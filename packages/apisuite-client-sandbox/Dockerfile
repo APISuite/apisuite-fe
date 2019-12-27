@@ -1,8 +1,8 @@
-# node 10.x with cypress dependencies
-FROM cypress/base:10 AS build
+FROM cypress/base:ubuntu16-12.13.1 AS build
 
 WORKDIR /build
 COPY . /build
+RUN npm install -g yarn
 RUN yarn install
 RUN yarn run build
 
