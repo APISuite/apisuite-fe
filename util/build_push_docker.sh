@@ -30,6 +30,10 @@ touch .env
 # Set docker repo
 DOCKER_REPO=${DOCKER_REPO:-"cloudokihub/apisuite"}
 
+# Set prefix filter to remove unwanted parts from project name/path
+PREFIX_FILTER=${PREFIX_FILTER:-"apisuite-"}
+SUFFIX_FILTER=${SUFFIX_FILTER:-""}
+
 # Run common code
 . ./common.sh
 
@@ -43,7 +47,9 @@ for project in ${PROJECTS_LIST}; do
     PROJECT_PACKAGE_VERSION=$(cat ../${ROOT_PROJECTS_FOLDER}/${project}/package.json | grep version | head -1 | awk -F ": " '{ print $2 }' | sed 's/[",]//g')
   fi
   echo "Creating the var for $(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG"
-  echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${project}-${PROJECT_PACKAGE_VERSION}" >> .env
+  CLEAN_PROJECT_PREFIX=${project#$PREFIX_FILTER}
+  CLEAN_PROJECT_SUFFIX=${CLEAN_PROJECT_PREFIX%$SUFFIX_FILTER}
+  echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${CLEAN_PROJECT_SUFFIX}-${PROJECT_PACKAGE_VERSION}" >> .env
 done
 
 # Get the projects folder name to build

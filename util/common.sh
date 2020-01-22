@@ -24,6 +24,8 @@ LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL 
 ## First commit in a branch
 if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
   COMMITS="origin/${CIRCLE_BRANCH}"
+elif [[ $CIRCLE_SHA1 == $LAST_SUCCESSFUL_COMMIT ]]; then
+  COMMITS="origin/${CIRCLE_BRANCH}"
 else
   COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
 fi

@@ -45,6 +45,13 @@ jsconfig.json
 local.conf
 cypress.env.json
 #sandbox.config.json
+.dev.env
+.stg.env
+.prod.env
+environment
+
+# generated docker-compose.yml file
+docker-compose.yml
 
 # cypress assets
 **/cypress/screenshots/

@@ -1,8 +1,8 @@
 # apisuite-client-sandbox
+
 APISuite client sandbox
 
-
-### Docker compose example for tests
+## Docker compose example for tests
 
 You will need the `.env` and `cypress.env.json` files in the project root.
 
@@ -20,7 +20,7 @@ services:
 run:
 
 ```bash
-$ docker-compose up -d --build
+$docker-compose up -d --build
 ```
 
 Go to [http://localhost:3500](http://localhost:3500)

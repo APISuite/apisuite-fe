@@ -1,24 +1,29 @@
-version: 2
+version: 2.1
+
+executors:
+  apisuite-executor:
+    environment:
+      SHOULD_TEST: "false"
+    docker:
+      - image: circleci/node:12.13.1
+    working_directory: ~/apisuite
+
 jobs:
   test:
-      working_directory: ~/apisuite
-      docker:
-        - image: circleci/node:12.13.1
+      executor: apisuite-executor
       steps:
         - checkout
         - run:
-            name: Build packages with docker-compose and push to registry
+            name: Run tests
             command: |
-              sudo apt-get install jq
               cd util
               chmod +x common.sh
               chmod +x run_tests.sh
-              ./run_tests.sh
+              chmod +x install_dependencies.sh
+              [[ $SHOULD_TEST == "false" ]] && echo "Bypass tests" || (./install_dependencies.sh && ./run_tests.sh)
 
   build:
-      working_directory: ~/apisuite
-      docker:
-        - image: circleci/buildpack-deps:stretch
+      executor: apisuite-executor
       steps:
         - checkout
         - setup_remote_docker
@@ -29,25 +34,54 @@ jobs:
               cd util
               chmod +x build_push_docker.sh
               ./build_push_docker.sh
+        - persist_to_workspace:
+              root: ./util
+              paths:
+                - .env
 
-  deploy:
-      working_directory: ~/apisuite
-      docker:
-        - image: circleci/node:12.13.1
+  deploy-dev:
+      executor: apisuite-executor
       steps:
         - checkout
+        - attach_workspace:
+            at: ./util
         - run:
             name: Fix ssh could not resolve hostname
             command: |
-              ssh-keyscan $DROPLET_IP >> ~/.ssh/known_hosts
+              ssh-keyscan $DROPLET_IP_DEV >> ~/.ssh/known_hosts
         - add_ssh_keys:
             fingerprints:
               - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
         - run:
             name: Deploy Over SSH
             command: |
-              scp -o StrictHostKeyChecking=no ./util/docker-compose.yaml $DROPLET_USER@$DROPLET_IP:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/ && docker-compose pull && docker-compose up -d && docker image prune --force"
+              chmod +x ./util/clean_compose.sh
+              (cd ./util && ./clean_compose.sh)
+              chmod +x ./util/merge_env.sh
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_DEV:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_DEV "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
+
+  deploy-stg:
+      executor: apisuite-executor
+      steps:
+        - checkout
+        - attach_workspace:
+            at: ./util
+        - run:
+            name: Fix ssh could not resolve hostname
+            command: |
+              ssh-keyscan $DROPLET_IP_STG >> ~/.ssh/known_hosts
+        - add_ssh_keys:
+            fingerprints:
+              - "5d:31:e4:99:b3:31:14:d9:2e:50:b7:1f:8f:b8:f3:ab"
+        - run:
+            name: Deploy Over SSH
+            command: |
+              chmod +x ./util/clean_compose.sh
+              (cd ./util && ./clean_compose.sh)
+              chmod +x ./util/merge_env.sh
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_STG:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_STG "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
   version: 2
@@ -59,12 +93,20 @@ workflows:
                 branches:
                   only:
                     - develop
+                    - rc
             requires:
                 - test
-        - deploy:
+        - deploy-dev:
             filters:
                 branches:
                   only:
                     - develop
+            requires:
+                - build
+        - deploy-stg:
+            filters:
+                branches:
+                  only:
+                    - rc
             requires:
                 - build
