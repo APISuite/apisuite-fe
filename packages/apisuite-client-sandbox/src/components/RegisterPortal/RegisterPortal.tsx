@@ -11,7 +11,7 @@ import Shuffle from '@material-ui/icons/Shuffle'
 import generator from 'generate-password'
 import { useTranslation } from 'react-i18next'
 
-const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
+const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser, errorMsg, success }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -24,6 +24,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
+  const [formMsg, setFormMsg] = React.useState('')
   const [input, setInput] = React.useState({
     name: '',
     email: '',
@@ -146,6 +147,14 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
     })
   }
 
+  React.useEffect(() => {
+    if (errorMsg !== '') {
+      setFormMsg(errorMsg)
+    } else if (success) {
+      setFormMsg(t('registerPortal.messages.success'))
+    }
+  }, [errorMsg, success])
+
   return (
     <div className={classes.registerContainer}>
       <div className={classes.content}>
@@ -155,6 +164,8 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
           buttonDisabled={buttonDisabled}
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
+          formMsg={formMsg}
+          success={success}
         >
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>GDPR protected</h5>

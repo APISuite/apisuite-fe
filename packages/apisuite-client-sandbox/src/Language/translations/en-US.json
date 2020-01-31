@@ -123,6 +123,9 @@
       "name": "Your name must be at least one character long.",
       "email": "Please enter a valid email address.",
       "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long"
+    },
+    "messages": {
+      "success": "You have successfully registered, click here be redirected to log in"
     }
   },
   "listApps": {
