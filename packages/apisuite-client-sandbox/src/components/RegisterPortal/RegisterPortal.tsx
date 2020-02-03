@@ -155,6 +155,27 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser, errorMsg,
     }
   }, [errorMsg, success])
 
+  function registerMsg () {
+    if ((formMsg !== '' && success) ||
+    (formMsg === 'User already registered, click here to be redirect to log in' && !success)) {
+      return (
+        <div className={classes.msgSuccess}>
+          <a href='/login'>
+            {formMsg}
+          </a>
+        </div>
+      )
+    } else if (formMsg !== '') {
+      return (
+        <div className={classes.msgError}>
+          {formMsg}
+        </div>
+      )
+    } else {
+      return undefined
+    }
+  }
+
   return (
     <div className={classes.registerContainer}>
       <div className={classes.content}>
@@ -164,8 +185,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser, errorMsg,
           buttonDisabled={buttonDisabled}
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
-          formMsg={formMsg}
-          success={success}
+          formMsg={registerMsg()}
         >
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>GDPR protected</h5>

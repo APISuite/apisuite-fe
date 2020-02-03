@@ -16,31 +16,9 @@ const FormCard: React.FC<FormCardProps> = ({
   buttonDisabled,
   handleSubmit,
   formMsg,
-  success,
   children,
 }) => {
   const classes = useStyles()
-
-  function registerMsg () {
-    if ((formMsg !== '' && success) ||
-    (formMsg === 'User already registered, click here to be redirect to log in' && !success)) {
-      return (
-        <div className={classes.msgSuccess}>
-          <a href='/login'>
-            {formMsg}
-          </a>
-        </div>
-      )
-    } else if (formMsg !== '') {
-      return (
-        <div className={classes.msgError}>
-          {formMsg}
-        </div>
-      )
-    } else {
-      return ''
-    }
-  }
 
   return (
     <div className={classes.formCard}>
@@ -62,7 +40,7 @@ const FormCard: React.FC<FormCardProps> = ({
           {buttonLabel}
         </Button>
       </form>
-      {registerMsg()}
+      {formMsg}
     </div>
   )
 }

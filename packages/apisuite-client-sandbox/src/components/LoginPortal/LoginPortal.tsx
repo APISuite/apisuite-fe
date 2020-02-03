@@ -28,8 +28,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
   const containerId = null
   const passFieldId = 'pass-field'
   const closeRoute = '/'
-  const formMsg = ''
-  const success = false
+  const formMsg = undefined
 
   function isValidEmail (email: string) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -108,7 +107,6 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
           formMsg={formMsg}
-          success={success}
         >
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>{t('loginPortal.fields.email')}</h5>
