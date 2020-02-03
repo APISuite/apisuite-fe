@@ -21,7 +21,7 @@ export function * registerUser (action: RegisterAction) {
     if (response.success && response.message === 'User created') {
       yield put(registerSuccess())
     } else if (!response.success && response.messages === 'user exists') {
-      yield put(registerError('User already registered, click here to be redirect to log in'))
+      yield put(registerError('User already registered, click here to be redirected to log in'))
     }
   } catch (error) {
     yield put(registerError('Internal error'))
