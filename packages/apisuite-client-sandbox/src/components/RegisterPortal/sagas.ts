@@ -12,15 +12,19 @@ export function * registerUser (action: RegisterAction) {
   const requestUrl = `${API_URL}${SIGNUP_PORT}/users/register`
 
   try {
-    yield call(request, {
+    const response = yield call(request, {
       url: requestUrl,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify(action.userData),
     })
-    yield put(registerSuccess())
+    if (response.success && response.message === 'User created') {
+      yield put(registerSuccess())
+    } else if (!response.success && response.messages === 'user exists') {
+      yield put(registerError('User already registered, click here to be redirect to log in'))
+    }
   } catch (error) {
-    yield put(registerError(error.message))
+    yield put(registerError('Internal error'))
   }
 }
 

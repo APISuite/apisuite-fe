@@ -22,7 +22,8 @@ const FormCard: React.FC<FormCardProps> = ({
   const classes = useStyles()
 
   function registerMsg () {
-    if (formMsg !== '' && success) {
+    if ((formMsg !== '' && success) ||
+    (formMsg === 'User already registered, click here to be redirect to log in' && !success)) {
       return (
         <div className={classes.msgSuccess}>
           <a href='/login'>
