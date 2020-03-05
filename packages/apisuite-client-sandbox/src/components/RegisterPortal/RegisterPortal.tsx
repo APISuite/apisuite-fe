@@ -25,12 +25,13 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
 
   const registerButtonLabel = 'CREATE ACCOUNT'
 
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) => {
+  const handleInputs = (err: any) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    const eventTarget = e.target
+    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
   }
 
   function handleClickShowPassword () {
@@ -68,7 +69,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
               type='text'
               name='name'
               value={input.name}
-              onChange={handleInputs}
+              handleChange={handleInputs}
               autoFocus
               fullWidth
               errorPlacing='bottom'
@@ -88,7 +89,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
               type='email'
               name='email'
               value={input.email}
-              onChange={handleInputs}
+              handleChange={handleInputs}
               fullWidth
               errorPlacing='bottom'
               InputProps={{
@@ -110,7 +111,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
                 value={input.password}
                 fullWidth
                 errorPlacing='bottom'
-                onChange={handleInputs}
+                handleChange={handleInputs}
                 rules={[
                   { rule: isValidPass(input.password), message: t('registerPortal.warnings.password') },
                 ]}

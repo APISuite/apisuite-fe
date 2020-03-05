@@ -21,12 +21,13 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     password: '',
   })
 
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) => {
+  const handleInputs = (err: any) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    const eventTarget = e.target
+    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
   }
 
   function handleClickShowPassword () {
@@ -61,7 +62,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
               placeholder=''
               name='email'
               value={input.email}
-              onChange={handleInputs}
+              handleChange={handleInputs}
               autoFocus
               fullWidth
               errorPlacing='bottom'
@@ -82,7 +83,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 type={showPassword ? 'text' : 'password'}
                 name='password'
                 value={input.password}
-                onChange={handleInputs}
+                handleChange={handleInputs}
                 fullWidth
                 errorPlacing='bottom'
                 InputProps={{

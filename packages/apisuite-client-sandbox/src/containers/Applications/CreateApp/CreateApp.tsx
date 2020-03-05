@@ -38,12 +38,13 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
     history.goBack()
   }
 
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
+  const handleInputs = (err: any) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    const eventTarget = e.target
+    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
@@ -88,7 +89,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
             name='name'
             type='text'
             value={input.name}
-            onChange={handleInputs}
+            handleChange={handleInputs}
             errorPlacing='bottom'
             rules={[
               { rule: input.name.length > 0, message: 'Please provide a valid name' },
@@ -103,7 +104,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
             name='description'
             type='text'
             value={input.description}
-            onChange={handleInputs}
+            handleChange={handleInputs}
             multiline
             rows={5}
           />
@@ -117,7 +118,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
               name='redirectUrl'
               type='text'
               value={input.redirectUrl}
-              onChange={handleInputs}
+              handleChange={handleInputs}
               errorPlacing='bottom'
               rules={[
                 { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
@@ -146,7 +147,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
               name='pubUrls'
               type='text'
               value={input.pubUrls}
-              onChange={handleInputs}
+              handleChange={handleInputs}
             />
 
             <Button variant='outlined' className={classes.iconBtn}>

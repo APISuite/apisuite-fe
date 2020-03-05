@@ -1,6 +1,6 @@
 import * as React from 'react'
 import clsx from 'clsx'
-import FormField, { parseErrors } from 'components/FormField'
+import FormField, { parseErrors, isValidURL } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -62,13 +62,14 @@ const AppDetail: React.FC<AppDetailProps> = (
     deleteApp(appId)
   }
 
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
+  const handleInputs = (err: any) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
     setChanged(true)
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    const eventTarget = e.target
+    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
   }
 
   function navigate (route: any) {
@@ -80,13 +81,15 @@ const AppDetail: React.FC<AppDetailProps> = (
       getAppDetails(appId, user.id)
     }
     setInput({ ...currentApp })
+  }, [currentApp])
+
+  React.useEffect(() => {
     setFormValid(errors && errors.length === 0)
-  }, [currentApp, errors])
+  }, [errors])
 
   return (
     <>
       <div className={classes.container}>
-
         <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
           <form noValidate autoComplete='off' className={classes.left}>
             <FormField
@@ -95,7 +98,7 @@ const AppDetail: React.FC<AppDetailProps> = (
               name='name'
               type='text'
               value={input.name}
-              onChange={handleInputs}
+              handleChange={handleInputs}
               errorPlacing='bottom'
               rules={[
                 { rule: input.name.length > 0, message: 'Please provide a valid name' },
@@ -111,7 +114,7 @@ const AppDetail: React.FC<AppDetailProps> = (
               name='description'
               rows={5}
               value={input.description}
-              onChange={handleInputs}
+              handleChange={handleInputs}
             />
 
             <br />
@@ -121,7 +124,7 @@ const AppDetail: React.FC<AppDetailProps> = (
               placeholder='https://localhost'
               name='pubUrls'
               value={input.pubUrls}
-              onChange={handleInputs}
+              handleChange={handleInputs}
             />
 
             <br />
@@ -130,6 +133,7 @@ const AppDetail: React.FC<AppDetailProps> = (
               <FormField
                 label='Terms of service'
                 value='https://cloudoki.com/tos'
+                name='terms-of-service'
               />
 
               {/* <Button variant='outlined' className={classes.iconBtn}>
@@ -152,6 +156,7 @@ const AppDetail: React.FC<AppDetailProps> = (
                 label='Client ID'
                 value={input.clientId}
                 inputProps={{ readOnly: true }}
+                name='clientId'
               />
 
               {/* <Button variant='outlined' className={classes.iconBtn}>
@@ -166,6 +171,7 @@ const AppDetail: React.FC<AppDetailProps> = (
                 label='Client Secret'
                 value={input.clientSecret}
                 inputProps={{ readOnly: true }}
+                name='clientSecret'
               />
 
               {/* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
@@ -185,7 +191,11 @@ const AppDetail: React.FC<AppDetailProps> = (
                 name='redirectUrl'
                 type='text'
                 value={input.redirectUrl}
-                onChange={handleInputs}
+                handleChange={handleInputs}
+                errorPlacing='bottom'
+                rules={[
+                  { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
+                ]}
               />
 
               {/* <Button variant='outlined' className={classes.iconBtn}>

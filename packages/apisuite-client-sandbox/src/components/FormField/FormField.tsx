@@ -9,12 +9,14 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     label,
     InputLabelProps,
     onBlur,
+    name,
     onFocus,
     variant = 'outlined' as any,
     margin = 'dense',
     fullWidth = true,
     value,
     errorPlacing,
+    handleChange,
     ...rest
   } = props
 
@@ -38,16 +40,6 @@ const FormField: React.FC<FormFieldProps> = (props) => {
 
   React.useEffect(() => {
     const err = props.rules && props.rules.filter(r => (props.showErrors ? !r.rule : changed && !r.rule))
-    // const messages = err && err.map(e => e.message).join(', ')
-
-    if (props.onChange) {
-      props.onChange({
-        target: {
-          name: props.name,
-          value: value,
-        },
-      }, err)
-    }
 
     setErrors(err)
     setChanged(true)
@@ -69,6 +61,8 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
         value={value}
+        name={name}
+        onChange={handleChange ? handleChange(errors) : undefined}
         {...rest}
       />
       {blured && errors && errors.length > 0 &&
