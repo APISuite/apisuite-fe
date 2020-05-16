@@ -1,20 +1,30 @@
 import * as React from 'react'
 import classnames from 'classnames'
+import useStyles from './styles'
 
 import './styles.scss'
 
-const Button: React.FC<{label?: any,
+const Button: React.FC<{
+  label?: any,
   type?: string,
   fullWidth?: boolean,
   href?: string,
   loading?: boolean,
   disabled?: boolean,
   onClick?: any,
-}> = ({ label, type, fullWidth, href, loading, disabled, onClick, ...rest }) => (
-  <div onClick={!disabled && !loading ? onClick : null}>
-    {href && !disabled && <a href={href} target='_blank' rel='noopener noreferrer' className={classnames('button', type, { 'full-width': fullWidth || false }, { 'disabled': disabled || loading || false }, { 'loading': loading || false })}>{label}</a>}
-    {!href && <div className={classnames('button', type, { 'full-width': fullWidth || false }, { 'disabled': disabled || loading || false }, { 'loading': loading || false })} {...rest}>{label}</div>}
-  </div>
-)
+  background?: string,
+  border?: string,
+  color?: string,
+}> = ({ label, type, fullWidth, href, loading, disabled, onClick, background, border, color, ...rest }) => {
+  
+  const classes = useStyles()
+  
+  return (
+    <div onClick={!disabled && !loading ? onClick : null}>
+      {href && !disabled && <a href={href} target='_blank' rel='noopener noreferrer' className={classnames([classes.button], type, {[classes.fullWidth]: fullWidth || false }, {[classes.disabled]: disabled || loading || false }, { [classes.loading]: loading || false }, {[classes.secondary]: background && background === 'secondary'}, {[classes.dark]: background && background === 'dark'})}>{label}</a>}
+      {!href && <div className={classnames([classes.button], type, {[classes.fullWidth]: fullWidth || false }, {[classes.disabled]: disabled || loading || false }, { [classes.loading]: loading || false }, {[classes.secondary]: background && background === 'secondary'}, {[classes.dark]: background && background === 'dark'})} {...rest}>{label}</div>}
+    </div>
+  )
+}
 
 export default Button
