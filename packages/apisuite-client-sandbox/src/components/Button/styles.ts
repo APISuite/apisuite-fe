@@ -16,47 +16,47 @@ const useStyles = makeStyles({
     textAlign: 'center',
     position: 'relative',
     fontWeight: 600,
-    
+
     '&:hover': {
       cursor: 'pointer',
       boxShadow: '0 4px 6px 0 rgba(0,0,0,0.35)',
     },
 
     '&:active': {
-      boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)'
-    }
+      boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
+    },
   },
   secondary: {
-    backgroundColor: theme.palette.secondary
+    backgroundColor: theme.palette.secondary,
   },
   dark: {
-    backgroundColor: theme.palette.text.primary
+    backgroundColor: theme.palette.text.primary,
   },
   transparent: {
     background: 'none',
     borderWidth: 0,
     boxShadow: 'none',
     '&:hover': {
-      boxShadow: 'none'
-    }
+      boxShadow: 'none',
+    },
   },
   primaryColor: {
-    color: `${theme.palette.primary} !important`
+    color: `${theme.palette.primary} !important`,
   },
   secondaryColor: {
-    color: `${theme.palette.secondary} !important`
+    color: `${theme.palette.secondary} !important`,
   },
   fullWidth: {
     width: '100%',
   },
   disabled: {
     cursor: 'default !important',
-    opacity: .6,
-    boxShadow: '0 2px 5px 0 rgba(0,0,0,0.05) !important'
+    opacity: 0.6,
+    boxShadow: '0 2px 5px 0 rgba(0,0,0,0.05) !important',
   },
   loading: {
 
-  }
+  },
 })
 
 export default useStyles

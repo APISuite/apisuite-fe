@@ -12,6 +12,8 @@ import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
 import NotificationStack from 'containers/NotificationStack'
 
+import logo from 'theme/images/logo.png'
+
 const theme: Theme = require(`themes/${process.env.THEME || 'default'}`).default
 
 const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
@@ -92,7 +94,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
           onTabChange={handleOnTabChange}
           onSubTabChange={handleOnSubTabChange}
           name={config.navbar.name}
-          logoSrc={theme.images.apiLogo}
+          logoSrc={logo}
           user={auth.user}
           forceScrolled={navScrolled}
           showBackButton={gobackLabel.length > 0}

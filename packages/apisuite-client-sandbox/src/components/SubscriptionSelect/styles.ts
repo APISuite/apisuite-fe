@@ -21,7 +21,7 @@ export default makeStyles(({
     display: 'flex',
     margin: 4,
     borderRadius: 3,
-    background: `linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)`,
+    background: 'linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)',
     fontWeight: 400,
     color: '#fff',
   },

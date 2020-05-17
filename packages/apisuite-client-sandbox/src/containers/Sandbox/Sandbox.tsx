@@ -42,7 +42,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   }
 
   return (
-    <main className={classes.root} style={{backgroundImage: `url(${themeBg})`}}>
+    <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
       <section className={classes.section}>
         <Carousel autoplay interval={8000}>
           {slidesConfig.map((slide) => (

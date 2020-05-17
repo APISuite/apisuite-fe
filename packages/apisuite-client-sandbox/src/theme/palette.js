@@ -1,11 +1,10 @@
 module.exports = {
-  // primary: '#2DB7BA',
-  primary: '#ef7213',
-  primaryLight: '#ef7213',
-  primaryDark: '#ef7213',
-  secondary: '#061E57',
-  secondaryLight: '#061E57',
-  secondaryDark: '#061E57',
+  primary: '#2DB7BA',
+  primaryLight: '#2DB7BA',
+  primaryDark: '#2DB7BA',
+  secondary: '#035e86',
+  secondaryLight: '#035e86',
+  secondaryDark: '#035e86',
   background: {
     default: '#fff'
   },

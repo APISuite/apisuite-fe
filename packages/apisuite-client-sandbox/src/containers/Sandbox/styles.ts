@@ -112,10 +112,10 @@ export default makeStyles(({
     margin: '0 40px',
   },
   featureAvatar: {
-    background: `linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)`,
+    background: 'linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)',
   },
   otherAvatar: {
-    background: `linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)`,
+    background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
   },
   partnersContainer: {
     display: 'felx',

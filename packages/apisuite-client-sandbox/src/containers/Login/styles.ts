@@ -25,8 +25,8 @@ const useStyles = makeStyles(({
     flexDirection: 'row',
 
     '@media screen and (max-width: 900px)': {
-      flexDirection: 'column-reverse'
-    }
+      flexDirection: 'column-reverse',
+    },
   },
   authContentRight: {
     flex: 1,
@@ -35,8 +35,8 @@ const useStyles = makeStyles(({
     backgroundColor: theme.palette.secondary,
 
     '@media screen and (max-width: 900px)': {
-      flex: 2
-    }
+      flex: 2,
+    },
   },
   authContentLeft: {
     flex: 1,
@@ -46,8 +46,8 @@ const useStyles = makeStyles(({
 
     '@media screen and (max-width: 900px)': {
       flex: 1,
-      padding: 20
-    }
+      padding: 20,
+    },
   },
   authContentStripe: {
     position: 'absolute',
@@ -63,8 +63,8 @@ const useStyles = makeStyles(({
       right: 0,
       height: 50,
       width: '100%',
-      backgroundImage: '-webkit-linear-gradient(87deg, #fff 54%, transparent 54.3%);'
-    }
+      backgroundImage: '-webkit-linear-gradient(87deg, #fff 54%, transparent 54.3%);',
+    },
   },
   authFormsWrapper: {
     maxWidth: 360,
@@ -73,12 +73,12 @@ const useStyles = makeStyles(({
     '@media screen and (max-width: 900px)': {
       maxWidth: 360,
       height: 620,
-      margin: '0 auto'
-    }
+      margin: '0 auto',
+    },
   },
   authBlock: {
     margin: '0 auto',
-    paddingTop: 20
+    paddingTop: 20,
   },
   authSelector: {
     width: '100%',
@@ -95,25 +95,25 @@ const useStyles = makeStyles(({
       top: 1,
 
       '&:hover': {
-        cursor: 'pointer'
-      }
-    }
+        cursor: 'pointer',
+      },
+    },
   },
   authSelectorSelected: {
     fontWeight: 500,
     color: theme.palette.primary,
-    borderBottom: `3px solid ${theme.palette.primary}`
+    borderBottom: `3px solid ${theme.palette.primary}`,
   },
   authForm: {
-    paddingTop: 10
+    paddingTop: 10,
   },
   userCreatedFeedback: {
     border: `1px solid ${theme.palette.primary}`,
     color: theme.palette.primary,
     textAlign: 'center',
     padding: '12px 25px',
-    minWidth: 50
-  }
+    minWidth: 50,
+  },
 }))
 
 export default useStyles
