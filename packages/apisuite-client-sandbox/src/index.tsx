@@ -17,7 +17,7 @@ import 'typeface-roboto'
 import 'styles/app.scss'
 
 (async () => {
-  await import(`themes/${process.env.THEME || 'default'}/theme.scss`)
+  await import('theme/styles/theme.scss')
 })()
 
 function render (Component: any) {
