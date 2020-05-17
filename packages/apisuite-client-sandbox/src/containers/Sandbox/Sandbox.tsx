@@ -22,6 +22,7 @@ import { config } from 'constants/global'
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
 import partnersUrl from 'assets/partners.png'
+import themeBg from 'theme/images/home_bg.png'
 
 const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   const classes = useStyles()
@@ -41,7 +42,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   }
 
   return (
-    <main className={classes.root}>
+    <main className={classes.root} style={{backgroundImage: `url(${themeBg})`}}>
       <section className={classes.section}>
         <Carousel autoplay interval={8000}>
           {slidesConfig.map((slide) => (

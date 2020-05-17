@@ -1,5 +1,8 @@
 .formfield-wrapper {
   position: relative;
+  .formfield {
+    border-color: #000;
+  }
   .formfield-errors {
     color: $error-color;
 

@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 import { colorPicker } from 'util/colorPicker'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   radioGroup: {
     display: 'flex',
     flexDirection: 'row',
@@ -11,24 +11,24 @@ export default makeStyles((theme: Theme) => ({
     marginBottom: 4,
   },
   controlWrapper: {
-    border: `1px solid ${colorPicker(theme.palette.grey, 900, '#131313')}`,
+    border: `1px solid ${theme.palette.greyScales[900]}`,
     marginRight: 8,
     paddingRight: 12,
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     cursor: 'pointer',
   },
   controlLabel: {
     margin: 0,
   },
   unselected: {
-    backgroundColor: colorPicker(theme.palette.grey, 50, '#EEEEEE'),
-    border: `1px solid ${colorPicker(theme.palette.grey, 50, '#EEEEEE')}`,
+    backgroundColor: theme.palette.greyScales[50],
+    border: `1px solid ${theme.palette.greyScales[50]}`,
   },
   desc: {
     fontSize: 12,
     width: 234,
     lineHeight: '18px',
-    color: colorPicker(theme.palette.grey, 500, '#8B8B8B'),
+    color: theme.palette.greyScales[500],
     paddingLeft: 42,
     marginTop: 0,
     marginBottom: 24,

@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 import { colorPicker } from 'util/colorPicker'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   cardContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -16,7 +16,7 @@ export default makeStyles((theme: Theme) => ({
     borderTopWidth: 1,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    borderColor: colorPicker(theme.palette.grey, 300, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
     borderStyle: 'solid',
   },
   options: {
@@ -30,7 +30,7 @@ export default makeStyles((theme: Theme) => ({
   },
   apiVersion: {
     width: '25%',
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
+    color: theme.palette.greyScales[400],
   },
   apiApps: {
     display: 'flex',

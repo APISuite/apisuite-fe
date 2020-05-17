@@ -1,14 +1,14 @@
 import { makeStyles } from '@material-ui/styles'
 import requireImage from 'util/requireImage'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     minHeight: '100%',
-    background: `url("${requireImage('landing-bg.png')}") no-repeat`,
+    // background: `url("${requireImage('landing-bg.png')}") no-repeat`,
     backgroundSize: '110% 110%',
     paddingTop: 300,
     paddingBottom: 45,
@@ -94,7 +94,7 @@ export default makeStyles((theme: Theme) => ({
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     cursor: 'pointer',
     fontWeight: 500,
   },

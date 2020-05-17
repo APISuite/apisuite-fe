@@ -1,11 +1,11 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   root: {
     minHeight: '100%',
     paddingTop: 200,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: '#fff',
   },
   contentContainer: {
     maxWidth: 900,

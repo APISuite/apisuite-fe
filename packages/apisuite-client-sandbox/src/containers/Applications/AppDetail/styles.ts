@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   container: {
     backgroundColor: 'white',
     paddingTop: 250,
@@ -55,7 +55,7 @@ export default makeStyles((theme: Theme) => ({
     backgroundColor: '#333333',
     color: 'white',
     padding: '8px 24px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
@@ -72,7 +72,7 @@ export default makeStyles((theme: Theme) => ({
   avatar: {
     fontSize: 26,
     fontWeight: 300,
-    backgroundColor: '#14BC7D',
+    backgroundColor: theme.palette.secondary,
     width: 140,
     height: 140,
   },
@@ -84,7 +84,7 @@ export default makeStyles((theme: Theme) => ({
     marginBottom: 8,
   },
   link: {
-    color: '#2DB7BA',
+    color: theme.palette.primary,
     textDecoration: 'underline',
     cursor: 'pointer',
   },
@@ -96,7 +96,7 @@ export default makeStyles((theme: Theme) => ({
     backgroundColor: '#333333',
     color: 'white',
     padding: '6px 24px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     marginRight: 8,
   },
   cardContainer: {
@@ -145,14 +145,14 @@ export default makeStyles((theme: Theme) => ({
     marginTop: 10,
   },
   errorAlert: {
-    backgroundColor: '#F5A623',
+    backgroundColor: theme.palette.feedback.error,
     border: 'solid',
     borderWidth: 1,
-    borderColor: '#F59523',
+    borderColor: theme.palette.feedback.error,
     fontSize: 13,
     color: '#FFF',
     padding: '2px 15px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     minHeight: 20,
   },
 }))

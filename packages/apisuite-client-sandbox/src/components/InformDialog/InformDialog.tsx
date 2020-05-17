@@ -1,8 +1,8 @@
 import * as React from 'react'
 import useStyles from './styles'
-import Button from '@material-ui/core/Button'
-import { isValidEmail } from 'components/FormField'
-import TextField from '@material-ui/core/TextField'
+// import Button from '@material-ui/core/Button'
+import Button from 'components/Button'
+import FormField, { isValidEmail } from 'components/FormField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -70,7 +70,7 @@ const InformDialog: React.FC<InformDialogProps> = (
         </DialogContentText>
 
         <form noValidate autoComplete='off' onSubmit={preventDefault}>
-          <TextField
+          <FormField
             data-testid='inform-dialog-email'
             label='Email Address'
             value={email}
@@ -88,23 +88,23 @@ const InformDialog: React.FC<InformDialogProps> = (
 
       <DialogActions>
         <Button
-          data-testid='inform-dialog-cancel'
-          color='primary'
+          label='Cancel'
           onClick={handleClose}
+          fullWidth
+          loading={showLoading}
           disabled={showLoading}
-        >
-            Cancel
-        </Button>
+          background='transparent'
+          color='primary'
+        />
 
         <div className={classes.confirmWrapper}>
           <Button
             data-testid='inform-dialog-submit'
-            color='primary'
+            label='Submit'
             onClick={handleConfirm}
+            fullWidth
             disabled={!isValidEmail(email) || showLoading}
-          >
-              Submit
-          </Button>
+          />
 
           {showLoading && <CircularProgress size={24} className={classes.progress} />}
         </div>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ThemeProvider } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+// import theme from 'theme'
 
 import { config } from 'constants/global'
 import Navigation from 'components/Navigation'

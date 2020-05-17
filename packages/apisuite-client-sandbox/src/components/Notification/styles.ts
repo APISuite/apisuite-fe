@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 import { colorPicker } from 'util/colorPicker'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   snackbar: {
     display: 'flex',
     position: 'relative',
@@ -14,7 +14,7 @@ export default makeStyles((theme: Theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
   },
   icon: {
     display: 'flex',
@@ -26,11 +26,11 @@ export default makeStyles((theme: Theme) => ({
     margin: 0,
   },
   success: {
-    backgroundColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
+    backgroundColor: theme.palette.primary,
     color: 'white',
   },
   error: {
-    backgroundColor: theme.palette.error,
+    backgroundColor: theme.palette.feedback.error,
     color: 'white',
   },
 }))

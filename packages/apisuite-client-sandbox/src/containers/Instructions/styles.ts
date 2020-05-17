@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   root: {
     minHeight: '100%',
     paddingTop: 200,
@@ -54,13 +54,13 @@ export default makeStyles((theme: Theme) => ({
   codeBlock: {
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
-    borderBottomLeftRadius: theme.shape.borderRadius,
-    borderBottomRightRadius: theme.shape.borderRadius,
+    borderBottomLeftRadius: theme.dim.radius,
+    borderBottomRightRadius: theme.dim.radius,
   },
   noteContainer: {
     width: '100%',
-    backgroundColor: '#00A7AA',
-    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.secondary,
+    borderRadius: theme.dim.radius,
     overflow: 'hidden',
     marginBottom: 20,
   },
@@ -74,7 +74,7 @@ export default makeStyles((theme: Theme) => ({
     color: 'white',
   },
   noteContent: {
-    backgroundColor: '#2DB7BA',
+    backgroundColor: theme.palette.primary,
     padding: 20,
     marginLeft: 5,
   },
@@ -88,15 +88,15 @@ export default makeStyles((theme: Theme) => ({
     marginTop: 0,
     paddingLeft: 20,
     paddingRight: 20,
-    borderTopRightRadius: theme.shape.borderRadius,
-    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.dim.radius,
+    borderTopLeftRadius: theme.dim.radius,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
   clipboardIcon: {
     cursor: 'pointer',
     '&:hover': {
-      color: '#2DB7BA',
+      color: theme.palette.primary,
     },
     zIndex: 1,
   },
@@ -109,16 +109,16 @@ export default makeStyles((theme: Theme) => ({
 
 export const codeStyle = {
   'hljs-string': {
-    'color': '#2DB7BA',
+    'color': theme.palette.primary,
   },
   'hljs-symbol': {
-    'color': '#2DB7BA',
+    'color': theme.palette.primary,
   },
   'hljs-bullet': {
-    'color': '#2DB7BA',
+    'color': theme.palette.primary,
   },
   'hljs-addition': {
-    'color': '#2DB7BA',
+    'color': theme.palette.primary,
   },
   'hljs': {
     display: 'block',

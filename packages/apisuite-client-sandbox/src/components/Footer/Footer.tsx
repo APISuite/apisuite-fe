@@ -2,7 +2,7 @@ import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
 import { useTheme } from '@material-ui/core/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 import LocaleSelect from 'language/LocaleSelect'
 
 import './styles.scss'

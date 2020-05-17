@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 import { colorPicker } from 'util/colorPicker'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   table: {
     display: 'flex',
     flexDirection: 'column',
@@ -10,11 +10,11 @@ export default makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     width: '100%',
     cursor: 'pointer',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
     border: 1,
     borderTopWidth: 0,
   },
@@ -26,7 +26,7 @@ export default makeStyles((theme: Theme) => ({
     justifyContent: 'space-between',
     height: 42,
     paddingLeft: 10,
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
+    color: theme.palette.greyScales[400],
   },
   actions: {
     paddingRight: 30,
@@ -45,7 +45,7 @@ export default makeStyles((theme: Theme) => ({
     borderBottomWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
   },
   apiContainer: {
     width: '100%',
@@ -69,7 +69,7 @@ export default makeStyles((theme: Theme) => ({
     borderBottomWidth: 0,
     borderRightWidth: 1,
     borderLeftWidth: 1,
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
   },
   appsListCardContainer: {
     display: 'flex',
@@ -78,12 +78,12 @@ export default makeStyles((theme: Theme) => ({
     width: '100%',
     minHeight: 42,
     borderStyle: 'solid',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderRightWidth: 1,
     borderLeftWidth: 1,
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
   },
   icons: {
     display: 'flex',
@@ -100,9 +100,9 @@ export default makeStyles((theme: Theme) => ({
     minHeight: 438,
     width: 289,
     backgroundColor: 'white',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.dim.radius,
     borderStyle: 'solid',
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
     borderWidth: 1,
     overflow: 'hidden',
   },
@@ -130,13 +130,13 @@ export default makeStyles((theme: Theme) => ({
     width: '100%',
     height: 36,
     padding: 15,
-    backgroundColor: theme.palette.background.white,
+    backgroundColor: '#fff',
     borderTopWidth: 1,
     borderBottomWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderStyle: 'solid',
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
   },
   viewRow: {
     display: 'flex',
@@ -150,8 +150,8 @@ export default makeStyles((theme: Theme) => ({
     alignItems: 'center',
     marginBottom: 20,
     borderWidth: 1,
-    borderRadius: theme.shape.borderRadius,
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderRadius: theme.dim.radius,
+    borderColor: theme.palette.greyScales[300],
     borderStyle: 'solid',
     cursor: 'pointer',
     overflow: 'hidden',
@@ -166,13 +166,13 @@ export default makeStyles((theme: Theme) => ({
     justifyContent: 'flex-start',
     width: 200,
     padding: 10,
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
-    backgroundColor: theme.palette.background.white,
+    color: theme.palette.greyScales[400],
+    backgroundColor: '#fff',
     borderStyle: 'none',
   },
   icon: {
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
-    backgroundColor: theme.palette.background.white,
+    color: theme.palette.greyScales[400],
+    backgroundColor: '#fff',
     height: '100%',
     cursor: 'pointer',
   },
@@ -188,7 +188,7 @@ export default makeStyles((theme: Theme) => ({
     borderTopWidth: 0,
     borderBottomWidth: 0,
     borderRightWidth: 0,
-    borderColor: colorPicker(theme.palette.grey, 400, '#D1D1D1'),
+    borderColor: theme.palette.greyScales[300],
     borderStyle: 'solid',
     cursor: 'pointer',
   },
@@ -196,6 +196,6 @@ export default makeStyles((theme: Theme) => ({
     width: '100%',
   },
   vNumber: {
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
+    color: theme.palette.greyScales[400],
   },
 }))

@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import theme from 'theme'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   card: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'white',
-    borderRadius: theme.shape.borderRadius * 2,
+    borderRadius: theme.dim.radius * 2,
     boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
     maxWidth: 900,
     margin: '0 auto',
