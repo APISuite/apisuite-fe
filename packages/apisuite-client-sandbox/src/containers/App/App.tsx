@@ -79,7 +79,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   }, [auth.user])
 
   return (
-    <div>
+    <div style={{height: '100%'}}>
       {navigations &&
         <Navigation
           key='app-navigation'
