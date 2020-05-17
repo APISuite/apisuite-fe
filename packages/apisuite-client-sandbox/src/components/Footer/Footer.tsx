@@ -1,7 +1,6 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
-import { useTheme } from '@material-ui/core/styles'
 import LocaleSelect from 'language/LocaleSelect'
 
 import logo from 'theme/images/logo.png'
@@ -9,7 +8,6 @@ import logo from 'theme/images/logo.png'
 import './styles.scss'
 
 const Footer = () => {
-
   function handleFabClick () {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }

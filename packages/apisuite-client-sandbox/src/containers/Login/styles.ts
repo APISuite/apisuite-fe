@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
 import theme from 'theme'
-import { colorPicker } from 'util/colorPicker'
 
 const useStyles = makeStyles(({
   authPage: {

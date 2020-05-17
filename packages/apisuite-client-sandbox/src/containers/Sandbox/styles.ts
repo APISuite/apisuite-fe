@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import requireImage from 'util/requireImage'
 import theme from 'theme'
-import { colorPicker } from 'util/colorPicker'
 
 export default makeStyles(({
   root: {
@@ -9,7 +7,6 @@ export default makeStyles(({
     flexDirection: 'column',
     width: '100%',
     minHeight: '100%',
-    // background: `url("${requireImage('sandbox-background.png')}") no-repeat`,
     backgroundSize: '100% 100%',
     paddingTop: 300,
     paddingBottom: 45,

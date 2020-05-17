@@ -2,7 +2,7 @@ import * as React from 'react'
 import requireImage from 'util/requireImage'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
-import sandbox_bg from 'theme/images/sandbox_bg.png'
+import sandboxBg from 'theme/images/sandbox_bg.png'
 
 import useStyles from './styles'
 import { LandingPageProps } from './types'
@@ -14,7 +14,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
   const fname = user ? user.fName : ''
 
   return (
-    <main className={classes.root} style={{ backgroundImage: `url(${sandbox_bg})` }}>
+    <main className={classes.root} style={{ backgroundImage: `url(${sandboxBg})` }}>
       <section className={classes.section}>
         <div className={classes.steps}>
           <div className={classes.step}>

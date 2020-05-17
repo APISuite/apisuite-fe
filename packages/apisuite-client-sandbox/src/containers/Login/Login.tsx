@@ -71,7 +71,10 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
                   <LoginPortal />}
                 {authView === 'register' &&
                   <RegisterPortal defaultEmail={defaultEmail()} />}
-                {justRegistered && <div className={classes.userCreatedFeedback}>Your account is created, {register.user}!</div>}
+                {justRegistered &&
+                  <div className={classes.userCreatedFeedback}>
+                    Your account is created, {register.user}!
+                  </div>}
               </div>
             </div>
           </div>

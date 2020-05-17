@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { ThemeProvider } from '@material-ui/styles'
-// import theme from 'theme'
 
 import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
@@ -13,8 +11,6 @@ import { initTabs, loginTabs, gobackConfig } from './config'
 import NotificationStack from 'containers/NotificationStack'
 
 import logo from 'theme/images/logo.png'
-
-const theme: Theme = require(`themes/${process.env.THEME || 'default'}`).default
 
 const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -83,7 +79,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   }, [auth.user])
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
       {navigations &&
         <Navigation
           key='app-navigation'
@@ -110,7 +106,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       <InformDialog />
 
       <NotificationStack />
-    </ThemeProvider>
+    </div>
   )
 }
 
