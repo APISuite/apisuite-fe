@@ -15,9 +15,8 @@ const Panel: React.FC<PanelProps> = ({ className, children, title, subtitle }) =
         <div className={classes.cardContent}>
           <h1 className={classes.featuresTitle}>{title}</h1>
           <p className={classes.featuresDesc}>{subtitle}</p>
-        </div>
-      }
-      
+        </div>}
+
       {children}
     </section>
   )

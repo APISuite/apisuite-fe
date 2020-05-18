@@ -47,11 +47,17 @@ export default makeStyles(({
   otherTitle: {
     color: config.palette.primary,
   },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '16px 24px',
+  },
   featuresDesc: {
     textAlign: 'center',
     color: '#666666',
     maxWidth: 600,
-    margin: '0 auto 20px'
+    margin: '0 auto 20px',
   },
   listContainer: {
     display: 'flex',

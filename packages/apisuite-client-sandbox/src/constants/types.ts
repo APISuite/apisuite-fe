@@ -2,13 +2,13 @@ import { LocaleOption } from 'language/types'
 
 export interface SandboxConfig {
   includes: { [prop: string]: boolean },
-  navbar: {
-    name: string,
-    logoUrl: string,
-  },
+  client: string,
+  social: object,
   footer: {
     copyright: string,
-    logoUrl: string,
   },
   i18n: LocaleOption[],
+  palette: any,
+  dimensions: any,
+  pages: any,
 }

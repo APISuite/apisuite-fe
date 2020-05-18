@@ -19,31 +19,23 @@ import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig,
 import partnersUrl from 'assets/partners.png'
 import themeBg from 'theme/images/home_bg.png'
 
-const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
+const Sandbox: React.FC<{}> = () => {
   const classes = useStyles()
   const [t] = useTranslation()
 
   // const [termsCheck, setTermsCheck] = React.useState(false)
 
-  // #conditional-loader-start: alert
-  // window.alert(config.navbar.name)
-  // #conditional-loader-end
-
   // function handleCheckboxClick () {
   //   setTermsCheck(!termsCheck)
   // }
 
-  function handleTrigger () {
-    toggleInform()
-  }
-
   return (
     <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
-      
+
       {/** #conditional-loader-start: instance */}
-      <ContentGenerator page={'landing'} />
+      <ContentGenerator page='landing' />
       {/** #conditional-loader-end */}
-      
+
       {/** #conditional-loader-start: demo */}
       <section className={classes.section}>
         <Carousel slideConfig={slidesConfig} />
@@ -119,7 +111,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
         </div>
         <br />
       </Panel>
-      
+
       <br />
 
       <section className={classes.stepsContainer}>
@@ -130,8 +122,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
               <h3 style={{ color: '#37E34D' }}>Add your app</h3>
               <p>You’ll need an app to send and recieve API calls.</p>
               <p>Adding your app details will help us enabling this flow.</p>
-
-              <div className={classes.spacer} />
 
               <Button
                 className={classes.stepBtn}
@@ -150,8 +140,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
                  we provide an overview of our available Sandbox API’s your apps can subscribe to.
               </p>
 
-              <div className={classes.spacer} />
-
               <Button
                 className={classes.stepBtn}
                 variant='outlined'
@@ -168,8 +156,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
                 Once your app and API subscriptions are all ready to go,
                  head to our “Getting Started” documentation for lift-off.
               </p>
-
-              <div className={classes.spacer} />
 
               <Button
                 className={classes.stepBtn}

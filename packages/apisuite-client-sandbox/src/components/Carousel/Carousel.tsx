@@ -19,9 +19,9 @@ const modulo = (a: number, n: number) => ((a % n) + n) % n
 const carouselSlideRenderer = (children: React.ReactNodeArray) =>
   ({ index, key }: RendererProps) => React.cloneElement(children[modulo(index, children.length)] as any, { key })
 
-const renderContent = (slidesConfig, classes, t) => (
-  slidesConfig.map((slide) => (
-    <div key={slide.key} className={classes.slide}>
+const renderContent = (slidesConfig: any, classes: any, t: any) => (
+  slidesConfig.map((slide: any, i: number) => (
+    <div key={i} className={classes.slide}>
       <img className={classes.slideImage} src={slide.img} alt='' />
 
       <div className={classes.spacer} />
@@ -46,7 +46,6 @@ const renderContent = (slidesConfig, classes, t) => (
             [classes.btn2]: slide.btn === 2,
             [classes.btn3]: slide.btn === 3,
           })}
-          onClick={slide.onClick}
         >
           {!slide.disabled &&
             <a href={slide.link} className={classes.buttonLink}>
@@ -60,10 +59,10 @@ const renderContent = (slidesConfig, classes, t) => (
   ))
 )
 
-const Carousel: React.FC<CarouselProps> = ({ slideConfig, ...other }) => {
+const Carousel: React.FC<CarouselProps> = ({ slideConfig }) => {
   const classes = useStyles()
   const [t] = useTranslation()
-  
+
   const autoplay = true
   const content = renderContent(slideConfig, classes, t)
   const slideRenderer = carouselSlideRenderer(content)

@@ -99,7 +99,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     <div className={clsx('navigation', className, { scrolled: scrolled || forceScrolled })} {...rest}>
       <header className={clsx({ scrolled: scrolled || forceScrolled })}>
         <img src={logoSrc} alt='logo' className='img' />
-        
+
         <h1>{name}</h1>
 
         <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
