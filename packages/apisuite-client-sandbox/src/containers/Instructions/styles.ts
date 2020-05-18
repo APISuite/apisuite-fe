@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   root: {
@@ -54,13 +54,13 @@ export default makeStyles(({
   codeBlock: {
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
-    borderBottomLeftRadius: theme.dim.radius,
-    borderBottomRightRadius: theme.dim.radius,
+    borderBottomLeftRadius: config.dimensions.borderRadius,
+    borderBottomRightRadius: config.dimensions.borderRadius,
   },
   noteContainer: {
     width: '100%',
-    backgroundColor: theme.palette.secondary,
-    borderRadius: theme.dim.radius,
+    backgroundColor: config.palette.secondary,
+    borderRadius: config.dimensions.borderRadius,
     overflow: 'hidden',
     marginBottom: 20,
   },
@@ -74,7 +74,7 @@ export default makeStyles(({
     color: 'white',
   },
   noteContent: {
-    backgroundColor: theme.palette.primary,
+    backgroundColor: config.palette.primary,
     padding: 20,
     marginLeft: 5,
   },
@@ -88,15 +88,15 @@ export default makeStyles(({
     marginTop: 0,
     paddingLeft: 20,
     paddingRight: 20,
-    borderTopRightRadius: theme.dim.radius,
-    borderTopLeftRadius: theme.dim.radius,
+    borderTopRightRadius: config.dimensions.borderRadius,
+    borderTopLeftRadius: config.dimensions.borderRadius,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
   clipboardIcon: {
     cursor: 'pointer',
     '&:hover': {
-      color: theme.palette.primary,
+      color: config.palette.primary,
     },
     zIndex: 1,
   },
@@ -109,16 +109,16 @@ export default makeStyles(({
 
 export const codeStyle = {
   'hljs-string': {
-    'color': theme.palette.primary,
+    'color': config.palette.primary,
   },
   'hljs-symbol': {
-    'color': theme.palette.primary,
+    'color': config.palette.primary,
   },
   'hljs-bullet': {
-    'color': theme.palette.primary,
+    'color': config.palette.primary,
   },
   'hljs-addition': {
-    'color': theme.palette.primary,
+    'color': config.palette.primary,
   },
   'hljs': {
     display: 'block',

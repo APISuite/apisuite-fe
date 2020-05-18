@@ -4,7 +4,6 @@ import Avatar from '@material-ui/core/Avatar'
 import SvgIcon from 'components/SvgIcon'
 import './styles.scss'
 import { NavigationProps } from './types'
-import theme from 'theme'
 
 function getBarValues (parent: React.RefObject<HTMLDivElement>, target: React.RefObject<HTMLDivElement>) {
   const values = { left: 0, width: 0 }

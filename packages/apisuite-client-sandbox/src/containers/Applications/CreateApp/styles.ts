@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles'
 import requireImage from 'util/requireImage'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   container: {
@@ -41,7 +41,7 @@ export default makeStyles(({
     lineHeight: '14px',
     '& a': {
       display: 'block',
-      color: theme.palette.primary,
+      color: config.palette.primary,
     },
   },
   divider: {
@@ -57,7 +57,7 @@ export default makeStyles(({
     backgroundColor: '#333333',
     color: 'white',
     padding: '8px 24px',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
@@ -111,14 +111,14 @@ export default makeStyles(({
     marginTop: 10,
   },
   errorAlert: {
-    backgroundColor: theme.palette.feedback.error,
+    backgroundColor: config.palette.feedback.error,
     border: 'solid',
     borderWidth: 1,
-    borderColor: theme.palette.feedback.error,
+    borderColor: config.palette.feedback.error,
     fontSize: 13,
     color: '#FFF',
     padding: '2px 15px',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     minHeight: 20,
   },
 }))

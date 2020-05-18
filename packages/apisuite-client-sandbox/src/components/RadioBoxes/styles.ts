@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   radioGroup: {
@@ -10,24 +10,24 @@ export default makeStyles(({
     marginBottom: 4,
   },
   controlWrapper: {
-    border: `1px solid ${theme.palette.greyScales[900]}`,
+    border: `1px solid ${config.palette.greyScales[900]}`,
     marginRight: 8,
     paddingRight: 12,
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
   },
   controlLabel: {
     margin: 0,
   },
   unselected: {
-    backgroundColor: theme.palette.greyScales[50],
-    border: `1px solid ${theme.palette.greyScales[50]}`,
+    backgroundColor: config.palette.greyScales[50],
+    border: `1px solid ${config.palette.greyScales[50]}`,
   },
   desc: {
     fontSize: 12,
     width: 234,
     lineHeight: '18px',
-    color: theme.palette.greyScales[500],
+    color: config.palette.greyScales[500],
     paddingLeft: 42,
     marginTop: 0,
     marginBottom: 24,

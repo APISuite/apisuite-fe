@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   card: {
@@ -11,13 +11,13 @@ export default makeStyles(({
     height: 218,
     cursor: 'pointer',
     margin: 8,
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     padding: 16,
     backgroundColor: 'white',
   },
   cardAdd: {
     backgroundColor: 'transparent',
-    border: `2px dashed ${theme.palette.greyScales[300]}`,
+    border: `2px dashed ${config.palette.greyScales[300]}`,
   },
   avatar: {
     fontSize: 26,
@@ -48,7 +48,7 @@ export default makeStyles(({
     display: 'flex',
     alignItems: 'center',
     fontSize: 12,
-    color: theme.palette.greyScales[700],
+    color: config.palette.greyScales[700],
     marginTop: 4,
   },
   disabled: {

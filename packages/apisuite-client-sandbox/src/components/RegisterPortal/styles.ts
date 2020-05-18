@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 const useStyles = makeStyles(({
   registerContainer: {
@@ -8,18 +8,18 @@ const useStyles = makeStyles(({
   },
   emailTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.dim.radius,
-    color: theme.palette.greyScales[400],
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
   nameTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.dim.radius,
-    color: theme.palette.greyScales[400],
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
   passPhrasefield: {
     backgroundColor: 'white',
-    borderRadius: theme.dim.radius,
-    color: theme.palette.greyScales[400],
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
   passPhraseContainer: {
     display: 'flex',

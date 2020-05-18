@@ -40,57 +40,20 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
 
   return (
     <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
+      
+      <ContentGenerator page={'landing'} />
+      
+      {/** #conditional-loader-start: demo */}
       <section className={classes.section}>
-        <Carousel autoplay interval={8000}>
-          {slidesConfig.map((slide) => (
-            <div key={slide.key} className={classes.slide}>
-              <img className={classes.slideImage} src={slide.imgUrl} alt='' />
-
-              <div className={classes.spacer} />
-
-              <section className={classes.slideInfo}>
-                <h1 className={classes.slideInfoH1}>{t(slide.title)}</h1>
-
-                {/** TODO: strings are not being escaped from translations, this needs to be reviwed */}
-                <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.p1) }} />
-
-                {slide.p2 && (
-                  <p
-                    className={classes.slideInfoParagraph}
-                    dangerouslySetInnerHTML={{ __html: t(slide.p2) }}
-                  />
-                )}
-
-                <div
-                  role='button'
-                  arial-label='register'
-                  className={clsx(classes.btn, {
-                    [classes.btn2]: slide.btn === 2,
-                    [classes.btn3]: slide.btn === 3,
-                  })}
-                  onClick={slide.disabled ? handleTrigger : undefined}
-                >
-                  {!slide.disabled &&
-                    <a href={slide.linkTo} className={classes.buttonLink}>
-                      {t(slide.btnStr)}
-                    </a>}
-                  {slide.disabled &&
-                    <div>{t(slide.btnStr)}</div>}
-                </div>
-              </section>
-            </div>
-          ))}
-        </Carousel>
+        <Carousel slideConfig={slidesConfig}>
       </section>
 
-      <br /><br /><br /><br />
+      <br /><br />
 
-      <Panel>
-        <div className={classes.cardContent}>
-          <h1 className={classes.featuresTitle}>{t('sandboxPage.features.title')}</h1>
-          <p className={classes.featuresDesc}>{t('sandboxPage.features.desc')}</p>
-        </div>
-
+      <Panel
+        title={t('sandboxPage.features.title')}
+        subtitle={t('sandboxPage.features.desc')}
+      >
         <div className={classes.listContainer}>
           <List className={classes.list}>
             {featuresLeftConfig.map((item) => (
@@ -119,7 +82,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
           </List>
         </div>
 
-        {/** #conditional-loader-start: other */}
         <div className={classes.cardContent}>
           <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>
             {t('sandboxPage.otherTreats.title')}
@@ -155,12 +117,10 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
             ))}
           </List>
         </div>
-        {/** #conditional-loader-end */}
-
         <br />
       </Panel>
-
-      <br /><br /><br />
+      
+      <br />
 
       <section className={classes.stepsContainer}>
         <Panel>
@@ -244,9 +204,8 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
         </aside>
       </section>
 
-      <br /><br /><br />
+      <br />
 
-      {/** #conditional-loader-start: partners */}
       <Panel>
         <div className={classes.partnersContainer}>
           <h1 className={classes.partnersTitle}>Cloudoki customers & partners</h1>
@@ -255,7 +214,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
         </div>
       </Panel>
 
-      <br /><br /><br />
+      <br />
       {/** #conditional-loader-end */}
 
       {/* <section className={classes.subscribeContainer}>

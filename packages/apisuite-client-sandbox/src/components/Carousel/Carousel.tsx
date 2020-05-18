@@ -4,8 +4,11 @@ import virtualize from 'react-swipeable-views-utils/lib/virtualize'
 import bindKeyboard from 'react-swipeable-views-utils/lib/bindKeyboard'
 import SwipeableViews from 'react-swipeable-views'
 import Dots from 'material-ui-dots'
-import { makeStyles } from '@material-ui/styles'
 import { CarouselProps, RendererProps } from './types'
+import useStyles from './styles'
+import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
+// import { slidesConfig } from 'containers/Sandbox/config'
 
 const VirtualizeSwipeViews = bindKeyboard(virtualize(SwipeableViews))
 const VirtualizeAutoPlaySwipeViews = autoPlay(VirtualizeSwipeViews)
@@ -16,23 +19,54 @@ const modulo = (a: number, n: number) => ((a % n) + n) % n
 const carouselSlideRenderer = (children: React.ReactNodeArray) =>
   ({ index, key }: RendererProps) => React.cloneElement(children[modulo(index, children.length)] as any, { key })
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-  dots: {
-    paddingTop: 36,
-    margin: '0 auto',
-  },
-})
+const renderContent = (slidesConfig, classes, t) => (
+  slidesConfig.map((slide) => (
+    <div key={slide.key} className={classes.slide}>
+      <img className={classes.slideImage} src={slide.imgUrl} alt='' />
 
-const Carousel: React.FC<CarouselProps> = ({ children, autoplay, ...other }) => {
-  if (children == null) {
-    return null
-  }
+      <div className={classes.spacer} />
 
-  const slideRenderer = carouselSlideRenderer(children)
+      <section className={classes.slideInfo}>
+        <h1 className={classes.slideInfoH1}>{t(slide.title)}</h1>
+
+        {/** TODO: strings are not being escaped from translations, this needs to be reviwed */}
+        <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.p1) }} />
+
+        {slide.p2 && (
+          <p
+            className={classes.slideInfoParagraph}
+            dangerouslySetInnerHTML={{ __html: t(slide.p2) }}
+          />
+        )}
+
+        <div
+          role='button'
+          arial-label='register'
+          className={clsx(classes.btn, {
+            [classes.btn2]: slide.btn === 2,
+            [classes.btn3]: slide.btn === 3,
+          })}
+          onClick={slide.onClick}
+        >
+          {!slide.disabled &&
+            <a href={slide.linkTo} className={classes.buttonLink}>
+              {t(slide.btnStr)}
+            </a>}
+          {slide.disabled &&
+            <div>{t(slide.btnStr)}</div>}
+        </div>
+      </section>
+    </div>
+  ))
+)
+
+const Carousel: React.FC<CarouselProps> = ({ slideConfig, ...other }) => {
   const classes = useStyles()
+  const [t] = useTranslation()
+  
+  const autoplay = true
+  const content = renderContent(slideConfig, classes, t)
+  const slideRenderer = carouselSlideRenderer(content)
   const [slideIndex, setSlideIndex] = React.useState(0)
 
   function handleChange (slideIndex: number) {
@@ -41,14 +75,13 @@ const Carousel: React.FC<CarouselProps> = ({ children, autoplay, ...other }) => 
 
   const Views = autoplay ? (
     <VirtualizeAutoPlaySwipeViews
-      {...other}
+      interval={8000}
       slideRenderer={slideRenderer}
       index={slideIndex}
       onChangeIndex={handleChange}
     />
   ) : (
     <VirtualizeSwipeViews
-      {...other}
       slideRenderer={slideRenderer}
       index={slideIndex}
       onChangeIndex={handleChange}
@@ -60,8 +93,8 @@ const Carousel: React.FC<CarouselProps> = ({ children, autoplay, ...other }) => 
       {Views}
 
       <Dots
-        count={children.length}
-        index={modulo(slideIndex, children.length)}
+        count={content.length}
+        index={modulo(slideIndex, content.length)}
         className={classes.dots}
         onDotClick={handleChange}
       />

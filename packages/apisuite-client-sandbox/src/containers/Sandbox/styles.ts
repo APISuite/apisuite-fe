@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   root: {
@@ -7,7 +7,7 @@ export default makeStyles(({
     flexDirection: 'column',
     width: '100%',
     minHeight: '100%',
-    backgroundSize: '100% 100%',
+    backgroundSize: 'cover',
     paddingTop: 300,
     paddingBottom: 45,
   },
@@ -15,87 +15,43 @@ export default makeStyles(({
     maxWidth: 900,
     margin: '0 auto',
   },
-  slide: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  slideImage: {
-    width: 400,
-    height: 350,
-  },
-  slideInfo: {
-    width: 400,
-    marginTop: 50,
-    color: 'white',
-  },
-  slideInfoH1: {
-    display: 'inline-block',
-    fontSize: 26,
-    fontWeight: 100,
-    backgroundColor: 'white',
-    padding: '8px 16px',
-    margin: 0,
-    marginBottom: 8,
-    color: theme.palette.primary,
-  },
-  slideInfoParagraph: {
-    marginBottom: 48,
-  },
-  spacer: {
-    flex: 1,
-  },
   btn: {
     display: 'inline-block',
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
-  },
-  btn2: {
-    backgroundColor: theme.palette.primary,
-    color: 'white',
-    border: '1px solid white',
-  },
-  btn3: {
-    backgroundColor: theme.palette.secondaryLight,
-    color: 'white',
-    border: '1px solid white',
   },
   btn4: {
     display: 'flex',
     color: '#333333',
-    backgroundColor: theme.palette.primary,
+    backgroundColor: config.palette.primary,
     padding: '8px 24px',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     marginLeft: 12,
     cursor: 'pointer',
     fontWeight: 500,
     '&:hover': {
       color: '#FFF',
-      backgroundColor: theme.palette.primary,
+      backgroundColor: config.palette.primary,
     },
-  },
-  cardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '16px 24px',
   },
   featuresTitle: {
     fontSize: 26,
     fontWeight: 100,
     textAlign: 'center',
-    color: theme.palette.primary,
+    color: config.palette.primary,
   },
   otherTitle: {
-    color: theme.palette.primary,
+    color: config.palette.primary,
   },
   featuresDesc: {
     textAlign: 'center',
     color: '#666666',
     maxWidth: 600,
+    margin: '0 auto 20px'
   },
   listContainer: {
     display: 'flex',
@@ -130,7 +86,7 @@ export default makeStyles(({
     maxWidth: 800,
   },
   partnersLink: {
-    color: theme.palette.primary,
+    color: config.palette.primary,
     textAlign: 'center',
     marginTop: 40,
   },
@@ -229,7 +185,7 @@ export default makeStyles(({
   },
   emailTextfield: {
     backgroundColor: '#646464',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     color: '#ACACAC',
     margin: 0,
   },
@@ -237,7 +193,7 @@ export default makeStyles(({
     fontSize: '14px',
     fontWeight: 300,
     '& > a': {
-      color: theme.palette.primaryLight,
+      color: config.palette.primaryLight,
     },
   },
   checkbox: {

@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 const useStyles = makeStyles(({
   authPage: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(({
   },
   authRightWrapper: {
     flex: 1,
-    backgroundColor: theme.palette.secondary,
+    backgroundColor: config.palette.secondary,
   },
   contentWrapper: {
     flexBasis: 1170,
@@ -31,7 +31,7 @@ const useStyles = makeStyles(({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: theme.palette.secondary,
+    backgroundColor: config.palette.secondary,
 
     '@media screen and (max-width: 900px)': {
       flex: 2,
@@ -54,7 +54,7 @@ const useStyles = makeStyles(({
     right: 0,
     height: '100%',
     width: 140,
-    backgroundImage: `-webkit-linear-gradient(5deg, #fff 54%, ${theme.palette.secondary} 54.3%)`,
+    backgroundImage: `-webkit-linear-gradient(5deg, #fff 54%, ${config.palette.secondary} 54.3%)`,
 
     '@media screen and (max-width: 900px)': {
       position: 'absolute',
@@ -100,15 +100,15 @@ const useStyles = makeStyles(({
   },
   authSelectorSelected: {
     fontWeight: 500,
-    color: theme.palette.primary,
-    borderBottom: `3px solid ${theme.palette.primary}`,
+    color: config.palette.primary,
+    borderBottom: `3px solid ${config.palette.primary}`,
   },
   authForm: {
     paddingTop: 10,
   },
   userCreatedFeedback: {
-    border: `1px solid ${theme.palette.primary}`,
-    color: theme.palette.primary,
+    border: `1px solid ${config.palette.primary}`,
+    color: config.palette.primary,
     textAlign: 'center',
     padding: '12px 25px',
     minWidth: 50,

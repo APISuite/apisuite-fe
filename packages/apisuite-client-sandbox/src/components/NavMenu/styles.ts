@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   menuItem: {
@@ -14,13 +14,13 @@ export default makeStyles(({
     borderRightWidth: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    borderColor: theme.palette.greyScales[500],
-    color: theme.palette.text.primary,
+    borderColor: config.palette.greyScales[500],
+    color: config.palette.text.primary,
     fontWeight: 500,
   },
   selected: {
-    color: theme.palette.text.secondary,
-    borderColor: theme.palette.primary,
+    color: config.palette.text.secondary,
+    borderColor: config.palette.primary,
     borderLeftWidth: 3,
     borderRightWidth: 0,
     borderTopWidth: 0,

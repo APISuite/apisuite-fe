@@ -1,8 +1,7 @@
 {
 	"includes": {
 		"alert": false,
-		"other": true,
-		"partners": true,
+		"demo": false,
 		"console": false
 	},
 	"client": "API Suite Portal",
@@ -60,8 +59,28 @@
     "landing": {
       "components": [
         {
+          "type": "Carousel",
+          "slideConfig": [
+            {
+              "imgUrl": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
+              "title": "This is a title",
+              "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nSed vel elementum tellus.",
+              "btnStr": "Click me",
+              "linkTo": "http://cloudoki.com"
+            },
+            {
+              "imgUrl": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
+              "title": "This is a title",
+              "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nSed vel elementum tellus.",
+              "btnStr": "Click me",
+              "linkTo": "http://cloudoki.com"
+            }
+          ]
+        },
+        {
           "type": "Panel",
-          "content": "test"
+          "title": "Welcome to API Suite's Portal",
+          "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel elementum tellus. Morbi venenatis justo sed elit interdum lacinia. Donec imperdiet rhoncus massa, vel gravida tellus fringilla ut."
         }
       ]
     }

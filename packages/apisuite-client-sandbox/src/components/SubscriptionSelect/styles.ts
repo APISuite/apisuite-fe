@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   subSelect: {
@@ -7,7 +7,7 @@ export default makeStyles(({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    color: theme.palette.greyScales[400],
+    color: config.palette.greyScales[400],
   },
   dropdown: {
     display: 'flex',

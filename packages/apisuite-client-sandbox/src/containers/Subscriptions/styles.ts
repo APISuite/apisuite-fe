@@ -1,11 +1,11 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   root: {
     minHeight: '100%',
     paddingTop: 200,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: config.palette.background.default,
   },
   contentContainer: {
     maxWidth: 900,

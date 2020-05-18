@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   cardContainer: {
@@ -9,13 +9,13 @@ export default makeStyles(({
     justifyContent: 'space-between',
     width: '100%',
     height: 42,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: config.palette.background.default,
     paddingLeft: 10,
     borderBottomWidth: 0,
     borderTopWidth: 1,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
     borderStyle: 'solid',
   },
   options: {
@@ -29,7 +29,7 @@ export default makeStyles(({
   },
   apiVersion: {
     width: '25%',
-    color: theme.palette.greyScales[400],
+    color: config.palette.greyScales[400],
   },
   apiApps: {
     display: 'flex',

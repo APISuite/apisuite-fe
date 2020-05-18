@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   table: {
@@ -9,11 +9,11 @@ export default makeStyles(({
     justifyContent: 'center',
     width: '100%',
     cursor: 'pointer',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
     border: 1,
     borderTopWidth: 0,
   },
@@ -25,7 +25,7 @@ export default makeStyles(({
     justifyContent: 'space-between',
     height: 42,
     paddingLeft: 10,
-    color: theme.palette.greyScales[400],
+    color: config.palette.greyScales[400],
   },
   actions: {
     paddingRight: 30,
@@ -44,7 +44,7 @@ export default makeStyles(({
     borderBottomWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
   },
   apiContainer: {
     width: '100%',
@@ -68,7 +68,7 @@ export default makeStyles(({
     borderBottomWidth: 0,
     borderRightWidth: 1,
     borderLeftWidth: 1,
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
   },
   appsListCardContainer: {
     display: 'flex',
@@ -77,12 +77,12 @@ export default makeStyles(({
     width: '100%',
     minHeight: 42,
     borderStyle: 'solid',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderRightWidth: 1,
     borderLeftWidth: 1,
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
   },
   icons: {
     display: 'flex',
@@ -90,7 +90,7 @@ export default makeStyles(({
     justifyContent: 'center',
     width: 42,
     height: 42,
-    color: theme.palette.text.primary,
+    color: config.palette.text.primary,
   },
   cardContainer: {
     display: 'flex',
@@ -99,9 +99,9 @@ export default makeStyles(({
     minHeight: 438,
     width: 289,
     backgroundColor: 'white',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     borderStyle: 'solid',
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
     borderWidth: 1,
     overflow: 'hidden',
   },
@@ -135,7 +135,7 @@ export default makeStyles(({
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderStyle: 'solid',
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
   },
   viewRow: {
     display: 'flex',
@@ -149,8 +149,8 @@ export default makeStyles(({
     alignItems: 'center',
     marginBottom: 20,
     borderWidth: 1,
-    borderRadius: theme.dim.radius,
-    borderColor: theme.palette.greyScales[300],
+    borderRadius: config.dimensions.borderRadius,
+    borderColor: config.palette.greyScales[300],
     borderStyle: 'solid',
     cursor: 'pointer',
     overflow: 'hidden',
@@ -165,12 +165,12 @@ export default makeStyles(({
     justifyContent: 'flex-start',
     width: 200,
     padding: 10,
-    color: theme.palette.greyScales[400],
+    color: config.palette.greyScales[400],
     backgroundColor: '#fff',
     borderStyle: 'none',
   },
   icon: {
-    color: theme.palette.greyScales[400],
+    color: config.palette.greyScales[400],
     backgroundColor: '#fff',
     height: '100%',
     cursor: 'pointer',
@@ -181,13 +181,13 @@ export default makeStyles(({
     justifyContent: 'center',
     width: 42,
     height: 42,
-    color: theme.palette.text.primary,
+    color: config.palette.text.primary,
     backgroundColor: 'white',
     borderLeftWidth: 1,
     borderTopWidth: 0,
     borderBottomWidth: 0,
     borderRightWidth: 0,
-    borderColor: theme.palette.greyScales[300],
+    borderColor: config.palette.greyScales[300],
     borderStyle: 'solid',
     cursor: 'pointer',
   },
@@ -195,6 +195,6 @@ export default makeStyles(({
     width: '100%',
   },
   vNumber: {
-    color: theme.palette.greyScales[400],
+    color: config.palette.greyScales[400],
   },
 }))

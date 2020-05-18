@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
-import theme from 'theme'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   root: {
@@ -92,7 +92,7 @@ export default makeStyles(({
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: theme.dim.radius,
+    borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
   },
