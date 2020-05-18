@@ -8,16 +8,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-// import TextField from '@material-ui/core/TextField'
-// import FormGroup from '@material-ui/core/FormGroup'
-// import FormControlLabel from '@material-ui/core/FormControlLabel'
-// import Checkbox from '@material-ui/core/Checkbox'
-// import Link from '@material-ui/core/Link'
 import Carousel from 'components/Carousel'
-// import Wheel from 'components/ApiSuiteWheel'
+
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 import { config } from 'constants/global'
+import ContentGenerator from 'components/ContentGenerator'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
@@ -27,10 +23,11 @@ import themeBg from 'theme/images/home_bg.png'
 const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   const classes = useStyles()
   const [t] = useTranslation()
+
   // const [termsCheck, setTermsCheck] = React.useState(false)
 
   // #conditional-loader-start: alert
-  window.alert(config.navbar.name)
+  // window.alert(config.navbar.name)
   // #conditional-loader-end
 
   // function handleCheckboxClick () {

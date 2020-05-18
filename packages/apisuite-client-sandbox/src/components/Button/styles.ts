@@ -1,10 +1,9 @@
 import { makeStyles } from '@material-ui/styles'
-
-import theme from 'theme'
+import { config } from 'constants/global'
 
 const useStyles = makeStyles({
   button: {
-    backgroundColor: theme.palette.primary,
+    backgroundColor: config.palette.primary,
     borderRadius: '5px',
     padding: '6px 12px',
     display: 'inline-block',
@@ -27,10 +26,10 @@ const useStyles = makeStyles({
     },
   },
   secondary: {
-    backgroundColor: theme.palette.secondary,
+    backgroundColor: config.palette.secondary,
   },
   dark: {
-    backgroundColor: theme.palette.text.primary,
+    backgroundColor: config.palette.text.primary,
   },
   transparent: {
     background: 'none',
@@ -41,10 +40,10 @@ const useStyles = makeStyles({
     },
   },
   primaryColor: {
-    color: `${theme.palette.primary} !important`,
+    color: `${config.palette.primary} !important`,
   },
   secondaryColor: {
-    color: `${theme.palette.secondary} !important`,
+    color: `${config.palette.secondary} !important`,
   },
   fullWidth: {
     width: '100%',

@@ -11,7 +11,7 @@ const Panel: React.FC<PanelProps> = ({ className, children }) => {
     <section className={clsx(classes.card, className)}>
       <div className={classes.cardShadow} />
       <div className={classes.cardShadowSide} />
-
+    
       {children}
     </section>
   )

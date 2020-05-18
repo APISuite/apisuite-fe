@@ -2,7 +2,7 @@ import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
 import LocaleSelect from 'language/LocaleSelect'
-
+import { config } from 'constants/global'
 import logo from 'theme/images/logo.png'
 
 import './styles.scss'
@@ -17,7 +17,7 @@ const Footer = () => {
       <div className='container'>
         <div className='logo-container'>
           <img src={logo} alt='logo' className='logo' />
-          <p>{'© 2020 APISuite\nAll rights reserved.\nProudly made in Europe.'}</p>
+          <p>{config.footer.copyright}</p>
 
           <div className='icons-container'>
             <a href='https://cloudoki.com' target='_blank' rel='noopener noreferrer'>

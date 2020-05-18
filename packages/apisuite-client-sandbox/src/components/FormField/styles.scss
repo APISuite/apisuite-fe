@@ -4,7 +4,7 @@
     border-color: #000;
   }
   .formfield-errors {
-    color: $error-color;
+    color: red;
 
     &.bottom {
       width: 100%;
@@ -18,7 +18,7 @@
       top: 0;
       width: 100%;
       left: 105%;
-      background-color: $error-color;
+      background-color: red;
       padding: 15px 20px;
       color: #fff;
       border-radius: 5px;
@@ -31,7 +31,7 @@
         top: 21px;
         width: 15px;
         height: 15px;
-        background-color: $error-color;
+        background-color: red;
         transform: rotate(45deg);
       }
     }

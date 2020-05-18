@@ -1,18 +1,69 @@
 {
-    "includes": {
-      "alert": false,
-      "other": true,
-      "partners": true,
-      "console": false
-    },
-    "navbar": {
-      "name": "CLOUDOKI"
-    },
-    "footer": {
-      "copyright": "© Cloudoki 2019.\nAll rights reserved.\nProudly made in Europe."
-    },
-    "i18n": [
-      { "locale": "en-US", "label": "We speak English" },
-      { "locale": "pt-PT", "label": "Nós falamos Português" }
-    ]
+	"includes": {
+		"alert": false,
+		"other": true,
+		"partners": true,
+		"console": false
+	},
+	"client": "API Suite Portal",
+  "social": {
+    "web": "https://cloudoki.com/",
+    "twitter": "https://twitter.com/TeamCloudoki",
+    "facebook": "https://www.facebook.com/cloudokiTeam/",
+    "github": "https://github.com/Cloudoki"
+  },
+	"footer": {
+		"copyright": "© Cloudoki 2020.\nAll rights reserved.\nProudly made in Europe."
+	},
+	"i18n": [{
+			"locale": "en-US",
+			"label": "We speak English"
+		},
+		{
+			"locale": "pt-PT",
+			"label": "Nós falamos Português"
+		}
+	],
+	"palette": {
+		"primary": "#2DB7BA",
+		"primaryLight": "#2DB7BA",
+		"primaryDark": "#2DB7BA",
+		"secondary": "#035e86",
+		"secondaryLight": "#035e86",
+		"secondaryDark": "#035e86",
+		"background": {
+			"default": "#fff"
+		},
+		"greyScales": {
+			"50": "#EEEEEE",
+			"100": "#E3E3E3",
+			"300": "#D1D1D1",
+			"400": "#ACACAC",
+			"500": "#8B8B8B",
+			"600": "#646464",
+			"700": "#646464",
+			"800": "#515151",
+			"900": "#131313"
+		},
+		"text": {
+			"primary": "#333",
+			"secondary": "#424242"
+		},
+		"feedback": {
+			"error": "#FF0000"
+		}
+  },
+  "dimensions": {
+    "borderRadius": 4
+  },
+  "pages": {
+    "landing": {
+      "components": [
+        {
+          "type": "Panel",
+          "content": "test"
+        }
+      ]
+    }
+  }
 }
