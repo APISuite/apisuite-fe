@@ -3,26 +3,26 @@
     "slides": {
       "one": {
         "title": "Experience the Sandbox",
-        "p1": "We have released a <b>Live Demo</b> of our Sandbox product. Browse through the features below to see what you can expect.",
-        "p2": "The proof of the pudding is, as they say, in the eating.",
-        "btnStr": "Register"
+        "subtitle": "We have released a <b>Live Demo</b> of our Sandbox product. Browse through the features below to see what you can expect.",
+        "content": "The proof of the pudding is, as they say, in the eating.",
+        "button": "Register"
       },
       "two": {
         "title": "Secure Proof of Concepts",
-        "p1": "With Cloudoki Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
-        "p2": "Talk to one of our humans for more information.",
-        "btnStr": "Contact"
+        "subtitle": "With Cloudoki Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
+        "content": "Talk to one of our humans for more information.",
+        "button": "Contact"
       },
       "three": {
         "title": "Sail the Seas of Innovation",
-        "p1": "Cloudoki <b>Sandbox</b> is built on open source technology, just ahead of the curve, in order to give you a long and smooth lifetime cycle.",
-        "p2": "Docker, Kubernetes, Kong, it is all there.",
-        "btnStr": "Features"
+        "subtitle": "Cloudoki <b>Sandbox</b> is built on open source technology, just ahead of the curve, in order to give you a long and smooth lifetime cycle.",
+        "content": "Docker, Kubernetes, Kong, it is all there.",
+        "button": "Features"
       },
       "four": {
         "title": "Extend and Customize",
-        "p1": "The Cloudoki Sandbox is purpose built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
-        "btnStr": "Documentation"
+        "subtitle": "The Cloudoki Sandbox is purpose built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
+        "button": "Documentation"
       }
     },
     "features": {

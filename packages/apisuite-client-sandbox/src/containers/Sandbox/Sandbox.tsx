@@ -12,7 +12,6 @@ import Carousel from 'components/Carousel'
 
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
-import { config } from 'constants/global'
 import ContentGenerator from 'components/ContentGenerator'
 
 import useStyles from './styles'
@@ -41,13 +40,14 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   return (
     <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
       
+      {/** #conditional-loader-start: instance */}
       <ContentGenerator page={'landing'} />
+      {/** #conditional-loader-end */}
       
       {/** #conditional-loader-start: demo */}
       <section className={classes.section}>
-        <Carousel slideConfig={slidesConfig}>
+        <Carousel slideConfig={slidesConfig} />
       </section>
-
       <br /><br />
 
       <Panel

@@ -1,7 +1,8 @@
 {
 	"includes": {
 		"alert": false,
-		"demo": false,
+    "demo": false,
+    "instance": true,
 		"console": false
 	},
 	"client": "API Suite Portal",
@@ -62,18 +63,20 @@
           "type": "Carousel",
           "slideConfig": [
             {
-              "imgUrl": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
+              "img": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
               "title": "This is a title",
-              "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nSed vel elementum tellus.",
-              "btnStr": "Click me",
-              "linkTo": "http://cloudoki.com"
+              "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              "content": "Sed vel elementum tellus.",
+              "button": "Click me",
+              "link": "http://cloudoki.com"
             },
             {
-              "imgUrl": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
-              "title": "This is a title",
-              "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nSed vel elementum tellus.",
-              "btnStr": "Click me",
-              "linkTo": "http://cloudoki.com"
+              "img": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
+              "title": "This is another title",
+              "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              "content": "Sed vel elementum tellus.",
+              "button": "Click me",
+              "link": "http://cloudoki.com"
             }
           ]
         },

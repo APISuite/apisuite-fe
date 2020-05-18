@@ -4,14 +4,13 @@ import { AnyAction } from 'redux'
 
 export interface SlideConfig {
   /** key should be unique to leverage render optimization */
-  key: string,
   title: string,
-  p1: string,
-  p2?: string,
-  btnStr: string,
-  linkTo: string,
+  subtitle: string,
+  content?: string,
+  button: string,
+  link: string,
   btn: 1 | 2 | 3,
-  imgUrl: string,
+  img: string,
   disabled?: boolean,
 }
 

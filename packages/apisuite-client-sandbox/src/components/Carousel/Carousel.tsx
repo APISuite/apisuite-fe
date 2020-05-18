@@ -22,7 +22,7 @@ const carouselSlideRenderer = (children: React.ReactNodeArray) =>
 const renderContent = (slidesConfig, classes, t) => (
   slidesConfig.map((slide) => (
     <div key={slide.key} className={classes.slide}>
-      <img className={classes.slideImage} src={slide.imgUrl} alt='' />
+      <img className={classes.slideImage} src={slide.img} alt='' />
 
       <div className={classes.spacer} />
 
@@ -30,12 +30,12 @@ const renderContent = (slidesConfig, classes, t) => (
         <h1 className={classes.slideInfoH1}>{t(slide.title)}</h1>
 
         {/** TODO: strings are not being escaped from translations, this needs to be reviwed */}
-        <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.p1) }} />
+        <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.subtitle) }} />
 
-        {slide.p2 && (
+        {slide.content && (
           <p
             className={classes.slideInfoParagraph}
-            dangerouslySetInnerHTML={{ __html: t(slide.p2) }}
+            dangerouslySetInnerHTML={{ __html: t(slide.content) }}
           />
         )}
 
@@ -49,11 +49,11 @@ const renderContent = (slidesConfig, classes, t) => (
           onClick={slide.onClick}
         >
           {!slide.disabled &&
-            <a href={slide.linkTo} className={classes.buttonLink}>
-              {t(slide.btnStr)}
+            <a href={slide.link} className={classes.buttonLink}>
+              {t(slide.button)}
             </a>}
           {slide.disabled &&
-            <div>{t(slide.btnStr)}</div>}
+            <div>{t(slide.button)}</div>}
         </div>
       </section>
     </div>
