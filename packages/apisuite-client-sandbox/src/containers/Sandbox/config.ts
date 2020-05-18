@@ -6,7 +6,6 @@ const securePocUrl = requireImage('features-secure-poc.svg')
 const sailTheSeasUrl = requireImage('features-sail-the-seas.png')
 const slideOvalUrl = requireImage('slide-oval.png')
 
-
 /**
  * Slides configuration
  */

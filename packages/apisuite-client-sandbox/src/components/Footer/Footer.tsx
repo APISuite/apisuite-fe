@@ -13,28 +13,24 @@ const renderSocialLinks = () => {
     return null
   }
 
-  return(
+  return (
     <div className='icons-container'>
       {social.web &&
         <a href={social.web} target='_blank' rel='noopener noreferrer'>
           <SvgIcon size={24} name='earth' />
-        </a>
-      }
+        </a>}
       {social.twitter &&
         <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
           <SvgIcon size={24} name='twitter' />
-        </a>
-      }
+        </a>}
       {social.facebook &&
         <a href={social.facebook} target='_blank' rel='noopener noreferrer'>
           <SvgIcon size={24} name='facebook' />
-        </a>
-      }
+        </a>}
       {social.github &&
         <a href={social.github} target='_blank' rel='noopener noreferrer'>
           <SvgIcon size={24} name='github-face' />
-        </a>
-      }
+        </a>}
     </div>
   )
 }
