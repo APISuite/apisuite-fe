@@ -89,7 +89,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
           subTabIndex={currentSubTab}
           onTabChange={handleOnTabChange}
           onSubTabChange={handleOnSubTabChange}
-          name={config.client}
+          name={config.portalName}
           logoSrc={logo}
           user={auth.user}
           forceScrolled={navScrolled}

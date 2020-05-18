@@ -2,6 +2,7 @@ import * as React from 'react'
 import useStyles from './styles'
 import SubscriptionsTable from 'components/SubscriptionsTable'
 import { useTranslation } from 'react-i18next'
+import { config } from 'constants/global'
 
 const Subscriptions: React.FC<{}> = () => {
   const classes = useStyles()
@@ -13,7 +14,7 @@ const Subscriptions: React.FC<{}> = () => {
         <h1 className={classes.title}>{t('subscriptions.title')}</h1>
 
         <p className={classes.description}>
-          {t('subscriptions.description')}
+          {t('subscriptions.description', { config })}
         </p>
 
         <div className={classes.subscriptionsContainer}>

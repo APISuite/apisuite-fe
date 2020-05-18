@@ -1,19 +1,21 @@
 {
 	"includes": {
 		"alert": false,
-    "demo": true,
-    "instance": false,
+    "demo": false,
+    "instance": true,
 		"console": false
 	},
-	"client": "API Suite Portal",
+  "portalName": "MobieTrain DevPortal",
+  "clientName": "Mobietrain",
+  "infra": {
+    "hydra": "hydraauth.mobietrain.apisuite.io",
+    "sandbox": "sandbox.mobietrain.cloudoki.com"
+  },
   "social": {
-    "web": "https://cloudoki.com/",
-    "twitter": "https://twitter.com/TeamCloudoki",
-    "facebook": "https://www.facebook.com/cloudokiTeam/",
-    "github": "https://github.com/Cloudoki"
+    "web": "https://mobietrain.com/"
   },
 	"footer": {
-		"copyright": "© Cloudoki 2020.\nAll rights reserved.\nProudly made in Europe."
+		"copyright": "© MobieTrain 2020.\nAll rights reserved."
 	},
 	"i18n": [{
 			"locale": "en-US",
@@ -25,12 +27,12 @@
 		}
 	],
 	"palette": {
-		"primary": "#2DB7BA",
-		"primaryLight": "#2DB7BA",
-		"primaryDark": "#2DB7BA",
-		"secondary": "#035e86",
-		"secondaryLight": "#035e86",
-		"secondaryDark": "#035e86",
+		"primary": "#ef7213",
+		"primaryLight": "#ef7213",
+		"primaryDark": "#F17D2C",
+		"secondary": "#061E57",
+		"secondaryLight": "#061E57",
+		"secondaryDark": "#061E57",
 		"background": {
 			"default": "#fff"
 		},
@@ -64,33 +66,25 @@
           "slideConfig": [
             {
               "img": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
-              "title": "This is a title",
+              "title": "This is an amazing title",
               "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
               "content": "Sed vel elementum tellus.",
               "button": "Click me",
-              "link": "http://cloudoki.com"
+              "link": "https://www.mobietrain.com/"
             },
             {
               "img": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
-              "title": "This is another title",
+              "title": "This one is even better",
               "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
               "content": "Sed vel elementum tellus.",
               "button": "Click me",
-              "link": "http://cloudoki.com"
-            },
-            {
-              "img": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
-              "title": "This is another title",
-              "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-              "content": "Sed vel elementum tellus.",
-              "button": "Click me",
-              "link": "http://cloudoki.com"
+              "link": "https://www.mobietrain.com/"
             }
           ]
         },
         {
           "type": "Panel",
-          "title": "Welcome to API Suite's Portal",
+          "title": "Welcome to MobieTrain's Developer Portal",
           "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel elementum tellus. Morbi venenatis justo sed elit interdum lacinia. Donec imperdiet rhoncus massa, vel gravida tellus fringilla ut."
         }
       ]

@@ -9,7 +9,7 @@
       },
       "two": {
         "title": "Secure Proof of Concepts",
-        "subtitle": "With Cloudoki Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
+        "subtitle": "With {{clientName}} Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
         "content": "Talk to one of our humans for more information.",
         "button": "Contact"
       },
@@ -142,7 +142,7 @@
   },
   "subscriptions": {
     "title": "Subscriptions",
-    "description": "The Cloudoki Sandbox can hold an unlimited amount of API Products and API versions. The former defines the business side of an API, the latter is the technical entry, defined by OpenAPI contracts. This view enables you to automate deprecation control and give better insight in how the API’s and applications are linked together."
+    "description": "The {{config.clientName}} Sandbox can hold an unlimited amount of API Products and API versions. The former defines the business side of an API, the latter is the technical entry, defined by OpenAPI contracts. This view enables you to automate deprecation control and give better insight in how the API’s and applications are linked together."
   },
   "subscriptionSelect": {
     "addApplication": "Subscribe applications..."

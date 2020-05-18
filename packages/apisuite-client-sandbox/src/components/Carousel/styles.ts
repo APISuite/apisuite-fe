@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core'
 export default makeStyles(({
   root: {
     maxWidth: 900,
-    margin: '0 auto'
+    margin: '0 auto',
   },
   dots: {
     paddingTop: 36,

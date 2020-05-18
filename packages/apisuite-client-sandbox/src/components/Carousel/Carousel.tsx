@@ -8,7 +8,6 @@ import { CarouselProps, RendererProps } from './types'
 import useStyles from './styles'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
-// import { slidesConfig } from 'containers/Sandbox/config'
 
 const VirtualizeSwipeViews = bindKeyboard(virtualize(SwipeableViews))
 const VirtualizeAutoPlaySwipeViews = autoPlay(VirtualizeSwipeViews)

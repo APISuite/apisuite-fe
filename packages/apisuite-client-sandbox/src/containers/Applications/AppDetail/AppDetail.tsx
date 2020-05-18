@@ -17,6 +17,7 @@ import { AppDetailProps } from './types'
 import { RouteParams, AppData } from '../types'
 import { useParams } from 'react-router'
 import { FormFieldEvent } from 'components/FormField/types'
+import { config } from 'constants/global'
 
 const AppDetail: React.FC<AppDetailProps> = (
   {
@@ -163,7 +164,7 @@ const AppDetail: React.FC<AppDetailProps> = (
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Terms of service'
-                value='https://cloudoki.com/tos'
+                value={`https://${config.clientName}.com/tos`}
               />
 
               {/* <Button variant='outlined' className={classes.iconBtn}>

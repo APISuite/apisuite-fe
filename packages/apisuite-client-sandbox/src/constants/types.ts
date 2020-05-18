@@ -2,8 +2,10 @@ import { LocaleOption } from 'language/types'
 
 export interface SandboxConfig {
   includes: { [prop: string]: boolean },
-  client: string,
-  social: object,
+  portalName: string,
+  clientName: string,
+  infra: any,
+  social: any,
   footer: {
     copyright: string,
   },

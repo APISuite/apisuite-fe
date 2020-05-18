@@ -4,6 +4,7 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/esm/languages/hljs/bash'
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 import NavMenu from 'components/NavMenu'
+import { config } from 'constants/global'
 
 SyntaxHighlighter.registerLanguage('bash', bash)
 
@@ -15,12 +16,12 @@ const Instructions: React.FC<{}> = () => {
       instruction: 'We begin by retrieving a unique token ID. We will use this token in the following requests so the API can verify your identity. Make a POST request with the parameters as shown below. Replace the variables with the Client ID and Client Secret of one of your Apps.',
       note: 'Manage and see each of your Apps\' details by navigating to the \'Client Applications\' tab. You can find the Client ID and Client Secret under the "Access Details" section on the App\'s page.',
       command: `curl -X POST \\
-    -H "Host: hydraauth-dev.apisuite.cloudoki.com" \\
+    -H "Host: ${config.infra.hydra}" \\
     -H "Content-Type: application/x-www-form-urlencoded" \\
     -u "{ClientID}:{ClientSecret}" \\
     --data-urlencode "grant_type=client_credentials" \\
     --data-urlencode "scope=sandbox" \\
-    https://hydraauth-dev.apisuite.cloudoki.com/oauth2/token`,
+    https://${config.infra.hydra}/oauth2/token`,
     },
     {
       stepTitle: 'Upload data to your Sandbox',
@@ -30,9 +31,9 @@ const Instructions: React.FC<{}> = () => {
     -H "Accept: application/json" \\
     -H "Content-Type: application/json" \\
     -H "Authorization: Bearer {TOKEN}" \\
-    -H "Host: sandbox-dev.apisuite.cloudoki.com" \\
+    -H "Host: ${config.infra.sandbox}" \\
     -d '{"name":"Jack Daniels","desc":"My cat","tag":"cat"}' \\
-    https://sandbox-dev.apisuite.cloudoki.com/v1/pets`,
+    https://${config.infra.sandbox}/v1/pets`,
     },
     {
       stepTitle: 'Fetching data from the Sandbox',
@@ -42,8 +43,8 @@ const Instructions: React.FC<{}> = () => {
       note: '',
       command: `curl -X GET \\
     -H "Authorization: Bearer {TOKEN}" \\
-    -H "Host: sandbox-dev.apisuite.cloudoki.com" \\
-    https://sandbox-dev.apisuite.cloudoki.com/v1/pets`,
+    -H "Host: ${config.infra.sandbox}" \\
+    https://${config.infra.sandbox}/v1/pets`,
     },
   ]
 
