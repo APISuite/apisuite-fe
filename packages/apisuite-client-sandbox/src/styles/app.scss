@@ -42,16 +42,6 @@ input:read-only {
   background-color: #EEEEEE;
 }
 
-h1 {
-  font-size: 43px;
-}
-
-h3 {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 500;
-}
-
 .subtitle {
   font-size: 20px;
   font-weight: 300;
@@ -69,5 +59,6 @@ img {
   margin: 0 auto;
 }
 
-@import 'containers/Login/styles.scss';
 @import 'components/FormField/styles.scss';
+@import './utilities.css';
+@import './style-guide.css';

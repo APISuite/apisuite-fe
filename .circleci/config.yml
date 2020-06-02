@@ -83,27 +83,27 @@ jobs:
               scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_STG:/apps/APISuite/
               ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_STG "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
 
-  deploy-carnext:
-      executor: apisuite-executor
-      steps:
-        - checkout
-        - attach_workspace:
-            at: ./util
-        - run:
-            name: Fix ssh could not resolve hostname
-            command: |
-              ssh-keyscan $DROPLET_IP_CN >> ~/.ssh/known_hosts
-        - add_ssh_keys:
-            fingerprints:
-              - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
-        - run:
-            name: Deploy Over SSH
-            command: |
-              chmod +x ./util/clean_compose.sh
-              (cd ./util && ./clean_compose.sh)
-              chmod +x ./util/merge_env.sh
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_CN:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_CN "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
+  # deploy-carnext:
+  #     executor: apisuite-executor
+  #     steps:
+  #       - checkout
+  #       - attach_workspace:
+  #           at: ./util
+  #       - run:
+  #           name: Fix ssh could not resolve hostname
+  #           command: |
+  #             ssh-keyscan $DROPLET_IP_CN >> ~/.ssh/known_hosts
+  #       - add_ssh_keys:
+  #           fingerprints:
+  #             - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
+  #       - run:
+  #           name: Deploy Over SSH
+  #           command: |
+  #             chmod +x ./util/clean_compose.sh
+  #             (cd ./util && ./clean_compose.sh)
+  #             chmod +x ./util/merge_env.sh
+  #             scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_CN:/apps/APISuite/
+  #             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_CN "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
   version: 2
@@ -132,10 +132,10 @@ workflows:
                     - staging
             requires:
                 - build
-        - deploy-carnext:
-            filters:
-                branches:
-                  only:
-                    - develop
-            requires:
-                - build
+        # - deploy-carnext:
+        #     filters:
+        #         branches:
+        #           only:
+        #             - develop
+        #     requires:
+        #         - build

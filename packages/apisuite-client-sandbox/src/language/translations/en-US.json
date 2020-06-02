@@ -106,11 +106,11 @@
       }
     }
   },
-  "loginPortal": {
+  "loginForm": {
     "title": "Login",
     "button": "LOG IN",
     "warnings": {
-      "email": "Please enter a valid email address.",
+      "email": "Please enter a valid e-mail address.",
       "password": "Please fill in your pass phrase."
     },
     "fields": {
@@ -118,11 +118,19 @@
       "password": "Pass Phrase"
     }
   },
-  "registerPortal": {
+  "registerForm": {
     "warnings": {
       "name": "Please enter your name.",
-      "email": "Please enter a valid email address.",
+      "email": "Please enter a valid e-mail address.",
+      "organisationName": "Please enter the name of your organisation.",
+      "website": "Please enter a valid website for your organisation.",
+      "vat": "Please enter your organisations' VAT.",
       "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
+    },
+    "steps": {
+      "personalDetails": "Personal Details",
+      "organisationDetails": "Organisation Details",
+      "securityStep": "Security Step"
     }
   },
   "listApps": {
@@ -150,5 +158,23 @@
   "subscriptionsTable": {
     "header": "Available API's",
     "actions": "actions"
+  },
+  "login": {
+    "welcomeTitle": "Welcome",
+    "welcomeMsg": "Please feel free to login or register, it's completely free!",
+    "loginBtn": "Login",
+    "registerBtn": "Register"
+  },
+  "registerConfirmation": {
+    "messageTitle": "Thanks for joining us!",
+    "message": "A verification link has been sent to your email address. Please follow the instruction to finish your registration!"
+  },
+  "forgotPassword": {
+    "messageTitle": "Forgot your password?",
+    "message": "Enter your recovery information below and we'll send you an e-mail to recover your password",
+    "sent": {
+      "messageTitle": "Check your inbox",
+      "message": "We've sent you an e-mail so you can recover your password. Check your inbox."
+    }
   }
 }

@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
@@ -207,11 +206,9 @@ const Sandbox: React.FC<{}> = () => {
         <div className={classes.wheelContainer}>
           <Wheel selected='br' />
         </div>
-
         <div className={classes.emailContainer}>
           <h1>Fly with us</h1>
           <p>Subscribe to our newsletter to keep up with updates, events and more.</p>
-
           <form noValidate autoComplete='off'>
             <div className={classes.email}>
               <TextField
@@ -222,7 +219,6 @@ const Sandbox: React.FC<{}> = () => {
                 fullWidth
                 className={classes.emailTextfield}
               />
-
               <Button
                 // arial-label='register'
                 // type='submit'
@@ -234,9 +230,7 @@ const Sandbox: React.FC<{}> = () => {
                 Subscribe
               </Button>
             </div>
-
             <br />
-
             <FormGroup row>
               <FormControlLabel
                 classes={{ label: classes.checkBoxLabel }}

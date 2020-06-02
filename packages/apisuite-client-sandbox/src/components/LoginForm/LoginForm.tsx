@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { LoginPortalProps } from './types'
+import { LoginFormProps } from './types'
 import FormCard from 'components/FormCard'
 import FormField, { parseErrors, isValidEmail } from 'components/FormField'
 import useStyles from './styles'
@@ -10,7 +10,11 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import { FormFieldEvent } from 'components/FormField/types'
 
-const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
+const LoginForm: React.FC<LoginFormProps> = ({
+  auth,
+  login,
+  history,
+}) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -63,50 +67,49 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
 
   return (
     <div className={classes.loginContainer}>
-      <div>
-        <FormCard
-          buttonLabel={t('loginPortal.button')}
-          buttonDisabled={!isFormValid}
-          loading={auth.isAuthorizing}
-          error={auth.error}
-          handleSubmit={handleSubmit}
-        >
-          <div className={classes.fieldContainer}>
+      <FormCard
+        buttonLabel={t('loginForm.button')}
+        buttonDisabled={!isFormValid}
+        loading={auth.isAuthorizing}
+        error={auth.error}
+        handleSubmit={handleSubmit}
+      >
+        <div className={classes.fieldContainer}>
+          <FormField
+            id='email-field'
+            label='E-mail'
+            variant='outlined'
+            type='email'
+            placeholder=''
+            name='email'
+            value={input.email}
+            onChange={handleInputs}
+            autoFocus
+            fullWidth
+            errorPlacing='bottom'
+            InputProps={{
+              classes: { input: classes.emailTextfield },
+            }}
+            rules={[
+              { rule: isValidEmail(input.email), message: t('loginForm.warnings.email') },
+            ]}
+          />
+        </div>
+        <div className={classes.fieldContainer}>
+          <div className={classes.passPhraseContainer}>
             <FormField
-              id='email-field'
-              label='E-mail'
+              id='pass-field'
+              label='Password'
               variant='outlined'
-              type='email'
-              placeholder=''
-              name='email'
-              value={input.email}
+              type={showPassword ? 'text' : 'password'}
+              name='password'
+              value={input.password}
               onChange={handleInputs}
-              autoFocus
               fullWidth
               errorPlacing='bottom'
               InputProps={{
-                classes: { input: classes.emailTextfield },
-              }}
-              rules={[
-                { rule: isValidEmail(input.email), message: t('loginPortal.warnings.email') },
-              ]}
-            />
-          </div>
-          <div className={classes.fieldContainer}>
-            <div className={classes.passPhraseContainer}>
-              <FormField
-                id='pass-field'
-                label='Password'
-                variant='outlined'
-                type={showPassword ? 'text' : 'password'}
-                name='password'
-                value={input.password}
-                onChange={handleInputs}
-                fullWidth
-                errorPlacing='bottom'
-                InputProps={{
-                  classes: { input: classes.passPhrasefield },
-                  endAdornment:
+                classes: { input: classes.passPhrasefield },
+                endAdornment:
   <InputAdornment position='end'>
     <IconButton
       aria-label='toggle password visibility'
@@ -116,21 +119,22 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
       {showPassword ? <Visibility /> : <VisibilityOff />}
     </IconButton>
   </InputAdornment>,
-                }}
-                rules={[
-                  { rule: input.password.length > 0, message: t('loginPortal.warnings.password') },
-                ]}
-              />
-            </div>
-            <div className={classes.optionsContainer}>
-              {/* <a className={classes.option} href='/'>Forgot your pass phrase?</a> */}
-              {/* <a className={classes.option} href='/register'>Not registered yet? Sign up.</a> */}
-            </div>
+              }}
+              rules={[
+                { rule: input.password.length > 0, message: t('loginForm.warnings.password') },
+              ]}
+            />
           </div>
-        </FormCard>
-      </div>
+        </div>
+      </FormCard>
+      <a
+        className={classes.forgotPassword}
+        onClick={() => history.push('/forgot')}
+      >
+        Forgot password?
+      </a>
     </div>
   )
 }
 
-export default LoginPortal
+export default LoginForm

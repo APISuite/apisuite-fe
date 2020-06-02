@@ -1,7 +1,7 @@
 import { connect, MapDispatchToPropsFunction } from 'react-redux'
 import { authActions } from 'containers/Auth/ducks'
 import { Store } from 'store/types'
-import LoginPortal from './LoginPortal'
+import LoginForm from './LoginForm'
 import { Dispatch } from 'redux'
 import { LoginDispatchToProps } from './types'
 import { AuthPayloads } from 'containers/Auth/types'
@@ -14,4 +14,4 @@ const mapStateToProps = ({ auth }: Store) => ({
   auth: auth,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPortal)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

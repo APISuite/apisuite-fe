@@ -28,9 +28,10 @@ const FormCard: React.FC<FormCardProps> = ({
           disabled={buttonDisabled}
         />
       </form>
-      <div className={classes.errorPlaceholder}>
-        {error && <div className={classes.errorAlert}>{error}</div>}
-      </div>
+      {error &&
+        <div className={classes.errorPlaceholder}>
+          <div className={classes.errorAlert}>{error}</div>
+        </div>}
     </div>
   )
 }

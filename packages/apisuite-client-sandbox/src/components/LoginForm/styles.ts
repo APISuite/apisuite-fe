@@ -65,6 +65,21 @@ const useStyles = makeStyles(({
     flexDirection: 'column',
     color: 'white',
   },
+  forgotPassword: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: 40,
+    marginTop: 20,
+    fontSize: 13,
+    lineHeight: '14px',
+    color: '#ACACAC',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    '& hover': {
+      fontWeight: 'bold',
+      color: '#ACACAC',
+    },
+  },
 }))
 
 export default useStyles

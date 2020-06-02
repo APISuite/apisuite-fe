@@ -3,7 +3,7 @@
  */
 
 import auth from 'containers/Auth/sagas'
-import register from 'components/RegisterPortal/sagas'
+import register from 'components/RegisterForm/sagas'
 import informDialog from 'components/InformDialog/sagas'
 import applications from 'containers/Applications/sagas'
 import subscriptions from 'containers/Subscriptions/sagas'

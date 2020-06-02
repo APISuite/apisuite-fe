@@ -1,7 +1,7 @@
 import { put, call, takeLatest } from 'redux-saga/effects'
 import request from 'util/request'
-import { authActions, LOGIN, LOGIN_USER, LOGIN_SUCCESS } from './ducks'
-import { AUTH_URL, LOGIN_PORT } from 'constants/endpoints'
+import { authActions, LOGIN, LOGIN_USER, LOGIN_SUCCESS, RECOVER_PASSWORD } from './ducks'
+import { AUTH_URL, LOGIN_PORT, API_URL } from 'constants/endpoints'
 import qs from 'qs'
 
 import { AnyAction } from 'redux'
@@ -65,8 +65,27 @@ function * loginUWorker (action: AnyAction) {
   }
 }
 
+function * recoverPasswordSaga (action: AnyAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/users/forgot`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(authActions.recoverPasswordSuccess())
+  } catch (error) {
+    // TODO: change to action
+    authActions.recoverPasswordError(error)
+  }
+}
+
 export function * rootSaga () {
   yield takeLatest(LOGIN, loginWorker)
   yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUWorker)
+  yield takeLatest(RECOVER_PASSWORD, recoverPasswordSaga)
 }
 export default rootSaga

@@ -27,6 +27,12 @@ export const isValidPass = (pass: string) => {
   return (uppercase.test(pass) && lowercase.test(pass) && symbol.test(pass) && passLength)
 }
 
+export const isRequired = (value: string | number) => {
+  if (typeof value === 'number') return true
+  if (value.length > 0) return true
+  return false
+}
+
 export const isValidName = (name: string) => {
   return (name && name.length > 0)
 }

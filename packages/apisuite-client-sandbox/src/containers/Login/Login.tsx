@@ -1,93 +1,43 @@
 import * as React from 'react'
-import LoginPortal from 'components/LoginPortal'
-import RegisterPortal from 'components/RegisterPortal'
-import classnames from 'classnames'
-import requireImage from 'util/requireImage'
+import { useTranslation } from 'react-i18next'
 import { View } from './types'
+import LoginForm from 'components/LoginForm'
+import RegisterForm from 'components/RegisterForm'
+import { decodeBase64 } from 'util/decodeBase64'
+import { useParams } from 'react-router'
+import { History } from 'history'
 import useStyles from './styles'
+import clsx from 'clsx'
 
-const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
-  const view = match.params.view
-  const encodedEmail = match.params.email
-  const [authView, setAuthView] = React.useState<View>(view === 'register' ? 'register' : 'login')
-  const [justRegistered, setJustRegistered] = React.useState(false)
-  const [isRedirected, setRedirected] = React.useState(false)
+const Login: React.FC<{ history: History }> = ({ history }) => {
+  const { view: viewParam, email: emailParam } = useParams()
+  const [view, setView] = React.useState<View>(viewParam === 'register' ? 'register' : 'login')
+  const [t] = useTranslation()
   const classes = useStyles()
 
-  function handleViewChange (view: string) {
-    switch (view) {
-      case 'login':
-        setAuthView(view)
-        break
-      case 'register':
-        setAuthView(view)
-        break
-      default:
-        setAuthView('login')
-    }
-    setJustRegistered(false)
-  }
-
-  React.useEffect(() => {
-    if (register.isRegistered) {
-      handleViewChange('login')
-      setJustRegistered(true)
-
-      setTimeout(() => {
-        setJustRegistered(false)
-      }, 2000)
-    }
-
-    if (match.params.email && !isRedirected) {
-      handleViewChange('register')
-      setRedirected(true)
-    }
-  }, [register.isRegistered])
-
-  const defaultEmail = () => {
-    try {
-      return atob(encodedEmail)
-    } catch {
-      return ''
-    }
-  }
-
   return (
-    <div className={classes.authPage}>
-      <div className={classes.authLeftWrapper} />
-      <div className={classes.contentWrapper}>
-        <div className={classes.authContentLeft}>
-          <div className={classes.authContentStripe} />
-          <div className={classes.authFormsWrapper}>
-            <h1>Welcome</h1>
-            <div className='subtitle'>Please feel free to login or register, it's completely free!</div>
-            <div className={classes.authBlock}>
-              <div className={classes.authSelector}>
-                <div className={classnames({ [classes.authSelectorSelected]: authView === 'login' })} onClick={() => handleViewChange('login')}>Login</div>
-                <div className={classnames({ [classes.authSelectorSelected]: authView === 'register' })} onClick={() => handleViewChange('register')}>Register</div>
-              </div>
-              <div className='auth-form'>
-                {authView === 'login' &&
-                  <LoginPortal />}
-                {authView === 'register' &&
-                  <RegisterPortal defaultEmail={defaultEmail()} />}
-                {justRegistered &&
-                  <div className={classes.userCreatedFeedback}>
-                    Your account is created, {register.user}!
-                  </div>}
-              </div>
-            </div>
+    <main className={classes.main}>
+      <section className={classes.formSide}>
+        <section className={classes.formContainer}>
+          <h1 className={classes.welcomeTitle}>{t('login.welcomeTitle')}</h1>
+          <p className={classes.welcomeMessage}>{t('login.welcomeMsg')}</p>
+
+          <div className={classes.loginRegisterSelector}>
+            <option className={view === 'login' ? classes.optionSelected : classes.option} onClick={() => setView('login')}>{t('login.loginBtn')}</option>
+            <option className={view === 'register' ? classes.optionSelected : classes.option} onClick={() => setView('register')}>{t('login.registerBtn')}</option>
           </div>
-        </div>
-        <div className={classes.authContentRight}>
-          {authView === 'login' &&
-            <img src={requireImage('woman_login.svg')} />}
-          {authView === 'register' &&
-            <img src={requireImage('woman_register.svg')} />}
-        </div>
-      </div>
-      <div className={classes.authRightWrapper} />
-    </div>
+
+          {view === 'login'
+            ? <LoginForm history={history} />
+            : <RegisterForm prefilledEmail={decodeBase64(emailParam)} />}
+        </section>
+      </section>
+
+      <aside className={clsx(classes.imageSide,
+        view === 'login' && classes.imageSideLogin,
+        view === 'register' && classes.imageSideRegister)}
+      />
+    </main>
   )
 }
 

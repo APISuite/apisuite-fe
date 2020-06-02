@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
 import { config } from 'constants/global'
 
-export default makeStyles(({
+export default makeStyles({
   cardContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -36,4 +36,4 @@ export default makeStyles(({
     flexDirection: 'row',
     width: '25%',
   },
-}))
+})

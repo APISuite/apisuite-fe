@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
 import { config } from 'constants/global'
 
-export default makeStyles(({
+export default makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -54,4 +54,4 @@ export default makeStyles(({
   disabled: {
     opacity: 0.5,
   },
-}))
+})

@@ -1,117 +1,121 @@
 import { makeStyles } from '@material-ui/styles'
 import { config } from 'constants/global'
+import loginImage from 'assets/loginImage.svg'
+import registerImage from 'assets/registerImage.svg'
 
 const useStyles = makeStyles(({
-  authPage: {
-    backgroundColor: '#fff',
-    position: 'relative',
+  main: {
     display: 'flex',
-    flexDirection: 'row',
     height: '100%',
-    zIndex: 10000,
-  },
-  authLeftWrapper: {
-    flex: 1,
-  },
-  authRightWrapper: {
-    flex: 1,
-    backgroundColor: config.palette.secondary,
-  },
-  contentWrapper: {
-    flexBasis: 1170,
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-
-    '@media screen and (max-width: 900px)': {
+    width: '100vw',
+    backgroundColor: '#fff',
+    '@media (max-width: 1024px)': {
       flexDirection: 'column-reverse',
     },
   },
-  authContentRight: {
-    flex: 1,
+  formSide: {
     display: 'flex',
-    alignItems: 'center',
-    backgroundColor: config.palette.secondary,
-
-    '@media screen and (max-width: 900px)': {
-      flex: 2,
-    },
-  },
-  authContentLeft: {
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    position: 'relative',
-
-    '@media screen and (max-width: 900px)': {
-      flex: 1,
-      padding: 20,
-    },
-  },
-  authContentStripe: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    height: '100%',
-    width: 140,
-    backgroundImage: `-webkit-linear-gradient(5deg, #fff 54%, ${config.palette.secondary} 54.3%)`,
-
-    '@media screen and (max-width: 900px)': {
-      position: 'absolute',
-      top: '-40px',
-      right: 0,
-      height: 50,
+    width: '44.25%',
+    // height: '50%',
+    margin: 'auto 0 auto 0',
+    alignItems: 'flex-start',
+    justifyContent: 'end',
+    '@media (max-width: 1024px)': {
       width: '100%',
-      backgroundImage: '-webkit-linear-gradient(87deg, #fff 54%, transparent 54.3%);',
+      height: '58.5%',
+      justifyContent: 'center',
+      alignItems: 'start',
     },
   },
-  authFormsWrapper: {
-    maxWidth: 360,
-    height: 620,
-
-    '@media screen and (max-width: 900px)': {
-      maxWidth: 360,
-      height: 620,
-      margin: '0 auto',
-    },
-  },
-  authBlock: {
-    margin: '0 auto',
-    paddingTop: 20,
-  },
-  authSelector: {
-    width: '100%',
-    borderBottom: '1px solid #d8d8d8',
+  imageSide: {
     display: 'flex',
-    flexDirection: 'row',
-    color: '#8B8B8B',
-
-    '& div': {
-      flex: 1,
-      textAlign: 'center',
-      padding: 10,
-      position: 'relative',
-      top: 1,
-
-      '&:hover': {
-        cursor: 'pointer',
+    flexDirection: 'column',
+    width: '55.75%',
+    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 51px 100%)',
+    backfaceVisibility: 'hidden',
+    backgroundColor: config.palette.secondary,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: '57px center',
+    '&::before': {
+      content: '',
+      height: '100%',
+      clipPath: 'polygon(0 0, 12px 0, 69px 100%, 51px 100%)',
+      backgroundColor: config.palette.secondary,
+    },
+    '@media (max-width: 1024px)': {
+      width: '100%',
+      height: '41.5%',
+      minHeight: '375px',
+      clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 22px))',
+      backgroundPosition: 'center -12px',
+      backgroundSize: 'auto 115%',
+      '&::before': {
+        position: 'absolute',
+        width: '100%',
+        height: '41.5%',
+        minHeight: '375px',
+        backgroundColor: config.palette.secondary,
+        opacity: 0.1,
+        clipPath: 'polygon(0 calc(100% - 12px - 22px), 100% calc(100% - 12px), 100% 100%, 0 calc(100% - 22px))',
       },
     },
+    '@media (min-width: 1024px)': {
+      backgroundSize: '85% auto',
+    },
+    '@media (min-width: 1441px)': {
+      backgroundSize: '60% auto',
+      backgroundPosition: 'center',
+    },
   },
-  authSelectorSelected: {
-    fontWeight: 500,
-    color: config.palette.primary,
-    borderBottom: `3px solid ${config.palette.primary}`,
+  imageSideLogin: {
+    backgroundImage: 'url(' + loginImage + ')',
   },
-  authForm: {
-    paddingTop: 10,
+  imageSideRegister: {
+    backgroundImage: 'url(' + registerImage + ')',
   },
-  userCreatedFeedback: {
-    border: `1px solid ${config.palette.primary}`,
-    color: config.palette.primary,
+  optionSelected: {
     textAlign: 'center',
-    padding: '12px 25px',
-    minWidth: 50,
+    color: config.palette.primary,
+    fontWeight: 'bold',
+    borderBottom: '3px solid ' + config.palette.primary,
+    flex: '1 1 0',
+    height: '40px',
+    background: 'none',
+    cursor: 'pointer',
+  },
+  option: {
+    textAlign: 'center',
+    flex: '1 1 0',
+    height: '40px',
+    background: 'none',
+    cursor: 'pointer',
+    color: config.palette.greyScales[300],
+    fontWeight: 'normal',
+    borderBottom: '1px solid ' + config.palette.greyScales[300],
+    '&:hover': {
+      color: config.palette.greyScales[500],
+      fontWeight: 'bold',
+      borderBottom: '2px solid ' + config.palette.greyScales[500],
+    },
+  },
+  formContainer: {
+    margin: '0 calc(100px - 68px) 0 auto',
+    padding: '0 68px 0 68px',
+    '@media (max-width: 1024px)': {
+      margin: 0,
+      padding: '0 20px 0 20px',
+    },
+  },
+  welcomeMessage: {
+    color: config.palette.greyScales[600],
+    marginBottom: '24px',
+  },
+  welcomeTitle: {
+    color: config.palette.greyScales[700],
+    marginBottom: '4px',
+  },
+  loginRegisterSelector: {
+    display: 'flex',
   },
 }))
 

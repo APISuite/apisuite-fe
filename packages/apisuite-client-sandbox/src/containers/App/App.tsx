@@ -36,7 +36,10 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
     const gb = gobackConfig.find((item) => pathname.includes(item.path))
 
-    if (pathname.startsWith('/auth')) {
+    if (pathname.startsWith('/auth') ||
+    pathname.startsWith('/confirmation') ||
+    pathname.startsWith('/registration') ||
+    pathname.startsWith('/forgot')) {
       setNavigations(false)
     } else {
       setNavigations(true)

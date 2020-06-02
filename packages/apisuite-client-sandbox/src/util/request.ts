@@ -26,7 +26,8 @@ function checkToken (response: AxiosResponse) {
 }
 
 async function checkStatus (response: AxiosResponse) {
-  if (response.statusText === 'OK') {
+  // TODO: we should review this reponse handling
+  if (response.statusText === 'OK' || response.statusText === 'Created') {
     // TODO add this back when API changes
     // const contentType = response.headers.get('Content-Type')
 
