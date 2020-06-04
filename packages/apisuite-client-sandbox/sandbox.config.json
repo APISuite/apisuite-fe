@@ -57,7 +57,34 @@
   },
   "pages": {
     "landing": {
-      "components": []
+      "components": [
+        {
+          "type": "Carousel",
+          "slideConfig": [
+            {
+              "img": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
+              "title": "This is an amazing title",
+              "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              "content": "Sed vel elementum tellus.",
+              "button": "Click me",
+              "link": "https://terrascope.be/en"
+            },
+            {
+              "img": "https://portal.apisuite.io/assets/images/slide-oval-0bc02452ae15d5928081c23d9140641c.png",
+              "title": "This one is even better",
+              "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              "content": "Sed vel elementum tellus.",
+              "button": "Click me",
+              "link": "https://terrascope.be/en"
+            }
+          ]
+        },
+        {
+          "type": "Panel",
+          "title": "Welcome to TerraScope's Developer Portal",
+          "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel elementum tellus. Morbi venenatis justo sed elit interdum lacinia. Donec imperdiet rhoncus massa, vel gravida tellus fringilla ut."
+        }
+      ]
     }
   }
 }
