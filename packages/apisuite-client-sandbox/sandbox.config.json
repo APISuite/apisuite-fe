@@ -1,41 +1,35 @@
 {
 	"includes": {
-		"alert": false,
-    "demo": true,
-    "instance": false,
-		"console": false
+	"alert": false,
+  "demo": false,
+   "instance": true,
+	"console": false
 	},
-  "portalName": "API Suite Portal",
-  "clientName": "API Suite",
+  "portalName": "TerraScope Portal",
+  "clientName": "TerraScope",
   "infra": {
     "hydra": "hydraauth-dev.apisuite.cloudoki.com",
     "sandbox": "sandbox-dev.apisuite.cloudoki.com"
   },
   "social": {
-    "web": "https://cloudoki.com/",
-    "twitter": "https://twitter.com/TeamCloudoki",
-    "facebook": "https://www.facebook.com/cloudokiTeam/",
-    "github": "https://github.com/Cloudoki"
+    "web": "https://terrascope.be/en",
+    "twitter": "https://twitter.com/Terrascope_BE"
   },
 	"footer": {
-		"copyright": "© Cloudoki 2020.\nAll rights reserved.\nProudly made in Europe."
+		"copyright": "© Copyright 2020 VITO NV All Rights reserved"
 	},
 	"i18n": [{
 			"locale": "en-US",
 			"label": "We speak English"
-		},
-		{
-			"locale": "pt-PT",
-			"label": "Nós falamos Português"
 		}
 	],
 	"palette": {
-		"primary": "#2DB7BA",
-		"primaryLight": "#2DB7BA",
-		"primaryDark": "#2DB7BA",
-		"secondary": "#035e86",
-		"secondaryLight": "#035e86",
-		"secondaryDark": "#035e86",
+		"primary": "#FF5551",
+		"primaryLight": "#FF5551",
+		"primaryDark": "#FF5551",
+		"secondary": "#002638",
+		"secondaryLight": "#002638",
+		"secondaryDark": "#002638",
 		"background": {
 			"default": "#fff"
 		},
