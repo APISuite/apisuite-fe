@@ -64,7 +64,7 @@ export default makeStyles(({
   cardRow: {
     display: 'flex',
     flexDirection: 'row',
-    width: 600,
+    width: 550,
   },
   cardItem: {
     display: 'flex',
@@ -72,19 +72,27 @@ export default makeStyles(({
     justifyContent: 'center',
     alignItems: 'center',
     width: 300,
-    height: 200,
+    height: 150,
     '& > p': {
-      color: '#E3E3E3',
+      fontSize: 16,
       textAlign: 'center',
       margin: 0,
       marginTop: 16,
     },
   },
   cardSide: {
-    marginLeft: 40,
+    paddingRight: 60,
+    paddingTop: 60,
+    color: '#fff',
     '& > h1': {
-      fontSize: '26px',
+      display: 'inline-block',
+      fontSize: 26,
       fontWeight: 300,
+      backgroundColor: 'white',
+      padding: '0px 16px',
+      margin: 0,
+      marginBottom: 30,
+      color: config.palette.primary,
     },
   },
   btn: {
@@ -96,4 +104,9 @@ export default makeStyles(({
     cursor: 'pointer',
     fontWeight: 500,
   },
+  featureAvatar: {
+    height: 60,
+    width: 60,
+    backgroundColor: config.palette.primary
+  }
 }))

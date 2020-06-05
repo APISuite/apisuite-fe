@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M5.83333333,0 L0,0 L0,5.83333333 L7.5,13.3416667 L13.3333333,7.5 L5.83333333,0 L5.83333333,0 Z M2.08333333,3.33333333 C1.39166667,3.33333333 0.833333333,2.775 0.833333333,2.08333333 C0.833333333,1.39166667 1.39166667,0.833333333 2.08333333,0.833333333 C2.775,0.833333333 3.33333333,1.39166667 3.33333333,2.08333333 C3.33333333,2.775 2.775,3.33333333 2.08333333,3.33333333 Z M7.5,6.41666667 L8,5.91666667 C8.30833333,5.60833333 8.74166667,5.41666667 9.20833333,5.41666667 C10.15,5.41666667 10.9166667,6.18333333 10.9166667,7.125 C10.9166667,7.6 10.725,8.025 10.4166667,8.33333333 L7.5,11.25 L4.58333333,8.33333333 C4.275,8.01666667 4.08333333,7.59166667 4.08333333,7.125 C4.08333333,6.18333333 4.85,5.41666667 5.79166667,5.41666667 C6.26666667,5.41666667 6.69166667,5.60833333 7,5.925 L7.5,6.41666667 Z" id="path-1"></path>
+        <path d="M16.175,7.98333333 L8.675,0.483333333 C8.375,0.183333333 7.95833333,0 7.5,0 L1.66666667,0 C0.75,0 0,0.75 0,1.66666667 L0,7.5 C0,7.95833333 0.183333333,8.375 0.491666667,8.68333333 L7.99166667,16.1833333 C8.29166667,16.4833333 8.70833333,16.6666667 9.16666667,16.6666667 C9.625,16.6666667 10.0416667,16.4833333 10.3416667,16.175 L16.175,10.3416667 C16.4833333,10.0416667 16.6666667,9.625 16.6666667,9.16666667 C16.6666667,8.70833333 16.475,8.28333333 16.175,7.98333333 Z M9.16666667,15.0083333 L1.66666667,7.5 L1.66666667,1.66666667 L7.5,1.66666667 L7.5,1.65833333 L15,9.15833333 L9.16666667,15.0083333 Z" id="path-3"></path>
+        <circle id="path-5" cx="1.25" cy="1.25" r="1.25"></circle>
+        <path d="M0.75,2.125 C0.75,2.6 0.941666667,3.01666667 1.25,3.33333333 L4.16666667,6.25 L7.08333333,3.33333333 C7.39166667,3.025 7.58333333,2.59166667 7.58333333,2.125 C7.58333333,1.18333333 6.81666667,0.416666667 5.875,0.416666667 C5.4,0.416666667 4.975,0.608333333 4.66666667,0.916666667 L4.16666667,1.41666667 L3.66666667,0.925 C3.35833333,0.608333333 2.925,0.416666667 2.45833333,0.416666667 C1.51666667,0.416666667 0.75,1.18333333 0.75,2.125 Z" id="path-7"></path>
+    </defs>
+    <g id="Dashboard---Landing-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard---landing" transform="translate(-470.000000, -739.000000)">
+            <g id="icon/action/loyalty_24px" transform="translate(469.000000, 738.000000)">
+                <g id="↳-Light-Color" transform="translate(3.333333, 3.333333)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask" opacity="0.3" fill-rule="nonzero"></g>
+                </g>
+                <g id="↳-Dark-Color" transform="translate(1.666667, 1.666667)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <g id="Mask" fill-rule="nonzero"></g>
+                    <g id="colours-/-highlight" mask="url(#mask-4)" fill="#FFFFFF" fill-rule="nonzero">
+                        <rect id="Rectangle" x="0" y="0" width="84.1666667" height="84.1666667"></rect>
+                    </g>
+                </g>
+                <g id="↳-Dark-Color" transform="translate(4.166667, 4.166667)">
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <g id="Mask" fill-rule="nonzero"></g>
+                    <g id="colours-/-highlight" mask="url(#mask-6)" fill="#FFFFFF" fill-rule="nonzero">
+                        <rect id="Rectangle" x="0" y="0" width="84.1666667" height="84.1666667"></rect>
+                    </g>
+                </g>
+                <g id="↳-Dark-Color" transform="translate(6.666667, 8.333333)">
+                    <mask id="mask-8" fill="white">
+                        <use xlink:href="#path-7"></use>
+                    </mask>
+                    <g id="Mask" fill-rule="nonzero"></g>
+                    <g id="colours-/-highlight" mask="url(#mask-8)" fill="#FFFFFF" fill-rule="nonzero">
+                        <rect id="Rectangle" x="0" y="0" width="84.1666667" height="84.1666667"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

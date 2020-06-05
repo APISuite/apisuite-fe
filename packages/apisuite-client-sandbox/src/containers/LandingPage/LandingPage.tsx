@@ -1,9 +1,12 @@
 import * as React from 'react'
-import requireImage from 'util/requireImage'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 import sandboxBg from 'theme/images/sandbox_bg.png'
-
+import documentation from 'assets/documentation-feature.svg'
+import subscriptions from 'assets/subscriptions-feature.svg'
+import application from 'assets/application-feature.svg'
+import testdata from 'assets/test-data-feature.svg'
+import Avatar from '@material-ui/core/Avatar'
 import useStyles from './styles'
 import { LandingPageProps } from './types'
 
@@ -46,38 +49,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
       <br /><br /><br />
 
       <section className={classes.cardContainer}>
-        <Panel>
-          <div className={classes.cardRow}>
-            <div className={classes.cardItem} style={{ borderRight: borderStyle, borderBottom: borderStyle }}>
-              <img src={requireImage('landing-card-1.png')} />
-              <p>Client Applications</p>
-            </div>
-            <div className={classes.cardItem} style={{ borderBottom: borderStyle }}>
-              <img src={requireImage('landing-card-2.png')} />
-              <p>Subscriptions</p>
-            </div>
-          </div>
-
-          <div className={classes.cardRow}>
-            <div className={classes.cardItem} style={{ borderRight: borderStyle }}>
-              <img src={requireImage('landing-card-3.png')} />
-              <p style={{ marginTop: 0 }}>Test Data</p>
-            </div>
-            <div className={classes.cardItem}>
-              <img src={requireImage('landing-card-4.png')} />
-              <p>Documentation</p>
-            </div>
-          </div>
-        </Panel>
-
         <aside className={classes.cardSide}>
-          <h1>Hi, {fname}</h1>
+          <h1>Hey there, {fname}</h1>
           <p>
           You’re at the right place if you want to set up a new app,
            get insights through analytics or follow up API subscriptions.
           </p>
 
-          <p>Don’t find what you’re looking for? Let us know, we’re happy to accomodate!</p>
+          {/* <p>Don’t find what you’re looking for? Let us know, we’re happy to accomodate!</p> */}
 
           {/* <div
             role='button'
@@ -88,6 +67,37 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
             Propose Feature
           </div> */}
         </aside>
+        <Panel>
+          <div className={classes.cardRow}>
+            <div className={classes.cardItem} style={{ borderRight: borderStyle, borderBottom: borderStyle }}>
+              <Avatar className={classes.featureAvatar}>
+                <img src={application}/>
+              </Avatar>
+              <p>Client Applications</p>
+            </div>
+            <div className={classes.cardItem} style={{ borderBottom: borderStyle }}>
+              <Avatar className={classes.featureAvatar}>
+                <img src={subscriptions}/>
+              </Avatar>
+              <p>Subscriptions</p>
+            </div>
+          </div>
+
+          <div className={classes.cardRow}>
+            <div className={classes.cardItem} style={{ borderRight: borderStyle }}>
+              <Avatar className={classes.featureAvatar}>
+                <img src={testdata}/>
+              </Avatar>
+              <p>Test Data</p>
+            </div>
+            <div className={classes.cardItem}>
+              <Avatar className={classes.featureAvatar}>
+                <img src={documentation}/>
+              </Avatar>
+              <p>Documentation</p>
+            </div>
+          </div>
+        </Panel>
       </section>
 
       <br /><br /><br />
