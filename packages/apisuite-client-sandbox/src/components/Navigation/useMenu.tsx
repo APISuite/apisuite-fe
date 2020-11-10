@@ -63,6 +63,22 @@ export function useMenu (): Array<TabProps[]> {
     [roleName],
   )
 
+  const topTabs = React.useMemo((): TabProps[] => {
+    return [
+      {
+        label: 'Register',
+        route: '/auth/register',
+        active: pathname === '/auth/register',
+      },
+      {
+        isLogin: true,
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
+      },
+    ]
+  }, [])
+
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
       {
@@ -70,11 +86,13 @@ export function useMenu (): Array<TabProps[]> {
         route: '/',
       },
       {
+        authRelated: true,
         label: 'Log in',
         route: '/auth/login',
         active: pathname === '/auth/login',
       },
       {
+        authRelated: true,
         label: 'Register',
         route: '/auth/register',
         active: pathname === '/auth/register',
@@ -166,7 +184,7 @@ export function useMenu (): Array<TabProps[]> {
     levelPathnames,
   ])
 
-  return [initTabs, loginTabs]
+  return [topTabs, initTabs, loginTabs]
 }
 
 export const goBackConfig = [

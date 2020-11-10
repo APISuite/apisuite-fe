@@ -11,6 +11,8 @@ export interface TabMenus {
 }
 
 export interface TabProps {
+  isLogin?: boolean,
+  authRelated?: boolean,
   label: string,
   route: string,
   disabled?: boolean,

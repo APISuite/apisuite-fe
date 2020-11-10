@@ -30,7 +30,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
   const [activeMenuName, setActiveMenuName] = React.useState('init')
   const [goBackLabel, setGoBackLabel] = React.useState('')
-  const [initTabs, loginTabs] = useMenu()
+  const [topTabs, initTabs, loginTabs] = useMenu()
   const allTabs: TabMenus = {
     init: initTabs,
     login: loginTabs,
@@ -90,6 +90,30 @@ const Navigation: React.FC<NavigationProps> = ({
 
           {/* TODO: Perhaps change the following text to "{settings.clientName}'s Portal" */}
           <h3 className={classes.portalName}>Cloudoki's Portal</h3>
+
+          {!auth.user && (
+            <div className='tabs pretabs'>
+              <div className='space' />
+              <Tabs
+                value={(activeTab && activeTab.route) || false}
+                aria-label='Top navigation'
+                classes={{ indicator: classes.indicatorTop }}
+              >
+                {topTabs.map((tab, idx) =>
+                  <Tab
+                    component={Link}
+                    key={`nav-tab-${idx}`}
+                    label={tab.isLogin ? '(|)' : tab.label}
+                    to={tab.route}
+                    disableRipple
+                    classes={{ root: classes.tabRoot }}
+                    className={clsx('tab', { selected: tab.active })}
+                    value={tab.route}
+                  />,
+                )}
+              </Tabs>
+            </div>
+          )}
         </div>
 
         <nav className={clsx('container', { scrolled })}>
@@ -108,7 +132,10 @@ const Navigation: React.FC<NavigationProps> = ({
                   to={tab.route}
                   disableRipple
                   classes={{ root: classes.tabRoot }}
-                  className={clsx('tab', { selected: tab.active })}
+                  className={clsx('tab', {
+                    selected: tab.active,
+                    'auth-related': tab.authRelated,
+                  })}
                   value={tab.route}
                 />,
               )}

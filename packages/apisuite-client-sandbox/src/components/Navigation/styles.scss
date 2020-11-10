@@ -23,6 +23,14 @@ $header-space: 50px;
     header:not(.scrolled) {
       padding: $header-space 0;
       border-bottom: 1px solid white;
+
+      .tabs.pretabs {
+        display: flex;
+      }
+
+      .auth-related {
+        display: none;
+      }
     }
 
     .container:not(.scrolled) {
@@ -129,6 +137,10 @@ $header-space: 50px;
     display: flex;
     width: 100%;
     align-items: center;
+
+    &.pretabs {
+      display: none;
+    }
 
     .back-btn {
       display: flex;
