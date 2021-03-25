@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme'
 import { createMuiTheme, Theme, ThemeProvider } from '@material-ui/core/styles'
-import mergeDeep from 'deepmerge'
+import mergeDeep from 'lodash.merge'
 import { config } from 'constants/global'
 import { API_URL } from 'constants/endpoints'
 
@@ -56,15 +56,16 @@ export const AppThemeProvider: React.FC = ({ children }) => {
         // load theme
         const fetchedTheme = await (await fetch(`${API_URL}/settings/theme`)).json()
 
-        // combine all options
-        setCombinedTheme(
-          mergeDeep({
-            ...createMuiTheme(theme),
-            alert: config?.palette?.alert,
-            dimensions: config?.dimensions,
-            feedback: config?.palette?.feedback,
-          }, fetchedTheme),
-        )
+        const fromConfig = {
+          alert: config?.palette?.alert,
+          dimensions: config?.dimensions,
+          feedback: config?.palette?.feedback,
+        }
+
+        // combine all options - the any is because a lot of types are missing from SandboxConfig
+        const merged: any = mergeDeep(createMuiTheme(theme), [fromConfig, fetchedTheme])
+
+        setCombinedTheme(merged)
       } catch (error) {
         // TODO: handle error
         console.log(error)
@@ -76,8 +77,6 @@ export const AppThemeProvider: React.FC = ({ children }) => {
 
   // TODO: add spinner?
   if (!combinedTheme) return <span>Loading...</span>
-
-  console.log(combinedTheme)
 
   return (
     <ThemeProvider theme={combinedTheme}>
