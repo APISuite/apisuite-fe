@@ -58,12 +58,12 @@ export const AppThemeProvider: React.FC = ({ children }) => {
 
         // combine all options
         setCombinedTheme(
-          mergeDeep(fetchedTheme, {
+          mergeDeep({
             ...createMuiTheme(theme),
             alert: config?.palette?.alert,
             dimensions: config?.dimensions,
             feedback: config?.palette?.feedback,
-          }),
+          }, fetchedTheme),
         )
       } catch (error) {
         // TODO: handle error
