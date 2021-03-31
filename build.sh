@@ -2,13 +2,6 @@
 
 . ./generate_envfile.sh
 
-if [[ -f sandbox.config-${CIRCLE_BRANCH}.json ]]; then
-  cp sandbox.config-${CIRCLE_BRANCH}.json sandbox.config.json
-else
-  cp sandbox.config-develop.json sandbox.config.json
-fi
-
-
 echo ${DOCKER_PASS} | docker login --username ${DOCKER_USER} --password-stdin
 
 HASH=$(git rev-parse --short HEAD)
@@ -26,7 +19,6 @@ if [ "$CIRCLE_BRANCH" = "production" ]; then
   docker push cloudokihub/apisuite-fe:$VERSION
 
   # Cloud image
-  cp sandbox.config-cloud.json sandbox.config.json
   docker build --build-arg SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" \
     -t cloudokihub/apisuite-fe:cloud-$VERSION \
     -t cloudokihub/apisuite-fe:cloud-latest .

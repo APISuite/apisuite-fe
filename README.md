@@ -26,9 +26,6 @@ If you need help, read this [documentation](https://docs.github.com/en/github/au
 ### Configuring your local environment
 
 1. Copy the `.env.sample` file to `.env` and adapt it to your setup
-1. Copy one of the `sandbox.config-*.json` files to `sandbox.config.json` and adapt it to your setup
-
-Note that the `sandbox.config.json` file is automatically created the first time you run/build the project if it doesn't already exist.
 
 ## Run
 
