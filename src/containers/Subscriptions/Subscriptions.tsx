@@ -35,7 +35,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
       getAPIs()
       getAllUserAppsAction(auth.user.id)
     }
-  }, [auth.user, getAPIs, getAllUserAppsAction])
+  }, [auth?.user, getAPIs, getAllUserAppsAction])
 
   /* Modal stuff */
 
