@@ -81,6 +81,12 @@ export interface DefaultConfig {
   dimensions: {
     borderRadius: number,
   },
+  pages: {
+    landing: {
+      // TODO: find out what this is
+      components: [],
+    },
+  },
 }
 
 declare module '@material-ui/core/styles/createPalette' {

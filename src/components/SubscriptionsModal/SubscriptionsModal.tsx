@@ -21,8 +21,6 @@ import SubscriptionsModalProps from './types'
 
 import useStyles from './styles'
 
-import { config } from 'constants/global'
-
 const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   allUserApps,
   apisByName,
@@ -185,7 +183,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
               onClick={resetModalSelections}
             >
               <p>
-                {t('dashboardTab.subscriptionsSubTab.subsModal.modalHeader.closeButtonLabel', { config })}
+                {t('dashboardTab.subscriptionsSubTab.subsModal.modalHeader.closeButtonLabel')}
               </p>
 
               <CloseRoundedIcon />
@@ -196,15 +194,15 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
           <div className={classes.modalBodyContainer}>
             {/* Modal's title */}
             <h1 className={classes.header}>
-              {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.header', { config })}
+              {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.header')}
             </h1>
 
             {/* 'Steps' section */}
             <ol className={classes.stepsContainer}>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepOne', { config })}</li>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepTwo', { config })}</li>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepThree', { config })}</li>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepFour', { config })}</li>
+              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepOne')}</li>
+              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepTwo')}</li>
+              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepThree')}</li>
+              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepFour')}</li>
             </ol>
 
             <hr className={classes.sectionSeparator} />
@@ -213,7 +211,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
             <div className={classes.clientAppsContainer}>
               <div className={classes.clientAppSelectorContainer}>
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.title', { config })}
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.title')}
                 </p>
 
                 <Select
@@ -229,8 +227,8 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   <MenuItem disabled value=''>
                     {
                       allUserApps.length > 0
-                        ? t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.moreThanOneApp', { config })
-                        : t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.noApps', { config })
+                        ? t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.moreThanOneApp')
+                        : t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.noApps')
                     }
                   </MenuItem>
 
@@ -252,7 +250,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
 
               <div className={classes.clientAppNotificationContainer}>
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.subtitle', { config })}
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.subtitle')}
                 </p>
 
                 {
@@ -262,9 +260,9 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                         <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
 
                         <p className={classes.infoBoxText}>
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartOne', { config })}
+                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartOne')}
                           {settings.clientName}
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartTwo', { config })}
+                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartTwo')}
                         </p>
                       </div>
                     )
@@ -273,7 +271,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                         <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
 
                         <p className={classes.warningBoxText}>
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText', { config })}
+                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText')}
                         </p>
                       </div>
                     )
@@ -287,22 +285,22 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
             <div className={classes.apiProductsSubsContainer}>
               <div className={classes.titleAndSubtitleContainer}>
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.title', { config })}
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.title')}
                 </p>
 
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.subtitle', { config })}
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.subtitle')}
                 </p>
               </div>
 
               <div className={classes.apiProductsSubsTable}>
                 <div className={classes.tableHeader}>
                   <p>
-                    {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.title', { config })}
+                    {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.title')}
                   </p>
 
                   <p>
-                    {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.subtitle', { config })}
+                    {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.subtitle')}
                   </p>
                 </div>
 
@@ -379,8 +377,8 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   href='#'
                   label={
                     (selectedClientApp.subscriptions.length === 0)
-                      ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess', { config }))
-                      : (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess', { config }))
+                      ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess'))
+                      : (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess'))
                   }
                   onClick={
                     (selectedClientApp.subscriptions.length === 0)
@@ -393,7 +391,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   customButtonClassName={classes.enabledOtherButtons}
                   href='/profile/organisation'
                   label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation', { config })
+                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation')
                   }
                 />
 
@@ -409,7 +407,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                       : '#'
                   }
                   label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp', { config })
+                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp')
                   }
                 />
               </div>
@@ -419,7 +417,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   customButtonClassName={classes.enabledOtherButtons}
                   href='#'
                   label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel', { config })
+                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel')
                   }
                   onClick={resetModalSelections}
                 />

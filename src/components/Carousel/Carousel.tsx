@@ -14,8 +14,7 @@ import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUnche
 import { CarouselSlideProps, CarouselProps } from './types'
 
 import useStyles from './styles'
-
-import { config } from 'constants/global'
+import { useTheme } from '@material-ui/core'
 
 // Carousel slides
 
@@ -84,6 +83,7 @@ const Carousel: React.FC<CarouselProps> = ({
   timeBetweenSlides,
 }) => {
   const classes = useStyles()
+  const { palette } = useTheme()
 
   const [slideNumber, setSlideNumber] = React.useState(initialSlide || 0)
   const amountOfSlides = slidesArray.length
@@ -139,6 +139,7 @@ const Carousel: React.FC<CarouselProps> = ({
     </button>,
   ))
 
+  // FIXME: hooks can not be called conditionally
   if (slidesAutoPlay) {
     /*
     If we want our slides to 'autoplay', we do the following:
@@ -168,7 +169,7 @@ const Carousel: React.FC<CarouselProps> = ({
       }
 
       return () => clearInterval(scheduledCarouselSlideChange)
-    }, [isHoveringSlide, slideNumber])
+    }, [isHoveringSlide, slideNumber, amountOfSlides, timeBetweenSlides])
   }
 
   return (
@@ -186,7 +187,8 @@ const Carousel: React.FC<CarouselProps> = ({
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
               }
-              : { backgroundColor: carouselBackgroundColor || config.palette.newGreyScales['700'] }
+              // TODO: update this config
+              : { backgroundColor: carouselBackgroundColor || palette.grey[700] }
           }
         >
           <ReactSlidy

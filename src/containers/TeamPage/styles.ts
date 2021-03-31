@@ -1,10 +1,9 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   root: {
     minHeight: '100%',
-    backgroundColor: config.palette.greyScales[50],
+    backgroundColor: theme.palette.grey[50],
   },
   contentContainer: {
     maxWidth: 900,
@@ -23,11 +22,11 @@ export default makeStyles(({
     justifyContent: 'center',
     width: '100%',
     cursor: 'pointer',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: theme.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: config.palette.greyScales[300],
+    borderColor: theme.palette.grey[300],
     border: 1,
   },
   header: {
@@ -38,7 +37,7 @@ export default makeStyles(({
     justifyContent: 'space-between',
     height: 42,
     paddingLeft: 10,
-    color: config.palette.greyScales[400],
+    color: theme.palette.grey[400],
   },
   actions: {
     paddingRight: 178,
@@ -48,30 +47,30 @@ export default makeStyles(({
     padding: '16px 30px 16px 10px',
     justifyContent: 'space-between',
     width: '100%',
-    borderTop: '1px solid ' + config.palette.greyScales[300],
+    borderTop: `1px solid ${theme.palette.grey[300]}`,
   },
   auth: {
     fontSize: 14,
-    color: config.palette.text.secondary,
+    color: theme.palette.text.secondary,
   },
   select: {
     width: 182,
   },
   name: {
     fontSize: 16,
-    color: config.palette.text.primary,
+    color: theme.palette.text.primary,
   },
   btn: {
     display: 'inline-block',
     color: 'white',
     padding: '8px 24px',
-    backgroundColor: config.palette.greyScales[900],
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.grey[900],
+    borderRadius: theme.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
     '&:disabled': {
-      backgroundColor: config.palette.greyScales[400],
+      backgroundColor: theme.palette.grey[400],
     },
   },
   inviteCard: {
@@ -80,11 +79,11 @@ export default makeStyles(({
     justifyContent: 'space-between',
     width: '100%',
     cursor: 'pointer',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: theme.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
-    borderColor: config.palette.greyScales[300],
+    borderColor: theme.palette.grey[300],
     border: 1,
     marginTop: 24,
     height: 82,
@@ -93,14 +92,14 @@ export default makeStyles(({
   emailTextfield: {
     backgroundColor: 'white',
     width: 220,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.grey[400],
   },
   nameTextfield: {
     backgroundColor: 'white',
     width: 220,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.grey[400],
   },
   loading: {
     position: 'relative',
@@ -120,14 +119,14 @@ export default makeStyles(({
   errorAlert: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: config.palette.feedback.error,
+    backgroundColor: theme.feedback.error,
     border: 'solid',
     borderWidth: 1,
-    borderColor: config.palette.feedback.error,
+    borderColor: theme.feedback.error,
     fontSize: 13,
     color: '#FFF',
     padding: '2px 15px',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: theme.dimensions.borderRadius,
     minHeight: 20,
   },
 }))

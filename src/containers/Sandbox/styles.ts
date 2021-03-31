@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   // General JSS
 
   root: {
@@ -20,15 +18,15 @@ export default makeStyles(({
   },
 
   sectionIntroHeading: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '32px',
     fontWeight: 300,
     margin: '40px 0px',
   },
 
   sectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey['300']}`,
+    borderRadius: theme.dimensions.borderRadius,
     maxWidth: '900px',
     width: '100%',
   },
@@ -44,15 +42,15 @@ export default makeStyles(({
   // JSS for the 'Steps' section
 
   individualStepsContainer: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.grey[300]}`,
     borderRadius: '8px',
     display: 'flex',
     flexDirection: 'row',
   },
 
   individualStepsDivider: {
-    borderRight: `1px solid ${config.palette.newGreyScales['300']}`,
+    borderRight: `1px solid ${theme.palette.grey[300]}`,
   },
 
   individualStep: {
@@ -76,7 +74,7 @@ export default makeStyles(({
     },
 
     '& > p': {
-      color: config.palette.newGreyScales['400'],
+      color: theme.palette.grey[400],
       fontSize: '14px',
       height: '100px',
       lineHeight: '18px',
@@ -91,9 +89,9 @@ export default makeStyles(({
   },
 
   individualStepButton: {
-    backgroundColor: config.palette.tertiary,
-    borderColor: config.palette.tertiary,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.tertiary.main,
+    borderColor: theme.palette.tertiary.main,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -101,16 +99,16 @@ export default makeStyles(({
     width: '100%',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: config.palette.tertiary,
-      borderColor: config.palette.tertiary,
-      borderRadius: `${config.dimensions.borderRadius}px`,
+      backgroundColor: theme.palette.tertiary.main,
+      borderColor: theme.palette.tertiary.main,
+      borderRadius: `${theme.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
 
     '&.MuiButton-root.Mui-disabled': {
-      backgroundColor: config.palette.newGreyScales['300'],
-      borderColor: config.palette.newGreyScales['300'],
-      borderRadius: `${config.dimensions.borderRadius}px`,
+      backgroundColor: theme.palette.grey[300],
+      borderColor: theme.palette.grey[300],
+      borderRadius: `${theme.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
@@ -136,9 +134,9 @@ export default makeStyles(({
   },
 
   stepsDescriptionContactSupportButton: {
-    backgroundColor: config.palette.warning,
-    borderColor: config.palette.warning,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.warning.main,
+    borderColor: theme.palette.warning.main,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -146,17 +144,17 @@ export default makeStyles(({
     width: '160px',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: config.palette.warning,
-      borderColor: config.palette.warning,
-      borderRadius: `${config.dimensions.borderRadius}px`,
+      backgroundColor: theme.palette.warning.main,
+      borderColor: theme.palette.warning.main,
+      borderRadius: `${theme.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
 
   stepsDescriptionRegisterButton: {
-    backgroundColor: config.palette.tertiary,
-    borderColor: config.palette.tertiary,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.tertiary.main,
+    borderColor: theme.palette.tertiary.main,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -164,9 +162,9 @@ export default makeStyles(({
     width: '135px',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: config.palette.tertiary,
-      borderColor: config.palette.tertiary,
-      borderRadius: `${config.dimensions.borderRadius}px`,
+      backgroundColor: theme.palette.tertiary.main,
+      borderColor: theme.palette.tertiary.main,
+      borderRadius: `${theme.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
@@ -178,21 +176,21 @@ export default makeStyles(({
   },
 
   stepsDescriptionHeading: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '24px',
     fontWeight: 500,
     margin: '0px 0px 12px 0px',
   },
 
   stepsDescriptionParagraphOne: {
-    color: config.palette.active,
+    color: theme.palette.active,
     fontSize: '20px',
     fontWeight: 200,
     margin: '12px 0px',
   },
 
   stepsDescriptionParagraphTwo: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '20px',

@@ -1,13 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   greetingCardContentsContainer: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     borderRadius: '4px',
-    boxShadow: `0px 3px 10px -3px ${config.palette.newGreyScales['100']}`,
+    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[100]}`,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -24,4 +22,4 @@ export default makeStyles({
     paddingRight: '20px',
     width: '625px',
   },
-})
+}))

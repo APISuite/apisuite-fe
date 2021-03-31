@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   formCard: {
     display: 'block',
     // width: '40%',
@@ -28,7 +27,7 @@ const useStyles = makeStyles(({
     color: 'white',
     padding: 8,
     border: '1px solid white',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: theme.dimensions.borderRadius,
   },
   backBtn: {
     margin: '20px 0px',
@@ -44,10 +43,10 @@ const useStyles = makeStyles(({
     marginTop: 30,
   },
   errorAlert: {
-    backgroundColor: config.palette.feedback.error,
+    backgroundColor: theme.feedback.error,
     color: '#fff',
     padding: '12px 25px',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: theme.dimensions.borderRadius,
     minHeight: 50,
   },
 }))

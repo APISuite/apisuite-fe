@@ -1,12 +1,10 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   /* 1. Modal */
 
   modalContentsContainer: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     borderRadius: '4px',
     boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
     height: '100%',
@@ -29,7 +27,7 @@ export default makeStyles(({
     display: 'flex',
 
     '& > p': {
-      color: config.palette.label,
+      color: theme.palette.label,
       fontSize: '14px',
       fontWeight: 300,
       marginRight: '15px',
@@ -37,21 +35,21 @@ export default makeStyles(({
     },
 
     '& > svg': {
-      color: config.palette.active,
+      color: theme.palette.active,
       height: '25px',
       width: '25px',
     },
   },
 
   editApplicationHeader: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
   },
 
   iconLogo: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -79,14 +77,14 @@ export default makeStyles(({
   },
 
   newApplicationHeader: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
   },
 
   portalName: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
@@ -94,7 +92,7 @@ export default makeStyles(({
   /* 1.2 Modal's body */
 
   additionalInfoSubSectionTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -102,8 +100,8 @@ export default makeStyles(({
   },
 
   alternativeSectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey['100']}`,
+    borderRadius: theme.dimensions.borderRadius,
     margin: '25px 0px',
     width: '100%',
   },
@@ -113,7 +111,7 @@ export default makeStyles(({
   },
 
   appAvatarSubSectionDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey['400'],
     fontSize: '14px',
     fontWeight: 400,
     lineHeight: '17px',
@@ -121,7 +119,7 @@ export default makeStyles(({
   },
 
   appNameAndShortDescriptionSubSectionTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -138,10 +136,10 @@ export default makeStyles(({
     },
 
     '& > :last-child': {
-      backgroundColor: config.palette.background.default,
-      border: `1px solid ${config.palette.greyScales['300']}`,
+      backgroundColor: theme.palette.background.default,
+      border: `1px solid ${theme.palette.grey['300']}`,
       borderRadius: '4px',
-      color: config.palette.active,
+      color: theme.palette.active,
       cursor: 'pointer',
       height: '40px',
       maxWidth: '40px',
@@ -153,7 +151,7 @@ export default makeStyles(({
   },
 
   avatarIcons: {
-    color: config.palette.active,
+    color: theme.palette.active,
     cursor: 'pointer',
     height: '20px',
     position: 'absolute',
@@ -170,28 +168,28 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: config.palette.active,
+        color: theme.palette.active,
         height: '85px',
         transform: 'translateY(30px)',
       },
@@ -199,10 +197,10 @@ export default makeStyles(({
 
     // Text field's input helper text
     '& .MuiFormHelperText-root': {
-      color: config.palette.label,
+      color: theme.palette.label,
 
       '&.Mui-error': {
-        color: config.palette.error,
+        color: theme.palette.error.main,
       },
     },
   },
@@ -213,14 +211,14 @@ export default makeStyles(({
   },
 
   clientApplicationCardStatusText: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '14px',
     fontWeight: 300,
     textAlign: 'left',
   },
 
   clientCredentialsSubSectionDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey['400'],
     fontSize: '14px',
     fontWeight: 400,
     lineHeight: '17px',
@@ -233,7 +231,7 @@ export default makeStyles(({
 
   disabledAddOrEditButton: {
     backgroundColor: '#99e6cc',
-    color: `${config.palette.primaryContrastText} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -257,21 +255,21 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey['300']} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
     },
 
@@ -281,14 +279,14 @@ export default makeStyles(({
 
       '& .MuiInputBase-input': {
         borderRight: '1px solid rgba(0, 0, 0, 0.2)',
-        color: config.palette.label,
+        color: theme.palette.label,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
       },
 
       '& .MuiInputAdornment-root': {
-        color: config.palette.label,
+        color: theme.palette.label,
         pointerEvents: 'none',
       },
     },
@@ -305,21 +303,21 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
     },
 
@@ -329,14 +327,14 @@ export default makeStyles(({
 
       '& .MuiInputBase-input': {
         borderRight: '1px solid rgba(0, 0, 0, 0.2)',
-        color: config.palette.label,
+        color: theme.palette.label,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
       },
 
       '& .MuiInputAdornment-root': {
-        color: config.palette.label,
+        color: theme.palette.label,
         pointerEvents: 'none',
       },
     },
@@ -346,7 +344,7 @@ export default makeStyles(({
     backgroundColor: '#DCDFE2',
     border: '1px solid rgba(0, 0, 0, 0.2)',
     borderRadius: '4px',
-    color: config.palette.label,
+    color: theme.palette.label,
     height: '40px',
     marginLeft: '10px',
     padding: '7px 0px',
@@ -356,7 +354,7 @@ export default makeStyles(({
   },
 
   draftClientApplicationCardStatusIcon: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '12px',
     margin: '0px 12px 0px 12px',
   },
@@ -372,8 +370,8 @@ export default makeStyles(({
   },
 
   enabledAddOrEditButton: {
-    backgroundColor: config.palette.primary,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -381,7 +379,7 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.primary,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -393,21 +391,21 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
 
       // Multiline text field's styles
@@ -422,11 +420,11 @@ export default makeStyles(({
 
       '& .MuiInputBase-input': {
         borderRight: '1px solid rgba(0, 0, 0, 0.2)',
-        color: config.palette.active,
+        color: theme.palette.active,
       },
 
       '& .MuiInputAdornment-root': {
-        color: config.palette.active,
+        color: theme.palette.active,
         cursor: 'pointer',
       },
     },
@@ -440,21 +438,21 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
 
       // Multiline text field's styles
@@ -469,11 +467,11 @@ export default makeStyles(({
 
       '& .MuiInputBase-input': {
         borderRight: '1px solid rgba(0, 0, 0, 0.2)',
-        color: config.palette.active,
+        color: theme.palette.active,
       },
 
       '& .MuiInputAdornment-root': {
-        color: config.palette.active,
+        color: theme.palette.active,
         cursor: 'pointer',
       },
     },
@@ -482,7 +480,7 @@ export default makeStyles(({
   enabledClientSecretInputFieldRefreshButton: {
     border: '1px solid rgba(0, 0, 0, 0.2)',
     borderRadius: '4px',
-    color: config.palette.active,
+    color: theme.palette.active,
     cursor: 'pointer',
     height: '40px',
     marginLeft: '10px',
@@ -509,7 +507,7 @@ export default makeStyles(({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: config.palette.alert.success.background,
+    backgroundColor: theme.alert.success.background,
     borderRadius: '4px',
     display: 'flex',
     height: '100%',
@@ -539,21 +537,21 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
 
       // Multiline text field's styles
@@ -565,7 +563,7 @@ export default makeStyles(({
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: config.palette.active,
+        color: theme.palette.active,
       },
     },
   },
@@ -599,7 +597,7 @@ export default makeStyles(({
   },
 
   optionalURLsSubSectionDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 400,
     lineHeight: '17px',
@@ -607,10 +605,10 @@ export default makeStyles(({
   },
 
   otherButtons: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
+    color: `${theme.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginLeft: '25px',
@@ -619,12 +617,12 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: theme.palette.background.default,
     },
   },
 
   redirectURISubSectionTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -632,17 +630,17 @@ export default makeStyles(({
   },
 
   regularSectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: theme.dimensions.borderRadius,
     margin: '0px 0px 25px 0px',
     width: '100%',
   },
 
   removeAppButton: {
-    backgroundColor: config.palette.error,
-    border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.error.main,
+    border: `1px solid ${theme.palette.error.main}`,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginLeft: '25px',
@@ -651,7 +649,7 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.error,
+      backgroundColor: theme.palette.error.main,
     },
   },
 
@@ -664,21 +662,21 @@ export default makeStyles(({
   },
 
   selectorOption: {
-    color: config.palette.active,
+    color: theme.palette.active,
     fontSize: '15px',
     fontWeight: 300,
     padding: '5px 25px',
   },
 
   selectorTitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 300,
     padding: '6px 25px',
   },
 
   subscribedClientApplicationCardStatusIcon: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     fontSize: '14px',
     margin: '0px 12px 0px 12px',
   },

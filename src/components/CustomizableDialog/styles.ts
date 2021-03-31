@@ -1,13 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   cancelButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
+    color: `${theme.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '24px',
@@ -17,15 +15,15 @@ const useStyles = makeStyles({
     width: 'auto',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: theme.palette.background.default,
     },
   },
 
   confirmButton: {
-    backgroundColor: config.palette.error,
-    border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.error.main,
+    border: `1px solid ${theme.palette.error.main}`,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -34,7 +32,7 @@ const useStyles = makeStyles({
     width: 'auto',
 
     '&:hover': {
-      backgroundColor: config.palette.error,
+      backgroundColor: theme.palette.error.main,
     },
   },
 
@@ -47,21 +45,21 @@ const useStyles = makeStyles({
     padding: '20px 24px',
 
     '& > :first-child': {
-      color: config.palette.newGreyScales['400'],
+      color: theme.palette.grey[400],
       fontSize: '16px',
       fontWeight: 400,
     },
   },
 
   dialogTitleContainer: {
-    backgroundColor: config.palette.newGreyScales['100'],
+    backgroundColor: theme.palette.grey[100],
 
     '& > :first-child': {
-      color: config.palette.tertiary,
+      color: theme.palette.tertiary.main,
       fontSize: '24px',
       fontWeight: 500,
     },
   },
-})
+}))
 
 export default useStyles

@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   clientApplicationCard: {
     height: '331.5px',
     marginBottom: '15px',
@@ -42,7 +40,7 @@ export default makeStyles(({
 
   clientApplicationCardBottomSection: {
     backgroundColor: '#F5F5F5',
-    border: `1px solid ${config.palette.label}`,
+    border: `1px solid ${theme.palette.label}`,
     borderRadius: '4px',
     borderTop: 'none',
     borderTopLeftRadius: '0px',
@@ -51,7 +49,7 @@ export default makeStyles(({
   },
 
   clientApplicationCardDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     display: '-webkit-box',
     fontSize: '16px',
     fontWeight: 300,
@@ -65,14 +63,14 @@ export default makeStyles(({
   },
 
   clientApplicationCardWithAvatarIcon: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '30px',
     position: 'absolute',
     transform: 'translate(105px, 10px) rotate(45deg)',
   },
 
   clientApplicationCardWithImageIcon: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '30px',
     position: 'absolute',
     transform: 'translate(165px, 10px) rotate(45deg)',
@@ -83,14 +81,14 @@ export default makeStyles(({
   },
 
   clientApplicationCardStatusText: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '14px',
     fontWeight: 300,
     textAlign: 'left',
   },
 
   clientApplicationCardTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '22px',
     fontWeight: 400,
     marginBottom: '12px',
@@ -100,8 +98,9 @@ export default makeStyles(({
   },
 
   clientApplicationCardTopSection: {
-    backgroundColor: config.palette.newGreyScales['25'],
-    border: `1px solid ${config.palette.label}`,
+    // FIXME: do we 25 grey scale?
+    backgroundColor: theme.palette.grey[25 as never],
+    border: `1px solid ${theme.palette.label}`,
     borderBottomLeftRadius: '0px',
     borderBottomRightRadius: '0px',
     borderRadius: '4px',
@@ -122,34 +121,34 @@ export default makeStyles(({
   },
 
   clientApplicationsSubtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '24px',
   },
 
   clientApplicationsTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
   },
 
   draftClientApplicationCardStatusIcon: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '14px',
     marginRight: '12px',
   },
 
   firstUseButton: {
-    backgroundColor: config.palette.primary,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
     padding: '12px 21px',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.primary,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -175,11 +174,11 @@ export default makeStyles(({
   },
 
   firstUseLink: {
-    color: `${config.palette.newGreyScales['300']} !important`,
+    color: `${theme.palette.grey[300]} !important`,
   },
 
   knowledgeBaseCard: {
-    backgroundColor: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.primary.contrastText,
     borderRadius: '4px',
     boxShadow: '1px 0px 10px 0px rgba(0, 0, 0, 0.05)',
     height: '310px',
@@ -200,14 +199,14 @@ export default makeStyles(({
   },
 
   knowledgeBaseCardDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '21.5px',
   },
 
   knowledgeBaseCardIcon: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '25px',
     position: 'absolute',
     transform: 'translate(362.5px, -10px)',
@@ -218,7 +217,7 @@ export default makeStyles(({
   },
 
   knowledgeBaseCardTitle: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
     marginBottom: '20px',
@@ -239,7 +238,7 @@ export default makeStyles(({
   },
 
   knowledgeBaseTitle: {
-    color: config.palette.active,
+    color: theme.palette.active,
     fontSize: '24px',
     fontWeight: 500,
     margin: '0px auto 24px auto',
@@ -248,7 +247,7 @@ export default makeStyles(({
   },
 
   loadingClientApplicationCards: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 200,
   },
@@ -256,7 +255,7 @@ export default makeStyles(({
   registerClientApplicationCard: {
     alignItems: 'center',
     backgroundColor: '#F5F5F5',
-    border: `1px solid ${config.palette.label}`,
+    border: `1px solid ${theme.palette.label}`,
     borderRadius: '4px',
     display: 'flex',
     height: '331.5px',
@@ -265,10 +264,10 @@ export default makeStyles(({
   },
 
   registerClientApplicationCardButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
+    color: `${theme.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     margin: '0px auto',
@@ -277,12 +276,12 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: theme.palette.background.default,
     },
   },
 
   subscribedClientApplicationCardStatusIcon: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     fontSize: '14px',
     marginRight: '12px',
   },
@@ -298,7 +297,7 @@ export default makeStyles(({
   },
 
   warningBoxIcon: {
-    fill: config.palette.warning,
+    fill: theme.palette.warning.main,
     transform: 'translate(7px, 0px)',
   },
 

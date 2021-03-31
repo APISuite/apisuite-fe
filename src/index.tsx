@@ -2,8 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import { AppThemeProvider } from 'theme'
+import { ConfigProvider } from 'config'
 import store, { history } from 'store'
+import { API_URL } from 'constants/endpoints'
 import App from 'containers/App'
 import ErrorMonitor from 'components/ErrorMonitor'
 
@@ -21,9 +22,9 @@ function render (Component: React.ElementType) {
     <ErrorMonitor>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <AppThemeProvider>
+          <ConfigProvider settingsUrl={`${API_URL}/settings/portal`}>
             <Component />
-          </AppThemeProvider>
+          </ConfigProvider>
         </ConnectedRouter>
       </Provider>
     </ErrorMonitor>,

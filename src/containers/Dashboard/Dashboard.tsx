@@ -26,7 +26,6 @@ import useStyles from './styles'
 import { DashboardProps } from './types'
 
 import {
-  config,
   DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
   DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
 } from 'constants/global'
@@ -52,7 +51,7 @@ const Dashboard: React.FC<DashboardProps> = ({
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
     getAPIs()
-  }, [])
+  }, [getAPIs])
 
   React.useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
@@ -104,10 +103,10 @@ const Dashboard: React.FC<DashboardProps> = ({
         {/* 'Notification cards' section */}
         <section className={classes.notificationCardSection}>
           <NotificationCard
-            notificationCardTitle={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardTitle', { config })}
-            notificationCardText={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardText', { config })}
+            notificationCardTitle={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardTitle')}
+            notificationCardText={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardText')}
             notificationCardButtonClassName={classes.customNotificationCardButton}
-            notificationCardButtonLabel={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardButtonLabel', { config })}
+            notificationCardButtonLabel={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardButtonLabel')}
             notificationCardButtonLink='/profile/team'
             typeOfUser={typeOfUser}
           />
@@ -130,66 +129,66 @@ const Dashboard: React.FC<DashboardProps> = ({
                   {
                     actionImage: teamSVG,
                     actionLink: '/profile/team',
-                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.team', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.team'),
                   },
                   {
                     actionImage: sandboxSVG,
                     actionLink: '/dashboard/apps',
-                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.sandbox', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.sandbox'),
                   },
                   {
                     actionImage: shieldSVG,
                     actionLink: '/dashboard/subscriptions',
-                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.shield', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.shield'),
                   },
                   {
                     actionImage: fingerprintSVG,
                     // TODO: Create an 'Update your password' view or mechanism, and link to it
                     actionLink: '',
-                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.fingerprint', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.fingerprint'),
                   },
                   {
                     actionImage: apiSVG,
                     actionLink: '/dashboard/subscriptions',
-                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api'),
                   },
                   {
                     actionImage: supportSVG,
                     actionLink: settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
-                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.support', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.support'),
                   },
                 ]
                 : [
                   {
                     actionImage: apiSVG,
                     actionLink: '/dashboard/admin/api-catalog',
-                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.api', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.api'),
                   },
                   {
                     actionImage: dataCloudSVG,
                     actionLink: '/dashboard/admin/integrations',
-                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.dataCloud', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.dataCloud'),
                   },
                   {
                     actionImage: settingsSVG,
                     actionLink: '/dashboard/admin',
-                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.settings', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.settings'),
                   },
                   {
                     actionImage: billingSVG,
                     // TODO: Create a 'Billing' view or mechanism, and link to it
                     actionLink: '',
-                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.billing', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.billing'),
                   },
                   {
                     actionImage: teamSVG,
                     actionLink: '/profile/team',
-                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.team', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.team'),
                   },
                   {
                     actionImage: supportSVG,
                     actionLink: settings.supportURL || DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
-                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.support', { config }),
+                    actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.support'),
                   },
                 ]
             }
@@ -206,25 +205,25 @@ const Dashboard: React.FC<DashboardProps> = ({
                     ? (
                       <>
                         <p className={classes.customGreetingCardText}>
-                          <>{t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartOne', { config })} </>
+                          <>{t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartOne')} </>
                           <>{profile.profile.user.name}! </>
-                          {t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartTwo', { config })}
+                          {t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartTwo')}
                         </p>
 
                         <p className={classes.customGreetingCardText}>
-                          {t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartThree', { config })}
+                          {t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartThree')}
                         </p>
                       </>
                     )
                     : (
                       <>
                         <p className={classes.customGreetingCardText}>
-                          <>{t('dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardTextPartOne', { config })} </>
+                          <>{t('dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardTextPartOne')} </>
                           <>{profile.profile.user.name}! </>
                         </p>
 
                         <p className={classes.customGreetingCardText}>
-                          {t('dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardTextPartTwo', { config })}
+                          {t('dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardTextPartTwo')}
                         </p>
                       </>
                     )
@@ -235,10 +234,10 @@ const Dashboard: React.FC<DashboardProps> = ({
             greetingCardButtonLabel={
               typeOfUser !== 'admin'
                 ? (
-                  t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardButtonLabel', { config }) +
+                  t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardButtonLabel') +
                   ` ${settings.clientName}`
                 )
-                : t('dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardButtonLabel', { config })
+                : t('dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardButtonLabel')
             }
             greetingCardButtonLink={
               typeOfUser !== 'admin'
@@ -257,13 +256,13 @@ const Dashboard: React.FC<DashboardProps> = ({
 
               <section className={classes.apiCatalogSectionContainer}>
                 <h1 className={classes.sectionIntroHeading}>
-                  {t('sandboxPage.apiCatalog.intro', { config })}
+                  {t('sandboxPage.apiCatalog.intro')}
                 </h1>
 
                 <section className={classes.apiCatalogContainer}>
                   {
                     recentlyAddedAPIs.length === 0
-                      ? <p>{t('sandboxPage.apiCatalog.paragraph', { config })}</p>
+                      ? <p>{t('sandboxPage.apiCatalog.paragraph')}</p>
                       : <APICatalog apisToDisplay={recentlyAddedAPIs} />
                   }
                 </section>
@@ -282,11 +281,11 @@ const Dashboard: React.FC<DashboardProps> = ({
               }
               noticeText={
                 <p>
-                  <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings?.clientName}.</>
+                  <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy')} {settings?.clientName}.</>
                   {
                     hasSocials() && (
                       <>
-                        <> {t('sandboxPage.notice.visitUs', { config })} </>
+                        <> {t('sandboxPage.notice.visitUs')} </>
                         <a
                           href={hasSocials() ? settings.socialURLs[0].url : '#'}
                           rel='noopener noreferrer'
@@ -313,19 +312,19 @@ const Dashboard: React.FC<DashboardProps> = ({
             <NotificationBanner
               customNotificationBannerContents={
                 <p className={classes.customNotificationBannerParagraph}>
-                  {t('dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartOne', { config })}
+                  {t('dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartOne')}
 
                   <br />
 
                   <a
                     href='/dashboard/admin/integrations'
                   >
-                    {t('dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartTwo', { config })}
+                    {t('dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartTwo')}
                   </a>
                 </p>
               }
               notificationBannerTitle={
-                t('dashboardTab.landingPageSubTab.adminUser.notificationBanner.title', { config })
+                t('dashboardTab.landingPageSubTab.adminUser.notificationBanner.title')
               }
               showNotificationBanner
             />

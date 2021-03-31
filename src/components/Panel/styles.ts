@@ -1,13 +1,12 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   card: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'white',
-    borderRadius: config.dimensions.borderRadius * 2,
+    borderRadius: theme.dimensions.borderRadius * 2,
     boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
     maxWidth: 900,
     margin: '20px auto',
@@ -41,10 +40,10 @@ export default makeStyles(({
     fontSize: 26,
     fontWeight: 100,
     textAlign: 'center',
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
   },
   otherTitle: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
   },
   featuresDesc: {
     textAlign: 'center',

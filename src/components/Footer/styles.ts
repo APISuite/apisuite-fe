@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   copyrightContainer: {
     marginBottom: '22px',
     textAlign: 'end',
@@ -21,7 +19,7 @@ export default makeStyles(({
   },
 
   footer: {
-    backgroundColor: config.palette.newGreyScales['700'],
+    backgroundColor: theme.palette.grey[700],
     color: 'white',
     paddingBottom: '50px',
     paddingTop: '40px',
@@ -56,7 +54,7 @@ export default makeStyles(({
   },
 
   iconLogo: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -90,7 +88,7 @@ export default makeStyles(({
   },
 
   logo: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '55px',
@@ -133,7 +131,7 @@ export default makeStyles(({
 
   subSection: {
     '& > h3': {
-      color: config.palette.primaryContrastText,
+      color: theme.palette.primary.contrastText,
       fontSize: '16px',
       fontWeight: '300',
       lineHeight: '22px',
@@ -142,7 +140,7 @@ export default makeStyles(({
     },
 
     '& > p': {
-      color: config.palette.newGreyScales['300'],
+      color: theme.palette.grey[300],
       fontSize: '14px',
       fontWeight: '300',
       lineHeight: '22px',

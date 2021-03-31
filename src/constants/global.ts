@@ -1,9 +1,5 @@
 
-import sandboxConfig from '../../sandbox.config.json'
-
-import { SandboxConfig, Roles } from './types.js'
-
-export const config: SandboxConfig = sandboxConfig
+import { Roles } from './types'
 
 export const DEFAULT_INSTANCE_OWNER_SUPPORT_URL =
   'https://intercom.help/api-suite/en/articles/4710860-api-portal-owners'

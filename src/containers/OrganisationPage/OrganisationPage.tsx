@@ -22,8 +22,6 @@ import useStyles from './styles'
 
 import { useForm } from 'util/useForm'
 
-import { config } from 'constants/global'
-
 const OrganisationPage: React.FC<OrganisationPageProps> = ({
   createOrg,
   fetchOrg,
@@ -39,7 +37,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
     fetchOrg(profile.current_org.id)
-  }, [fetchOrg])
+  }, [fetchOrg, profile.current_org.id])
 
   /*
   Organisation details
@@ -117,32 +115,32 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
           return validURL
         }],
-        message: t('profileTab.organisationSubTab.warningLabels.orgAvatarURL', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.orgAvatarURL'),
       },
 
       orgPrivacyURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgSupportURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgTermsURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgWebsiteURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgYouTubeURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
     })
 
@@ -161,7 +159,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
       orgWebsiteURL: org.websiteUrl ? org.websiteUrl : '',
       orgYouTubeURL: org.youtubeUrl ? org.youtubeUrl : '',
     })
-  }, [org])
+  }, [org, resetForm])
 
   /* All organisation details */
 
@@ -285,12 +283,12 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             {
               org.name
                 ? org.name
-                : t('profileTab.organisationSubTab.newOrgTitle', { config })
+                : t('profileTab.organisationSubTab.newOrgTitle')
             }
           </p>
 
           <p className={classes.orgSubtitle}>
-            {t('profileTab.organisationSubTab.orgSubtitle', { config })}
+            {t('profileTab.organisationSubTab.orgSubtitle')}
           </p>
         </section>
 
@@ -299,7 +297,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
-              label={t('profileTab.organisationSubTab.fieldLabels.orgNameLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgNameLabel')}
               margin='dense'
               name='orgName'
               onChange={handleChange}
@@ -311,7 +309,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
-              label={t('profileTab.organisationSubTab.fieldLabels.orgVATLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgVATLabel')}
               margin='dense'
               name='orgVAT'
               onChange={handleChange}
@@ -365,14 +363,14 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               helperText={
                 (formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage
                   ? formState.errorMsgs.orgAvatarURL
-                  : t('profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel', { config })
+                  : t('profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel')
               }
               inputRef={(input) =>
                 avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
               InputLabelProps={{
                 shrink: true,
               }}
-              label={t('profileTab.organisationSubTab.fieldLabels.orgAvatarLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgAvatarLabel')}
               margin='dense'
               name='orgAvatarURL'
               onChange={handleChange}
@@ -401,7 +399,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
-              label={t('profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel')}
               margin='dense'
               multiline
               name='orgDescription'
@@ -415,7 +413,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
           <section className={classes.rightSideDetailsContainer}>
             <p className={classes.orgAdditionalDetailsSubtitle}>
-              {t('profileTab.organisationSubTab.orgAdditionalDetailsSubtitle', { config })}
+              {t('profileTab.organisationSubTab.orgAdditionalDetailsSubtitle')}
             </p>
 
             <div className={classes.orgURLFieldWrapper}>
@@ -428,7 +426,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                     ? formState.errorMsgs.orgWebsiteURL
                     : ''
                 }
-                label={t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel', { config })}
+                label={t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel')}
                 margin='dense'
                 name='orgWebsiteURL'
                 onChange={handleChange}
@@ -452,7 +450,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                 className={classes.selectorTitle}
                 disabled
               >
-                {t('profileTab.organisationSubTab.selectorTitle', { config })}
+                {t('profileTab.organisationSubTab.selectorTitle')}
               </MenuItem>
 
               <MenuItem
@@ -460,7 +458,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                 disabled={isShowing[0]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 0)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgToSLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgToSLabel')}
               </MenuItem>
 
               <MenuItem
@@ -468,7 +466,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                 disabled={isShowing[1]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 1)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel')}
               </MenuItem>
 
               <MenuItem
@@ -476,14 +474,14 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                 disabled={isShowing[2]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 2)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel')}
               </MenuItem>
 
               <MenuItem
                 className={classes.selectorOption}
                 disabled
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel')}
               </MenuItem>
 
               <MenuItem
@@ -491,7 +489,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                 disabled={isShowing[3]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 3)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel')}
               </MenuItem>
             </Menu>
 
@@ -507,7 +505,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgTermsURL
                       : ''
                   }
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgToSLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgToSLabel')}
                   margin='dense'
                   name='orgTermsURL'
                   onChange={handleChange}
@@ -534,7 +532,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgPrivacyURL
                       : ''
                   }
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel')}
                   margin='dense'
                   name='orgPrivacyURL'
                   onChange={handleChange}
@@ -561,7 +559,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgYouTubeURL
                       : ''
                   }
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel')}
                   margin='dense'
                   name='orgYouTubeURL'
                   onChange={handleChange}
@@ -588,7 +586,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgSupportURL
                       : ''
                   }
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel')}
                   margin='dense'
                   name='orgSupportURL'
                   onChange={handleChange}
@@ -618,7 +616,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                     ? classes.enabledUpdateDetailsButton
                     : classes.disabledUpdateDetailsButton
                 }
-                label={t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel', { config })}
+                label={t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel')}
                 onClick={updateOrgDetails}
               />
             )
@@ -631,7 +629,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                     ? classes.enabledCreateOrgButton
                     : classes.disabledCreateOrgButton
                 }
-                label={t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel', { config })}
+                label={t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel')}
                 onClick={createOrgDetails}
               />
             )

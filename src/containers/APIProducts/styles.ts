@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   activeDocumentationAccessFilterButtonIcon: {
     color: '#51606E',
   },
@@ -71,7 +69,7 @@ export default makeStyles(({
   },
 
   apiProductOnlineStatus: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     fontSize: '14px',
     marginRight: '12px',
   },

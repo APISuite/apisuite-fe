@@ -1,17 +1,16 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   textField: {
     '& label.Mui-focused': {
-      color: config.palette.primary,
+      color: theme.palette.primary,
     },
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: config.palette.greyScales[600],
+        borderColor: theme.palette.grey[600],
       },
       '&.Mui-focused fieldset': {
-        borderColor: config.palette.primary,
+        borderColor: theme.palette.primary,
       },
     },
   },

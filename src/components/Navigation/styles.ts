@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   activeTab: {
     '& > span': {
       fontWeight: 600,
@@ -10,8 +8,8 @@ export default makeStyles(({
   },
 
   alternativeAssistantAmountOfNotifications: {
-    backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: theme.dimensions.borderRadius,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -19,7 +17,7 @@ export default makeStyles(({
     width: '24px',
 
     '& > p': {
-      color: config.palette.text.primary,
+      color: theme.palette.text.primary,
       fontSize: '14px',
       fontWeight: 400,
       height: '24px',
@@ -31,7 +29,7 @@ export default makeStyles(({
   alternativeAssistantButton: {
     backgroundColor: 'transparent',
     borderRadius: '50%',
-    color: config.palette.active,
+    color: theme.palette.active,
     cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
@@ -40,7 +38,7 @@ export default makeStyles(({
   },
 
   alternativeLogo: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -98,14 +96,14 @@ export default makeStyles(({
   },
 
   opaqueMenuActiveTabOverLine: {
-    backgroundColor: config.palette.primary,
+    backgroundColor: theme.palette.primary.main,
     height: '3px',
     top: 0,
     transition: 'none !important',
   },
 
   opaqueMenuTab: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.primary.contrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -123,7 +121,7 @@ export default makeStyles(({
   },
 
   opaqueSubMenuActiveTabUnderLine: {
-    backgroundColor: config.palette.tertiary,
+    backgroundColor: theme.palette.tertiary.main,
     height: '3px',
     transition: 'none !important',
   },
@@ -134,8 +132,8 @@ export default makeStyles(({
   },
 
   regularAssistantAmountOfNotifications: {
-    backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: theme.dimensions.borderRadius,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -143,7 +141,7 @@ export default makeStyles(({
     width: '24px',
 
     '& > p': {
-      color: config.palette.background.default,
+      color: theme.palette.background.default,
       fontSize: '14px',
       fontWeight: 400,
       height: '24px',
@@ -153,9 +151,9 @@ export default makeStyles(({
   },
 
   regularAssistantButton: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     borderRadius: '50%',
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
@@ -164,14 +162,14 @@ export default makeStyles(({
   },
 
   regularLogo: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.primary.contrastText,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
   },
 
   subTab: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.primary.contrastText,
     fontSize: '16px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -191,14 +189,14 @@ export default makeStyles(({
   },
 
   transparentMenuActiveTabOverLine: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     height: '3px',
     top: 0,
     transition: 'none !important',
   },
 
   transparentMenuTab: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.primary.contrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -208,14 +206,14 @@ export default makeStyles(({
   },
 
   userAvatar: {
-    border: `2px solid ${config.palette.primaryContrastText}`,
+    border: `2px solid ${theme.palette.primary.contrastText}`,
     fontSize: '20px',
     fontWeight: 300,
     height: '33px',
     width: '33px',
 
     '&:hover': {
-      border: `2px solid ${config.palette.primary}`,
+      border: `2px solid ${theme.palette.primary.main}`,
     },
   },
 
@@ -228,7 +226,7 @@ export default makeStyles(({
   },
 
   transparentSubMenuActiveTabUnderLine: {
-    backgroundColor: config.palette.focus,
+    backgroundColor: theme.palette.focus.main,
     height: '3px',
     transition: 'none !important',
   },

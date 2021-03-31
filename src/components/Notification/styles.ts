@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   snackbar: {
     display: 'flex',
     position: 'relative',
@@ -13,7 +12,7 @@ export default makeStyles(({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: theme.dimensions.borderRadius,
   },
   icon: {
     display: 'flex',
@@ -25,11 +24,11 @@ export default makeStyles(({
     margin: 0,
   },
   success: {
-    backgroundColor: config.palette.primary,
+    backgroundColor: theme.palette.primary.main,
     color: 'white',
   },
   error: {
-    backgroundColor: config.palette.feedback.error,
+    backgroundColor: theme.feedback.error,
     color: 'white',
   },
 }))

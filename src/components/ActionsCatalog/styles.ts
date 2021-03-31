@@ -1,10 +1,8 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   actionsCatalogContainer: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -13,13 +11,13 @@ export default makeStyles({
     maxWidth: '900px',
     /* This outline (and its offset) allows us to hide every catalog entry's
     outermost border. It should always be of the same color as the background. */
-    outline: `5px solid ${config.palette.background.default}`,
+    outline: `5px solid ${theme.palette.background.default}`,
     outlineOffset: '-2.5px',
   },
 
   actionsCatalogEntry: {
     /* This outline sets the color of every catalog entry's innermost borders. */
-    outline: `1px solid ${config.palette.newGreyScales['100']}`,
+    outline: `1px solid ${theme.palette.grey['100']}`,
     textAlign: 'center',
     width: '300px',
 
@@ -30,7 +28,7 @@ export default makeStyles({
     },
 
     '& > p': {
-      color: config.palette.label,
+      color: theme.palette.label,
       fontSize: '16px',
       fontWeight: 300,
       paddingBottom: '65px',
@@ -46,4 +44,4 @@ export default makeStyles({
     filter: 'grayscale(1)',
     opacity: 0.5,
   },
-})
+}))

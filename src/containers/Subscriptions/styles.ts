@@ -1,11 +1,9 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   addSubscriptionButton: {
-    backgroundColor: config.palette.primary,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
     color: '#FFFFFF !important',
     cursor: 'pointer',
     fontSize: '16px',
@@ -25,7 +23,7 @@ export default makeStyles(({
   },
 
   dataToShowDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '24px',
@@ -38,7 +36,7 @@ export default makeStyles(({
   },
 
   dataToShowTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -46,7 +44,7 @@ export default makeStyles(({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: config.palette.alert.success.background,
+    backgroundColor: theme.alert.success.background,
     borderRadius: '4px',
     display: 'flex',
     height: '75px',
@@ -86,7 +84,7 @@ export default makeStyles(({
   },
 
   noDataToShowLink: {
-    color: `${config.palette.newGreyScales['300']} !important`,
+    color: `${theme.palette.grey[300]} !important`,
     marginTop: '15px',
   },
 }))

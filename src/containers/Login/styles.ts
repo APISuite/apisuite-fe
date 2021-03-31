@@ -1,10 +1,8 @@
-import { makeStyles } from '@material-ui/styles'
-import { Theme } from '@material-ui/core'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 import loginImage from 'assets/loginImage.svg'
 import registerImage from 'assets/registerImage.svg'
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
     height: '100%',
@@ -34,14 +32,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '55.75%',
     clipPath: 'polygon(0 0, 100% 0, 100% 100%, 51px 100%)',
     backfaceVisibility: 'hidden',
-    backgroundColor: theme.palette.tertiary?.main,
+    backgroundColor: theme.palette.tertiary.main,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '57px center',
     '&::before': {
       content: '',
       height: '100%',
       clipPath: 'polygon(0 0, 12px 0, 69px 100%, 51px 100%)',
-      backgroundColor: theme.palette.tertiary?.main,
+      backgroundColor: theme.palette.tertiary.main,
     },
     '@media (max-width: 1024px)': {
       width: '100%',
@@ -55,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         height: '41.5%',
         minHeight: '375px',
-        backgroundColor: config.palette.secondary,
+        backgroundColor: theme.palette.secondary.main,
         opacity: 0.1,
         clipPath: 'polygon(0 calc(100% - 12px - 22px), 100% calc(100% - 12px), 100% 100%, 0 calc(100% - 22px))',
       },
@@ -76,9 +74,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   optionSelected: {
     textAlign: 'center',
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
     fontWeight: 'bold',
-    borderBottom: '3px solid ' + config.palette.primary,
+    borderBottom: `3px solid ${theme.palette.primary.main}`,
     flex: '1 1 0',
     height: '40px',
     background: 'none',
@@ -90,13 +88,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '40px',
     background: 'none',
     cursor: 'pointer',
-    color: config.palette.greyScales[300],
+    color: theme.palette.grey[300],
     fontWeight: 'normal',
-    borderBottom: '1px solid ' + config.palette.greyScales[300],
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
     '&:hover': {
-      color: config.palette.greyScales[500],
+      color: theme.palette.grey[500],
       fontWeight: 'bold',
-      borderBottom: '2px solid ' + config.palette.greyScales[500],
+      borderBottom: `2px solid ${theme.palette.grey[500]}`,
     },
   },
   formContainer: {
@@ -108,11 +106,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   welcomeMessage: {
-    color: config.palette.greyScales[600],
+    color: theme.palette.grey[600],
     marginBottom: '24px',
   },
   welcomeTitle: {
-    color: config.palette.greyScales[700],
+    color: theme.palette.grey[700],
     marginBottom: '4px',
   },
   loginRegisterSelector: {

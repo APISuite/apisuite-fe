@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -25,12 +24,12 @@ export default makeStyles(({
     lineHeight: '1em',
   },
   live: {
-    backgroundColor: config.palette.primary,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
   },
   docs: {
-    backgroundColor: config.palette.active,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.active,
+    color: theme.palette.primary.contrastText,
   },
   centerVertical: {
     display: 'flex',

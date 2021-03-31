@@ -1,24 +1,22 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   apiAppsContainer: {
     alignItems: 'center',
-    borderLeft: `1px solid ${config.palette.newGreyScales['100']}`,
+    borderLeft: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     width: '405px',
   },
 
   apiDetailsLinkContainer: {
     alignItems: 'center',
-    borderLeft: `1px solid ${config.palette.newGreyScales['100']}`,
+    borderLeft: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     justifyContent: 'center',
     width: '40px',
 
     '& > a': {
-      color: config.palette.active,
+      color: theme.palette.active,
       height: '24px',
       transform: 'scaleX(-1)',
       width: '24px',
@@ -27,7 +25,7 @@ export default makeStyles(({
 
   apiName: {
     alignItems: 'center',
-    color: config.palette.active,
+    color: theme.palette.active,
     display: 'flex',
     fontSize: '16px',
     fontWeight: 400,
@@ -35,8 +33,8 @@ export default makeStyles(({
   },
 
   apiNameAndAppsContainer: {
-    backgroundColor: config.palette.background.default,
-    borderTop: `1px solid ${config.palette.newGreyScales['100']}`,
+    backgroundColor: theme.palette.background.default,
+    borderTop: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     height: '40px',
     justifyContent: 'space-between',
@@ -51,7 +49,7 @@ export default makeStyles(({
 
   apiVersionDetailsContainer: {
     alignItems: 'center',
-    borderTop: `1px solid ${config.palette.newGreyScales['100']}`,
+    borderTop: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     height: '35px',
     justifyContent: 'space-between',
@@ -69,7 +67,7 @@ export default makeStyles(({
   },
 
   apiVersionName: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 300,
     textAlign: 'center',
@@ -77,7 +75,7 @@ export default makeStyles(({
   },
 
   apiVersionNumber: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '14px',
     fontWeight: 300,
     textAlign: 'left',
@@ -85,9 +83,9 @@ export default makeStyles(({
   },
 
   appNameIcon: {
-    backgroundColor: config.palette.primary,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: '4px',
-    color: config.palette.primaryContrastText,
+    color: theme.palette.primary.contrastText,
     fontSize: '14px',
     fontWeight: 300,
     justifyContent: 'center',
@@ -98,19 +96,19 @@ export default makeStyles(({
   },
 
   chevronIcon: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
   },
 
   deprecatedIcon: {
-    backgroundColor: config.palette.warning,
+    backgroundColor: theme.palette.warning.main,
     borderRadius: '4px',
-    color: config.palette.primaryContrastText,
+    color: theme.palette.primary.contrastText,
     marginRight: '20px',
     padding: '5px',
   },
 
   mostRecentAPIVersionLink: {
-    color: config.palette.active,
+    color: theme.palette.active,
     height: '24px',
     textDecoration: 'none',
     transform: 'scaleX(-1)',
@@ -118,17 +116,18 @@ export default makeStyles(({
   },
 
   noSubsMessage: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 300,
     padding: '10px 0px 10px 12px',
   },
 
   tableBody: {
-    backgroundColor: config.palette.newGreyScales['25'],
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderBottomLeftRadius: `${config.dimensions.borderRadius}px`,
-    borderBottomRightRadius: `${config.dimensions.borderRadius}px`,
+    // FIXME: do we need 25 grey scale?
+    backgroundColor: theme.palette.grey[25 as never],
+    border: `1px solid ${theme.palette.grey['300']}`,
+    borderBottomLeftRadius: `${theme.dimensions.borderRadius}px`,
+    borderBottomRightRadius: `${theme.dimensions.borderRadius}px`,
     borderTop: 'none',
     width: '100%',
   },
@@ -138,23 +137,23 @@ export default makeStyles(({
   },
 
   tableHeader: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderTopLeftRadius: `${config.dimensions.borderRadius}px`,
-    borderTopRightRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderTopLeftRadius: `${theme.dimensions.borderRadius}px`,
+    borderTopRightRadius: `${theme.dimensions.borderRadius}px`,
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px 47.5px 10px 40px',
     width: '100%',
 
     '& > :first-child': {
-      color: config.palette.active,
+      color: theme.palette.active,
       fontSize: '16px',
       fontWeight: 300,
     },
 
     '& > :last-child': {
-      color: config.palette.newGreyScales['400'],
+      color: theme.palette.grey[400],
       fontSize: '16px',
       fontWeight: 300,
     },

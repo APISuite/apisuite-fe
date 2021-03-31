@@ -1,28 +1,21 @@
-import * as React from 'react'
-
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-import APICatalog from 'components/APICatalog'
-import Carousel from 'components/Carousel'
-import Notice from 'components/Notice'
-
+import { useTheme } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
 import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
 import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
-
+import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
+import APICatalog from 'components/APICatalog'
+import Carousel from 'components/Carousel'
+import Notice from 'components/Notice'
 import useStyles from './styles'
-
 import { SandboxProps } from './types'
-
 import carouselBackground from 'assets/space-background.svg'
 import carouselSlide1 from 'assets/carousel-slide-1.svg'
 import carouselSlide2 from 'assets/carousel-slide-2.svg'
 import carouselSlide3 from 'assets/carousel-slide-3.svg'
-
-import { config, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
 
 const Sandbox: React.FC<SandboxProps> = ({
   auth,
@@ -31,6 +24,7 @@ const Sandbox: React.FC<SandboxProps> = ({
   subscriptions,
 }) => {
   const classes = useStyles()
+  const { palette } = useTheme()
 
   const [t] = useTranslation()
 
@@ -40,7 +34,7 @@ const Sandbox: React.FC<SandboxProps> = ({
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
     getAPIs()
-  }, [])
+  }, [getAPIs])
 
   React.useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
@@ -98,45 +92,45 @@ const Sandbox: React.FC<SandboxProps> = ({
             ? [
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel', { config }),
+                slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel'),
                 slideButtonLink: '/auth/register',
                 slideContentsPlacement: 'top-to-bottom',
                 slideForegroundImage: carouselSlide1,
-                slideText: t('sandboxPage.newSlides.slideOne.slideText', { config }),
+                slideText: t('sandboxPage.newSlides.slideOne.slideText'),
               },
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel'),
                 slideButtonLink: '/api-products',
                 slideContentsPlacement: 'side-by-side',
                 slideForegroundImage: carouselSlide2,
-                slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+                slideText: t('sandboxPage.newSlides.slideTwo.slideText'),
               },
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
+                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel'),
                 slideButtonLink: '/documentation',
                 slideContentsPlacement: 'side-by-side',
                 slideForegroundImage: carouselSlide3,
-                slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
+                slideText: t('sandboxPage.newSlides.slideThree.slideText'),
               },
             ]
             : [
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel'),
                 slideButtonLink: '/api-products',
                 slideContentsPlacement: 'side-by-side',
                 slideForegroundImage: carouselSlide2,
-                slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+                slideText: t('sandboxPage.newSlides.slideTwo.slideText'),
               },
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
+                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel'),
                 slideButtonLink: '/documentation',
                 slideContentsPlacement: 'side-by-side',
                 slideForegroundImage: carouselSlide3,
-                slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
+                slideText: t('sandboxPage.newSlides.slideThree.slideText'),
               },
             ]}
           slidingAnimationDuration={1500}
@@ -147,7 +141,7 @@ const Sandbox: React.FC<SandboxProps> = ({
       {/* 'Steps' section */}
       <section className={classes.stepsSectionContainer}>
         <h1 className={classes.sectionIntroHeading}>
-          {t('sandboxPage.stepsSection.intro', { config })}
+          {t('sandboxPage.stepsSection.intro')}
         </h1>
 
         <section className={classes.stepsSectionDescriptionsContainer}>
@@ -155,16 +149,16 @@ const Sandbox: React.FC<SandboxProps> = ({
             <h3 className={classes.stepsDescriptionHeading}>
               {
                 !auth.user
-                  ? t('sandboxPage.stepsSection.notLoggedIn.heading', { config })
-                  : t('sandboxPage.stepsSection.loggedIn.heading', { config })
+                  ? t('sandboxPage.stepsSection.notLoggedIn.heading')
+                  : t('sandboxPage.stepsSection.loggedIn.heading')
               }
             </h3>
 
             <p className={classes.stepsDescriptionParagraphOne}>
               {
                 !auth.user
-                  ? t('sandboxPage.stepsSection.notLoggedIn.paragraphOne', { config })
-                  : `${settings.portalName} ${t('sandboxPage.stepsSection.loggedIn.paragraphOne', { config })}`
+                  ? t('sandboxPage.stepsSection.notLoggedIn.paragraphOne')
+                  : `${settings.portalName} ${t('sandboxPage.stepsSection.loggedIn.paragraphOne')}`
               }
             </p>
 
@@ -172,16 +166,16 @@ const Sandbox: React.FC<SandboxProps> = ({
               <span>
                 {
                   !auth.user
-                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartOne', { config })
-                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartOne', { config })
+                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartOne')
+                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartOne')
                 }
               </span>
 
               <>
                 {
                   !auth.user
-                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartTwo', { config })
-                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartTwo', { config })
+                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartTwo')
+                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartTwo')
                 }
               </>
             </p>
@@ -210,8 +204,8 @@ const Sandbox: React.FC<SandboxProps> = ({
             >
               {
                 !auth.user
-                  ? t('sandboxPage.stepsSection.notLoggedIn.buttonLabel', { config })
-                  : t('sandboxPage.stepsSection.loggedIn.buttonLabel', { config })
+                  ? t('sandboxPage.stepsSection.notLoggedIn.buttonLabel')
+                  : t('sandboxPage.stepsSection.loggedIn.buttonLabel')
               }
             </Button>
           </section>
@@ -222,16 +216,16 @@ const Sandbox: React.FC<SandboxProps> = ({
                 <h1 style={{ color: '#7DD291' }}>1.</h1>
 
                 <h3 style={{ color: '#7DD291' }}>
-                  {t('sandboxPage.stepsSection.individualSteps.stepOne.header', { config })}
+                  {t('sandboxPage.stepsSection.individualSteps.stepOne.header')}
                 </h3>
 
                 <p>
                   <span>
-                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne', { config })}
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne')}
                   </span>
 
                   <>
-                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo', { config })}
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo')}
                   </>
                 </p>
 
@@ -240,19 +234,19 @@ const Sandbox: React.FC<SandboxProps> = ({
                   disabled={!auth.user}
                   href='/dashboard/apps'
                 >
-                  {t('sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel', { config })}
+                  {t('sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel')}
                 </Button>
               </div>
 
               <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
-                <h1 style={{ color: config.palette.primary }}>2.</h1>
+                <h1 style={{ color: palette.primary.main }}>2.</h1>
 
-                <h3 style={{ color: config.palette.primary }}>
-                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.header', { config })}
+                <h3 style={{ color: palette.primary.main }}>
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.header')}
                 </h3>
 
                 <p>
-                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.paragraph', { config })}
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.paragraph')}
                 </p>
 
                 <Button
@@ -260,7 +254,7 @@ const Sandbox: React.FC<SandboxProps> = ({
                   disabled={!auth.user}
                   href='/dashboard/subscriptions'
                 >
-                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel', { config })}
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel')}
                 </Button>
               </div>
 
@@ -268,11 +262,11 @@ const Sandbox: React.FC<SandboxProps> = ({
                 <h1 style={{ color: '#007D7D' }}>3.</h1>
 
                 <h3 style={{ color: '#007D7D' }}>
-                  {t('sandboxPage.stepsSection.individualSteps.stepThree.header', { config })}
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.header')}
                 </h3>
 
                 <p>
-                  {t('sandboxPage.stepsSection.individualSteps.stepThree.paragraph', { config })}
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.paragraph')}
                 </p>
 
                 <Button
@@ -280,7 +274,7 @@ const Sandbox: React.FC<SandboxProps> = ({
                   disabled={!auth.user}
                   href='/dashboard/test'
                 >
-                  {t('sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel', { config })}
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel')}
                 </Button>
               </div>
             </div>
@@ -293,13 +287,13 @@ const Sandbox: React.FC<SandboxProps> = ({
       {/* 'API Catalog' section */}
       <section className={classes.apiCatalogSectionContainer}>
         <h1 className={classes.sectionIntroHeading}>
-          {t('sandboxPage.apiCatalog.intro', { config })}
+          {t('sandboxPage.apiCatalog.intro')}
         </h1>
 
         <section className={classes.apiCatalogContainer}>
           {
             recentlyAddedAPIs.length === 0
-              ? <p>{t('sandboxPage.apiCatalog.paragraph', { config })}</p>
+              ? <p>{t('sandboxPage.apiCatalog.paragraph')}</p>
               : <APICatalog apisToDisplay={recentlyAddedAPIs} />
           }
         </section>
@@ -315,11 +309,11 @@ const Sandbox: React.FC<SandboxProps> = ({
             }
             noticeText={
               <p>
-                <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings?.clientName}.</>
+                <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy')} {settings?.clientName}.</>
                 {
                   hasSocials() && (
                     <>
-                      <> {t('sandboxPage.notice.visitUs', { config })} </>
+                      <> {t('sandboxPage.notice.visitUs')} </>
                       <a
                         href={hasSocials() ? settings.socialURLs[0].url : '#'}
                         rel='noopener noreferrer'

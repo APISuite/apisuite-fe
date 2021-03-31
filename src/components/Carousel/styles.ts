@@ -1,11 +1,9 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   carouselSlideButtonStyling: {
-    backgroundColor: config.palette.primary,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.dimensions.borderRadius}px`,
     color: '#FFFFFF !important',
     cursor: 'pointer',
     fontSize: '16px',
@@ -60,19 +58,19 @@ export default makeStyles({
     transform: 'translateY(-20px)',
 
     '& > :first-child': {
-      borderBottomLeftRadius: `${config.dimensions.borderRadius}px`,
-      borderTopLeftRadius: `${config.dimensions.borderRadius}px`,
+      borderBottomLeftRadius: `${theme.dimensions.borderRadius}px`,
+      borderTopLeftRadius: `${theme.dimensions.borderRadius}px`,
     },
 
     '& > :last-child': {
-      borderBottomRightRadius: `${config.dimensions.borderRadius}px`,
-      borderTopRightRadius: `${config.dimensions.borderRadius}px`,
+      borderBottomRightRadius: `${theme.dimensions.borderRadius}px`,
+      borderTopRightRadius: `${theme.dimensions.borderRadius}px`,
     },
   },
 
   notSelectedCarouselSliderIconButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.grey[300]}`,
     color: '#6A7884',
     height: '40px',
     width: '40px',
@@ -80,8 +78,8 @@ export default makeStyles({
 
   selectedCarouselSliderIconButton: {
     backgroundColor: '#DCDFE3',
-    border: `1px solid ${config.palette.focus}`,
-    color: config.palette.focus,
+    border: `1px solid ${theme.palette.focus.main}`,
+    color: theme.palette.focus.main,
     height: '40px',
     width: '40px',
   },
@@ -108,4 +106,4 @@ export default makeStyles({
       paddingTop: '165px',
     },
   },
-})
+}))

@@ -5,7 +5,8 @@
   "extends": [
     "standard",
     "plugin:@typescript-eslint/recommended",
-    "standard-react"
+    "standard-react",
+    "plugin:react-hooks/recommended"
   ],
   "settings": {
     "react": {

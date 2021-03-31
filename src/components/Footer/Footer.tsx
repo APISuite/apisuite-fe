@@ -23,9 +23,7 @@ import useStyles from './styles'
 
 import { FooterProps, MenuSection, MenuSections } from './types'
 
-import { config } from 'constants/global'
-
-const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
+const SocialLinks = ({ settings }: { settings: SettingsStore }) => {
   const classes = useStyles()
 
   const { socialURLs } = settings
@@ -63,10 +61,8 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
   )
 }
 
-const renderSubSection = (
-  settings: SettingsStore,
-  subMenu: string,
-  roleName?: string,
+const SubSection = (
+  { settings, subMenu, roleName }: { settings: SettingsStore; subMenu: string; roleName?: string },
 ) => {
   const classes = useStyles()
 
@@ -74,56 +70,56 @@ const renderSubSection = (
 
   const menuSections: MenuSections = {
     [Menus.FooterProducts]: {
-      title: t('footer.apiProductsMenu.menuTitle', { config }),
+      title: t('footer.apiProductsMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.apiProductsMenu.menuItemOne', { config }),
+          label: t('footer.apiProductsMenu.menuItemOne'),
           route: '/dashboard/subscriptions',
         },
         {
-          label: t('footer.apiProductsMenu.menuItemTwo', { config }),
+          label: t('footer.apiProductsMenu.menuItemTwo'),
           route: '/documentation',
         },
       ],
     },
 
     [Menus.FooterSupport]: {
-      title: t('footer.supportMenu.menuTitle', { config }),
+      title: t('footer.supportMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.supportMenu.menuItemOne', { config }),
+          label: t('footer.supportMenu.menuItemOne'),
           route: settings && settings.socialURLs && settings.socialURLs.length ? settings.socialURLs[0]?.url : '#',
         },
         {
-          label: t('footer.supportMenu.menuItemTwo', { config }),
+          label: t('footer.supportMenu.menuItemTwo'),
           route: 'https://cloudoki.atlassian.net/wiki/spaces/APIEC/overview?homepageId=281444539',
         },
       ],
     },
 
     [Menus.FooterDashboard]: {
-      title: t('footer.dashboardMenu.menuTitle', { config }),
+      title: t('footer.dashboardMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.dashboardMenu.menuItemOne', { config }),
+          label: t('footer.dashboardMenu.menuItemOne'),
           route: '/dashboard/apps',
         },
         {
-          label: t('footer.dashboardMenu.menuItemTwo', { config }),
+          label: t('footer.dashboardMenu.menuItemTwo'),
           route: '/profile/team',
         },
       ],
     },
 
     [Menus.FooterProfile]: {
-      title: t('footer.profileMenu.menuTitle', { config }),
+      title: t('footer.profileMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.profileMenu.menuItemOne', { config }),
+          label: t('footer.profileMenu.menuItemOne'),
           route: '/profile/security',
         },
         {
-          label: t('footer.profileMenu.menuItemTwo', { config }),
+          label: t('footer.profileMenu.menuItemTwo'),
           route: '/profile/organisation',
         },
       ],
@@ -219,19 +215,35 @@ const Footer: React.FC<FooterProps> = ({
 
           <div className={classes.sectionsContainer}>
             <div>
-              {renderSubSection(settings, Menus.FooterProducts, roleName)}
+              <SubSection
+                settings={settings}
+                subMenu={Menus.FooterProducts}
+                roleName={roleName}
+              />
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(settings, Menus.FooterSupport, roleName)}
+              <SubSection
+                settings={settings}
+                subMenu={Menus.FooterSupport}
+                roleName={roleName}
+              />
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(settings, Menus.FooterDashboard, roleName)}
+              <SubSection
+                settings={settings}
+                subMenu={Menus.FooterDashboard}
+                roleName={roleName}
+              />
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(settings, Menus.FooterProfile, roleName)}
+              <SubSection
+                settings={settings}
+                subMenu={Menus.FooterProfile}
+                roleName={roleName}
+              />
             </div>
 
             {/* TODO: Come up with a solution to a bug that manifests upon logging out with this extension active */}
@@ -245,7 +257,7 @@ auth.user?.role.name === 'admin' &&
         </div>
 
         <div className={classes.rightFooterContentsContainer}>
-          {renderSocialLinks({ settings })}
+          <SocialLinks settings={settings} />
 
           <div className={classes.copyrightContainer}>
             <a
@@ -253,10 +265,10 @@ auth.user?.role.name === 'admin' &&
               rel='noopener noreferrer'
               target='_blank'
             >
-              &copy; {new Date().getFullYear()} {t('footer.copyrights.website', { config })}
+              &copy; {new Date().getFullYear()} {t('footer.copyrights.website')}
             </a>
 
-            <p>{t('footer.copyrights.allRightsReserved', { config })}</p>
+            <p>{t('footer.copyrights.allRightsReserved')}</p>
           </div>
 
           <LocaleSelect />

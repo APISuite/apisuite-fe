@@ -19,7 +19,7 @@ export const ConfigContext = createContext<ConfigContextProps>({
   footer: {
     'copyright': '© Cloudoki 2020.\nAll rights reserved.\nProudly made in Europe.',
   },
-  i18n: [
+  i18nOptions: [
     {
       locale: 'en-US',
       label: 'We speak English',

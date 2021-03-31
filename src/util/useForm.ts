@@ -4,7 +4,7 @@ type FieldValues = Record<string, string | number>;
 type FieldName<FormValues> = keyof FormValues;
 type FormState<FormValues> = {
   values: FormValues,
-  errors: Record<FieldName<FormValues>, boolean>,
+  errors: Record<FieldName<FormValues>, boolean | undefined>,
   errorMsgs: Record<FieldName<FormValues>, string>,
   focused: Record<FieldName<FormValues>, boolean>,
   touched: Record<FieldName<FormValues>, boolean>,

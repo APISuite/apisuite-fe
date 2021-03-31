@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   actionsContainer: {
     display: 'flex',
     marginBottom: '65px',
@@ -9,10 +8,10 @@ export default makeStyles(({
   },
 
   disabledUpdatePasswordButton: {
-    backgroundColor: config.palette.label,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.label,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -24,10 +23,10 @@ export default makeStyles(({
   },
 
   enabledUpdatePasswordButton: {
-    backgroundColor: config.palette.tertiary,
-    border: `1px solid ${config.palette.tertiary}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.tertiary.main,
+    border: `1px solid ${theme.palette.tertiary.main}`,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -37,10 +36,10 @@ export default makeStyles(({
   },
 
   forgotPasswordButton: {
-    backgroundColor: config.palette.primaryContrastText,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.primary.contrastText,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -56,42 +55,42 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: config.palette.active,
+        color: theme.palette.active,
       },
     },
   },
 
   sectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: theme.dimensions.borderRadius,
     marginBottom: '25px',
     maxWidth: '900px',
     width: '100%',
   },
 
   securityTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '55px',
@@ -104,7 +103,7 @@ export default makeStyles(({
   },
 
   updatePasswordTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '10px',

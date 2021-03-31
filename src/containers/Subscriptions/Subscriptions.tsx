@@ -15,8 +15,6 @@ import rocket from 'assets/rocket.svg'
 
 import useStyles from './styles'
 
-import { config } from 'constants/global'
-
 const Subscriptions: React.FC<SubscriptionsProps> = ({
   auth,
   getAllUserAppsAction,
@@ -37,7 +35,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
       getAPIs()
       getAllUserAppsAction(auth.user.id)
     }
-  }, [])
+  }, [auth.user, getAPIs, getAllUserAppsAction])
 
   /* Modal stuff */
 
@@ -62,7 +60,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
                   customButtonClassName={classes.addSubscriptionButton}
                   href='#'
                   label={
-                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })
+                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel')
                   }
                   onClick={toggleModal}
                 />
@@ -72,18 +70,18 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
                 className={classes.noDataToShowLink}
                 to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
               >
-                {t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.linkText', { config })}
+                {t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.linkText')}
               </Link>
             </section>
           )
           : (
             <section className={classes.dataToShowContentContainer}>
               <h1 className={classes.dataToShowTitle}>
-                {t('dashboardTab.subscriptionsSubTab.hasDataToShow.title', { config })}
+                {t('dashboardTab.subscriptionsSubTab.hasDataToShow.title')}
               </h1>
 
               <p className={classes.dataToShowDescription}>
-                {t('dashboardTab.subscriptionsSubTab.hasDataToShow.description', { config })}
+                {t('dashboardTab.subscriptionsSubTab.hasDataToShow.description')}
               </p>
 
               <div className={classes.dataToShowSubscriptionsTable}>
@@ -95,7 +93,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
                   customButtonClassName={classes.addSubscriptionButton}
                   href='#'
                   label={
-                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })
+                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel')
                   }
                   onClick={toggleModal}
                 />
@@ -105,13 +103,13 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
                 <SportsSoccerRoundedIcon className={classes.infoBoxIcon} />
 
                 <p className={classes.infoBoxText}>
-                  <>{t('dashboardTab.subscriptionsSubTab.hasDataToShow.notificationTextPartOne', { config })} "</>
+                  <>{t('dashboardTab.subscriptionsSubTab.hasDataToShow.notificationTextPartOne')} "</>
                   <a
                     href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
                     rel='noopener noreferrer'
                     target='_blank'
                   >
-                    {t('dashboardTab.subscriptionsSubTab.hasDataToShow.notificationTextPartTwo', { config })}
+                    {t('dashboardTab.subscriptionsSubTab.hasDataToShow.notificationTextPartTwo')}
                   </a>
                   <>".</>
                 </p>

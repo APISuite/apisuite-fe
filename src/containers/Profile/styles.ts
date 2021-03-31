@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   allUserDetailsContainer: {
     display: 'flex',
     margin: '0px auto',
@@ -10,15 +9,15 @@ export default makeStyles(({
   },
 
   alternativeOrganisationDetailsTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '40px',
   },
 
   alternativeSectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: theme.dimensions.borderRadius,
     margin: '32.5px 0px',
     maxWidth: '900px',
     width: '100%',
@@ -35,7 +34,7 @@ export default makeStyles(({
   },
 
   avatarIcons: {
-    color: config.palette.active,
+    color: theme.palette.active,
     cursor: 'pointer',
     height: '20px',
     position: 'absolute',
@@ -44,10 +43,10 @@ export default makeStyles(({
   },
 
   deleteProfileButton: {
-    backgroundColor: config.palette.error,
-    border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.error.main,
+    border: `1px solid ${theme.palette.error.main}`,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '15px',
@@ -56,9 +55,9 @@ export default makeStyles(({
   },
 
   disabledOrganisationButton: {
-    backgroundColor: config.palette.label,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.label,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -68,9 +67,9 @@ export default makeStyles(({
   },
 
   disabledUpdateDetailsButton: {
-    backgroundColor: config.palette.label,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.label,
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.primary.contrastText,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -82,9 +81,9 @@ export default makeStyles(({
   },
 
   enabledOrganisationButton: {
-    backgroundColor: config.palette.active,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.active,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -93,9 +92,9 @@ export default makeStyles(({
   },
 
   enabledUpdateDetailsButton: {
-    backgroundColor: config.palette.active,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.active,
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.primary.contrastText,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -106,16 +105,16 @@ export default makeStyles(({
   },
 
   formFieldsContainer: {
-    backgroundColor: config.palette.primaryContrastText,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.primary.contrastText,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: theme.dimensions.borderRadius,
     marginBottom: '35px',
     textAlign: 'center',
   },
 
   formSectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey['100']}`,
+    borderRadius: theme.dimensions.borderRadius,
     margin: '0px 0px 16px 0px',
     maxWidth: '320px',
     width: '100%',
@@ -128,28 +127,28 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: config.palette.active,
+        color: theme.palette.active,
       },
     },
   },
@@ -161,30 +160,30 @@ export default makeStyles(({
   },
 
   organisationSelector: {
-    borderColor: config.palette.label,
+    borderColor: theme.palette.label,
     marginBottom: '35px',
 
     // Selector
     '& > .MuiFormControl-root': {
       // Selector's label
       '& > .MuiFormLabel-root': {
-        color: config.palette.label,
+        color: theme.palette.label,
       },
 
       // Selector's input (i.e., text)
       '& > .MuiInputBase-root': {
         '& > .MuiInputBase-input': {
-          color: config.palette.active,
+          color: theme.palette.active,
         },
       },
     },
   },
 
   otherActionsButtons: {
-    backgroundColor: config.palette.primaryContrastText,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.primary.contrastText,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: theme.dimensions.borderRadius,
+    color: `${theme.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '15px',
@@ -197,15 +196,15 @@ export default makeStyles(({
   },
 
   regularOrganisationDetailsTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '20px',
   },
 
   regularSectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: theme.dimensions.borderRadius,
     margin: '32.5px 0px 32.5px 0px',
     maxWidth: '900px',
     width: '100%',
@@ -217,20 +216,20 @@ export default makeStyles(({
   },
 
   subtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '25px',
   },
 
   userDetailsContainer: {
-    backgroundColor: config.palette.primaryContrastText,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.primary.contrastText,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: theme.dimensions.borderRadius,
   },
 
   userName: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginRight: '10px',
@@ -242,9 +241,9 @@ export default makeStyles(({
   },
 
   userRole: {
-    backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.primary.contrastText,
     fontSize: '14px',
     fontWeight: 300,
     padding: '0px 7.5px',
@@ -255,13 +254,13 @@ export default makeStyles(({
     margin: '0px 25px 20px 25px',
 
     '& > :first-child': {
-      color: config.palette.primary,
+      color: theme.palette.primary.main,
       fontSize: '14px',
       marginRight: '12px',
     },
 
     '& > :last-child': {
-      color: config.palette.label,
+      color: theme.palette.label,
       fontSize: '14px',
       fontWeight: 300,
       textAlign: 'left',

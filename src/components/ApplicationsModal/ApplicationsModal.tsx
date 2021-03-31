@@ -30,8 +30,6 @@ import useStyles from './styles'
 
 import { useForm } from 'util/useForm'
 
-import { config } from 'constants/global'
-
 const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
   createAppAction,
@@ -55,7 +53,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     if (modalDetails.userAppID && modalDetails.userID) {
       getUserAppAction(modalDetails.userAppID, modalDetails.userID)
     }
-  }, [modalMode])
+  }, [modalMode, getUserAppAction, modalDetails.userAppID, modalDetails.userID])
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false)
   const [validImage, setValidImage] = React.useState<boolean>(true)
@@ -128,37 +126,37 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
           return validURL
         }],
-        message: t('dashboardTab.applicationsSubTab.appModal.appAvatarURLError', { config }),
+        message: t('dashboardTab.applicationsSubTab.appModal.appAvatarURLError'),
       },
 
       appPrivacyURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError'),
       },
 
       appRedirectURI: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError'),
       },
 
       appSupportURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError'),
       },
 
       appTermsURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError'),
       },
 
       appWebsiteURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError'),
       },
 
       appYouTubeURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError'),
       },
     })
 
@@ -201,7 +199,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appYouTubeURL: '',
       })
     }
-  }, [modalMode, mostRecentlySelectedAppDetails])
+  }, [modalMode, mostRecentlySelectedAppDetails, resetForm])
 
   /* Optional URL selector */
 
@@ -417,7 +415,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 onClick={toggleModal}
               >
                 <p>
-                  {t('dashboardTab.applicationsSubTab.appModal.closeButtonLabel', { config })}
+                  {t('dashboardTab.applicationsSubTab.appModal.closeButtonLabel')}
                 </p>
 
                 <CloseRoundedIcon />
@@ -431,7 +429,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 modalMode === 'new'
                   ? (
                     <h1 className={classes.newApplicationHeader}>
-                      {t('dashboardTab.applicationsSubTab.appModal.newAppLabel', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.newAppLabel')}
                     </h1>
                   )
                   : (
@@ -455,8 +453,8 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <p className={classes.clientApplicationCardStatusText}>
                           {
                             mostRecentlySelectedAppDetails.subscriptions.length === 0
-                              ? t('dashboardTab.applicationsSubTab.appModal.draftAppStatus', { config })
-                              : t('dashboardTab.applicationsSubTab.appModal.subbedAppStatus', { config })
+                              ? t('dashboardTab.applicationsSubTab.appModal.draftAppStatus')
+                              : t('dashboardTab.applicationsSubTab.appModal.subbedAppStatus')
                           }
                         </p>
                       </div>
@@ -469,7 +467,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'App name and short description' subsection */}
                 <div className={classes.leftSubSectionContainer}>
                   <p className={classes.appNameAndShortDescriptionSubSectionTitle}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelOne', { config })}
+                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelOne')}
                   </p>
 
                   <TextField
@@ -481,14 +479,14 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     fullWidth
                     helperText={
                       (formState.touched.appName && formState.values.appName.length === 0)
-                        ? t('dashboardTab.applicationsSubTab.appModal.noAppNameError', { config })
+                        ? t('dashboardTab.applicationsSubTab.appModal.noAppNameError')
                         : (
                           (modalMode === 'new' && allUserAppNames.includes(formState.values.appName))
-                            ? t('dashboardTab.applicationsSubTab.appModal.existingAppNameError', { config })
+                            ? t('dashboardTab.applicationsSubTab.appModal.existingAppNameError')
                             : ''
                         )
                     }
-                    label={t('dashboardTab.applicationsSubTab.appModal.appNameFieldLabel', { config })}
+                    label={t('dashboardTab.applicationsSubTab.appModal.appNameFieldLabel')}
                     margin='dense'
                     name='appName'
                     onChange={handleChange}
@@ -501,7 +499,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   <TextField
                     className={classes.inputFields}
                     fullWidth
-                    label={t('dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel', { config })}
+                    label={t('dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel')}
                     margin='dense'
                     name='appShortDescription'
                     onChange={handleChange}
@@ -514,7 +512,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'App avatar' subsection */}
                 <div className={classes.rightSubSectionContainer}>
                   <p className={classes.appAvatarSubSectionDescription}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo', { config })}
+                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo')}
                   </p>
 
                   <div className={classes.appAvatarContainer}>
@@ -561,14 +559,14 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       helperText={
                         (formState.touched.appAvatarURL && formState.errors.appAvatarURL) || !validImage
                           ? formState.errorMsgs.appAvatarURL
-                          : t('dashboardTab.applicationsSubTab.appModal.appAvatarFieldSubLabel', { config })
+                          : t('dashboardTab.applicationsSubTab.appModal.appAvatarFieldSubLabel')
                       }
                       inputRef={(input) =>
                         avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      label={t('dashboardTab.applicationsSubTab.appModal.appAvatarFieldLabel', { config })}
+                      label={t('dashboardTab.applicationsSubTab.appModal.appAvatarFieldLabel')}
                       margin='dense'
                       name='appAvatarURL'
                       onBlur={() => {
@@ -594,7 +592,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Redirect URI' subsection */}
                 <div className={classes.leftSubSectionContainer}>
                   <p className={classes.redirectURISubSectionTitle}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelThree', { config })}
+                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelThree')}
                   </p>
 
                   <TextField
@@ -606,7 +604,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         ? formState.errorMsgs.appRedirectURI
                         : ''
                     }
-                    label={t('dashboardTab.applicationsSubTab.appModal.subSectionLabelThree', { config })}
+                    label={t('dashboardTab.applicationsSubTab.appModal.subSectionLabelThree')}
                     margin='dense'
                     name='appRedirectURI'
                     onChange={handleChange}
@@ -619,13 +617,13 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Client credentials' subsection */}
                 <div className={classes.rightSubSectionContainer}>
                   <p className={classes.clientCredentialsSubSectionDescription}>
-                    <>{t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartOne', { config })}</>
+                    <>{t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartOne')}</>
                     <a
                       href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2'
                       target='_blank'
                       rel='noopener noreferrer'
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartTwo', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartTwo')}
                     </a>
                     <>.</>
                   </p>
@@ -645,7 +643,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           <FileCopyOutlinedIcon />
                         </InputAdornment>,
                     }}
-                    label={t('dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel', { config })}
+                    label={t('dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel')}
                     margin='dense'
                     name='appClientID'
                     onChange={handleChange}
@@ -670,7 +668,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             <FileCopyOutlinedIcon />
                           </InputAdornment>,
                       }}
-                      label={t('dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel', { config })}
+                      label={t('dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel')}
                       margin='dense'
                       name='appClientSecret'
                       onChange={handleChange}
@@ -701,13 +699,13 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Full description' subsection */}
                 <div className={classes.leftSubSectionContainer}>
                   <p className={classes.additionalInfoSubSectionTitle}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFive', { config })}
+                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFive')}
                   </p>
 
                   <TextField
                     className={classes.inputFields}
                     fullWidth
-                    label={t('dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel', { config })}
+                    label={t('dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel')}
                     margin='dense'
                     multiline
                     name='appFullDescription'
@@ -722,7 +720,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Optional URLs' subsection */}
                 <div className={classes.rightSubSectionContainer}>
                   <p className={classes.optionalURLsSubSectionDescription}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelSix', { config })}
+                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelSix')}
                   </p>
 
                   <div className={classes.appURLFieldWrapper}>
@@ -735,7 +733,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           ? formState.errorMsgs.appWebsiteURL
                           : ''
                       }
-                      label={t('dashboardTab.applicationsSubTab.appModal.appWebsiteURLFieldLabel', { config })}
+                      label={t('dashboardTab.applicationsSubTab.appModal.appWebsiteURLFieldLabel')}
                       margin='dense'
                       name='appWebsiteURL'
                       onChange={handleChange}
@@ -759,7 +757,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       className={classes.selectorTitle}
                       disabled
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.selectorTitle', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.selectorTitle')}
                     </MenuItem>
 
                     <MenuItem
@@ -767,7 +765,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[0]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 0)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appToSFieldLabel', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.appToSFieldLabel')}
                     </MenuItem>
 
                     <MenuItem
@@ -775,7 +773,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[1]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 1)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyFieldLabel', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyFieldLabel')}
                     </MenuItem>
 
                     <MenuItem
@@ -783,14 +781,14 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[2]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 2)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appYouTubeChannelFieldLabel', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.appYouTubeChannelFieldLabel')}
                     </MenuItem>
 
                     <MenuItem
                       className={classes.selectorOption}
                       disabled
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appWebsiteFieldLabel', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.appWebsiteFieldLabel')}
                     </MenuItem>
 
                     <MenuItem
@@ -798,7 +796,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[3]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 3)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appSupportFieldLabel', { config })}
+                      {t('dashboardTab.applicationsSubTab.appModal.appSupportFieldLabel')}
                     </MenuItem>
                   </Menu>
 
@@ -814,7 +812,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             ? formState.errorMsgs.appTermsURL
                             : ''
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appToSURLFieldLabel', { config })}
+                        label={t('dashboardTab.applicationsSubTab.appModal.appToSURLFieldLabel')}
                         margin='dense'
                         name='appTermsURL'
                         onChange={handleChange}
@@ -841,7 +839,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             ? formState.errorMsgs.appPrivacyURL
                             : ''
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyURLFieldLabel', { config })}
+                        label={t('dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyURLFieldLabel')}
                         margin='dense'
                         name='appPrivacyURL'
                         onChange={handleChange}
@@ -868,7 +866,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             ? formState.errorMsgs.appYouTubeURL
                             : ''
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appYouTubeChannelURLFieldLabel', { config })}
+                        label={t('dashboardTab.applicationsSubTab.appModal.appYouTubeChannelURLFieldLabel')}
                         margin='dense'
                         name='appYouTubeURL'
                         onChange={handleChange}
@@ -895,7 +893,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             ? formState.errorMsgs.appSupportURL
                             : ''
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appSupportURLFieldLabel', { config })}
+                        label={t('dashboardTab.applicationsSubTab.appModal.appSupportURLFieldLabel')}
                         margin='dense'
                         name='appSupportURL'
                         onChange={handleChange}
@@ -936,7 +934,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             href='#'
                             onClick={createApp}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.addAppButtonLabel', { config })}
+                            {t('dashboardTab.applicationsSubTab.appModal.addAppButtonLabel')}
                           </Button>
 
                           <Button
@@ -944,7 +942,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             href='#'
                             onClick={toggleModal}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel', { config })}
+                            {t('dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel')}
                           </Button>
                         </div>
 
@@ -953,11 +951,11 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <div>
                             <p className={classes.infoBoxText}>
-                              {t('dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel', { config })}
+                              {t('dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel')}
                             </p>
 
                             <p className={classes.infoBoxText}>
-                              {t('dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel', { config })}
+                              {t('dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel')}
                             </p>
                           </div>
                         </div>
@@ -977,7 +975,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             href='#'
                             onClick={updateApp}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.editAppButtonLabel', { config })}
+                            {t('dashboardTab.applicationsSubTab.appModal.editAppButtonLabel')}
                           </Button>
 
                           <Button
@@ -986,7 +984,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             rel='noopener noreferrer'
                             target='_blank'
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.appSubsButtonLabel', { config })}
+                            {t('dashboardTab.applicationsSubTab.appModal.appSubsButtonLabel')}
                           </Button>
 
                           <Button
@@ -994,7 +992,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             href='#'
                             onClick={handleOpenDialog}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.removeAppButtonLabel', { config })}
+                            {t('dashboardTab.applicationsSubTab.appModal.removeAppButtonLabel')}
                           </Button>
                         </div>
 
@@ -1003,7 +1001,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           href='#'
                           onClick={toggleModal}
                         >
-                          {t('dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel', { config })}
+                          {t('dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel')}
                         </Button>
                       </>
                     )
@@ -1019,10 +1017,10 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         <CustomizableDialog
           closeDialogCallback={handleCloseDialog}
           confirmButtonCallback={deleteApp}
-          confirmButtonLabel={t('dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel', { config })}
+          confirmButtonLabel={t('dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel')}
           open={openDialog}
-          providedText={t('dashboardTab.applicationsSubTab.appModal.dialogText', { config })}
-          providedTitle={t('dashboardTab.applicationsSubTab.appModal.dialogTitle', { config })}
+          providedText={t('dashboardTab.applicationsSubTab.appModal.dialogText')}
+          providedTitle={t('dashboardTab.applicationsSubTab.appModal.dialogTitle')}
         />
       }
     </>

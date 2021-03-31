@@ -1,12 +1,10 @@
-import { Theme } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles((theme) => ({
   root: {
     height: '100%',
     '& .MuiAlert-standardInfo': {
-      backgroundColor: config.palette.alert.success.background,
+      backgroundColor: theme.alert.success.background,
     },
     '& .MuiInputBase-root.MuiInputBase-formControl': {
       backgroundColor: theme.palette.common.white,

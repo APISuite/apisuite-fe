@@ -7,7 +7,7 @@ import { ConfigProviderProps, ConfigState, DefaultConfig } from './types'
 export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, settingsUrl, ...rest }) => {
   const appTheme = useRef<Theme>()
   const [state, setState] = useState<ConfigState>({
-    initialized: true,
+    initialized: false,
     portalName: 'API Suite Portal',
     clientName: 'API Suite',
     infra: {
@@ -35,6 +35,11 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, settin
     ],
     dimensions: {
       borderRadius: 4,
+    },
+    pages: {
+      landing: {
+        components: [],
+      },
     },
   })
 
@@ -81,7 +86,7 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, settin
           feedback: palette?.feedback,
         })
 
-        setState((s) => safeMergeDeep(s, { ...rest }))
+        setState((s) => safeMergeDeep(s, { ...rest, initialized: true }))
       } catch (error) {
         // TODO: handle errors here
       }
@@ -100,7 +105,7 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, settin
         provider: true,
       }}
     >
-      <ThemeProvider theme={appTheme}>
+      <ThemeProvider theme={appTheme.current!}>
         {children}
       </ThemeProvider>
     </ConfigContext.Provider>

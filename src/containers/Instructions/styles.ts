@@ -1,9 +1,9 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   root: {
-    backgroundColor: config.palette.newGreyScales['25'],
+    // FIXME: do we need 25 grey scale?
+    backgroundColor: theme.palette.grey[25 as never],
     minHeight: '100%',
   },
 
@@ -60,15 +60,15 @@ export default makeStyles(({
   },
 
   codeBlock: {
-    borderBottomLeftRadius: config.dimensions.borderRadius,
-    borderBottomRightRadius: config.dimensions.borderRadius,
+    borderBottomLeftRadius: theme.dimensions.borderRadius,
+    borderBottomRightRadius: theme.dimensions.borderRadius,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
   },
 
   noteContainer: {
-    backgroundColor: config.palette.secondary,
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: theme.dimensions.borderRadius,
     marginBottom: 20,
     overflow: 'hidden',
     width: '100%',
@@ -86,14 +86,14 @@ export default makeStyles(({
   },
 
   noteContent: {
-    backgroundColor: config.palette.primary,
+    backgroundColor: theme.palette.primary.main,
     marginLeft: 5,
     padding: 20,
   },
 
   iconRow: {
     alignItems: 'flex-end',
-    backgroundColor: config.palette.text.primary,
+    backgroundColor: theme.palette.text.primary,
     color: 'white',
     display: 'flex',
     height: 40,
@@ -103,8 +103,8 @@ export default makeStyles(({
     paddingRight: 20,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopRightRadius: config.dimensions.borderRadius,
-    borderTopLeftRadius: config.dimensions.borderRadius,
+    borderTopRightRadius: theme.dimensions.borderRadius,
+    borderTopLeftRadius: theme.dimensions.borderRadius,
   },
 
   clipboardIcon: {
@@ -112,7 +112,7 @@ export default makeStyles(({
     zIndex: 1,
 
     '&:hover': {
-      color: config.palette.primary,
+      color: theme.palette.primary.main,
     },
   },
 
@@ -122,43 +122,3 @@ export default makeStyles(({
     top: 180,
   },
 }))
-
-export const codeStyle = {
-  'hljs-string': {
-    'color': config.palette.primary,
-  },
-
-  'hljs-symbol': {
-    'color': config.palette.primary,
-  },
-
-  'hljs-bullet': {
-    'color': config.palette.primary,
-  },
-
-  'hljs-addition': {
-    'color': config.palette.primary,
-  },
-
-  'hljs': {
-    background: config.palette.text.primary,
-    color: '#D8D8D8',
-    display: 'block',
-    fontFamily: 'Roboto, sans-serif',
-    fontSize: 14,
-    marginTop: 0,
-    overflowX: 'auto',
-    paddingBottom: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 0,
-  },
-
-  'hljs-emphasis': {
-    fontStyle: 'italic',
-  },
-
-  'hljs-strong': {
-    fontWeight: 'bold',
-  },
-}

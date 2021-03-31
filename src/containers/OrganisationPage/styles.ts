@@ -1,14 +1,13 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   avatarContainer: {
     alignItems: 'center',
     display: 'flex',
   },
 
   avatarIcons: {
-    color: config.palette.active,
+    color: theme.palette.active,
     cursor: 'pointer',
     height: '20px',
     position: 'absolute',
@@ -24,28 +23,28 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: config.palette.active,
+        color: theme.palette.active,
         height: '85px',
         transform: 'translateY(30px)',
       },
@@ -53,18 +52,18 @@ export default makeStyles(({
 
     // Text field's input helper text
     '& .MuiFormHelperText-root': {
-      color: config.palette.label,
+      color: theme.palette.label,
 
       '&.Mui-error': {
-        color: config.palette.error,
+        color: theme.palette.error.main,
       },
     },
   },
 
   disabledUpdateDetailsButton: {
-    backgroundColor: config.palette.label,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.label,
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.primary.contrastText,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -77,8 +76,8 @@ export default makeStyles(({
 
   disabledCreateOrgButton: {
     backgroundColor: '#99e6cc',
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.primary.contrastText,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -90,9 +89,9 @@ export default makeStyles(({
   },
 
   enabledCreateOrgButton: {
-    backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.primary.contrastText,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -103,9 +102,9 @@ export default makeStyles(({
   },
 
   enabledUpdateDetailsButton: {
-    backgroundColor: config.palette.active,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.active,
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.primary.contrastText,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -116,8 +115,8 @@ export default makeStyles(({
   },
 
   firstSectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: theme.dimensions.borderRadius,
     marginBottom: '25px',
     marginTop: '15px',
     maxWidth: '900px',
@@ -143,28 +142,28 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${theme.palette.primary.main} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${theme.palette.primary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: config.palette.active,
+        color: theme.palette.active,
       },
     },
   },
@@ -192,7 +191,7 @@ export default makeStyles(({
   },
 
   orgAdditionalDetailsSubtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 300,
     lineHeight: '16.5px',
@@ -200,7 +199,7 @@ export default makeStyles(({
   },
 
   orgAdditionalDetailsTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '30px',
@@ -218,13 +217,13 @@ export default makeStyles(({
   },
 
   orgSubtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
   },
 
   orgTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -245,10 +244,10 @@ export default makeStyles(({
     },
 
     '& > :last-child': {
-      backgroundColor: config.palette.background.default,
-      border: `1px solid ${config.palette.greyScales['300']}`,
+      backgroundColor: theme.palette.background.default,
+      border: `1px solid ${theme.palette.grey[300]}`,
       borderRadius: '4px',
-      color: config.palette.active,
+      color: theme.palette.active,
       cursor: 'pointer',
       height: '40px',
       maxWidth: '40px',
@@ -265,8 +264,8 @@ export default makeStyles(({
   },
 
   secondSectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: theme.dimensions.borderRadius,
     marginBottom: '15px',
     marginTop: '0px',
     maxWidth: '900px',
@@ -274,14 +273,14 @@ export default makeStyles(({
   },
 
   selectorOption: {
-    color: config.palette.active,
+    color: theme.palette.active,
     fontSize: '15px',
     fontWeight: 300,
     padding: '5px 25px',
   },
 
   selectorTitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 300,
     padding: '6px 25px',

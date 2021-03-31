@@ -1,25 +1,24 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   loginContainer: {
     width: '100%',
     height: '100%',
   },
   emailTextfield: {
     backgroundColor: 'white',
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.grey[400],
   },
   nameTextfield: {
     backgroundColor: 'white',
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.grey[400],
   },
   passPhrasefield: {
     backgroundColor: 'white',
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.grey[400],
   },
   passPhraseContainer: {
     display: 'flex',

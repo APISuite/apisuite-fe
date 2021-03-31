@@ -3,7 +3,6 @@ import { useParams } from 'react-router'
 import useStyles from './styles'
 import { APIDetailParams, APIVersionProps } from './types'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { config } from 'constants/global'
 import { useTranslation } from 'react-i18next'
 import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
@@ -21,7 +20,7 @@ const APIDetails: React.FC<APIVersionProps> = ({
       apiId: apiId || '0',
       versionId: versionId || '0',
     })
-  }, [getApiVersion])
+  }, [getApiVersion, apiId, versionId])
 
   const hasSpec = (): boolean => {
     return !!(apiDetails && apiDetails.version && apiDetails.version.spec)
@@ -63,7 +62,7 @@ const APIDetails: React.FC<APIVersionProps> = ({
             <>
               <div className={`${classes.header} ${classes.docs}`}>&nbsp;</div>
               <div className={classes.centerVertical}>
-                <h2>{t('apidetails.notfound', { config })}</h2>
+                <h2>{t('apidetails.notfound')}</h2>
               </div>
             </>
           }

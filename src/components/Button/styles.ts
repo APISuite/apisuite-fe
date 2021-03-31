@@ -1,14 +1,13 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   // a) Button's variant
 
   button: {
-    backgroundColor: config.palette.primary,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: '5px',
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
-    color: config.palette.primaryContrastText,
+    color: theme.palette.primary.contrastText,
     display: 'inline-block',
     fontSize: '14px',
     fontWeight: 600,
@@ -27,20 +26,20 @@ const useStyles = makeStyles({
     },
 
     '&:link, &:visited': {
-      color: config.palette.primaryContrastText,
+      color: theme.palette.primary.contrastText,
     },
   },
 
   dark: {
-    backgroundColor: config.palette.text.primary,
+    backgroundColor: theme.palette.text.primary,
   },
 
   secondary: {
-    backgroundColor: config.palette.secondary,
+    backgroundColor: theme.palette.secondary.main,
   },
 
   tertiary: {
-    backgroundColor: config.palette.tertiary,
+    backgroundColor: theme.palette.tertiary.main,
   },
 
   transparent: {
@@ -56,21 +55,21 @@ const useStyles = makeStyles({
   // b) Button's text color
 
   primaryColor: {
-    color: `${config.palette.primaryContrastText} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
   },
 
   secondaryColor: {
-    color: `${config.palette.secondaryContrastText} !important`,
+    color: `${theme.palette.secondary.contrastText} !important`,
   },
 
   tertiaryColor: {
-    color: `${config.palette.tertiaryContrastText} !important`,
+    color: `${theme.palette.tertiary.contrastText} !important`,
   },
 
   // c) Button's status
 
   disabled: {
-    backgroundColor: `${config.palette.newGreyScales['300']} !important`,
+    backgroundColor: `${theme.palette.grey[300]} !important`,
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.05) !important',
     cursor: 'default !important',
     opacity: 0.6,
@@ -83,6 +82,6 @@ const useStyles = makeStyles({
   loading: {
 
   },
-})
+}))
 
 export default useStyles

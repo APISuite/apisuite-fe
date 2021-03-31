@@ -3,7 +3,6 @@ import { SSOFormProps } from './types'
 import useStyles from './styles'
 import { useTranslation } from 'react-i18next'
 import Button from 'components/Button'
-import { config } from 'constants/global'
 
 const SSOForm: React.FC<SSOFormProps> = ({
   auth,
@@ -30,7 +29,8 @@ const SSOForm: React.FC<SSOFormProps> = ({
           <div className={classes.loginWithButtonWrapper}>
             <Button
               key={`${prov}-${idx}`}
-              label={`${t('loginForm.loginWith', { config })} ${prov}`}
+              // FIXME: the translations support interpolation
+              label={`${t('loginForm.loginWith')} ${prov}`}
               onClick={() => handleSubmit(prov)}
               fullWidth
               background='secondary'

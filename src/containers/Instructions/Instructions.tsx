@@ -1,70 +1,107 @@
 import * as React from 'react'
-
 import { useTranslation } from 'react-i18next'
-
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/esm/languages/hljs/bash'
-
-import NavMenu from 'components/NavMenu'
-
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
-
-import useStyles, { codeStyle } from './styles'
-
-import { config } from 'constants/global'
+import { useConfig } from 'config'
+import NavMenu from 'components/NavMenu'
+import useStyles from './styles'
+import { useTheme } from '@material-ui/core'
 
 SyntaxHighlighter.registerLanguage('bash', bash)
 
 const Instructions: React.FC<{}> = () => {
+  const { palette } = useTheme()
+  const { infra } = useConfig()
   const classes = useStyles()
 
   const [t] = useTranslation()
 
   const steps = [
     {
-      stepTitle: t('dashboardTab.testSubTab.instructions.stepOne.stepTitle', { config }),
-      stepText: t('dashboardTab.testSubTab.instructions.stepOne.stepText', { config }),
-      stepNote: t('dashboardTab.testSubTab.instructions.stepOne.stepNote', { config }),
+      stepTitle: t('dashboardTab.testSubTab.instructions.stepOne.stepTitle'),
+      stepText: t('dashboardTab.testSubTab.instructions.stepOne.stepText'),
+      stepNote: t('dashboardTab.testSubTab.instructions.stepOne.stepNote'),
       command: `curl -X POST \\
--H "Host: ${config.infra.hydra}" \\
+-H "Host: ${infra.hydra}" \\
 -H "Content-Type: application/x-www-form-urlencoded" \\
 -u "{ClientID}:{ClientSecret}" \\
 --data-urlencode "grant_type=client_credentials" \\
 --data-urlencode "" \\
-https://${config.infra.hydra}/oauth2/token`,
+https://${infra.hydra}/oauth2/token`,
     },
     {
-      stepTitle: t('dashboardTab.testSubTab.instructions.stepTwo.stepTitle', { config }),
-      stepText: t('dashboardTab.testSubTab.instructions.stepTwo.stepText', { config }),
-      stepNote: t('dashboardTab.testSubTab.instructions.stepOne.stepNote', { config }),
+      stepTitle: t('dashboardTab.testSubTab.instructions.stepTwo.stepTitle'),
+      stepText: t('dashboardTab.testSubTab.instructions.stepTwo.stepText'),
+      stepNote: t('dashboardTab.testSubTab.instructions.stepOne.stepNote'),
       command: `curl -X POST \\
 -H "Accept: application/json" \\
 -H "Content-Type: application/json" \\
 -H "Authorization: Bearer {TOKEN}" \\
 -d '{"name": "Jack Daniels", "desc": "My cat", "tag": "cat"}' \\
-https://${config.infra.remoteAPI}/v1/pets`,
+https://${infra.remoteAPI}/v1/pets`,
     },
     {
-      stepTitle: t('dashboardTab.testSubTab.instructions.stepThree.stepTitle', { config }),
-      stepText: t('dashboardTab.testSubTab.instructions.stepThree.stepText', { config }),
-      stepNote: t('dashboardTab.testSubTab.instructions.stepThree.stepNote', { config }),
-      response: t('dashboardTab.testSubTab.instructions.stepThree.response', { config }),
-      responseCode: t('dashboardTab.testSubTab.instructions.stepThree.responseCode', { config }),
+      stepTitle: t('dashboardTab.testSubTab.instructions.stepThree.stepTitle'),
+      stepText: t('dashboardTab.testSubTab.instructions.stepThree.stepText'),
+      stepNote: t('dashboardTab.testSubTab.instructions.stepThree.stepNote'),
+      response: t('dashboardTab.testSubTab.instructions.stepThree.response'),
+      responseCode: t('dashboardTab.testSubTab.instructions.stepThree.responseCode'),
       command: `curl -X GET \\
 -H "Authorization: Bearer {TOKEN}" \\
-https://${config.infra.remoteAPI}/v1/pets`,
+https://${infra.remoteAPI}/v1/pets`,
     },
   ]
+
+  const codeStyle = {
+    'hljs-string': {
+      'color': palette.primary.main,
+    },
+
+    'hljs-symbol': {
+      'color': palette.primary.main,
+    },
+
+    'hljs-bullet': {
+      'color': palette.primary.main,
+    },
+
+    'hljs-addition': {
+      'color': palette.primary.main,
+    },
+
+    'hljs': {
+      background: palette.text.primary,
+      color: '#D8D8D8',
+      display: 'block',
+      fontFamily: 'Roboto, sans-serif',
+      fontSize: 14,
+      marginTop: 0,
+      overflowX: 'auto',
+      paddingBottom: 20,
+      paddingLeft: 20,
+      paddingRight: 20,
+      paddingTop: 0,
+    },
+
+    'hljs-emphasis': {
+      fontStyle: 'italic',
+    },
+
+    'hljs-strong': {
+      fontWeight: 'bold',
+    },
+  }
 
   return (
     <div className={`page-container ${classes.root}`}>
       <section className={classes.contentContainer}>
-        <h1 className={classes.title}>{t('dashboardTab.testSubTab.title', { config })}</h1>
+        <h1 className={classes.title}>{t('dashboardTab.testSubTab.title')}</h1>
 
         <div className={classes.mainContainer}>
           <div className={classes.content}>
             <p className={classes.description}>
-              {t('dashboardTab.testSubTab.description', { config })}
+              {t('dashboardTab.testSubTab.description')}
             </p>
 
             {
@@ -74,7 +111,7 @@ https://${config.infra.remoteAPI}/v1/pets`,
                     id={`step-${index + 1}`}
                     className={classes.stepTitle}
                   >
-                    {t('dashboardTab.testSubTab.stepIntro', { config })} {index + 1}: {step.stepTitle}
+                    {t('dashboardTab.testSubTab.stepIntro')} {index + 1}: {step.stepTitle}
                   </h2>
 
                   <p className={classes.description}>
@@ -134,11 +171,11 @@ https://${config.infra.remoteAPI}/v1/pets`,
             }
 
             <h2 className={classes.stepTitle}>
-              {t('dashboardTab.testSubTab.finalRemarksPartOne', { config })}
+              {t('dashboardTab.testSubTab.finalRemarksPartOne')}
             </h2>
 
             <p className={classes.description}>
-              {t('dashboardTab.testSubTab.finalRemarksPartTwo', { config })}
+              {t('dashboardTab.testSubTab.finalRemarksPartTwo')}
             </p>
           </div>
 
@@ -146,7 +183,7 @@ https://${config.infra.remoteAPI}/v1/pets`,
             <div className={classes.sideMenuContainer}>
               <NavMenu
                 options={steps.map((step, index) => (
-                  `${t('dashboardTab.testSubTab.stepIntro', { config })} ${index + 1}: ${step.stepTitle}`
+                  `${t('dashboardTab.testSubTab.stepIntro')} ${index + 1}: ${step.stepTitle}`
                 ))}
               />
             </div>

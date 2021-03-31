@@ -1,13 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   hideNotificationCardContentsContainer: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     borderRadius: '4px',
-    boxShadow: `0px 3px 10px -3px ${config.palette.newGreyScales['100']}`,
+    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[100]}`,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -21,16 +19,16 @@ export default makeStyles({
   },
 
   notificationCardCloseButton: {
-    color: config.palette.newGreyScales['300'],
+    color: theme.palette.grey[300],
     height: '24px',
     width: '24px',
   },
 
   showNotificationCardContentsContainer: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     borderRadius: '4px',
-    boxShadow: `0px 3px 10px -3px ${config.palette.newGreyScales['100']}`,
+    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[100]}`,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -44,7 +42,7 @@ export default makeStyles({
   },
 
   notificationCardText: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '20px',
     fontWeight: 300,
     maxWidth: '542.5px',
@@ -52,11 +50,11 @@ export default makeStyles({
   },
 
   notificationCardTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.tertiary.main,
     fontSize: '27px',
     fontWeight: 400,
     marginBottom: '12px',
     maxWidth: '542.5px',
     width: '100%',
   },
-})
+}))

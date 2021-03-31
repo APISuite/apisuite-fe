@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   registerContainer: {
     width: '100%',
     height: '100%',
@@ -12,8 +11,8 @@ const useStyles = makeStyles(({
   },
   textField: {
     backgroundColor: 'white',
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    borderRadius: theme.dimensions.borderRadius,
+    color: theme.palette.grey[400],
   },
   centerContent: {
     display: 'flex',
@@ -24,7 +23,7 @@ const useStyles = makeStyles(({
     fontWeight: 500,
   },
   loading: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
   },
 
 }))

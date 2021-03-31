@@ -1,12 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 import keyIllustration from 'assets/keyIllustration.svg'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
     height: '100%',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     '@media (max-width: 1024px)': {
       flexCirection: 'column-reverse',
     },
@@ -56,11 +55,11 @@ const useStyles = makeStyles(({
     },
   },
   message: {
-    color: config.palette.greyScales[600],
+    color: theme.palette.grey[600],
     marginBottom: '12px',
   },
   messageTitle: {
-    color: config.palette.greyScales[800],
+    color: theme.palette.grey[800],
     marginBottom: '16px',
   },
 }))

@@ -1,12 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   stepCircle: {
     display: 'block',
     width: '20px',
     height: '20px',
-    border: '3px solid ' + config.palette.greyScales[100],
+    border: '3px solid ' + theme.palette.grey[100],
     borderRadius: '50%',
   },
   stepTitle: {
@@ -19,12 +18,12 @@ export default makeStyles(({
     lineHeight: '18px',
     width: '80px',
     fontWeight: 'normal',
-    color: config.palette.greyScales[300],
+    color: theme.palette.grey[300],
     borderRadius: '50%',
   },
   stepCircleBefore: {
-    border: '3px solid ' + config.palette.primary,
-    color: config.palette.greyScales[500],
+    border: `3px solid ${theme.palette.primary.main}`,
+    color: theme.palette.grey[500],
   },
   stepCircleCurrent: {
     fontWeight: 'bold',
@@ -35,28 +34,28 @@ export default makeStyles(({
     height: '4px',
     width: '90px',
     '&::-webkit-progress-bar': {
-      backgroundImage: config.palette.greyScales[100],
-      backgroundColor: config.palette.primary,
+      backgroundImage: theme.palette.grey[100],
+      backgroundColor: theme.palette.primary.main,
     },
     '&::-moz-progress-bar': {
-      backgroundImage: config.palette.greyScales[100],
-      backgroundColor: config.palette.primary,
+      backgroundImage: theme.palette.grey[100],
+      backgroundColor: theme.palette.primary.main,
     },
   },
   progressAfter: {
     '&::-webkit-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
+      backgroundColor: theme.palette.grey[100],
     },
     '&::-moz-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
+      backgroundColor: theme.palette.grey[100],
     },
   },
   progressCurrent: {
     '&::-webkit-progress-bar': {
-      backgroundImage: 'linear-gradient(to right, ' + config.palette.primary + ', ' + config.palette.greyScales[100] + ')',
+      backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.grey[100]})`,
     },
     '&::-moz-progress-bar': {
-      backgroundImage: 'linear-gradient(to right, ' + config.palette.primary + ', ' + config.palette.greyScales[100] + ')',
+      backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.grey[100]})`,
     },
   },
   stepProgress: {
