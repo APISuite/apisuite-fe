@@ -139,7 +139,6 @@ const Carousel: React.FC<CarouselProps> = ({
     </button>,
   ))
 
-  // FIXME: hooks can not be called conditionally
   if (slidesAutoPlay) {
     /*
     If we want our slides to 'autoplay', we do the following:
@@ -153,6 +152,9 @@ const Carousel: React.FC<CarouselProps> = ({
 
     This behavior repeats itself ad nauseam, UNLESS the user happens to hover over a particular slide.
     */
+
+    // FIXME: hooks can not be called conditionally
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
       let scheduledCarouselSlideChange: NodeJS.Timeout
 
