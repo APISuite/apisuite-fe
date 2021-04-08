@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     display: 'block',
     width: '20px',
     height: '20px',
-    border: '3px solid ' + theme.palette.grey[100],
+    border: '3px solid ' + theme.palette.grey[200],
     borderRadius: '50%',
   },
   stepTitle: {
@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
     borderRadius: '50%',
   },
   stepCircleBefore: {
-    border: `3px solid ${theme.palette.primary.main}`,
+    border: `3px solid ${theme.palette.secondary.main}`,
     color: theme.palette.grey[500],
   },
   stepCircleCurrent: {
@@ -34,28 +34,28 @@ export default makeStyles((theme) => ({
     height: '4px',
     width: '90px',
     '&::-webkit-progress-bar': {
-      backgroundImage: theme.palette.grey[100],
-      backgroundColor: theme.palette.primary.main,
+      backgroundImage: theme.palette.grey[200],
+      backgroundColor: theme.palette.secondary.main,
     },
     '&::-moz-progress-bar': {
-      backgroundImage: theme.palette.grey[100],
-      backgroundColor: theme.palette.primary.main,
+      backgroundImage: theme.palette.grey[200],
+      backgroundColor: theme.palette.secondary.main,
     },
   },
   progressAfter: {
     '&::-webkit-progress-bar': {
-      backgroundColor: theme.palette.grey[100],
+      backgroundColor: theme.palette.grey[200],
     },
     '&::-moz-progress-bar': {
-      backgroundColor: theme.palette.grey[100],
+      backgroundColor: theme.palette.grey[200],
     },
   },
   progressCurrent: {
     '&::-webkit-progress-bar': {
-      backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.grey[100]})`,
+      backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.grey[200]})`,
     },
     '&::-moz-progress-bar': {
-      backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.grey[100]})`,
+      backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.grey[200]})`,
     },
   },
   stepProgress: {

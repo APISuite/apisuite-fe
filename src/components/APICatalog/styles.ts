@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   apiCatalogEntry: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.grey['300']}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '200px',
     marginBottom: '20px',
@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
   },
 
   apiCatalogEntryName: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '22px',
     fontWeight: 400,
     marginBottom: '8px',
@@ -51,7 +51,7 @@ export default makeStyles((theme) => ({
   },
 
   apiCatalogEntryVersion: {
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     marginRight: '8px',
     padding: '5px 10px',
   },
@@ -64,12 +64,12 @@ export default makeStyles((theme) => ({
   },
 
   colorsOfAPIDocumentation: {
-    backgroundColor: theme.palette.active,
+    backgroundColor: theme.palette.action.active,
     color: '#FFFFFF',
   },
 
   colorsOfProductionAPI: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     color: '#FFFFFF',
   },
 

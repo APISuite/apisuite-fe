@@ -1,5 +1,4 @@
 import { AppData } from 'containers/Applications/types'
-import { SettingsStore } from 'containers/Settings/types'
 import { ApiDocs, APIVersion } from 'containers/Subscriptions/types'
 
 export default interface SubscriptionsModalProps {
@@ -7,7 +6,6 @@ export default interface SubscriptionsModalProps {
   apisByName: APIData[],
   isModalOpen: boolean,
   requestAPIAccessAction: (appId: number) => void,
-  settings: SettingsStore,
   toggleModal: () => void,
 }
 

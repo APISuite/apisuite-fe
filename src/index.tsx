@@ -22,7 +22,7 @@ function render (Component: React.ElementType) {
     <ErrorMonitor>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <ConfigProvider settingsUrl={`${API_URL}/settings/portal`}>
+          <ConfigProvider api={{ base: API_URL }}>
             <Component />
           </ConfigProvider>
         </ConnectedRouter>

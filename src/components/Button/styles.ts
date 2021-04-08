@@ -4,10 +4,10 @@ const useStyles = makeStyles((theme) => ({
   // a) Button's variant
 
   button: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: '5px',
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
     display: 'inline-block',
     fontSize: '14px',
     fontWeight: 600,
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     '&:link, &:visited': {
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.secondary.contrastText,
     },
   },
 
@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   secondary: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.action.focus,
   },
 
   tertiary: {
-    backgroundColor: theme.palette.tertiary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
 
   transparent: {
@@ -55,15 +55,15 @@ const useStyles = makeStyles((theme) => ({
   // b) Button's text color
 
   primaryColor: {
-    color: `${theme.palette.primary.contrastText} !important`,
-  },
-
-  secondaryColor: {
     color: `${theme.palette.secondary.contrastText} !important`,
   },
 
+  secondaryColor: {
+    color: `${theme.palette.common.white} !important`,
+  },
+
   tertiaryColor: {
-    color: `${theme.palette.tertiary.contrastText} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
   },
 
   // c) Button's status

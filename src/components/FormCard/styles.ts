@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     padding: 8,
     border: '1px solid white',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
   },
   backBtn: {
     margin: '20px 0px',
@@ -43,10 +43,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 30,
   },
   errorAlert: {
-    backgroundColor: theme.feedback.error,
+    backgroundColor: theme.palette.error.main,
     color: '#fff',
     padding: '12px 25px',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     minHeight: 50,
   },
 }))

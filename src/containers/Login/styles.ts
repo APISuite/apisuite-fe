@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme) => ({
     width: '55.75%',
     clipPath: 'polygon(0 0, 100% 0, 100% 100%, 51px 100%)',
     backfaceVisibility: 'hidden',
-    backgroundColor: theme.palette.tertiary.main,
+    backgroundColor: theme.palette.primary.main,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '57px center',
     '&::before': {
       content: '',
       height: '100%',
       clipPath: 'polygon(0 0, 12px 0, 69px 100%, 51px 100%)',
-      backgroundColor: theme.palette.tertiary.main,
+      backgroundColor: theme.palette.primary.main,
     },
     '@media (max-width: 1024px)': {
       width: '100%',
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         height: '41.5%',
         minHeight: '375px',
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.action.focus,
         opacity: 0.1,
         clipPath: 'polygon(0 calc(100% - 12px - 22px), 100% calc(100% - 12px), 100% 100%, 0 calc(100% - 22px))',
       },
@@ -74,9 +74,9 @@ const useStyles = makeStyles((theme) => ({
   },
   optionSelected: {
     textAlign: 'center',
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontWeight: 'bold',
-    borderBottom: `3px solid ${theme.palette.primary.main}`,
+    borderBottom: `3px solid ${theme.palette.secondary.main}`,
     flex: '1 1 0',
     height: '40px',
     background: 'none',
@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '24px',
   },
   welcomeTitle: {
-    color: theme.palette.grey[700],
+    color: theme.palette.primary.light,
     marginBottom: '4px',
   },
   loginRegisterSelector: {

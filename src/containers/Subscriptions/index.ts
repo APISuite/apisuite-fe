@@ -10,10 +10,9 @@ import { getAllUserAppsAction } from 'containers/Applications/ducks'
 
 import Subscriptions from './Subscriptions'
 
-export const mapStateToProps = ({ applications, auth, settings, subscriptions }: Store) => ({
+export const mapStateToProps = ({ applications, auth, subscriptions }: Store) => ({
   allUserApps: applications.userApps,
   auth: auth,
-  settings: settings,
   subscriptions: subscriptions,
 })
 

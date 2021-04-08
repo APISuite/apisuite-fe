@@ -69,7 +69,7 @@ export default makeStyles((theme) => ({
   },
 
   apiProductOnlineStatus: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '14px',
     marginRight: '12px',
   },

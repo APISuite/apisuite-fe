@@ -2,9 +2,9 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles((theme) => ({
   noticeContentsContainer: {
-    backgroundColor: theme.alert.success.background,
-    border: `1px solid ${theme.alert.success.background}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.info.light,
+    border: `1px solid ${theme.palette.info.light}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     padding: '12px',
     width: '100%',

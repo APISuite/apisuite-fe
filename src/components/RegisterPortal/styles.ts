@@ -7,17 +7,17 @@ const useStyles = makeStyles((theme) => ({
   },
   emailTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.grey[400],
   },
   nameTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.grey[400],
   },
   passPhrasefield: {
     backgroundColor: 'white',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.grey[400],
   },
   passPhraseContainer: {

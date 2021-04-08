@@ -1,15 +1,17 @@
-import * as React from 'react'
-
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-
+import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
+import {
+  DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
+  DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
+} from 'constants/global'
+import { useConfig } from 'config'
 import ActionsCatalog from 'components/ActionsCatalog'
 import APICatalog from 'components/APICatalog'
 import GreetingCard from 'components/GreetingCard'
 import Notice from 'components/Notice'
 import NotificationBanner from 'components/NotificationBanner'
 import NotificationCard from 'components/NotificationCard'
-
-import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
 
 import apiSVG from 'assets/icons/API.svg'
 import billingSVG from 'assets/icons/Billing.svg'
@@ -22,13 +24,7 @@ import supportSVG from 'assets/icons/Support.svg'
 import teamSVG from 'assets/icons/Team.svg'
 
 import useStyles from './styles'
-
 import { DashboardProps } from './types'
-
-import {
-  DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
-  DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
-} from 'constants/global'
 
 const Dashboard: React.FC<DashboardProps> = ({
   auth,
@@ -36,11 +32,10 @@ const Dashboard: React.FC<DashboardProps> = ({
   // Temporary until notification cards become clearer
   notificationCards,
   profile,
-  settings,
   subscriptions,
 }) => {
   const classes = useStyles()
-
+  const { socialURLs, supportURL, clientName, portalName } = useConfig()
   const [t] = useTranslation()
 
   const typeOfUser = auth.user!.role.name
@@ -83,7 +78,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   }, [subscriptions])
 
   const hasSocials = () => {
-    return settings && settings.socialURLs && settings.socialURLs.length > 0
+    return socialURLs.length > 0
   }
 
   return (
@@ -154,7 +149,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: supportSVG,
-                    actionLink: settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
+                    actionLink: supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
                     actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.support'),
                   },
                 ]
@@ -187,7 +182,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: supportSVG,
-                    actionLink: settings.supportURL || DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
+                    actionLink: supportURL || DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
                     actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.support'),
                   },
                 ]
@@ -235,13 +230,13 @@ const Dashboard: React.FC<DashboardProps> = ({
               typeOfUser !== 'admin'
                 ? (
                   t('dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardButtonLabel') +
-                  ` ${settings.clientName}`
+                  ` ${clientName}`
                 )
                 : t('dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardButtonLabel')
             }
             greetingCardButtonLink={
               typeOfUser !== 'admin'
-                ? (settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL)
+                ? (supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL)
                 : '/dashboard/admin'
             }
           />
@@ -281,17 +276,17 @@ const Dashboard: React.FC<DashboardProps> = ({
               }
               noticeText={
                 <p>
-                  <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy')} {settings?.clientName}.</>
+                  <>{portalName} {t('sandboxPage.notice.maintainedBy')} {clientName}.</>
                   {
                     hasSocials() && (
                       <>
                         <> {t('sandboxPage.notice.visitUs')} </>
                         <a
-                          href={hasSocials() ? settings.socialURLs[0].url : '#'}
+                          href={hasSocials() ? socialURLs[0].url : '#'}
                           rel='noopener noreferrer'
                           target='_blank'
                         >
-                          {hasSocials() ? settings.socialURLs[0].url : ''}
+                          {hasSocials() ? socialURLs[0].url : ''}
                         </a>
                         <>.</>
                       </>

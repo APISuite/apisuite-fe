@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     backgroundColor: 'white',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.grey[400],
   },
   centerContent: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
   },
   loading: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
 
 }))

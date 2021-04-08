@@ -17,7 +17,6 @@ import ApplicationsModal from './ApplicationsModal'
 
 export const mapStateToProps = (store: Store) => ({
   mostRecentlySelectedAppDetails: store.applications.currentApp,
-  settings: store.settings,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

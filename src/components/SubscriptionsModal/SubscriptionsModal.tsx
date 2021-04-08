@@ -1,14 +1,9 @@
-import * as React from 'react'
-
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-
-import Button from 'components/Button'
-
 import Fade from '@material-ui/core/Fade'
 import MenuItem from '@material-ui/core/MenuItem'
 import Modal from '@material-ui/core/Modal'
 import Select from '@material-ui/core/Select'
-
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CheckBoxOutlineBlankRoundedIcon from '@material-ui/icons/CheckBoxOutlineBlankRounded'
 import CheckBoxRoundedIcon from '@material-ui/icons/CheckBoxRounded'
@@ -16,9 +11,10 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+import { useConfig } from 'config'
+import Button from 'components/Button'
 
 import SubscriptionsModalProps from './types'
-
 import useStyles from './styles'
 
 const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
@@ -26,11 +22,10 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   apisByName,
   isModalOpen,
   requestAPIAccessAction,
-  settings,
   toggleModal,
 }) => {
   const classes = useStyles()
-
+  const { portalName, ownerInfo, clientName } = useConfig()
   const [t] = useTranslation()
 
   /* 'Client app' selection */
@@ -159,13 +154,12 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
           <div className={classes.modalHeaderContainer}>
             <div className={classes.logoAndNameContainer}>
               {
-                settings.logoURL
-                  ? (
-                    <img
-                      className={classes.imageLogo}
-                      src={settings.logoURL}
-                    />
-                  )
+                ownerInfo.logo ? (
+                  <img
+                    className={classes.imageLogo}
+                    src={ownerInfo.logo}
+                  />
+                )
                   : (
                     <AmpStoriesRoundedIcon
                       className={classes.iconLogo}
@@ -174,7 +168,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
               }
 
               <h3 className={classes.portalName}>
-                {settings.portalName}
+                {portalName}
               </h3>
             </div>
 
@@ -260,8 +254,9 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                         <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
 
                         <p className={classes.infoBoxText}>
+                          {/* FIXME: translations support interpolation */}
                           {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartOne')}
-                          {settings.clientName}
+                          {clientName}
                           {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartTwo')}
                         </p>
                       </div>

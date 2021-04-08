@@ -41,10 +41,10 @@ export default makeStyles((theme) => ({
   // JSS for the 'Notification cards' section
 
   customNotificationCardButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: '5px',
     boxShadow: 'none',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -58,7 +58,7 @@ export default makeStyles((theme) => ({
     },
 
     '&:link, &:visited': {
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.secondary.contrastText,
     },
   },
 
@@ -86,10 +86,10 @@ export default makeStyles((theme) => ({
   // JSS for the 'Greeting card' section
 
   customGreetingCardButton: {
-    backgroundColor: theme.palette.tertiary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: '5px',
     boxShadow: 'none',
-    color: theme.palette.tertiary.contrastText,
+    color: theme.palette.primary.contrastText,
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -103,7 +103,7 @@ export default makeStyles((theme) => ({
     },
 
     '&:link, &:visited': {
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.secondary.contrastText,
     },
   },
 
@@ -142,14 +142,14 @@ export default makeStyles((theme) => ({
   },
 
   sectionIntroHeading: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     margin: '40px 0px',
   },
 
   sectionSeparator: {
-    border: `1px solid ${theme.palette.grey[100]}`,
+    border: `1px solid ${theme.palette.grey[200]}`,
     borderRadius: '4px',
     maxWidth: '900px',
     width: '100%',
@@ -165,7 +165,7 @@ export default makeStyles((theme) => ({
   // JSS for the notification banner
 
   customNotificationBannerParagraph: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '22px',

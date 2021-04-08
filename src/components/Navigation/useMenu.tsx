@@ -1,27 +1,21 @@
 import * as React from 'react'
-
 import { useSelector } from 'react-redux'
-
 import { useLocation } from 'react-router-dom'
-
-import { getRoleName } from 'containers/Profile/selectors'
-
 import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
-
-import { getMenuEntries } from 'util/extensions'
-import { useSettings } from 'util/useSetting'
-
-import { TabProps } from './types'
-
 import {
   DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
   DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
 } from 'constants/global'
+import { useConfig } from 'config'
+import { getMenuEntries } from 'util/extensions'
+import { getRoleName } from 'containers/Profile/selectors'
+
+import { TabProps } from './types'
 
 export function useMenu (): Array<TabProps[]> {
-  const [settings] = useSettings()
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
+  const { documentationURL, supportURL } = useConfig()
 
   /*
   Create an array for each accumulated level of pathnames of the current URI.
@@ -99,7 +93,7 @@ export function useMenu (): Array<TabProps[]> {
         active: pathname === '/auth/login',
       },
     ]
-  }, [])
+  }, [pathname])
 
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
@@ -109,11 +103,11 @@ export function useMenu (): Array<TabProps[]> {
       },
       {
         label: 'Documentation',
-        route: settings.documentationURL || '/documentation',
+        route: documentationURL || '/documentation',
       },
       {
         label: 'Support',
-        route: settings.supportURL || (
+        route: supportURL || (
           roleName === 'admin'
             ? DEFAULT_INSTANCE_OWNER_SUPPORT_URL
             : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
@@ -139,7 +133,7 @@ export function useMenu (): Array<TabProps[]> {
     ].filter(Boolean)
 
     return setMenuActiveEntries(entries)
-  }, [settings, extensionsInitTabs])
+  }, [extensionsInitTabs, documentationURL, pathname, roleName, setMenuActiveEntries, supportURL])
 
   const loginTabs = React.useMemo((): TabProps[] => {
     const entries = [
@@ -149,11 +143,11 @@ export function useMenu (): Array<TabProps[]> {
       },
       {
         label: 'Documentation',
-        route: settings.documentationURL || '/documentation',
+        route: documentationURL || '/documentation',
       },
       {
         label: 'Support',
-        route: settings.supportURL || (
+        route: supportURL || (
           roleName === 'admin'
             ? DEFAULT_INSTANCE_OWNER_SUPPORT_URL
             : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
@@ -215,11 +209,13 @@ export function useMenu (): Array<TabProps[]> {
 
     return setMenuActiveEntries(entries)
   }, [
-    settings,
     extensionsLoginTabs,
     extensionsLoginDashboardTabs,
     extensionsLoginProfileTabs,
-    levelPathnames,
+    documentationURL,
+    roleName,
+    supportURL,
+    setMenuActiveEntries,
   ])
 
   return [topTabs, initTabs, loginTabs]

@@ -1,32 +1,21 @@
-import * as React from 'react'
-
+import React from 'react'
 import { useSelector } from 'react-redux'
-
 import { useTranslation } from 'react-i18next'
-
+import Fab from '@material-ui/core/Fab'
+import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import { Menus } from '@apisuite/extension-ui-types'
-
+import { useConfig } from 'config'
+import { getMenuEntries } from 'util/extensions'
+import LocaleSelect from 'language/LocaleSelect'
 import { getRoleName } from 'containers/Profile/selectors'
-import { SettingsStore } from 'containers/Settings/types'
-
 import SvgIcon from 'components/SvgIcon'
 
-import Fab from '@material-ui/core/Fab'
-
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-
-import LocaleSelect from 'language/LocaleSelect'
-
-import { getMenuEntries } from 'util/extensions'
-
 import useStyles from './styles'
-
 import { FooterProps, MenuSection, MenuSections } from './types'
 
-const SocialLinks = ({ settings }: { settings: SettingsStore }) => {
+const SocialLinks = () => {
   const classes = useStyles()
-
-  const { socialURLs } = settings
+  const { socialURLs } = useConfig()
 
   if (!socialURLs || !socialURLs.length) {
     return null
@@ -61,11 +50,9 @@ const SocialLinks = ({ settings }: { settings: SettingsStore }) => {
   )
 }
 
-const SubSection = (
-  { settings, subMenu, roleName }: { settings: SettingsStore; subMenu: string; roleName?: string },
-) => {
+const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string }) => {
   const classes = useStyles()
-
+  const { socialURLs } = useConfig()
   const [t] = useTranslation()
 
   const menuSections: MenuSections = {
@@ -88,7 +75,7 @@ const SubSection = (
       entries: [
         {
           label: t('footer.supportMenu.menuItemOne'),
-          route: settings && settings.socialURLs && settings.socialURLs.length ? settings.socialURLs[0]?.url : '#',
+          route: socialURLs[0]?.url ?? '#',
         },
         {
           label: t('footer.supportMenu.menuItemTwo'),
@@ -167,15 +154,13 @@ const SubSection = (
 
 // Footer
 
-const Footer: React.FC<FooterProps> = ({
+const Footer: React.FC<FooterProps> = (
   // TODO: Come up with a solution to a bug that manifests upon logging out with this extension active
-  // auth,
-  settings,
-}) => {
+  // { auth }
+) => {
   const classes = useStyles()
-
   const roleName = useSelector(getRoleName)
-
+  const { ownerInfo, portalName } = useConfig()
   const [t] = useTranslation()
 
   const handleFabClick = () => {
@@ -194,13 +179,12 @@ const Footer: React.FC<FooterProps> = ({
         <div className={classes.leftFooterContentsContainer}>
           <div className={classes.logoAndPortalNameContainer}>
             {
-              settings.logoURL
-                ? (
-                  <img
-                    className={classes.imageLogo}
-                    src={settings.logoURL}
-                  />
-                )
+              ownerInfo.logo ? (
+                <img
+                  className={classes.imageLogo}
+                  src={ownerInfo.logo}
+                />
+              )
                 : (
                   <AmpStoriesRoundedIcon
                     className={classes.iconLogo}
@@ -209,14 +193,13 @@ const Footer: React.FC<FooterProps> = ({
             }
 
             <h3 className={classes.portalName}>
-              {settings.portalName}
+              {portalName}
             </h3>
           </div>
 
           <div className={classes.sectionsContainer}>
             <div>
               <SubSection
-                settings={settings}
                 subMenu={Menus.FooterProducts}
                 roleName={roleName}
               />
@@ -224,7 +207,6 @@ const Footer: React.FC<FooterProps> = ({
 
             <div className={classes.section}>
               <SubSection
-                settings={settings}
                 subMenu={Menus.FooterSupport}
                 roleName={roleName}
               />
@@ -232,7 +214,6 @@ const Footer: React.FC<FooterProps> = ({
 
             <div className={classes.section}>
               <SubSection
-                settings={settings}
                 subMenu={Menus.FooterDashboard}
                 roleName={roleName}
               />
@@ -240,7 +221,6 @@ const Footer: React.FC<FooterProps> = ({
 
             <div className={classes.section}>
               <SubSection
-                settings={settings}
                 subMenu={Menus.FooterProfile}
                 roleName={roleName}
               />
@@ -257,7 +237,7 @@ auth.user?.role.name === 'admin' &&
         </div>
 
         <div className={classes.rightFooterContentsContainer}>
-          <SocialLinks settings={settings} />
+          <SocialLinks />
 
           <div className={classes.copyrightContainer}>
             <a

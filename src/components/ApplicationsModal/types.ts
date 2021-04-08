@@ -1,8 +1,6 @@
 
 import { AppData, CreateAppActionData, ModalDetails, UpdateAppActionData } from 'containers/Applications/types'
 
-import { SettingsStore } from 'containers/Settings/types'
-
 export default interface ApplicationsModalProps {
   allUserAppNames: string[],
   createAppAction: (appData: CreateAppActionData) => void,
@@ -12,7 +10,6 @@ export default interface ApplicationsModalProps {
   modalDetails: ModalDetails,
   modalMode: string,
   mostRecentlySelectedAppDetails: AppData,
-  settings: SettingsStore,
   toggleModal: () => void,
   updateAppAction: (appData: UpdateAppActionData) => void,
 }

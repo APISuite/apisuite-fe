@@ -10,9 +10,8 @@ import { Store } from 'store/types'
 
 import Sandbox from './Sandbox'
 
-const mapStateToProps = ({ auth, settings, subscriptions }: Store) => ({
+const mapStateToProps = ({ auth, subscriptions }: Store) => ({
   auth: auth,
-  settings: settings,
   subscriptions: subscriptions,
 })
 

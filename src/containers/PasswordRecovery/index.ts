@@ -10,9 +10,8 @@ import { Store } from 'store/types'
 
 import PasswordRecovery from './PasswordRecovery'
 
-export const mapStateToProps = ({ auth, settings }: Store) => ({
+export const mapStateToProps = ({ auth }: Store) => ({
   auth,
-  settings,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

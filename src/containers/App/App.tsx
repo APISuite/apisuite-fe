@@ -10,7 +10,6 @@ import CookiesBanner from 'components/CookiesBanner'
 const App: React.FC<AppProps> = ({
   auth,
   getProfile,
-  getSettings,
   loginUser,
 }) => {
   const classes = useStyles()
@@ -21,17 +20,16 @@ const App: React.FC<AppProps> = ({
   }, [pathname])
 
   React.useEffect(function initOnce () {
-    getSettings()
     if (auth.authToken && !auth.user) {
       loginUser({ token: auth.authToken })
     }
-  }, [])
+  }, [auth.authToken, auth.user, loginUser])
 
   React.useEffect(() => {
     if (auth.user) {
       getProfile()
     }
-  }, [auth.user])
+  }, [auth.user, getProfile])
 
   return (
     <div className={classes.root}>

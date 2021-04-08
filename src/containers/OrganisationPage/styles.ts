@@ -7,7 +7,7 @@ export default makeStyles((theme) => ({
   },
 
   avatarIcons: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     cursor: 'pointer',
     height: '20px',
     position: 'absolute',
@@ -27,7 +27,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -37,14 +37,14 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
         height: '85px',
         transform: 'translateY(30px)',
       },
@@ -62,7 +62,7 @@ export default makeStyles((theme) => ({
 
   disabledUpdateDetailsButton: {
     backgroundColor: theme.palette.label,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.primary.contrastText,
     cursor: 'none',
     fontWeight: 500,
@@ -76,8 +76,8 @@ export default makeStyles((theme) => ({
 
   disabledCreateOrgButton: {
     backgroundColor: '#99e6cc',
-    borderRadius: theme.dimensions.borderRadius,
-    color: theme.palette.primary.contrastText,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: theme.palette.secondary.contrastText,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -89,9 +89,9 @@ export default makeStyles((theme) => ({
   },
 
   enabledCreateOrgButton: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: theme.dimensions.borderRadius,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: theme.palette.secondary.contrastText,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -102,9 +102,9 @@ export default makeStyles((theme) => ({
   },
 
   enabledUpdateDetailsButton: {
-    backgroundColor: theme.palette.active,
-    borderRadius: theme.dimensions.borderRadius,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.action.active,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: theme.palette.secondary.contrastText,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -115,8 +115,8 @@ export default makeStyles((theme) => ({
   },
 
   firstSectionSeparator: {
-    border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     marginBottom: '25px',
     marginTop: '15px',
     maxWidth: '900px',
@@ -146,7 +146,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -156,14 +156,14 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
       },
     },
   },
@@ -199,7 +199,7 @@ export default makeStyles((theme) => ({
   },
 
   orgAdditionalDetailsTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '30px',
@@ -223,7 +223,7 @@ export default makeStyles((theme) => ({
   },
 
   orgTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -247,7 +247,7 @@ export default makeStyles((theme) => ({
       backgroundColor: theme.palette.background.default,
       border: `1px solid ${theme.palette.grey[300]}`,
       borderRadius: '4px',
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       cursor: 'pointer',
       height: '40px',
       maxWidth: '40px',
@@ -264,8 +264,8 @@ export default makeStyles((theme) => ({
   },
 
   secondSectionSeparator: {
-    border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     marginBottom: '15px',
     marginTop: '0px',
     maxWidth: '900px',
@@ -273,7 +273,7 @@ export default makeStyles((theme) => ({
   },
 
   selectorOption: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     fontSize: '15px',
     fontWeight: 300,
     padding: '5px 25px',

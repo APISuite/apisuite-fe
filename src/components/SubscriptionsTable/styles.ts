@@ -3,20 +3,20 @@ import { makeStyles } from '@material-ui/core/styles'
 export default makeStyles((theme) => ({
   apiAppsContainer: {
     alignItems: 'center',
-    borderLeft: `1px solid ${theme.palette.grey[100]}`,
+    borderLeft: `1px solid ${theme.palette.grey[200]}`,
     display: 'flex',
     width: '405px',
   },
 
   apiDetailsLinkContainer: {
     alignItems: 'center',
-    borderLeft: `1px solid ${theme.palette.grey[100]}`,
+    borderLeft: `1px solid ${theme.palette.grey[200]}`,
     display: 'flex',
     justifyContent: 'center',
     width: '40px',
 
     '& > a': {
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       height: '24px',
       transform: 'scaleX(-1)',
       width: '24px',
@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
 
   apiName: {
     alignItems: 'center',
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     display: 'flex',
     fontSize: '16px',
     fontWeight: 400,
@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
 
   apiNameAndAppsContainer: {
     backgroundColor: theme.palette.background.default,
-    borderTop: `1px solid ${theme.palette.grey[100]}`,
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
     display: 'flex',
     height: '40px',
     justifyContent: 'space-between',
@@ -49,7 +49,7 @@ export default makeStyles((theme) => ({
 
   apiVersionDetailsContainer: {
     alignItems: 'center',
-    borderTop: `1px solid ${theme.palette.grey[100]}`,
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
     display: 'flex',
     height: '35px',
     justifyContent: 'space-between',
@@ -75,7 +75,7 @@ export default makeStyles((theme) => ({
   },
 
   apiVersionNumber: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '14px',
     fontWeight: 300,
     textAlign: 'left',
@@ -83,9 +83,9 @@ export default makeStyles((theme) => ({
   },
 
   appNameIcon: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: '4px',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
     fontSize: '14px',
     fontWeight: 300,
     justifyContent: 'center',
@@ -102,13 +102,13 @@ export default makeStyles((theme) => ({
   deprecatedIcon: {
     backgroundColor: theme.palette.warning.main,
     borderRadius: '4px',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
     marginRight: '20px',
     padding: '5px',
   },
 
   mostRecentAPIVersionLink: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     height: '24px',
     textDecoration: 'none',
     transform: 'scaleX(-1)',
@@ -126,8 +126,8 @@ export default makeStyles((theme) => ({
     // FIXME: do we need 25 grey scale?
     backgroundColor: theme.palette.grey[25 as never],
     border: `1px solid ${theme.palette.grey['300']}`,
-    borderBottomLeftRadius: `${theme.dimensions.borderRadius}px`,
-    borderBottomRightRadius: `${theme.dimensions.borderRadius}px`,
+    borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderTop: 'none',
     width: '100%',
   },
@@ -139,15 +139,15 @@ export default makeStyles((theme) => ({
   tableHeader: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.grey[300]}`,
-    borderTopLeftRadius: `${theme.dimensions.borderRadius}px`,
-    borderTopRightRadius: `${theme.dimensions.borderRadius}px`,
+    borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px 47.5px 10px 40px',
     width: '100%',
 
     '& > :first-child': {
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       fontSize: '16px',
       fontWeight: 300,
     },

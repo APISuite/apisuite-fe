@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
 
     '& > p': {
-      color: theme.palette.tertiary.main,
+      color: theme.palette.primary.main,
       fontSize: '14px',
       fontWeight: 300,
       marginRight: '15px',
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     '& > svg': {
-      color: theme.palette.tertiary.main,
+      color: theme.palette.primary.main,
       height: '25px',
       width: '25px',
     },
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   formSideTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '42px',
     fontWeight: 700,
     marginBottom: '5px',
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   iconLogo: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: theme.alert.success.background,
+    backgroundColor: theme.palette.info.light,
     borderRadius: '4px',
     display: 'flex',
     height: '100%',
@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
 
   inputField: {
     backgroundColor: theme.palette.background.default,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.grey[400],
   },
 
@@ -155,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   portalName: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
   },

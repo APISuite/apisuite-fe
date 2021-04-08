@@ -35,21 +35,21 @@ export default makeStyles((theme) => ({
     },
 
     '& > svg': {
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       height: '25px',
       width: '25px',
     },
   },
 
   editApplicationHeader: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
   },
 
   iconLogo: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -77,14 +77,14 @@ export default makeStyles((theme) => ({
   },
 
   newApplicationHeader: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
   },
 
   portalName: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
@@ -92,7 +92,7 @@ export default makeStyles((theme) => ({
   /* 1.2 Modal's body */
 
   additionalInfoSubSectionTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -101,7 +101,7 @@ export default makeStyles((theme) => ({
 
   alternativeSectionSeparator: {
     border: `1px solid ${theme.palette.grey['100']}`,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     margin: '25px 0px',
     width: '100%',
   },
@@ -119,7 +119,7 @@ export default makeStyles((theme) => ({
   },
 
   appNameAndShortDescriptionSubSectionTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -139,7 +139,7 @@ export default makeStyles((theme) => ({
       backgroundColor: theme.palette.background.default,
       border: `1px solid ${theme.palette.grey['300']}`,
       borderRadius: '4px',
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       cursor: 'pointer',
       height: '40px',
       maxWidth: '40px',
@@ -151,7 +151,7 @@ export default makeStyles((theme) => ({
   },
 
   avatarIcons: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     cursor: 'pointer',
     height: '20px',
     position: 'absolute',
@@ -189,7 +189,7 @@ export default makeStyles((theme) => ({
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
         height: '85px',
         transform: 'translateY(30px)',
       },
@@ -259,7 +259,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -269,7 +269,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
     },
 
@@ -307,7 +307,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -317,7 +317,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
     },
 
@@ -370,8 +370,8 @@ export default makeStyles((theme) => ({
   },
 
   enabledAddOrEditButton: {
-    backgroundColor: theme.palette.primary.main,
-    color: `${theme.palette.primary.contrastText} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    color: `${theme.palette.secondary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -379,7 +379,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
@@ -395,7 +395,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -405,7 +405,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
 
       // Multiline text field's styles
@@ -420,11 +420,11 @@ export default makeStyles((theme) => ({
 
       '& .MuiInputBase-input': {
         borderRight: '1px solid rgba(0, 0, 0, 0.2)',
-        color: theme.palette.active,
+        color: theme.palette.action.active,
       },
 
       '& .MuiInputAdornment-root': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
         cursor: 'pointer',
       },
     },
@@ -442,7 +442,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -452,7 +452,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
 
       // Multiline text field's styles
@@ -467,11 +467,11 @@ export default makeStyles((theme) => ({
 
       '& .MuiInputBase-input': {
         borderRight: '1px solid rgba(0, 0, 0, 0.2)',
-        color: theme.palette.active,
+        color: theme.palette.action.active,
       },
 
       '& .MuiInputAdornment-root': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
         cursor: 'pointer',
       },
     },
@@ -480,7 +480,7 @@ export default makeStyles((theme) => ({
   enabledClientSecretInputFieldRefreshButton: {
     border: '1px solid rgba(0, 0, 0, 0.2)',
     borderRadius: '4px',
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     cursor: 'pointer',
     height: '40px',
     marginLeft: '10px',
@@ -507,7 +507,7 @@ export default makeStyles((theme) => ({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: theme.alert.success.background,
+    backgroundColor: theme.palette.info.light,
     borderRadius: '4px',
     display: 'flex',
     height: '100%',
@@ -541,7 +541,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -551,7 +551,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
 
       // Multiline text field's styles
@@ -563,7 +563,7 @@ export default makeStyles((theme) => ({
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
       },
     },
   },
@@ -607,8 +607,8 @@ export default makeStyles((theme) => ({
   otherButtons: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
-    color: `${theme.palette.active} !important`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginLeft: '25px',
@@ -622,7 +622,7 @@ export default makeStyles((theme) => ({
   },
 
   redirectURISubSectionTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -631,7 +631,7 @@ export default makeStyles((theme) => ({
 
   regularSectionSeparator: {
     border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     margin: '0px 0px 25px 0px',
     width: '100%',
   },
@@ -639,8 +639,8 @@ export default makeStyles((theme) => ({
   removeAppButton: {
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: theme.dimensions.borderRadius,
-    color: `${theme.palette.primary.contrastText} !important`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.secondary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginLeft: '25px',
@@ -662,7 +662,7 @@ export default makeStyles((theme) => ({
   },
 
   selectorOption: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     fontSize: '15px',
     fontWeight: 300,
     padding: '5px 25px',
@@ -676,7 +676,7 @@ export default makeStyles((theme) => ({
   },
 
   subscribedClientApplicationCardStatusIcon: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '14px',
     margin: '0px 12px 0px 12px',
   },

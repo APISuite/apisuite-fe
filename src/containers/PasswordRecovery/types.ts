@@ -1,6 +1,4 @@
 import { AuthStore } from 'containers/Auth/types'
-import { SettingsStore } from 'containers/Settings/types'
-
 import { History, Location } from 'history'
 
 export interface PasswordRecoveryProps {
@@ -9,5 +7,4 @@ export interface PasswordRecoveryProps {
   history: History<any>,
   location: Location<{ stage: 'forgot' | 'recover'; token: string }>,
   recoverPassword: (payload: { token: string; password: string }, history: History<any>) => void,
-  settings: SettingsStore,
 }

@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'white',
-    borderRadius: theme.dimensions.borderRadius * 2,
+    borderRadius: theme.palette.dimensions.borderRadius * 2,
     boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
     maxWidth: 900,
     margin: '20px auto',
@@ -40,10 +40,10 @@ export default makeStyles((theme) => ({
     fontSize: 26,
     fontWeight: 100,
     textAlign: 'center',
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   otherTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   featuresDesc: {
     textAlign: 'center',

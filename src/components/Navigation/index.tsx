@@ -14,11 +14,10 @@ import { Store } from 'store/types'
 
 import Navigation from './Navigation'
 
-const mapStateToProps = ({ notificationCards, profile, settings }: Store) => ({
+const mapStateToProps = ({ notificationCards, profile }: Store) => ({
   // Temporary until notification cards become clearer
   notificationCards: notificationCards,
   profile: profile,
-  settings: settings,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

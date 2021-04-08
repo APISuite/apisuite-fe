@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles((theme) => ({
   addSubscriptionButton: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: '#FFFFFF !important',
     cursor: 'pointer',
     fontSize: '16px',
@@ -36,7 +36,7 @@ export default makeStyles((theme) => ({
   },
 
   dataToShowTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -44,7 +44,7 @@ export default makeStyles((theme) => ({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: theme.alert.success.background,
+    backgroundColor: theme.palette.info.light,
     borderRadius: '4px',
     display: 'flex',
     height: '75px',

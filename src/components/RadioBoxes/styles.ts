@@ -12,15 +12,15 @@ export default makeStyles((theme) => ({
     border: `1px solid ${theme.palette.grey[900]}`,
     marginRight: 8,
     paddingRight: 12,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     cursor: 'pointer',
   },
   controlLabel: {
     margin: 0,
   },
   unselected: {
-    backgroundColor: theme.palette.grey[50],
-    border: `1px solid ${theme.palette.grey[50]}`,
+    backgroundColor: theme.palette.grey[100],
+    border: `1px solid ${theme.palette.grey[100]}`,
   },
   desc: {
     fontSize: 12,

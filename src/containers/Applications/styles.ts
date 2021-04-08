@@ -88,7 +88,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '22px',
     fontWeight: 400,
     marginBottom: '12px',
@@ -98,8 +98,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardTopSection: {
-    // FIXME: do we 25 grey scale?
-    backgroundColor: theme.palette.grey[25 as never],
+    backgroundColor: theme.palette.grey[50],
     border: `1px solid ${theme.palette.label}`,
     borderBottomLeftRadius: '0px',
     borderBottomRightRadius: '0px',
@@ -128,7 +127,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationsTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -141,14 +140,14 @@ export default makeStyles((theme) => ({
   },
 
   firstUseButton: {
-    backgroundColor: theme.palette.primary.main,
-    color: `${theme.palette.primary.contrastText} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    color: `${theme.palette.secondary.contrastText} !important`,
     padding: '12px 21px',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
@@ -178,7 +177,7 @@ export default makeStyles((theme) => ({
   },
 
   knowledgeBaseCard: {
-    backgroundColor: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.secondary.contrastText,
     borderRadius: '4px',
     boxShadow: '1px 0px 10px 0px rgba(0, 0, 0, 0.05)',
     height: '310px',
@@ -217,7 +216,7 @@ export default makeStyles((theme) => ({
   },
 
   knowledgeBaseCardTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '24px',
     fontWeight: 500,
     marginBottom: '20px',
@@ -238,7 +237,7 @@ export default makeStyles((theme) => ({
   },
 
   knowledgeBaseTitle: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     fontSize: '24px',
     fontWeight: 500,
     margin: '0px auto 24px auto',
@@ -266,8 +265,8 @@ export default makeStyles((theme) => ({
   registerClientApplicationCardButton: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
-    color: `${theme.palette.active} !important`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     margin: '0px auto',

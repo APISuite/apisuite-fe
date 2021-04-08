@@ -9,7 +9,6 @@ import informDialog from 'components/InformDialog/sagas'
 import profile from 'containers/Profile/sagas'
 import register from 'components/RegisterForm/sagas'
 import security from 'containers/Security/sagas'
-import settings from 'containers/Settings/sagas'
 import subscriptions from 'containers/Subscriptions/sagas'
 
 const sagas = [
@@ -20,7 +19,6 @@ const sagas = [
   profile,
   register,
   security,
-  settings,
   subscriptions,
 ]
 

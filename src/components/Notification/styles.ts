@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
   },
   icon: {
     display: 'flex',
@@ -24,11 +24,11 @@ export default makeStyles((theme) => ({
     margin: 0,
   },
   success: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     color: 'white',
   },
   error: {
-    backgroundColor: theme.feedback.error,
+    backgroundColor: theme.palette.error.main,
     color: 'white',
   },
 }))

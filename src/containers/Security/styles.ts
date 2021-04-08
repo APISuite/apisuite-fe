@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
   disabledUpdatePasswordButton: {
     backgroundColor: theme.palette.label,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
@@ -23,10 +23,10 @@ export default makeStyles((theme) => ({
   },
 
   enabledUpdatePasswordButton: {
-    backgroundColor: theme.palette.tertiary.main,
-    border: `1px solid ${theme.palette.tertiary.main}`,
-    borderRadius: theme.dimensions.borderRadius,
-    color: `${theme.palette.primary.contrastText} !important`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.secondary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -36,10 +36,10 @@ export default makeStyles((theme) => ({
   },
 
   forgotPasswordButton: {
-    backgroundColor: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.secondary.contrastText,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: theme.dimensions.borderRadius,
-    color: `${theme.palette.active} !important`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -59,7 +59,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.secondary.main} !important`,
     },
 
     // Text field's input outline styles
@@ -69,28 +69,28 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.secondary.main} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
       },
     },
   },
 
   sectionSeparator: {
-    border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     marginBottom: '25px',
     maxWidth: '900px',
     width: '100%',
   },
 
   securityTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '55px',
@@ -103,7 +103,7 @@ export default makeStyles((theme) => ({
   },
 
   updatePasswordTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '10px',

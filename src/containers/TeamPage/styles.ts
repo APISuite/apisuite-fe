@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export default makeStyles((theme) => ({
   root: {
     minHeight: '100%',
-    backgroundColor: theme.palette.grey[50],
+    backgroundColor: theme.palette.grey[100],
   },
   contentContainer: {
     maxWidth: 900,
@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     width: '100%',
     cursor: 'pointer',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
@@ -65,7 +65,7 @@ export default makeStyles((theme) => ({
     color: 'white',
     padding: '8px 24px',
     backgroundColor: theme.palette.grey[900],
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
@@ -79,7 +79,7 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     width: '100%',
     cursor: 'pointer',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
@@ -92,13 +92,13 @@ export default makeStyles((theme) => ({
   emailTextfield: {
     backgroundColor: 'white',
     width: 220,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.grey[400],
   },
   nameTextfield: {
     backgroundColor: 'white',
     width: 220,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.grey[400],
   },
   loading: {
@@ -119,14 +119,14 @@ export default makeStyles((theme) => ({
   errorAlert: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: theme.feedback.error,
+    backgroundColor: theme.palette.error.main,
     border: 'solid',
     borderWidth: 1,
-    borderColor: theme.feedback.error,
+    borderColor: theme.palette.error.main,
     fontSize: 13,
     color: '#FFF',
     padding: '2px 15px',
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     minHeight: 20,
   },
 }))

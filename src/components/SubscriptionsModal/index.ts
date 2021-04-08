@@ -13,7 +13,6 @@ import SubscriptionsModal from './SubscriptionsModal'
 export const mapStateToProps = (store: Store) => ({
   allUserApps: store.applications.userApps,
   apisByName: getAPIsByName(store),
-  settings: store.settings,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

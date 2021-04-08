@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles((theme) => ({
   carouselSlideButtonStyling: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: '#FFFFFF !important',
     cursor: 'pointer',
     fontSize: '16px',
@@ -58,13 +58,13 @@ export default makeStyles((theme) => ({
     transform: 'translateY(-20px)',
 
     '& > :first-child': {
-      borderBottomLeftRadius: `${theme.dimensions.borderRadius}px`,
-      borderTopLeftRadius: `${theme.dimensions.borderRadius}px`,
+      borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+      borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
     },
 
     '& > :last-child': {
-      borderBottomRightRadius: `${theme.dimensions.borderRadius}px`,
-      borderTopRightRadius: `${theme.dimensions.borderRadius}px`,
+      borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
+      borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     },
   },
 
@@ -78,8 +78,8 @@ export default makeStyles((theme) => ({
 
   selectedCarouselSliderIconButton: {
     backgroundColor: '#DCDFE3',
-    border: `1px solid ${theme.palette.focus.main}`,
-    color: theme.palette.focus.main,
+    border: `1px solid ${theme.palette.action.focus}`,
+    color: theme.palette.action.focus,
     height: '40px',
     width: '40px',
   },

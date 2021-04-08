@@ -7,6 +7,7 @@ import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRoun
 import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
 import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
 import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
+import { useConfig } from 'config'
 import APICatalog from 'components/APICatalog'
 import Carousel from 'components/Carousel'
 import Notice from 'components/Notice'
@@ -20,11 +21,11 @@ import carouselSlide3 from 'assets/carousel-slide-3.svg'
 const Sandbox: React.FC<SandboxProps> = ({
   auth,
   getAPIs,
-  settings,
   subscriptions,
 }) => {
   const classes = useStyles()
   const { palette } = useTheme()
+  const { socialURLs, portalName, clientName, supportURL } = useConfig()
 
   const [t] = useTranslation()
 
@@ -66,10 +67,6 @@ const Sandbox: React.FC<SandboxProps> = ({
       setRecentlyAddedAPIs(twoMostRecentlyAddedAPIs)
     }
   }, [subscriptions])
-
-  const hasSocials = () => {
-    return settings && settings.socialURLs && settings.socialURLs.length > 0
-  }
 
   return (
     <main className='page-container'>
@@ -158,7 +155,7 @@ const Sandbox: React.FC<SandboxProps> = ({
               {
                 !auth.user
                   ? t('sandboxPage.stepsSection.notLoggedIn.paragraphOne')
-                  : `${settings.portalName} ${t('sandboxPage.stepsSection.loggedIn.paragraphOne')}`
+                  : `${portalName} ${t('sandboxPage.stepsSection.loggedIn.paragraphOne')}`
               }
             </p>
 
@@ -189,7 +186,7 @@ const Sandbox: React.FC<SandboxProps> = ({
               href={
                 !auth.user
                   ? '/auth/register'
-                  : settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
+                  : supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
               }
               rel={
                 auth.user
@@ -239,9 +236,9 @@ const Sandbox: React.FC<SandboxProps> = ({
               </div>
 
               <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
-                <h1 style={{ color: palette.primary.main }}>2.</h1>
+                <h1 style={{ color: palette.secondary.main }}>2.</h1>
 
-                <h3 style={{ color: palette.primary.main }}>
+                <h3 style={{ color: palette.secondary.main }}>
                   {t('sandboxPage.stepsSection.individualSteps.stepTwo.header')}
                 </h3>
 
@@ -300,36 +297,27 @@ const Sandbox: React.FC<SandboxProps> = ({
       </section>
 
       {/* Notice */}
-      {
-        hasSocials() &&
+      {socialURLs.length > 0 && (
         <section className={classes.noticeContainer}>
           <Notice
-            noticeIcon={
-              <CheckCircleOutlineRoundedIcon />
-            }
+            noticeIcon={<CheckCircleOutlineRoundedIcon />}
             noticeText={
               <p>
-                <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy')} {settings?.clientName}.</>
-                {
-                  hasSocials() && (
-                    <>
-                      <> {t('sandboxPage.notice.visitUs')} </>
-                      <a
-                        href={hasSocials() ? settings.socialURLs[0].url : '#'}
-                        rel='noopener noreferrer'
-                        target='_blank'
-                      >
-                        {hasSocials() ? settings.socialURLs[0].url : ''}
-                      </a>
-                      <>.</>
-                    </>
-                  )
-                }
+                {portalName} {t('sandboxPage.notice.maintainedBy')} {clientName}.
+                {t('sandboxPage.notice.visitUs')}
+                <a
+                  href={socialURLs[0]?.url ?? '#'}
+                  rel='noopener noreferrer'
+                  target='_blank'
+                >
+                  {socialURLs[0].url}
+                </a>
+                  .
               </p>
             }
           />
         </section>
-      }
+      )}
     </main>
   )
 }

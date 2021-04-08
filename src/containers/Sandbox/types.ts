@@ -1,13 +1,11 @@
 import { SvgIconProps } from 'components/SvgIcon/types'
 
 import { AuthStore } from 'containers/Auth/types'
-import { SettingsStore } from 'containers/Settings/types'
 import { SubscriptionsStore } from 'containers/Subscriptions/types'
 
 export interface SandboxProps extends React.HTMLAttributes<HTMLDivElement> {
   auth: AuthStore,
   getAPIs: () => void,
-  settings: SettingsStore,
   subscriptions: SubscriptionsStore,
 }
 

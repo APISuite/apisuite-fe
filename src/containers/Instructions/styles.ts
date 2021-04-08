@@ -2,8 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles((theme) => ({
   root: {
-    // FIXME: do we need 25 grey scale?
-    backgroundColor: theme.palette.grey[25 as never],
+    backgroundColor: theme.palette.grey[50],
     minHeight: '100%',
   },
 
@@ -60,15 +59,15 @@ export default makeStyles((theme) => ({
   },
 
   codeBlock: {
-    borderBottomLeftRadius: theme.dimensions.borderRadius,
-    borderBottomRightRadius: theme.dimensions.borderRadius,
+    borderBottomLeftRadius: theme.palette.dimensions.borderRadius,
+    borderBottomRightRadius: theme.palette.dimensions.borderRadius,
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
   },
 
   noteContainer: {
-    backgroundColor: theme.palette.secondary.main,
-    borderRadius: theme.dimensions.borderRadius,
+    backgroundColor: theme.palette.action.focus,
+    borderRadius: theme.palette.dimensions.borderRadius,
     marginBottom: 20,
     overflow: 'hidden',
     width: '100%',
@@ -86,7 +85,7 @@ export default makeStyles((theme) => ({
   },
 
   noteContent: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     marginLeft: 5,
     padding: 20,
   },
@@ -103,8 +102,8 @@ export default makeStyles((theme) => ({
     paddingRight: 20,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopRightRadius: theme.dimensions.borderRadius,
-    borderTopLeftRadius: theme.dimensions.borderRadius,
+    borderTopRightRadius: theme.palette.dimensions.borderRadius,
+    borderTopLeftRadius: theme.palette.dimensions.borderRadius,
   },
 
   clipboardIcon: {
@@ -112,7 +111,7 @@ export default makeStyles((theme) => ({
     zIndex: 1,
 
     '&:hover': {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
     },
   },
 

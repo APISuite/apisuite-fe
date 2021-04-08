@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     backgroundColor: theme.palette.background.default,
     borderRadius: '4px',
-    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[100]}`,
+    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -28,7 +28,7 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     backgroundColor: theme.palette.background.default,
     borderRadius: '4px',
-    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[100]}`,
+    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -50,7 +50,7 @@ export default makeStyles((theme) => ({
   },
 
   notificationCardTitle: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '27px',
     fontWeight: 400,
     marginBottom: '12px',

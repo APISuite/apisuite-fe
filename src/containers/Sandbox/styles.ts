@@ -18,7 +18,7 @@ export default makeStyles((theme) => ({
   },
 
   sectionIntroHeading: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     margin: '40px 0px',
@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
 
   sectionSeparator: {
     border: `1px solid ${theme.palette.grey['300']}`,
-    borderRadius: theme.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     maxWidth: '900px',
     width: '100%',
   },
@@ -89,9 +89,9 @@ export default makeStyles((theme) => ({
   },
 
   individualStepButton: {
-    backgroundColor: theme.palette.tertiary.main,
-    borderColor: theme.palette.tertiary.main,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -99,16 +99,16 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: theme.palette.tertiary.main,
-      borderColor: theme.palette.tertiary.main,
-      borderRadius: `${theme.dimensions.borderRadius}px`,
+      backgroundColor: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
 
     '&.MuiButton-root.Mui-disabled': {
       backgroundColor: theme.palette.grey[300],
       borderColor: theme.palette.grey[300],
-      borderRadius: `${theme.dimensions.borderRadius}px`,
+      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
@@ -136,7 +136,7 @@ export default makeStyles((theme) => ({
   stepsDescriptionContactSupportButton: {
     backgroundColor: theme.palette.warning.main,
     borderColor: theme.palette.warning.main,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -146,15 +146,15 @@ export default makeStyles((theme) => ({
     '&:active, &:hover, &:link, &:visited': {
       backgroundColor: theme.palette.warning.main,
       borderColor: theme.palette.warning.main,
-      borderRadius: `${theme.dimensions.borderRadius}px`,
+      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
 
   stepsDescriptionRegisterButton: {
-    backgroundColor: theme.palette.tertiary.main,
-    borderColor: theme.palette.tertiary.main,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -162,9 +162,9 @@ export default makeStyles((theme) => ({
     width: '135px',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: theme.palette.tertiary.main,
-      borderColor: theme.palette.tertiary.main,
-      borderRadius: `${theme.dimensions.borderRadius}px`,
+      backgroundColor: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
@@ -176,14 +176,14 @@ export default makeStyles((theme) => ({
   },
 
   stepsDescriptionHeading: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
     margin: '0px 0px 12px 0px',
   },
 
   stepsDescriptionParagraphOne: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     fontSize: '20px',
     fontWeight: 200,
     margin: '12px 0px',

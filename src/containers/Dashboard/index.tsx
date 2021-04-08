@@ -8,11 +8,10 @@ import { Store } from 'store/types'
 
 import Dashboard from './Dashboard'
 
-const mapStateToProps = ({ auth, notificationCards, profile, settings, subscriptions }: Store) => ({
+const mapStateToProps = ({ auth, notificationCards, profile, subscriptions }: Store) => ({
   auth: auth,
   notificationCards: notificationCards,
   profile: profile,
-  settings: settings,
   subscriptions: subscriptions,
 })
 

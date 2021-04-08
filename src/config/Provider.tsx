@@ -2,98 +2,40 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createMuiTheme, ThemeProvider, Theme } from '@material-ui/core/styles'
 import { safeMergeDeep } from 'util/safeMergeDeep'
 import { ConfigContext } from './context'
-import { ConfigProviderProps, ConfigState, DefaultConfig } from './types'
+import { defaultState, apiDefaults } from './constants'
+import { ConfigProviderProps, ConfigState } from './types'
 
-export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, settingsUrl, ...rest }) => {
+export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, api, ...rest }) => {
   const appTheme = useRef<Theme>()
-  const [state, setState] = useState<ConfigState>({
-    initialized: false,
-    portalName: 'API Suite Portal',
-    clientName: 'API Suite',
-    infra: {
-      hydra: 'hydraauth.develop.apisuite.io',
-      sandbox: 'sandbox.develop.apisuite.io',
-      remoteAPI: 'remoteAPI',
-    },
-    social: {
-      web: 'https://cloudoki.com/',
-      twitter: 'https://twitter.com/TeamCloudoki',
-      github: 'https://github.com/Cloudoki',
-    },
-    footer: {
-      'copyright': '© Cloudoki 2020.\nAll rights reserved.\nProudly made in Europe.',
-    },
-    i18nOptions: [
-      {
-        locale: 'en-US',
-        label: 'We speak English',
-      },
-      {
-        locale: 'pt-PT',
-        label: 'Nós falamos Português',
-      },
-    ],
-    dimensions: {
-      borderRadius: 4,
-    },
-    pages: {
-      landing: {
-        components: [],
-      },
-    },
-  })
+  const [state, setState] = useState<ConfigState>(defaultState)
 
   useEffect(() => {
     const bootstrap = async () => {
       try {
-        // load config
-        // `${API_URL}/settings/portal`
-        const { palette, dimensions, ...rest }: DefaultConfig = await (await fetch(settingsUrl)).json()
+        const responses = await Promise.all([
+          // settings config
+          await fetch(`${api.base}/${api.settings || apiDefaults.settings}`),
+          // owner info
+          await fetch(`${api.base}/${api.owner || apiDefaults.owner}`),
+        ])
 
-        appTheme.current = createMuiTheme({
-          palette: {
-            type: 'light',
-            primary: {
-              main: palette.primary,
-              contrastText: palette?.primaryContrastText,
-            },
-            secondary: {
-              main: palette.secondary,
-              contrastText: palette?.secondaryContrastText,
-            },
-            tertiary: {
-              main: palette.tertiary,
-            },
-            focus: {
-              main: palette.focus,
-            },
-            info: {
-              main: palette.info,
-            },
-            success: {
-              main: palette.success,
-            },
-            warning: {
-              main: palette.warning,
-            },
-            grey: palette.grey,
-            text: palette.text,
-            label: palette.label,
-            active: palette.active,
-          },
-          dimensions: dimensions,
-          alert: palette?.alert,
-          feedback: palette?.feedback,
-        })
+        // unwrap responses
+        const [{ theme, ...rest }, ownerInfo] = await Promise.all(
+          responses.map((r) => r.json()),
+        )
 
-        setState((s) => safeMergeDeep(s, { ...rest, initialized: true }))
+        // create theme from API configurations
+        appTheme.current = createMuiTheme({ palette: theme })
+
+        // initialize state with API configurations
+        setState((s) => safeMergeDeep(s, { ...rest, ownerInfo, initialized: true }))
       } catch (error) {
         // TODO: handle errors here
       }
     }
 
     bootstrap()
-  }, [settingsUrl])
+  }, [api])
 
   if (!state.initialized) return <span>Loading...</span>
 

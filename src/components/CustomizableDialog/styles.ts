@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme) => ({
   cancelButton: {
     backgroundColor: theme.palette.background.default,
-    border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
-    color: `${theme.palette.active} !important`,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '24px',
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   confirmButton: {
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: theme.dimensions.borderRadius,
-    color: `${theme.palette.primary.contrastText} !important`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.secondary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   dialogTitleContainer: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[200],
 
     '& > :first-child': {
-      color: theme.palette.tertiary.main,
+      color: theme.palette.primary.main,
       fontSize: '24px',
       fontWeight: 500,
     },

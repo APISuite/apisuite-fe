@@ -35,14 +35,14 @@ export default makeStyles((theme) => ({
     },
 
     '& > svg': {
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       height: '25px',
       width: '25px',
     },
   },
 
   iconLogo: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -70,7 +70,7 @@ export default makeStyles((theme) => ({
   },
 
   portalLogo: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     height: 'auto',
     /* This property makes it so that the logo is
     left-aligned with the remaining content.
@@ -81,7 +81,7 @@ export default makeStyles((theme) => ({
   },
 
   portalName: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
@@ -89,7 +89,7 @@ export default makeStyles((theme) => ({
   /* 1.2 Modal's body */
 
   header: {
-    color: theme.palette.tertiary.main,
+    color: theme.palette.primary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
@@ -103,8 +103,8 @@ export default makeStyles((theme) => ({
   },
 
   sectionSeparator: {
-    border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.dimensions.borderRadius,
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     margin: '25px 0px',
     width: '100%',
   },
@@ -112,7 +112,7 @@ export default makeStyles((theme) => ({
   /* 1.2.1 'Steps' section */
 
   stepsContainer: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     fontSize: '20px',
     fontWeight: 200,
     lineHeight: '30px',
@@ -144,14 +144,14 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '& > :first-child': {
-      color: theme.palette.tertiary.main,
+      color: theme.palette.primary.main,
       fontSize: '16px',
       fontWeight: 500,
       marginBottom: '25px',
     },
 
     '& > :last-child': {
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       border: `1px solid ${theme.palette.grey[400]}`,
       borderRadius: '4px',
       height: '40px',
@@ -166,7 +166,7 @@ export default makeStyles((theme) => ({
       },
 
       '& > .MuiSelect-icon': {
-        color: theme.palette.active,
+        color: theme.palette.action.active,
         marginRight: '15px',
       },
     },
@@ -178,7 +178,7 @@ export default makeStyles((theme) => ({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: theme.alert.success.background,
+    backgroundColor: theme.palette.info.light,
     borderRadius: '4px',
     display: 'flex',
     height: '100%',
@@ -229,7 +229,7 @@ export default makeStyles((theme) => ({
   alternativeAPIProductDetailsContainer: {
     alignItems: 'center',
     backgroundColor: 'none',
-    borderBottom: `1px solid ${theme.palette.grey[50]}`,
+    borderBottom: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     height: '40px',
     justifyContent: 'space-between',
@@ -238,7 +238,7 @@ export default makeStyles((theme) => ({
   },
 
   apiProductName: {
-    color: theme.palette.active,
+    color: theme.palette.action.active,
     fontSize: '16px',
     fontWeight: 500,
   },
@@ -284,7 +284,7 @@ export default makeStyles((theme) => ({
   regularAPIProductDetailsContainer: {
     alignItems: 'center',
     backgroundColor: theme.palette.background.default,
-    borderBottom: `1px solid ${theme.palette.grey[50]}`,
+    borderBottom: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     height: '40px',
     justifyContent: 'space-between',
@@ -293,15 +293,14 @@ export default makeStyles((theme) => ({
   },
 
   selectedAPIProduct: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
 
   tableBody: {
-    // FIXME: do we need a 25 grey scale?
-    backgroundColor: theme.palette.grey[25 as never],
+    backgroundColor: theme.palette.grey[50],
     border: `1px solid ${theme.palette.grey[300]}`,
-    borderBottomLeftRadius: `${theme.dimensions.borderRadius}px`,
-    borderBottomRightRadius: `${theme.dimensions.borderRadius}px`,
+    borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderTop: 'none',
     width: '100%',
   },
@@ -309,15 +308,15 @@ export default makeStyles((theme) => ({
   tableHeader: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.grey[300]}`,
-    borderTopLeftRadius: `${theme.dimensions.borderRadius}px`,
-    borderTopRightRadius: `${theme.dimensions.borderRadius}px`,
+    borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px 55px 10px 40px',
     width: '100%',
 
     '& > :first-child': {
-      color: theme.palette.active,
+      color: theme.palette.action.active,
       fontSize: '16px',
       fontWeight: 400,
     },
@@ -333,7 +332,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
 
     '& > :first-child': {
-      color: theme.palette.tertiary,
+      color: theme.palette.primary.main,
       fontSize: '16px',
       fontWeight: 500,
       marginBottom: '25px',
@@ -363,8 +362,8 @@ export default makeStyles((theme) => ({
   disabledOtherButtons: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
-    color: `${theme.palette.active} !important`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -378,7 +377,7 @@ export default makeStyles((theme) => ({
   disabledRequestAccessButton: {
     backgroundColor: theme.palette.primary.main,
     border: `1px solid ${theme.palette.primary.main}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -391,7 +390,7 @@ export default makeStyles((theme) => ({
   disabledRevokeAccessButton: {
     backgroundColor: theme.palette.warning.main,
     border: `1px solid ${theme.palette.warning.main}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -404,8 +403,8 @@ export default makeStyles((theme) => ({
   enabledOtherButtons: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
-    color: `${theme.palette.active} !important`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -415,9 +414,9 @@ export default makeStyles((theme) => ({
   },
 
   enabledRequestAccessButton: {
-    backgroundColor: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.primary.main}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     cursor: 'pointer',
     fontSize: '16px',
@@ -430,7 +429,7 @@ export default makeStyles((theme) => ({
   enabledRevokeAccessButton: {
     backgroundColor: theme.palette.warning.main,
     border: `1px solid ${theme.palette.warning.main}`,
-    borderRadius: `${theme.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     cursor: 'pointer',
     fontSize: '16px',
