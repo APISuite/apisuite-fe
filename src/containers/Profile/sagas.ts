@@ -1,47 +1,46 @@
-import {
-  takeLatest,
-  put,
-  call,
-  select,
-} from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
+
 import request from 'util/request'
+
+import { authActions } from 'containers/Auth/ducks'
+import { openNotification } from 'containers/NotificationStack/ducks'
+
 import {
-  ProfileActionTypes,
-  fetchTeamMembersActions,
-  fetchRoleOptionsActions,
-  inviteMemberActions,
-  confirmInviteActions,
   changeRoleActions,
-  getProfileActions,
-  updateProfileActions,
-  fetchOrgActions,
-  updateOrgActions,
-  deleteAccountActions,
+  confirmInviteActions,
   createOrgActions,
+  deleteAccountActions,
+  fetchOrgActions,
+  fetchRoleOptionsActions,
+  fetchTeamMembersActions,
+  getProfileActions,
+  inviteMemberActions,
+  ProfileActionTypes,
+  updateOrgActions,
+  updateProfileActions,
 } from './ducks'
-import { Store } from 'store/types'
-import { API_URL } from 'constants/endpoints'
+
 import {
-  FetchTeamMembersResponse,
-  FetchRoleOptionsResponse,
-  InviteMemberResponse,
-  GetProfileResponse,
-  UpdateProfileResponse,
   ChangeRoleResponse,
   FetchOrgResponse,
+  FetchRoleOptionsResponse,
+  FetchTeamMembersResponse,
+  GetProfileResponse,
+  InviteMemberResponse,
   UpdateOrgResponse,
+  UpdateProfileResponse,
 } from './types'
-import { openNotification } from 'containers/NotificationStack/ducks'
-import { authActions } from 'containers/Auth/ducks'
+
+import { Store } from 'store/types'
+
+import { API_URL } from 'constants/endpoints'
 
 export function * fetchTeamMembersSaga (
   action: ReturnType<typeof fetchTeamMembersActions.request>,
 ) {
   try {
-    let orgID
-    if (!action.payload.orgID) {
-      orgID = yield select((state: Store) => state.profile.profile.current_org.id)
-    }
+    const orgID = action.payload.orgID
+
     const response: FetchTeamMembersResponse[] = yield call(request, {
       url: `${API_URL}/organizations/${orgID}/users`,
       method: 'GET',

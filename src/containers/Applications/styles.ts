@@ -151,7 +151,7 @@ export default makeStyles(({
   firstUseButton: {
     backgroundColor: config.palette.primary,
     color: `${config.palette.primaryContrastText} !important`,
-    padding: '12px 21px',
+    padding: '12px 20px',
     textDecoration: 'none',
     textTransform: 'none',
 

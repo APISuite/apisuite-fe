@@ -110,7 +110,7 @@ const renderSubSection = (
         },
         {
           label: t('footer.dashboardMenu.menuItemTwo', { config }),
-          route: '/profile/team',
+          route: '/dashboard/team',
         },
       ],
     },

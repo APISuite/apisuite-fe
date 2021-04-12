@@ -108,7 +108,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             notificationCardText={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardText', { config })}
             notificationCardButtonClassName={classes.customNotificationCardButton}
             notificationCardButtonLabel={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardButtonLabel', { config })}
-            notificationCardButtonLink='/profile/team'
+            notificationCardButtonLink='/dashboard/team'
             typeOfUser={typeOfUser}
           />
         </section>
@@ -129,7 +129,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                 ? [
                   {
                     actionImage: teamSVG,
-                    actionLink: '/profile/team',
+                    actionLink: '/dashboard/team',
                     actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.team', { config }),
                   },
                   {
@@ -183,7 +183,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: teamSVG,
-                    actionLink: '/profile/team',
+                    actionLink: '/dashboard/team',
                     actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.team', { config }),
                   },
                   {

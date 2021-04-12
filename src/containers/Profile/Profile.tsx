@@ -325,7 +325,7 @@ const Profile: React.FC<ProfileProps> = ({
 
             <Button
               customButtonClassName={classes.otherActionsButtons}
-              href='profile/team'
+              href='dashboard/team'
               label={t('profileTab.overviewTab.otherActionsLabels.viewTeam', { config })}
             />
           </div>

@@ -4,11 +4,9 @@ import { bindActionCreators, Dispatch } from 'redux'
 
 import { authActions } from 'containers/Auth/ducks'
 import {
-  getProfileActions,
-  resetErrorAction,
-  updateProfileActions,
   deleteAccountActions,
-  fetchTeamMembersActions,
+  getProfileActions,
+  updateProfileActions,
 } from 'containers/Profile/ducks'
 
 import Profile from './Profile'
@@ -23,12 +21,10 @@ export const mapStateToProps = ({ auth, profile }: Store) => ({
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(
   {
-    getProfile: getProfileActions.request,
-    logout: () => dispatch(authActions.logout()),
-    resetErrors: resetErrorAction,
-    updateProfile: updateProfileActions.request,
     deleteAccount: deleteAccountActions.request,
-    fetchTeamMembers: fetchTeamMembersActions.request,
+    getProfile: getProfileActions.request,
+    logout: authActions.logout,
+    updateProfile: updateProfileActions.request,
   },
   dispatch,
 )

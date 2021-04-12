@@ -22,7 +22,7 @@ const RedirectPage: React.FC<RedirectPageProps> = ({
       return <Redirect to='/auth/login' />
 
     case 'invite':
-      return <Redirect to='/profile/team' />
+      return <Redirect to='/dashboard/team' />
 
     case 'password':
       return (

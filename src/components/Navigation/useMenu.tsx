@@ -169,7 +169,7 @@ export function useMenu (): Array<TabProps[]> {
           },
           {
             label: 'Team',
-            route: '/profile/team',
+            route: '/dashboard/team',
           },
           {
             label: 'Subscriptions',

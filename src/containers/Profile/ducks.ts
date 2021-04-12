@@ -18,7 +18,7 @@ import {
 } from './types'
 
 const initialState: ProfileStore = {
-  members: [{
+  teamMembers: [{
     'Organization': {
       id: '',
       name: '',
@@ -175,15 +175,15 @@ export default function profileReducer (
 
     case ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS: {
       return update(state, {
-        /* Previously '{ $set: action.response.members }', which caused the
+        /* Previously '{ $set: action.response.teamMembers }', which caused the
         'Profile -> Team' view to NOT be rendered as a result of an error
-        ('members' being 'undefined'). */
+        ('teamMembers' being 'undefined'). */
         requestStatuses: {
           getMembersRequest: {
             isRequesting: { $set: false },
           },
         },
-        members: { $set: action.response },
+        teamMembers: { $set: action.response },
       })
     }
 
@@ -461,7 +461,7 @@ export default function profileReducer (
 }
 
 export const fetchTeamMembersActions = {
-  request: (orgID?: string) => {
+  request: (orgID: string) => {
     return {
       type: ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST,
       payload: {
