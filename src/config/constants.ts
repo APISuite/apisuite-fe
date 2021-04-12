@@ -7,6 +7,7 @@ export enum apiDefaults {
 
 export const defaultState: ConfigState = {
   initialized: false,
+  failedToFetch: false,
   portalName: '',
   clientName: '',
   supportURL: '',

@@ -16,6 +16,7 @@ export interface ConfigProviderProps {
 
 export interface ConfigState extends Omit<DefaultConfig, 'theme'> {
   initialized: boolean,
+  failedToFetch: boolean,
   ownerInfo: Owner,
 }
 
