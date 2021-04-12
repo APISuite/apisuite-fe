@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createMuiTheme, ThemeProvider, Theme } from '@material-ui/core/styles'
+import { CircularProgress } from '@material-ui/core'
 import { safeMergeDeep } from 'util/safeMergeDeep'
 import { ConfigContext } from './context'
 import { defaultState, apiDefaults } from './constants'
+import useStyles from './styles'
 import { ConfigProviderProps, ConfigState } from './types'
 
 export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, api, ...rest }) => {
+  const classes = useStyles()
   const appTheme = useRef<Theme>()
   const [state, setState] = useState<ConfigState>(defaultState)
 
@@ -37,7 +40,13 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({ children, api, .
     bootstrap()
   }, [api])
 
-  if (!state.initialized) return <span>Loading...</span>
+  if (!state.initialized) {
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress color='inherit' />
+      </div>
+    )
+  }
 
   return (
     <ConfigContext.Provider
