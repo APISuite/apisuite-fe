@@ -131,7 +131,7 @@ export default makeStyles((theme) => ({
 
   subSection: {
     '& > h3': {
-      color: theme.palette.secondary.contrastText,
+      color: theme.palette.common.white,
       fontSize: '16px',
       fontWeight: '300',
       lineHeight: '22px',

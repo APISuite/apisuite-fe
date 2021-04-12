@@ -44,7 +44,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     borderRadius: '5px',
     boxShadow: 'none',
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -58,7 +58,7 @@ export default makeStyles((theme) => ({
     },
 
     '&:link, &:visited': {
-      color: theme.palette.secondary.contrastText,
+      color: theme.palette.common.white,
     },
   },
 
@@ -103,7 +103,7 @@ export default makeStyles((theme) => ({
     },
 
     '&:link, &:visited': {
-      color: theme.palette.secondary.contrastText,
+      color: theme.palette.common.white,
     },
   },
 
@@ -165,7 +165,7 @@ export default makeStyles((theme) => ({
   // JSS for the notification banner
 
   customNotificationBannerParagraph: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '22px',

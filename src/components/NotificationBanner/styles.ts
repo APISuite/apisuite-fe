@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   notificationBannerCloseButton: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     height: '24px',
     width: '24px',
   },
@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   notificationBannerHeader: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     fontSize: '24px',
     fontWeight: 400,
     margin: '0px 15px 15px 0px',
   },
 
   notificationBannerParagraph: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '22px',

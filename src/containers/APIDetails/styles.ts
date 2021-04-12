@@ -25,11 +25,11 @@ export default makeStyles((theme) => ({
   },
   live: {
     backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
   },
   docs: {
     backgroundColor: theme.palette.action.active,
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
   },
   centerVertical: {
     display: 'flex',

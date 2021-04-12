@@ -141,7 +141,7 @@ export default makeStyles((theme) => ({
 
   firstUseButton: {
     backgroundColor: theme.palette.secondary.main,
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     padding: '12px 21px',
     textDecoration: 'none',
     textTransform: 'none',
@@ -177,7 +177,7 @@ export default makeStyles((theme) => ({
   },
 
   knowledgeBaseCard: {
-    backgroundColor: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.background.paper,
     borderRadius: '4px',
     boxShadow: '1px 0px 10px 0px rgba(0, 0, 0, 0.05)',
     height: '310px',
@@ -280,7 +280,7 @@ export default makeStyles((theme) => ({
   },
 
   subscribedClientApplicationCardStatusIcon: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '14px',
     marginRight: '12px',
   },

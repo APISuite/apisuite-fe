@@ -77,7 +77,7 @@ export default makeStyles((theme) => ({
   disabledCreateOrgButton: {
     backgroundColor: '#99e6cc',
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -91,7 +91,7 @@ export default makeStyles((theme) => ({
   enabledCreateOrgButton: {
     backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -104,7 +104,7 @@ export default makeStyles((theme) => ({
   enabledUpdateDetailsButton: {
     backgroundColor: theme.palette.action.active,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',

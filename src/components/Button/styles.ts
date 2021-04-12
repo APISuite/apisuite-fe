@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     borderRadius: '5px',
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     display: 'inline-block',
     fontSize: '14px',
     fontWeight: 600,
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     '&:link, &:visited': {
-      color: theme.palette.secondary.contrastText,
+      color: theme.palette.common.white,
     },
   },
 
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   // b) Button's text color
 
   primaryColor: {
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
   },
 
   secondaryColor: {

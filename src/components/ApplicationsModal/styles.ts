@@ -371,7 +371,7 @@ export default makeStyles((theme) => ({
 
   enabledAddOrEditButton: {
     backgroundColor: theme.palette.secondary.main,
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -640,7 +640,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginLeft: '25px',

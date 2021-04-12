@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -36,7 +36,7 @@ export default makeStyles((theme) => ({
   },
 
   forgotPasswordButton: {
-    backgroundColor: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.action.active} !important`,

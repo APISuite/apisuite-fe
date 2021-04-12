@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
     width: '24px',
 
     '& > p': {
-      color: theme.palette.text.primary,
+      color: theme.palette.common.white,
       fontSize: '14px',
       fontWeight: 400,
       height: '24px',
@@ -103,7 +103,7 @@ export default makeStyles((theme) => ({
   },
 
   opaqueMenuTab: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -162,14 +162,14 @@ export default makeStyles((theme) => ({
   },
 
   regularLogo: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
   },
 
   subTab: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     fontSize: '16px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -196,7 +196,7 @@ export default makeStyles((theme) => ({
   },
 
   transparentMenuTab: {
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -206,7 +206,7 @@ export default makeStyles((theme) => ({
   },
 
   userAvatar: {
-    border: `2px solid ${theme.palette.secondary.contrastText}`,
+    border: `2px solid ${theme.palette.common.white}`,
     fontSize: '20px',
     fontWeight: 300,
     height: '33px',

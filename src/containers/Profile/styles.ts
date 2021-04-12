@@ -46,7 +46,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '15px',
@@ -57,7 +57,7 @@ export default makeStyles((theme) => ({
   disabledOrganisationButton: {
     backgroundColor: theme.palette.label,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -83,7 +83,7 @@ export default makeStyles((theme) => ({
   enabledOrganisationButton: {
     backgroundColor: theme.palette.action.active,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.secondary.contrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -94,7 +94,7 @@ export default makeStyles((theme) => ({
   enabledUpdateDetailsButton: {
     backgroundColor: theme.palette.action.active,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.secondary.contrastText,
+    color: theme.palette.common.white,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -105,7 +105,7 @@ export default makeStyles((theme) => ({
   },
 
   formFieldsContainer: {
-    backgroundColor: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderRadius: theme.palette.dimensions.borderRadius,
     marginBottom: '35px',
@@ -180,7 +180,7 @@ export default makeStyles((theme) => ({
   },
 
   otherActionsButtons: {
-    backgroundColor: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.action.active} !important`,
@@ -223,7 +223,7 @@ export default makeStyles((theme) => ({
   },
 
   userDetailsContainer: {
-    backgroundColor: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderRadius: theme.palette.dimensions.borderRadius,
   },
