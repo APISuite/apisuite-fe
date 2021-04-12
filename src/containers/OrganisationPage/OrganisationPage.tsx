@@ -159,7 +159,8 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
       orgWebsiteURL: org.websiteUrl ? org.websiteUrl : '',
       orgYouTubeURL: org.youtubeUrl ? org.youtubeUrl : '',
     })
-  }, [org, resetForm])
+  // FIXME: adding resetForm to the dependencies causes an infinite loop
+  }, [org])
 
   /* All organisation details */
 

@@ -142,7 +142,8 @@ const Profile: React.FC<ProfileProps> = ({
           : '',
       },
     )
-  }, [profile, resetForm])
+  // FIXME: adding resetForm to the dependencies causes an infinite loop
+  }, [profile])
 
   /* Organisation details */
 
