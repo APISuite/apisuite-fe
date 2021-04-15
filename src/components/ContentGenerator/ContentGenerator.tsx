@@ -1,6 +1,5 @@
 import React from 'react'
-import { useConfig } from 'config'
-import { DefaultConfig } from 'config/types'
+import { useConfig, DefaultConfig } from '@apisuite/fe-base'
 
 const components: any = []
 

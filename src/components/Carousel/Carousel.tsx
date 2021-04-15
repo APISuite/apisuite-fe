@@ -1,23 +1,16 @@
-import * as React from 'react'
-
+import React from 'react'
 import ReactSlidy from 'react-slidy/lib'
+import { useTheme, Fade } from '@apisuite/fe-base'
+import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded'
+import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUncheckedRounded'
+import Button from 'components/Button'
+
+import useStyles from './styles'
+import { CarouselSlideProps, CarouselProps } from './types'
 
 import 'react-slidy/lib/index.scss'
 
-import Button from 'components/Button'
-
-import Fade from '@material-ui/core/Fade'
-
-import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded'
-import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUncheckedRounded'
-
-import { CarouselSlideProps, CarouselProps } from './types'
-
-import useStyles from './styles'
-import { useTheme } from '@material-ui/core'
-
 // Carousel slides
-
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
   carouselSlideButton,
   carouselSlideButtonCustomStyling,

@@ -1,12 +1,9 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation, InputBase } from '@apisuite/fe-base'
 
 import APICatalog from 'components/APICatalog'
 import Button from 'components/Button'
 import SubscriptionsModal from 'components/SubscriptionsModal'
-
-import InputBase from '@material-ui/core/InputBase'
 
 import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import PowerRoundedIcon from '@material-ui/icons/PowerRounded'

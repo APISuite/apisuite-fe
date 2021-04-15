@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation } from '@apisuite/fe-base'
 import useStyles from './styles'
 import { RegisterConfirmationProps } from './types'
 

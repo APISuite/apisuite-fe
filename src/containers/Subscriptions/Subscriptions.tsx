@@ -1,6 +1,5 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation } from '@apisuite/fe-base'
 
 import Button from 'components/Button'
 import Link from 'components/Link'

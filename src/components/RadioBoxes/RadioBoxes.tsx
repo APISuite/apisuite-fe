@@ -1,12 +1,9 @@
-import * as React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Radio, { RadioProps } from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
+import React from 'react'
+import clsx from 'clsx'
+import { withStyles, Radio, RadioGroup, FormControlLabel, RadioProps } from '@apisuite/fe-base'
 
 import useStyles from './styles'
 import { RadioBoxesProps } from './types'
-import clsx from 'clsx'
 
 const WhiteRadio = withStyles({ root: { color: 'white' } })((props: RadioProps) => <Radio {...props} />)
 

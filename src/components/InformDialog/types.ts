@@ -1,4 +1,4 @@
-import { DialogProps } from '@material-ui/core/Dialog'
+import { DialogProps } from '@apisuite/fe-base'
 import { AnyAction } from 'redux'
 
 export interface InformDialogProps extends DialogProps {

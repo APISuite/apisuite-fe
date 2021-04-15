@@ -2,7 +2,7 @@ import * as React from 'react'
 import { FormCardProps } from './types'
 import useStyles from './styles'
 import Button from 'components/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { CircularProgress } from '@apisuite/fe-base'
 
 const FormCard: React.FC<FormCardProps> = ({
   title,

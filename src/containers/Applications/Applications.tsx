@@ -1,12 +1,9 @@
-import * as React from 'react'
+import React from 'react'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Avatar, Button } from '@apisuite/fe-base'
 
 import ApplicationsModal from 'components/ApplicationsModal'
 import Link from 'components/Link'
-
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
 
 import HeightRoundedIcon from '@material-ui/icons/HeightRounded'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'

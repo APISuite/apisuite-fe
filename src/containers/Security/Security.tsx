@@ -1,19 +1,12 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
+import React from 'react'
+import { useTranslation, TextField, InputAdornment, IconButton } from '@apisuite/fe-base'
 import Button from 'components/Button'
 import { isValidPass } from 'components/FormField'
-
-import TextField from '@material-ui/core/TextField'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import IconButton from '@material-ui/core/IconButton'
 
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded'
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded'
 
 import useStyles from './styles'
-
 import { SecurityProps } from './types'
 
 const Security: React.FC<SecurityProps> = ({

@@ -1,4 +1,4 @@
-import { RadioGroupProps } from '@material-ui/core/RadioGroup'
+import { RadioGroupProps } from '@apisuite/fe-base'
 
 export interface RadioBoxesProps {
   options: RadioBoxesOption[],

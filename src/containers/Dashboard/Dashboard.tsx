@@ -1,11 +1,10 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useConfig, useTranslation } from '@apisuite/fe-base'
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
 import {
   DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
   DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
 } from 'constants/global'
-import { useConfig } from 'config'
 import ActionsCatalog from 'components/ActionsCatalog'
 import APICatalog from 'components/APICatalog'
 import GreetingCard from 'components/GreetingCard'

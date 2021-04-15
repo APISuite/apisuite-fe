@@ -1,12 +1,10 @@
-import * as React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useConfig, useTranslation, useTheme } from '@apisuite/fe-base'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import bash from 'react-syntax-highlighter/dist/esm/languages/hljs/bash'
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
-import { useConfig } from 'config'
 import NavMenu from 'components/NavMenu'
 import useStyles from './styles'
-import { useTheme } from '@material-ui/core'
 
 SyntaxHighlighter.registerLanguage('bash', bash)
 

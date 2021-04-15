@@ -1,14 +1,11 @@
 import * as React from 'react'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Avatar, TextField } from '@apisuite/fe-base'
 
 import Button from 'components/Button'
 import Select from 'components/Select'
 import { SelectOption } from 'components/Select/types'
 import { isValidImage, isValidPhoneNumber, isValidURL } from 'components/FormField'
-
-import Avatar from '@material-ui/core/Avatar'
-import TextField from '@material-ui/core/TextField'
 
 import Close from '@material-ui/icons/Close'
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'

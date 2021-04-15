@@ -1,4 +1,4 @@
-import { DialogProps } from '@material-ui/core/Dialog'
+import { DialogProps } from '@apisuite/fe-base'
 
 export interface CustomizableDialogProps extends DialogProps {
   // Props passed by the 'calling' component to be added below

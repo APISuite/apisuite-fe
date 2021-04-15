@@ -6,9 +6,8 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const MinifyPlugin = require('babel-minify-webpack-plugin')
 const RobotstxtPlugin = require('robotstxt-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -27,15 +26,19 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({ filename: 'assets/[name]-[contenthash].css' }),
-    new MinifyPlugin({ mangle: { topLevel: true } }, { comments: false }),
     new webpack.HashedModuleIdsPlugin(),
     new RobotstxtPlugin(),
   ],
 
   optimization: {
-    minimizer: [
-      new OptimizeCSSAssetsPlugin({}),
-    ],
+    minimize: true,
+    minimizer: [new TerserPlugin({
+      terserOptions: {
+        mangle: { toplevel: true },
+        format: { comments: false },
+      },
+      extractComments: false,
+    })],
   },
 
   devtool: false,

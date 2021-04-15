@@ -7,6 +7,11 @@
           "desc": "Deixe os seu clientes criar uma conta sem demoras"
         }
       }
+    },
+    "newSlides": {
+      "slideOne": {
+        "slideButtonLabel": "Registar"
+      }
     }
   }
 }

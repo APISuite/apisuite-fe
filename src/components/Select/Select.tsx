@@ -1,35 +1,28 @@
-import * as React from 'react'
-
-import TextField from '@material-ui/core/TextField'
-
+import React from 'react'
+import { TextField } from '@apisuite/fe-base'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 
 import { SelectProps, SelectOption } from './types'
-
 import useStyles from './styles'
 
 const Select: React.FC<SelectProps> = ({
-  className,
   customCloseIcon,
   customOpenIcon,
-  disabled,
   fieldLabel,
-  onChange,
   options,
   selected,
+  ...rest
 }) => {
   const classes = useStyles()
 
   return (
     <Autocomplete
-      className={className}
+      {...rest}
       closeIcon={customCloseIcon}
       defaultValue={selected ? options.find((option) => option.value === selected.value) : undefined}
       disableClearable
-      disabled={disabled}
       getOptionLabel={(option: SelectOption) => option.label}
       groupBy={(option: SelectOption) => option.group}
-      onChange={onChange}
       options={options.sort((optionA, optionB) => -optionB.group.localeCompare(optionA.group))}
       popupIcon={customOpenIcon}
       renderInput={(params) => (

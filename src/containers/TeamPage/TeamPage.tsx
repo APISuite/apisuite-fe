@@ -1,16 +1,16 @@
-import * as React from 'react'
-import useStyles from './styles'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation, Button, CircularProgress } from '@apisuite/fe-base'
 import Select from 'components/Select'
-import Button from '@material-ui/core/Button'
 import FormField, { isValidEmail } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
-import { TeamPageProps } from './types'
 import { SelectOption } from 'components/Select/types'
 import { Role, FetchTeamMembersResponse } from 'containers/Profile/types'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { ROLES } from 'constants/global'
 import { User } from 'containers/Auth/types'
+
+import useStyles from './styles'
+import { TeamPageProps } from './types'
+
 const AUTHORIZED_ROLES = [
   ROLES.admin.value,
   ROLES.organizationOwner.value,

@@ -1,15 +1,9 @@
-import * as React from 'react'
+import React from 'react'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Avatar, Fade, Menu, MenuItem, TextField } from '@apisuite/fe-base'
 
 import Button from 'components/Button'
 import { isValidImage, isValidURL } from 'components/FormField'
-
-import Avatar from '@material-ui/core/Avatar'
-import Fade from '@material-ui/core/Fade'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import TextField from '@material-ui/core/TextField'
 
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import Close from '@material-ui/icons/Close'

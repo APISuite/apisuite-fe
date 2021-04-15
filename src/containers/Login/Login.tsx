@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation } from '@apisuite/fe-base'
 import { View } from './types'
 import LoginForm from 'components/LoginForm'
 import RegisterForm from 'components/RegisterForm'

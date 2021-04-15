@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import Link from 'components/Link'
 
-import Avatar from '@material-ui/core/Avatar'
+import { Avatar } from '@apisuite/fe-base'
 
 import useStyles from './styles'
 

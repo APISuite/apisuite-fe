@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
 import dashboardSpaceBackground from 'assets/dashboardSpaceBackground.svg'
 

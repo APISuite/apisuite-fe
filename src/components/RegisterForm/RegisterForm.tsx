@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import qs from 'qs'
 import {
   RegisterFormProps,
@@ -6,11 +6,9 @@ import {
   OrganisationDetails,
   SecurityStep,
 } from './types'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
 import { Redirect } from 'react-router-dom'
 import StepsProgress from 'components/StepsProgress'
-import IconButton from '@material-ui/core/IconButton'
-import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import FormCard from 'components/FormCard'

@@ -1,12 +1,16 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import Fade from '@material-ui/core/Fade'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Modal from '@material-ui/core/Modal'
-import TextField from '@material-ui/core/TextField'
+import {
+  useConfig,
+  useTranslation,
+  Avatar,
+  Button,
+  Fade,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Modal,
+  TextField,
+} from '@apisuite/fe-base'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import Close from '@material-ui/icons/Close'
@@ -15,8 +19,6 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
 import RefreshRoundedIcon from '@material-ui/icons/RefreshRounded'
-import { useTranslation } from 'react-i18next'
-import { useConfig } from 'config'
 import { useForm } from 'util/useForm'
 import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 import { isValidImage, isValidURL } from 'components/FormField'

@@ -1,5 +1,4 @@
-import { StandardTextFieldProps } from '@material-ui/core/TextField'
-import { InputProps as StandardInputProps } from '@material-ui/core/Input'
+import { StandardTextFieldProps, InputProps as StandardInputProps } from '@apisuite/fe-base'
 export interface FormFieldProps extends StandardTextFieldProps {
   onBlur?: StandardInputProps['onBlur'],
   onFocus?: StandardInputProps['onFocus'],

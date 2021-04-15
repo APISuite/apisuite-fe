@@ -1,14 +1,12 @@
-import * as React from 'react'
-import { LoginFormProps } from './types'
-import FormCard from 'components/FormCard'
-import FormField, { parseErrors, isValidEmail } from 'components/FormField'
-import useStyles from './styles'
-import IconButton from '@material-ui/core/IconButton'
+import React from 'react'
+import { useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import { useTranslation } from 'react-i18next'
+import FormCard from 'components/FormCard'
+import FormField, { parseErrors, isValidEmail } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
+import useStyles from './styles'
+import { LoginFormProps } from './types'
 
 const LoginForm: React.FC<LoginFormProps> = ({
   auth,

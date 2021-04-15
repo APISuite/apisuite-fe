@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React from 'react'
 import { useParams } from 'react-router'
-import useStyles from './styles'
-import { APIDetailParams, APIVersionProps } from './types'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, CircularProgress } from '@apisuite/fe-base'
 import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
+
+import useStyles from './styles'
+import { APIDetailParams, APIVersionProps } from './types'
 
 const APIDetails: React.FC<APIVersionProps> = ({
   getApiVersion,

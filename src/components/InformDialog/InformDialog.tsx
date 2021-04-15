@@ -1,14 +1,15 @@
 import * as React from 'react'
 import useStyles from './styles'
-// import Button from '@material-ui/core/Button'
 import Button from 'components/Button'
 import FormField, { isValidEmail } from 'components/FormField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  CircularProgress,
+} from '@apisuite/fe-base'
 import { InformDialogProps } from './types'
 
 const InformDialog: React.FC<InformDialogProps> = (

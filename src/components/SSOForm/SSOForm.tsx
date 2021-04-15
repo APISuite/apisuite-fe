@@ -1,8 +1,9 @@
-import * as React from 'react'
+import React from 'react'
+import { useTranslation } from '@apisuite/fe-base'
+import Button from 'components/Button'
+
 import { SSOFormProps } from './types'
 import useStyles from './styles'
-import { useTranslation } from 'react-i18next'
-import Button from 'components/Button'
 
 const SSOForm: React.FC<SSOFormProps> = ({
   auth,

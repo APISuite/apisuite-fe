@@ -1,11 +1,10 @@
-import * as React from 'react'
+import React from 'react'
+import { useTranslation, Chip } from '@apisuite/fe-base'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ClearIcon from '@material-ui/icons/Clear'
+
 import useStyles from './styles'
 import { SubscriptionSelectProps } from './types'
-import Chip from '@material-ui/core/Chip'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-// import CircularProgress from '@material-ui/core/CircularProgress'
-import { useTranslation } from 'react-i18next'
-import ClearIcon from '@material-ui/icons/Clear'
 
 const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({
   apps,

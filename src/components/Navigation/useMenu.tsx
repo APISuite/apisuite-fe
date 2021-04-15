@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { useConfig } from '@apisuite/fe-base'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
@@ -6,7 +7,6 @@ import {
   DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
   DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
 } from 'constants/global'
-import { useConfig } from 'config'
 import { getMenuEntries } from 'util/extensions'
 import { getRoleName } from 'containers/Profile/selectors'
 

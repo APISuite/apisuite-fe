@@ -1,7 +1,5 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
+import React from 'react'
+import { useTranslation } from '@apisuite/fe-base'
 import CookieConsent from 'react-cookie-consent'
 
 import useStyles from './styles'

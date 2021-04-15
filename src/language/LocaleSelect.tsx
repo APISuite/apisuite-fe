@@ -1,16 +1,7 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
-import { LOCALE_KEY, changeLocale } from './i18n'
-
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
-
-import { localPut } from 'util/storage'
+import React from 'react'
+import { useConfig, useTranslation, changeLocale, MenuItem, Select } from '@apisuite/fe-base'
 
 import useStyles from './styles'
-import { useConfig } from 'config'
 
 const LocaleSelect: React.FC<{}> = () => {
   const { i18nOptions } = useConfig()
@@ -20,7 +11,6 @@ const LocaleSelect: React.FC<{}> = () => {
 
   const handleLocaleChange = (event: React.ChangeEvent<any>) => {
     changeLocale(event.target.value)
-    localPut(LOCALE_KEY, event.target.value)
   }
 
   const selectionMenuItems = i18nOptions.map((opt) => (

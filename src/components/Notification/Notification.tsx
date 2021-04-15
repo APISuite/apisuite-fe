@@ -1,7 +1,7 @@
 import * as React from 'react'
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined'
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined'
-import Snackbar from '@material-ui/core/Snackbar'
+import { Snackbar } from '@apisuite/fe-base'
 import { NotificationProps } from './types'
 import useStyles from './styles'
 import clsx from 'clsx'

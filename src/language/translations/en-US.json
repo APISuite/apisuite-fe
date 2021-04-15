@@ -537,8 +537,5 @@
   "apidetails": {
     "notfound": "No Swagger documentation found.",
     "goback": "Go back"
-  },
-  "config": {
-    "errorMessage": "Could not reach the server - please check your Internet connection."
   }
 }
