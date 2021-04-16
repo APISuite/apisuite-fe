@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation, Button} from '@apisuite/fe-base'
+import { useTranslation, Button } from '@apisuite/fe-base'
 
 import { FormCardProps } from './types'
 import useStyles from './styles'

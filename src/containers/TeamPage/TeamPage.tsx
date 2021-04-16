@@ -12,7 +12,6 @@ import { SelectOption } from 'components/Select/types'
 import useStyles from './styles'
 import { TeamPageProps } from './types'
 
-
 const AUTHORIZED_ROLES = [
   ROLES.admin.value,
   ROLES.organizationOwner.value,

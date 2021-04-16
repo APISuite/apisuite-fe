@@ -1,7 +1,5 @@
 import { History } from 'history'
 
-import { SettingsStore } from 'containers/Settings/types'
-
 import { PreviousData } from 'components/SignUpForm/types'
 
 export interface SignUpConfirmationProps {
@@ -9,5 +7,4 @@ export interface SignUpConfirmationProps {
   history: History,
   nextStep: (previousData: PreviousData) => void,
   register: any,
-  settings: SettingsStore,
 }

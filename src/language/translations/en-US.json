@@ -539,10 +539,6 @@
     "loginBtn": "Login",
     "registerBtn": "Register"
   },
-  "registerConfirmation": {
-    "messageTitle": "Thanks for joining us!",
-    "message": "A verification link has been sent to your e-mail address. Please follow the instructions to finish your registration!"
-  },
   "forgotPassword": {
     "messageTitle": "Forgot your password?",
     "messageTitleRecover": "Enter your new password",

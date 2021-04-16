@@ -125,7 +125,7 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.active,
+      backgroundColor: theme.palette.action.active,
     },
   },
 
