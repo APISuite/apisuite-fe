@@ -14,10 +14,12 @@ export interface CustomizableDialogProps extends DialogProps {
   },
   open: boolean,
   openDialogCallback?: (...args: any[]) => any,
+  optionalTitleIcon?: 'info' | 'warning',
   providedDialogActions?: {
     [key: string]: any,
   },
   providedDialogContent?: any,
+  providedSubText?: string,
   providedText: string,
   providedTitle: string,
 

@@ -1,7 +1,8 @@
-import { Step } from 'components/RegisterForm/types'
-import { steps } from 'components/RegisterForm/RegisterForm'
+import { steps } from 'components/SignUpForm/SignUpForm'
+
+import { Step } from 'components/SignUpForm/types'
 
 export type StepsProgressProps = {
-  steps: typeof steps,
   currentStep: Step,
+  steps: typeof steps,
 }

@@ -1,5 +1,8 @@
 import React from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@apisuite/fe-base'
+import { useTranslation, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@apisuite/fe-base'
+
+import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
+import WarningRoundedIcon from '@material-ui/icons/WarningRounded'
 
 import { CustomizableDialogProps } from './types'
 import useStyles from './styles'
@@ -12,14 +15,18 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
   confirmButtonLabel,
   open,
   openDialogCallback,
+  optionalTitleIcon,
   providedDialogActions,
   providedDialogContent,
+  providedSubText,
   providedText,
   providedTitle,
 
   // 'mapStateToProps' props (i.e., coming from the app's Redux 'store') to be added below (if any)
 }) => {
   const classes = useStyles()
+
+  const [t] = useTranslation()
 
   const handleOpenDialog = () => {
     if (openDialogCallback) openDialogCallback()
@@ -39,13 +46,29 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
       onEnter={handleOpenDialog}
       open={open}
     >
-      <DialogTitle className={classes.dialogTitleContainer}>
-        {providedTitle}
-      </DialogTitle>
+      <div className={classes.dialogTitleContainer}>
+        {
+          optionalTitleIcon === 'info' &&
+          <InfoRoundedIcon className={classes.dialogTitleInfoIcon} />
+        }
+
+        {
+          optionalTitleIcon === 'warning' &&
+          <WarningRoundedIcon className={classes.dialogTitleWarningIcon} />
+        }
+
+        <DialogTitle>
+          {providedTitle}
+        </DialogTitle>
+      </div>
 
       <DialogContent className={classes.dialogContentContainer}>
-        <DialogContentText>
+        <DialogContentText className={classes.dialogText}>
           {providedText}
+        </DialogContentText>
+
+        <DialogContentText className={classes.dialogSubText}>
+          {providedSubText}
         </DialogContentText>
 
         {providedDialogContent}
@@ -57,7 +80,7 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
           fullWidth
           onClick={handleCloseDialog}
         >
-          {cancelButtonLabel || 'Cancel'}
+          {cancelButtonLabel || t('customizableDialog.cancelButtonLabel')}
         </Button>
 
         <div>
@@ -66,7 +89,7 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
             fullWidth
             onClick={handleConfirmAction}
           >
-            {confirmButtonLabel || 'Confirm'}
+            {confirmButtonLabel || t('customizableDialog.confirmButtonLabel')}
           </Button>
 
           {providedDialogActions}

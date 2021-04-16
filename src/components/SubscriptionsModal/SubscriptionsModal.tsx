@@ -1,5 +1,5 @@
 import React from 'react'
-import { useConfig, useTranslation, Fade, MenuItem, Modal, Select } from '@apisuite/fe-base'
+import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CheckBoxOutlineBlankRoundedIcon from '@material-ui/icons/CheckBoxOutlineBlankRounded'
 import CheckBoxRoundedIcon from '@material-ui/icons/CheckBoxRounded'
@@ -7,7 +7,6 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
-import Button from 'components/Button'
 
 import SubscriptionsModalProps from './types'
 import useStyles from './styles'
@@ -349,7 +348,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
             <div className={classes.buttonsContainer}>
               <div className={classes.leftSideButtonsContainer}>
                 <Button
-                  customButtonClassName={
+                  className={
                     (selectedClientApp.subscriptions.length === 0)
                       ? (
                         selectedClientApp.id === ''
@@ -364,29 +363,28 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                           : classes.disabledRevokeAccessButton
                       )
                   }
-                  href='#'
-                  label={
+                  onClick={
+                    (selectedClientApp.subscriptions.length === 0)
+                      ? handleAPIProductAccessRequest
+                      : () => null
+                  }
+                >
+                  {
                     (selectedClientApp.subscriptions.length === 0)
                       ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess'))
                       : (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess'))
                   }
-                  onClick={
-                    (selectedClientApp.subscriptions.length === 0)
-                      ? handleAPIProductAccessRequest
-                      : null
-                  }
-                />
+                </Button>
 
                 <Button
-                  customButtonClassName={classes.enabledOtherButtons}
+                  className={classes.enabledOtherButtons}
                   href='/profile/organisation'
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation')
-                  }
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation')}
+                </Button>
 
                 <Button
-                  customButtonClassName={
+                  className={
                     isClientAppSelected
                       ? classes.enabledOtherButtons
                       : classes.disabledOtherButtons
@@ -396,21 +394,18 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                       ? `/dashboard/apps/${selectedClientApp.id}`
                       : '#'
                   }
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp')
-                  }
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp')}
+                </Button>
               </div>
 
               <div className={classes.rightSideButtonsContainer}>
                 <Button
-                  customButtonClassName={classes.enabledOtherButtons}
-                  href='#'
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel')
-                  }
+                  className={classes.enabledOtherButtons}
                   onClick={resetModalSelections}
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel')}
+                </Button>
               </div>
             </div>
           </div>

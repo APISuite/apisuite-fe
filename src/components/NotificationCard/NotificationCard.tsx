@@ -1,11 +1,8 @@
-import * as React from 'react'
-
-import Button from '../Button'
-
+import React from 'react'
+import { Button } from '@apisuite/fe-base'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
 import useStyles from './styles'
-
 import { NotificationCardProps } from './types'
 
 const NotificationCard: React.FC<NotificationCardProps> = ({
@@ -70,21 +67,22 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
         notificationCardButtonClassName
           ? (
             <Button
-              customButtonClassName={notificationCardButtonClassName}
+              className={notificationCardButtonClassName}
               href={notificationCardButtonLink}
-              label={notificationCardButtonLabel}
               onClick={notificationCardButtonAction}
-            />
+            >
+              {notificationCardButtonLabel}
+            </Button>
           )
           : (
             <Button
-              background='tertiary'
-              color='tertiary'
+              className={classes.notificationCardButton}
               fullWidth
               href={notificationCardButtonLink}
-              label={notificationCardButtonLabel}
               onClick={notificationCardButtonAction}
-            />
+            >
+              {notificationCardButtonLabel}
+            </Button>
           )
       }
 

@@ -1,9 +1,6 @@
 import { connect } from 'react-redux'
 
-import {
-  Dispatch,
-  bindActionCreators,
-} from 'redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
 import {
   createOrgActions,
@@ -12,14 +9,13 @@ import {
   updateOrgActions,
 } from 'containers/Profile/ducks'
 
-import OrganisationPage from './OrganisationPage'
+import Organisation from './Organisation'
 
 import { Store } from 'store/types'
 
 export const mapStateToProps = ({ profile }: Store) => ({
   org: profile.org,
   profile: profile.profile,
-  requestStatutes: profile.requestStatuses,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
@@ -29,4 +25,4 @@ export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   updateOrg: updateOrgActions.request,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrganisationPage)
+export default connect(mapStateToProps, mapDispatchToProps)(Organisation)

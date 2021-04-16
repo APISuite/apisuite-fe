@@ -1,34 +1,39 @@
 import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
-  snackbar: {
-    display: 'flex',
-    position: 'relative',
-    margin: 8,
-  },
   content: {
+    alignItems: 'center',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
-    borderRadius: theme.palette.dimensions.borderRadius,
   },
+
+  error: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.common.white,
+  },
+
   icon: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
     fontSize: 24,
     marginRight: 10,
   },
-  text: {
-    margin: 0,
+
+  snackbar: {
+    display: 'flex',
+    margin: 8,
+    position: 'relative',
   },
+
   success: {
     backgroundColor: theme.palette.secondary.main,
-    color: 'white',
+    color: theme.palette.common.white,
   },
-  error: {
-    backgroundColor: theme.palette.error.main,
-    color: 'white',
+
+  text: {
+    margin: 0,
   },
 }))

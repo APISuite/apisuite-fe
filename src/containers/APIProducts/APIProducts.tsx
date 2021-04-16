@@ -1,8 +1,7 @@
 import React from 'react'
-import { useTranslation, InputBase } from '@apisuite/fe-base'
+import { useTranslation, Button, InputBase } from '@apisuite/fe-base'
 
 import APICatalog from 'components/APICatalog'
-import Button from 'components/Button'
 import SubscriptionsModal from 'components/SubscriptionsModal'
 
 import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
@@ -215,25 +214,24 @@ ${latestUpdatedAPI.apiAccess
 
             <div className={classes.apiProductButtons}>
               <Button
-                customButtonClassName={classes.viewDetailsButton}
+                className={classes.viewDetailsButton}
                 href={
                   (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
                     ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
                     : '#'
                 }
-                label={t('apiProductsTab.apiProductButtons.viewDetailsButtonLabel')}
-              />
+              >
+                {t('apiProductsTab.apiProductButtons.viewDetailsButtonLabel')}
+              </Button>
 
               {
                 auth.user &&
                 <Button
-                  /* TODO: This button will be disabled until we move on from the simplified API
-                  subscription model, where APIs are automatically associated to any and all apps. */
-                  customButtonClassName={classes.subscribeButton}
-                  href='#'
-                  label={t('apiProductsTab.apiProductButtons.subscribeButtonLabel')}
+                  className={classes.subscribeButton}
                   onClick={toggleModal}
-                />
+                >
+                  {t('apiProductsTab.apiProductButtons.subscribeButtonLabel')}
+                </Button>
               }
             </div>
 
@@ -263,7 +261,7 @@ ${latestUpdatedAPI.apiAccess
                     </>
                   )
                   : (
-                    <a href='/auth/register'>
+                    <a href='/auth/signup'>
                       {t('apiProductsTab.registerForMoreMessage')}
                     </a>
                   )

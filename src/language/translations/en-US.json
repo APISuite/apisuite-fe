@@ -3,7 +3,7 @@
     "newSlides": {
       "slideOne": {
         "slideText": "Sign up now to enjoy all portal features",
-        "slideButtonLabel": "Register"
+        "slideButtonLabel": "Sign up"
       },
       "slideTwo": {
         "slideText": "Take a look at our available APIs",
@@ -21,7 +21,7 @@
         "paragraphOne": "Our API Portal enables you to register a free team-based account without on the fly.",
         "paragraphTwoPartOne": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.",
         "paragraphTwoPartTwo": "Not sure how to get there? The onboarding documentation will help you along.",
-        "buttonLabel": "Register now"
+        "buttonLabel": "Sign up now"
       },
       "loggedIn": {
         "heading": "We value you as an interested developer!",
@@ -69,35 +69,74 @@
     "paragraphThree": "By clicking \"I Accept\", you agree to essential cookie usage.",
     "buttonLabel": "I Accept"
   },
-  "loginForm": {
-    "title": "Log in",
-    "button": "Log in",
+  "customizableDialog": {
+    "cancelButtonLabel": "Cancel",
+    "confirmButtonLabel": "Confirm"
+  },
+  "signInOrUpView": {
+    "closeButtonLabel": "close",
+    "welcomeTitle": "Welcome",
+    "welcomeSubtitle": "Please, feel free to sign in, or sign up for free.",
+    "options": {
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    }
+  },
+  "signInForm": {
+    "regularSignInButtonLabel": "Sign in",
+    "alternativeSignInButtonLabel": "Sign in with",
+    "separatorLabel": "or",
+    "fieldLabels": {
+      "email": "E-mail",
+      "password": "Password"
+    },
     "warnings": {
       "email": "Please enter a valid e-mail address.",
       "password": "Please fill in your password."
     },
-    "fields": {
-      "email": "E-mail address",
+    "togglePasswordVisibilityARIALabel": "Toggle password visibility",
+    "forgotPasswordLinkLabel": "Forgot Password?",
+    "ssoSignInPleaseHoldMessage": "Please hold..."
+  },
+  "signUpForm": {
+    "nextStepButtonLabel": "Next",
+    "previousStepButtonLabel": "Back",
+    "lastStepButtonLabel": "Finish",
+    "fieldLabels": {
+      "profileName": "Profile name",
+      "profileEmail": "E-mail",
+      "orgName": "Organisation name (optional)",
+      "orgWebsite": "Organisation website (optional)",
       "password": "Password"
     },
-    "loginWith": "Login With"
-  },
-  "registerForm": {
     "warnings": {
-      "name": "Please enter your name.",
-      "email": "Please enter a valid e-mail address.",
+      "email": "Please provide a valid e-mail address.",
       "emailInUse": "The provided e-mail address is already in use.",
-      "organisationName": "Please enter the name of your organisation.",
+      "invalidInvitation": "The invitation is not valid, or has expired.",
       "invalidWebsite": "Please provide a valid website for your organisation.",
-      "noPrefixWebsite": "Please include the 'http://' or 'https://' prefix to the provided web address.",
-      "vat": "Please enter your organisations' VAT.",
-      "password": "Password must have one lowercase, one uppercase, one symbol, and be at least 12 characters long."
+      "organisationName": "Please enter the name of your organisation.",
+      "organisationNeeded": "The provided website needs an organisation to be associated to.",
+      "password": "Your password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol.",
+      "profileName": "Please enter your name."
     },
     "steps": {
-      "personalDetails": "Personal Details",
-      "organisationDetails": "Organisation Details",
-      "securityStep": "Security Step"
-    }
+      "profileDetails": "Profile details",
+      "organisationDetails": "Organisation details",
+      "securityDetails": "Security details"
+    },
+    "togglePasswordVisibilityARIALabel": "Toggle password visibility",
+    "privacyPolicyDisclaimerPartOne": "By creating an account, you are agreeing to our",
+    "privacyPolicyDisclaimerPartTwo": "Privacy Policy"
+  },
+  "signUpConfirmation": {
+    "titleText": "Thank you for joining us, ",
+    "subtitleTextPartOne": "A",
+    "subtitleTextPartTwo": " verification link ",
+    "subtitleTextPartThree": "has been sent to your e-mail address. Please, follow its instructions to activate your account!",
+    "infoBoxText": "Once you activate your account, you'll be able to provide additional information."
+  },
+  "formCard": {
+    "holdMessage": "Please hold..."
   },
   "passwordRecovery": {
     "closeButtonLabel": "close",
@@ -137,7 +176,7 @@
     },
     "productionAccess": "Production access",
     "documentationAccess": "API Documentation",
-    "registerForMoreMessage": "Register for more options",
+    "registerForMoreMessage": "Sign up for more options",
     "textFilterPlaceholder": "Filter..."
   },
   "dashboardTab": {
@@ -253,11 +292,12 @@
       "documentationLink": "Read why apps are used",
       "noOrganisationWarning": "You need to create an Organisation before you can create your first app. Click on the \"Set up your Organisation\" button above to start.",
       "listOfAppsSection": {
-        "title": "Client applications",
-        "subtitle": "Register and manage your client applications",
-        "loadingApps": "Loading all user apps...",
+        "title": "Applications",
+        "subtitle": "Register and manage your applications",
+        "loadingApps": "Loading all apps...",
+        "clientApplicationsTitle": "Client applications",
+        "registerNewAppButtonLabel": "Register new app",
         "noAppDescription": "No description provided.",
-        "registerAppButtonLabel": "Register app",
         "subscribedAppStatus": "Subscribed",
         "draftAppStatus": "Draft"
       },
@@ -277,6 +317,8 @@
         "appClientIDFieldLabel": "Client ID",
         "appClientSecretFieldLabel": "Client Secret",
         "appFullDescriptionFieldLabel": "Full description",
+        "appLabelsFieldLabel": "Labels",
+        "appLabelsFieldHelperText": "Each provided label should be separated by a space.",
         "appNameFieldLabel": "Application name",
         "appPrivacyPolicyFieldLabel": "Privacy Policy URL",
         "appPrivacyPolicyURLFieldLabel": "Privacy Policy URL",
@@ -295,7 +337,8 @@
         "closeButtonLabel": "close",
         "closeModalButtonLabel": "Close",
         "dialogConfirmButtonLabel": "Delete",
-        "dialogText": "Are you sure you want to delete this app? This action is NOT reversible.",
+        "dialogText": "Are you sure you want to delete this app?",
+        "dialogSubText": "This action is not reversible.",
         "dialogTitle": "Delete app",
         "draftAppStatus": "Draft",
         "editAppButtonLabel": "Edit application",
@@ -312,7 +355,7 @@
         "subSectionLabelFourPartTwo": "OAuth2 secured API access",
         "subSectionLabelOne": "General information",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
-        "subSectionLabelThree": "Access details",
+        "subSectionLabelThree": "Redirect URI",
         "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
       }
     },
@@ -344,27 +387,31 @@
     }
   },
   "profileTab": {
-    "overviewTab": {
+    "overviewSubTab": {
+      "loadingDetails": "Loading details...",
       "subtitle": "We've selected some profile-specific actions for you.",
       "orgRelatedLabels": {
         "selectorTitle": "Linked organisation",
         "selectorLabel": "Organisations",
-        "createOrgButtonLabel": "Create your organisation"
+        "createOrgButtonLabel": "Create your organisation",
+        "switchOrgButtonLabel": "Switch"
       },
       "otherActionsLabels": {
         "changePassword": "Change password",
         "viewTeam": "View team",
         "updateProfileDetails": "Update",
-        "logOut": "Log out",
-        "deleteProfile": "Delete profile",
-        "deleteProfileModalConfirmButton": "Delete",
-        "deleteProfileModalTitle": "Delete",
-        "deleteProfileModalWarningText": "Are you sure you want to delete your account? This action is not reversible."
+        "signOut": "Sign out",
+        "deleteAccount": "Delete account",
+        "deleteAccountModalConfirmButton": "Delete account",
+        "deleteAccountModalTitle": "Delete account",
+        "deleteAccountModalWarningText": "Are you sure you want to delete your API Suite acount, whose associated e-mail address is",
+        "deleteAccountModalWarningSubText": "This action is irreversible, and all the data associated with your account will be permanently deleted."
       },
       "roleRelatedLabels": {
         "admin": "Admin",
         "orgOwner": "Organisation owner",
-        "developer": "Developer"
+        "developer": "Developer",
+        "baseUser": "Base user"
       },
       "userRelatedLabels": {
         "userAvatarURL": "Avatar URL",
@@ -375,10 +422,15 @@
       "warningLabels": {
         "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
         "userPhoneNumber": "Please enter a valid phone number."
-      }
+      },
+      "openIDInfoBoxContainerPartOne": "Your profile's name and e-mail address are provided by the Identity Provider service linked with this portal.",
+      "openIDInfoBoxContainerPartTwo": "Read here",
+      "openIDInfoBoxContainerPartThree": " on how to integrate an Open Identity service."
     },
     "securitySubTab": {
       "securityTitle": "Security",
+      "securitySubtitleWithoutActiveSSO": "Update your password, and check your latest activity in the portal.",
+      "securitySubtitleWithActiveSSO": "Check your latest activity in the portal.",
       "updatePasswordTitle": "Update password",
       "userActivityTitle": "User activity",
       "fieldLabels": {
@@ -395,7 +447,8 @@
       "errorMessages": {
         "samePasswordErrorMessage": "The new password should not be the same as the current one.",
         "tooWeakPasswordErrorMessage": "The provided password is too weak."
-      }
+      },
+      "activeSSOBoxText": "With SSO enabled, you can only change your account's password through the Identity Provider service linked to this portal."
     },
     "organisationSubTab": {
       "newOrgTitle": "New organisation",

@@ -3,7 +3,7 @@ import { makeStyles } from '@apisuite/fe-base'
 export default makeStyles((theme) => ({
   allUserDetailsContainer: {
     display: 'flex',
-    margin: '0px auto',
+    margin: '0px auto 50px auto',
     maxWidth: '900px',
     width: '100%',
   },
@@ -24,7 +24,7 @@ export default makeStyles((theme) => ({
   },
 
   avatar: {
-    backgroundColor: '#7DD291',
+    background: '#C8DC8C linear-gradient(270deg, rgba(200, 220, 140, 1) 0%, rgba(25, 165, 140, 1) 100%)',
     cursor: 'pointer',
     fontSize: '20px',
     fontWeight: 300,
@@ -41,17 +41,75 @@ export default makeStyles((theme) => ({
     transform: 'translate(130px, -10px)',
     width: '20px',
   },
+  createOrganisationButton: {
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.common.white} !important`,
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: 500,
+    padding: '12px 20px',
+    textDecoration: 'none',
+    textTransform: 'none',
+  },
 
-  deleteProfileButton: {
+  deleteAccountButton: {
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
-    marginRight: '15px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.error.main,
+    },
+  },
+
+  disabledInputFields: {
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    marginBottom: '25px',
+    marginTop: '0px',
+    maxWidth: '270px',
+    pointerEvents: 'none',
+    width: '100%',
+
+    // Text field's label styles
+    '& > label': {
+      color: theme.palette.label,
+    },
+
+    '& label.Mui-focused': {
+      color: `${theme.palette.action.focus} !important`,
+    },
+
+    // Text field's input outline styles
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: `${theme.palette.grey[300]} !important`,
+      },
+
+      '&.Mui-focused fieldset': {
+        borderColor: `${theme.palette.action.focus} !important`,
+      },
+    },
+
+    // Text field's input text styles
+    '& .MuiInputBase-root': {
+      '& .MuiInputBase-input': {
+        backgroundColor: '#DCDFE2',
+        borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+        color: theme.palette.label,
+      },
+
+      '& .MuiInputAdornment-root': {
+        color: theme.palette.label,
+        pointerEvents: 'none',
+      },
+    },
   },
 
   disabledOrganisationButton: {
@@ -64,12 +122,17 @@ export default makeStyles((theme) => ({
     padding: '12px 20px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.label,
+    },
   },
 
   disabledUpdateDetailsButton: {
     backgroundColor: theme.palette.label,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.primary.contrastText,
+    color: `${theme.palette.common.white} !important`,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -77,7 +140,12 @@ export default makeStyles((theme) => ({
     maxWidth: '270px',
     padding: '6px 0px',
     pointerEvents: 'none',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: theme.palette.label,
+    },
   },
 
   enabledOrganisationButton: {
@@ -89,6 +157,11 @@ export default makeStyles((theme) => ({
     fontWeight: 500,
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.action.active,
+    },
   },
 
   enabledUpdateDetailsButton: {
@@ -102,6 +175,11 @@ export default makeStyles((theme) => ({
     maxWidth: '270px',
     padding: '6px 0px',
     width: '100%',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.action.active,
+    },
   },
 
   formFieldsContainer: {
@@ -113,11 +191,35 @@ export default makeStyles((theme) => ({
   },
 
   formSectionSeparator: {
-    border: `1px solid ${theme.palette.grey['100']}`,
+    border: `1px solid ${theme.palette.grey[200]}`,
     borderRadius: theme.palette.dimensions.borderRadius,
-    margin: '0px 0px 16px 0px',
+    margin: '0px 0px 20px 0px',
     maxWidth: '320px',
     width: '100%',
+  },
+
+  infoBox: {
+    alignItems: 'center',
+    backgroundColor: theme.palette.info.light,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    display: 'flex',
+    height: '100%',
+    padding: '12px 12px',
+    textAlign: 'left',
+    width: '400px',
+  },
+
+  infoBoxIcon: {
+    fill: '#46B5EF',
+    transform: 'translate(-3.5px, -23.5px)',
+  },
+
+  infoBoxText: {
+    color: '#035E86',
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '18px',
+    margin: '0px 0px 5px 2.5px',
   },
 
   inputFields: {
@@ -131,7 +233,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -141,7 +243,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
@@ -157,6 +259,21 @@ export default makeStyles((theme) => ({
     marginRight: '80px',
     maxWidth: '500px',
     width: '100%',
+  },
+
+  openIDInfoBoxContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '0px auto',
+    maxWidth: '900px',
+    width: '100%',
+  },
+
+  organisationDetailsTitle: {
+    color: theme.palette.primary.main,
+    fontSize: '16px',
+    fontWeight: 500,
+    marginBottom: '40px',
   },
 
   organisationSelector: {
@@ -189,22 +306,25 @@ export default makeStyles((theme) => ({
     marginRight: '15px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.common.white,
+    },
   },
 
-  otherActionsContainer: {
+  otherActionsContainerOne: {
     display: 'flex',
   },
 
-  regularOrganisationDetailsTitle: {
-    color: theme.palette.primary.main,
-    fontSize: '16px',
-    fontWeight: 500,
-    marginBottom: '20px',
+  otherActionsContainerTwo: {
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 
   regularSectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     margin: '32.5px 0px 32.5px 0px',
     maxWidth: '900px',
     width: '100%',
@@ -213,6 +333,23 @@ export default makeStyles((theme) => ({
   rightSideDetailsContainer: {
     maxWidth: '320px',
     width: '100%',
+  },
+
+  signOutButton: {
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
+    fontSize: '16px',
+    fontWeight: 500,
+    marginLeft: '15px',
+    padding: '12px 20px',
+    textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.background.paper,
+    },
   },
 
   subtitle: {
@@ -233,10 +370,15 @@ export default makeStyles((theme) => ({
     fontSize: '32px',
     fontWeight: 300,
     marginRight: '10px',
+    maxWidth: '355px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 
   userNameAndRoleContainer: {
     display: 'flex',
+    height: '32.5px',
     marginBottom: '12px',
   },
 
@@ -246,7 +388,7 @@ export default makeStyles((theme) => ({
     color: theme.palette.primary.contrastText,
     fontSize: '14px',
     fontWeight: 300,
-    padding: '0px 7.5px',
+    padding: '2px 7.5px',
   },
 
   userStatusAndType: {

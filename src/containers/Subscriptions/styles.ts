@@ -4,12 +4,17 @@ export default makeStyles((theme) => ({
   addSubscriptionButton: {
     backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: '#FFFFFF !important',
+    color: `${theme.palette.common.white} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 21px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 
   addSubscriptionButtonContainer: {
@@ -45,7 +50,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: 'center',
     backgroundColor: theme.palette.info.light,
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '75px',
     marginLeft: 'auto',
@@ -54,7 +59,7 @@ export default makeStyles((theme) => ({
   },
 
   infoBoxIcon: {
-    fill: '#46b5ef',
+    fill: '#46B5EF',
     transform: 'translate(7px, -17.5px)',
   },
 

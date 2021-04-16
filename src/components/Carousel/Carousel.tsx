@@ -1,9 +1,8 @@
 import React from 'react'
 import ReactSlidy from 'react-slidy/lib'
-import { useTheme, Fade } from '@apisuite/fe-base'
+import { useTheme, Fade, Button } from '@apisuite/fe-base'
 import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded'
 import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUncheckedRounded'
-import Button from 'components/Button'
 
 import useStyles from './styles'
 import { CarouselSlideProps, CarouselProps } from './types'
@@ -48,13 +47,12 @@ ${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-
         {
           carouselSlideButton &&
           <Button
-            customButtonClassName={
-              carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling
-            }
+            className={carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling}
             href={carouselSlideButtonLink}
-            label={carouselSlideButtonLabel}
             onClick={carouselSlideButtonOnClick}
-          />
+          >
+            {carouselSlideButtonLabel}
+          </Button>
         }
       </div>
     </div>

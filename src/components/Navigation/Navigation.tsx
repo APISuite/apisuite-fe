@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import { useConfig, Avatar, Tabs, Tab } from '@apisuite/fe-base'
+
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
 import RoomServiceRoundedIcon from '@material-ui/icons/RoomServiceRounded'
@@ -14,7 +15,7 @@ import { useMenu, goBackConfig } from './useMenu'
 import useStyles from './styles'
 import './styles.scss'
 
-import { TabMenus, NavigationProps } from './types'
+import { NavigationProps, TabMenus } from './types'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
@@ -30,6 +31,7 @@ const Navigation: React.FC<NavigationProps> = ({
   ...rest
 }) => {
   const classes = useStyles()
+
   const history = useHistory()
   const { portalName, ownerInfo } = useConfig()
 
@@ -166,7 +168,7 @@ const Navigation: React.FC<NavigationProps> = ({
                     component={Link}
                     disableRipple
                     key={`nav-tab-${idx}`}
-                    label={tab.isLogin ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                    label={tab.label}
                     to={tab.route}
                     value={tab.route}
                   />,
@@ -207,7 +209,7 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                         component={Link}
                         disableRipple
                         key={`nav-tab-${idx}`}
-                        label={tab.isLogin ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                        label={tab.label}
                         to={tab.route}
                         value={tab.route}
                       />

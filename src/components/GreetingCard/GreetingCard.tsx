@@ -1,9 +1,7 @@
-import * as React from 'react'
-
-import Button from '../Button'
+import React from 'react'
+import { Button } from '@apisuite/fe-base'
 
 import useStyles from './styles'
-
 import { GreetingCardProps } from './types'
 
 const GreetingCard: React.FC<GreetingCardProps> = ({
@@ -31,21 +29,22 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
         greetingCardButtonClassName
           ? (
             <Button
-              customButtonClassName={greetingCardButtonClassName}
+              className={greetingCardButtonClassName}
               href={greetingCardButtonLink}
-              label={greetingCardButtonLabel}
               onClick={greetingCardButtonAction}
-            />
+            >
+              {greetingCardButtonLabel}
+            </Button>
           )
           : (
             <Button
-              background='tertiary'
-              color='tertiary'
+              className={classes.greetingCardButton}
               fullWidth
               href={greetingCardButtonLink}
-              label={greetingCardButtonLabel}
               onClick={greetingCardButtonAction}
-            />
+            >
+              {greetingCardButtonLabel}
+            </Button>
           )
       }
     </section>

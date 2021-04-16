@@ -1,5 +1,7 @@
 import { RouteProps } from 'react-router'
+
 import { AuthPayloads, AuthStore } from 'containers/Auth/types'
+
 import { TabProps } from 'components/Navigation/types'
 
 export interface AppProps extends AppDispatchToProps {
@@ -13,11 +15,11 @@ export interface AppDispatchToProps {
 }
 
 export type AppRouteProps = RouteProps & {
-  component?: React.ComponentType<any>,
   auth?: boolean,
-  role?: string | string[],
+  component?: React.ComponentType<any>,
   layout?: React.ComponentType<any>,
   layoutProps?: any,
+  role?: string | string[],
 }
 
 export interface TabMenus {

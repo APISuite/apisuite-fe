@@ -84,7 +84,7 @@ export default makeStyles((theme) => ({
 
   appNameIcon: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: '4px',
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.common.white,
     fontSize: '14px',
     fontWeight: 300,
@@ -101,7 +101,7 @@ export default makeStyles((theme) => ({
 
   deprecatedIcon: {
     backgroundColor: theme.palette.warning.main,
-    borderRadius: '4px',
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.common.white,
     marginRight: '20px',
     padding: '5px',

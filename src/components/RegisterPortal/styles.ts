@@ -1,51 +1,61 @@
+
 import { makeStyles } from '@apisuite/fe-base'
 
 const useStyles = makeStyles((theme) => ({
-  registerContainer: {
-    width: '100%',
-    height: '100%',
-  },
-  emailTextfield: {
-    backgroundColor: 'white',
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.grey[400],
-  },
-  nameTextfield: {
-    backgroundColor: 'white',
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.grey[400],
-  },
-  passPhrasefield: {
-    backgroundColor: 'white',
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.grey[400],
-  },
-  passPhraseContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   btnsContainer: {
+    alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
     paddingLeft: 10,
   },
+
+  emailTextfield: {
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
+  },
+
+  fieldContainer: {
+    marginBottom: 20,
+    marginTop: 20,
+  },
+
   fieldTitle: {
-    margin: 0,
-    color: 'white',
+    color: theme.palette.common.white,
     fontSize: 14,
     fontWeight: 300,
+    margin: 0,
   },
-  fieldContainer: {
-    marginTop: 20,
-    marginBottom: 20,
+
+  registerContainer: {
+    height: '100%',
+    width: '100%',
   },
+
+  nameTextfield: {
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
+  },
+
+  passPhrasefield: {
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
+  },
+
+  passPhraseContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
   shuffleIcon: {
-    color: 'white',
+    color: theme.palette.common.white,
   },
+
   visibilityIcon: {
-    color: 'white',
+    color: theme.palette.common.white,
   },
 }))
 

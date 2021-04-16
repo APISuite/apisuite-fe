@@ -1,30 +1,32 @@
+import { bindActionCreators, Dispatch } from 'redux'
+
 import { connect } from 'react-redux'
+
 import {
-  fetchTeamMembersActions,
-  fetchRoleOptionsActions,
-  inviteMemberActions,
   changeRoleActions,
+  fetchRoleOptionsActions,
+  fetchTeamMembersActions,
+  inviteMemberActions,
   resetErrorAction,
 } from 'containers/Profile/ducks'
-import {
-  Dispatch,
-  bindActionCreators,
-} from 'redux'
+
 import { Store } from 'store/types'
+
 import TeamPage from './TeamPage'
 
-export const mapStateToProps = ({ profile, auth }: Store) => ({
+export const mapStateToProps = ({ auth, profile }: Store) => ({
+  currentOrganisation: profile.profile.current_org,
   members: profile.members,
+  requestStatuses: profile.requestStatuses,
   roleOptions: profile.roleOptions,
   user: auth.user,
-  requestStatuses: profile.requestStatuses,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-  fetchTeamMembers: fetchTeamMembersActions.request,
-  fetchRoleOptions: fetchRoleOptionsActions.request,
-  inviteMember: inviteMemberActions.request,
   changeRole: changeRoleActions.request,
+  fetchRoleOptions: fetchRoleOptionsActions.request,
+  fetchTeamMembers: fetchTeamMembersActions.request,
+  inviteMember: inviteMemberActions.request,
   resetErrors: resetErrorAction,
 }, dispatch)
 

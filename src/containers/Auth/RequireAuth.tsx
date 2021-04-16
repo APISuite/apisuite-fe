@@ -1,15 +1,20 @@
 import * as React from 'react'
-import { RequireAuthProps } from './types'
+
 import { Redirect } from 'react-router'
+
 import { useSelector } from 'react-redux'
+
 import { getRoleName } from 'containers/Profile/selectors'
+
+import { RequireAuthProps } from './types'
+
 import { validateRoleConfig } from 'util/roleSetup'
 
 export const RequireAuth: React.FC<RequireAuthProps> = ({
-  requireAuth,
   auth,
-  role,
   component,
+  requireAuth,
+  role,
 }) => {
   const roleName = useSelector(getRoleName)
   const roleAuthorized = validateRoleConfig(role, roleName ? [roleName] : [])

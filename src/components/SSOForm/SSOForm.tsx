@@ -1,42 +1,41 @@
 import React from 'react'
-import { useTranslation } from '@apisuite/fe-base'
-import Button from 'components/Button'
+import { useTranslation, Button } from '@apisuite/fe-base'
+import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
 
 import { SSOFormProps } from './types'
+
 import useStyles from './styles'
 
 const SSOForm: React.FC<SSOFormProps> = ({
   auth,
-  getProviders,
-  loginWith,
+  ssoLogin,
 }) => {
   const classes = useStyles()
+
   const [t] = useTranslation()
 
-  React.useEffect(() => {
-    if (auth.providers === null) {
-      getProviders()
-    }
-  }, [])
+  const handleSubmit = (provider: string) => {
+    localStorage.setItem('attemptingSignInWithProvider', provider)
 
-  function handleSubmit (provider: string) {
-    loginWith({ provider })
+    ssoLogin({ provider })
   }
 
   return (
-    <div className={classes.loginWithContainer}>
+    <div className={classes.ssoFormContainer}>
       {
-        auth.providers?.map((prov, idx) => (
-          <div className={classes.loginWithButtonWrapper}>
+        auth.providers?.map((provider, index) => (
+          <div className={classes.ssoSignInWithButtonContainer}>
             <Button
-              key={`${prov}-${idx}`}
-              // FIXME: the translations support interpolation
-              label={`${t('loginForm.loginWith')} ${prov}`}
-              onClick={() => handleSubmit(prov)}
-              fullWidth
-              background='secondary'
-              type='button'
-            />
+              className={classes.ssoSignInWithButton}
+              key={`${provider}${index}`}
+              onClick={() => handleSubmit(provider)}
+              startIcon={
+                <VpnKeyRoundedIcon className={classes.ssoSignInWithIcon} />
+              }
+            >
+              {/* FIXME: the translations support interpolation */}
+              {t('signInForm.alternativeSignInButtonLabel') + ` ${provider}`}
+            </Button>
           </div>
         ))
       }

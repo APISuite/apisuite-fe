@@ -10,11 +10,11 @@ export default interface SubscriptionsModalProps {
 }
 
 export interface APIData {
-  name: string,
-  versions: APIVersion[],
   apps: {
     appId: number,
     appName: string,
   }[],
   description: ApiDocs | undefined,
+  name: string,
+  versions: APIVersion[],
 }

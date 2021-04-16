@@ -10,6 +10,7 @@ const initialState: ApplicationsStore = {
     createdAt: '',
     description: '',
     id: 0,
+    labels: [],
     logo: '',
     name: '',
     orgId: 0,
@@ -140,6 +141,7 @@ export default function reducer (
           createdAt: { $set: action.appData.createdAt },
           description: { $set: action.appData.description },
           id: { $set: action.appData.id },
+          labels: { $set: action.appData.labels },
           logo: { $set: action.appData.logo },
           name: { $set: action.appData.name },
           orgId: { $set: action.appData.orgId },
@@ -199,6 +201,7 @@ export default function reducer (
 
         currentApp: {
           description: { $set: action.appData.description },
+          labels: { $set: action.appData.labels },
           logo: { $set: action.appData.logo },
           name: { $set: action.appData.name },
           privacyUrl: { $set: action.appData.privacyUrl },

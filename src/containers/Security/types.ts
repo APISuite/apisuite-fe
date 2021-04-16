@@ -1,11 +1,16 @@
 import { Action } from 'redux'
+
+import { Profile } from 'containers/Profile/types'
+
 import {
-  UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_REQUEST_ERROR,
   UPDATE_PASSWORD_REQUEST_SUCCESS,
+  UPDATE_PASSWORD_REQUEST,
 } from './ducks'
 
 export interface SecurityProps {
+  getProfile: () => void,
+  profile: Profile,
   updatePasswordRequest: (oldPassword: string, newPassword: string) => void,
 }
 
@@ -13,8 +18,8 @@ export interface SecurityProps {
 export interface UpdatePasswordRequestAction extends Action {
   type: typeof UPDATE_PASSWORD_REQUEST,
   payload: {
-    oldPassword: string,
     newPassword: string,
+    oldPassword: string,
   },
 }
 

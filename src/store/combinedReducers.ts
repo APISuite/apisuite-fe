@@ -17,7 +17,7 @@ import notificationCards from 'containers/NotificationCards/ducks'
 import notifications from 'containers/NotificationStack/ducks'
 import profile from 'containers/Profile/ducks'
 import reduceReducers from './reduceReducers'
-import register from 'components/RegisterForm/ducks'
+import register from 'components/SignUpForm/ducks'
 import security from 'containers/Security/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
 

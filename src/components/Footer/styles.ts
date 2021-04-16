@@ -19,8 +19,8 @@ export default makeStyles((theme) => ({
   },
 
   footer: {
-    backgroundColor: theme.palette.primary.light,
-    color: 'white',
+    backgroundColor: theme.palette.grey[600],
+    color: theme.palette.common.white,
     paddingBottom: '50px',
     paddingTop: '40px',
     width: '100%',

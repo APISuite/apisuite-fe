@@ -8,10 +8,10 @@ export default makeStyles((theme) => ({
   },
 
   disabledUpdatePasswordButton: {
-    backgroundColor: theme.palette.label,
-    border: `1px solid ${theme.palette.label}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.primary.contrastText} !important`,
+    backgroundColor: '#99E6CC',
+    border: '1px solid #99E6CC',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.common.white} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -20,11 +20,16 @@ export default makeStyles((theme) => ({
     padding: '12px 20px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: '#99E6CC',
+    },
   },
 
   enabledUpdatePasswordButton: {
-    backgroundColor: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.primary.main}`,
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
@@ -33,6 +38,11 @@ export default makeStyles((theme) => ({
     marginRight: '15px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 
   forgotPasswordButton: {
@@ -47,6 +57,31 @@ export default makeStyles((theme) => ({
     textDecoration: 'none',
   },
 
+  infoBox: {
+    alignItems: 'center',
+    backgroundColor: theme.palette.info.light,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    display: 'flex',
+    height: '100%',
+    marginBottom: '25px',
+    padding: '12px 12px',
+    textAlign: 'left',
+    width: '500px',
+  },
+
+  infoBoxIcon: {
+    fill: '#46B5EF',
+    transform: 'translate(-3.5px, -11.5px)',
+  },
+
+  infoBoxText: {
+    color: '#035E86',
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '18px',
+    margin: '0px 0px 5px 2.5px',
+  },
+
   inputFields: {
     marginBottom: '20px',
     marginTop: '20px',
@@ -59,7 +94,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -69,7 +104,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
@@ -93,6 +128,13 @@ export default makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
+    marginBottom: '12px',
+  },
+
+  securitySubtitle: {
+    color: theme.palette.grey[400],
+    fontSize: '16px',
+    fontWeight: 300,
     marginBottom: '55px',
   },
 
@@ -110,7 +152,7 @@ export default makeStyles((theme) => ({
   },
 
   userActivityTitle: {
-    color: '#BAC0C6',
+    color: theme.palette.label,
     fontSize: '22px',
     fontWeight: 300,
   },

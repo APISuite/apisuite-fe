@@ -27,7 +27,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -37,7 +37,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
@@ -63,7 +63,7 @@ export default makeStyles((theme) => ({
   disabledUpdateDetailsButton: {
     backgroundColor: theme.palette.label,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.common.white,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -71,7 +71,12 @@ export default makeStyles((theme) => ({
     padding: '6px 0px',
     pointerEvents: 'none',
     textAlign: 'center',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: theme.palette.label,
+    },
   },
 
   disabledCreateOrgButton: {
@@ -98,7 +103,12 @@ export default makeStyles((theme) => ({
     maxWidth: '185px',
     padding: '6px 0px',
     textAlign: 'center',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: theme.palette.primary,
+    },
   },
 
   enabledUpdateDetailsButton: {
@@ -111,7 +121,12 @@ export default makeStyles((theme) => ({
     maxWidth: '95px',
     padding: '6px 0px',
     textAlign: 'center',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: theme.palette.active,
+    },
   },
 
   firstSectionSeparator: {
@@ -146,7 +161,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -156,7 +171,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
@@ -230,8 +245,8 @@ export default makeStyles((theme) => ({
   },
 
   orgTitleAndSubtitleContainer: {
-    width: '100%',
     marginBottom: '40px',
+    width: '100%',
   },
 
   orgURLFieldWrapper: {
@@ -246,7 +261,7 @@ export default makeStyles((theme) => ({
     '& > :last-child': {
       backgroundColor: theme.palette.background.default,
       border: `1px solid ${theme.palette.grey[300]}`,
-      borderRadius: '4px',
+      borderRadius: theme.palette.dimensions.borderRadius,
       color: theme.palette.action.active,
       cursor: 'pointer',
       height: '40px',

@@ -87,7 +87,7 @@ const Sandbox: React.FC<SandboxProps> = ({
               {
                 slideButton: true,
                 slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel'),
-                slideButtonLink: '/auth/register',
+                slideButtonLink: '/auth/signup',
                 slideContentsPlacement: 'top-to-bottom',
                 slideForegroundImage: carouselSlide1,
                 slideText: t('sandboxPage.newSlides.slideOne.slideText'),
@@ -182,7 +182,7 @@ const Sandbox: React.FC<SandboxProps> = ({
               }
               href={
                 !auth.user
-                  ? '/auth/register'
+                  ? '/auth/signup'
                   : supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
               }
               rel={

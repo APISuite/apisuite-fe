@@ -1,16 +1,20 @@
 import * as React from 'react'
-import { RedirectPageProps } from './types'
-import { useQuery } from 'util/useQuery'
-import { Redirect } from 'react-router-dom'
+
 import { useParams } from 'react-router'
 
+import { Redirect } from 'react-router-dom'
+
+import { RedirectPageProps } from './types'
+
+import { useQuery } from 'util/useQuery'
+
 const RedirectPage: React.FC<RedirectPageProps> = ({
-  confirmRegistration,
   confirmInvite,
+  confirmRegistration,
 }) => {
   const query = useQuery()
   const token = query.get('token')
-  const redirect = useParams<{redirect: 'invite' | 'registration' | 'password'}>().redirect
+  const redirect = useParams<{ redirect: 'invite' | 'registration' | 'password' }>().redirect
 
   React.useEffect(() => {
     if (token && redirect === 'registration') confirmRegistration(token)
@@ -19,7 +23,7 @@ const RedirectPage: React.FC<RedirectPageProps> = ({
 
   switch (redirect) {
     case 'registration':
-      return <Redirect to='/auth/login' />
+      return <Redirect to='/auth/signin' />
 
     case 'invite':
       return <Redirect to='/profile/team' />

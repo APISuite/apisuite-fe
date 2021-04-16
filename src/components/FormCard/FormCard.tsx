@@ -1,53 +1,81 @@
-import * as React from 'react'
+import React from 'react'
+import { useTranslation, Button} from '@apisuite/fe-base'
+
 import { FormCardProps } from './types'
 import useStyles from './styles'
-import Button from 'components/Button'
-import { CircularProgress } from '@apisuite/fe-base'
 
 const FormCard: React.FC<FormCardProps> = ({
-  title,
-  buttonLabel,
+  backLabel,
   buttonDisabled,
+  buttonLabel,
+  children,
+  customBackButtonStyles,
+  customDisabledConfirmButtonStyles,
+  customEnabledConfirmButtonStyles,
+  error,
+  handleBackClick,
   handleSubmit,
   loading,
-  error,
-  children,
   showBack = false,
-  backLabel,
-  backDisabled,
-  handleBackClick,
+  title,
 }) => {
   const classes = useStyles()
 
+  const [t] = useTranslation()
+
   return (
     <div className={classes.formCard}>
-      <h2 className={classes.formTitle}>{title}</h2>
+      <h2 className={classes.formTitle}>
+        {title}
+      </h2>
+
       <form onSubmit={handleSubmit}>
+        {/* Form fields, among other (optional) things */}
         {children}
+
+        {/* @ts-ignore */}
+        <Button
+          className={
+            buttonDisabled
+              ? customDisabledConfirmButtonStyles || classes.disabledNextButton
+              : customEnabledConfirmButtonStyles || classes.enabledNextButton
+          }
+          disabled={buttonDisabled}
+          onClick={handleSubmit}
+        >
+          {
+            loading
+              ? t('formCard.holdMessage')
+              : buttonLabel
+          }
+        </Button>
+
         {
           showBack &&
-          <div className={classes.backBtn}>
+          <div className={classes.backButtonContainer}>
+            {/* @ts-ignore */}
             <Button
-              label={backLabel}
+              className={customBackButtonStyles || classes.backButton}
               onClick={handleBackClick}
-              fullWidth
-              type='button'
-              disabled={backDisabled}
-            />
+            >
+              {backLabel}
+            </Button>
           </div>
         }
-        <Button
-          label={loading ? <CircularProgress size={20} className={classes.loading} /> : buttonLabel}
-          onClick={handleSubmit}
-          fullWidth
-          loading={loading}
-          disabled={buttonDisabled}
-        />
       </form>
-      {error &&
+
+      {
+        error &&
         <div className={classes.errorPlaceholder}>
-          <div className={classes.errorAlert}>{typeof error === 'string' ? error : error.message}</div>
-        </div>}
+          <div className={classes.errorAlert}>
+            {
+              typeof error === 'string'
+                ? error
+                : error.message
+            }
+          </div>
+        </div>
+      }
     </div>
   )
 }

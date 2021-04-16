@@ -29,19 +29,10 @@ export default makeStyles((theme) => ({
     width: '120px',
   },
 
-  clientApplicationCardImage: {
-    borderRadius: '50%',
-    fontSize: '20px',
-    fontWeight: 300,
-    height: '120px',
-    margin: '20px auto',
-    width: '120px',
-  },
-
   clientApplicationCardBottomSection: {
     backgroundColor: '#F5F5F5',
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: '4px',
+    borderRadius: theme.palette.dimensions.borderRadius,
     borderTop: 'none',
     borderTopLeftRadius: '0px',
     borderTopRightRadius: '0px',
@@ -61,19 +52,13 @@ export default makeStyles((theme) => ({
     '-webkit-box-orient': 'vertical',
     '-webkit-line-clamp': 2,
   },
-
-  clientApplicationCardWithAvatarIcon: {
-    color: theme.palette.label,
-    fontSize: '30px',
-    position: 'absolute',
-    transform: 'translate(105px, 10px) rotate(45deg)',
-  },
-
-  clientApplicationCardWithImageIcon: {
-    color: theme.palette.label,
-    fontSize: '30px',
-    position: 'absolute',
-    transform: 'translate(165px, 10px) rotate(45deg)',
+  clientApplicationCardImage: {
+    borderRadius: '50%',
+    fontSize: '20px',
+    fontWeight: 300,
+    height: '120px',
+    margin: '20px auto',
+    width: '120px',
   },
 
   clientApplicationCardStatus: {
@@ -102,14 +87,35 @@ export default makeStyles((theme) => ({
     border: `1px solid ${theme.palette.label}`,
     borderBottomLeftRadius: '0px',
     borderBottomRightRadius: '0px',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     textAlign: 'center',
+  },
+
+  clientApplicationCardWithAvatarIcon: {
+    color: theme.palette.label,
+    fontSize: '30px',
+    position: 'absolute',
+    transform: 'translate(105px, 10px) rotate(45deg)',
+  },
+
+  clientApplicationCardWithImageIcon: {
+    color: theme.palette.label,
+    fontSize: '30px',
+    position: 'absolute',
+    transform: 'translate(165px, 10px) rotate(45deg)',
   },
 
   clientApplicationCardsContainer: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+
+  clientApplicationsContainerTitle: {
+    color: '#14283C',
+    fontSize: '24px',
+    fontWeight: 400,
+    marginBottom: '24px',
   },
 
   clientApplicationsContentContainer: {
@@ -123,7 +129,7 @@ export default makeStyles((theme) => ({
     color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
-    marginBottom: '24px',
+    marginBottom: '40px',
   },
 
   clientApplicationsTitle: {
@@ -178,7 +184,7 @@ export default makeStyles((theme) => ({
 
   knowledgeBaseCard: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: '4px',
+    borderRadius: theme.palette.dimensions.borderRadius,
     boxShadow: '1px 0px 10px 0px rgba(0, 0, 0, 0.05)',
     height: '310px',
     padding: '24px 40px 40px 40px',
@@ -251,31 +257,20 @@ export default makeStyles((theme) => ({
     fontWeight: 200,
   },
 
-  registerClientApplicationCard: {
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    border: `1px solid ${theme.palette.label}`,
-    borderRadius: '4px',
-    display: 'flex',
-    height: '331.5px',
-    marginBottom: '25px',
-    width: '285px',
-  },
-
-  registerClientApplicationCardButton: {
-    backgroundColor: theme.palette.background.default,
-    border: `1px solid ${theme.palette.label}`,
+  registerNewClientApplicationCardButton: {
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.action.active} !important`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
-    margin: '0px auto',
+    marginBottom: '40px',
     padding: '6px 21px',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
@@ -288,7 +283,7 @@ export default makeStyles((theme) => ({
   warningBox: {
     alignItems: 'center',
     backgroundColor: '#FFDCB9',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '40px',
     marginTop: '40px',

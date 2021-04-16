@@ -17,5 +17,5 @@ RUN npm run build
 
 # This results in a single layer image
 FROM nginx:1.17.3-alpine
-COPY ./dist /usr/share/nginx/apisuite-portal
-COPY ./nginx/public.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /build/dist /usr/share/nginx/apisuite-portal
+COPY nginx/public.conf /etc/nginx/conf.d/default.conf

@@ -49,9 +49,9 @@ export default makeStyles((theme) => ({
   },
 
   goBackButton: {
-    display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
+    display: 'flex',
 
     '& > span': {
       fontSize: '16px',
@@ -64,8 +64,8 @@ export default makeStyles((theme) => ({
   },
 
   headerContentsContainer: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
   },
 
   imageLogo: {
@@ -90,8 +90,8 @@ export default makeStyles((theme) => ({
   },
 
   logoAndNameContainer: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
     textDecoration: 'none',
   },
 
@@ -133,7 +133,7 @@ export default makeStyles((theme) => ({
 
   regularAssistantAmountOfNotifications: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -206,6 +206,7 @@ export default makeStyles((theme) => ({
   },
 
   userAvatar: {
+    background: theme.palette.gradient.light,
     border: `2px solid ${theme.palette.common.white}`,
     fontSize: '20px',
     fontWeight: 300,

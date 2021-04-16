@@ -3,6 +3,7 @@ import { makeStyles } from '@apisuite/fe-base'
 const useStyles = makeStyles((theme) => ({
   notificationBannerCloseButton: {
     color: theme.palette.common.white,
+    cursor: 'pointer',
     height: '24px',
     width: '24px',
   },

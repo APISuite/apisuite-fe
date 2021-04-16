@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
 
   button: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: '5px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
     color: theme.palette.common.white,
     display: 'inline-block',

@@ -1,22 +1,17 @@
 import React from 'react'
-
-import { useTranslation, Avatar, Fade, Menu, MenuItem, TextField } from '@apisuite/fe-base'
-
-import Button from 'components/Button'
-import { isValidImage, isValidURL } from 'components/FormField'
-
+import { useTranslation, Avatar, Button, Fade, Menu, MenuItem, TextField } from '@apisuite/fe-base'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import Close from '@material-ui/icons/Close'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 
-import { OrganisationPageProps } from './types'
+import { useForm } from 'util/useForm'
+import { isValidImage, isValidURL } from 'components/FormField/index'
 
+import { OrganisationProps } from './types'
 import useStyles from './styles'
 
-import { useForm } from 'util/useForm'
-
-const OrganisationPage: React.FC<OrganisationPageProps> = ({
+const Organisation: React.FC<OrganisationProps> = ({
   createOrg,
   fetchOrg,
   org,
@@ -180,6 +175,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
     event.preventDefault()
 
     const orgId = org.id.toString()
+
     const orgDetails = {
       name: formState.values.orgName,
       description: formState.values.orgDescription,
@@ -250,18 +246,22 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
     if (indexOfFormFieldToRemove === 0 && formState.values.orgTermsURL) {
       formState.values.orgTermsURL = ''
+      // @ts-ignore
       delete formState.errors.orgTermsURL
       formState.isDirty = !!org.tosUrl
     } else if (indexOfFormFieldToRemove === 1 && formState.values.orgPrivacyURL) {
       formState.values.orgPrivacyURL = ''
+      // @ts-ignore
       delete formState.errors.orgPrivacyURL
       formState.isDirty = !!org.privacyUrl
     } else if (indexOfFormFieldToRemove === 2 && formState.values.orgYouTubeURL) {
       formState.values.orgYouTubeURL = ''
+      // @ts-ignore
       delete formState.errors.orgYouTubeURL
       formState.isDirty = !!org.youtubeUrl
     } else if (indexOfFormFieldToRemove === 3 && formState.values.orgSupportURL) {
       formState.values.orgSupportURL = ''
+      // @ts-ignore
       delete formState.errors.orgSupportURL
       formState.isDirty = !!org.supportUrl
     }
@@ -292,6 +292,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
+              InputLabelProps={{ shrink: true }}
               label={t('profileTab.organisationSubTab.fieldLabels.orgNameLabel')}
               margin='dense'
               name='orgName'
@@ -304,6 +305,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
+              InputLabelProps={{ shrink: true }}
               label={t('profileTab.organisationSubTab.fieldLabels.orgVATLabel')}
               margin='dense'
               name='orgVAT'
@@ -368,13 +370,13 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               label={t('profileTab.organisationSubTab.fieldLabels.orgAvatarLabel')}
               margin='dense'
               name='orgAvatarURL'
+              onBlur={() => {
+                setAvatarInputIsInFocus(false)
+              }}
               onChange={handleChange}
               onFocus={(focusEvent) => {
                 handleFocus(focusEvent)
                 setAvatarInputIsInFocus(true)
-              }}
-              onBlur={() => {
-                setAvatarInputIsInFocus(false)
               }}
               type='url'
               value={formState.values.orgAvatarURL}
@@ -388,12 +390,13 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
         <section className={classes.orgAdditionalDetailsContainer}>
           <section className={classes.leftSideDetailsContainer}>
             <p className={classes.orgAdditionalDetailsTitle}>
-              Additional information
+              {t('profileTab.organisationSubTab.orgAdditionalDetailsTitle')}
             </p>
 
             <TextField
               className={classes.inputFields}
               fullWidth
+              InputLabelProps={{ shrink: true }}
               label={t('profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel')}
               margin='dense'
               multiline
@@ -421,6 +424,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                     ? formState.errorMsgs.orgWebsiteURL
                     : ''
                 }
+                InputLabelProps={{ shrink: true }}
                 label={t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel')}
                 margin='dense'
                 name='orgWebsiteURL'
@@ -500,6 +504,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgTermsURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgToSLabel')}
                   margin='dense'
                   name='orgTermsURL'
@@ -527,6 +532,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgPrivacyURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel')}
                   margin='dense'
                   name='orgPrivacyURL'
@@ -554,6 +560,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgYouTubeURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel')}
                   margin='dense'
                   name='orgYouTubeURL'
@@ -581,6 +588,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgSupportURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel')}
                   margin='dense'
                   name='orgSupportURL'
@@ -604,29 +612,31 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
           org.name
             ? (
               <Button
-                customButtonClassName={
+                className={
                   formState.isDirty &&
-                  (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                  validImage
+                (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                validImage
                     ? classes.enabledUpdateDetailsButton
                     : classes.disabledUpdateDetailsButton
                 }
-                label={t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel')}
                 onClick={updateOrgDetails}
-              />
+              >
+                {t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel')}
+              </Button>
             )
             : (
               <Button
-                customButtonClassName={
+                className={
                   formState.isDirty &&
-                  (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                  validImage
+                (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                validImage
                     ? classes.enabledCreateOrgButton
                     : classes.disabledCreateOrgButton
                 }
-                label={t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel')}
                 onClick={createOrgDetails}
-              />
+              >
+                {t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel')}
+              </Button>
             )
         }
       </section>
@@ -634,4 +644,4 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
   )
 }
 
-export default OrganisationPage
+export default Organisation

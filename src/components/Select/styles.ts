@@ -3,7 +3,7 @@ import { makeStyles } from '@apisuite/fe-base'
 const useStyles = makeStyles((theme) => ({
   textField: {
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     '& .MuiOutlinedInput-root': {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
   },

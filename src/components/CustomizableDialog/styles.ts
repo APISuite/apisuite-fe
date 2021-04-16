@@ -1,6 +1,6 @@
 import { makeStyles } from '@apisuite/fe-base'
 
-const useStyles = makeStyles((theme) => ({
+export default makeStyles((theme) => ({
   cancelButton: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.grey[300]}`,
@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
-    marginRight: '24px',
+    marginRight: '12px',
     padding: '6px 21px',
     textDecoration: 'none',
     textTransform: 'none',
@@ -43,23 +43,47 @@ const useStyles = makeStyles((theme) => ({
 
   dialogContentContainer: {
     padding: '20px 24px',
+  },
 
-    '& > :first-child': {
-      color: theme.palette.grey[400],
-      fontSize: '16px',
-      fontWeight: 400,
-    },
+  dialogText: {
+    color: '#2F4152',
+    fontSize: '16px',
+    fontWeight: 400,
+    lineHeight: '20px',
+  },
+
+  dialogSubText: {
+    color: theme.palette.grey[400],
+    fontSize: '14px',
+    fontWeight: 300,
+    lineHeight: '20px',
   },
 
   dialogTitleContainer: {
-    backgroundColor: theme.palette.grey[200],
+    alignItems: 'center',
+    backgroundColor: theme.palette.grey[50],
+    display: 'flex',
+    padding: '15px 25px',
 
+    // Dialog's optional title icon
     '& > :first-child': {
+      marginRight: '10px',
+    },
+
+    // Dialog's title
+    '& > :last-child': {
       color: theme.palette.primary.main,
       fontSize: '24px',
       fontWeight: 500,
+      padding: '0px',
     },
   },
-}))
 
-export default useStyles
+  dialogTitleInfoIcon: {
+    color: '#46B5EF',
+  },
+
+  dialogTitleWarningIcon: {
+    color: theme.palette.warning.main,
+  },
+}))

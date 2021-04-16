@@ -1,47 +1,44 @@
-import {
-  takeLatest,
-  put,
-  call,
-  select,
-} from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
+
 import request from 'util/request'
+
 import {
-  RegisterFormActionTypes,
-  nextStepAction,
-  submitPersonalDetailsActions,
-  submitOrganisationDetailsActions,
-  submitSecurityStepActions,
   confirmRegistrationActions,
+  nextStepAction,
+  SignUpFormActionTypes,
+  submitOrganisationDetailsActions,
+  submitProfileDetailsActions,
+  submitSecurityDetailsActions,
   validateRegisterTokenActions,
 } from './ducks'
+
 import { openNotification } from 'containers/NotificationStack/ducks'
-import {
-  Store,
-} from 'store/types'
+
+import { Store } from 'store/types'
+
 import { API_URL } from 'constants/endpoints'
 
-export function * submitPersonalDetailsSaga (
-  action: ReturnType<typeof submitPersonalDetailsActions.request>,
+export function * submitProfileDetailsSaga (
+  action: ReturnType<typeof submitProfileDetailsActions.request>,
 ) {
   try {
-    const headers = {
-      'Content-Type': 'application/json',
-    }
-    const response = yield call(request, {
-      url: `${API_URL}/registration/user`,
-      method: 'POST',
-      headers,
-      data: JSON.stringify(action.payload),
-    })
-
     const previousData = {
       personal: action.payload,
     }
 
-    yield put(submitPersonalDetailsActions.success(response))
+    const response = yield call(request, {
+      url: `${API_URL}/registration/user`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(submitProfileDetailsActions.success(response))
     yield put(nextStepAction(previousData))
   } catch (error) {
-    yield put(submitPersonalDetailsActions.error(error))
+    yield put(submitProfileDetailsActions.error(error))
   }
 }
 
@@ -49,8 +46,22 @@ export function * submitOrganisationDetailsSaga (
   action: ReturnType<typeof submitOrganisationDetailsActions.request>,
 ) {
   try {
-    action.payload.registrationToken = yield select(
-      (state: Store) => state.register.registrationToken)
+    const previousData = {
+      org: action.payload,
+    }
+
+    if (
+      action.payload.name === '' ||
+      (action.payload.name === '' && action.payload.website === '')
+    ) {
+      yield put(submitOrganisationDetailsActions.success())
+      yield put(nextStepAction(previousData))
+
+      return
+    }
+
+    action.payload.registrationToken = yield select((state: Store) => state.register.registrationToken)
+
     yield call(request, {
       url: `${API_URL}/registration/organization`,
       method: 'POST',
@@ -60,10 +71,6 @@ export function * submitOrganisationDetailsSaga (
       data: JSON.stringify(action.payload),
     })
 
-    const previousData = {
-      org: action.payload,
-    }
-
     yield put(submitOrganisationDetailsActions.success())
     yield put(nextStepAction(previousData))
   } catch (error) {
@@ -71,30 +78,31 @@ export function * submitOrganisationDetailsSaga (
   }
 }
 
-export function * submitSecurityStepSaga (
-  action: ReturnType<typeof submitSecurityStepActions.request>,
+export function * submitSecurityDetailsSaga (
+  action: ReturnType<typeof submitSecurityDetailsActions.request>,
 ) {
   try {
     action.payload.registrationToken = yield select((state: Store) => state.register.registrationToken)
+
     if (action.payload.token) {
       action.payload.registrationToken = action.payload.token
+
       delete action.payload.token
     }
 
-    const headers = {
-      'Content-Type': 'application/json',
-    }
     yield call(request, {
       url: `${API_URL}/registration/security`,
       method: 'POST',
-      headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       data: JSON.stringify(action.payload),
     })
 
-    yield put(submitSecurityStepActions.success())
+    yield put(submitSecurityDetailsActions.success())
     yield put(nextStepAction({}))
   } catch (error) {
-    yield put(submitSecurityStepActions.error(error))
+    yield put(submitSecurityDetailsActions.error(error))
   }
 }
 
@@ -111,8 +119,7 @@ export function * confirmRegistrationSaga (
       data: JSON.stringify(action.payload),
     })
 
-    yield put(openNotification('success', 'We have confirmed your account, you can login!', 4000))
-    // yield put(confirmRegistrationActions.success())
+    yield put(openNotification('success', 'We have confirmed your account! You can now sign in.', 4000))
   } catch (error) {
     yield put(confirmRegistrationActions.error(error))
   }
@@ -138,11 +145,11 @@ export function * validateRegisterTokenSaga (
 }
 
 function * rootSaga () {
-  yield takeLatest(RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST, submitPersonalDetailsSaga)
-  yield takeLatest(RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST, submitOrganisationDetailsSaga)
-  yield takeLatest(RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST, submitSecurityStepSaga)
-  yield takeLatest(RegisterFormActionTypes.CONFIRM_REGISTRATION_REQUEST, confirmRegistrationSaga)
-  yield takeLatest(RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST, validateRegisterTokenSaga)
+  yield takeLatest(SignUpFormActionTypes.CONFIRM_REGISTRATION_REQUEST, confirmRegistrationSaga)
+  yield takeLatest(SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST, submitOrganisationDetailsSaga)
+  yield takeLatest(SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST, submitProfileDetailsSaga)
+  yield takeLatest(SignUpFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST, submitSecurityDetailsSaga)
+  yield takeLatest(SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST, validateRegisterTokenSaga)
 }
 
 export default rootSaga

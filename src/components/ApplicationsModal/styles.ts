@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
 
   modalContentsContainer: {
     backgroundColor: theme.palette.background.default,
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
     height: '100%',
     /* The 'outline' property is necessary to remove
@@ -101,7 +101,7 @@ export default makeStyles((theme) => ({
 
   alternativeSectionSeparator: {
     border: `1px solid ${theme.palette.grey['100']}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     margin: '25px 0px',
     width: '100%',
   },
@@ -138,7 +138,7 @@ export default makeStyles((theme) => ({
     '& > :last-child': {
       backgroundColor: theme.palette.background.default,
       border: `1px solid ${theme.palette.grey['300']}`,
-      borderRadius: '4px',
+      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
       color: theme.palette.action.active,
       cursor: 'pointer',
       height: '40px',
@@ -172,7 +172,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.primary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -182,7 +182,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.primary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
@@ -195,7 +195,7 @@ export default makeStyles((theme) => ({
       },
     },
 
-    // Text field's input helper text
+    // Text field's helper text
     '& .MuiFormHelperText-root': {
       color: theme.palette.label,
 
@@ -208,6 +208,7 @@ export default makeStyles((theme) => ({
   buttonsContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginBottom: '25px',
   },
 
   clientApplicationCardStatusText: {
@@ -232,6 +233,7 @@ export default makeStyles((theme) => ({
   disabledAddOrEditButton: {
     backgroundColor: '#99e6cc',
     color: `${theme.palette.primary.contrastText} !important`,
+    border: '1px solid #99e6cc',
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -246,7 +248,7 @@ export default makeStyles((theme) => ({
 
   disabledClientIDInputField: {
     backgroundColor: '#DCDFE2',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     marginBottom: '25px',
     marginTop: '0px',
     maxWidth: '400px',
@@ -259,7 +261,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -269,7 +271,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
@@ -294,7 +296,7 @@ export default makeStyles((theme) => ({
 
   disabledClientSecretInputField: {
     backgroundColor: '#DCDFE2',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     marginBottom: '25px',
     marginTop: '0px',
     maxWidth: '350px',
@@ -307,7 +309,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -317,7 +319,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
@@ -343,7 +345,7 @@ export default makeStyles((theme) => ({
   disabledClientSecretInputFieldRefreshButton: {
     backgroundColor: '#DCDFE2',
     border: '1px solid rgba(0, 0, 0, 0.2)',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.label,
     height: '40px',
     marginLeft: '10px',
@@ -372,6 +374,7 @@ export default makeStyles((theme) => ({
   enabledAddOrEditButton: {
     backgroundColor: theme.palette.secondary.main,
     color: `${theme.palette.common.white} !important`,
+    border: `1px solid ${theme.palette.secondary.main}`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -395,7 +398,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -405,7 +408,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
 
       // Multiline text field's styles
@@ -442,7 +445,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -452,7 +455,7 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
 
       // Multiline text field's styles
@@ -479,7 +482,7 @@ export default makeStyles((theme) => ({
 
   enabledClientSecretInputFieldRefreshButton: {
     border: '1px solid rgba(0, 0, 0, 0.2)',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.action.active,
     cursor: 'pointer',
     height: '40px',
@@ -508,7 +511,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: 'center',
     backgroundColor: theme.palette.info.light,
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     padding: '12px 10px',
@@ -517,7 +520,7 @@ export default makeStyles((theme) => ({
   },
 
   infoBoxIcon: {
-    fill: '#46b5ef',
+    fill: '#46B5EF',
     transform: 'translate(-2.5px, -40px)',
   },
 
@@ -541,7 +544,7 @@ export default makeStyles((theme) => ({
     },
 
     '& label.Mui-focused': {
-      color: `${theme.palette.secondary.main} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -551,13 +554,18 @@ export default makeStyles((theme) => ({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${theme.palette.secondary.main} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
 
       // Multiline text field's styles
       '&.MuiInputBase-multiline': {
         height: '104.5px',
       },
+    },
+
+    // Text field's helper text styles
+    '& > p': {
+      color: theme.palette.label,
     },
 
     // Text field's input text styles
@@ -630,7 +638,7 @@ export default makeStyles((theme) => ({
   },
 
   regularSectionSeparator: {
-    border: `1px solid ${theme.palette.grey[100]}`,
+    border: `1px solid ${theme.palette.grey[200]}`,
     borderRadius: theme.palette.dimensions.borderRadius,
     margin: '0px 0px 25px 0px',
     width: '100%',
@@ -639,7 +647,7 @@ export default makeStyles((theme) => ({
   removeAppButton: {
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,

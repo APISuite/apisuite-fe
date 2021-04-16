@@ -4,14 +4,19 @@ export default makeStyles((theme) => ({
   carouselSlideButtonStyling: {
     backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: '#FFFFFF !important',
+    color: `${theme.palette.common.white} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     margin: '0px auto',
     padding: '17px 40px',
     textDecoration: 'none',
+    textTransform: 'none',
     width: '200px',
+
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 
   carouselSlideInnerContainer: {
@@ -27,7 +32,7 @@ export default makeStyles((theme) => ({
   },
 
   carouselSlideText: {
-    color: '#FFFFFF',
+    color: theme.palette.background.default,
     fontSize: '22px',
     fontWeight: 300,
     marginBottom: '30px',

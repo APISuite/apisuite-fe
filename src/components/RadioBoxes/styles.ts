@@ -10,10 +10,10 @@ export default makeStyles((theme) => ({
   },
   controlWrapper: {
     border: `1px solid ${theme.palette.grey[900]}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    cursor: 'pointer',
     marginRight: 8,
     paddingRight: 12,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    cursor: 'pointer',
   },
   controlLabel: {
     margin: 0,

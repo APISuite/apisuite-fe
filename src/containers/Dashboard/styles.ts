@@ -42,9 +42,10 @@ export default makeStyles((theme) => ({
 
   customNotificationCardButton: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: '5px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
     color: theme.palette.common.white,
+    cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -52,9 +53,10 @@ export default makeStyles((theme) => ({
     position: 'relative',
     textAlign: 'center',
     textDecoration: 'none',
+    textTransform: 'none',
 
     '&:hover': {
-      cursor: 'pointer',
+      backgroundColor: theme.palette.secondary.main,
     },
 
     '&:link, &:visited': {
@@ -87,9 +89,10 @@ export default makeStyles((theme) => ({
 
   customGreetingCardButton: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: '5px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.common.white,
+    cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -97,9 +100,10 @@ export default makeStyles((theme) => ({
     position: 'relative',
     textAlign: 'center',
     textDecoration: 'none',
+    textTransform: 'none',
 
     '&:hover': {
-      cursor: 'pointer',
+      backgroundColor: theme.palette.primary.main,
     },
 
     '&:link, &:visited': {
@@ -150,7 +154,7 @@ export default makeStyles((theme) => ({
 
   sectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: '4px',
+    borderRadius: theme.palette.dimensions.borderRadius,
     maxWidth: '900px',
     width: '100%',
   },

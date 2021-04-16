@@ -41,6 +41,7 @@ export interface AppData {
   createdAt: string,
   description: string,
   id: number,
+  labels: string[],
   logo: string,
   name: string,
   orgId: number,
@@ -81,6 +82,7 @@ export interface ApplicationsProps {
 
 export interface CreateAppActionData {
   description: string,
+  labels: string[],
   logo: string,
   name: string,
   privacyUrl: string,
@@ -95,6 +97,7 @@ export interface CreateAppActionData {
 export interface UpdateAppActionData {
   description: string,
   id: number,
+  labels: string[],
   logo: string,
   name: string,
   privacyUrl: string,

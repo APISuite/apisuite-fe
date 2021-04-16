@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   hideNotificationCardContentsContainer: {
     alignItems: 'center',
     backgroundColor: theme.palette.background.default,
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
     display: 'flex',
     flexDirection: 'row',
@@ -18,27 +18,30 @@ export default makeStyles((theme) => ({
     width: '100%',
   },
 
-  notificationCardCloseButton: {
-    color: theme.palette.grey[300],
-    height: '24px',
-    width: '24px',
+  notificationCardButton: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    boxShadow: 'none',
+    color: `${theme.palette.common.white} !important`,
+    display: 'inline-block',
+    fontSize: '16px',
+    fontWeight: 600,
+    padding: '12px 20px',
+    position: 'relative',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.primary,
+    },
   },
 
-  showNotificationCardContentsContainer: {
-    alignItems: 'center',
-    backgroundColor: theme.palette.background.default,
-    borderRadius: '4px',
-    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    margin: 'auto',
-    maxWidth: '900px',
-    opacity: 1,
-    padding: '20px 40px',
-    transition: 'opacity 0.35s',
-    width: '100%',
+  notificationCardCloseButton: {
+    color: theme.palette.grey[300],
+    cursor: 'pointer',
+    height: '24px',
+    width: '24px',
   },
 
   notificationCardText: {
@@ -55,6 +58,23 @@ export default makeStyles((theme) => ({
     fontWeight: 400,
     marginBottom: '12px',
     maxWidth: '542.5px',
+    width: '100%',
+  },
+
+  showNotificationCardContentsContainer: {
+    alignItems: 'center',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    margin: 'auto',
+    maxWidth: '900px',
+    opacity: 1,
+    padding: '20px 40px',
+    transition: 'opacity 0.35s',
     width: '100%',
   },
 }))

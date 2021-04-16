@@ -1,9 +1,27 @@
+
 import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.grey[50],
-    minHeight: '100%',
+  clipboardIcon: {
+    cursor: 'pointer',
+    zIndex: 1,
+
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
+  },
+
+  codeBlock: {
+    borderBottomLeftRadius: theme.palette.dimensions.borderRadius,
+    borderBottomRightRadius: theme.palette.dimensions.borderRadius,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
+
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 688,
   },
 
   contentContainer: {
@@ -15,36 +33,6 @@ export default makeStyles((theme) => ({
     transform: 'translateX(-8px)',
   },
 
-  mainContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: 100,
-    width: '100%',
-  },
-
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: 688,
-  },
-
-  navigation: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: 300,
-  },
-
-  title: {
-    fontSize: 26,
-    fontWeight: 300,
-  },
-
-  stepTitle: {
-    fontSize: 20,
-    marginTop: -170,
-    paddingTop: 170,
-  },
-
   description: {
     display: 'flex',
     marginBottom: 20,
@@ -53,35 +41,46 @@ export default makeStyles((theme) => ({
     textAlign: 'justify',
   },
 
-  stepContainer: {
-    marginBottom: 20,
-    marginTop: 20,
+  iconRow: {
+    alignItems: 'flex-end',
+    backgroundColor: theme.palette.text.primary,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: theme.palette.dimensions.borderRadius,
+    borderTopRightRadius: theme.palette.dimensions.borderRadius,
+    color: theme.palette.common.white,
+    display: 'flex',
+    height: 40,
+    justifyContent: 'flex-end',
+    marginTop: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 
-  codeBlock: {
-    borderBottomLeftRadius: theme.palette.dimensions.borderRadius,
-    borderBottomRightRadius: theme.palette.dimensions.borderRadius,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
-  },
-
-  noteContainer: {
-    backgroundColor: theme.palette.action.focus,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    marginBottom: 20,
-    overflow: 'hidden',
+  mainContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: 100,
     width: '100%',
   },
 
-  noteTitle: {
-    color: 'black',
-    fontSize: 16,
-    fontWeight: 400,
+  navigation: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 300,
   },
 
   note: {
-    color: 'white',
+    color: theme.palette.common.white,
     fontSize: 14,
+  },
+
+  noteContainer: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    marginBottom: 20,
+    overflow: 'hidden',
+    width: '100%',
   },
 
   noteContent: {
@@ -90,34 +89,36 @@ export default makeStyles((theme) => ({
     padding: 20,
   },
 
-  iconRow: {
-    alignItems: 'flex-end',
-    backgroundColor: theme.palette.text.primary,
-    color: 'white',
-    display: 'flex',
-    height: 40,
-    justifyContent: 'flex-end',
-    marginTop: 0,
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: theme.palette.dimensions.borderRadius,
-    borderTopLeftRadius: theme.palette.dimensions.borderRadius,
+  noteTitle: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 400,
   },
 
-  clipboardIcon: {
-    cursor: 'pointer',
-    zIndex: 1,
-
-    '&:hover': {
-      color: theme.palette.secondary.main,
-    },
+  root: {
+    backgroundColor: theme.palette.grey[50],
+    minHeight: '100%',
   },
 
   sideMenuContainer: {
     paddingLeft: 40,
     position: 'sticky',
     top: 180,
+  },
+
+  stepContainer: {
+    marginBottom: 20,
+    marginTop: 20,
+  },
+
+  stepTitle: {
+    fontSize: 20,
+    marginTop: -170,
+    paddingTop: 170,
+  },
+
+  title: {
+    fontSize: 26,
+    fontWeight: 300,
   },
 }))

@@ -1,47 +1,53 @@
-import {
-  takeLatest,
-  put,
-  call,
-  select,
-} from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
+
 import request from 'util/request'
+
+import { authActions } from 'containers/Auth/ducks'
+import { openNotification } from 'containers/NotificationStack/ducks'
+
 import {
-  ProfileActionTypes,
-  fetchTeamMembersActions,
-  fetchRoleOptionsActions,
-  inviteMemberActions,
-  confirmInviteActions,
   changeRoleActions,
-  getProfileActions,
-  updateProfileActions,
-  fetchOrgActions,
-  updateOrgActions,
-  deleteAccountActions,
+  confirmInviteActions,
   createOrgActions,
+  deleteAccountActions,
+  fetchOrgActions,
+  fetchRoleOptionsActions,
+  fetchTeamMembersActions,
+  getProfileActions,
+  inviteMemberActions,
+  ProfileActionTypes,
+  switchOrgActions,
+  updateOrgActions,
+  updateProfileActions,
 } from './ducks'
-import { Store } from 'store/types'
-import { API_URL } from 'constants/endpoints'
+
 import {
-  FetchTeamMembersResponse,
-  FetchRoleOptionsResponse,
-  InviteMemberResponse,
-  GetProfileResponse,
-  UpdateProfileResponse,
   ChangeRoleResponse,
   FetchOrgResponse,
+  FetchRoleOptionsResponse,
+  FetchTeamMembersResponse,
+  GetProfileResponse,
+  InviteMemberResponse,
   UpdateOrgResponse,
+  UpdateProfileResponse,
 } from './types'
-import { openNotification } from 'containers/NotificationStack/ducks'
-import { authActions } from 'containers/Auth/ducks'
+
+import { Store } from 'store/types'
+
+import { API_URL } from 'constants/endpoints'
+
+const STATE_STORAGE = 'ssoStateStorage'
 
 export function * fetchTeamMembersSaga (
   action: ReturnType<typeof fetchTeamMembersActions.request>,
 ) {
   try {
     let orgID
+
     if (!action.payload.orgID) {
       orgID = yield select((state: Store) => state.profile.profile.current_org.id)
     }
+
     const response: FetchTeamMembersResponse[] = yield call(request, {
       url: `${API_URL}/organizations/${orgID}/users`,
       method: 'GET',
@@ -82,7 +88,7 @@ export function * inviteMemberSaga (
     })
 
     yield put(inviteMemberActions.success(response))
-    yield put(openNotification('success', 'Member was invited successfully.', 3000))
+    yield put(openNotification('success', 'Member was successfully invited.', 3000))
   } catch (error) {
     yield put(inviteMemberActions.error(error.message || 'Invitation failed.'))
     yield put(openNotification('error', 'Error inviting member.', 3000))
@@ -104,7 +110,7 @@ export function * confirmInviteSaga (
     })
 
     yield put(confirmInviteActions.success(response))
-    yield put(openNotification('success', 'You were added to a team, go to your profile to check your new organization!', 5000))
+    yield put(openNotification('success', 'You were added to a team! Check your new organisation on your profile!', 5000))
   } catch (error) {
     yield put(confirmInviteActions.error(error))
   }
@@ -155,7 +161,8 @@ export function * updateProfileSaga (
 ) {
   try {
     const response: UpdateProfileResponse = yield call(request, {
-      url: `${API_URL}/users/profile/update`,
+      // url: `${API_URL}/users/profile/update`,
+      url: `${API_URL}/users/${action.userId}`,
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
@@ -176,10 +183,12 @@ export function * fetchOrgSaga (
 ) {
   try {
     let orgId
+
     if (!action.payload.org_id) {
       yield call(getProfileSaga)
       orgId = yield select((state: Store) => state.profile.profile.current_org.id)
     }
+
     const response: FetchOrgResponse = yield call(request, {
       url: `${API_URL}/organizations/${action.payload.org_id !== '' ? action.payload.org_id : orgId}`,
       method: 'GET',
@@ -209,6 +218,7 @@ export function * createOrgSaga (
     })
 
     yield put(createOrgActions.success(response))
+    yield put(openNotification('success', 'Your organisation was successfully created!', 3000))
   } catch (error) {
     yield put(createOrgActions.error(error.message))
     yield put(authActions.handleSessionExpire())
@@ -230,8 +240,30 @@ export function * updateOrgSaga (
 
     yield put(updateOrgActions.success(response))
     yield put(fetchOrgActions.request(action.orgId))
+    yield put(openNotification('success', 'Your organisation was successfully updated!', 3000))
   } catch (error) {
     yield put(updateOrgActions.error(error.message))
+    yield put(authActions.handleSessionExpire())
+  }
+}
+
+export function * switchOrgSaga (
+  action: ReturnType<typeof switchOrgActions.request>,
+) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/users/${action.payload.id}/organizations/${action.payload.orgId}`,
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(switchOrgActions.success())
+    yield put(getProfileActions.request())
+  } catch (error) {
+    yield put(switchOrgActions.error(error.message))
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -242,6 +274,9 @@ export function * deleteAccountSaga () {
       url: `${API_URL}/users`,
       method: 'DELETE',
     })
+
+    localStorage.removeItem(STATE_STORAGE)
+    localStorage.removeItem('attemptingSignInWithProvider')
 
     yield put(deleteAccountActions.success())
     yield put(openNotification('success', 'Account deleted successfully.', 3000))
@@ -254,17 +289,18 @@ export function * deleteAccountSaga () {
 }
 
 function * rootSaga () {
-  yield takeLatest(ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST, fetchTeamMembersSaga)
-  yield takeLatest(ProfileActionTypes.FETCH_ROLE_OPTIONS_REQUEST, fetchRoleOptionsSaga)
-  yield takeLatest(ProfileActionTypes.INVITE_MEMBER_REQUEST, inviteMemberSaga)
-  yield takeLatest(ProfileActionTypes.CONFIRM_INVITE_MEMBER_REQUEST, confirmInviteSaga)
   yield takeLatest(ProfileActionTypes.CHANGE_ROLE_REQUEST, changeRoleSaga)
-  yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
-  yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
-  yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
+  yield takeLatest(ProfileActionTypes.CONFIRM_INVITE_MEMBER_REQUEST, confirmInviteSaga)
   yield takeLatest(ProfileActionTypes.CREATE_ORG_REQUEST, createOrgSaga)
-  yield takeLatest(ProfileActionTypes.UPDATE_ORG_REQUEST, updateOrgSaga)
   yield takeLatest(ProfileActionTypes.DELETE_ACCOUNT_REQUEST, deleteAccountSaga)
+  yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
+  yield takeLatest(ProfileActionTypes.FETCH_ROLE_OPTIONS_REQUEST, fetchRoleOptionsSaga)
+  yield takeLatest(ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST, fetchTeamMembersSaga)
+  yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
+  yield takeLatest(ProfileActionTypes.INVITE_MEMBER_REQUEST, inviteMemberSaga)
+  yield takeLatest(ProfileActionTypes.SWITCH_ORG_REQUEST, switchOrgSaga)
+  yield takeLatest(ProfileActionTypes.UPDATE_ORG_REQUEST, updateOrgSaga)
+  yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
 }
 
 export default rootSaga

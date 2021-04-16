@@ -1,0 +1,19 @@
+{
+  "extensions": [
+    {
+      "path": "github:Cloudoki/apisuite-cloud-extension-ui#v1.0.22",
+      "name": "@apisuite/extension-cloud-extension-ui",
+      "className": "CloudExtension",
+      "config": {
+        "cloudExtensionSubdomain": "cloudextapi",
+        "cloudExtensionUrl": "https://cloudextapi.apisuite.io"
+      }
+    },
+    {
+      "path": "github:APISuite/apisuite-marketplace-extension-ui#v1.0.2",
+      "name": "@apisuite/extension-marketplace-extension-ui",
+      "className": "MarketplaceExtension",
+      "config": {}
+    }
+  ]
+}

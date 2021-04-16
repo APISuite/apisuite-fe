@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
 
   modalContentsContainer: {
     backgroundColor: theme.palette.background.default,
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
     height: '100%',
     /* The 'outline' property is necessary to remove
@@ -153,7 +153,7 @@ export default makeStyles((theme) => ({
     '& > :last-child': {
       color: theme.palette.action.active,
       border: `1px solid ${theme.palette.grey[400]}`,
-      borderRadius: '4px',
+      borderRadius: theme.palette.dimensions.borderRadius,
       height: '40px',
       maxWidth: '420px',
       width: '100%',
@@ -179,7 +179,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: 'center',
     backgroundColor: theme.palette.info.light,
-    borderRadius: '4px',
+    borderRadius: theme.palette.dimensions.borderRadius,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -188,7 +188,7 @@ export default makeStyles((theme) => ({
   },
 
   infoBoxIcon: {
-    fill: '#46b5ef',
+    fill: '#46B5EF',
     transform: 'translate(7px, -7px)',
   },
 
@@ -203,7 +203,7 @@ export default makeStyles((theme) => ({
   warningBox: {
     alignItems: 'center',
     backgroundColor: '#FFDCB9',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -372,6 +372,11 @@ export default makeStyles((theme) => ({
     padding: '12px 21px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.background.default,
+    },
   },
 
   disabledRequestAccessButton: {
@@ -385,6 +390,11 @@ export default makeStyles((theme) => ({
     padding: '12px 21px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 
   disabledRevokeAccessButton: {
@@ -398,6 +408,11 @@ export default makeStyles((theme) => ({
     padding: '12px 21px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.warning.main,
+    },
   },
 
   enabledOtherButtons: {
@@ -411,6 +426,11 @@ export default makeStyles((theme) => ({
     marginLeft: '25px',
     padding: '12px 21px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.background.default,
+    },
   },
 
   enabledRequestAccessButton: {
@@ -424,6 +444,11 @@ export default makeStyles((theme) => ({
     opacity: 1,
     padding: '12px 21px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 
   enabledRevokeAccessButton: {

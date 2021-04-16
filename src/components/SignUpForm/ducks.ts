@@ -1,70 +1,74 @@
 import update from 'immutability-helper'
-import { AuthStoreActionTypes } from 'containers/Auth/types'
+
 import { LOGOUT } from 'containers/Auth/ducks'
+
+import { AuthStoreActionTypes } from 'containers/Auth/types'
+
 import {
-  RegisterFormStore,
-  RegisterFormActions,
   isStep,
-  PersonalDetails,
   OrganisationDetails,
-  SecurityStep,
-  PersonalDetailsResponse,
-  PersonalDetailsResponseErrorObject,
   PreviousData,
+  ProfileDetails,
+  ProfileDetailsResponse,
+  ProfileDetailsResponseErrorObject,
+  SecurityDetails,
+  SignUpFormActions,
+  SignUpFormStore,
 } from './types'
 
-export enum RegisterFormActionTypes {
-  SUBMIT_PERSONAL_DETAILS_REQUEST = 'SUBMIT_PERSONAL_DETAILS_REQUEST',
-  SUBMIT_PERSONAL_DETAILS_SUCCESS = 'SUBMIT_PERSONAL_DETAILS_SUCCESS',
-  SUBMIT_PERSONAL_DETAILS_ERROR = 'SUBMIT_PERSONAL_DETAILS_ERROR',
-
-  SUBMIT_ORGANISATION_DETAILS_REQUEST = 'SUBMIT_ORGANISATION_DETAILS_REQUEST',
-  SUBMIT_ORGANISATION_DETAILS_SUCCESS = 'SUBMIT_ORGANISATION_DETAILS_SUCCESS',
-  SUBMIT_ORGANISATION_DETAILS_ERROR = 'SUBMIT_ORGANISATION_DETAILS_ERROR',
-
-  SUBMIT_SECURITY_STEP_REQUEST = 'SUBMIT_SECURITY_STEP_REQUEST',
-  SUBMIT_SECURITY_STEP_SUCCESS = 'SUBMIT_SECURITY_STEP_SUCCESS',
-  SUBMIT_SECURITY_STEP_ERROR = 'SUBMIT_SECURITY_STEP_ERROR',
-
+export enum SignUpFormActionTypes {
+  CONFIRM_REGISTRATION_ERROR = 'CONFIRM_REGISTRATION_ERROR',
   CONFIRM_REGISTRATION_REQUEST = 'CONFIRM_REGISTRATION_REQUEST',
   CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS',
-  CONFIRM_REGISTRATION_ERROR = 'CONFIRM_REGISTRATION_ERROR',
-
-  VALIDATE_REGISTRATION_TOKEN_REQUEST = 'VALIDATE_REGISTRATION_TOKEN_REQUEST',
-  VALIDATE_REGISTRATION_TOKEN_SUCCESS = 'VALIDATE_REGISTRATION_TOKEN_SUCCESS',
-  VALIDATE_REGISTRATION_TOKEN_ERROR = 'VALIDATE_REGISTRATION_TOKEN_ERROR',
 
   NEXT_STEP = 'NEXT_STEP',
-  PREVIOUS_STEP = 'PREVIOUS_STEP'
+
+  PREVIOUS_STEP = 'PREVIOUS_STEP',
+
+  SUBMIT_ORGANISATION_DETAILS_ERROR = 'SUBMIT_ORGANISATION_DETAILS_ERROR',
+  SUBMIT_ORGANISATION_DETAILS_REQUEST = 'SUBMIT_ORGANISATION_DETAILS_REQUEST',
+  SUBMIT_ORGANISATION_DETAILS_SUCCESS = 'SUBMIT_ORGANISATION_DETAILS_SUCCESS',
+
+  SUBMIT_PERSONAL_DETAILS_ERROR = 'SUBMIT_PERSONAL_DETAILS_ERROR',
+  SUBMIT_PERSONAL_DETAILS_REQUEST = 'SUBMIT_PERSONAL_DETAILS_REQUEST',
+  SUBMIT_PERSONAL_DETAILS_SUCCESS = 'SUBMIT_PERSONAL_DETAILS_SUCCESS',
+
+  SUBMIT_SECURITY_STEP_ERROR = 'SUBMIT_SECURITY_STEP_ERROR',
+  SUBMIT_SECURITY_STEP_REQUEST = 'SUBMIT_SECURITY_STEP_REQUEST',
+  SUBMIT_SECURITY_STEP_SUCCESS = 'SUBMIT_SECURITY_STEP_SUCCESS',
+
+  VALIDATE_REGISTRATION_TOKEN_ERROR = 'VALIDATE_REGISTRATION_TOKEN_ERROR',
+  VALIDATE_REGISTRATION_TOKEN_REQUEST = 'VALIDATE_REGISTRATION_TOKEN_REQUEST',
+  VALIDATE_REGISTRATION_TOKEN_SUCCESS = 'VALIDATE_REGISTRATION_TOKEN_SUCCESS',
 }
 
-const initialState: RegisterFormStore = {
-  isRequesting: false,
+const initialState: SignUpFormStore = {
+  back: false,
   error: undefined,
-  registrationToken: undefined,
-  step: 1,
-  submittedEmail: '',
   invitation: {
     email: undefined,
   },
   invitationError: undefined,
-  back: false,
+  isRequesting: false,
   previousData: {
-    personal: undefined,
     org: undefined,
+    personal: undefined,
   },
+  registrationToken: undefined,
+  step: 1,
+  submittedEmail: '',
 }
 
 export default function registerFormReducer (
   state = initialState,
-  action: RegisterFormActions | AuthStoreActionTypes['logout'],
-): RegisterFormStore {
+  action: SignUpFormActions | AuthStoreActionTypes['logout'],
+): SignUpFormStore {
   switch (action.type) {
     case LOGOUT: {
       return initialState
     }
 
-    case RegisterFormActionTypes.NEXT_STEP: {
+    case SignUpFormActionTypes.NEXT_STEP: {
       const nextStep = state.step + 1
 
       let previousData = {}
@@ -78,7 +82,7 @@ export default function registerFormReducer (
         }
       }
 
-      // if we have an invitation skip step 2
+      // If we have an invitation, we skip step 2
       if (state.invitation && state.invitation.email && nextStep === 2) {
         const skipedStep = nextStep + 1
         return update(state, {
@@ -109,10 +113,10 @@ export default function registerFormReducer (
       return state
     }
 
-    case RegisterFormActionTypes.PREVIOUS_STEP: {
+    case SignUpFormActionTypes.PREVIOUS_STEP: {
       const previousStep = state.step - 1
 
-      // if we have an invitation skip step 2
+      // If we have an invitation, we skip step 2
       if (state.invitation && state.invitation.email && previousStep === 2) {
         const skipedStep = previousStep - 1
         return update(state, {
@@ -140,7 +144,7 @@ export default function registerFormReducer (
       return state
     }
 
-    case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_SUCCESS: {
+    case SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_SUCCESS: {
       return update(state, {
         registrationToken: { $set: action.response.token },
         isRequesting: { $set: false },
@@ -148,21 +152,21 @@ export default function registerFormReducer (
       })
     }
 
-    case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST:
+    case SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST:
       return update(state, {
         isRequesting: { $set: true },
         error: { $set: undefined },
         submittedEmail: { $set: action.payload.email },
       })
-    case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST:
-    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST:
-    case RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST: {
+    case SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST:
+    case SignUpFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST:
+    case SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST: {
       return update(state, {
         isRequesting: { $set: true },
       })
     }
 
-    case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR:
+    case SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR:
       /* The submission of one's personal details can fail for a number of
       reasons (e.g., connection issues, bad requests, ...), one of them
       being an e-mail address that's already in use. When this happens,
@@ -172,22 +176,22 @@ export default function registerFormReducer (
         error: { $set: `${action.error.status}` },
       })
 
-    case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS:
-    case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR:
-    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS:
-    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_ERROR: {
+    case SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS:
+    case SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR:
+    case SignUpFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS:
+    case SignUpFormActionTypes.SUBMIT_SECURITY_STEP_ERROR: {
       return update(state, {
         isRequesting: { $set: false },
       })
     }
 
-    case RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_SUCCESS: {
+    case SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_SUCCESS: {
       return update(state, {
         invitation: { $set: action.response },
         isRequesting: { $set: false },
       })
     }
-    case RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_ERROR: {
+    case SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_ERROR: {
       return update(state, {
         invitationError: { $set: action.error },
         isRequesting: { $set: false },
@@ -200,30 +204,32 @@ export default function registerFormReducer (
 }
 
 export const nextStepAction = (previousData: PreviousData) => ({
-  type: RegisterFormActionTypes.NEXT_STEP,
+  type: SignUpFormActionTypes.NEXT_STEP,
   previousData,
 } as const)
 
 export const previousStepAction = () => ({
-  type: RegisterFormActionTypes.PREVIOUS_STEP,
+  type: SignUpFormActionTypes.PREVIOUS_STEP,
 } as const)
 
-export const submitPersonalDetailsActions = {
-  request: (personalDetails: PersonalDetails) => {
+export const submitProfileDetailsActions = {
+  request: (personalDetails: ProfileDetails) => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST,
+      type: SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST,
       payload: personalDetails,
     } as const
   },
-  success: (response: PersonalDetailsResponse) => {
+
+  success: (response: ProfileDetailsResponse) => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_SUCCESS,
+      type: SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_SUCCESS,
       response: response,
     } as const
   },
-  error: (error: PersonalDetailsResponseErrorObject) => {
+
+  error: (error: ProfileDetailsResponseErrorObject) => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR,
+      type: SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR,
       error: error,
     } as const
   },
@@ -232,38 +238,42 @@ export const submitPersonalDetailsActions = {
 export const submitOrganisationDetailsActions = {
   request: (organisationDetails: OrganisationDetails) => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST,
+      type: SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST,
       payload: organisationDetails,
     } as const
   },
+
   success: () => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS,
+      type: SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS,
     } as const
   },
+
   error: (error: string) => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR,
+      type: SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR,
       error: error,
     } as const
   },
 }
 
-export const submitSecurityStepActions = {
-  request: (securityStep: SecurityStep) => {
+export const submitSecurityDetailsActions = {
+  request: (securityStep: SecurityDetails) => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST,
+      type: SignUpFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST,
       payload: securityStep,
     } as const
   },
+
   success: () => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS,
+      type: SignUpFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS,
     } as const
   },
+
   error: (error: string) => {
     return {
-      type: RegisterFormActionTypes.SUBMIT_SECURITY_STEP_ERROR,
+      type: SignUpFormActionTypes.SUBMIT_SECURITY_STEP_ERROR,
       error: error,
     } as const
   },
@@ -272,19 +282,21 @@ export const submitSecurityStepActions = {
 export const confirmRegistrationActions = {
   request: (token: string) => {
     return {
-      type: RegisterFormActionTypes.CONFIRM_REGISTRATION_REQUEST,
+      type: SignUpFormActionTypes.CONFIRM_REGISTRATION_REQUEST,
       payload: { token: token },
     } as const
   },
+
   success: (response: any) => {
     return {
-      type: RegisterFormActionTypes.CONFIRM_REGISTRATION_SUCCESS,
+      type: SignUpFormActionTypes.CONFIRM_REGISTRATION_SUCCESS,
       response: response,
     } as const
   },
+
   error: (error: string) => {
     return {
-      type: RegisterFormActionTypes.CONFIRM_REGISTRATION_ERROR,
+      type: SignUpFormActionTypes.CONFIRM_REGISTRATION_ERROR,
       error: error,
     } as const
   },
@@ -293,19 +305,21 @@ export const confirmRegistrationActions = {
 export const validateRegisterTokenActions = {
   request: (token: string) => {
     return {
-      type: RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST,
+      type: SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST,
       payload: { token: token },
     } as const
   },
+
   success: (response: any) => {
     return {
-      type: RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_SUCCESS,
+      type: SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_SUCCESS,
       response: response,
     } as const
   },
+
   error: (error: string) => {
     return {
-      type: RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_ERROR,
+      type: SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_ERROR,
       error: error,
     } as const
   },

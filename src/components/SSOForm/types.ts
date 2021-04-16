@@ -1,7 +1,5 @@
-import {
-  AuthPayloads,
-  AuthStore,
-} from 'containers/Auth/types'
+import { AuthPayloads, AuthStore } from 'containers/Auth/types'
+
 import { History } from 'history'
 
 export interface SSOFormProps extends SSODispatchToProps {
@@ -10,6 +8,5 @@ export interface SSOFormProps extends SSODispatchToProps {
 }
 
 export interface SSODispatchToProps {
-  loginWith: (payload: AuthPayloads['sso']['ssoLogin']) => void,
-  getProviders: () => void,
+  ssoLogin: (payload: AuthPayloads['sso']['ssoLogin']) => void,
 }

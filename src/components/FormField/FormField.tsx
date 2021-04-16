@@ -1,30 +1,34 @@
-import * as React from 'react'
+import React from 'react'
 import { TextField } from '@apisuite/fe-base'
 import classnames from 'classnames'
-import useStyles from './styles'
+
 import { FormFieldProps } from './types'
 
+import useStyles from './styles'
+
 const FormField: React.FC<FormFieldProps> = (props) => {
+  const classes = useStyles()
+
   const {
-    label,
+    errorPlacing,
+    fullWidth = true,
     InputLabelProps,
+    label,
+    margin = 'dense',
     onBlur,
     onFocus,
-    variant = 'outlined' as any,
-    margin = 'dense',
-    fullWidth = true,
     value,
-    errorPlacing,
+    variant = 'outlined' as any,
     ...rest
   } = props
 
   const [errors, setErrors] = React.useState()
+
   const [changed, setChanged] = React.useState(false)
+
   const [blured, setBlured] = React.useState(false)
-  const classes = useStyles()
 
   function handleOnFocus (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    // TODO: Fix this
     // @ts-ignore
     onFocus && onFocus(event)
   }
@@ -32,14 +36,12 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   function handleOnBlur (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setBlured(true)
 
-    // TODO: Fix this
     // @ts-ignore
     onBlur && onBlur(event)
   }
 
   React.useEffect(() => {
     const err = props.rules && props.rules.filter(r => (props.showErrors ? !r.rule : changed && !r.rule))
-    // const messages = err && err.map(e => e.message).join(', ')
 
     if (props.onChange) {
       props.onChange({
@@ -64,29 +66,31 @@ const FormField: React.FC<FormFieldProps> = (props) => {
 
   return (
     <div
-      style={{ width: fullWidth ? '100%' : undefined }}
       className='formfield-wrapper'
+      style={{ width: fullWidth ? '100%' : undefined }}
     >
-
       <TextField
         className={classes.textField}
-        label={label}
         // @ts-ignore
         error={blured && errors && errors.length > 0}
-        variant={variant}
-        margin={margin}
         fullWidth={fullWidth}
-        onFocus={handleOnFocus}
+        label={label}
+        margin={margin}
         onBlur={handleOnBlur}
+        onFocus={handleOnFocus}
         value={value}
+        variant={variant}
         {...rest}
       />
-      {/* @ts-ignore */}
-      {blured && errors && errors.length > 0 &&
+
+      {
+        // @ts-ignore
+        blured && errors && errors.length > 0 &&
         <div className={classnames('formfield-errors', errorPlacing)}>
           {/* @ts-ignore */}
           {errors && errors.length > 0 && errors.map((e: any) => e.message)}
-        </div>}
+        </div>
+      }
     </div>
   )
 }

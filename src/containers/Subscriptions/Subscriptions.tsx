@@ -1,18 +1,14 @@
 import React from 'react'
-import { useTranslation } from '@apisuite/fe-base'
+import { useTranslation, Button } from '@apisuite/fe-base'
+import SportsSoccerRoundedIcon from '@material-ui/icons/SportsSoccerRounded'
 
-import Button from 'components/Button'
 import Link from 'components/Link'
 import SubscriptionsModal from 'components/SubscriptionsModal'
 import SubscriptionsTable from 'components/SubscriptionsTable'
-
-import SportsSoccerRoundedIcon from '@material-ui/icons/SportsSoccerRounded'
-
-import { SubscriptionsProps } from './types'
-
 import rocket from 'assets/rocket.svg'
 
 import useStyles from './styles'
+import { SubscriptionsProps } from './types'
 
 const Subscriptions: React.FC<SubscriptionsProps> = ({
   auth,
@@ -56,13 +52,11 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
 
               <div className={classes.addSubscriptionButtonContainer}>
                 <Button
-                  customButtonClassName={classes.addSubscriptionButton}
-                  href='#'
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel')
-                  }
+                  className={classes.addSubscriptionButton}
                   onClick={toggleModal}
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel')}
+                </Button>
               </div>
 
               <Link
@@ -89,13 +83,11 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
 
               <div className={classes.addSubscriptionButtonContainer}>
                 <Button
-                  customButtonClassName={classes.addSubscriptionButton}
-                  href='#'
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel')
-                  }
+                  className={classes.addSubscriptionButton}
                   onClick={toggleModal}
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel')}
+                </Button>
               </div>
 
               <div className={classes.infoBox}>

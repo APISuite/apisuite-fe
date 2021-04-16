@@ -1,132 +1,150 @@
 import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
-  root: {
-    minHeight: '100%',
-    backgroundColor: theme.palette.grey[100],
-  },
-  contentContainer: {
-    maxWidth: 900,
-    margin: '0 auto',
-    transform: 'translateX(-8px)',
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: 300,
-    marginBottom: 54,
-  },
-  table: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    cursor: 'pointer',
-    borderRadius: theme.palette.dimensions.borderRadius,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: theme.palette.grey[300],
-    border: 1,
-  },
-  header: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 42,
-    paddingLeft: 10,
-    color: theme.palette.grey[400],
-  },
   actions: {
     paddingRight: 178,
   },
-  row: {
-    display: 'flex',
-    padding: '16px 30px 16px 10px',
-    justifyContent: 'space-between',
-    width: '100%',
-    borderTop: `1px solid ${theme.palette.grey[300]}`,
-  },
+
   auth: {
-    fontSize: 14,
     color: theme.palette.text.secondary,
+    fontSize: 14,
   },
-  select: {
-    width: 182,
-  },
-  name: {
-    fontSize: 16,
-    color: theme.palette.text.primary,
-  },
+
   btn: {
-    display: 'inline-block',
-    color: 'white',
-    padding: '8px 24px',
     backgroundColor: theme.palette.grey[900],
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.common.white,
     cursor: 'pointer',
+    display: 'inline-block',
     fontWeight: 500,
     marginRight: 16,
+    padding: '8px 24px',
+
     '&:disabled': {
       backgroundColor: theme.palette.grey[400],
     },
   },
-  inviteCard: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    cursor: 'pointer',
-    borderRadius: theme.palette.dimensions.borderRadius,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: theme.palette.grey[300],
-    border: 1,
-    marginTop: 24,
-    height: 82,
-    padding: '12px 30px 12px 10px',
+
+  contentContainer: {
+    margin: '0 auto',
+    maxWidth: 900,
+    transform: 'translateX(-8px)',
   },
+
   emailTextfield: {
-    backgroundColor: 'white',
-    width: 220,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.grey[400],
-  },
-  nameTextfield: {
-    backgroundColor: 'white',
     width: 220,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.grey[400],
   },
-  loading: {
-    position: 'relative',
-    top: 4,
-    color: 'white',
-    opacity: 0.5,
-  },
-  loadingPage: {
-    display: 'flex',
+
+  errorAlert: {
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: theme.palette.error.main,
+    border: 'solid',
+    borderColor: theme.palette.error.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderWidth: 1,
+    color: theme.palette.common.white,
+    display: 'flex',
+    fontSize: 13,
+    minHeight: 20,
+    padding: '2px 15px',
   },
+
   errorPlaceholder: {
     display: 'flex',
     marginTop: 10,
   },
-  errorAlert: {
-    display: 'flex',
+
+  header: {
     alignItems: 'center',
-    backgroundColor: theme.palette.error.main,
-    border: 'solid',
-    borderWidth: 1,
-    borderColor: theme.palette.error.main,
-    fontSize: 13,
-    color: '#FFF',
-    padding: '2px 15px',
-    borderRadius: theme.palette.dimensions.borderRadius,
-    minHeight: 20,
+    color: theme.palette.grey[400],
+    display: 'flex',
+    flexDirection: 'row',
+    height: 42,
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    width: '100%',
+  },
+
+  inviteCard: {
+    alignItems: 'center',
+    backgroundColor: theme.palette.background.default,
+    border: 1,
+    borderColor: theme.palette.grey[300],
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderStyle: 'solid',
+    cursor: 'pointer',
+    display: 'flex',
+    height: 82,
+    justifyContent: 'space-between',
+    marginTop: 24,
+    overflow: 'hidden',
+    padding: '12px 30px 12px 10px',
+    width: '100%',
+  },
+
+  loading: {
+    color: theme.palette.common.white,
+    opacity: 0.5,
+    position: 'relative',
+    top: 4,
+  },
+
+  loadingPage: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  name: {
+    color: theme.palette.text.primary,
+    fontSize: 16,
+  },
+
+  nameTextfield: {
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
+    width: 220,
+  },
+
+  root: {
+    backgroundColor: theme.palette.grey[100],
+    minHeight: '100%',
+  },
+
+  row: {
+    borderTop: '1px solid ' + theme.palette.grey[300],
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '16px 30px 16px 10px',
+    width: '100%',
+  },
+
+  select: {
+    width: 182,
+  },
+
+  table: {
+    alignItems: 'center',
+    backgroundColor: theme.palette.background.default,
+    border: 1,
+    borderColor: theme.palette.grey[300],
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderStyle: 'solid',
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    width: '100%',
+  },
+
+  title: {
+    fontSize: 26,
+    fontWeight: 300,
+    marginBottom: 54,
   },
 }))

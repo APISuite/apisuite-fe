@@ -28,6 +28,7 @@ jobs:
   build:
     docker:
       - image: cimg/base:2020.01
+    resource_class: medium+
     steps:
       - attach_workspace:
           at: ~/

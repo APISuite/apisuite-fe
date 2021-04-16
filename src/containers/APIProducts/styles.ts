@@ -2,13 +2,13 @@ import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
   activeDocumentationAccessFilterButtonIcon: {
-    color: '#51606E',
+    color: theme.palette.action.active,
   },
 
   activeFilterButtonContainer: {
     alignItems: 'center',
     backgroundColor: '#DCDFE3',
-    border: '1px solid #BAC0C6',
+    border: `1px solid ${theme.palette.label}`,
     borderLeft: 'none',
     cursor: 'pointer',
     display: 'flex',
@@ -16,11 +16,11 @@ export default makeStyles((theme) => ({
   },
 
   activeProductionAccessFilterButtonIcon: {
-    color: '#32C896',
+    color: theme.palette.secondary.main,
   },
 
   activeSandboxAccessFilterButtonIcon: {
-    color: '#19B3EE',
+    color: theme.palette.primary.main,
   },
 
   allAPIProductsSection: {
@@ -45,11 +45,12 @@ export default makeStyles((theme) => ({
 
   apiProductButtons: {
     display: 'flex',
-    marginBottom: '12px',
+    height: '40px',
+    marginBottom: '6px',
   },
 
   apiProductName: {
-    color: '#FFFFFF',
+    color: theme.palette.background.default,
     fontSize: '22px',
     fontWeight: 400,
     marginRight: '12px',
@@ -58,12 +59,12 @@ export default makeStyles((theme) => ({
   apiProductNameAndVersion: {
     alignItems: 'center',
     display: 'flex',
-    marginBottom: '20px',
+    marginBottom: '12px',
     marginTop: '-5px',
   },
 
   apiProductOfflineStatus: {
-    color: '#FFFFFF',
+    color: theme.palette.background.default,
     fontSize: '14px',
     marginRight: '12px',
   },
@@ -79,7 +80,7 @@ export default makeStyles((theme) => ({
 
     // Access type
     '& > :last-child': {
-      color: '#14283C',
+      color: theme.palette.primary.main,
       fontSize: '14px',
       fontWeight: 300,
       textAlign: 'left',
@@ -87,14 +88,14 @@ export default makeStyles((theme) => ({
   },
 
   apiProductVersion: {
-    color: '#FFFFFF',
+    color: theme.palette.background.default,
     fontSize: '14px',
     fontWeight: 400,
   },
 
   documentationAccess: {
-    backgroundColor: '#51606E',
-    borderRadius: '4px',
+    backgroundColor: theme.palette.action.active,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
@@ -105,8 +106,8 @@ export default makeStyles((theme) => ({
 
   inactiveFilterButtonContainer: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #BAC0C6',
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.label}`,
     borderLeft: 'none',
     cursor: 'pointer',
     display: 'flex',
@@ -114,7 +115,7 @@ export default makeStyles((theme) => ({
   },
 
   inactiveFilterButtonIcon: {
-    color: '#85909A',
+    color: theme.palette.grey[400],
   },
 
   lastFilterButtonContainer: {
@@ -139,7 +140,7 @@ export default makeStyles((theme) => ({
   },
 
   latestAPIProductTitle: {
-    color: '#FFFFFF',
+    color: theme.palette.background.default,
     fontSize: '16px',
     fontWeight: 500,
   },
@@ -160,8 +161,8 @@ export default makeStyles((theme) => ({
   },
 
   productionAccess: {
-    backgroundColor: '#32C896',
-    borderRadius: '4px',
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
@@ -169,33 +170,38 @@ export default makeStyles((theme) => ({
     textAlign: 'center',
 
     '& > :first-child': {
-      color: '#14283C',
+      color: theme.palette.primary.main,
       fontSize: '16px',
       fontWeight: 300,
     },
   },
 
   sandboxAccess: {
-    backgroundColor: '#19B3EE',
-    borderRadius: '4px',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
   subscribeButton: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: '4px',
-    color: '#32C896 !important',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.primary} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.background.default,
+    },
   },
 
   textFilter: {
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #BAC0C6',
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.label}`,
     borderBottomRightRadius: '0px',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderTopRightRadius: '0px',
     maxWidth: '325px',
     padding: '2.5px 12px',
@@ -207,18 +213,23 @@ export default makeStyles((theme) => ({
     },
 
     '& > :last-child': {
-      color: '#BAC0C6',
+      color: theme.palette.label,
     },
   },
 
   viewDetailsButton: {
-    backgroundColor: '#14283C',
-    borderRadius: '4px',
-    color: '#FFFFFF !important',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '12px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+    },
   },
 }))

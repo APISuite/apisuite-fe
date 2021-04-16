@@ -81,16 +81,16 @@ export function useMenu (): Array<TabProps[]> {
   const topTabs = React.useMemo((): TabProps[] => {
     return [
       {
-        label: 'Register',
-        route: '/auth/register',
-        active: pathname === '/auth/register',
+        label: 'Sign up',
+        route: '/auth/signup',
+        active: pathname === '/auth/signup',
       },
       {
         // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
+        label: 'Sign in',
+        route: '/auth/signin',
+        active: pathname === '/auth/signin',
       },
     ]
   }, [pathname])
@@ -113,23 +113,25 @@ export function useMenu (): Array<TabProps[]> {
             : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
         ),
       },
+
+      ...extensionsInitTabs,
+
       {
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
-        label: 'Register',
-        route: '/auth/register',
-        active: pathname === '/auth/register',
+        label: 'Sign up',
+        route: '/auth/signup',
+        active: pathname === '/auth/signup',
       },
       {
         // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
+        label: 'Sign in',
+        route: '/auth/signin',
+        active: pathname === '/auth/signin',
       },
-      ...extensionsInitTabs,
     ].filter(Boolean)
 
     return setMenuActiveEntries(entries)

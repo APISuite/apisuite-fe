@@ -37,6 +37,7 @@ export default makeStyles((theme) => ({
   },
 
   actionsCatalogEntryLink: {
+    cursor: 'pointer',
     textDecoration: 'none',
   },
 
