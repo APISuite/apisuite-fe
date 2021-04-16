@@ -6,6 +6,7 @@ import Select from 'components/Select'
 import { FetchTeamMembersResponse, Role } from 'containers/Profile/types'
 import { User } from 'containers/Auth/types'
 import FormField, { isValidEmail } from 'components/FormField'
+
 import { FormFieldEvent } from 'components/FormField/types'
 import { SelectOption } from 'components/Select/types'
 

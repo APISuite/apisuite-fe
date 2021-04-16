@@ -1,6 +1,5 @@
 import React from 'react'
 import { useTranslation, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@apisuite/fe-base'
-
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded'
 

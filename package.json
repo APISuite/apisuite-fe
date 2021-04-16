@@ -11,8 +11,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "mock-api": "json-server --watch __mocks__/db.json --port 9004",
-    "prebuild": "rimraf dist && npm run lint",
-    "build": "cross-env NODE_ENV=production webpack --progress",
+    "prebuild": "rimraf dist && npm run lint && npm run check-types",
+    "build": "cross-env NODE_OPTIONS=--max_old_space_size=6000 NODE_ENV=production webpack --progress",
     "pretest": "npm run lint && npm run check-types",
     "test": "start-server-and-test dev http://localhost:9001 cy:run",
     "commit": "git-cz",
