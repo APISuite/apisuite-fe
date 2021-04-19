@@ -33,7 +33,7 @@ export default makeStyles((theme) => ({
   },
 
   apiNameAndAppsContainer: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     borderTop: `1px solid ${theme.palette.grey[200]}`,
     display: 'flex',
     height: '40px',
@@ -137,7 +137,7 @@ export default makeStyles((theme) => ({
   },
 
   tableHeader: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey[300]}`,
     borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,

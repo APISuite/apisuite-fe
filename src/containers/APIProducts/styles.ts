@@ -106,7 +106,7 @@ export default makeStyles((theme) => ({
 
   inactiveFilterButtonContainer: {
     alignItems: 'center',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderLeft: 'none',
     cursor: 'pointer',
@@ -198,7 +198,7 @@ export default makeStyles((theme) => ({
   },
 
   textFilter: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderBottomRightRadius: '0px',
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,

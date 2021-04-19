@@ -2,7 +2,7 @@ import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
   apiCatalogEntry: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey['300']}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',

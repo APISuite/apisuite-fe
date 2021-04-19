@@ -83,14 +83,6 @@ const Security: React.FC<SecurityProps> = ({
           }
         </p>
 
-        <p className={classes.securitySubtitle}>
-          {
-            !ssoIsActive
-              ? t('profileTab.securitySubTab.securitySubtitleWithoutActiveSSO')
-              : t('profileTab.securitySubTab.securitySubtitleWithActiveSSO')
-          }
-        </p>
-
         <p className={classes.updatePasswordTitle}>
           {t('profileTab.securitySubTab.updatePasswordTitle')}
         </p>

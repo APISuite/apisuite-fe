@@ -113,43 +113,47 @@ export default makeStyles((theme) => ({
   },
 
   disabledOrganisationButton: {
-    backgroundColor: theme.palette.label,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.common.white} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
+    opacity: 0.5,
     padding: '12px 20px',
     pointerEvents: 'none',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.label,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   disabledUpdateDetailsButton: {
-    backgroundColor: theme.palette.label,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.common.white} !important`,
     cursor: 'none',
+    fontSize: '16px',
     fontWeight: 500,
     height: '40px',
     margin: '10px auto',
     maxWidth: '270px',
-    padding: '6px 0px',
+    opacity: 0.5,
+    padding: '12px 20px',
     pointerEvents: 'none',
+    textDecoration: 'none',
     textTransform: 'none',
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.label,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   enabledOrganisationButton: {
-    backgroundColor: theme.palette.action.active,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.common.white} !important`,
     cursor: 'pointer',
@@ -160,25 +164,27 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.action.active,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   enabledUpdateDetailsButton: {
-    backgroundColor: theme.palette.action.active,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
-    cursor: 'pointer',
+    color: `${theme.palette.common.white} !important`,
+    cursor: 'none',
+    fontSize: '16px',
     fontWeight: 500,
     height: '40px',
     margin: '10px auto',
     maxWidth: '270px',
-    padding: '6px 0px',
-    width: '100%',
+    padding: '12px 20px',
+    textDecoration: 'none',
     textTransform: 'none',
+    width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.action.active,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -377,13 +383,14 @@ export default makeStyles((theme) => ({
   },
 
   userNameAndRoleContainer: {
+    alignItems: 'center',
     display: 'flex',
     height: '32.5px',
     marginBottom: '12px',
   },
 
   userRole: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.primary.contrastText,
     fontSize: '14px',
@@ -392,11 +399,12 @@ export default makeStyles((theme) => ({
   },
 
   userStatusAndType: {
+    alignItems: 'center',
     display: 'flex',
     margin: '0px 25px 20px 25px',
 
     '& > :first-child': {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
       fontSize: '14px',
       marginRight: '12px',
     },

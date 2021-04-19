@@ -74,7 +74,7 @@ export default makeStyles((theme) => ({
   },
 
   notSelectedCarouselSliderIconButton: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey[300]}`,
     color: '#6A7884',
     height: '40px',

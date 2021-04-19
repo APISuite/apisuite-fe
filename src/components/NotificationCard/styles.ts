@@ -9,13 +9,27 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    height: '0px',
     justifyContent: 'space-between',
     margin: 'auto',
     maxWidth: '900px',
     opacity: 0,
     padding: '20px 40px',
-    transition: 'opacity 0.35s',
+    transition: 'opacity 0.35s, height 0.35s',
     width: '100%',
+
+    '& > div': {
+      display: 'none',
+    },
+
+    '& > a': {
+      display: 'none',
+    },
+
+    '& > svg': {
+      display: 'none',
+    },
+
   },
 
   notificationCardButton: {
@@ -69,12 +83,25 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    height: '150px',
     justifyContent: 'space-between',
     margin: 'auto',
     maxWidth: '900px',
     opacity: 1,
     padding: '20px 40px',
-    transition: 'opacity 0.35s',
+    transition: 'opacity 0.35s, height 0.35s',
     width: '100%',
+
+    '& > div': {
+      display: 'initial',
+    },
+
+    '& > a': {
+      display: 'initial',
+    },
+
+    '& > svg': {
+      display: 'initial',
+    },
   },
 }))

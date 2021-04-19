@@ -8,30 +8,32 @@ export default makeStyles((theme) => ({
   },
 
   disabledUpdatePasswordButton: {
-    backgroundColor: '#99E6CC',
-    border: '1px solid #99E6CC',
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.common.white} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
     marginRight: '15px',
+    opacity: 0.5,
     padding: '12px 20px',
     pointerEvents: 'none',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: '#99E6CC',
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   enabledUpdatePasswordButton: {
-    backgroundColor: theme.palette.secondary.main,
-    border: `1px solid ${theme.palette.secondary.main}`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
     color: `${theme.palette.common.white} !important`,
+    cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -41,7 +43,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 

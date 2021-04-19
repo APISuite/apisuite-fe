@@ -19,7 +19,7 @@ export default makeStyles((theme) => ({
   },
 
   footer: {
-    backgroundColor: theme.palette.grey[600],
+    backgroundColor: theme.palette.primary.light,
     color: theme.palette.common.white,
     paddingBottom: '50px',
     paddingTop: '40px',

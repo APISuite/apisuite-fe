@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   /* 1. Modal */
 
   modalContentsContainer: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
     height: '100%',
@@ -283,7 +283,7 @@ export default makeStyles((theme) => ({
 
   regularAPIProductDetailsContainer: {
     alignItems: 'center',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     borderBottom: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     height: '40px',
@@ -306,7 +306,7 @@ export default makeStyles((theme) => ({
   },
 
   tableHeader: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey[300]}`,
     borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
@@ -416,7 +416,7 @@ export default makeStyles((theme) => ({
   },
 
   enabledOtherButtons: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.action.active} !important`,

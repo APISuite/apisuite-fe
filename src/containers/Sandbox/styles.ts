@@ -42,7 +42,7 @@ export default makeStyles((theme) => ({
   // JSS for the 'Steps' section
 
   individualStepsContainer: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey[300]}`,
     borderRadius: '8px',
     display: 'flex',

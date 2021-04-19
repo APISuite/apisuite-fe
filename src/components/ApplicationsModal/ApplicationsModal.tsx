@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  useConfig,
   useTranslation,
   Avatar,
   Button,
@@ -10,6 +9,7 @@ import {
   MenuItem,
   Modal,
   TextField,
+  useConfig,
 } from '@apisuite/fe-base'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
@@ -39,8 +39,10 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   updateAppAction,
 }) => {
   const classes = useStyles()
-  const { portalName, ownerInfo } = useConfig()
+
   const [t] = useTranslation()
+
+  const { ownerInfo, portalName } = useConfig()
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
@@ -48,7 +50,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     if (modalDetails.userAppID && modalDetails.userID) {
       getUserAppAction(modalDetails.userAppID, modalDetails.userID)
     }
-  }, [modalMode, getUserAppAction, modalDetails.userAppID, modalDetails.userID])
+  }, [modalMode])
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false)
   const [validImage, setValidImage] = React.useState<boolean>(true)
@@ -67,7 +69,6 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /*
   App details
-
   Note:
   - 'formState' refers to our own, local copy of an app's details.
   - 'mostRecentlySelectedAppDetails' refers to our stored, back-end approved copy of all details
@@ -199,7 +200,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appYouTubeURL: '',
       })
     }
-  }, [modalMode, mostRecentlySelectedAppDetails, resetForm])
+  }, [modalMode, mostRecentlySelectedAppDetails])
 
   /* Optional URL selector */
 
@@ -402,12 +403,13 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             <div className={classes.modalHeaderContainer}>
               <div className={classes.logoAndNameContainer}>
                 {
-                  ownerInfo.logo ? (
-                    <img
-                      className={classes.imageLogo}
-                      src={ownerInfo.logo}
-                    />
-                  )
+                  ownerInfo.logo
+                    ? (
+                      <img
+                        className={classes.imageLogo}
+                        src={ownerInfo.logo}
+                      />
+                    )
                     : (
                       <AmpStoriesRoundedIcon
                         className={classes.iconLogo}

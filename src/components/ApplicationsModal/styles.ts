@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   /* 1. Modal */
 
   modalContentsContainer: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
     height: '100%',
@@ -231,18 +231,19 @@ export default makeStyles((theme) => ({
   },
 
   disabledAddOrEditButton: {
-    backgroundColor: '#99e6cc',
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
     color: `${theme.palette.primary.contrastText} !important`,
-    border: '1px solid #99e6cc',
     fontSize: '16px',
     fontWeight: 500,
+    opacity: 0.5,
     padding: '6px 21px',
     pointerEvents: 'none',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: '#99e6cc',
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -613,7 +614,7 @@ export default makeStyles((theme) => ({
   },
 
   otherButtons: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.action.active} !important`,
