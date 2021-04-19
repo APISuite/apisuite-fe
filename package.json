@@ -22,10 +22,11 @@
     "check-types": "tsc",
     "lint": "eslint './src/**/*.{ts,tsx}' --fix && npm run check-types",
     "cy": "cross-env NODE_ENV=test cypress open",
-    "cy:run": "cross-env NODE_ENV=test cypress run"
+    "cy:run": "cross-env NODE_ENV=test cypress run",
+    "convert-translation": "./node_modules/.bin/convert-translation"
   },
   "dependencies": {
-    "@apisuite/fe-base": "1.0.0-next.1",
+    "@apisuite/fe-base": "1.0.0-next.2",
     "@types/history": "4.7.3",
     "@types/qs": "6.9.0",
     "@types/react-scrollspy": "3.3.2",
