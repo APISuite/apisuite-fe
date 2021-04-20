@@ -24,7 +24,6 @@ const Navigation: React.FC<NavigationProps> = ({
   notificationCards,
   profile,
   title,
-  toggleInform,
   // Temporary until notification cards become clearer
   toggleInstanceOwnerNotificationCards,
   toggleNonInstanceOwnerNotificationCards,

@@ -8,8 +8,6 @@ import {
   toggleNonInstanceOwnerNotificationCards,
 } from 'containers/NotificationCards/ducks'
 
-import { appStoreActionCreators } from 'components/InformDialog/ducks'
-
 import { Store } from 'store/types'
 
 import Navigation from './Navigation'
@@ -22,7 +20,6 @@ const mapStateToProps = ({ notificationCards, profile }: Store) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: () => dispatch(authActions.logout()),
-  toggleInform: () => dispatch(appStoreActionCreators.informOpen()),
   // Temporary until notification cards become clearer
   toggleInstanceOwnerNotificationCards: () => dispatch(toggleInstanceOwnerNotificationCards()),
   toggleNonInstanceOwnerNotificationCards: () => dispatch(toggleNonInstanceOwnerNotificationCards()),

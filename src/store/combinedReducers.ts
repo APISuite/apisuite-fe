@@ -11,7 +11,6 @@ import { History } from 'history'
 import apiDetails from 'containers/APIDetails/ducks'
 import applications from 'containers/Applications/ducks'
 import auth from 'containers/Auth/ducks'
-import informDialog from 'components/InformDialog/ducks'
 // Temporary until notification cards become clearer
 import notificationCards from 'containers/NotificationCards/ducks'
 import notifications from 'containers/NotificationStack/ducks'
@@ -28,7 +27,6 @@ export default (
     apiDetails: [apiDetails],
     applications: [applications],
     auth: [auth],
-    informDialog: [informDialog],
     notifications: [notifications],
     // Temporary until notification cards become clearer
     notificationCards: [notificationCards],
