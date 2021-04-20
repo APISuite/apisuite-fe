@@ -9,7 +9,6 @@ export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   notificationCards: NotificationCardsStore,
   profile: ProfileStore,
   showBackButton?: boolean,
-  toggleInform: any,
   // Temporary until notification cards become clearer
   toggleInstanceOwnerNotificationCards: () => void,
   toggleNonInstanceOwnerNotificationCards: () => void,
