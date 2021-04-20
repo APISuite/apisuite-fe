@@ -17,12 +17,6 @@ module.exports = {
     publicPath: '/',
   },
 
-  resolveLoader: {
-    alias: {
-      'conditional-loader': path.join(__dirname, './scripts/conditional-loader'),
-    },
-  },
-
   module: {
     rules: [
       {
@@ -43,13 +37,6 @@ module.exports = {
             },
           },
           'sass-loader',
-          // {
-          //   loader: '@epegzz/sass-vars-loader',
-          //   options: {
-          //     syntax: 'scss',
-          //     files: [path.resolve(__dirname, 'src/theme/index.js')],
-          //   },
-          // },
         ],
       },
       {
