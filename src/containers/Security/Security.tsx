@@ -4,7 +4,7 @@ import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded'
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded'
 
-import { isValidPass } from 'components/FormField'
+import { isValidPass } from 'util/forms'
 
 import useStyles from './styles'
 import { SecurityProps } from './types'

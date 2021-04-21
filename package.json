@@ -11,8 +11,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "mock-api": "json-server --watch __mocks__/db.json --port 9004",
-    "prebuild": "rimraf dist && npm run lint && npm run check-types",
-    "build": "cross-env NODE_OPTIONS=--max_old_space_size=6000 NODE_ENV=production webpack --progress",
+    "prebuild": "rimraf dist && npm run lint",
+    "build": "cross-env NODE_ENV=production webpack --progress",
     "pretest": "npm run lint && npm run check-types",
     "test": "start-server-and-test dev http://localhost:9001 cy:run",
     "commit": "git-cz",
@@ -26,7 +26,7 @@
     "convert-translation": "./node_modules/.bin/convert-translation"
   },
   "dependencies": {
-    "@apisuite/fe-base": "1.0.0-next.2",
+    "@apisuite/fe-base": "1.0.0-next.3",
     "@types/history": "4.7.3",
     "@types/qs": "6.9.0",
     "@types/react-scrollspy": "3.3.2",

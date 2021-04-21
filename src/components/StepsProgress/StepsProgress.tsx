@@ -15,11 +15,10 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
   return (
     <ul className={classes.container}>
       {
-        Object.values(steps).slice(0, -1).map((step, index) => (
-          <>
-            {
-              index === 0 &&
-              <li className={classes.stepProgress}>
+        Object.values(steps).slice(0, -1).map((step, index) => {
+          if (index === 0) {
+            return (
+              <li key={step} className={classes.stepProgress}>
                 <span
                   className={clsx(
                     classes.stepCircle,
@@ -41,40 +40,39 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
                   {step}
                 </label>
               </li>
-            }
+            )
+          }
 
-            {
-              index !== 0 &&
-              <li className={classes.stepProgress}>
-                <progress
-                  className={clsx(classes.progress,
-                    index === currentStep && classes.progressCurrent,
-                    index > currentStep && classes.progressAfter)}
-                />
+          return (
+            <li key={step} className={classes.stepProgress}>
+              <progress
+                className={clsx(classes.progress,
+                  index === currentStep && classes.progressCurrent,
+                  index > currentStep && classes.progressAfter)}
+              />
 
-                <span
-                  className={clsx(
-                    classes.stepCircle,
-                    currentStep > index && classes.stepCircleBefore,
-                    index + 1 === currentStep && classes.stepCircleCurrent,
-                  )}
-                />
+              <span
+                className={clsx(
+                  classes.stepCircle,
+                  currentStep > index && classes.stepCircleBefore,
+                  index + 1 === currentStep && classes.stepCircleCurrent,
+                )}
+              />
 
-                <label
-                  className={
-                    clsx(
-                      classes.stepTitle,
-                      currentStep > index && classes.stepTitle,
-                      index + 1 === currentStep && classes.stepTitleCurrent,
-                    )
-                  }
-                >
-                  {step}
-                </label>
-              </li>
-            }
-          </>
-        ))
+              <label
+                className={
+                  clsx(
+                    classes.stepTitle,
+                    currentStep > index && classes.stepTitle,
+                    index + 1 === currentStep && classes.stepTitleCurrent,
+                  )
+                }
+              >
+                {step}
+              </label>
+            </li>
+          )
+        })
       }
     </ul>
   )

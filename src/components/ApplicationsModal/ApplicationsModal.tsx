@@ -21,7 +21,7 @@ import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
 import RefreshRoundedIcon from '@material-ui/icons/RefreshRounded'
 import { useForm } from 'util/useForm'
 import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
-import { isValidImage, isValidURL } from 'components/FormField'
+import { isValidImage, isValidURL } from 'util/forms'
 
 import ApplicationsModalProps from './types'
 import useStyles from './styles'

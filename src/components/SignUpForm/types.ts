@@ -1,5 +1,3 @@
-import { mapDispatchToProps, mapStateToProps } from './index'
-
 import {
   nextStepAction,
   previousStepAction,
@@ -13,12 +11,9 @@ import { ReturnNestedType } from 'util/typeUtils'
 
 import { steps } from './SignUpForm'
 
-export type SignUpFormProps =
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  {
-    prefilledEmail?: string,
-  }
+export interface SignUpFormProps {
+  preFilledEmail?: string,
+}
 
 export type Step = keyof typeof steps
 
@@ -30,8 +25,7 @@ export type PreviousData = {
 // Profile details
 
 export type ProfileDetailsProps = {
-  handleSubmit: (profileDetails: ProfileDetails) => void,
-  preFilledEmail: string,
+  preFilledEmail?: string,
   register: any,
   token: string | undefined,
 }
@@ -54,8 +48,6 @@ export type ProfileDetailsResponseErrorObject = {
 // Organisation details
 
 export type OrganisationDetailsProps = {
-  handleSubmit: (organisationDetails: OrganisationDetails) => void,
-  previousStep: () => void,
   register: any,
 }
 
@@ -69,8 +61,6 @@ export type OrganisationDetails = {
 // Security details
 
 export type SecurityDetailsProps = {
-  handleSubmit: (securityStep: SecurityDetails) => void,
-  previousStep: () => void,
   register: any,
   token: string | undefined,
 }
@@ -106,6 +96,7 @@ export type SignUpFormActions =
   ReturnType<typeof nextStepAction> |
   ReturnType<typeof previousStepAction>
 
+// FIXME: don't export functionality from types file
 export function isStep (step: Step | number): step is Step {
   return step as Step !== undefined
 }

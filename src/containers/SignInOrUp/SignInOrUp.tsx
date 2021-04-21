@@ -1,20 +1,19 @@
 import React from 'react'
-import { useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import { useConfig, useTranslation } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
 import { decodeBase64 } from 'util/decodeBase64'
-import SignInForm from 'components/SignInForm'
-import SignUpForm from 'components/SignUpForm'
+import { SignInForm } from 'components/SignInForm'
+import { SignUpForm } from 'components/SignUpForm'
 
 import useStyles from './styles'
-import { SignInOrUpProps, View } from './types'
+import { View } from './types'
 
-const SignInOrUp: React.FC<SignInOrUpProps> = ({
-  history,
-}) => {
+export const SignInOrUp: React.FC = () => {
   const classes = useStyles()
+  const history = useHistory()
   const [t] = useTranslation()
   const { ownerInfo, portalName } = useConfig()
 
@@ -103,8 +102,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
             <div className={classes.form}>
               {
                 view === 'signin'
-                  ? <SignInForm history={history} />
-                  // @ts-ignore
+                  ? <SignInForm />
                   : <SignUpForm preFilledEmail={decodeBase64(emailParameter)} />
               }
             </div>
@@ -116,5 +114,3 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
     </main>
   )
 }
-
-export default SignInOrUp

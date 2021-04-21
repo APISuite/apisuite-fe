@@ -3,7 +3,7 @@ import { CircularProgress } from '@apisuite/fe-base'
 
 import useStyles from './styles'
 
-const LoadingView: React.FC<{
+export const LoadingView: React.FC<{
   errorMessage: string,
   isError: boolean,
   isLoading: boolean,
@@ -18,5 +18,3 @@ const LoadingView: React.FC<{
     </div>
   )
 }
-
-export default LoadingView

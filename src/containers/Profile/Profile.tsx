@@ -10,7 +10,7 @@ import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import { useForm } from 'util/useForm'
 import Select from 'components/Select'
 import { SelectOption } from 'components/Select/types'
-import { isValidImage, isValidPhoneNumber, isValidURL } from 'components/FormField'
+import { isValidImage, isValidPhoneNumber, isValidURL } from 'util/forms'
 
 import useStyles from './styles'
 import { Organization, ProfileProps } from './types'

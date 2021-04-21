@@ -113,6 +113,7 @@ export interface AuthStoreActionTypes {
   loginUserError: AnyAction & { error: AuthPayloads['loginUserError'] },
   loginUserSuccess: AnyAction & { payload: AuthPayloads['loginUserSuccess'] },
   logout: Action<typeof LOGOUT>,
+  // FIXME: use middleware do not pass history in actions
   recoverPassword: AnyAction & { payload: AuthPayloads['recoverPassword'] } & { history: History<any> },
   recoverPasswordError: AnyAction & { payload: AuthPayloads['recoverPasswordError'] },
   recoverPasswordSuccess: AnyAction,

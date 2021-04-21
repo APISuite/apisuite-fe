@@ -115,6 +115,7 @@ function * recoverPasswordSaga (action: AnyAction) {
 
     yield put(authActions.recoverPasswordSuccess())
 
+    // FIXME: use middleware
     action.history.replace('auth/login')
 
     yield put(openNotification('success', 'Password successfully changed! You may now sign in.', 3000))

@@ -1,13 +1,12 @@
-import React from 'react'
-import { useTranslation, Button, CircularProgress } from '@apisuite/fe-base'
+import React, { useEffect, useState } from 'react'
+import { useTranslation, Button, CircularProgress, TextField, TextFieldProps } from '@apisuite/fe-base'
 
 import { ROLES } from 'constants/global'
 import Select from 'components/Select'
 import { FetchTeamMembersResponse, Role } from 'containers/Profile/types'
 import { User } from 'containers/Auth/types'
-import FormField, { isValidEmail } from 'components/FormField'
+import { isValidEmail } from 'util/forms'
 
-import { FormFieldEvent } from 'components/FormField/types'
 import { SelectOption } from 'components/Select/types'
 
 import useStyles from './styles'
@@ -18,7 +17,7 @@ const AUTHORIZED_ROLES = [
   ROLES.organizationOwner.value,
 ]
 
-const TeamPage: React.FC<TeamPageProps> = ({
+export const TeamPage: React.FC<TeamPageProps> = ({
   changeRole,
   currentOrganisation,
   fetchRoleOptions,
@@ -31,12 +30,11 @@ const TeamPage: React.FC<TeamPageProps> = ({
   user,
 }) => {
   const classes = useStyles()
+  const { t } = useTranslation()
 
-  const [t] = useTranslation()
+  const [inviteVisible, showInvite] = useState(false)
 
-  const [inviteVisible, showInvite] = React.useState(false)
-
-  const [input, setInput] = React.useState({
+  const [input, setInput] = useState({
     email: '',
     roleId: '',
   })
@@ -49,20 +47,21 @@ const TeamPage: React.FC<TeamPageProps> = ({
     }))
   }
 
-  const handleInputs = (e: FormFieldEvent) => {
+  const handleInputs: TextFieldProps['onChange'] = ({ target }) => {
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [target.name]: target.value,
     })
   }
 
-  React.useEffect(() => {
-    if (Object.keys(currentOrganisation).length !== 0 && currentOrganisation.id !== '') {
+  useEffect(() => {
+    // TODO: why check if currentOrganisation has keys?
+    if (Object.keys(currentOrganisation).length && currentOrganisation.id !== '') {
       fetchTeamMembers()
 
       fetchRoleOptions()
     }
-  }, [fetchRoleOptions, fetchTeamMembers])
+  }, [fetchRoleOptions, fetchTeamMembers, currentOrganisation])
 
   function chooseRole (e: React.ChangeEvent<{}>, option: SelectOption) {
     if (e && option) {
@@ -109,7 +108,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
     return member?.Role || user.role
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (requestStatuses.inviteMemberRequest.invited || requestStatuses.inviteMemberRequest.error) {
       showInvite(false)
       resetErrors()
@@ -138,11 +137,11 @@ const TeamPage: React.FC<TeamPageProps> = ({
         }
       </Button>
 
-      <FormField
+      <TextField
         autoFocus
         error={inputErrors.email}
-        errorPlacing='bottom'
         fullWidth={false}
+        // FIXME: not translated
         helperText={inputErrors.email && 'Please insert a valid email.'}
         id='email-field'
         InputProps={{
@@ -233,5 +232,3 @@ const TeamPage: React.FC<TeamPageProps> = ({
     </div>
   )
 }
-
-export default TeamPage

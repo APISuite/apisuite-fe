@@ -1,76 +1,79 @@
-import React, { useCallback } from 'react'
-import { useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
+import update from 'immutability-helper'
+import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps } from '@apisuite/fe-base'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
+import { authActions } from 'containers/Auth/ducks'
 import FormCard from 'components/FormCard'
-import FormField, { isValidEmail, parseErrors } from 'components/FormField'
-import { FormFieldEvent } from 'components/FormField/types'
+import { isValidEmail } from 'util/forms'
 import SSOForm from 'components/SSOForm'
 
-import { SignInFormProps } from './types'
 import useStyles from './styles'
+import { signinFormSelector } from './selector'
 
-const SignInForm: React.FC<SignInFormProps> = ({
-  auth,
-  getProviders,
-  history,
-  login,
-}) => {
+export const SignInForm: React.FC = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const auth = useSelector(signinFormSelector)
   const classes = useStyles()
-
-  const [t] = useTranslation()
+  const { t } = useTranslation()
 
   /* SSO sign in */
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (auth.providers === null) {
-      getProviders()
+      dispatch(authActions.getSSOProviders())
     }
-  }, [])
+  }, [auth.providers, dispatch])
 
   /* Regular sign in */
 
-  // Form validity logic
-  const [isFormValid, setFormValid] = React.useState(false)
-  const [errors, setErrors] = React.useState()
-
-  React.useEffect(() => {
-    // @ts-ignore
-    setFormValid(errors && errors.length === 0)
-  }, [errors])
-
-  // Form changes logic
-  const [formInputs, setFormInputs] = React.useState({
+  const [formInputs, setFormInputs] = useState({
     email: '',
     password: '',
+    errors: {
+      email: '',
+      password: '',
+    },
   })
-  const [formInputsHaveChanged, setFormInputsHaveChanged] = React.useState(false)
+  const [formInputsHaveChanged, setFormInputsHaveChanged] = useState(false)
 
-  const handleInputChanges = (event: FormFieldEvent, error: any) => {
-    setFormInputs({
-      ...formInputs,
-      [event.target.name]: event.target.value,
+  const handleInputChanges: TextFieldProps['onChange'] = ({ target }) => {
+    setFormInputs((s) => {
+      switch (target.name) {
+        case 'email': {
+          return update(s, {
+            email: { $set: target.value },
+            errors: { email: { $set: isValidEmail(target.value) ? '' : t('signInForm.warnings.email') } },
+          })
+        }
+
+        case 'password': {
+          return update(s, {
+            password: { $set: target.value },
+            errors: { password: { $set: target.value.length > 0 ? '' : t('signInForm.warnings.password') } },
+          })
+        }
+
+        default:
+          return s
+      }
     })
-
-    setFormInputsHaveChanged(true)
-
-    const eventTarget = event.target
-
-    // @ts-ignore
-    setErrors((old: string[]) => parseErrors(eventTarget, error, old || []))
   }
 
   const handleFormSubmission = useCallback((event: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
     event.preventDefault()
 
-    login({ email: formInputs.email, password: formInputs.password })
+    dispatch(authActions.login({ email: formInputs.email, password: formInputs.password }))
 
     setFormInputsHaveChanged(false)
-  }, [formInputs.email, formInputs.password, login])
+  }, [formInputs.email, formInputs.password, dispatch])
 
   // 'Show password' logic
-  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
@@ -80,13 +83,14 @@ const SignInForm: React.FC<SignInFormProps> = ({
   const submitEnter = useCallback((event: KeyboardEvent) => {
     const { key } = event
     const inputElement = document.getElementById('passwordField')
+    const haveErrors = Object.values(formInputs.errors).some(Boolean)
 
-    if (key === 'Enter' && document.activeElement === inputElement && isFormValid) {
+    if (key === 'Enter' && document.activeElement === inputElement && haveErrors) {
       handleFormSubmission(event)
     }
-  }, [isFormValid, handleFormSubmission])
+  }, [formInputs.errors, handleFormSubmission])
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('keydown', submitEnter)
 
     return () => {
@@ -114,7 +118,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
       }
 
       <FormCard
-        buttonDisabled={!isFormValid}
+        buttonDisabled={Object.values(formInputs.errors).some(Boolean)}
         buttonLabel={t('signInForm.regularSignInButtonLabel')}
         customDisabledConfirmButtonStyles={classes.disabledConfirmButton}
         customEnabledConfirmButtonStyles={classes.enabledConfirmButton}
@@ -132,32 +136,36 @@ const SignInForm: React.FC<SignInFormProps> = ({
         loading={auth.isAuthorizing}
       >
         <div className={classes.inputFieldContainer}>
-          <FormField
-            autoFocus
-            errorPlacing='bottom'
-            fullWidth
+          <TextField
             id='emailField'
-            InputProps={{
-              classes: { input: classes.inputField },
-            }}
-            label={t('signInForm.fieldLabels.email')}
-            name='email'
-            onChange={handleInputChanges}
-            placeholder=''
-            rules={[
-              { rule: isValidEmail(formInputs.email), message: t('signInForm.warnings.email') },
-            ]}
-            type='email'
-            value={formInputs.email}
             variant='outlined'
+            margin='dense'
+            type='email'
+            name='email'
+            label={t('signInForm.fieldLabels.email')}
+            placeholder=''
+            value={formInputs.email}
+            error={!!formInputs.errors.email.length}
+            helperText={formInputs.errors.email}
+            autoFocus
+            fullWidth
+            InputProps={{ classes: { input: classes.inputField } }}
+            onChange={handleInputChanges}
           />
         </div>
 
         <div className={classes.inputFieldContainer}>
-          <FormField
-            errorPlacing='bottom'
-            fullWidth
+          <TextField
             id='passwordField'
+            variant='outlined'
+            margin='dense'
+            type={showPassword ? 'text' : 'password'}
+            name='password'
+            label={t('signInForm.fieldLabels.password')}
+            value={formInputs.password}
+            error={!!formInputs.errors.password.length}
+            helperText={formInputs.errors.password}
+            fullWidth
             InputProps={{
               classes: { input: classes.inputField },
               endAdornment:
@@ -171,15 +179,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
                   </IconButton>
                 </InputAdornment>,
             }}
-            label={t('signInForm.fieldLabels.password')}
-            name='password'
             onChange={handleInputChanges}
-            rules={[
-              { rule: formInputs.password.length > 0, message: t('signInForm.warnings.password') },
-            ]}
-            type={showPassword ? 'text' : 'password'}
-            value={formInputs.password}
-            variant='outlined'
           />
         </div>
       </FormCard>
@@ -193,5 +193,3 @@ const SignInForm: React.FC<SignInFormProps> = ({
     </div>
   )
 }
-
-export default SignInForm

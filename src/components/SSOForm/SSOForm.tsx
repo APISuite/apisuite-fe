@@ -24,7 +24,7 @@ const SSOForm: React.FC<SSOFormProps> = ({
     <div className={classes.ssoFormContainer}>
       {
         auth.providers?.map((provider, index) => (
-          <div className={classes.ssoSignInWithButtonContainer}>
+          <div key={provider} className={classes.ssoSignInWithButtonContainer}>
             <Button
               className={classes.ssoSignInWithButton}
               key={`${provider}${index}`}

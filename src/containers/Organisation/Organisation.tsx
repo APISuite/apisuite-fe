@@ -6,7 +6,7 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 
 import { useForm } from 'util/useForm'
-import { isValidImage, isValidURL } from 'components/FormField/index'
+import { isValidImage, isValidURL } from 'util/forms'
 
 import { OrganisationProps } from './types'
 import useStyles from './styles'

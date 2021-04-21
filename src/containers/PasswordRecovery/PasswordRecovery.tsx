@@ -1,5 +1,7 @@
-import React from 'react'
-import { useConfig, useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
+import React, { useEffect, useState } from 'react'
+import { useConfig, useTranslation, IconButton, InputAdornment, TextField, TextFieldProps } from '@apisuite/fe-base'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
@@ -7,44 +9,54 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
 import FormCard from 'components/FormCard'
-import FormField, { isValidEmail, isValidPass, parseErrors } from 'components/FormField'
-import { FormFieldEvent } from 'components/FormField/types'
+import { isValidEmail, isValidPass } from 'util/forms'
 import keyIllustration from 'assets/keyIllustration.svg'
 
-import { PasswordRecoveryProps } from './types'
+import { passwordRecoverySelector } from './selector'
 import useStyles from './styles'
+import { authActions } from 'containers/Auth/ducks'
 
-const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
-  auth,
-  forgotPassword,
-  history,
-  location,
-  recoverPassword,
-}) => {
+export const PasswordRecovery: React.FC = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const { ownerInfo, portalName, supportURL } = useConfig()
+  const history = useHistory()
+  const location = useLocation()
   const [t] = useTranslation()
+  const auth = useSelector(passwordRecoverySelector)
+  const stage = location.state?.stage ?? 'forgot'
 
-  let stage = 'forgot'
+  const [state, setState] = useState({
+    userInput: '',
+    error: '',
+  })
 
-  if (location.state) stage = location.state.stage
+  const [showPassword, setShowPassword] = useState(false)
 
-  const [isFormValid, setFormValid] = React.useState(false)
-  const [errors, setErrors] = React.useState()
+  const [userHasSubmitted, setUserHasSubmitted] = useState(false)
+  const [emailHasBeenSent, setEmailHasBeenSent] = useState(false)
 
-  const [userInput, setUserInput] = React.useState('')
-  const [showPassword, setShowPassword] = React.useState(false)
+  const handleUserInput: TextFieldProps['onChange'] = ({ target }) => {
+    setState((s) => {
+      switch (target.name) {
+        case 'email': {
+          return {
+            userInput: target.value,
+            error: isValidEmail(target.value) ? '' : t('passwordRecovery.warnings.email'),
+          }
+        }
 
-  const [userHasSubmitted, setUserHasSubmitted] = React.useState(false)
-  const [emailHasBeenSent, setEmailHasBeenSent] = React.useState(false)
+        case 'password': {
+          return {
+            userInput: target.value,
+            error: isValidPass(target.value) ? '' : t('passwordRecovery.warnings.password'),
+          }
+        }
 
-  const handleUserInput = (event: FormFieldEvent, error: any) => {
-    setUserInput(event.target.value)
-
-    const eventTarget = event.target
-
-    // @ts-ignore
-    setErrors((old: string[]) => parseErrors(eventTarget, error, old || []))
+        default:
+          return s
+      }
+    })
   }
 
   const handleShowPassword = (event: any) => {
@@ -61,18 +73,14 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
     setUserHasSubmitted(true)
 
     if (stage === 'recover') {
-      recoverPassword({ token: location.state.token, password: userInput }, history)
+      // FIXME: use middleware do not pass history in actions
+      dispatch(authActions.recoverPassword({ token: location.state.token, password: state.userInput }, history))
     } else {
-      forgotPassword({ email: userInput })
+      dispatch(authActions.forgotPassword({ email: state.userInput }))
     }
   }
 
-  React.useEffect(() => {
-    // @ts-ignore
-    setFormValid(errors && errors.length === 0)
-  }, [errors])
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (userHasSubmitted && !auth.isRecoveringPassword) {
       setEmailHasBeenSent(true)
     }
@@ -139,7 +147,7 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
 
                   <div className={classes.form}>
                     <FormCard
-                      buttonDisabled={!isFormValid}
+                      buttonDisabled={!!state.error.length}
                       buttonLabel={
                         stage === 'forgot'
                           ? t('passwordRecovery.formButtonLabel.forgot')
@@ -152,35 +160,36 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
                         {
                           stage === 'forgot'
                             ? (
-                              <FormField
-                                autoFocus
-                                errorPlacing='bottom'
-                                fullWidth
+                              <TextField
                                 id='emailField'
-                                InputProps={{
-                                  classes: { input: classes.inputField },
-                                }}
-                                label={t('passwordRecovery.emailLabel')}
-                                name='email'
-                                onChange={handleUserInput}
-                                placeholder=''
-                                rules={[
-                                  {
-                                    rule: isValidEmail(userInput),
-                                    message: t('passwordRecovery.warnings.email'),
-                                  },
-                                ]}
-                                type='email'
-                                value={userInput}
                                 variant='outlined'
+                                margin='dense'
+                                label={t('passwordRecovery.emailLabel')}
+                                type='email'
+                                name='email'
+                                value={state.userInput}
+                                placeholder=''
+                                error={!!state.error.length}
+                                helperText={state.error}
+                                autoFocus
+                                fullWidth
+                                InputProps={{ classes: { input: classes.inputField } }}
+                                onChange={handleUserInput}
                               />
                             )
                             : (
-                              <FormField
-                                autoFocus
-                                errorPlacing='bottom'
-                                fullWidth
+                              <TextField
                                 id='passwordField'
+                                label={t('passwordRecovery.newPasswordLabel')}
+                                variant='outlined'
+                                margin='dense'
+                                name='password'
+                                type={showPassword ? 'text' : 'password'}
+                                value={state.userInput}
+                                error={!!state.error.length}
+                                helperText={state.error}
+                                autoFocus
+                                fullWidth
                                 InputProps={{
                                   classes: { input: classes.inputField },
                                   endAdornment:
@@ -194,18 +203,7 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
                                       </IconButton>
                                     </InputAdornment>,
                                 }}
-                                label={t('passwordRecovery.newPasswordLabel')}
-                                name='password'
                                 onChange={handleUserInput}
-                                rules={[
-                                  {
-                                    rule: isValidPass(userInput),
-                                    message: t('passwordRecovery.warnings.password'),
-                                  },
-                                ]}
-                                type={showPassword ? 'text' : 'password'}
-                                value={userInput}
-                                variant='outlined'
                               />
                             )
                         }
@@ -224,7 +222,7 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
                     <>{t('passwordRecovery.recoveryEmailHasBeenSentPartTwo')} </>
                     <span className={classes.boldText}>{portalName} </span>
                     <>{t('passwordRecovery.recoveryEmailHasBeenSentPartThree')} </>
-                    <span className={classes.boldText}>{userInput}</span>
+                    <span className={classes.boldText}>{state.userInput}</span>
                     <>{t('passwordRecovery.recoveryEmailHasBeenSentPartFour')}</>
                   </p>
 
@@ -260,5 +258,3 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
     </main>
   )
 }
-
-export default PasswordRecovery

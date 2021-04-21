@@ -12,7 +12,7 @@ import {
 
 import { Store } from 'store/types'
 
-import TeamPage from './TeamPage'
+import { TeamPage } from './TeamPage'
 
 export const mapStateToProps = ({ auth, profile }: Store) => ({
   currentOrganisation: profile.profile.current_org,
