@@ -2,7 +2,7 @@
 * Combine all sagas in the this file and export them.
 */
 
-import apiDetails from 'containers/APIDetails/sagas'
+import apiDetails from './apiDetails/sagas'
 import applications from 'containers/Applications/sagas'
 import auth from 'containers/Auth/sagas'
 import profile from 'containers/Profile/sagas'

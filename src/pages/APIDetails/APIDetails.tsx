@@ -1,26 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { useTranslation, CircularProgress } from '@apisuite/fe-base'
 import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
 
+import { apiDetailsSelector } from './selector'
 import useStyles from './styles'
-import { APIDetailParams, APIVersionProps } from './types'
+import { APIDetailParams } from 'store/apiDetails/types'
+import { geAPIVersion } from 'store/apiDetails/actions/getAPIVersion'
 
-const APIDetails: React.FC<APIVersionProps> = ({
-  getApiVersion,
-  apiDetails,
-}) => {
+export const APIDetails: React.FC = () => {
   const classes = useStyles()
   const { apiId, versionId } = useParams<APIDetailParams>()
   const [t] = useTranslation()
+  const dispatch = useDispatch()
+  const apiDetails = useSelector(apiDetailsSelector)
 
-  React.useEffect(() => {
-    getApiVersion({
-      apiId: apiId || '0',
-      versionId: versionId || '0',
-    })
-  }, [getApiVersion, apiId, versionId])
+  useEffect(() => {
+    dispatch(geAPIVersion({
+      params: {
+        apiId: apiId || '0',
+        versionId: versionId || '0',
+      },
+    }))
+  }, [dispatch, apiId, versionId])
 
   const hasSpec = (): boolean => {
     return !!(apiDetails && apiDetails.version && apiDetails.version.spec)
@@ -71,5 +75,3 @@ const APIDetails: React.FC<APIVersionProps> = ({
     </div>
   )
 }
-
-export default APIDetails

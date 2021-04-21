@@ -9,7 +9,7 @@ import { getRoutes } from 'util/extensions'
 import EssentialLayout from 'layouts/Essential'
 import MainLayout from 'layouts/Main'
 
-import APIDetails from 'containers/APIDetails'
+import { APIDetails } from 'pages/APIDetails'
 import APIProducts from 'pages/APIProducts'
 import Applications from 'containers/Applications'
 import Dashboard from 'pages/Dashboard'

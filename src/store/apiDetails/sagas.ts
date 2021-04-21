@@ -5,14 +5,14 @@ import {
 } from 'redux-saga/effects'
 import {
   GET_API_VERSION,
-  getApiVersionSuccess,
-  getApiVersionError,
-} from './ducks'
-import { GetAPIVersionAction } from './types'
+  geAPIVersionSuccess,
+  geAPIVersionError,
+} from './actions/getAPIVersion'
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
 import { authActions } from 'containers/Auth/ducks'
 import { Api, APIVersion } from 'containers/Subscriptions/types'
+import { GetAPIVersionAction } from './actions/types'
 
 const emptyVersion: APIVersion = {
   id: 0,
@@ -26,11 +26,9 @@ const emptyVersion: APIVersion = {
   updatedAt: '',
 }
 
-function * getAPIVersionSaga (
-  action: GetAPIVersionAction,
-) {
+function * getAPIVersionSaga (action: GetAPIVersionAction) {
   try {
-    const getAPIVersionUrl = `${API_URL}/apis/${action.payload.apiId}`
+    const getAPIVersionUrl = `${API_URL}/apis/${action.params.apiId}`
 
     const response: Api = yield call(request, {
       url: getAPIVersionUrl,
@@ -38,12 +36,12 @@ function * getAPIVersionSaga (
     })
 
     const version: APIVersion = response.apiVersions.find((v) => {
-      return v.id === Number(action.payload.versionId)
+      return v.id === Number(action.params.versionId)
     }) || emptyVersion
 
-    yield put(getApiVersionSuccess(version))
+    yield put(geAPIVersionSuccess({ version }))
   } catch (error) {
-    yield put(getApiVersionError(error))
+    yield put(geAPIVersionError(error))
     yield put(authActions.handleSessionExpire())
   }
 }

@@ -8,7 +8,7 @@ import { connectRouter } from 'connected-react-router'
 
 import { History } from 'history'
 
-import apiDetails from 'containers/APIDetails/ducks'
+import apiDetails from './apiDetails/reducer'
 import applications from 'containers/Applications/ducks'
 import auth from 'containers/Auth/ducks'
 // Temporary until notification cards become clearer

@@ -1,15 +1,9 @@
 import update from 'immutability-helper'
 import { AuthStoreActionTypes } from 'containers/Auth/types'
 import { LOGOUT } from 'containers/Auth/ducks'
-import {
-  APIVersionStore,
-  APIDetailParams,
-  GetAPIVersionAction,
-  GetAPIVersionSuccessAction,
-  GetAPIVersionErrorAction,
-  APIVersionActions,
-} from './types'
-import { APIVersion } from 'containers/Subscriptions/types'
+import { APIVersionStore } from './types'
+import { APIVersionActions } from './actions/types'
+import { GET_API_VERSION, GET_API_VERSION_ERROR, GET_API_VERSION_SUCCESS } from './actions/getAPIVersion'
 
 /** Initial state */
 const initialState: APIVersionStore = {
@@ -27,11 +21,6 @@ const initialState: APIVersionStore = {
     updatedAt: '',
   },
 }
-
-/** Action types */
-export const GET_API_VERSION = 'API/Version/GET_API_VERSION'
-export const GET_API_VERSION_SUCCESS = 'API/Version/GET_API_VERSION_SUCCESS'
-export const GET_API_VERSION_ERROR = 'API/Version/GET_API_VERSION_ERROR'
 
 /** Reducer */
 export default function apiVersionReducer (
@@ -66,17 +55,4 @@ export default function apiVersionReducer (
     default:
       return state
   }
-}
-
-/** Action builders */
-export function getApiVersion (payload: APIDetailParams): GetAPIVersionAction {
-  return { type: GET_API_VERSION, payload }
-}
-
-export function getApiVersionSuccess (version: APIVersion): GetAPIVersionSuccessAction {
-  return { type: GET_API_VERSION_SUCCESS, version }
-}
-
-export function getApiVersionError (error: Error): GetAPIVersionErrorAction {
-  return { type: GET_API_VERSION_ERROR, error }
 }
