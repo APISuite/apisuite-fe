@@ -1,13 +1,8 @@
 import { RouteProps } from 'react-router'
 
-import { AuthPayloads, AuthStore } from 'containers/Auth/types'
+import { AuthPayloads } from 'containers/Auth/types'
 
 import { TabProps } from 'components/Navigation/types'
-
-export interface AppProps extends AppDispatchToProps {
-  auth: AuthStore,
-  logout: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
-}
 
 export interface AppDispatchToProps {
   getProfile: () => void,
