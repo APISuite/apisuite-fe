@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CheckBoxOutlineBlankRoundedIcon from '@material-ui/icons/CheckBoxOutlineBlankRounded'
@@ -8,19 +9,20 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
 
-import SubscriptionsModalProps from './types'
+import { requestAPIAccessAction } from 'containers/Applications/ducks'
+import { allUserAppsSelector, apisByNameSelector } from 'pages/Subscriptions/selectors'
+
+import { SubscriptionsModalProps } from './types'
 import useStyles from './styles'
 
-const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
-  allUserApps,
-  apisByName,
-  isModalOpen,
-  requestAPIAccessAction,
-  toggleModal,
-}) => {
+export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalOpen, toggleModal }) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
   const { portalName, ownerInfo, clientName } = useConfig()
-  const [t] = useTranslation()
+  // FIXME: unify these
+  const apisByName = useSelector(apisByNameSelector)
+  const allUserApps = useSelector(allUserAppsSelector)
 
   /* 'Client app' selection */
 
@@ -133,7 +135,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   const handleAPIProductAccessRequest = () => {
     const idOfSelectedClientApp = Number(selectedClientApp.id)
 
-    requestAPIAccessAction(idOfSelectedClientApp)
+    dispatch(requestAPIAccessAction(idOfSelectedClientApp))
     resetModalSelections()
   }
 
@@ -414,5 +416,3 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
     </Modal>
   )
 }
-
-export default SubscriptionsModal

@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useConfig, useTranslation } from '@apisuite/fe-base'
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
-import {
-  DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
-  DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
-} from 'constants/global'
+
+import { DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
+import { getAPIs } from 'store/subscriptions/actions/getAPIs'
 import ActionsCatalog from 'components/ActionsCatalog'
 import APICatalog from 'components/APICatalog'
 import GreetingCard from 'components/GreetingCard'
@@ -22,32 +22,27 @@ import shieldSVG from 'assets/icons/Shield.svg'
 import supportSVG from 'assets/icons/Support.svg'
 import teamSVG from 'assets/icons/Team.svg'
 
+import { dashboardSelector } from './selector'
 import useStyles from './styles'
-import { DashboardProps } from './types'
 
-const Dashboard: React.FC<DashboardProps> = ({
-  auth,
-  getAPIs,
-  // Temporary until notification cards become clearer
-  notificationCards,
-  profile,
-  subscriptions,
-}) => {
+export const Dashboard: React.FC = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
   const { socialURLs, supportURL, clientName, portalName } = useConfig()
-  const [t] = useTranslation()
+  const { auth, subscriptions, notificationCards, profile } = useSelector(dashboardSelector)
 
   const typeOfUser = auth.user!.role.name
 
-  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState<any[]>([])
+  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([])
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
-    getAPIs()
-  }, [getAPIs])
+    dispatch(getAPIs({}))
+  }, [dispatch])
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'API Catalog' section. */
     const allAvailableAPIs = subscriptions.apis
@@ -327,5 +322,3 @@ const Dashboard: React.FC<DashboardProps> = ({
     </>
   )
 }
-
-export default Dashboard

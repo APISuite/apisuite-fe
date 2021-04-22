@@ -1,40 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useConfig, useTranslation, useTheme, Button } from '@apisuite/fe-base'
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
 import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
 import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
+
 import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
 import APICatalog from 'components/APICatalog'
 import Carousel from 'components/Carousel'
 import Notice from 'components/Notice'
-import useStyles from './styles'
-import { SandboxProps } from './types'
+
 import carouselBackground from 'assets/space-background.svg'
 import carouselSlide1 from 'assets/carousel-slide-1.svg'
 import carouselSlide2 from 'assets/carousel-slide-2.svg'
 import carouselSlide3 from 'assets/carousel-slide-3.svg'
 
-const Sandbox: React.FC<SandboxProps> = ({
-  auth,
-  getAPIs,
-  subscriptions,
-}) => {
+import { sandboxSelector } from './selector'
+import useStyles from './styles'
+import { getAPIs } from 'store/subscriptions/actions/getAPIs'
+
+export const Sandbox: React.FC = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
   const { palette } = useTheme()
   const { socialURLs, portalName, clientName, supportURL } = useConfig()
+  const { auth, subscriptions } = useSelector(sandboxSelector)
 
-  const [t] = useTranslation()
+  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([])
 
-  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState<any[]>([])
-
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
-    getAPIs()
-  }, [getAPIs])
+    dispatch(getAPIs({}))
+  }, [dispatch])
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'API Catalog' section. */
     const allAvailableAPIs = subscriptions.apis
@@ -318,5 +320,3 @@ const Sandbox: React.FC<SandboxProps> = ({
     </main>
   )
 }
-
-export default Sandbox

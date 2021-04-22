@@ -6,7 +6,7 @@ import { NotificationCardsStore } from './notificationCards/types'
 import { NotificationStackStore } from './notificationStack/types'
 import { ProfileStore } from 'containers/Profile/types'
 import { RouterState } from 'connected-react-router'
-import { SubscriptionsStore } from 'containers/Subscriptions/types'
+import { SubscriptionsStore } from './subscriptions/types'
 
 export interface Store {
   apiDetails: APIVersionStore,

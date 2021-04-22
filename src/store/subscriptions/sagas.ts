@@ -1,17 +1,9 @@
-import {
-  call,
-  put,
-  takeLatest,
-} from 'redux-saga/effects'
-import {
-  SubscriptionsActionTypes,
-  getAPIsSuccess,
-  getAPIsError,
-} from './ducks'
-import { ApisResponse } from './types'
+import { call, put, takeLatest } from 'redux-saga/effects'
+import { ApisResponse } from './actions/types'
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
 import { authActions } from 'containers/Auth/ducks'
+import { getAPIsError, getAPIsSuccess, GET_APIS } from './actions/getAPIs'
 
 function * getAPIsSaga () {
   try {
@@ -24,16 +16,16 @@ function * getAPIsSaga () {
       },
     })
 
-    yield put(getAPIsSuccess(response.rows))
+    yield put(getAPIsSuccess({ apis: response.rows }))
   } catch (error) {
     // TODO: decide and implement error handling
-    yield put(getAPIsError())
+    yield put(getAPIsError({}))
     yield put(authActions.handleSessionExpire())
   }
 }
 
 export function * rootSaga () {
-  yield takeLatest(SubscriptionsActionTypes.GET_APIS, getAPIsSaga)
+  yield takeLatest(GET_APIS, getAPIsSaga)
 }
 
 export default rootSaga

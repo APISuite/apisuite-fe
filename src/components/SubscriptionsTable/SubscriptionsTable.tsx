@@ -1,25 +1,20 @@
 import React from 'react'
-
+import { useSelector } from 'react-redux'
 import { useTranslation } from '@apisuite/fe-base'
-
-import { AppInfo } from 'containers/Subscriptions/types'
-
-import Link from 'components/Link'
-
 import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded'
 import MenuOpenRoundedIcon from '@material-ui/icons/MenuOpenRounded'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
 
-import { SubscriptionsTableProps } from './types'
+import { apisByNameSelector } from 'pages/Subscriptions/selectors'
+import { AppInfo } from 'store/subscriptions/types'
+import Link from 'components/Link'
 
 import useStyles from './styles'
 
-const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
-  apisByName,
-}) => {
+export const SubscriptionsTable: React.FC = () => {
   const classes = useStyles()
-
-  const [t] = useTranslation()
+  const { t } = useTranslation()
+  const apisByName = useSelector(apisByNameSelector)
 
   const generateAppIcons = (appNamesArray: AppInfo[]) => {
     const sortedAppNamesArray = appNamesArray.sort()
@@ -129,5 +124,3 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
     </div>
   )
 }
-
-export default SubscriptionsTable

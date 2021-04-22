@@ -1,35 +1,32 @@
-import * as React from 'react'
-
+import React from 'react'
 import { Route, Switch } from 'react-router'
-
 import { Layouts } from '@apisuite/extension-ui-types'
 
 import { getRoutes } from 'util/extensions'
-
 import EssentialLayout from 'layouts/Essential'
 import MainLayout from 'layouts/Main'
 
+import NotFound from 'components/NotFound'
+import Privacy from 'components/Privacy'
+import SSOSignIn from 'components/SSOSignIn'
+import Terms from 'components/Terms'
+
 import { APIDetails } from 'pages/APIDetails'
-import APIProducts from 'pages/APIProducts'
+import { APIProducts } from 'pages/APIProducts'
 import Applications from 'containers/Applications'
-import Dashboard from 'pages/Dashboard'
+import { Dashboard } from 'pages/Dashboard'
 import Instructions from 'pages/Instructions'
 import Organisation from 'pages/Organisation'
 import { PasswordRecovery } from 'pages/PasswordRecovery'
 import Profile from 'containers/Profile'
 import RedirectPage from 'pages/RedirectPage'
 import RequireAuth from 'containers/Auth'
-import Sandbox from 'pages/Sandbox'
+import { Sandbox } from 'pages/Sandbox'
 import { Security } from 'pages/Security'
 import { SignInOrUp } from 'pages/SignInOrUp'
 import SignUpConfirmation from 'pages/SignUpConfirmation'
-import Subscriptions from 'containers/Subscriptions'
+import { Subscriptions } from 'pages/Subscriptions'
 import TeamPage from 'pages/TeamPage'
-
-import NotFound from 'components/NotFound'
-import Privacy from 'components/Privacy'
-import SSOSignIn from 'components/SSOSignIn'
-import Terms from 'components/Terms'
 
 import { AppRouteProps } from './types'
 

@@ -11,7 +11,7 @@ import {
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
 import { authActions } from 'containers/Auth/ducks'
-import { Api, APIVersion } from 'containers/Subscriptions/types'
+import { Api, APIVersion } from 'store/subscriptions/types'
 import { GetAPIVersionAction } from './actions/types'
 
 const emptyVersion: APIVersion = {

@@ -8,7 +8,7 @@ import auth from 'containers/Auth/sagas'
 import profile from 'containers/Profile/sagas'
 import register from 'components/SignUpForm/sagas'
 import security from './security/sagas'
-import subscriptions from 'containers/Subscriptions/sagas'
+import subscriptions from './subscriptions/sagas'
 
 const sagas = [
   apiDetails,

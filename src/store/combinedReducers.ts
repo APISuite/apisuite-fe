@@ -18,7 +18,7 @@ import profile from 'containers/Profile/ducks'
 import reduceReducers from './reduceReducers'
 import register from 'components/SignUpForm/ducks'
 import security from './security/reducer'
-import subscriptions from 'containers/Subscriptions/ducks'
+import subscriptions from './subscriptions/reducer'
 
 export default (
   history: History<any>, additionalReducers: Record<string, any[]> = {},

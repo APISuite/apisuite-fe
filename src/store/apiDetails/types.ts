@@ -1,4 +1,4 @@
-import { APIVersion } from 'containers/Subscriptions/types'
+import { APIVersion } from 'store/subscriptions/types'
 
 export type APIVersionStore = {
   requested: boolean,

@@ -1,35 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation, Button, InputBase } from '@apisuite/fe-base'
 
 import APICatalog from 'components/APICatalog'
-import SubscriptionsModal from 'components/SubscriptionsModal'
-
-import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
-import PowerRoundedIcon from '@material-ui/icons/PowerRounded'
-import SearchRoundedIcon from '@material-ui/icons/SearchRounded'
+import { APIDetails } from 'components/APICatalog/types'
+import { SubscriptionsModal } from 'components/SubscriptionsModal'
 
 // TODO: Uncomment once this view does account for 'sandbox' accessible API products.
 // import SubscriptionsRoundedIcon from '@material-ui/icons/SubscriptionsRounded'
+import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
+import PowerRoundedIcon from '@material-ui/icons/PowerRounded'
+import SearchRoundedIcon from '@material-ui/icons/SearchRounded'
+import apiProductCard from 'assets/apiProductCard.svg'
 
 import useStyles from './styles'
-
-import { APIProductsProps } from './types'
-
-import { APIDetails } from 'components/APICatalog/types'
-
-import apiProductCard from 'assets/apiProductCard.svg'
+import { apiProductsSelector } from './selector'
+import { getAPIs } from 'store/subscriptions/actions/getAPIs'
+import { getAllUserAppsAction } from 'containers/Applications/ducks'
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
-const APIProducts: React.FC<APIProductsProps> = ({
-  auth,
-  getAllUserAppsAction,
-  getAPIs,
-  subscriptions,
-}) => {
+export const APIProducts: React.FC = () => {
   const classes = useStyles()
-
-  const [t] = useTranslation()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
+  const { auth, subscriptions } = useSelector(apiProductsSelector)
 
   const initialAPIState: APIDetails = {
     apiAccess: false,
@@ -41,24 +36,24 @@ const APIProducts: React.FC<APIProductsProps> = ({
     id: 0,
   }
 
-  const [recentlyUpdatedAPIs, setRecentlyUpdatedAPIs] = React.useState<APIDetails[]>([])
-  const [latestUpdatedAPI, setLatestUpdatedAPI] = React.useState(initialAPIState)
+  const [recentlyUpdatedAPIs, setRecentlyUpdatedAPIs] = useState<APIDetails[]>([])
+  const [latestUpdatedAPI, setLatestUpdatedAPI] = useState(initialAPIState)
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
-    getAPIs()
-  }, [getAPIs])
+    dispatch(getAPIs({}))
+  }, [dispatch])
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage of all app-related information we presently
     have on a given user. */
     if (auth?.user) {
-      getAllUserAppsAction(auth.user.id)
+      dispatch(getAllUserAppsAction(auth.user.id))
     }
-  }, [auth, getAllUserAppsAction])
+  }, [auth, dispatch])
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'All API products' section. */
     const allAvailableAPIs = subscriptions.apis
@@ -90,8 +85,8 @@ const APIProducts: React.FC<APIProductsProps> = ({
 
   // API filtering logic
 
-  const [filteredAPIs, setFilteredAPIs] = React.useState<any[]>([])
-  const [apiFilters, setAPIFilters] = React.useState<any[]>(['', false, false, false])
+  const [filteredAPIs, setFilteredAPIs] = useState<any[]>([])
+  const [apiFilters, setAPIFilters] = useState<any[]>(['', false, false, false])
 
   const handleAPIFiltering = (
     changeEvent?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -380,5 +375,3 @@ apiFilters[2]
     </main>
   )
 }
-
-export default APIProducts

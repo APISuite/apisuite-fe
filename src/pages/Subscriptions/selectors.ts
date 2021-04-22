@@ -1,19 +1,23 @@
 import { createSelector } from 'reselect'
-
-import { ApplicationsStore } from 'containers/Applications/types'
-
-import {
-  SubscriptionsStore,
-} from './types'
-
 import { Store } from 'store/types'
 
-const getAPIs = ({ subscriptions }: Store) => subscriptions
-const getApps = ({ applications }: Store) => applications
+export const subscriptionsSelector = createSelector(
+  ({ subscriptions }: Store) => subscriptions,
+  ({ auth }: Store) => auth,
+  (subscriptions, auth) => {
+    return { subscriptions, auth }
+  },
+)
 
-export const getAPIsByName = createSelector(
-  [getAPIs, getApps],
-  (subscriptions: SubscriptionsStore, applications: ApplicationsStore) => {
+export const allUserAppsSelector = createSelector(
+  ({ applications }: Store) => applications,
+  (applications) => applications.userApps,
+)
+
+export const apisByNameSelector = createSelector(
+  ({ subscriptions }: Store) => subscriptions,
+  ({ applications }: Store) => applications,
+  (subscriptions, applications) => {
     const allApis = subscriptions.apis
     const allApps = applications.userApps
 

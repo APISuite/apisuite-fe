@@ -1,40 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation, Button } from '@apisuite/fe-base'
 import SportsSoccerRoundedIcon from '@material-ui/icons/SportsSoccerRounded'
 
+import { getAPIs } from 'store/subscriptions/actions/getAPIs'
+import { getAllUserAppsAction } from 'containers/Applications/ducks'
 import Link from 'components/Link'
-import SubscriptionsModal from 'components/SubscriptionsModal'
-import SubscriptionsTable from 'components/SubscriptionsTable'
+import { SubscriptionsModal } from 'components/SubscriptionsModal'
+import { SubscriptionsTable } from 'components/SubscriptionsTable'
 import rocket from 'assets/rocket.svg'
 
 import useStyles from './styles'
-import { SubscriptionsProps } from './types'
+import { useDispatch, useSelector } from 'react-redux'
+import { subscriptionsSelector } from './selectors'
 
-const Subscriptions: React.FC<SubscriptionsProps> = ({
-  auth,
-  getAllUserAppsAction,
-  getAPIs,
-  subscriptions,
-}) => {
+export const Subscriptions: React.FC = () => {
   const classes = useStyles()
-
-  const [t] = useTranslation()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
+  const { auth, subscriptions } = useSelector(subscriptionsSelector)
 
   /* Retrieval of our APIs' data */
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage of all API and app-related information
     we presently have. Once this is done, the 'SubscriptionsTable' component will
     have all the information it needs. */
-    if (auth?.user) {
-      getAPIs()
-      getAllUserAppsAction(auth.user.id)
+    if (auth.user) {
+      dispatch(getAPIs({}))
+      dispatch(getAllUserAppsAction(auth.user.id))
     }
-  }, [auth?.user, getAPIs, getAllUserAppsAction])
+  }, [auth.user, dispatch])
 
   /* Modal stuff */
 
-  const [isModalOpen, setModalOpen] = React.useState(false)
+  const [isModalOpen, setModalOpen] = useState(false)
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen)
@@ -119,5 +118,3 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
     </main>
   )
 }
-
-export default Subscriptions
