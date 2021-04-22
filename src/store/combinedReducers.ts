@@ -17,7 +17,7 @@ import notifications from './notificationStack/reducer'
 import profile from 'containers/Profile/ducks'
 import reduceReducers from './reduceReducers'
 import register from 'components/SignUpForm/ducks'
-import security from 'containers/Security/ducks'
+import security from './security/reducer'
 import subscriptions from 'containers/Subscriptions/ducks'
 
 export default (

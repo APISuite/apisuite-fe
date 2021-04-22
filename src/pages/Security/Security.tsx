@@ -1,30 +1,29 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation, Button, TextField, InputAdornment, IconButton } from '@apisuite/fe-base'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded'
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded'
+import { getProfileActions } from 'containers/Profile/ducks'
+import { updatePasswordRequest } from 'store/security/actions/updatePassword'
 
 import { isValidPass } from 'util/forms'
 
+import { securitySelector } from './selector'
 import useStyles from './styles'
-import { SecurityProps } from './types'
 
-const Security: React.FC<SecurityProps> = ({
-  profile,
-  getProfile,
-  updatePasswordRequest,
-}) => {
+export const Security: React.FC = () => {
   const classes = useStyles()
-
   const [t] = useTranslation()
-
+  const dispatch = useDispatch()
+  const { profile } = useSelector(securitySelector)
   const [ssoIsActive, setSSOIsActive] = React.useState(false)
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
-    getProfile()
-  }, [getProfile])
+    dispatch(getProfileActions.request())
+  }, [dispatch])
 
   React.useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
@@ -63,7 +62,7 @@ const Security: React.FC<SecurityProps> = ({
   }
 
   const handlePasswordChangeRequest = () => {
-    updatePasswordRequest(providedPasswords[0], providedPasswords[1])
+    dispatch(updatePasswordRequest({ oldPassword: providedPasswords[0], newPassword: providedPasswords[1] }))
 
     setProvidedPasswords(['', ''])
   }
