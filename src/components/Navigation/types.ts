@@ -1,4 +1,4 @@
-import { NotificationCardsStore } from 'containers/NotificationCards/types'
+import { NotificationCardsStore } from 'store/notificationCards/types'
 import { ProfileStore } from 'containers/Profile/types'
 
 export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {

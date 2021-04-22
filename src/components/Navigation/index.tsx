@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 
 import { authActions } from 'containers/Auth/ducks'
 import {
-  toggleInstanceOwnerNotificationCards,
-  toggleNonInstanceOwnerNotificationCards,
-} from 'containers/NotificationCards/ducks'
+  toggleInstanceOwner,
+  toggleNonInstanceOwner,
+} from 'store/notificationCards/actions/toggleInstanceOwner'
 
 import { Store } from 'store/types'
 
@@ -21,8 +21,8 @@ const mapStateToProps = ({ notificationCards, profile }: Store) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: () => dispatch(authActions.logout()),
   // Temporary until notification cards become clearer
-  toggleInstanceOwnerNotificationCards: () => dispatch(toggleInstanceOwnerNotificationCards()),
-  toggleNonInstanceOwnerNotificationCards: () => dispatch(toggleNonInstanceOwnerNotificationCards()),
+  toggleInstanceOwnerNotificationCards: () => dispatch(toggleInstanceOwner()),
+  toggleNonInstanceOwnerNotificationCards: () => dispatch(toggleNonInstanceOwner()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation)

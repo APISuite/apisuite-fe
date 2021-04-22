@@ -1,4 +1,4 @@
-import { NotificationCardsStore } from 'containers/NotificationCards/types'
+import { NotificationCardsStore } from 'store/notificationCards/types'
 
 export type NotificationCardProps = {
   notificationCards: NotificationCardsStore,

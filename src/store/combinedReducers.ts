@@ -12,7 +12,7 @@ import apiDetails from './apiDetails/reducer'
 import applications from 'containers/Applications/ducks'
 import auth from 'containers/Auth/ducks'
 // Temporary until notification cards become clearer
-import notificationCards from 'containers/NotificationCards/ducks'
+import notificationCards from './notificationCards/reducer'
 import notifications from 'containers/NotificationStack/ducks'
 import profile from 'containers/Profile/ducks'
 import reduceReducers from './reduceReducers'
