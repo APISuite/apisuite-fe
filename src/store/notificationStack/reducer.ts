@@ -1,9 +1,8 @@
 import update from 'immutability-helper'
 import { Reducer } from 'redux'
-import { NotificationStackStore, NotificationActions, NotificationType } from './types'
-
-export const CLOSE_NOTIFICATION = 'Notification/CLOSE_NOFICATION'
-export const OPEN_NOTIFICATION = 'Notification/OPEN_NOFICATION'
+import { CLOSE_NOTIFICATION, OPEN_NOTIFICATION } from './actions/notification'
+import { NotificationActions } from './actions/types'
+import { NotificationStackStore } from './types'
 
 const initialState: NotificationStackStore = {
   notifications: [],
@@ -35,14 +34,6 @@ const reducer: Reducer<NotificationStackStore, NotificationActions> = (state = i
     default:
       return state
   }
-}
-
-export function closeNotification (notificationNumber: number) {
-  return { type: CLOSE_NOTIFICATION, notificationNumber }
-}
-
-export function openNotification (notificationType: NotificationType, msg: string, timer: number) {
-  return { type: OPEN_NOTIFICATION, notificationType, msg, timer }
 }
 
 export default reducer

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import NotificationStack from 'containers/NotificationStack'
+import { NotificationStack } from 'components/NotificationStack'
 import routes from './routes'
 import useStyles from './styles'
 import CookiesBanner from 'components/CookiesBanner'

@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { openNotification } from 'containers/NotificationStack/ducks'
+import { openNotification } from 'store/notificationStack/actions/notification'
 
 import {
   updatePasswordRequestErrorAction,

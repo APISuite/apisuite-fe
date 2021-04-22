@@ -3,7 +3,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects'
 import request from 'util/request'
 
 import { authActions } from 'containers/Auth/ducks'
-import { openNotification } from 'containers/NotificationStack/ducks'
+import { openNotification } from 'store/notificationStack/actions/notification'
 
 import {
   changeRoleActions,

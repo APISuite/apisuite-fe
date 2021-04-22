@@ -19,7 +19,7 @@ import {
   SSO_TOKEN_EXCHANGE,
 } from './ducks'
 
-import { openNotification } from 'containers/NotificationStack/ducks'
+import { openNotification } from 'store/notificationStack/actions/notification'
 
 import { Profile } from 'containers/Profile/types'
 

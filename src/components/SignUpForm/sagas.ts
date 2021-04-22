@@ -12,7 +12,7 @@ import {
   validateRegisterTokenActions,
 } from './ducks'
 
-import { openNotification } from 'containers/NotificationStack/ducks'
+import { openNotification } from 'store/notificationStack/actions/notification'
 
 import { Store } from 'store/types'
 
