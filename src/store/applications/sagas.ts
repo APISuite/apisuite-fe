@@ -1,48 +1,19 @@
-import {
-  call,
-  put,
-  select,
-  takeLatest,
-} from 'redux-saga/effects'
-
-import {
-  CREATE_APP_ACTION,
-  createAppActionError,
-  createAppActionSuccess,
-  DELETE_APP_ACTION,
-  deleteAppActionError,
-  deleteAppActionSuccess,
-  GET_ALL_USER_APPS_ACTION,
-  GET_USER_APP_ACTION,
-  getAllUserAppsAction,
-  getAllUserAppsActionSuccess,
-  getUserAppActionSuccess,
-  REQUEST_API_ACCESS_ACTION,
-  requestAPIAccessActionError,
-  requestAPIAccessActionSuccess,
-  UPDATE_APP_ACTION,
-  updateAppActionError,
-  updateAppActionSuccess,
-} from './ducks'
-
-import {
-  AppData,
-  CreateAppAction,
-  DeleteAppAction,
-  GetUserAppAction,
-  RequestAPIAccessAction,
-  UpdateAppAction,
-} from './types'
-
-import { authActions } from 'containers/Auth/ducks'
-
-import { API_URL } from 'constants/endpoints'
-
-import request from 'util/request'
-
+import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-react-router'
 
+import { API_URL } from 'constants/endpoints'
+import request from 'util/request'
+import { authActions } from 'containers/Auth/ducks'
+
 import { Store } from 'store/types'
+import { AppData } from './types'
+import { CreateAppAction, DeleteAppAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction } from './actions/types'
+import { createAppSuccess, createAppError, CREATE_APP } from './actions/createApp'
+import { updateAppError, updateAppSuccess, UPDATE_APP } from './actions/updatedApp'
+import { deleteAppError, deleteAppSuccess, DELETE_APP } from './actions/deleteApp'
+import { getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess, GET_ALL_USER_APPS } from './actions/getAllUserApps'
+import { requestAPIAccessError, requestAPIAccessSuccess, REQUEST_API_ACCESS } from './actions/requestApiAccess'
+import { getUserAppError, getUserAppSuccess, GET_USER_APP } from './actions/getUserApp'
 
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
@@ -71,11 +42,11 @@ export function * createAppActionSaga (action: CreateAppAction) {
       data: data,
     })
 
-    yield put(createAppActionSuccess())
+    yield put(createAppSuccess({}))
 
     yield put(push('/dashboard/apps'))
   } catch (error) {
-    yield put(createAppActionError())
+    yield put(createAppError(error))
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -107,28 +78,30 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       data: data,
     })
 
-    yield put(updateAppActionSuccess({
-      clientId: response.clientId,
-      clientSecret: response.clientSecret,
-      createdAt: response.createdAt,
-      description: response.description,
-      id: response.id,
-      labels: response.labels,
-      logo: response.logo,
-      name: response.name,
-      orgId: response.orgId,
-      privacyUrl: response.privacyUrl,
-      redirectUrl: response.redirectUrl,
-      shortDescription: response.shortDescription,
-      subscriptions: response.subscriptions,
-      supportUrl: response.supportUrl,
-      tosUrl: response.tosUrl,
-      updatedAt: response.updatedAt,
-      websiteUrl: response.websiteUrl,
-      youtubeUrl: response.youtubeUrl,
+    yield put(updateAppSuccess({
+      appData: {
+        clientId: response.clientId,
+        clientSecret: response.clientSecret,
+        createdAt: response.createdAt,
+        description: response.description,
+        id: response.id,
+        labels: response.labels,
+        logo: response.logo,
+        name: response.name,
+        orgId: response.orgId,
+        privacyUrl: response.privacyUrl,
+        redirectUrl: response.redirectUrl,
+        shortDescription: response.shortDescription,
+        subscriptions: response.subscriptions,
+        supportUrl: response.supportUrl,
+        tosUrl: response.tosUrl,
+        updatedAt: response.updatedAt,
+        websiteUrl: response.websiteUrl,
+        youtubeUrl: response.youtubeUrl,
+      },
     }))
   } catch (error) {
-    yield put(updateAppActionError())
+    yield put(updateAppError(error))
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -145,10 +118,10 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
       },
     })
 
-    yield put(deleteAppActionSuccess())
+    yield put(deleteAppSuccess({}))
 
     if (action.orgId) {
-      yield put(getAllUserAppsAction(action.orgId))
+      yield put(getAllUserApps({ userId: action.orgId }))
     }
 
     yield put(push('/dashboard/apps'))
@@ -157,15 +130,16 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
     as this Saga considers a response from the server whose status
     code is 204 (i.e., a 'No Content') as an error. */
     if (error.status === 204) {
-      yield put(deleteAppActionSuccess())
+      yield put(deleteAppSuccess({}))
 
       if (action.orgId) {
-        yield put(getAllUserAppsAction(action.orgId))
+        yield put(getAllUserApps({ userId: action.orgId }))
       }
 
+      // TODO: I'm not sure if this does not create side effects - research
       yield put(push('/dashboard/apps'))
     } else {
-      yield put(deleteAppActionError())
+      yield put(deleteAppError({}))
       yield put(authActions.handleSessionExpire())
     }
   }
@@ -175,8 +149,7 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
   try {
     const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`
 
-    const accessToken = yield select(
-      (state: Store) => state.auth.authToken)
+    const accessToken = yield select((state: Store) => state.auth.authToken)
 
     yield call(request, {
       url: requestAPIAccessUrl,
@@ -187,9 +160,9 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
       },
     })
 
-    yield put(requestAPIAccessActionSuccess())
+    yield put(requestAPIAccessSuccess({}))
   } catch (error) {
-    yield put(requestAPIAccessActionError())
+    yield put(requestAPIAccessError({}))
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -229,11 +202,11 @@ export function * getAllUserAppsActionSaga () {
       }
     ))
 
-    yield put(getAllUserAppsActionSuccess(
-      allUserApps.sort((userAppA: AppData, userAppB: AppData) => userAppA.id - userAppB.id)),
-    )
+    yield put(getAllUserAppsSuccess({
+      userApps: allUserApps.sort((userAppA: AppData, userAppB: AppData) => userAppA.id - userAppB.id),
+    }))
   } catch (error) {
-    console.log('Error fetching all user apps')
+    yield put(getAllUserAppsError(error))
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -275,20 +248,20 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
 
     const indexOfUserAppWeWant = allUserApps.findIndex((userApp: AppData) => userApp.id === action.appId)
 
-    yield put(getUserAppActionSuccess(allUserApps[indexOfUserAppWeWant]))
+    yield put(getUserAppSuccess({ appData: allUserApps[indexOfUserAppWeWant] }))
   } catch (error) {
-    console.log('Error fetching user app')
+    yield put(getUserAppError(error))
     yield put(authActions.handleSessionExpire())
   }
 }
 
 function * rootSaga () {
-  yield takeLatest(CREATE_APP_ACTION, createAppActionSaga)
-  yield takeLatest(DELETE_APP_ACTION, deleteAppActionSaga)
-  yield takeLatest(GET_ALL_USER_APPS_ACTION, getAllUserAppsActionSaga)
-  yield takeLatest(GET_USER_APP_ACTION, getUserAppActionSaga)
-  yield takeLatest(REQUEST_API_ACCESS_ACTION, requestAPIAccessActionSaga)
-  yield takeLatest(UPDATE_APP_ACTION, updateAppActionSaga)
+  yield takeLatest(CREATE_APP, createAppActionSaga)
+  yield takeLatest(DELETE_APP, deleteAppActionSaga)
+  yield takeLatest(GET_ALL_USER_APPS, getAllUserAppsActionSaga)
+  yield takeLatest(GET_USER_APP, getUserAppActionSaga)
+  yield takeLatest(REQUEST_API_ACCESS, requestAPIAccessActionSaga)
+  yield takeLatest(UPDATE_APP, updateAppActionSaga)
 }
 
 export default rootSaga

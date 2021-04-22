@@ -13,7 +13,7 @@ import Terms from 'components/Terms'
 
 import { APIDetails } from 'pages/APIDetails'
 import { APIProducts } from 'pages/APIProducts'
-import Applications from 'containers/Applications'
+import { Applications } from 'pages/Applications'
 import { Dashboard } from 'pages/Dashboard'
 import Instructions from 'pages/Instructions'
 import Organisation from 'pages/Organisation'

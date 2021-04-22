@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   useTranslation,
   Avatar,
@@ -19,38 +20,40 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
 import RefreshRoundedIcon from '@material-ui/icons/RefreshRounded'
+
 import { useForm } from 'util/useForm'
-import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 import { isValidImage, isValidURL } from 'util/forms'
+import { getUserApp } from 'store/applications/actions/getUserApp'
+import { createApp } from 'store/applications/actions/createApp'
+import { updateApp } from 'store/applications/actions/updatedApp'
+import { deleteApp } from 'store/applications/actions/deleteApp'
+import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 
-import ApplicationsModalProps from './types'
+import { ApplicationsModalProps } from './types'
 import useStyles from './styles'
+import { applicationsModalSelector } from './selector'
 
-const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
+export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
-  createAppAction,
-  deleteAppAction,
-  getUserAppAction,
   isModalOpen,
   modalDetails,
   modalMode,
-  mostRecentlySelectedAppDetails,
   toggleModal,
-  updateAppAction,
 }) => {
   const classes = useStyles()
-
-  const [t] = useTranslation()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
+  const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector)
 
   const { ownerInfo, portalName } = useConfig()
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
     if (modalDetails.userAppID && modalDetails.userID) {
-      getUserAppAction(modalDetails.userAppID, modalDetails.userID)
+      dispatch(getUserApp({ appId: modalDetails.userAppID, orgId: modalDetails.userID }))
     }
-  }, [modalMode])
+  }, [modalMode, modalDetails, dispatch])
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false)
   const [validImage, setValidImage] = React.useState<boolean>(true)
@@ -162,7 +165,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   - Whatever is stored in 'mostRecentlySelectedAppDetails' (if 'modalMode' amounts to 'edit').
   - An empty string (if 'modalMode' amounts to 'new').
   */
-  React.useEffect(() => {
+  useEffect(() => {
     if (modalMode === 'edit') {
       resetForm({
         appAvatarURL: mostRecentlySelectedAppDetails.logo ? mostRecentlySelectedAppDetails.logo : '',
@@ -210,7 +213,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   /* Whenever the store's 'applications > currentApp' details become available
   (i.e., upon mounting this React.Component, and immediately after saving an app's details),
   we need to determine what optional URLs have been provided, and are meant to be shown. */
-  React.useEffect(() => {
+  useEffect(() => {
     setIsShowing([
       !!mostRecentlySelectedAppDetails.tosUrl,
       !!mostRecentlySelectedAppDetails.privacyUrl,
@@ -307,7 +310,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   // Creating an app
 
-  const createApp = (event: React.ChangeEvent<{}>) => {
+  const createNewApp = (event: React.ChangeEvent<{}>) => {
     event.preventDefault()
 
     const newAppDetails = {
@@ -324,14 +327,14 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       youtubeUrl: formState.values.appYouTubeURL,
     }
 
-    createAppAction(newAppDetails)
+    dispatch(createApp({ appData: newAppDetails }))
 
     toggleModal()
   }
 
   // Updating an app
 
-  const updateApp = (event: React.ChangeEvent<{}>) => {
+  const _updateApp = (event: React.ChangeEvent<{}>) => {
     event.preventDefault()
 
     const updatedAppDetails = {
@@ -349,7 +352,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       youtubeUrl: formState.values.appYouTubeURL,
     }
 
-    updateAppAction(updatedAppDetails)
+    dispatch(updateApp({ appData: updatedAppDetails }))
 
     toggleModal()
   }
@@ -366,8 +369,8 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     setOpenDialog(false)
   }
 
-  const deleteApp = () => {
-    deleteAppAction(modalDetails.userAppID)
+  const _deleteApp = () => {
+    dispatch(deleteApp({ appId: modalDetails.userAppID }))
 
     handleCloseDialog()
 
@@ -956,7 +959,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                                 ? classes.enabledAddOrEditButton
                                 : classes.disabledAddOrEditButton
                             }
-                            onClick={createApp}
+                            onClick={createNewApp}
                           >
                             {t('dashboardTab.applicationsSubTab.appModal.addAppButtonLabel')}
                           </Button>
@@ -995,7 +998,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                                 ? classes.enabledAddOrEditButton
                                 : classes.disabledAddOrEditButton
                             }
-                            onClick={updateApp}
+                            onClick={_updateApp}
                           >
                             {t('dashboardTab.applicationsSubTab.appModal.editAppButtonLabel')}
                           </Button>
@@ -1036,7 +1039,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         openDialog &&
         <CustomizableDialog
           closeDialogCallback={handleCloseDialog}
-          confirmButtonCallback={deleteApp}
+          confirmButtonCallback={_deleteApp}
           confirmButtonLabel={t('dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel')}
           open={openDialog}
           optionalTitleIcon='warning'
@@ -1048,5 +1051,3 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     </>
   )
 }
-
-export default ApplicationsModal

@@ -1,58 +1,49 @@
-import React from 'react'
-
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation, Avatar, Button } from '@apisuite/fe-base'
-
-import { getSections } from 'util/extensions'
-
-import ApplicationsModal from 'components/ApplicationsModal'
-import Link from 'components/Link'
-
 import HeightRoundedIcon from '@material-ui/icons/HeightRounded'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+
+import { AppData, ModalDetails } from 'store/applications/types'
+import { getAllUserApps } from 'store/applications/actions/getAllUserApps'
+import { getSections } from 'util/extensions'
+import { ApplicationsModal } from 'components/ApplicationsModal'
+import Link from 'components/Link'
 
 import adrift from 'assets/adrift.svg'
 import authFundamentals from 'assets/authFundamentals.svg'
 import launchApp from 'assets/launchApp.svg'
 
-import { AppData, ModalDetails, ApplicationsProps } from './types'
-
+import { applicationsSelector } from './selector'
 import useStyles from './styles'
 
-const Applications: React.FC<ApplicationsProps> = ({
-  allUserApps,
-  createAppStatus,
-  currentOrganisation,
-  deleteAppStatus,
-  getAllUserAppsAction,
-  requestAPIAccessStatus,
-  updateAppStatus,
-  user,
-}) => {
+export const Applications: React.FC = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
+  const { allUserApps, currentOrganisation, user } = useSelector(applicationsSelector)
 
-  const [t] = useTranslation()
-
-  const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = React.useState(false)
+  const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false)
 
   /* With every change of our store's 'profile > profile > current_org' section
   (which goes from its initial state, to a filled or completely empty state),
   we do the following check, so as to know what view needs to be shown. */
-  React.useEffect(() => {
+  useEffect(() => {
     if (Object.keys(currentOrganisation).length !== 0 && currentOrganisation.id !== '') {
       setHasCurrentOrgDetails(true)
     }
   }, [currentOrganisation])
 
   /* Modal stuff */
-  const [modalDetails, setModalDetails] = React.useState<ModalDetails>({
+  const [modalDetails, setModalDetails] = useState<ModalDetails>({
     userID: 0,
     userAppID: 0,
   })
-  const [modalMode, setModalMode] = React.useState('')
-  const [isModalOpen, setModalOpen] = React.useState(false)
+  const [modalMode, setModalMode] = useState('')
+  const [isModalOpen, setModalOpen] = useState(false)
 
-  const toggleModal = React.useCallback((
+  const toggleModal = useCallback((
     modalMode: string,
     userID: number,
     userAppID: number,
@@ -91,7 +82,11 @@ const Applications: React.FC<ApplicationsProps> = ({
         <div
           className={classes.clientApplicationCard}
           key={`appCard${index}`}
-          onClick={() => toggleModal('edit', user.id, userApp.id)}
+          onClick={() => {
+            if (user) {
+              toggleModal('edit', user.id, userApp.id)
+            }
+          }}
         >
           <div className={classes.clientApplicationCardTopSection}>
             <HeightRoundedIcon className={
@@ -166,7 +161,7 @@ const Applications: React.FC<ApplicationsProps> = ({
 
   /* The following useEffect comes in handy when users want to quickly review & edit an app
   from some other place in our project (say, from the 'API Product' subscription's modal). */
-  React.useEffect(() => {
+  useEffect(() => {
     /*
     - 'window.location.pathname' will amount to '/dashboard/apps/X'.
     - '.split('/')[3]' will amount to 'X', our app's ID.
@@ -174,15 +169,17 @@ const Applications: React.FC<ApplicationsProps> = ({
     */
     const appIDInURL = parseInt(window.location.pathname.split('/')[3]) || undefined
 
-    if (appIDInURL !== undefined) toggleModal('edit', user.id, appIDInURL)
-  }, [toggleModal, user.id])
+    if (appIDInURL !== undefined && user) toggleModal('edit', user.id, appIDInURL)
+  }, [toggleModal, user])
 
   /* Triggers the retrieval and storage (on the app's Store, under 'applications > userApps')
   of all app-related information we presently have on a particular user the first time, and
   following any changes to 'applications > userApps' (i.e., 'allUserApps'). */
-  React.useEffect(() => {
-    if (user) getAllUserAppsAction(user.id)
-  }, [modalMode, createAppStatus, updateAppStatus, deleteAppStatus, requestAPIAccessStatus, getAllUserAppsAction, user])
+  useEffect(() => {
+    if (user) {
+      dispatch(getAllUserApps({ userId: user.id }))
+    }
+  }, [user, dispatch])
 
   return (
     <main>
@@ -343,5 +340,3 @@ const Applications: React.FC<ApplicationsProps> = ({
     </main>
   )
 }
-
-export default Applications

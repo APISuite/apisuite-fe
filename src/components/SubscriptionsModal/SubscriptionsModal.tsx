@@ -9,7 +9,7 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
 
-import { requestAPIAccessAction } from 'containers/Applications/ducks'
+import { requestAPIAccess } from 'store/applications/actions/requestApiAccess'
 import { allUserAppsSelector, apisByNameSelector } from 'pages/Subscriptions/selectors'
 
 import { SubscriptionsModalProps } from './types'
@@ -135,7 +135,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
   const handleAPIProductAccessRequest = () => {
     const idOfSelectedClientApp = Number(selectedClientApp.id)
 
-    dispatch(requestAPIAccessAction(idOfSelectedClientApp))
+    dispatch(requestAPIAccess({ appId: idOfSelectedClientApp }))
     resetModalSelections()
   }
 

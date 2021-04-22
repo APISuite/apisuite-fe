@@ -3,7 +3,7 @@
 */
 
 import apiDetails from './apiDetails/sagas'
-import applications from 'containers/Applications/sagas'
+import applications from 'store/applications/sagas'
 import auth from 'containers/Auth/sagas'
 import profile from 'containers/Profile/sagas'
 import register from 'components/SignUpForm/sagas'

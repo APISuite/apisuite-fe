@@ -16,7 +16,7 @@ import apiProductCard from 'assets/apiProductCard.svg'
 import useStyles from './styles'
 import { apiProductsSelector } from './selector'
 import { getAPIs } from 'store/subscriptions/actions/getAPIs'
-import { getAllUserAppsAction } from 'containers/Applications/ducks'
+import { getAllUserApps } from 'store/applications/actions/getAllUserApps'
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -49,7 +49,7 @@ export const APIProducts: React.FC = () => {
     /* Triggers the retrieval and storage of all app-related information we presently
     have on a given user. */
     if (auth?.user) {
-      dispatch(getAllUserAppsAction(auth.user.id))
+      dispatch(getAllUserApps({ userId: auth.user.id }))
     }
   }, [auth, dispatch])
 

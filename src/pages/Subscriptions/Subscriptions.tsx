@@ -3,7 +3,7 @@ import { useTranslation, Button } from '@apisuite/fe-base'
 import SportsSoccerRoundedIcon from '@material-ui/icons/SportsSoccerRounded'
 
 import { getAPIs } from 'store/subscriptions/actions/getAPIs'
-import { getAllUserAppsAction } from 'containers/Applications/ducks'
+import { getAllUserApps } from 'store/applications/actions/getAllUserApps'
 import Link from 'components/Link'
 import { SubscriptionsModal } from 'components/SubscriptionsModal'
 import { SubscriptionsTable } from 'components/SubscriptionsTable'
@@ -27,7 +27,7 @@ export const Subscriptions: React.FC = () => {
     have all the information it needs. */
     if (auth.user) {
       dispatch(getAPIs({}))
-      dispatch(getAllUserAppsAction(auth.user.id))
+      dispatch(getAllUserApps({ userId: auth.user.id }))
     }
   }, [auth.user, dispatch])
 

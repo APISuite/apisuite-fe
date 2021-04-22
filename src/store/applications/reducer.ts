@@ -1,6 +1,13 @@
 import update from 'immutability-helper'
 
-import { AppData, ApplicationsActions, ApplicationsStore, CreateAppActionData, UpdateAppActionData } from './types'
+import { ApplicationsStore } from './types'
+import { ApplicationsActions } from './actions/types'
+import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from './actions/createApp'
+import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from './actions/deleteApp'
+import { GET_ALL_USER_APPS_SUCCESS } from './actions/getAllUserApps'
+import { GET_USER_APP_SUCCESS } from './actions/getUserApp'
+import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from './actions/requestApiAccess'
+import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from './actions/updatedApp'
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -43,31 +50,13 @@ const initialState: ApplicationsStore = {
   userApps: [],
 }
 
-/** Action types */
-export const CREATE_APP_ACTION = 'Applications/CREATE_APP_ACTION'
-export const CREATE_APP_ACTION_ERROR = 'Applications/CREATE_APP_ACTION_ERROR'
-export const CREATE_APP_ACTION_SUCCESS = 'Applications/CREATE_APP_ACTION_SUCCESS'
-export const DELETE_APP_ACTION = 'Applications/DELETE_APP_ACTION'
-export const DELETE_APP_ACTION_ERROR = 'Applications/DELETE_APP_ACTION_ERROR'
-export const DELETE_APP_ACTION_SUCCESS = 'Applications/DELETE_APP_ACTION_SUCCESS'
-export const GET_ALL_USER_APPS_ACTION = 'Applications/GET_ALL_USER_APPS_ACTION'
-export const GET_ALL_USER_APPS_ACTION_SUCCESS = 'Applications/GET_ALL_USER_APPS_ACTION_SUCCESS'
-export const GET_USER_APP_ACTION = 'Applications/GET_USER_APP_ACTION'
-export const GET_USER_APP_ACTION_SUCCESS = 'Applications/GET_USER_APP_ACTION_SUCCESS'
-export const REQUEST_API_ACCESS_ACTION = 'Applications/REQUEST_API_ACCESS_ACTION'
-export const REQUEST_API_ACCESS_ACTION_ERROR = 'Applications/REQUEST_API_ACCESS_ACTION_ERROR'
-export const REQUEST_API_ACCESS_ACTION_SUCCESS = 'Applications/REQUEST_API_ACCESS_ACTION_SUCCESS'
-export const UPDATE_APP_ACTION = 'Applications/UPDATE_APP_ACTION'
-export const UPDATE_APP_ACTION_ERROR = 'Applications/UPDATE_APP_ACTION_ERROR'
-export const UPDATE_APP_ACTION_SUCCESS = 'Applications/UPDATE_APP_ACTION_SUCCESS'
-
 /** Reducer */
 export default function reducer (
   state = initialState,
   action: ApplicationsActions,
 ): ApplicationsStore {
   switch (action.type) {
-    case CREATE_APP_ACTION: {
+    case CREATE_APP: {
       return update(state, {
         createAppStatus: {
           isError: { $set: false },
@@ -76,7 +65,7 @@ export default function reducer (
       })
     }
 
-    case CREATE_APP_ACTION_SUCCESS: {
+    case CREATE_APP_SUCCESS: {
       return update(state, {
         createAppStatus: {
           isRequesting: { $set: false },
@@ -84,7 +73,7 @@ export default function reducer (
       })
     }
 
-    case CREATE_APP_ACTION_ERROR: {
+    case CREATE_APP_ERROR: {
       return update(state, {
         createAppStatus: {
           isError: { $set: true },
@@ -93,7 +82,7 @@ export default function reducer (
       })
     }
 
-    case DELETE_APP_ACTION: {
+    case DELETE_APP: {
       return update(state, {
         deleteAppStatus: {
           isError: { $set: false },
@@ -102,7 +91,7 @@ export default function reducer (
       })
     }
 
-    case DELETE_APP_ACTION_SUCCESS: {
+    case DELETE_APP_SUCCESS: {
       return update(state, {
         deleteAppStatus: {
           isRequesting: { $set: false },
@@ -110,7 +99,7 @@ export default function reducer (
       })
     }
 
-    case DELETE_APP_ACTION_ERROR: {
+    case DELETE_APP_ERROR: {
       return update(state, {
         deleteAppStatus: {
           isError: { $set: true },
@@ -119,21 +108,13 @@ export default function reducer (
       })
     }
 
-    case GET_ALL_USER_APPS_ACTION: {
-      return state
-    }
-
-    case GET_ALL_USER_APPS_ACTION_SUCCESS: {
+    case GET_ALL_USER_APPS_SUCCESS: {
       return update(state, {
         userApps: { $set: action.userApps },
       })
     }
 
-    case GET_USER_APP_ACTION: {
-      return state
-    }
-
-    case GET_USER_APP_ACTION_SUCCESS: {
+    case GET_USER_APP_SUCCESS: {
       return update(state, {
         currentApp: {
           clientId: { $set: action.appData.clientId },
@@ -158,7 +139,7 @@ export default function reducer (
       })
     }
 
-    case REQUEST_API_ACCESS_ACTION: {
+    case REQUEST_API_ACCESS: {
       return update(state, {
         requestingAPIAccessStatus: {
           isError: { $set: false },
@@ -167,7 +148,7 @@ export default function reducer (
       })
     }
 
-    case REQUEST_API_ACCESS_ACTION_SUCCESS: {
+    case REQUEST_API_ACCESS_SUCCESS: {
       return update(state, {
         requestingAPIAccessStatus: {
           isRequesting: { $set: false },
@@ -175,7 +156,7 @@ export default function reducer (
       })
     }
 
-    case REQUEST_API_ACCESS_ACTION_ERROR: {
+    case REQUEST_API_ACCESS_ERROR: {
       return update(state, {
         requestingAPIAccessStatus: {
           isError: { $set: true },
@@ -184,7 +165,7 @@ export default function reducer (
       })
     }
 
-    case UPDATE_APP_ACTION: {
+    case UPDATE_APP: {
       return update(state, {
         updateAppStatus: {
           isError: { $set: false },
@@ -193,7 +174,7 @@ export default function reducer (
       })
     }
 
-    case UPDATE_APP_ACTION_SUCCESS: {
+    case UPDATE_APP_SUCCESS: {
       return update(state, {
         updateAppStatus: {
           isRequesting: { $set: false },
@@ -215,7 +196,7 @@ export default function reducer (
       })
     }
 
-    case UPDATE_APP_ACTION_ERROR: {
+    case UPDATE_APP_ERROR: {
       return update(state, {
         updateAppStatus: {
           isError: { $set: true },
@@ -227,69 +208,4 @@ export default function reducer (
     default:
       return state
   }
-}
-
-/** Action builders */
-export function createAppAction (appData: CreateAppActionData) {
-  return { type: CREATE_APP_ACTION, appData }
-}
-
-export function createAppActionSuccess () {
-  return { type: CREATE_APP_ACTION_SUCCESS }
-}
-
-export function createAppActionError () {
-  return { type: CREATE_APP_ACTION_ERROR }
-}
-
-export function updateAppAction (appData: UpdateAppActionData) {
-  return { type: UPDATE_APP_ACTION, appData }
-}
-
-export function updateAppActionSuccess (appData: AppData) {
-  return { type: UPDATE_APP_ACTION_SUCCESS, appData }
-}
-
-export function updateAppActionError () {
-  return { type: UPDATE_APP_ACTION_ERROR }
-}
-
-export function deleteAppAction (appId: number, orgId?: number) {
-  return { type: DELETE_APP_ACTION, appId, orgId }
-}
-
-export function deleteAppActionSuccess () {
-  return { type: DELETE_APP_ACTION_SUCCESS }
-}
-
-export function deleteAppActionError () {
-  return { type: DELETE_APP_ACTION_ERROR }
-}
-
-export function requestAPIAccessAction (appId: number) {
-  return { type: REQUEST_API_ACCESS_ACTION, appId }
-}
-
-export function requestAPIAccessActionSuccess () {
-  return { type: REQUEST_API_ACCESS_ACTION_SUCCESS }
-}
-
-export function requestAPIAccessActionError () {
-  return { type: REQUEST_API_ACCESS_ACTION_ERROR }
-}
-
-export function getUserAppAction (appId: number, orgId: number) {
-  return { type: GET_USER_APP_ACTION, appId, orgId }
-}
-
-export function getUserAppActionSuccess (appData: AppData) {
-  return { type: GET_USER_APP_ACTION_SUCCESS, appData }
-}
-
-export function getAllUserAppsAction (userId: number) {
-  return { type: GET_ALL_USER_APPS_ACTION, userId }
-}
-
-export function getAllUserAppsActionSuccess (userApps: AppData[]) {
-  return { type: GET_ALL_USER_APPS_ACTION_SUCCESS, userApps }
 }
