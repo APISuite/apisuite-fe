@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
   btn: {
     backgroundColor: theme.palette.grey[900],
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     cursor: 'pointer',
     display: 'inline-block',
     fontWeight: 500,
@@ -45,7 +45,7 @@ export default makeStyles((theme) => ({
     borderColor: theme.palette.error.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderWidth: 1,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     display: 'flex',
     fontSize: 13,
     minHeight: 20,
@@ -86,7 +86,7 @@ export default makeStyles((theme) => ({
   },
 
   loading: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     opacity: 0.5,
     position: 'relative',
     top: 4,

@@ -7,7 +7,7 @@ export default makeStyles((theme) => ({
     zIndex: 1,
 
     '&:hover': {
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
     },
   },
 
@@ -48,7 +48,7 @@ export default makeStyles((theme) => ({
     borderBottomRightRadius: 0,
     borderTopLeftRadius: theme.palette.dimensions.borderRadius,
     borderTopRightRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     display: 'flex',
     height: 40,
     justifyContent: 'flex-end',
@@ -71,12 +71,12 @@ export default makeStyles((theme) => ({
   },
 
   note: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: 14,
   },
 
   noteContainer: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     marginBottom: 20,
     overflow: 'hidden',
@@ -84,7 +84,7 @@ export default makeStyles((theme) => ({
   },
 
   noteContent: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     marginLeft: 5,
     padding: 20,
   },

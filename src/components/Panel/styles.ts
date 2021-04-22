@@ -47,13 +47,13 @@ export default makeStyles((theme) => ({
   },
 
   featuresTitle: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     fontSize: 26,
     fontWeight: 100,
     textAlign: 'center',
   },
 
   otherTitle: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
 }))

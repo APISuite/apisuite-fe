@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   fieldTitle: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: 14,
     fontWeight: 300,
     margin: 0,
@@ -51,11 +51,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   shuffleIcon: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
   },
 
   visibilityIcon: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
   },
 }))
 

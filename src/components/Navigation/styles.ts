@@ -8,7 +8,7 @@ export default makeStyles((theme) => ({
   },
 
   alternativeAssistantAmountOfNotifications: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
     height: '24px',
     pointerEvents: 'none',
@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
     width: '24px',
 
     '& > p': {
-      color: theme.palette.common.white,
+      color: theme.palette.primary.contrastText,
       fontSize: '14px',
       fontWeight: 400,
       height: '24px',
@@ -38,7 +38,7 @@ export default makeStyles((theme) => ({
   },
 
   alternativeLogo: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -96,14 +96,14 @@ export default makeStyles((theme) => ({
   },
 
   opaqueMenuActiveTabOverLine: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     height: '3px',
     top: 0,
     transition: 'none !important',
   },
 
   opaqueMenuTab: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -121,7 +121,7 @@ export default makeStyles((theme) => ({
   },
 
   opaqueSubMenuActiveTabUnderLine: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     height: '3px',
     transition: 'none !important',
   },
@@ -132,7 +132,7 @@ export default makeStyles((theme) => ({
   },
 
   regularAssistantAmountOfNotifications: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     height: '24px',
     pointerEvents: 'none',
@@ -153,7 +153,7 @@ export default makeStyles((theme) => ({
   regularAssistantButton: {
     backgroundColor: theme.palette.background.default,
     borderRadius: '50%',
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
@@ -162,14 +162,14 @@ export default makeStyles((theme) => ({
   },
 
   regularLogo: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
   },
 
   subTab: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: '16px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -196,7 +196,7 @@ export default makeStyles((theme) => ({
   },
 
   transparentMenuTab: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -207,14 +207,14 @@ export default makeStyles((theme) => ({
 
   userAvatar: {
     background: theme.palette.gradient.light,
-    border: `2px solid ${theme.palette.common.white}`,
+    border: `2px solid ${theme.palette.primary.contrastText}`,
     fontSize: '20px',
     fontWeight: 300,
     height: '33px',
     width: '33px',
 
     '&:hover': {
-      border: `2px solid ${theme.palette.secondary.main}`,
+      border: `2px solid ${theme.palette.primary.main}`,
     },
   },
 

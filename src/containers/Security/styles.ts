@@ -8,10 +8,10 @@ export default makeStyles((theme) => ({
   },
 
   disabledUpdatePasswordButton: {
-    backgroundColor: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.primary.main}`,
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -24,15 +24,15 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
   enabledUpdatePasswordButton: {
-    backgroundColor: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.primary.main}`,
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -43,7 +43,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
@@ -127,7 +127,7 @@ export default makeStyles((theme) => ({
   },
 
   securityTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -147,7 +147,7 @@ export default makeStyles((theme) => ({
   },
 
   updatePasswordTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '10px',

@@ -63,7 +63,7 @@ export default makeStyles((theme) => ({
   disabledUpdateDetailsButton: {
     backgroundColor: theme.palette.label,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -82,7 +82,7 @@ export default makeStyles((theme) => ({
   disabledCreateOrgButton: {
     backgroundColor: '#99e6cc',
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -94,9 +94,9 @@ export default makeStyles((theme) => ({
   },
 
   enabledCreateOrgButton: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -107,14 +107,14 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary,
+      backgroundColor: theme.palette.secondary,
     },
   },
 
   enabledUpdateDetailsButton: {
     backgroundColor: theme.palette.action.active,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -214,7 +214,7 @@ export default makeStyles((theme) => ({
   },
 
   orgAdditionalDetailsTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '30px',
@@ -238,7 +238,7 @@ export default makeStyles((theme) => ({
   },
 
   orgTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',

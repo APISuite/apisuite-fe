@@ -73,7 +73,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '22px',
     fontWeight: 400,
     marginBottom: '12px',
@@ -133,7 +133,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationsTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -146,14 +146,14 @@ export default makeStyles((theme) => ({
   },
 
   firstUseButton: {
-    backgroundColor: theme.palette.secondary.main,
-    color: `${theme.palette.common.white} !important`,
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
     padding: '12px 21px',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -222,7 +222,7 @@ export default makeStyles((theme) => ({
   },
 
   knowledgeBaseCardTitle: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
     marginBottom: '20px',
@@ -258,10 +258,10 @@ export default makeStyles((theme) => ({
   },
 
   registerNewClientApplicationCardButton: {
-    backgroundColor: theme.palette.secondary.main,
-    border: `1px solid ${theme.palette.secondary.main}`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '40px',
@@ -270,12 +270,12 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   subscribedClientApplicationCardStatusIcon: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     fontSize: '14px',
     marginRight: '12px',
   },

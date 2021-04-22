@@ -2,10 +2,10 @@ import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
   greetingCardButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.secondary.contrastText} !important`,
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -16,7 +16,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 

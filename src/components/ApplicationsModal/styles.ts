@@ -42,14 +42,14 @@ export default makeStyles((theme) => ({
   },
 
   editApplicationHeader: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
   },
 
   iconLogo: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -77,14 +77,14 @@ export default makeStyles((theme) => ({
   },
 
   newApplicationHeader: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
   },
 
   portalName: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
@@ -92,7 +92,7 @@ export default makeStyles((theme) => ({
   /* 1.2 Modal's body */
 
   additionalInfoSubSectionTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -119,7 +119,7 @@ export default makeStyles((theme) => ({
   },
 
   appNameAndShortDescriptionSubSectionTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -231,9 +231,9 @@ export default makeStyles((theme) => ({
   },
 
   disabledAddOrEditButton: {
-    backgroundColor: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.primary.main}`,
-    color: `${theme.palette.primary.contrastText} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
+    color: `${theme.palette.secondary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     opacity: 0.5,
@@ -243,7 +243,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
@@ -373,9 +373,9 @@ export default makeStyles((theme) => ({
   },
 
   enabledAddOrEditButton: {
-    backgroundColor: theme.palette.secondary.main,
-    color: `${theme.palette.common.white} !important`,
-    border: `1px solid ${theme.palette.secondary.main}`,
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
+    border: `1px solid ${theme.palette.primary.main}`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -383,7 +383,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -631,7 +631,7 @@ export default makeStyles((theme) => ({
   },
 
   redirectURISubSectionTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '20px',
@@ -649,7 +649,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginLeft: '25px',
@@ -685,7 +685,7 @@ export default makeStyles((theme) => ({
   },
 
   subscribedClientApplicationCardStatusIcon: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     fontSize: '14px',
     margin: '0px 12px 0px 12px',
   },

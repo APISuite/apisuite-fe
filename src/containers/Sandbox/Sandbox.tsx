@@ -233,9 +233,9 @@ const Sandbox: React.FC<SandboxProps> = ({
               </div>
 
               <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
-                <h1 style={{ color: palette.secondary.main }}>2.</h1>
+                <h1 style={{ color: palette.primary.main }}>2.</h1>
 
-                <h3 style={{ color: palette.secondary.main }}>
+                <h3 style={{ color: palette.primary.main }}>
                   {t('sandboxPage.stepsSection.individualSteps.stepTwo.header')}
                 </h3>
 

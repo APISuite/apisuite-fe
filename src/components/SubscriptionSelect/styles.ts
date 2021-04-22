@@ -40,7 +40,7 @@ export default makeStyles((theme) => ({
   },
 
   loading: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     opacity: 0.5,
   },
 

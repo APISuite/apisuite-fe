@@ -19,7 +19,7 @@ export default makeStyles((theme) => ({
   },
   selected: {
     color: theme.palette.text.secondary,
-    borderColor: theme.palette.secondary.main,
+    borderColor: theme.palette.primary.main,
     borderLeftWidth: 3,
     borderRightWidth: 0,
     borderTopWidth: 0,

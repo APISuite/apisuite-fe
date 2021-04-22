@@ -16,11 +16,11 @@ export default makeStyles((theme) => ({
   },
 
   activeProductionAccessFilterButtonIcon: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
 
   activeSandboxAccessFilterButtonIcon: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
 
   allAPIProductsSection: {
@@ -70,7 +70,7 @@ export default makeStyles((theme) => ({
   },
 
   apiProductOnlineStatus: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     fontSize: '14px',
     marginRight: '12px',
   },
@@ -80,7 +80,7 @@ export default makeStyles((theme) => ({
 
     // Access type
     '& > :last-child': {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
       fontSize: '14px',
       fontWeight: 300,
       textAlign: 'left',
@@ -161,7 +161,7 @@ export default makeStyles((theme) => ({
   },
 
   productionAccess: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
@@ -170,14 +170,14 @@ export default makeStyles((theme) => ({
     textAlign: 'center',
 
     '& > :first-child': {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
       fontSize: '16px',
       fontWeight: 300,
     },
   },
 
   sandboxAccess: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
@@ -185,7 +185,7 @@ export default makeStyles((theme) => ({
   subscribeButton: {
     backgroundColor: theme.palette.background.default,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.primary} !important`,
+    color: `${theme.palette.secondary} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 20px',
@@ -218,9 +218,9 @@ export default makeStyles((theme) => ({
   },
 
   viewDetailsButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '12px',
@@ -229,7 +229,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 }))

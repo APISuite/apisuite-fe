@@ -18,7 +18,7 @@ export default makeStyles((theme) => ({
   },
 
   sectionIntroHeading: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '32px',
     fontWeight: 300,
     margin: '40px 0px',
@@ -89,8 +89,8 @@ export default makeStyles((theme) => ({
   },
 
   individualStepButton: {
-    backgroundColor: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
+    borderColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.background.default,
     fontSize: '16px',
@@ -99,8 +99,8 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: theme.palette.primary.main,
-      borderColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
+      borderColor: theme.palette.secondary.main,
       borderRadius: `${theme.palette.dimensions.borderRadius}px`,
       color: theme.palette.background.default,
     },
@@ -152,8 +152,8 @@ export default makeStyles((theme) => ({
   },
 
   stepsDescriptionRegisterButton: {
-    backgroundColor: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
+    borderColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.background.default,
     fontSize: '16px',
@@ -162,8 +162,8 @@ export default makeStyles((theme) => ({
     width: '135px',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: theme.palette.primary.main,
-      borderColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
+      borderColor: theme.palette.secondary.main,
       borderRadius: `${theme.palette.dimensions.borderRadius}px`,
       color: theme.palette.background.default,
     },
@@ -176,7 +176,7 @@ export default makeStyles((theme) => ({
   },
 
   stepsDescriptionHeading: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '24px',
     fontWeight: 500,
     margin: '0px 0px 12px 0px',

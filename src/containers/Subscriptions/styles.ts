@@ -2,9 +2,9 @@ import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
   addSubscriptionButton: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -41,7 +41,7 @@ export default makeStyles((theme) => ({
   },
 
   dataToShowTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',

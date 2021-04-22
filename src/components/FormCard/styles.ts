@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
   disabledNextButton: {
     backgroundColor: `${theme.palette.label} !important`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   enabledNextButton: {
-    backgroundColor: theme.palette.secondary.main,
-    color: `${theme.palette.common.white} !important`,
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary,
+      backgroundColor: theme.palette.secondary,
     },
   },
 
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   formTitle: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: '26px',
     fontWeight: 300,
   },

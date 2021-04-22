@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
   },
   loading: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   ssoSignIcon: {
     fontSize: '25px',

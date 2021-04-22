@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
 
   error: {
     backgroundColor: theme.palette.error.main,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
   },
 
   icon: {
@@ -29,8 +29,8 @@ export default makeStyles((theme) => ({
   },
 
   success: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
   },
 
   text: {
