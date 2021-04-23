@@ -1,29 +1,5 @@
-import { mapDispatchToProps, mapStateToProps } from './index'
-
-import {
-  changeRoleActions,
-  confirmInviteActions,
-  createOrgActions,
-  deleteAccountActions,
-  fetchOrgActions,
-  fetchRoleOptionsActions,
-  fetchTeamMembersActions,
-  getProfileActions,
-  inviteMemberActions,
-  resetErrorAction,
-  switchOrgActions,
-  updateOrgActions,
-  updateProfileActions,
-} from './ducks'
-
 import { User } from 'containers/Auth/types'
-
 import { RequestStatus } from 'util/request'
-import { ReturnNestedType } from 'util/typeUtils'
-
-export type ProfileProps =
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>
 
 export const roleNameOptions = ['admin', 'organizationOwner', 'developer', ''] as const
 
@@ -118,12 +94,6 @@ export type FetchTeamMembersResponse = {
 
 export type FetchRoleOptionsResponse = Role[]
 
-export type InviteMemberResponse = any
-
-export type ConfirmInviteResponse = any
-
-export type ChangeRoleResponse = any
-
 export type GetProfileResponse = Profile
 
 export type UpdateProfileResponse = {
@@ -136,22 +106,3 @@ export type FetchOrgResponse = {
   org: Organization & ExistingOrgInfo,
   success: boolean,
 }
-
-export type CreateOrgResponse = any
-
-export type UpdateOrgResponse = any
-
-export type ProfileActions =
-  ReturnNestedType<typeof changeRoleActions> |
-  ReturnNestedType<typeof confirmInviteActions> |
-  ReturnNestedType<typeof createOrgActions> |
-  ReturnNestedType<typeof deleteAccountActions> |
-  ReturnNestedType<typeof fetchOrgActions> |
-  ReturnNestedType<typeof fetchRoleOptionsActions> |
-  ReturnNestedType<typeof fetchTeamMembersActions> |
-  ReturnNestedType<typeof getProfileActions> |
-  ReturnNestedType<typeof inviteMemberActions> |
-  ReturnNestedType<typeof switchOrgActions> |
-  ReturnNestedType<typeof updateOrgActions> |
-  ReturnNestedType<typeof updateProfileActions> |
-  ReturnType<typeof resetErrorAction>

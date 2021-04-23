@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation, Button, Avatar, TextField } from '@apisuite/fe-base'
 import Close from '@material-ui/icons/Close'
 import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
@@ -8,34 +8,34 @@ import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 
 import { useForm } from 'util/useForm'
+import { isValidImage, isValidPhoneNumber, isValidURL } from 'util/forms'
+import { Organization } from 'store/profile/types'
 import Select from 'components/Select'
 import { SelectOption } from 'components/Select/types'
-import { isValidImage, isValidPhoneNumber, isValidURL } from 'util/forms'
 
+import { profileSelector } from './selectors'
 import useStyles from './styles'
-import { Organization, ProfileProps } from './types'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateProfile } from 'store/profile/actions/updateProfile'
+import { switchOrg } from 'store/profile/actions/switchOrg'
+import { deleteAccount } from 'store/profile/actions/deleteAccount'
+import { authActions } from 'containers/Auth/ducks'
+import { getProfile } from 'store/profile/actions/getProfile'
 
-const Profile: React.FC<ProfileProps> = ({
-  deleteAccount,
-  getProfile,
-  logout,
-  profile,
-  switchOrg,
-  updateProfile,
-}) => {
+export const Profile: React.FC = () => {
   const classes = useStyles()
-
+  const dispatch = useDispatch()
   const [t] = useTranslation()
+  const { profile } = useSelector(profileSelector)
+  const [ssoIsActive, setSSOIsActive] = useState(false)
 
-  const [ssoIsActive, setSSOIsActive] = React.useState(false)
-
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
-    getProfile()
-  }, [getProfile])
+    dispatch(getProfile({}))
+  }, [dispatch])
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
     field to determine whether the user signed in regularly or by way of SSO.
 
@@ -62,8 +62,8 @@ const Profile: React.FC<ProfileProps> = ({
     userNameInitials = userNameInitialsArray[0].charAt(0).toLocaleUpperCase()
   }
 
-  const [avatarHasBeenClicked, setAvatarHasBeenClicked] = React.useState(false)
-  const [validImage, setValidImage] = React.useState<boolean>(true)
+  const [avatarHasBeenClicked, setAvatarHasBeenClicked] = useState(false)
+  const [validImage, setValidImage] = useState<boolean>(true)
 
   const validateAvatar = (avatar: string) => {
     if (avatar !== '') {
@@ -137,7 +137,7 @@ const Profile: React.FC<ProfileProps> = ({
   /* Whenever the store's 'profile' changes (i.e., upon mounting this component,
   and immediately after saving one's details), our form's values are 'reset'
   to whatever is in 'profile'. */
-  React.useEffect(() => {
+  useEffect(() => {
     resetForm(
       {
         userAvatarURL: profile.user.avatar ? profile.user.avatar : '',
@@ -154,9 +154,9 @@ const Profile: React.FC<ProfileProps> = ({
 
   /* Organisation details */
 
-  const [profileHasOrgDetails, setProfileHasOrgDetails] = React.useState(false)
+  const [profileHasOrgDetails, setProfileHasOrgDetails] = useState(false)
 
-  const [currentlySelectedOrganisation, setCurrentlySelectedOrganisation] = React.useState({
+  const [currentlySelectedOrganisation, setCurrentlySelectedOrganisation] = useState({
     group: '',
     label: '',
     value: '',
@@ -182,14 +182,14 @@ const Profile: React.FC<ProfileProps> = ({
     setCurrentlySelectedOrganisation(newlySelectedOrganisation)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Once our store's 'profile' details load, we check if there's organisation data associated to it
     const hasOrgDetails = Object.keys(profile.current_org).length !== 0 && profile.current_org.id !== ''
 
     setProfileHasOrgDetails(hasOrgDetails)
   }, [profile])
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Once our store's 'profile' details load, we store them locally
     setCurrentlySelectedOrganisation({
       group: '',
@@ -204,23 +204,21 @@ const Profile: React.FC<ProfileProps> = ({
     event.preventDefault()
 
     if (selectedOrganisation && selectedOrganisation.value) {
-      const userID = profile.user.id
-      const userAvatarURL = profile.user.avatar ? profile.user.avatar : ''
-      const userBio = ''
-      const userName = profile.user.name
-      const userPhoneNumber = profile.user.mobile ? profile.user.mobile : ''
-
-      updateProfile(userID, userName, userBio, userAvatarURL, userPhoneNumber)
+      dispatch(updateProfile({
+        userId: profile.user.id,
+        avatar: profile.user.avatar ? profile.user.avatar : '',
+        bio: '',
+        name: profile.user.name,
+        mobile: profile.user.mobile ? profile.user.mobile : '',
+      }))
     } else {
-      const userID = profile.user.id
-      const userAvatarURL = formState.values.userAvatarURL
-      const userBio = formState.values.userBio
-      const userName = formState.values.userName
-      const userPhoneNumber = formState.values.userPhoneNumber
-        ? formState.values.userPhoneNumber
-        : ''
-
-      updateProfile(userID, userName, userBio, userAvatarURL, userPhoneNumber)
+      dispatch(updateProfile({
+        userId: profile.user.id,
+        avatar: formState.values.userAvatarURL,
+        bio: formState.values.userBio,
+        name: formState.values.userName,
+        mobile: formState.values.userPhoneNumber ? formState.values.userPhoneNumber : '',
+      }))
     }
   }
 
@@ -232,13 +230,13 @@ const Profile: React.FC<ProfileProps> = ({
       currentlySelectedOrganisation.value &&
       currentlySelectedOrganisation.value !== profile.current_org.id
     ) {
-      switchOrg(profile.user.id, currentlySelectedOrganisation.value)
+      dispatch(switchOrg({ id: profile.user.id, orgId: currentlySelectedOrganisation.value }))
     }
   }
 
   /* Account deletion */
 
-  const [openDialog, setOpenDialog] = React.useState<boolean>(false)
+  const [openDialog, setOpenDialog] = useState<boolean>(false)
 
   const handleDelete = () => {
     setOpenDialog(true)
@@ -518,7 +516,7 @@ const Profile: React.FC<ProfileProps> = ({
 
             <Button
               className={classes.signOutButton}
-              onClick={logout}
+              onClick={() => dispatch(authActions.logout())}
             >
               {t('profileTab.overviewSubTab.otherActionsLabels.signOut')}
             </Button>
@@ -530,7 +528,7 @@ const Profile: React.FC<ProfileProps> = ({
           <CustomizableDialog
             closeDialogCallback={handleCloseDialog}
             confirmButtonCallback={() => {
-              deleteAccount()
+              dispatch(deleteAccount({}))
 
               handleCloseDialog()
             }}
@@ -577,5 +575,3 @@ const Profile: React.FC<ProfileProps> = ({
     </main>
   )
 }
-
-export default Profile

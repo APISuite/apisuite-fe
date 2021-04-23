@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation, Avatar, Button, Fade, Menu, MenuItem, TextField } from '@apisuite/fe-base'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import Close from '@material-ui/icons/Close'
@@ -8,25 +8,24 @@ import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 import { useForm } from 'util/useForm'
 import { isValidImage, isValidURL } from 'util/forms'
 
-import { OrganisationProps } from './types'
 import useStyles from './styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchOrg } from 'store/profile/actions/fetchOrg'
+import { createOrg } from 'store/profile/actions/createOrg'
+import { updateOrg } from 'store/profile/actions/updateOrg'
+import { organisationSelector } from './selector'
 
-const Organisation: React.FC<OrganisationProps> = ({
-  createOrg,
-  fetchOrg,
-  org,
-  profile,
-  updateOrg,
-}) => {
+export const Organisation: React.FC = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
+  const { profile, org } = useSelector(organisationSelector)
 
-  const [t] = useTranslation()
-
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
-    fetchOrg(profile.current_org.id)
-  }, [fetchOrg, profile.current_org.id])
+    dispatch(fetchOrg({ 'org_id': profile.current_org.id }))
+  }, [dispatch, profile.current_org.id])
 
   /*
   Organisation details
@@ -136,7 +135,7 @@ const Organisation: React.FC<OrganisationProps> = ({
   /* Whenever the store's 'profile > org' changes (i.e., upon mounting this component,
   and immediately after saving one's details), our form's values are 'reset'
   to whatever is now in 'profile > org'. */
-  React.useEffect(() => {
+  useEffect(() => {
     resetForm({
       orgAvatarURL: org.logo ? org.logo : '',
       orgDescription: org.description ? org.description : '',
@@ -156,19 +155,19 @@ const Organisation: React.FC<OrganisationProps> = ({
   const createOrgDetails = (event: React.ChangeEvent<{}>) => {
     event.preventDefault()
 
-    const newOrgDetails = {
-      name: formState.values.orgName,
-      description: formState.values.orgDescription,
-      vat: formState.values.orgVAT,
-      tosUrl: formState.values.orgTermsURL,
-      privacyUrl: formState.values.orgPrivacyURL,
-      youtubeUrl: formState.values.orgYouTubeURL,
-      websiteUrl: formState.values.orgWebsiteURL,
-      supportUrl: formState.values.orgSupportURL,
-      logo: formState.values.orgAvatarURL,
-    }
-
-    createOrg(newOrgDetails)
+    dispatch(createOrg({
+      newOrgInfo: {
+        name: formState.values.orgName,
+        description: formState.values.orgDescription,
+        vat: formState.values.orgVAT,
+        tosUrl: formState.values.orgTermsURL,
+        privacyUrl: formState.values.orgPrivacyURL,
+        youtubeUrl: formState.values.orgYouTubeURL,
+        websiteUrl: formState.values.orgWebsiteURL,
+        supportUrl: formState.values.orgSupportURL,
+        logo: formState.values.orgAvatarURL,
+      },
+    }))
   }
 
   const updateOrgDetails = (event: React.ChangeEvent<{}>) => {
@@ -176,7 +175,7 @@ const Organisation: React.FC<OrganisationProps> = ({
 
     const orgId = org.id.toString()
 
-    const orgDetails = {
+    const orgInfo = {
       name: formState.values.orgName,
       description: formState.values.orgDescription,
       vat: formState.values.orgVAT,
@@ -188,7 +187,7 @@ const Organisation: React.FC<OrganisationProps> = ({
       logo: formState.values.orgAvatarURL,
     }
 
-    updateOrg(orgId, orgDetails)
+    dispatch(updateOrg({ orgId, orgInfo }))
   }
 
   /* URL selector */
@@ -199,7 +198,7 @@ const Organisation: React.FC<OrganisationProps> = ({
   /* Whenever the store's 'profile > org' details become available
   (i.e., upon mounting this component, and immediately after saving one's details),
   we need to determine what optional URLs have been provided, and are meant to be shown. */
-  React.useEffect(() => {
+  useEffect(() => {
     setIsShowing([
       !!org.tosUrl,
       !!org.privacyUrl,
@@ -643,5 +642,3 @@ const Organisation: React.FC<OrganisationProps> = ({
     </main>
   )
 }
-
-export default Organisation

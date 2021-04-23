@@ -1,25 +1,27 @@
-import * as React from 'react'
-
+import { confirmRegistrationActions } from 'components/SignUpForm/ducks'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
-
 import { Redirect } from 'react-router-dom'
-
-import { RedirectPageProps } from './types'
-
 import { useQuery } from 'util/useQuery'
 
-const RedirectPage: React.FC<RedirectPageProps> = ({
-  confirmInvite,
-  confirmRegistration,
-}) => {
+import { confirmInviteMember } from 'store/profile/actions/confirmInviteMember'
+
+export const RedirectPage: React.FC = () => {
   const query = useQuery()
   const token = query.get('token')
   const redirect = useParams<{ redirect: 'invite' | 'registration' | 'password' }>().redirect
+  const dispatch = useDispatch()
 
-  React.useEffect(() => {
-    if (token && redirect === 'registration') confirmRegistration(token)
-    if (token && redirect === 'invite') confirmInvite(token)
-  }, [confirmRegistration, confirmInvite])
+  useEffect(() => {
+    if (token && redirect === 'registration') {
+      dispatch(confirmRegistrationActions.request(token))
+    }
+
+    if (token && redirect === 'invite') {
+      dispatch(confirmInviteMember({ token }))
+    }
+  }, [dispatch, token, redirect])
 
   switch (redirect) {
     case 'registration':
@@ -44,5 +46,3 @@ const RedirectPage: React.FC<RedirectPageProps> = ({
       return <Redirect to='/' />
   }
 }
-
-export default RedirectPage

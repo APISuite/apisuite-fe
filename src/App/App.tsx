@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { NotificationStack } from 'components/NotificationStack'
+import { getProfile } from 'store/profile/actions/getProfile'
 import routes from './routes'
 import useStyles from './styles'
 import CookiesBanner from 'components/CookiesBanner'
 import { authActions } from 'containers/Auth/ducks'
 import { authSelector } from './selector'
-import { getProfileActions } from 'containers/Profile/ducks'
 
 export const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     if (auth.user) {
-      dispatch(getProfileActions.request())
+      dispatch(getProfile)
     }
   }, [auth.user, dispatch])
 

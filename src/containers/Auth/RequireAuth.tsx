@@ -4,7 +4,7 @@ import { Redirect } from 'react-router'
 
 import { useSelector } from 'react-redux'
 
-import { getRoleName } from 'containers/Profile/selectors'
+import { getRoleName } from 'pages/Profile/selectors'
 
 import { RequireAuthProps } from './types'
 

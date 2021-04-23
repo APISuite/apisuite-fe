@@ -21,7 +21,7 @@ import {
 
 import { openNotification } from 'store/notificationStack/actions/notification'
 
-import { Profile } from 'containers/Profile/types'
+import { Profile } from 'store/profile/types'
 
 import { API_URL } from 'constants/endpoints'
 import { ROLES } from 'constants/global'

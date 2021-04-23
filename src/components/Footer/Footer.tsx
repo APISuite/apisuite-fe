@@ -5,7 +5,7 @@ import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import { Menus } from '@apisuite/extension-ui-types'
 import { getMenuEntries } from 'util/extensions'
 import LocaleSelect from 'language/LocaleSelect'
-import { getRoleName } from 'containers/Profile/selectors'
+import { getRoleName } from 'pages/Profile/selectors'
 import SvgIcon from 'components/SvgIcon'
 
 import useStyles from './styles'

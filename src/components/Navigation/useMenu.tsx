@@ -8,7 +8,7 @@ import {
   DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
 } from 'constants/global'
 import { getMenuEntries } from 'util/extensions'
-import { getRoleName } from 'containers/Profile/selectors'
+import { getRoleName } from 'pages/Profile/selectors'
 
 import { TabProps } from './types'
 

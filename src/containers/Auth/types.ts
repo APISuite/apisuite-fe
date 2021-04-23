@@ -6,7 +6,7 @@ import { ErrorReason } from 'util/request'
 
 import { RoleRequirement } from '@apisuite/extension-ui-types'
 
-import { Role } from 'containers/Profile/types'
+import { Role } from 'store/profile/types'
 
 import { LOGOUT, SSO_PROVIDERS } from './ducks'
 

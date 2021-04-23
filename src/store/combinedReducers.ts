@@ -14,7 +14,7 @@ import auth from 'containers/Auth/ducks'
 // Temporary until notification cards become clearer
 import notificationCards from './notificationCards/reducer'
 import notifications from './notificationStack/reducer'
-import profile from 'containers/Profile/ducks'
+import profile from './profile/reducer'
 import reduceReducers from './reduceReducers'
 import register from 'components/SignUpForm/ducks'
 import security from './security/reducer'

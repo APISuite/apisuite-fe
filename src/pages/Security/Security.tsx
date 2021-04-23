@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation, Button, TextField, InputAdornment, IconButton } from '@apisuite/fe-base'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded'
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded'
-import { getProfileActions } from 'containers/Profile/ducks'
 import { updatePasswordRequest } from 'store/security/actions/updatePassword'
 
 import { isValidPass } from 'util/forms'
 
 import { securitySelector } from './selector'
 import useStyles from './styles'
+import { getProfile } from 'store/profile/actions/getProfile'
 
 export const Security: React.FC = () => {
   const classes = useStyles()
@@ -19,13 +19,13 @@ export const Security: React.FC = () => {
   const { profile } = useSelector(securitySelector)
   const [ssoIsActive, setSSOIsActive] = React.useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
-    dispatch(getProfileActions.request())
+    dispatch(getProfile({}))
   }, [dispatch])
 
-  React.useEffect(() => {
+  useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
     field to determine whether the user signed in regularly or by way of SSO.
 
@@ -36,9 +36,9 @@ export const Security: React.FC = () => {
     }
   }, [profile])
 
-  const [providedPasswords, setProvidedPasswords] = React.useState(['', ''])
+  const [providedPasswords, setProvidedPasswords] = useState(['', ''])
 
-  const [showPassword, setShowPassword] = React.useState([false, false])
+  const [showPassword, setShowPassword] = useState([false, false])
 
   const handleShowPassword = (event: any, passwordFieldNumber: number) => {
     event.preventDefault()
