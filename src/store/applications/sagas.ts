@@ -3,7 +3,6 @@ import { push } from 'connected-react-router'
 
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
-import { authActions } from 'containers/Auth/ducks'
 
 import { Store } from 'store/types'
 import { AppData } from './types'
@@ -14,6 +13,7 @@ import { deleteAppError, deleteAppSuccess, DELETE_APP } from './actions/deleteAp
 import { getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess, GET_ALL_USER_APPS } from './actions/getAllUserApps'
 import { requestAPIAccessError, requestAPIAccessSuccess, REQUEST_API_ACCESS } from './actions/requestApiAccess'
 import { getUserAppError, getUserAppSuccess, GET_USER_APP } from './actions/getUserApp'
+import { handleSessionExpire } from 'store/auth/actions/expiredSession'
 
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
@@ -47,7 +47,7 @@ export function * createAppActionSaga (action: CreateAppAction) {
     yield put(push('/dashboard/apps'))
   } catch (error) {
     yield put(createAppError(error))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -102,7 +102,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
     }))
   } catch (error) {
     yield put(updateAppError(error))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -140,7 +140,7 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
       yield put(push('/dashboard/apps'))
     } else {
       yield put(deleteAppError({}))
-      yield put(authActions.handleSessionExpire())
+      yield put(handleSessionExpire({}))
     }
   }
 }
@@ -163,7 +163,7 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
     yield put(requestAPIAccessSuccess({}))
   } catch (error) {
     yield put(requestAPIAccessError({}))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -207,7 +207,7 @@ export function * getAllUserAppsActionSaga () {
     }))
   } catch (error) {
     yield put(getAllUserAppsError(error))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -251,7 +251,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
     yield put(getUserAppSuccess({ appData: allUserApps[indexOfUserAppWeWant] }))
   } catch (error) {
     yield put(getUserAppError(error))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 

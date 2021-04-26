@@ -7,7 +7,6 @@ import { useConfig, Avatar, Tabs, Tab } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
 import RoomServiceRoundedIcon from '@material-ui/icons/RoomServiceRounded'
-import { getAuth } from 'containers/Auth/selectors'
 import Link from 'components/Link'
 import SvgIcon from 'components/SvgIcon'
 
@@ -16,6 +15,7 @@ import useStyles from './styles'
 import './styles.scss'
 
 import { NavigationProps, TabMenus } from './types'
+import { navigationSelector } from './selector'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
@@ -34,7 +34,7 @@ const Navigation: React.FC<NavigationProps> = ({
   const history = useHistory()
   const { portalName, ownerInfo } = useConfig()
 
-  const auth = useSelector(getAuth)
+  const { auth } = useSelector(navigationSelector)
   const user = auth.user
   const userProfile = profile.profile.user
 

@@ -10,9 +10,9 @@ import {
 } from './actions/getAPIVersion'
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
-import { authActions } from 'containers/Auth/ducks'
 import { Api, APIVersion } from 'store/subscriptions/types'
 import { GetAPIVersionAction } from './actions/types'
+import { handleSessionExpire } from 'store/auth/actions/expiredSession'
 
 const emptyVersion: APIVersion = {
   id: 0,
@@ -42,7 +42,7 @@ function * getAPIVersionSaga (action: GetAPIVersionAction) {
     yield put(geAPIVersionSuccess({ version }))
   } catch (error) {
     yield put(geAPIVersionError(error))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 

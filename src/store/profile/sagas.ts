@@ -1,13 +1,9 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 
 import request from 'util/request'
-
-import { authActions } from 'containers/Auth/ducks'
 import { openNotification } from 'store/notificationStack/actions/notification'
-
 import { FetchOrgResponse, FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, UpdateProfileResponse } from './types'
 import { Store } from 'store/types'
-
 import { API_URL } from 'constants/endpoints'
 import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, UpdateOrgAction, UpdateProfileAction, SwitchOrgAction } from './actions/types'
 import { fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess, FETCH_TEAM_MEMBERS } from './actions/fetchTeamMembers'
@@ -22,6 +18,8 @@ import { createOrgError, createOrgSuccess, CREATE_ORG } from './actions/createOr
 import { updateOrgError, updateOrgSuccess, UPDATE_ORG } from './actions/updateOrg'
 import { switchOrgError, switchOrgSuccess, SWITCH_ORG } from './actions/switchOrg'
 import { deleteAccountError, deleteAccountSuccess, DELETE_ACCOUNT } from './actions/deleteAccount'
+import { handleSessionExpire } from 'store/auth/actions/expiredSession'
+import { logout } from 'store/auth/actions/logout'
 
 const STATE_STORAGE = 'ssoStateStorage'
 
@@ -41,7 +39,7 @@ export function * fetchTeamMembersSaga (action: FetchTeamMembersAction) {
     yield put(fetchTeamMembersSuccess({ members }))
   } catch (error) {
     yield put(fetchTeamMembersError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -55,7 +53,7 @@ export function * fetchRoleOptionsSaga () {
     yield put(fetchRoleOptionsSuccess({ roles }))
   } catch (error) {
     yield put(fetchRoleOptionsError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -75,7 +73,7 @@ export function * inviteMemberSaga ({ type, ...rest }: InviteTeamMemberAction) {
   } catch (error) {
     yield put(inviteTeamMemberError({ error: error.message || 'Invitation failed.' }))
     yield put(openNotification('error', 'Error inviting member.', 3000))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -114,7 +112,7 @@ export function * changeRoleSaga ({ type, ...rest }: ChangeRoleAction) {
   } catch (error) {
     yield put(changeRoleError({ error: error.message }))
     yield put(openNotification('error', 'Failed to update role.', 3000))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -131,7 +129,7 @@ export function * getProfileSaga () {
     yield put(getProfileSuccess({ profile }))
   } catch (error) {
     yield put(getProfileError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -151,7 +149,7 @@ export function * updateProfileSaga ({ userId, ...rest }: UpdateProfileAction) {
     yield put(getProfile({}))
   } catch (error) {
     yield put(updateProfileError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -175,7 +173,7 @@ export function * fetchOrgSaga (action: FetchOrgAction) {
     yield put(fetchOrgSuccess({ org }))
   } catch (error) {
     yield put(fetchOrgError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -194,7 +192,7 @@ export function * createOrgSaga ({ newOrgInfo }: CreateOrgAction) {
     yield put(openNotification('success', 'Your organisation was successfully created!', 3000))
   } catch (error) {
     yield put(createOrgError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -214,7 +212,7 @@ export function * updateOrgSaga ({ orgId, orgInfo }: UpdateOrgAction) {
     yield put(openNotification('success', 'Your organisation was successfully updated!', 3000))
   } catch (error) {
     yield put(updateOrgError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -233,7 +231,7 @@ export function * switchOrgSaga ({ type, ...props }: SwitchOrgAction) {
     yield put(getProfile({}))
   } catch (error) {
     yield put(switchOrgError({ error: error.message }))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 
@@ -250,11 +248,11 @@ export function * deleteAccountSaga () {
 
     yield put(deleteAccountSuccess({}))
     yield put(openNotification('success', 'Account deleted successfully.', 3000))
-    yield put(authActions.logout())
+    yield put(logout({}))
   } catch (error) {
     yield put(deleteAccountError({ error: error.message }))
     yield put(openNotification('error', `Failed to delete account. ${error.message}`, 3000))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 

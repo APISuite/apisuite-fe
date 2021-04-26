@@ -1,44 +1,32 @@
-import { AnyAction } from 'redux'
-
 import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
+import qs from 'qs'
 
 import request from 'util/request'
 import stateGenerator from 'util/stateGenerator'
-
-import {
-  authActions,
-  EXPIRED_SESSION,
-  FORGOT_PASSWORD,
-  LOGIN_SUCCESS,
-  LOGIN_USER,
-  LOGIN,
-  LOGOUT,
-  RECOVER_PASSWORD,
-  SSO_LOGIN,
-  SSO_PROVIDERS,
-  SSO_TOKEN_EXCHANGE,
-} from './ducks'
-
 import { openNotification } from 'store/notificationStack/actions/notification'
-
 import { Profile } from 'store/profile/types'
-
 import { API_URL } from 'constants/endpoints'
 import { ROLES } from 'constants/global'
-
 import { Store } from 'store/types'
-
-import qs from 'qs'
+import { LOGIN, loginError, loginSuccess, loginUserError, loginUserSuccess, LOGIN_SUCCESS, LOGIN_USER } from './actions/login'
+import { EXPIRED_SESSION } from './actions/expiredSession'
+import { forgotPasswordError, forgotPasswordSuccess, FORGOT_PASSWORD } from './actions/forgotPassword'
+import { logout, LOGOUT, logoutError, logoutSuccess } from './actions/logout'
+import { recoverPasswordError, recoverPasswordSuccess, RECOVER_PASSWORD } from './actions/recoverPassword'
+import { SSO_LOGIN } from './actions/ssoLogin'
+import { ssoProvidersSuccess, SSO_PROVIDERS } from './actions/ssoProviders'
+import { SSO_TOKEN_EXCHANGE } from './actions/ssoTokenExchange'
+import { ForgotPasswordAction, LoginAction, RecoverPasswordAction, SSOLoginAction, SSOTokenExchangeAction } from './actions/types'
 
 const STATE_STORAGE = 'ssoStateStorage'
 
-function * loginWorker (action: AnyAction) {
+function * loginWorker (action: LoginAction) {
   try {
     const loginUrl = `${API_URL}/auth/login`
 
     const data = {
-      email: action.payload.email,
-      password: action.payload.password,
+      email: action.email,
+      password: action.password,
     }
 
     yield call(request, {
@@ -50,9 +38,9 @@ function * loginWorker (action: AnyAction) {
       data: qs.stringify(data),
     })
 
-    yield put(authActions.loginSuccess())
+    yield put(loginSuccess({}))
   } catch (error) {
-    yield put(authActions.loginError(error.message.error))
+    yield put(loginError({ error }))
   }
 }
 
@@ -69,7 +57,7 @@ function * loginUserWorker () {
     const userId = user.id
     const userName = user.name.split(' ')
 
-    yield put(authActions.loginUserSuccess({
+    yield put(loginUserSuccess({
       user: {
         fName: userName[0],
         lName: userName[userName.length - 1],
@@ -81,11 +69,11 @@ function * loginUserWorker () {
       },
     }))
   } catch (error) {
-    yield put(authActions.loginUserError(error.message.error))
+    yield put(loginUserError({ error }))
   }
 }
 
-function * forgotPasswordSaga (action: AnyAction) {
+function * forgotPasswordSaga ({ email }: ForgotPasswordAction) {
   try {
     yield call(request, {
       url: `${API_URL}/users/forgot`,
@@ -93,16 +81,16 @@ function * forgotPasswordSaga (action: AnyAction) {
       headers: {
         'Content-Type': 'application/json',
       },
-      data: JSON.stringify(action.payload),
+      data: JSON.stringify({ email }),
     })
 
-    yield put(authActions.forgotPasswordSuccess())
+    yield put(forgotPasswordSuccess({}))
   } catch (error) {
-    authActions.forgotPasswordError(error)
+    forgotPasswordError({ error })
   }
 }
 
-function * recoverPasswordSaga (action: AnyAction) {
+function * recoverPasswordSaga ({ password, token }: RecoverPasswordAction) {
   try {
     yield call(request, {
       url: `${API_URL}/users/recover`,
@@ -110,17 +98,17 @@ function * recoverPasswordSaga (action: AnyAction) {
       headers: {
         'Content-Type': 'application/json',
       },
-      data: JSON.stringify(action.payload),
+      data: JSON.stringify({ password, token }),
     })
 
-    yield put(authActions.recoverPasswordSuccess())
+    yield put(recoverPasswordSuccess({}))
 
     // FIXME: use middleware
-    action.history.replace('auth/login')
+    // action.history.replace('auth/login')
 
     yield put(openNotification('success', 'Password successfully changed! You may now sign in.', 3000))
   } catch (error) {
-    authActions.recoverPasswordError(error)
+    recoverPasswordError({ error })
   }
 }
 
@@ -133,9 +121,9 @@ function * logoutWorker () {
       method: 'POST',
     })
 
-    yield put(authActions.logoutSuccess())
+    yield put(logoutSuccess({}))
   } catch (error) {
-    yield put(authActions.logoutError({ error: error.message || 'An unknown error has occurred.' }))
+    yield put(logoutError({ error }))
   }
 }
 
@@ -155,7 +143,7 @@ function * expiredSessionWorker () {
       if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
         yield put(openNotification('error', 'Your session has expired! You need to sign in again.', 5000))
         yield delay(1000)
-        yield put(authActions.logout())
+        yield put(logout({}))
       }
     }
   }
@@ -170,13 +158,13 @@ function * getProviders () {
       method: 'GET',
     })
 
-    yield put(authActions.getSSOProvidersSuccess({ providers: response.sso }))
+    yield put(ssoProvidersSuccess({ providers: response.sso }))
   } catch (error) {
     console.log('Error retrieving SSO providers.')
   }
 }
 
-function * ssoLoginWorker (action: AnyAction) {
+function * ssoLoginWorker ({ provider }: SSOLoginAction) {
   try {
     let state = localStorage.getItem(STATE_STORAGE)
 
@@ -188,40 +176,36 @@ function * ssoLoginWorker (action: AnyAction) {
       localStorage.setItem(STATE_STORAGE, state)
     }
 
-    const provider = action?.payload?.provider
     const ssoLoginUrl = `${API_URL}/auth/oidc/${provider}?state=${state}`
 
     const response: { url: string } = yield call(window.fetch, ssoLoginUrl)
 
     window.location.href = response.url
   } catch (error) {
-    yield put(authActions.loginError(error.message.error))
+    yield put(loginError({ error }))
   }
 }
 
-function * ssoTokenExchangeWorker (action: AnyAction) {
+function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
   try {
-    const provider = action?.payload?.provider
     const ssoLoginUrl = `${API_URL}/auth/oidc/${provider}/token`
-
-    const data = {
-      code: action?.payload?.code,
-    }
 
     yield call(request, {
       url: ssoLoginUrl,
       method: 'POST',
-      data,
+      data: { code },
     })
 
+    // FIXME: move to middleware
     localStorage.removeItem(STATE_STORAGE)
     localStorage.removeItem('attemptingSignInWithProvider')
 
-    yield put(authActions.loginSuccess())
+    yield put(loginSuccess({}))
 
+    // FIXME: move to middleware
     window.location.href = '/auth'
   } catch (error) {
-    yield put(authActions.loginError(error.message.error))
+    yield put(loginError(error.message.error))
   }
 }
 

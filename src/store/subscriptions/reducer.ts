@@ -1,7 +1,7 @@
 import update from 'immutability-helper'
 
-import { LOGOUT } from 'containers/Auth/ducks'
-import { AuthStoreActionTypes } from 'containers/Auth/types'
+import { LOGOUT } from 'store/auth/actions/logout'
+import { LogoutAction } from 'store/auth/actions/types'
 
 import { SubscriptionsActions, SubscriptionsStore } from './types'
 import { GET_APIS_SUCCESS } from './actions/getAPIs'
@@ -15,7 +15,7 @@ const initialState: SubscriptionsStore = {
 /** Reducer */
 export default function subscriptionsReducer (
   state = initialState,
-  action: SubscriptionsActions | AuthStoreActionTypes['logout'],
+  action: SubscriptionsActions | LogoutAction,
 ): SubscriptionsStore {
   switch (action.type) {
     case LOGOUT: {

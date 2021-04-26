@@ -14,7 +14,8 @@ import keyIllustration from 'assets/keyIllustration.svg'
 
 import { passwordRecoverySelector } from './selector'
 import useStyles from './styles'
-import { authActions } from 'containers/Auth/ducks'
+import { recoverPassword } from 'store/auth/actions/recoverPassword'
+import { forgotPassword } from 'store/auth/actions/forgotPassword'
 
 export const PasswordRecovery: React.FC = () => {
   const classes = useStyles()
@@ -74,9 +75,9 @@ export const PasswordRecovery: React.FC = () => {
 
     if (stage === 'recover') {
       // FIXME: use middleware do not pass history in actions
-      dispatch(authActions.recoverPassword({ token: location.state.token, password: state.userInput }, history))
+      dispatch(recoverPassword({ token: location.state.token, password: state.userInput }))
     } else {
-      dispatch(authActions.forgotPassword({ email: state.userInput }))
+      dispatch(forgotPassword({ email: state.userInput }))
     }
   }
 

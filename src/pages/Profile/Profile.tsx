@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation, Button, Avatar, TextField } from '@apisuite/fe-base'
 import Close from '@material-ui/icons/Close'
 import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
@@ -7,6 +8,11 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 
+import { updateProfile } from 'store/profile/actions/updateProfile'
+import { switchOrg } from 'store/profile/actions/switchOrg'
+import { deleteAccount } from 'store/profile/actions/deleteAccount'
+import { getProfile } from 'store/profile/actions/getProfile'
+import { logout } from 'store/auth/actions/logout'
 import { useForm } from 'util/useForm'
 import { isValidImage, isValidPhoneNumber, isValidURL } from 'util/forms'
 import { Organization } from 'store/profile/types'
@@ -15,12 +21,6 @@ import { SelectOption } from 'components/Select/types'
 
 import { profileSelector } from './selectors'
 import useStyles from './styles'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateProfile } from 'store/profile/actions/updateProfile'
-import { switchOrg } from 'store/profile/actions/switchOrg'
-import { deleteAccount } from 'store/profile/actions/deleteAccount'
-import { authActions } from 'containers/Auth/ducks'
-import { getProfile } from 'store/profile/actions/getProfile'
 
 export const Profile: React.FC = () => {
   const classes = useStyles()
@@ -516,7 +516,7 @@ export const Profile: React.FC = () => {
 
             <Button
               className={classes.signOutButton}
-              onClick={() => dispatch(authActions.logout())}
+              onClick={() => dispatch(logout({}))}
             >
               {t('profileTab.overviewSubTab.otherActionsLabels.signOut')}
             </Button>

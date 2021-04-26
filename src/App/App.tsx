@@ -6,8 +6,8 @@ import { getProfile } from 'store/profile/actions/getProfile'
 import routes from './routes'
 import useStyles from './styles'
 import CookiesBanner from 'components/CookiesBanner'
-import { authActions } from 'containers/Auth/ducks'
 import { authSelector } from './selector'
+import { loginUser } from 'store/auth/actions/login'
 
 export const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -21,7 +21,7 @@ export const App: React.FC = () => {
 
   useEffect(function initOnce () {
     if (auth.authToken && !auth.user) {
-      dispatch(authActions.loginUser({ token: auth.authToken }))
+      dispatch(loginUser({ token: auth.authToken }))
     }
   }, [auth.authToken, auth.user, dispatch])
 

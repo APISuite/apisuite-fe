@@ -1,5 +1,5 @@
-import { AuthPayloads } from 'containers/Auth/types'
+import { SSOTokenExchangeAction } from 'store/auth/actions/types'
 
 export interface SSOSignInProps {
-  ssoTokenExchange: (payload: AuthPayloads['sso']['ssoTokenExchange']) => void,
+  ssoTokenExchange: (payload: Omit<SSOTokenExchangeAction, 'type'>) => void,
 }

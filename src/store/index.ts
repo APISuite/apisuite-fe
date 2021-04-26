@@ -8,7 +8,7 @@ import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { createLogger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { createAuthMiddleware } from 'containers/Auth/ducks'
+import { createAuthMiddleware } from 'store/auth/middleware'
 
 import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'

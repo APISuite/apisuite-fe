@@ -1,9 +1,9 @@
 import update from 'immutability-helper'
-import { AuthStoreActionTypes } from 'containers/Auth/types'
-import { LOGOUT } from 'containers/Auth/ducks'
 import { APIVersionStore } from './types'
 import { APIVersionActions } from './actions/types'
 import { GET_API_VERSION, GET_API_VERSION_ERROR, GET_API_VERSION_SUCCESS } from './actions/getAPIVersion'
+import { LogoutAction } from 'store/auth/actions/types'
+import { LOGOUT } from 'store/auth/actions/logout'
 
 /** Initial state */
 const initialState: APIVersionStore = {
@@ -25,7 +25,7 @@ const initialState: APIVersionStore = {
 /** Reducer */
 export default function apiVersionReducer (
   state = initialState,
-  action: APIVersionActions | AuthStoreActionTypes['logout'],
+  action: APIVersionActions | LogoutAction,
 ): APIVersionStore {
   switch (action.type) {
     case LOGOUT: {

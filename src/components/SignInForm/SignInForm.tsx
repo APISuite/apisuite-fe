@@ -6,13 +6,14 @@ import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps }
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-import { authActions } from 'containers/Auth/ducks'
 import FormCard from 'components/FormCard'
 import { isValidEmail } from 'util/forms'
 import SSOForm from 'components/SSOForm'
 
 import useStyles from './styles'
 import { signinFormSelector } from './selector'
+import { ssoProviders } from 'store/auth/actions/ssoProviders'
+import { login } from 'store/auth/actions/login'
 
 export const SignInForm: React.FC = () => {
   const dispatch = useDispatch()
@@ -25,7 +26,7 @@ export const SignInForm: React.FC = () => {
 
   useEffect(() => {
     if (auth.providers === null) {
-      dispatch(authActions.getSSOProviders())
+      dispatch(ssoProviders({}))
     }
   }, [auth.providers, dispatch])
 
@@ -67,7 +68,7 @@ export const SignInForm: React.FC = () => {
   const handleFormSubmission = useCallback((event: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
     event.preventDefault()
 
-    dispatch(authActions.login({ email: formInputs.email, password: formInputs.password }))
+    dispatch(login({ email: formInputs.email, password: formInputs.password }))
 
     setFormInputsHaveChanged(false)
   }, [formInputs.email, formInputs.password, dispatch])

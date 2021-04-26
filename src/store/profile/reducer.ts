@@ -1,9 +1,5 @@
 import update from 'immutability-helper'
 
-import { AuthStoreActionTypes } from 'containers/Auth/types'
-import { LOGOUT } from 'containers/Auth/ducks'
-
-import { ProfileStore } from './types'
 import { ProfileActions } from './actions/types'
 import { RESET_PROFILE_ERRORS } from './actions/resetProfileErrors'
 import { FETCH_TEAM_MEMBERS, FETCH_TEAM_MEMBERS_ERROR, FETCH_TEAM_MEMBERS_SUCCESS } from './actions/fetchTeamMembers'
@@ -17,6 +13,9 @@ import { SWITCH_ORG, SWITCH_ORG_ERROR, SWITCH_ORG_SUCCESS } from './actions/swit
 import { FETCH_ROLE_OPTIONS_SUCCESS } from './actions/fetchRoleOptions'
 import { CHANGE_ROLE, CHANGE_ROLE_ERROR, CHANGE_ROLE_SUCCESS } from './actions/changeRole'
 import { DELETE_ACCOUNT, DELETE_ACCOUNT_ERROR, DELETE_ACCOUNT_SUCCESS } from './actions/deleteAccount'
+import { LogoutAction } from 'store/auth/actions/types'
+import { ProfileStore } from './types'
+import { LOGOUT } from 'store/auth/actions/logout'
 
 const initialState: ProfileStore = {
   members: [{
@@ -114,7 +113,7 @@ const initialState: ProfileStore = {
 
 export default function profileReducer (
   state = initialState,
-  action: ProfileActions | AuthStoreActionTypes['logout'],
+  action: ProfileActions | LogoutAction,
 ): ProfileStore {
   switch (action.type) {
     // General actions

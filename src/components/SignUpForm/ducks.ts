@@ -1,8 +1,6 @@
 import update from 'immutability-helper'
-
-import { LOGOUT } from 'containers/Auth/ducks'
-
-import { AuthStoreActionTypes } from 'containers/Auth/types'
+import { LOGOUT } from 'store/auth/actions/logout'
+import { LogoutAction } from 'store/auth/actions/types'
 
 import {
   isStep,
@@ -61,7 +59,7 @@ const initialState: SignUpFormStore = {
 
 export default function registerFormReducer (
   state = initialState,
-  action: SignUpFormActions | AuthStoreActionTypes['logout'],
+  action: SignUpFormActions | LogoutAction,
 ): SignUpFormStore {
   switch (action.type) {
     case LOGOUT: {

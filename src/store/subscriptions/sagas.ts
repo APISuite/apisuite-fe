@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects'
 import { ApisResponse } from './actions/types'
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
-import { authActions } from 'containers/Auth/ducks'
+import { handleSessionExpire } from 'store/auth/actions/expiredSession'
 import { getAPIsError, getAPIsSuccess, GET_APIS } from './actions/getAPIs'
 
 function * getAPIsSaga () {
@@ -20,7 +20,7 @@ function * getAPIsSaga () {
   } catch (error) {
     // TODO: decide and implement error handling
     yield put(getAPIsError({}))
-    yield put(authActions.handleSessionExpire())
+    yield put(handleSessionExpire({}))
   }
 }
 

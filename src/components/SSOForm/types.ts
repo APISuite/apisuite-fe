@@ -1,6 +1,7 @@
-import { AuthPayloads, AuthStore } from 'containers/Auth/types'
+import { AuthStore } from 'store/auth/types'
 
 import { History } from 'history'
+import { SSOLoginAction } from 'store/auth/actions/types'
 
 export interface SSOFormProps extends SSODispatchToProps {
   auth: AuthStore,
@@ -8,5 +9,5 @@ export interface SSOFormProps extends SSODispatchToProps {
 }
 
 export interface SSODispatchToProps {
-  ssoLogin: (payload: AuthPayloads['sso']['ssoLogin']) => void,
+  ssoLogin: (payload: Omit<SSOLoginAction, 'type'>) => void,
 }

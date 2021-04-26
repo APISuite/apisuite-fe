@@ -4,7 +4,7 @@ import { useTranslation, Button, CircularProgress, TextField, TextFieldProps } f
 import { ROLES } from 'constants/global'
 import Select from 'components/Select'
 import { FetchTeamMembersResponse, Role } from 'store/profile/types'
-import { User } from 'containers/Auth/types'
+import { User } from 'store/auth/types'
 import { isValidEmail } from 'util/forms'
 
 import { SelectOption } from 'components/Select/types'
