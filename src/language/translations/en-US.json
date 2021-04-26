@@ -84,7 +84,7 @@
   },
   "signInForm": {
     "regularSignInButtonLabel": "Sign in",
-    "alternativeSignInButtonLabel": "Sign in with",
+    "alternativeSignInButtonLabel": "Sign in with {{provider}}",
     "separatorLabel": "or",
     "fieldLabels": {
       "email": "E-mail",

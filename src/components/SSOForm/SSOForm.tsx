@@ -33,8 +33,7 @@ const SSOForm: React.FC<SSOFormProps> = ({
                 <VpnKeyRoundedIcon className={classes.ssoSignInWithIcon} />
               }
             >
-              {/* FIXME: the translations support interpolation */}
-              {t('signInForm.alternativeSignInButtonLabel') + ` ${provider}`}
+              {t('signInForm.alternativeSignInButtonLabel', { provider })}
             </Button>
           </div>
         ))
