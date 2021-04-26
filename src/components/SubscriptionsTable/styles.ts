@@ -123,8 +123,7 @@ export default makeStyles((theme) => ({
   },
 
   tableBody: {
-    // FIXME: do we need 25 grey scale?
-    backgroundColor: theme.palette.grey[25 as never],
+    backgroundColor: theme.palette.grey[50],
     border: `1px solid ${theme.palette.grey['300']}`,
     borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,

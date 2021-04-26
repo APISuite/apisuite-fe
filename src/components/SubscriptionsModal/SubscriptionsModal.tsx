@@ -250,10 +250,10 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                         <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
 
                         <p className={classes.infoBoxText}>
-                          {/* FIXME: translations support interpolation */}
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartOne')}
-                          {clientName}
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartTwo')}
+                          {t(
+                            'dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationText',
+                            { clientName },
+                          )}
                         </p>
                       </div>
                     )
