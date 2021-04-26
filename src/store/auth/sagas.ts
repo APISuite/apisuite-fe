@@ -16,7 +16,22 @@ import { recoverPasswordError, recoverPasswordSuccess, RECOVER_PASSWORD } from '
 import { SSO_LOGIN } from './actions/ssoLogin'
 import { ssoProvidersSuccess, SSO_PROVIDERS } from './actions/ssoProviders'
 import { SSO_TOKEN_EXCHANGE } from './actions/ssoTokenExchange'
-import { ForgotPasswordAction, LoginAction, RecoverPasswordAction, SSOLoginAction, SSOTokenExchangeAction } from './actions/types'
+import {
+  ConfirmRegistrationAction,
+  ForgotPasswordAction,
+  LoginAction,
+  RecoverPasswordAction,
+  SSOLoginAction,
+  SSOTokenExchangeAction,
+  SubmitSignUpDetails,
+  ValidateRegistrationTokenAction,
+} from './actions/types'
+
+import { confirmRegistrationSuccess } from './actions/confirmRegistration'
+import { validateRegistrationTokenError, validateRegistrationTokenSuccess, VALIDATE_REGISTRATION_TOKEN } from './actions/validateRegistrationToken'
+
+import { submitSignUpDetailsError, submitSignUpDetailsSuccess, SUBMIT_SIGN_UP_DETAILS } from './actions/submitSignUpDetails'
+import { ProfileDetailsResponse } from 'components/SignUpForm/types'
 
 const STATE_STORAGE = 'ssoStateStorage'
 
@@ -209,6 +224,98 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
   }
 }
 
+// ---
+
+export function * submitSignUpDetailsSaga ({ details }: SubmitSignUpDetails) {
+  try {
+    // Personal details submission logic
+
+    const personalDetailsResponse: ProfileDetailsResponse = yield call(request, {
+      url: `${API_URL}/registration/user`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({
+        name: details.name,
+        email: details.email,
+      }),
+    })
+
+    // Organisation details submission logic
+
+    if (details.orgName === '' || (details.orgName === '' && details.website === '')) {
+      yield call(request, {
+        url: `${API_URL}/registration/organization`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({
+          name: details.orgName,
+          website: details.website,
+          registrationToken: personalDetailsResponse.token,
+        }),
+      })
+    }
+
+    // Security details submission logic
+
+    yield call(request, {
+      url: `${API_URL}/registration/security`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({
+        password: details.password,
+        registrationToken: personalDetailsResponse.token,
+      }),
+    })
+
+    yield put(submitSignUpDetailsSuccess({}))
+  } catch (error) {
+    yield put(submitSignUpDetailsError({ error: error.message }))
+  }
+}
+
+export function * confirmRegistrationSaga ({ token }: ConfirmRegistrationAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/registration/confirm`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({ token }),
+    })
+
+    yield put(openNotification('success', 'We have confirmed your account! You can now sign in.', 4000))
+    yield put(confirmRegistrationSuccess({}))
+  } catch (error) {
+    yield put(confirmRegistrationSuccess({ error: error.message }))
+  }
+}
+
+export function * validateRegisterTokenSaga ({ token }: ValidateRegistrationTokenAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/registration/invitation`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({ token }),
+    })
+
+    yield put(validateRegistrationTokenSuccess({}))
+  } catch (error) {
+    yield put(validateRegistrationTokenError({ error: error.message }))
+  }
+}
+
+// ---
+
 export function * rootSaga () {
   yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUserWorker)
   yield takeLatest(EXPIRED_SESSION, expiredSessionWorker)
@@ -219,6 +326,8 @@ export function * rootSaga () {
   yield takeLatest(SSO_LOGIN, ssoLoginWorker)
   yield takeLatest(SSO_PROVIDERS, getProviders)
   yield takeLatest(SSO_TOKEN_EXCHANGE, ssoTokenExchangeWorker)
+  yield takeLatest(SUBMIT_SIGN_UP_DETAILS, submitSignUpDetailsSaga)
+  yield takeLatest(VALIDATE_REGISTRATION_TOKEN, validateRegisterTokenSaga)
 }
 
 export default rootSaga

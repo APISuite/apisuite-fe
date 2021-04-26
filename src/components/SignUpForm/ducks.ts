@@ -4,40 +4,15 @@ import { LogoutAction } from 'store/auth/actions/types'
 
 import {
   isStep,
-  OrganisationDetails,
   PreviousData,
-  ProfileDetails,
-  ProfileDetailsResponse,
-  ProfileDetailsResponseErrorObject,
-  SecurityDetails,
   SignUpFormActions,
   SignUpFormStore,
 } from './types'
 
 export enum SignUpFormActionTypes {
-  CONFIRM_REGISTRATION_ERROR = 'CONFIRM_REGISTRATION_ERROR',
-  CONFIRM_REGISTRATION_REQUEST = 'CONFIRM_REGISTRATION_REQUEST',
-  CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS',
-
   NEXT_STEP = 'NEXT_STEP',
 
   PREVIOUS_STEP = 'PREVIOUS_STEP',
-
-  SUBMIT_ORGANISATION_DETAILS_ERROR = 'SUBMIT_ORGANISATION_DETAILS_ERROR',
-  SUBMIT_ORGANISATION_DETAILS_REQUEST = 'SUBMIT_ORGANISATION_DETAILS_REQUEST',
-  SUBMIT_ORGANISATION_DETAILS_SUCCESS = 'SUBMIT_ORGANISATION_DETAILS_SUCCESS',
-
-  SUBMIT_PERSONAL_DETAILS_ERROR = 'SUBMIT_PERSONAL_DETAILS_ERROR',
-  SUBMIT_PERSONAL_DETAILS_REQUEST = 'SUBMIT_PERSONAL_DETAILS_REQUEST',
-  SUBMIT_PERSONAL_DETAILS_SUCCESS = 'SUBMIT_PERSONAL_DETAILS_SUCCESS',
-
-  SUBMIT_SECURITY_STEP_ERROR = 'SUBMIT_SECURITY_STEP_ERROR',
-  SUBMIT_SECURITY_STEP_REQUEST = 'SUBMIT_SECURITY_STEP_REQUEST',
-  SUBMIT_SECURITY_STEP_SUCCESS = 'SUBMIT_SECURITY_STEP_SUCCESS',
-
-  VALIDATE_REGISTRATION_TOKEN_ERROR = 'VALIDATE_REGISTRATION_TOKEN_ERROR',
-  VALIDATE_REGISTRATION_TOKEN_REQUEST = 'VALIDATE_REGISTRATION_TOKEN_REQUEST',
-  VALIDATE_REGISTRATION_TOKEN_SUCCESS = 'VALIDATE_REGISTRATION_TOKEN_SUCCESS',
 }
 
 const initialState: SignUpFormStore = {
@@ -209,116 +184,3 @@ export const nextStepAction = (previousData: PreviousData) => ({
 export const previousStepAction = () => ({
   type: SignUpFormActionTypes.PREVIOUS_STEP,
 } as const)
-
-export const submitProfileDetailsActions = {
-  request: (personalDetails: ProfileDetails) => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST,
-      payload: personalDetails,
-    } as const
-  },
-
-  success: (response: ProfileDetailsResponse) => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_SUCCESS,
-      response: response,
-    } as const
-  },
-
-  error: (error: ProfileDetailsResponseErrorObject) => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR,
-      error: error,
-    } as const
-  },
-}
-
-export const submitOrganisationDetailsActions = {
-  request: (organisationDetails: OrganisationDetails) => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST,
-      payload: organisationDetails,
-    } as const
-  },
-
-  success: () => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS,
-    } as const
-  },
-
-  error: (error: string) => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR,
-      error: error,
-    } as const
-  },
-}
-
-export const submitSecurityDetailsActions = {
-  request: (securityStep: SecurityDetails) => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST,
-      payload: securityStep,
-    } as const
-  },
-
-  success: () => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS,
-    } as const
-  },
-
-  error: (error: string) => {
-    return {
-      type: SignUpFormActionTypes.SUBMIT_SECURITY_STEP_ERROR,
-      error: error,
-    } as const
-  },
-}
-
-export const confirmRegistrationActions = {
-  request: (token: string) => {
-    return {
-      type: SignUpFormActionTypes.CONFIRM_REGISTRATION_REQUEST,
-      payload: { token: token },
-    } as const
-  },
-
-  success: (response: any) => {
-    return {
-      type: SignUpFormActionTypes.CONFIRM_REGISTRATION_SUCCESS,
-      response: response,
-    } as const
-  },
-
-  error: (error: string) => {
-    return {
-      type: SignUpFormActionTypes.CONFIRM_REGISTRATION_ERROR,
-      error: error,
-    } as const
-  },
-}
-
-export const validateRegisterTokenActions = {
-  request: (token: string) => {
-    return {
-      type: SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST,
-      payload: { token: token },
-    } as const
-  },
-
-  success: (response: any) => {
-    return {
-      type: SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_SUCCESS,
-      response: response,
-    } as const
-  },
-
-  error: (error: string) => {
-    return {
-      type: SignUpFormActionTypes.VALIDATE_REGISTRATION_TOKEN_ERROR,
-      error: error,
-    } as const
-  },
-}

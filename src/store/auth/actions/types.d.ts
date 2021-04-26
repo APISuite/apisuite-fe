@@ -1,4 +1,8 @@
 import { User } from '../types'
+
+import { CONFIRM_REGISTRATION, CONFIRM_REGISTRATION_SUCCESS, CONFIRM_REGISTRATION_ERROR } from './confirmRegistration'
+import { SUBMIT_SIGN_UP_DETAILS, SUBMIT_SIGN_UP_DETAILS_SUCCESS, SUBMIT_SIGN_UP_DETAILS_ERROR } from './submitSignUpDetails'
+import { VALIDATE_REGISTRATION_TOKEN, VALIDATE_REGISTRATION_TOKEN_SUCCESS, VALIDATE_REGISTRATION_TOKEN_ERROR } from './validateRegistrationToken'
 import { EXPIRED_SESSION } from './expiredSession'
 import { FORGOT_PASSWORD, FORGOT_PASSWORD_ERROR, FORGOT_PASSWORD_SUCCESS } from './forgotPassword'
 import { LOGIN, LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_USER, LOGIN_USER_ERROR, LOGIN_USER_SUCCESS } from './login'
@@ -9,31 +13,40 @@ import { SSO_PROVIDERS, SSO_PROVIDERS_ERROR, SSO_PROVIDERS_SUCCESS } from './sso
 import { SSO_TOKEN_EXCHANGE, SSO_TOKEN_EXCHANGE_ERROR, SSO_TOKEN_EXCHANGE_SUCCESS } from './ssoTokenExchange'
 
 export type AuthActions =
-LoginAction |
-LoginActionSuccess |
-LoginActionError |
-LoginUserAction |
-LoginUserActionSuccess |
-LoginUserActionError |
-ForgotPasswordAction |
-ForgotPasswordActionSuccess |
-ForgotPasswordActionError |
-ExpiredSessionAction |
-RecoverPasswordAction |
-RecoverPasswordActionSuccess |
-RecoverPasswordActionError |
-LogoutAction |
-LogoutActionSuccess |
-LogoutActionError |
-SSOLoginAction |
-SSOLoginActionSuccess |
-SSOLoginActionError |
-SSOProvidersAction |
-SSOProvidersActionSuccess |
-SSOProvidersActionError |
-SSOTokenExchangeAction |
-SSOTokenExchangeActionSuccess |
-SSOTokenExchangeActionError
+  LoginAction |
+  LoginActionSuccess |
+  LoginActionError |
+  LoginUserAction |
+  LoginUserActionSuccess |
+  LoginUserActionError |
+  ForgotPasswordAction |
+  ForgotPasswordActionSuccess |
+  ForgotPasswordActionError |
+  ExpiredSessionAction |
+  RecoverPasswordAction |
+  RecoverPasswordActionSuccess |
+  RecoverPasswordActionError |
+  LogoutAction |
+  LogoutActionSuccess |
+  LogoutActionError |
+  SSOLoginAction |
+  SSOLoginActionSuccess |
+  SSOLoginActionError |
+  SSOProvidersAction |
+  SSOProvidersActionSuccess |
+  SSOProvidersActionError |
+  SSOTokenExchangeAction |
+  SSOTokenExchangeActionSuccess |
+  SSOTokenExchangeActionError |
+  ConfirmRegistrationAction |
+  ConfirmRegistrationActionSuccess |
+  ConfirmRegistrationActionError |
+  SubmitSignUpDetails |
+  SubmitSignUpDetailsSuccess |
+  SubmitSignUpDetailsError |
+  ValidateRegistrationTokenAction |
+  ValidateRegistrationTokenActionSuccess |
+  ValidateRegistrationTokenActionError
 
 export type LoginAction = {
   type: typeof LOGIN,
@@ -153,5 +166,55 @@ export type SSOTokenExchangeActionSuccess = {
 
 export type SSOTokenExchangeActionError = {
   type: typeof SSO_TOKEN_EXCHANGE_ERROR,
+  error: string,
+}
+
+export type ConfirmRegistrationAction = {
+  type: typeof CONFIRM_REGISTRATION,
+  token: string,
+}
+
+export type ConfirmRegistrationActionSuccess = {
+  type: typeof CONFIRM_REGISTRATION_SUCCESS,
+}
+
+export type ConfirmRegistrationActionError = {
+  type: typeof CONFIRM_REGISTRATION_ERROR,
+  error: string,
+}
+
+export type SubmitSignUpDetails = {
+  type: typeof SUBMIT_SIGN_UP_DETAILS,
+  details: {
+    token: string,
+    email: string,
+    name: string,
+    password: string,
+    orgName?: string,
+    vat?: string,
+    website?: string,
+  },
+}
+
+export type SubmitSignUpDetailsSuccess = {
+  type: typeof SUBMIT_SIGN_UP_DETAILS_SUCCESS,
+}
+
+export type SubmitSignUpDetailsError = {
+  type: typeof SUBMIT_SIGN_UP_DETAILS_ERROR,
+  error: string,
+}
+
+export type ValidateRegistrationTokenAction = {
+  type: typeof VALIDATE_REGISTRATION_TOKEN,
+  token: string,
+}
+
+export type ValidateRegistrationTokenActionSuccess = {
+  type: typeof VALIDATE_REGISTRATION_TOKEN_SUCCESS,
+}
+
+export type ValidateRegistrationTokenActionError = {
+  type: typeof VALIDATE_REGISTRATION_TOKEN_ERROR,
   error: string,
 }
