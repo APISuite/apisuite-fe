@@ -1,12 +1,12 @@
 import { AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import update from 'immutability-helper'
-import { AuthStoreActionTypes } from 'containers/Auth/types'
-import { LOGOUT } from 'containers/Auth/ducks'
+import { LOGOUT } from 'store/auth/actions/logout'
 import {
   InvitationFormStore,
   InvitationFormActions,
 } from './types'
+import { LogoutAction } from 'store/auth/actions/types'
 
 export enum InvitationFormActionsTypes {
   ACCEPT_INVITATION_WITH_SIGN_REQUEST = 'invitation/ACCEPT_INVITATION_WITH_SIGN_REQUEST',
@@ -45,7 +45,7 @@ const initialState: InvitationFormStore = {
 
 export default function registerFormReducer (
   state = initialState,
-  action: InvitationFormActions | AuthStoreActionTypes['logout'],
+  action: InvitationFormActions | LogoutAction,
 ): InvitationFormStore {
   switch (action.type) {
     case LOGOUT: {

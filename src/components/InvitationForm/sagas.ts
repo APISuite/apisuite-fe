@@ -6,8 +6,7 @@ import {
 import request from 'util/request'
 import stateGenerator from 'util/stateGenerator'
 
-import { openNotification } from 'containers/NotificationStack/ducks'
-import { authActions } from 'containers/Auth/ducks'
+import { openNotification } from 'store/notificationStack/actions/notification'
 
 import { API_URL } from 'constants/endpoints'
 
@@ -22,6 +21,7 @@ import {
 import {
   InvitationResponse,
 } from './types'
+import { loginSuccess } from 'store/auth/actions/login'
 
 const STATE_STORAGE = 'ssoStateStorage'
 const STATE_STORAGE_INVITATION = 'ssoStateInvitationStorage'
@@ -46,7 +46,7 @@ export function * invitationWithSignInSaga (
 
     localStorage.removeItem(STATE_STORAGE)
     localStorage.removeItem(STATE_STORAGE_INVITATION)
-    yield put(authActions.loginSuccess())
+    yield put(loginSuccess({}))
     yield put(acceptInvitationWithSignInActions.success('/'))
     yield put(openNotification('success', 'You have accepted your invitation.', 4000))
   } catch (error) {

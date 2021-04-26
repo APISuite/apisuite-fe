@@ -1,10 +1,10 @@
-import { confirmRegistrationActions } from 'components/SignUpForm/ducks'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { Redirect } from 'react-router-dom'
 import { useQuery } from 'util/useQuery'
 
+import { confirmRegistration } from 'store/auth/actions/confirmRegistration'
 import { confirmInviteMember } from 'store/profile/actions/confirmInviteMember'
 
 export const RedirectPage: React.FC = () => {
@@ -15,7 +15,7 @@ export const RedirectPage: React.FC = () => {
 
   useEffect(() => {
     if (token && redirect === 'registration') {
-      dispatch(confirmRegistrationActions.request(token))
+      dispatch(confirmRegistration({ token }))
     }
 
     if (token && redirect === 'invite') {

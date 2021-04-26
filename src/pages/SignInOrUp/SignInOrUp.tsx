@@ -138,8 +138,8 @@ export const SignInOrUp: React.FC = () => {
             <div className={classes.form}>
               {view === 'signin' && <SignInForm />}
               {/* @ts-ignore */}
-              {view === 'signup' && <SignUpForm prefilledEmail={decodeBase64(emailParameter)} />}
-              {view === 'invitation' && <InvitationForm isLogged={!!auth.authToken} sso={sso} />}
+              {/* {view === 'signup' && <SignUpForm prefilledEmail={decodeBase64(emailParameter)} />} */}
+              {/* {view === 'invitation' && <InvitationForm isLogged={!!auth.authToken} sso={sso} />} */}
             </div>
             {/* <div className={classes.formFooter}>
               {(view === 'invitation' && !auth.authToken) && <div>Sign Up</div>}
