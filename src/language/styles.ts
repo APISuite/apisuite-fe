@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[400],
     borderColor: theme.palette.grey[400],
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '14px',
     fontWeight: 300,
     overflow: 'hidden !important',

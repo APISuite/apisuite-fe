@@ -53,19 +53,19 @@ https://${infra.remoteAPI}/v1/pets`,
 
   const codeStyle = {
     'hljs-string': {
-      'color': palette.secondary.main,
+      'color': palette.primary.main,
     },
 
     'hljs-symbol': {
-      'color': palette.secondary.main,
+      'color': palette.primary.main,
     },
 
     'hljs-bullet': {
-      'color': palette.secondary.main,
+      'color': palette.primary.main,
     },
 
     'hljs-addition': {
-      'color': palette.secondary.main,
+      'color': palette.primary.main,
     },
 
     'hljs': {

@@ -3,7 +3,7 @@ import { makeStyles } from '@apisuite/fe-base'
 const useStyles = makeStyles((theme) => ({
   disabledConfirmButton: {
     backgroundColor: theme.palette.label,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   enabledConfirmButton: {
-    backgroundColor: theme.palette.primary.main,
-    color: `${theme.palette.common.white} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 

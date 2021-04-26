@@ -9,6 +9,7 @@ import { createBrowserHistory } from 'history'
 import { createLogger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createAuthMiddleware } from 'store/auth/middleware'
+import { createInvitationMiddleware } from 'components/InvitationForm/ducks'
 
 import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'
@@ -22,8 +23,9 @@ let injectedSagas: any = []
 const sagaMiddleware = createSagaMiddleware()
 const routingMiddleware = routerMiddleware(history)
 const authMiddleware = createAuthMiddleware(history)
+const invitationMiddleware = createInvitationMiddleware(history)
 
-const middleware = [sagaMiddleware, routingMiddleware, authMiddleware]
+const middleware = [sagaMiddleware, routingMiddleware, authMiddleware, invitationMiddleware]
 
 let composedMiddleware
 

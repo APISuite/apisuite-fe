@@ -75,7 +75,7 @@ export default makeStyles((theme) => ({
   },
 
   apiVersionNumber: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '14px',
     fontWeight: 300,
     textAlign: 'left',
@@ -83,9 +83,9 @@ export default makeStyles((theme) => ({
   },
 
   appNameIcon: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: '14px',
     fontWeight: 300,
     justifyContent: 'center',
@@ -102,7 +102,7 @@ export default makeStyles((theme) => ({
   deprecatedIcon: {
     backgroundColor: theme.palette.warning.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     marginRight: '20px',
     padding: '5px',
   },

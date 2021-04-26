@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
   },
 
   alternativeOrganisationDetailsTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '40px',
@@ -42,9 +42,9 @@ export default makeStyles((theme) => ({
     width: '20px',
   },
   createOrganisationButton: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -57,7 +57,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 20px',
@@ -113,9 +113,9 @@ export default makeStyles((theme) => ({
   },
 
   disabledOrganisationButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -126,14 +126,14 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
   disabledUpdateDetailsButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -148,14 +148,14 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
   enabledOrganisationButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -164,14 +164,14 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
   enabledUpdateDetailsButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
@@ -184,7 +184,7 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
@@ -276,7 +276,7 @@ export default makeStyles((theme) => ({
   },
 
   organisationDetailsTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '40px',
@@ -315,7 +315,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: theme.palette.primary.contrastText,
     },
   },
 
@@ -372,7 +372,7 @@ export default makeStyles((theme) => ({
   },
 
   userName: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginRight: '10px',
@@ -390,9 +390,9 @@ export default makeStyles((theme) => ({
   },
 
   userRole: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
     fontSize: '14px',
     fontWeight: 300,
     padding: '2px 7.5px',
@@ -404,7 +404,7 @@ export default makeStyles((theme) => ({
     margin: '0px 25px 20px 25px',
 
     '& > :first-child': {
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
       fontSize: '14px',
       marginRight: '12px',
     },

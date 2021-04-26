@@ -186,7 +186,6 @@ export type ConfirmRegistrationActionError = {
 export type SubmitSignUpDetails = {
   type: typeof SUBMIT_SIGN_UP_DETAILS,
   details: {
-    token: string,
     email: string,
     name: string,
     password: string,

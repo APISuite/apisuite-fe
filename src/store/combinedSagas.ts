@@ -9,11 +9,13 @@ import profile from './profile/sagas'
 import register from 'components/SignUpForm/sagas'
 import security from './security/sagas'
 import subscriptions from './subscriptions/sagas'
+import invitation from 'components/InvitationForm/sagas'
 
 const sagas = [
   apiDetails,
   applications,
   auth,
+  invitation,
   profile,
   register,
   security,

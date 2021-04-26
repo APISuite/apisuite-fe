@@ -33,10 +33,10 @@ export default makeStyles((theme) => ({
   },
 
   notificationCardButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -47,7 +47,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary,
+      backgroundColor: theme.palette.secondary,
     },
   },
 
@@ -67,7 +67,7 @@ export default makeStyles((theme) => ({
   },
 
   notificationCardTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '27px',
     fontWeight: 400,
     marginBottom: '12px',

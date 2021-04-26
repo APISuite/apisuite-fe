@@ -7,6 +7,7 @@ import useStyles from './styles'
 
 const FormCard: React.FC<FormCardProps> = ({
   backLabel,
+  buttonIcon,
   buttonDisabled,
   buttonLabel,
   children,
@@ -19,6 +20,11 @@ const FormCard: React.FC<FormCardProps> = ({
   loading,
   showBack = false,
   title,
+  showReject = false,
+  rejectDisabled,
+  rejectLabel,
+  customRejectButtonStyles,
+  handleReject,
 }) => {
   const classes = useStyles()
 
@@ -41,6 +47,7 @@ const FormCard: React.FC<FormCardProps> = ({
               ? customDisabledConfirmButtonStyles || classes.disabledNextButton
               : customEnabledConfirmButtonStyles || classes.enabledNextButton
           }
+          startIcon={buttonIcon}
           disabled={buttonDisabled}
           onClick={handleSubmit}
         >
@@ -60,6 +67,19 @@ const FormCard: React.FC<FormCardProps> = ({
               onClick={handleBackClick}
             >
               {backLabel}
+            </Button>
+          </div>
+        }
+        {
+          showReject &&
+          <div className={classes.rejectBtnContainer}>
+            <Button
+              className={customRejectButtonStyles || classes.rejectButton}
+              onClick={handleReject}
+              disabled={rejectDisabled}
+              fullWidth
+            >
+              {rejectLabel}
             </Button>
           </div>
         }

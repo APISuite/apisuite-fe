@@ -95,14 +95,14 @@ export const TeamPage: React.FC = () => {
 
   const isEmpty = (members: FetchTeamMembersResponse[], roleOptions: Role[]) => {
     // check if the arrays contain empty data
-    const hasEmptyMember = members.some((m) => !(m.Organization.id && m.Role.id && m.User.id))
-    const hasEmptyRole = roleOptions.some((r) => !(r.id && r.name))
+    const hasEmptyMember = members.every((m) => !(m.Organization?.id && m.Role?.id && m.User?.id))
+    const hasEmptyRole = roleOptions.every((r) => !(r?.id && r?.name))
 
     return hasEmptyMember || hasEmptyRole
   }
 
   const getUserMemberRole = (user: User) => {
-    const member = members.find((member) => user.id === member.User.id)
+    const member = members.find((member) => user.id === member.User?.id)
     return member?.Role || user.role
   }
 
@@ -171,6 +171,7 @@ export const TeamPage: React.FC = () => {
 
         {
           !isEmpty(members, roleOptions) && members.map((member, indx) => (
+            member.User &&
             <div key={indx} className={classes.row}>
               <div>
                 <div className={classes.name}>

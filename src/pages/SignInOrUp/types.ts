@@ -1,1 +1,1 @@
-export type View = 'signup' | 'signin'
+export type View = 'signup' | 'signin' | 'invitation'

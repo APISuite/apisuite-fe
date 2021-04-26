@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
   },
 
   apiCatalogEntryName: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '22px',
     fontWeight: 400,
     marginBottom: '8px',
@@ -69,7 +69,7 @@ export default makeStyles((theme) => ({
   },
 
   colorsOfProductionAPI: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.background.default,
   },
 

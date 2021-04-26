@@ -42,7 +42,7 @@ export default makeStyles((theme) => ({
   },
 
   iconLogo: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -70,7 +70,7 @@ export default makeStyles((theme) => ({
   },
 
   portalLogo: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     height: 'auto',
     /* This property makes it so that the logo is
     left-aligned with the remaining content.
@@ -81,7 +81,7 @@ export default makeStyles((theme) => ({
   },
 
   portalName: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
@@ -89,7 +89,7 @@ export default makeStyles((theme) => ({
   /* 1.2 Modal's body */
 
   header: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
@@ -144,7 +144,7 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '& > :first-child': {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
       fontSize: '16px',
       fontWeight: 500,
       marginBottom: '25px',
@@ -293,7 +293,7 @@ export default makeStyles((theme) => ({
   },
 
   selectedAPIProduct: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
 
   tableBody: {
@@ -332,7 +332,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
 
     '& > :first-child': {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
       fontSize: '16px',
       fontWeight: 500,
       marginBottom: '25px',
@@ -380,8 +380,8 @@ export default makeStyles((theme) => ({
   },
 
   disabledRequestAccessButton: {
-    backgroundColor: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.primary.main}`,
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     fontSize: '16px',
@@ -393,7 +393,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -434,8 +434,8 @@ export default makeStyles((theme) => ({
   },
 
   enabledRequestAccessButton: {
-    backgroundColor: theme.palette.secondary.main,
-    border: `1px solid ${theme.palette.secondary.main}`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     cursor: 'pointer',
@@ -447,7 +447,7 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 

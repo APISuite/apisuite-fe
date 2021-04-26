@@ -12,7 +12,6 @@ import { submitProfileDetailsActions } from './ducks'
 
 export const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
   preFilledEmail,
-  register,
   token,
 }) => {
   const dispatch = useDispatch()

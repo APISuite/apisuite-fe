@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   loading: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
 
   privacyPolicyDisclaimerContainer: {

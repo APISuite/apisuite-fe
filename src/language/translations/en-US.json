@@ -77,6 +77,7 @@
     "closeButtonLabel": "close",
     "welcomeTitle": "Welcome",
     "welcomeSubtitle": "Please, feel free to sign in, or sign up for free.",
+    "welcomeSubtitleInvitation": "You have been invited to join {{org}}.",
     "options": {
       "signIn": "Sign in",
       "signUp": "Sign up"
@@ -536,7 +537,9 @@
     "welcomeTitle": "Welcome",
     "welcomeMsg": "Please feel free to login or register, it's completely free!",
     "loginBtn": "Login",
-    "registerBtn": "Register"
+    "registerBtn": "Register",
+    "invitationSignInBtn": "Sign in to accept invitation",
+    "invitationBtn": "Invitation"
   },
   "forgotPassword": {
     "messageTitle": "Forgot your password?",
@@ -585,5 +588,10 @@
   "apidetails": {
     "notfound": "No Swagger documentation found.",
     "goback": "Go back"
+  },
+  "invitationForm": {
+    "accept": "Accept invitation",
+    "reject": "Reject invitation",
+    "signin": "Sign in with {{provider}}"
   }
 }

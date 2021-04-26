@@ -314,8 +314,6 @@ export function * validateRegisterTokenSaga ({ token }: ValidateRegistrationToke
   }
 }
 
-// ---
-
 export function * rootSaga () {
   yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUserWorker)
   yield takeLatest(EXPIRED_SESSION, expiredSessionWorker)

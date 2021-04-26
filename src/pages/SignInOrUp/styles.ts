@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
 
     '& > p': {
-      color: theme.palette.common.white,
+      color: theme.palette.primary.contrastText,
       fontSize: '14px',
       fontWeight: 300,
       marginRight: '15px',
@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   form: {
+    maxWidth: '550px',
+  },
+
+  formFooter: {
     maxWidth: '550px',
   },
 
@@ -47,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   formSideTitle: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '42px',
     fontWeight: 700,
     marginBottom: '5px',
@@ -64,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   iconLogo: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -128,15 +132,15 @@ const useStyles = makeStyles((theme) => ({
   },
 
   portalName: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
 
   selectedOption: {
     background: 'none',
-    borderBottom: '3px solid ' + theme.palette.secondary.main,
-    color: theme.palette.secondary.main,
+    borderBottom: '3px solid ' + theme.palette.primary.main,
+    color: theme.palette.primary.main,
     cursor: 'pointer',
     flex: '1 1 0',
     fontWeight: 'bold',

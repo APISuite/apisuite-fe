@@ -19,6 +19,7 @@ import reduceReducers from './reduceReducers'
 import register from 'components/SignUpForm/ducks'
 import security from './security/reducer'
 import subscriptions from './subscriptions/reducer'
+import invitation from 'components/InvitationForm/ducks'
 
 export default (
   history: History<any>, additionalReducers: Record<string, any[]> = {},
@@ -27,6 +28,7 @@ export default (
     apiDetails: [apiDetails],
     applications: [applications],
     auth: [auth],
+    invitation: [invitation],
     notifications: [notifications],
     // Temporary until notification cards become clearer
     notificationCards: [notificationCards],

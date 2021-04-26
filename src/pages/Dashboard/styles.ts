@@ -41,10 +41,10 @@ export default makeStyles((theme) => ({
   // JSS for the 'Notification cards' section
 
   customNotificationCardButton: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
@@ -56,11 +56,11 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
 
     '&:link, &:visited': {
-      color: theme.palette.common.white,
+      color: theme.palette.primary.contrastText,
     },
   },
 
@@ -88,10 +88,10 @@ export default makeStyles((theme) => ({
   // JSS for the 'Greeting card' section
 
   customGreetingCardButton: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: theme.palette.common.white,
+    color: theme.palette.secondary.contrastText,
     cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
@@ -103,11 +103,11 @@ export default makeStyles((theme) => ({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
 
     '&:link, &:visited': {
-      color: theme.palette.common.white,
+      color: theme.palette.primary.contrastText,
     },
   },
 
@@ -146,7 +146,7 @@ export default makeStyles((theme) => ({
   },
 
   sectionIntroHeading: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     fontSize: '32px',
     fontWeight: 300,
     margin: '40px 0px',
@@ -169,7 +169,7 @@ export default makeStyles((theme) => ({
   // JSS for the notification banner
 
   customNotificationBannerParagraph: {
-    color: theme.palette.common.white,
+    color: theme.palette.primary.contrastText,
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '22px',

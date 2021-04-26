@@ -23,7 +23,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.common.white} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -72,7 +72,7 @@ export default makeStyles((theme) => ({
 
     // Dialog's title
     '& > :last-child': {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
       fontSize: '24px',
       fontWeight: 500,
       padding: '0px',

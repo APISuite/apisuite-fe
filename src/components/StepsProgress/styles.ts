@@ -19,12 +19,12 @@ export default makeStyles((theme) => ({
 
     '&::-webkit-progress-bar': {
       backgroundImage: theme.palette.grey[200],
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
 
     '&::-moz-progress-bar': {
       backgroundImage: theme.palette.grey[200],
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
@@ -57,7 +57,7 @@ export default makeStyles((theme) => ({
   },
 
   stepCircleBefore: {
-    border: '3px solid ' + theme.palette.secondary.main,
+    border: '3px solid ' + theme.palette.primary.main,
     color: theme.palette.grey[500],
   },
 
@@ -86,7 +86,7 @@ export default makeStyles((theme) => ({
 
   stepTitleCurrent: {
     borderRadius: '50%',
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     display: 'flex',
     fontSize: '14px',
     fontWeight: 'normal',

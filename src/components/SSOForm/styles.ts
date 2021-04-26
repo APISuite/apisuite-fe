@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   ssoSignInWithButton: {
-    backgroundColor: theme.palette.secondary.main,
-    color: `${theme.palette.common.white} !important`,
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 

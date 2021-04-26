@@ -19,8 +19,8 @@ export default makeStyles((theme) => ({
   },
 
   footer: {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.common.white,
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.primary.contrastText,
     paddingBottom: '50px',
     paddingTop: '40px',
     width: '100%',
@@ -54,7 +54,7 @@ export default makeStyles((theme) => ({
   },
 
   iconLogo: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -88,7 +88,7 @@ export default makeStyles((theme) => ({
   },
 
   logo: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     height: 'auto',
     marginRight: '10px',
     width: '55px',
@@ -131,7 +131,7 @@ export default makeStyles((theme) => ({
 
   subSection: {
     '& > h3': {
-      color: theme.palette.common.white,
+      color: theme.palette.primary.contrastText,
       fontSize: '16px',
       fontWeight: '300',
       lineHeight: '22px',

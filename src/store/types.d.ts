@@ -1,6 +1,7 @@
 import { APIVersionStore } from './apiDetails/types'
 import { ApplicationsStore } from './applications/types'
 import { AuthStore } from 'containers/Auth/types'
+import { InvitationFormStore } from 'components/InvitationForm/types'
 // Temporary until notification cards become clearer
 import { NotificationCardsStore } from './notificationCards/types'
 import { NotificationStackStore } from './notificationStack/types'
@@ -12,6 +13,7 @@ export interface Store {
   apiDetails: APIVersionStore,
   applications: ApplicationsStore,
   auth: AuthStore,
+  invitation: InvitationFormStore,
   notifications: NotificationStackStore,
   // Temporary until notification cards become clearer
   notificationCards: NotificationCardsStore,
