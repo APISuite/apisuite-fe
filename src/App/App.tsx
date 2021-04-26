@@ -27,7 +27,7 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     if (auth.user) {
-      dispatch(getProfile)
+      dispatch(getProfile({}))
     }
   }, [auth.user, dispatch])
 

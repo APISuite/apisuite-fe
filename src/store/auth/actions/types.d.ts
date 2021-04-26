@@ -1,4 +1,3 @@
-import { ErrorReason } from 'util/request'
 import { User } from '../types'
 import { EXPIRED_SESSION } from './expiredSession'
 import { FORGOT_PASSWORD, FORGOT_PASSWORD_ERROR, FORGOT_PASSWORD_SUCCESS } from './forgotPassword'
@@ -48,7 +47,7 @@ export type LoginActionSuccess = {
 
 export type LoginActionError = {
   type: typeof LOGIN_ERROR,
-  error: ErrorReason,
+  error: string,
 }
 
 export type LoginUserAction = {
@@ -63,7 +62,7 @@ export type LoginUserActionSuccess = {
 
 export type LoginUserActionError = {
   type: typeof LOGIN_USER_ERROR,
-  error: ErrorReason,
+  error: string,
 }
 
 export type ForgotPasswordAction = {
@@ -77,7 +76,7 @@ export type ForgotPasswordActionSuccess = {
 
 export type ForgotPasswordActionError = {
   type: typeof FORGOT_PASSWORD_ERROR,
-  error: ErrorReason,
+  error: string,
 }
 
 export type ExpiredSessionAction = {
@@ -96,7 +95,7 @@ export type RecoverPasswordActionSuccess = {
 
 export type RecoverPasswordActionError = {
   type: typeof RECOVER_PASSWORD_ERROR,
-  error: ErrorReason,
+  error: string,
 }
 
 export type LogoutAction = {
@@ -109,7 +108,7 @@ export type LogoutActionSuccess = {
 
 export type LogoutActionError = {
   type: typeof LOGOUT_ERROR,
-  error: ErrorReason,
+  error: string,
 }
 
 export type SSOLoginAction = {
@@ -124,7 +123,7 @@ export type SSOLoginActionSuccess = {
 
 export type SSOLoginActionError = {
   type: typeof SSO_LOGIN_ERROR,
-  error: ErrorReason,
+  error: string,
 }
 
 export type SSOProvidersAction = {
@@ -138,7 +137,7 @@ export type SSOProvidersActionSuccess = {
 
 export type SSOProvidersActionError = {
   type: typeof SSO_PROVIDERS_ERROR,
-  error: ErrorReason,
+  error: string,
 }
 
 export type SSOTokenExchangeAction = {
@@ -154,5 +153,5 @@ export type SSOTokenExchangeActionSuccess = {
 
 export type SSOTokenExchangeActionError = {
   type: typeof SSO_TOKEN_EXCHANGE_ERROR,
-  error: ErrorReason,
+  error: string,
 }

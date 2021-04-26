@@ -11,8 +11,8 @@ export const LOGIN = 'auth/LOGIN'
 export const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'auth/LOGIN_ERROR'
 export const LOGIN_USER = 'auth/LOGIN_USER'
-export const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
 export const LOGIN_USER_SUCCESS = 'auth/LOGIN_USER_SUCCESS'
+export const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
 
 export function login (payload: Omit<LoginAction, 'type'>) {
   return { type: LOGIN, ...payload }

@@ -40,7 +40,7 @@ function * loginWorker (action: LoginAction) {
 
     yield put(loginSuccess({}))
   } catch (error) {
-    yield put(loginError({ error }))
+    yield put(loginError({ error: error.message }))
   }
 }
 
@@ -69,7 +69,7 @@ function * loginUserWorker () {
       },
     }))
   } catch (error) {
-    yield put(loginUserError({ error }))
+    yield put(loginUserError({ error: error.message }))
   }
 }
 
@@ -86,7 +86,7 @@ function * forgotPasswordSaga ({ email }: ForgotPasswordAction) {
 
     yield put(forgotPasswordSuccess({}))
   } catch (error) {
-    forgotPasswordError({ error })
+    forgotPasswordError({ error: error.message })
   }
 }
 
@@ -108,7 +108,7 @@ function * recoverPasswordSaga ({ password, token }: RecoverPasswordAction) {
 
     yield put(openNotification('success', 'Password successfully changed! You may now sign in.', 3000))
   } catch (error) {
-    recoverPasswordError({ error })
+    recoverPasswordError({ error: error.message })
   }
 }
 
@@ -123,7 +123,7 @@ function * logoutWorker () {
 
     yield put(logoutSuccess({}))
   } catch (error) {
-    yield put(logoutError({ error }))
+    yield put(logoutError({ error: error.message }))
   }
 }
 
@@ -182,7 +182,7 @@ function * ssoLoginWorker ({ provider }: SSOLoginAction) {
 
     window.location.href = response.url
   } catch (error) {
-    yield put(loginError({ error }))
+    yield put(loginError({ error: error.message }))
   }
 }
 
@@ -205,7 +205,7 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
     // FIXME: move to middleware
     window.location.href = '/auth'
   } catch (error) {
-    yield put(loginError(error.message.error))
+    yield put(loginError({ error: error.message }))
   }
 }
 
