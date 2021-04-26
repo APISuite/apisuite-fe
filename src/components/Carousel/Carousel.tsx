@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import ReactSlidy from 'react-slidy/lib'
 import { useTheme, Fade, Button } from '@apisuite/fe-base'
 import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded'
 import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUncheckedRounded'
+import clsx from 'clsx'
 
 import useStyles from './styles'
 import { CarouselSlideProps, CarouselProps } from './types'
@@ -24,15 +25,10 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
   return (
     <div
-      className={
-        `
-${classes.carouselSlideOuterContainer}
-${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-side'
-      ? classes.sideBySideSlideContentsPlacement
-      : classes.topToBottomSlideContentsPlacement
-    }
-`
-      }
+      className={clsx(classes.carouselSlideOuterContainer, {
+        [classes.sideBySideSlideContentsPlacement]: carouselSlideContentsPlacement === 'side-by-side',
+        [classes.topToBottomSlideContentsPlacement]: carouselSlideContentsPlacement !== 'side-by-side',
+      })}
     >
       {
         carouselSlideImage &&
@@ -59,9 +55,7 @@ ${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-
   )
 }
 
-// Carousel
-
-const Carousel: React.FC<CarouselProps> = ({
+export const Carousel: React.FC<CarouselProps> = ({
   carouselBackgroundColor,
   carouselBackgroundImage,
   carouselFadeIn,
@@ -75,15 +69,37 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
   const classes = useStyles()
   const { palette } = useTheme()
-
+  const timer = useRef<ReturnType<typeof setInterval>>()
   const [slideNumber, setSlideNumber] = React.useState(initialSlide || 0)
-  const amountOfSlides = slidesArray.length
 
   const handleCarouselSlideChange = (newSlideNumber: number) => {
     setSlideNumber(newSlideNumber)
   }
 
   const [isHoveringSlide, setIsHoveringSlide] = React.useState(false)
+
+  const runSlides = useCallback(() => {
+    if (!isHoveringSlide) {
+      if (slideNumber < (slidesArray.length - 1)) {
+        setSlideNumber((s) => s + 1)
+      } else {
+        setSlideNumber(0)
+      }
+    }
+  }, [slideNumber, isHoveringSlide, slidesArray])
+
+  useEffect(() => {
+    if (slidesAutoPlay) {
+      timer.current = setInterval(() => {
+        runSlides()
+      // TODO: fix type
+      }, timeBetweenSlides) as any
+    }
+
+    return () => {
+      timer.current && clearInterval(timer.current)
+    }
+  }, [runSlides, timeBetweenSlides, slidesAutoPlay])
 
   const carouselSlides = slidesArray.map((slide, index) =>
     <div
@@ -130,41 +146,6 @@ const Carousel: React.FC<CarouselProps> = ({
     </button>,
   ))
 
-  if (slidesAutoPlay) {
-    /*
-    If we want our slides to 'autoplay', we do the following:
-
-    1) We set up an effect that fires every time the 'slideNumber' variable is manipulated
-    (initialization included);
-    2) Every time that effect fires, we set a timer for 'X' seconds (or 'X,xxx' milliseconds) - once that
-    time is up, we manipulate the 'slideNumber' variable;
-    3) Before the component is inevitably re-rendered, we execute the 'clearInterval' method so as to avoid
-    stacking timeouts.
-
-    This behavior repeats itself ad nauseam, UNLESS the user happens to hover over a particular slide.
-    */
-
-    // FIXME: hooks can not be called conditionally
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    React.useEffect(() => {
-      let scheduledCarouselSlideChange: NodeJS.Timeout
-
-      if (!isHoveringSlide) {
-        scheduledCarouselSlideChange = setTimeout(() => {
-          if (slideNumber < (amountOfSlides - 1)) {
-            const newSlideNumber = slideNumber + 1
-
-            setSlideNumber(newSlideNumber)
-          } else {
-            setSlideNumber(0)
-          }
-        }, timeBetweenSlides || 1000)
-      }
-
-      return () => clearInterval(scheduledCarouselSlideChange)
-    }, [isHoveringSlide, slideNumber, amountOfSlides, timeBetweenSlides])
-  }
-
   return (
     <>
       <Fade
@@ -205,5 +186,3 @@ const Carousel: React.FC<CarouselProps> = ({
     </>
   )
 }
-
-export default Carousel

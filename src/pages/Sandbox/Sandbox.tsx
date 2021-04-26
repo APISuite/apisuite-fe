@@ -8,7 +8,7 @@ import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
 
 import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
 import APICatalog from 'components/APICatalog'
-import Carousel from 'components/Carousel'
+import { Carousel } from 'components/Carousel'
 import Notice from 'components/Notice'
 
 import carouselBackground from 'assets/space-background.svg'
