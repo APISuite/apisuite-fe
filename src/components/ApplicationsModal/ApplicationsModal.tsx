@@ -11,6 +11,7 @@ import {
   Modal,
   TextField,
   useConfig,
+  useTheme,
 } from '@apisuite/fe-base'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
@@ -46,6 +47,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector)
 
   const { ownerInfo, portalName } = useConfig()
+
+  const theme = useTheme()
+
+  console.log('theme', theme)
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')

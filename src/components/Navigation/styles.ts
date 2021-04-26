@@ -241,4 +241,42 @@ export default makeStyles((theme) => ({
   yetToLogIn: {
     display: 'none',
   },
+
+  tabs: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+  },
+
+  scrolled: {
+    color: '#333333',
+    backgroundColor: '#e3e3e3',
+    transform: 'translateY(0)',
+  },
+
+  subContainerWithoutScroll: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    flexWrap: 'nowrap',
+    margin: 0,
+    padding: '0 50px',
+
+    color: 'unset',
+    backgroundColor: 'transparent',
+    transform: 'translateY(100%)',
+  },
+
+  header: {
+    position: 'relative',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    margin: '0 50px',
+    padding: 0,
+    borderBottom: 'none',
+    alignItems: 'center',
+  },
 }))

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
@@ -47,15 +47,15 @@ const Navigation: React.FC<NavigationProps> = ({
     initials = splitName[0].charAt(0).toLocaleUpperCase()
   }
 
-  const [scrollPos, setScrollPos] = React.useState(0)
+  const [scrollPos, setScrollPos] = useState(0)
   const scrolled = contractible && (scrollPos >= 10)
 
-  const scrollHandler = React.useCallback(() => {
+  const scrollHandler = useCallback(() => {
     setScrollPos(window.scrollY)
   }, [])
 
-  const [activeMenuName, setActiveMenuName] = React.useState('init')
-  const [goBackLabel, setGoBackLabel] = React.useState('')
+  const [activeMenuName, setActiveMenuName] = useState('init')
+  const [goBackLabel, setGoBackLabel] = useState('')
   const [topTabs, initTabs, loginTabs] = useMenu()
   const allTabs: TabMenus = {
     init: initTabs,
@@ -63,7 +63,7 @@ const Navigation: React.FC<NavigationProps> = ({
   }
   const tabs = allTabs[activeMenuName]
 
-  const { activeTab, subTabs, activeSubTab } = React.useMemo(() => {
+  const { activeTab, subTabs, activeSubTab } = useMemo(() => {
     const activeTab = tabs.find((tab) => tab.active)
     const subTabs = !!activeTab && activeTab.subTabs
     const activeSubTab = !!subTabs && subTabs.find((tab) => tab.active)
@@ -71,13 +71,13 @@ const Navigation: React.FC<NavigationProps> = ({
     return { activeTab, subTabs, activeSubTab }
   }, [tabs])
 
-  const handleGobackClick = React.useCallback(() => history.goBack(), [])
+  const handleGobackClick = useCallback(() => history.goBack(), [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     setActiveMenuName(user ? 'login' : 'init')
   }, [user])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const { pathname } = history.location
     const goBack = goBackConfig.find((item) => pathname.indexOf(item.path) === 0)
 
@@ -88,7 +88,7 @@ const Navigation: React.FC<NavigationProps> = ({
     }
   }, [history.location.pathname])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!contractible) {
       return
     }
@@ -100,9 +100,9 @@ const Navigation: React.FC<NavigationProps> = ({
     }
   }, [contractible])
 
-  const [amountOfNotifications, setAmountOfNotifications] = React.useState(0)
+  const [amountOfNotifications, setAmountOfNotifications] = useState(0)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user?.role.name !== 'admin') {
       if (amountOfNotifications !== notificationCards.instanceOwnerNotificationCardsData.length) {
         setAmountOfNotifications(notificationCards.instanceOwnerNotificationCardsData.length)
@@ -138,9 +138,10 @@ const Navigation: React.FC<NavigationProps> = ({
                 : (
                   <AmpStoriesRoundedIcon
                     className={
-                      !scrolled
-                        ? classes.regularLogo
-                        : classes.alternativeLogo
+                      clsx({
+                        [classes.regularLogo]: !scrolled,
+                        [classes.alternativeLogo]: scrolled,
+                      })
                     }
                   />
                 )
@@ -150,41 +151,17 @@ const Navigation: React.FC<NavigationProps> = ({
               {portalName}
             </h3>
           </Link>
-
-          {!user && (
-            <div className='tabs pretabs'>
-              <Tabs
-                aria-label='Header-level navigation tabs'
-                value={(activeTab && activeTab.route) || false}
-              >
-                {topTabs.map((tab, idx) =>
-                  <Tab
-                    className={
-                      (contractible && !scrolled)
-                        ? classes.transparentMenuTab
-                        : classes.opaqueMenuTab
-                    }
-                    component={Link}
-                    disableRipple
-                    key={`nav-tab-${idx}`}
-                    label={tab.label}
-                    to={tab.route}
-                    value={tab.route}
-                  />,
-                )}
-              </Tabs>
-            </div>
-          )}
         </div>
 
         <nav className={clsx('container', { scrolled })}>
-          <div className='tabs maintabs'>
+          <div className={classes.tabs}>
             <Tabs
               aria-label='Navigation tabs'
               classes={{
-                indicator: (contractible && !scrolled)
-                  ? classes.transparentMenuActiveTabOverLine
-                  : classes.opaqueMenuActiveTabOverLine,
+                indicator: clsx({
+                  [classes.transparentMenuActiveTabOverLine]: contractible && !scrolled,
+                  [classes.opaqueMenuActiveTabOverLine]: !(contractible && !scrolled),
+                }),
               }}
               value={(activeTab && activeTab.route) || false}
             >
@@ -196,14 +173,12 @@ const Navigation: React.FC<NavigationProps> = ({
                     ? (
                       <Tab
                         className={
-                          `
-${(contractible && !scrolled)
-                        ? classes.transparentMenuTab
-                        : classes.opaqueMenuTab
-                      }
-${tab.active ? ' ' + classes.activeTab : ''}
-${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
-`
+                          clsx({
+                            [classes.transparentMenuTab]: contractible && !scrolled,
+                            [classes.opaqueMenuTab]: !(contractible && !scrolled),
+                            [classes.activeTab]: tab.active,
+                            [classes.yetToLogIn]: contractible && !scrolled && tab.yetToLogIn,
+                          })
                         }
                         component={Link}
                         disableRipple
@@ -224,9 +199,10 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
           user && (
             <div
               className={
-                (contractible && !scrolled)
-                  ? classes.transparentMenuUserNameAndAvatarContainer
-                  : classes.opaqueMenuUserNameAndAvatarContainer
+                clsx({
+                  [classes.transparentMenuUserNameAndAvatarContainer]: contractible && !scrolled,
+                  [classes.opaqueMenuUserNameAndAvatarContainer]: !(contractible && !scrolled),
+                })
               }
             >
               {
@@ -259,22 +235,28 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
       </header>
 
       {!!subTabs && (
-        <div className={clsx('sub-container', { scrolled })}>
+        <div className={
+          clsx(
+            classes.subContainerWithoutScroll,
+            {
+              [classes.scrolled]: scrolled,
+            })
+        }
+        >
           <div
             className={
-              `
-tabs
-${(
-          goBackLabel ||
-                (
-                  activeTab && activeTab.label === 'Dashboard' &&
+              clsx(
+                'tabs',
+                {
+                  [classes.subTabsAndExtraButton]: goBackLabel || (
+                    activeTab && activeTab.label === 'Dashboard' &&
                   activeSubTab && activeSubTab.label === 'Overview'
-                )
-        )
-          ? ` ${classes.subTabsAndExtraButton}`
-          : ` ${classes.subTabs}`
-        }
-`
+                  ),
+                  [classes.subTabs]: goBackLabel || (
+                    activeTab && activeTab.label === 'Dashboard' &&
+                  activeSubTab && activeSubTab.label === 'Overview'
+                  ),
+                })
             }
           >
             {/* Assistant icon (to be shown on the 'Overview' sub-tab of the 'Dashboard' tab) */}
@@ -285,9 +267,10 @@ ${(
                 <div className={classes.assistantContainer}>
                   <div
                     className={
-                      (contractible && !scrolled)
-                        ? classes.regularAssistantButton
-                        : classes.alternativeAssistantButton
+                      clsx({
+                        [classes.regularAssistantButton]: contractible && !scrolled,
+                        [classes.alternativeAssistantButton]: !(contractible && !scrolled),
+                      })
                     }
                     onClick={
                       user?.role.name !== 'admin'
@@ -337,9 +320,10 @@ ${(
                         (amountOfNotifications && !notificationCards.showNonInstanceOwnerNotificationCards) &&
                         <div
                           className={
-                            (contractible && !scrolled)
-                              ? classes.regularAssistantAmountOfNotifications
-                              : classes.alternativeAssistantAmountOfNotifications
+                            clsx({
+                              [classes.regularAssistantAmountOfNotifications]: contractible && !scrolled,
+                              [classes.alternativeAssistantAmountOfNotifications]: !(contractible && !scrolled),
+                            })
                           }
                         >
                           <p>{amountOfNotifications}</p>
@@ -348,9 +332,10 @@ ${(
                         (amountOfNotifications && !notificationCards.showInstanceOwnerNotificationCards) &&
                         <div
                           className={
-                            (contractible && !scrolled)
-                              ? classes.regularAssistantAmountOfNotifications
-                              : classes.alternativeAssistantAmountOfNotifications
+                            clsx({
+                              [classes.regularAssistantAmountOfNotifications]: contractible && !scrolled,
+                              [classes.alternativeAssistantAmountOfNotifications]: !(contractible && !scrolled),
+                            })
                           }
                         >
                           <p>{amountOfNotifications}</p>
@@ -378,20 +363,22 @@ ${(
             <Tabs
               aria-label='Navigation sub-tabs'
               classes={{
-                indicator: (contractible && !scrolled)
-                  ? classes.transparentSubMenuActiveTabUnderLine
-                  : classes.opaqueSubMenuActiveTabUnderLine,
+                indicator: clsx({
+                  [classes.transparentSubMenuActiveTabUnderLine]: contractible && !scrolled,
+                  [classes.opaqueSubMenuActiveTabUnderLine]: !(contractible && !scrolled),
+                }),
               }}
               value={(activeSubTab && activeSubTab.route) || false}
             >
               {subTabs.map((tab, idx) =>
                 <Tab
                   className={
-                    `
-${classes.subTab}
-${tab.active ? ' ' + classes.activeTab : ''}
-${tab.isLogout ? ' ' + classes.logOutTab : ''}
-`
+                    clsx(
+                      classes.subTab,
+                      {
+                        [classes.activeTab]: tab.active,
+                        [classes.logOutTab]: tab.isLogout,
+                      })
                   }
                   component={Link}
                   disableRipple
