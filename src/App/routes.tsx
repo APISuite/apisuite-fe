@@ -24,7 +24,7 @@ import { RequireAuth } from 'components/RequireAuth'
 import { Sandbox } from 'pages/Sandbox'
 import { Security } from 'pages/Security'
 import { SignInOrUp } from 'pages/SignInOrUp'
-import SignUpConfirmation from 'pages/SignUpConfirmation'
+import { SignUpConfirmation } from 'pages/SignUpConfirmation'
 import { Subscriptions } from 'pages/Subscriptions'
 import { TeamPage } from 'pages/TeamPage'
 

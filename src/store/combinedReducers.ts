@@ -16,7 +16,6 @@ import notificationCards from './notificationCards/reducer'
 import notifications from './notificationStack/reducer'
 import profile from './profile/reducer'
 import reduceReducers from './reduceReducers'
-import register from 'components/SignUpForm/ducks'
 import security from './security/reducer'
 import subscriptions from './subscriptions/reducer'
 import invitation from 'components/InvitationForm/ducks'
@@ -33,7 +32,6 @@ export default (
     // Temporary until notification cards become clearer
     notificationCards: [notificationCards],
     profile: [profile],
-    register: [register],
     router: [connectRouter(history)],
     security: [security],
     subscriptions: [subscriptions],

@@ -9,7 +9,7 @@ const EssentialLayout: React.FC<LayoutProps> = ({
   const classes = useStyles()
 
   return (
-    <div className={`layout-container layout-essential ${classes.root}`}>
+    <div className={classes.root}>
       {children}
     </div>
   )

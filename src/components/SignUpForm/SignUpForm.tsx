@@ -13,7 +13,6 @@ import { SecurityDetailsForm } from './SecurityDetailsForm'
 
 import { signUpFormSelector } from './selector'
 import useStyles from './styles'
-import { validateRegisterTokenActions } from './ducks'
 import { SignUpFormProps } from './types'
 
 export let steps = {
@@ -46,16 +45,16 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ preFilledEmail }) => {
 
   const step = register.step
 
+  const name = 'TODO'
+
   steps = {
     ...steps,
     1: t('signUpForm.steps.profileDetails'),
-    2: t('signUpForm.steps.organisationDetails'),
     3: t('signUpForm.steps.securityDetails'),
   }
 
   if (invitationToken) {
-    // @ts-ignore
-    delete steps[2]
+    steps[2] = t('signUpForm.steps.organisationDetails')
   }
 
   const signUpFormStep = (step: keyof typeof steps) => {
@@ -91,7 +90,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ preFilledEmail }) => {
         return (
           <Redirect
             key='redirectToAccountConfirmation'
-            to='/confirmation'
+            to={`/confirmation/${name}`}
           />
         )
     }

@@ -19,8 +19,6 @@ const MainLayout: React.FC<LayoutProps> = ({
       />
       <div
         className={clsx(
-          'layout-container',
-          'layout-main',
           classes.container,
           { [classes.contractible]: contractibleMenu },
         )}

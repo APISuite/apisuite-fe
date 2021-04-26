@@ -1,26 +1,18 @@
 import React from 'react'
+import { useHistory, useParams } from 'react-router'
 import { useConfig, useTranslation } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 
 import useStyles from './styles'
-import { SignUpConfirmationProps } from './types'
 
-const SignUpConfirmation: React.FC<SignUpConfirmationProps> = ({
-  history,
-  nextStep,
-  register,
-}) => {
+export const SignUpConfirmation: React.FC = () => {
   const classes = useStyles()
   const [t] = useTranslation()
+  const history = useHistory()
   const { ownerInfo, portalName } = useConfig()
-
-  /* Once this component renders (which means that we've reached the end of our registration process),
-  we dispatch a 'NEXT_STEP' type of action so as to reset the 'steps' property of our app's store back to 1. */
-  React.useEffect(() => {
-    nextStep({})
-  }, [nextStep])
+  const { name } = useParams<{ name: string }>()
 
   return (
     <main className={classes.mainContainer}>
@@ -65,7 +57,7 @@ const SignUpConfirmation: React.FC<SignUpConfirmationProps> = ({
         <div className={classes.signUpCompleteSideContentContainer}>
           <h1 className={classes.signUpCompleteSideTitle}>
             {t('signUpConfirmation.titleText')}
-            {register.previousData.personal.name}!
+            {name}!
           </h1>
 
           <p className={classes.signUpCompleteSideSubtitle}>
