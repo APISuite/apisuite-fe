@@ -40,25 +40,13 @@ module.exports = {
         ],
       },
       {
-        test: /\.(gif|svg|webp|jpg|png|woff2)$/,
+        test: /\.(gif|svg|webp|jpg|png|ttf)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
               esModule: false,
-              name: 'assets/images/[name]-[hash].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              name: 'assets/fonts/[name]-[hash].[ext]',
+              name: 'assets/images/[name]-[contenthash].[ext]',
             },
           },
         ],
