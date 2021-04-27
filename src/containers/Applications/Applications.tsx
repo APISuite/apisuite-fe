@@ -276,10 +276,10 @@ const Applications: React.FC<ApplicationsProps> = ({
                       </div>
                     </div>
 
-                    {/* Marketplace applications container */}
+                    {/* Subscribed Marketplace applications container */}
                     <div>
                       {
-                        getSections('MARKETPLACE_APPLICATIONS')
+                        getSections('SUBBED_MARKETPLACE_APPS')
                       }
                     </div>
                   </section>
