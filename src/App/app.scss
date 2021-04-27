@@ -1,52 +1,5 @@
 // Main styles
 
-// Set the global 'box-sizing' state to 'border-box', and set the font's size for unit measurement purposes.
-html {
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-html,
-body,
-#root {
-  background-color: #f7f8f9;
-  height: 100%;
-  min-width: 1024px;
-  width: 100%;
-}
-
-* {
-  &,
-  &:before,
-  &:after {
-    box-sizing: inherit;
-  }
-}
-
-body {
-  color: #424242;
-  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-weight: 300;
-  line-height: 1.7rem;
-  margin: 0;
-  padding: 0;
-}
-
-a:link,
-a:visited,
-a:hover,
-a:active {
-  color: inherit;
-}
-
-input:read-only {
-  background-color: #eeeeee;
-}
-
-img {
-  max-width: 100%;
-}
-
 // Fonts
 @font-face {
   font-family: Roboto;
@@ -130,4 +83,77 @@ img {
   font-style: italic;
   font-weight: 100;
   src: local('Roboto'), local('Roboto-ThinItalic'), url(/assets/fonts/Roboto-ThinItalic.woff2) format('woff2');
+}
+
+// Set the global 'box-sizing' state to 'border-box', and set the font's size for unit measurement purposes.
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+html,
+body,
+#root {
+  background-color: #f7f8f9;
+  height: 100%;
+  min-width: 1024px;
+  width: 100%;
+}
+
+* {
+  &,
+  &:before,
+  &:after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  color: #424242;
+  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  line-height: 1.7rem;
+  margin: 0;
+  padding: 0;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+}
+
+input:read-only {
+  background-color: #eeeeee;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1 {
+  font-size: 43px;
+  line-height: 50px;
+  font-weight: bold;
+  margin: 0;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  margin: 0;
+}
+
+p {
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
