@@ -52,6 +52,7 @@ export default makeStyles((theme) => ({
     '-webkit-box-orient': 'vertical',
     '-webkit-line-clamp': 2,
   },
+
   clientApplicationCardImage: {
     borderRadius: '50%',
     fontSize: '20px',
@@ -182,6 +183,10 @@ export default makeStyles((theme) => ({
     color: `${theme.palette.grey[300]} !important`,
   },
 
+  hasNoUserAppsButHasMarketplaceAppSubsContainer: {
+    textAlign: 'left',
+  },
+
   knowledgeBaseCard: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.palette.dimensions.borderRadius,
@@ -272,6 +277,14 @@ export default makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
     },
+  },
+
+  sectionSeparator: {
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    margin: '40px 0px',
+    maxWidth: '900px',
+    width: '100%',
   },
 
   subscribedClientApplicationCardStatusIcon: {

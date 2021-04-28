@@ -244,6 +244,15 @@ const Applications: React.FC<ApplicationsProps> = ({
                   >
                     {t('dashboardTab.applicationsSubTab.documentationLink')}
                   </Link>
+
+                  <hr className={classes.sectionSeparator} />
+
+                  {/* Subscribed Marketplace applications container */}
+                  <div className={classes.hasNoUserAppsButHasMarketplaceAppSubsContainer}>
+                    {
+                      getSections('SUBBED_MARKETPLACE_APPS')
+                    }
+                  </div>
                 </section>
               )
               : (

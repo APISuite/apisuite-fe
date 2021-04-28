@@ -39,6 +39,7 @@ export const getRoutes = () => {
 }
 
 export const getSections = (section: string, args?: object) => {
+  console.log('sections', section)
   return extensions
     .reduce((accum: any[], ext: Extension) => {
       const extensionSection =
