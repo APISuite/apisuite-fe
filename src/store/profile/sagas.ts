@@ -185,7 +185,7 @@ export function * createOrgSaga ({ newOrgInfo }: CreateOrgAction) {
       headers: {
         'content-type': 'application/json',
       },
-      data: JSON.stringify({ newOrgInfo }),
+      data: JSON.stringify(newOrgInfo),
     })
 
     yield put(createOrgSuccess({ org }))
