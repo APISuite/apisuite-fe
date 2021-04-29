@@ -184,7 +184,8 @@ export function useMenu () {
             route: '/dashboard/subscriptions',
           },
           {
-            label: 'Applications',
+            /* FIXME: Revert to 'Applications' once ESA Demo is complete. */
+            label: 'Services',
             route: '/dashboard/apps',
           },
           ...extensionsLoginDashboardTabs,
