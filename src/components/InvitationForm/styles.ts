@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     fontWeight: 500,
     '& div > input': {
-      color: theme.palette.grey[400] + ' !important',
+      color: theme.palette.text.primary + ' !important',
     },
   },
   centerContent: {

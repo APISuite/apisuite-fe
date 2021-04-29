@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   formSideSubtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '20px',
     fontWeight: 300,
     marginBottom: '35px',

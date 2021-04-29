@@ -111,7 +111,7 @@ export default makeStyles((theme) => ({
   },
 
   appAvatarSubSectionDescription: {
-    color: theme.palette.grey['400'],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 400,
     lineHeight: '17px',
@@ -219,7 +219,7 @@ export default makeStyles((theme) => ({
   },
 
   clientCredentialsSubSectionDescription: {
-    color: theme.palette.grey['400'],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 400,
     lineHeight: '17px',
@@ -606,7 +606,7 @@ export default makeStyles((theme) => ({
   },
 
   optionalURLsSubSectionDescription: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 400,
     lineHeight: '17px',
@@ -678,7 +678,7 @@ export default makeStyles((theme) => ({
   },
 
   selectorTitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 300,
     padding: '6px 25px',

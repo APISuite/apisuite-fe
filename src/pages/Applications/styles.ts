@@ -40,7 +40,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardDescription: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     display: '-webkit-box',
     fontSize: '16px',
     fontWeight: 300,
@@ -126,7 +126,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationsSubtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '40px',
@@ -204,7 +204,7 @@ export default makeStyles((theme) => ({
   },
 
   knowledgeBaseCardDescription: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '21.5px',
@@ -252,7 +252,7 @@ export default makeStyles((theme) => ({
   },
 
   loadingClientApplicationCards: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '16px',
     fontWeight: 200,
   },

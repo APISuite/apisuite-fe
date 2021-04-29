@@ -59,7 +59,7 @@ export default makeStyles((theme) => ({
   },
 
   notificationCardText: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '20px',
     fontWeight: 300,
     maxWidth: '542.5px',

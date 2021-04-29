@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   inputField: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
   },
 
   inputFieldContainer: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   privacyPolicyDisclaimerText: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '12px',
     fontWeight: 300,
     marginRight: '3.5px',
