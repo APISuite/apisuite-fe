@@ -241,6 +241,15 @@ export const Applications: React.FC = () => {
                   >
                     {t('dashboardTab.applicationsSubTab.documentationLink')}
                   </Link>
+
+                  <hr className={classes.sectionSeparator} />
+
+                  {/* Subscribed Marketplace applications container */}
+                  <div className={classes.hasNoUserAppsButHasMarketplaceAppSubsContainer}>
+                    {
+                      getSections('SUBBED_MARKETPLACE_APPS')
+                    }
+                  </div>
                 </section>
               )
               : (
@@ -250,7 +259,7 @@ export const Applications: React.FC = () => {
                     <h1 className={classes.clientApplicationsTitle}>
                       {t('dashboardTab.applicationsSubTab.listOfAppsSection.title')}
                     </h1>
-
+                    
                     <p className={classes.clientApplicationsSubtitle}>
                       {t('dashboardTab.applicationsSubTab.listOfAppsSection.subtitle')}
                     </p>
@@ -273,10 +282,10 @@ export const Applications: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Marketplace applications container */}
+                    {/* Subscribed Marketplace applications container */}
                     <div>
                       {
-                        getSections('MARKETPLACE_APPLICATIONS')
+                        getSections('SUBBED_MARKETPLACE_APPS')
                       }
                     </div>
                   </section>

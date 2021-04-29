@@ -121,7 +121,7 @@ export default makeStyles((theme) => ({
   clientApplicationsContentContainer: {
     margin: '0px auto',
     maxWidth: '900px',
-    padding: '40px 0px 20px 0px',
+    padding: '0px 0px 20px 0px',
     width: '100%',
   },
 
@@ -180,6 +180,10 @@ export default makeStyles((theme) => ({
 
   firstUseLink: {
     color: `${theme.palette.grey[300]} !important`,
+  },
+
+  hasNoUserAppsButHasMarketplaceAppSubsContainer: {
+    textAlign: 'left',
   },
 
   knowledgeBaseCard: {
@@ -276,6 +280,13 @@ export default makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
     },
+  },
+
+  sectionSeparator: {
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    margin: '25px 0px',
+    width: '100%',
   },
 
   subscribedClientApplicationCardStatusIcon: {
