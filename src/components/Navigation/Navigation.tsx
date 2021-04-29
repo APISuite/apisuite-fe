@@ -118,7 +118,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       <header className={clsx({ expand })}>
         <Link className={classes.logoLink} to={user?.role.name === ROLES.admin.value ? '/dashboard' : '/'}>
           {/* Portal logo image */}
-          {ownerInfo.logo && <img className={classes.logo} src={ownerInfo.logo} />}
+          {ownerInfo.logo && <img className={classes.logoImage} src={ownerInfo.logo} />}
           {/* Portal logo fallback */}
           {!ownerInfo.logo && <AmpStoriesRoundedIcon className={classes.logo} />}
 

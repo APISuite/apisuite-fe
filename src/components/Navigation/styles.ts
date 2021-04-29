@@ -70,6 +70,12 @@ export default makeStyles((theme) => ({
     height: 'auto',
     marginRight: 10,
   },
+  // FIXME: this logic will probably not work with all images
+  logoImage: {
+    height: 60,
+    width: 'auto',
+    marginRight: 10,
+  },
   logoLink: {
     display: 'flex',
     alignItems: 'center',
