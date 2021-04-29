@@ -21,10 +21,6 @@ export default makeStyles((theme) => ({
       backgroundColor: theme.palette.action.disabled,
     },
 
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-
     '&::after': {
       content: 'none',
     },
