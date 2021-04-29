@@ -2,10 +2,10 @@ import { makeStyles } from '@apisuite/fe-base'
 
 export default makeStyles((theme) => ({
   languageSelector: {
-    backgroundColor: theme.palette.grey[400],
+    backgroundColor: theme.palette.common.white,
     borderColor: theme.palette.grey[400],
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.primary.contrastText} !important`,
+    color: `${theme.palette.text.primary} !important`,
     fontSize: '14px',
     fontWeight: 300,
     overflow: 'hidden !important',
@@ -18,11 +18,11 @@ export default makeStyles((theme) => ({
     width: '180px',
 
     '&:disabled': {
-      backgroundColor: theme.palette.grey[400],
+      backgroundColor: theme.palette.action.disabled,
     },
 
     '&:hover': {
-      backgroundColor: theme.palette.grey[400],
+      backgroundColor: theme.palette.action.hover,
     },
 
     '&::after': {
