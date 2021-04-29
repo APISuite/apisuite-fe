@@ -9,7 +9,7 @@ export default makeStyles(({
   container: {
     flex: 1,
     '& .page-container': {
-      padding: '40px 0 80px 0',
+      padding: '210px 0 80px 0',
     },
   },
   contractible: {

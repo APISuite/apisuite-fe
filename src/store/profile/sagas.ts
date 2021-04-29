@@ -162,7 +162,7 @@ export function * fetchOrgSaga (action: FetchOrgAction) {
       orgId = yield select((state: Store) => state.profile.profile.current_org.id)
     }
 
-    const { org }: FetchOrgResponse = yield call(request, {
+    const org: FetchOrgResponse = yield call(request, {
       url: `${API_URL}/organizations/${orgId}`,
       method: 'GET',
       headers: {
@@ -179,7 +179,7 @@ export function * fetchOrgSaga (action: FetchOrgAction) {
 
 export function * createOrgSaga ({ newOrgInfo }: CreateOrgAction) {
   try {
-    const org = yield call(request, {
+    const org: FetchOrgResponse = yield call(request, {
       url: `${API_URL}/organizations/`,
       method: 'POST',
       headers: {

@@ -108,7 +108,7 @@ function RouteWrapper ({
         />
       )
     })
-  }, [Layout, Component, render, auth, role])
+  }, [Component, render, auth, role, layoutProps])
 
   return (
     <Route render={renderFunc} {...rest} />

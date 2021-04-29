@@ -3,16 +3,14 @@
 import { Reducer, AnyAction } from 'redux'
 import update from 'immutability-helper'
 
-import { GET_INSTANCE_OWNER, GET_NON_INSTANCE_OWNER } from './actions/getInstanceOwner'
-import { TOGGLE_INSTANCE_OWNER, TOGGLE_NON_INSTANCE_OWNER } from './actions/toggleInstanceOwner'
+import { TOGGLE_NOTIFICATION_CARD } from './actions/toggleNotificationCard'
 import { NotificationCardsStore } from './types'
 
 /** Initial state */
 const initialState: NotificationCardsStore = {
+  show: false,
   instanceOwnerNotificationCardsData: [{}],
   nonInstanceOwnerNotificationCardsData: [{}],
-  showInstanceOwnerNotificationCards: false,
-  showNonInstanceOwnerNotificationCards: true,
 }
 
 /** Reducer */
@@ -21,27 +19,9 @@ const reducer: Reducer<NotificationCardsStore, AnyAction> = (
   action,
 ) => {
   switch (action.type) {
-    case GET_INSTANCE_OWNER: {
-      return state.instanceOwnerNotificationCardsData
-    }
-
-    case GET_NON_INSTANCE_OWNER: {
-      return state.nonInstanceOwnerNotificationCardsData
-    }
-
-    case TOGGLE_INSTANCE_OWNER: {
-      const newValueOfShowNotificationCards = !(state.showInstanceOwnerNotificationCards)
-
+    case TOGGLE_NOTIFICATION_CARD: {
       return update(state, {
-        showInstanceOwnerNotificationCards: { $set: newValueOfShowNotificationCards },
-      })
-    }
-
-    case TOGGLE_NON_INSTANCE_OWNER: {
-      const newValueOfShowNotificationCards = !(state.showNonInstanceOwnerNotificationCards)
-
-      return update(state, {
-        showNonInstanceOwnerNotificationCards: { $set: newValueOfShowNotificationCards },
+        show: { $set: !state.show },
       })
     }
 

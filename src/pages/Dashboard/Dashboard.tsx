@@ -10,7 +10,7 @@ import APICatalog from 'components/APICatalog'
 import GreetingCard from 'components/GreetingCard'
 import Notice from 'components/Notice'
 import NotificationBanner from 'components/NotificationBanner'
-import NotificationCard from 'components/NotificationCard'
+import { NotificationCard } from 'components/NotificationCard'
 
 import apiSVG from 'assets/icons/API.svg'
 import billingSVG from 'assets/icons/Billing.svg'
@@ -80,13 +80,7 @@ export const Dashboard: React.FC = () => {
       <main className={`page-container ${classes.dashboardContentsContainer}`}>
         {/* 'Dashboard' page's header image */}
         <section
-          className={
-            (typeOfUser === 'admin' && notificationCards.showInstanceOwnerNotificationCards)
-              ? classes.expandedHeaderImageSection
-              : (typeOfUser !== 'admin' && notificationCards.showNonInstanceOwnerNotificationCards)
-                ? classes.expandedHeaderImageSection
-                : classes.regularHeaderImageSection
-          }
+          className={notificationCards.show ? classes.expandedHeaderImageSection : classes.regularHeaderImageSection}
         />
 
         {/* 'Notification cards' section */}
@@ -97,18 +91,15 @@ export const Dashboard: React.FC = () => {
             notificationCardButtonClassName={classes.customNotificationCardButton}
             notificationCardButtonLabel={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardButtonLabel')}
             notificationCardButtonLink='/profile/team'
-            typeOfUser={typeOfUser}
           />
         </section>
 
         {/* 'Actions Catalog' section */}
         <section
           className={
-            (typeOfUser === 'admin' && notificationCards.showInstanceOwnerNotificationCards)
+            notificationCards.show
               ? classes.actionsCatalogSectionWithNotificationCards
-              : (typeOfUser !== 'admin' && notificationCards.showNonInstanceOwnerNotificationCards)
-                ? classes.actionsCatalogSectionWithNotificationCards
-                : classes.actionsCatalogSectionWithoutNotificationCards
+              : classes.actionsCatalogSectionWithoutNotificationCards
           }
         >
           <ActionsCatalog

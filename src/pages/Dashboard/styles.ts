@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
     backgroundPosition: 'center -320px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    height: '208.5px',
+    height: '206px',
     position: 'absolute',
     top: 0,
     transition: 'height 0.5s',

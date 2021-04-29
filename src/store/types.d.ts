@@ -1,6 +1,6 @@
 import { APIVersionStore } from './apiDetails/types'
 import { ApplicationsStore } from './applications/types'
-import { AuthStore } from 'containers/Auth/types'
+import { AuthStore } from 'store/auth/types'
 import { InvitationFormStore } from 'components/InvitationForm/types'
 // Temporary until notification cards become clearer
 import { NotificationCardsStore } from './notificationCards/types'

@@ -1,23 +1,7 @@
-import { GET_INSTANCE_OWNER, GET_NON_INSTANCE_OWNER } from './getInstanceOwner'
-import { TOGGLE_INSTANCE_OWNER, TOGGLE_NON_INSTANCE_OWNER } from './toggleInstanceOwner'
+import { TOGGLE_NOTIFICATION_CARD } from './toggleNotificationCard'
 
-export type GetInstanceOwnerAction = {
-  type: typeof GET_INSTANCE_OWNER,
+export type ToggleNotificationCardAction = {
+  type: typeof TOGGLE_NOTIFICATION_CARD,
 }
 
-export type GetNonInstanceOwnerAction = {
-  type: typeof GET_NON_INSTANCE_OWNER,
-}
-
-export type ToggleInstanceOwnerAction = {
-  type: typeof TOGGLE_INSTANCE_OWNER,
-}
-
-export type ToggleNonInstanceOwnerAction = {
-  type: typeof TOGGLE_NON_INSTANCE_OWNER,
-}
-
-export type NotificationCardsActions = GetInstanceOwnerAction
-| GetNonInstanceOwnerAction
-| ToggleInstanceOwnerAction
-| ToggleNonInstanceOwnerAction
+export type NotificationCardsActions = ToggleNotificationCardAction

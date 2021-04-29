@@ -1,4 +1,4 @@
-import React from 'react'
+import { useCallback, useMemo } from 'react'
 import { useConfig } from '@apisuite/fe-base'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
@@ -10,18 +10,48 @@ import {
 import { getMenuEntries } from 'util/extensions'
 import { getRoleName } from 'pages/Profile/selectors'
 
-import { TabProps } from './types'
+import { LeftActions, TabProps } from './types'
+import { NavigationLeftActionTypes } from './constants'
 
-export function useMenu (): Array<TabProps[]> {
+// Navigation's left actions
+export const leftActionsConfig: LeftActions[] = [
+  {
+    type: NavigationLeftActionTypes.goBack,
+    path: '/dashboard/apps/create',
+    label: 'Cancel',
+  },
+  {
+    type: NavigationLeftActionTypes.goBack,
+    path: '/dashboard/apps/detail',
+    label: 'Back to overview',
+  },
+  {
+    type: NavigationLeftActionTypes.goBack,
+    path: '/api-products/details',
+    label: 'Back to overview',
+  },
+  {
+    type: NavigationLeftActionTypes.goBack,
+    path: '/profile/organisation',
+    label: 'Back to profile',
+  },
+  {
+    type: NavigationLeftActionTypes.openCard,
+    path: '/dashboard',
+    label: '',
+  },
+]
+
+export function useMenu () {
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
   const { documentationURL, supportURL } = useConfig()
 
   /*
-  Create an array for each accumulated level of pathnames of the current URI.
-  E.g.: '/dashboard/subscriptions' -> ['/dashboard', '/dashboard/subscriptions']
-  */
-  const levelPathnames = React.useMemo(() => {
+   * Create an array for each accumulated level of pathnames of the current URI.
+   * E.g.: '/dashboard/subscriptions' -> ['/dashboard', '/dashboard/subscriptions']
+   */
+  const levelPathnames = useMemo(() => {
     const pathParts = pathname.split('/')
     return pathParts.reduce((accum, _part, index) => {
       const levelParts = pathParts.slice(0, index + 1)
@@ -31,11 +61,11 @@ export function useMenu (): Array<TabProps[]> {
   }, [pathname])
 
   /*
-  Iterates through all menu and sub-menu entries, and sets which entries are
-  active. Active entries are either those whose path matches with the current
-  page, or where any of the sub-menu items is active.
-  */
-  const setMenuActiveEntries = React.useCallback((entries, level = 0) => {
+   * Iterates through all menu and sub-menu entries, and sets which entries are
+   * active. Active entries are either those whose path matches with the current
+   * page, or where any of the sub-menu items is active.
+   */
+  const setMenuActiveEntries = useCallback((entries, level = 0) => {
     return entries.map((entry: MenuEntry) => {
       const hasLevelPathname = !!levelPathnames[level]
       const currentActiveEntry =
@@ -64,7 +94,7 @@ export function useMenu (): Array<TabProps[]> {
     extensionsLoginTabs,
     extensionsLoginDashboardTabs,
     extensionsLoginProfileTabs,
-  ] = React.useMemo(
+  ] = useMemo(
     () => {
       return [
         getMenuEntries(Menus.HeaderAnonymousMain, roleName),
@@ -77,8 +107,7 @@ export function useMenu (): Array<TabProps[]> {
   )
 
   // Tabs and sub-tabs
-
-  const topTabs = React.useMemo((): TabProps[] => {
+  const topTabs = useMemo((): TabProps[] => {
     return [
       {
         label: 'Sign up',
@@ -95,7 +124,7 @@ export function useMenu (): Array<TabProps[]> {
     ]
   }, [pathname])
 
-  const initTabs = React.useMemo((): TabProps[] => {
+  const initTabs = useMemo((): TabProps[] => {
     const entries = [
       {
         label: 'API Products',
@@ -115,29 +144,12 @@ export function useMenu (): Array<TabProps[]> {
       },
 
       ...extensionsInitTabs,
-
-      {
-        // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
-        yetToLogIn: true,
-        label: 'Sign up',
-        route: '/auth/signup',
-        active: pathname === '/auth/signup',
-      },
-      {
-        // Used to convert the 'Log in' tab's label into a Material UI icon
-        isLogin: true,
-        // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
-        yetToLogIn: true,
-        label: 'Sign in',
-        route: '/auth/signin',
-        active: pathname === '/auth/signin',
-      },
     ].filter(Boolean)
 
     return setMenuActiveEntries(entries)
-  }, [extensionsInitTabs, documentationURL, pathname, roleName, setMenuActiveEntries, supportURL])
+  }, [extensionsInitTabs, documentationURL, roleName, setMenuActiveEntries, supportURL])
 
-  const loginTabs = React.useMemo((): TabProps[] => {
+  const loginTabs = useMemo((): TabProps[] => {
     const entries = [
       {
         label: 'API Products',
@@ -223,26 +235,9 @@ export function useMenu (): Array<TabProps[]> {
     setMenuActiveEntries,
   ])
 
-  return [topTabs, initTabs, loginTabs]
+  const goBack = useMemo(() => {
+    return leftActionsConfig.find((config) => config.path === pathname)
+  }, [pathname])
+
+  return { topTabs, initTabs, loginTabs, goBack }
 }
-
-// Navigation's 'back' buttons
-
-export const goBackConfig = [
-  {
-    path: '/dashboard/apps/create',
-    label: 'Cancel',
-  },
-  {
-    path: '/dashboard/apps/detail',
-    label: 'Back to overview',
-  },
-  {
-    path: '/api-products/details',
-    label: 'Back to overview',
-  },
-  {
-    path: '/profile/organisation',
-    label: 'Back to profile',
-  },
-]

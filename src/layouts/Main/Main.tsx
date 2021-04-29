@@ -1,7 +1,7 @@
 import * as React from 'react'
 import clsx from 'clsx'
 import { LayoutProps } from './types'
-import Navigation from 'components/Navigation'
+import { Navigation } from 'components/Navigation'
 import Footer from 'components/Footer'
 import useStyles from './styles'
 

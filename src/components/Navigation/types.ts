@@ -1,17 +1,19 @@
-import { NotificationCardsStore } from 'store/notificationCards/types'
-import { ProfileStore } from 'store/profile/types'
+// import { NotificationCardsStore } from 'store/notificationCards/types'
+// import { ProfileStore } from 'store/profile/types'
+
+import { NavigationLeftActionTypes } from './constants'
 
 export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
-  backButtonLabel?: string,
+  // backButtonLabel?: string,
   contractible?: boolean,
-  logout: () => void,
-  // Temporary until notification cards become clearer
-  notificationCards: NotificationCardsStore,
-  profile: ProfileStore,
-  showBackButton?: boolean,
-  // Temporary until notification cards become clearer
-  toggleInstanceOwnerNotificationCards: () => void,
-  toggleNonInstanceOwnerNotificationCards: () => void,
+  // logout: () => void,
+  // // Temporary until notification cards become clearer
+  // notificationCards: NotificationCardsStore,
+  // profile: ProfileStore,
+  // showBackButton?: boolean,
+  // // Temporary until notification cards become clearer
+  // toggleInstanceOwnerNotificationCards: () => void,
+  // toggleNonInstanceOwnerNotificationCards: () => void,
 }
 
 export interface TabMenus {
@@ -36,4 +38,10 @@ export interface SubTabProps {
   route: string,
   disabled?: boolean,
   active?: boolean,
+}
+
+export interface LeftActions {
+  type: NavigationLeftActionTypes,
+  path: string,
+  label: string,
 }

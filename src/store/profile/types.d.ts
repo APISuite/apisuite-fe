@@ -101,8 +101,4 @@ export type UpdateProfileResponse = {
   success: boolean,
 }
 
-export type FetchOrgResponse = {
-  message: string,
-  org: Organization & ExistingOrgInfo,
-  success: boolean,
-}
+export type FetchOrgResponse = Organization & ExistingOrgInfo
