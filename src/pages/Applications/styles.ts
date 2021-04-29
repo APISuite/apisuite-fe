@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
 
   clientApplicationCardBottomSection: {
     backgroundColor: '#F5F5F5',
-    border: `1px solid ${theme.palette.label}`,
+    border: `1px solid ${theme.palette.grey['300']}`,
     borderRadius: theme.palette.dimensions.borderRadius,
     borderTop: 'none',
     borderTopLeftRadius: '0px',
@@ -52,6 +52,7 @@ export default makeStyles((theme) => ({
     '-webkit-box-orient': 'vertical',
     '-webkit-line-clamp': 2,
   },
+
   clientApplicationCardImage: {
     borderRadius: '50%',
     fontSize: '20px',
@@ -83,11 +84,11 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardTopSection: {
-    backgroundColor: theme.palette.grey[50],
-    border: `1px solid ${theme.palette.label}`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.grey['300']}`,
     borderBottomLeftRadius: '0px',
     borderBottomRightRadius: '0px',
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     textAlign: 'center',
   },
 
