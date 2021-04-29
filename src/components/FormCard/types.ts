@@ -2,7 +2,7 @@
 export interface FormCardProps extends React.HTMLAttributes<HTMLDivElement> {
   backLabel?: string,
   buttonIcon?: any,
-  buttonDisabled: boolean,
+  buttonDisabled?: boolean,
   buttonLabel: string,
   children: React.ReactNode,
   closeRoute?: string,
@@ -12,7 +12,7 @@ export interface FormCardProps extends React.HTMLAttributes<HTMLDivElement> {
   error?: string | Error,
   handleBackClick?: (e: React.FormEvent<HTMLFormElement>) => void,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
-  loading: boolean,
+  loading?: boolean,
   showBack?: boolean,
   showReject?: boolean,
   rejectDisabled?: boolean,

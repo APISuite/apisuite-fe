@@ -1,112 +1,72 @@
 import React from 'react'
 import qs from 'qs'
+import { useSelector, useDispatch } from 'react-redux'
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
 import {
-  InvitationFormProps, InvitationFormStore,
+  InvitationFormProps,
 } from './types'
-import { useTranslation } from '@apisuite/fe-base'
+import { TextField, TextFieldProps, useTranslation } from '@apisuite/fe-base'
+import {
+  acceptInvitationWithSignIn,
+  invitationSignIn,
+  acceptInvitation,
+  rejectInvitation,
+  validateInvitationToken,
+} from 'store/auth/actions/invitation'
+import { Invitation } from 'store/auth/types'
 import FormCard from 'components/FormCard'
-import FormField, {
-  parseErrors,
-} from 'components/FormField'
-import { FormFieldEvent } from 'components/FormField/types'
 import useStyles from './styles'
-import LoadingView from 'components/SignUpForm/LoadingView'
+import { LoadingView } from 'components/SignUpForm/LoadingView'
+import { invitationFormSelector } from './selector'
 
 const InvitationConfirmationForm: React.FC<{
-  handleSubmit: (token: string, provider: string) => void,
-  handleReject: (token: string) => void,
-  invitation: InvitationFormStore,
+  invitation: Invitation,
   token: string,
   provider: string,
   isLogged: boolean,
-}> = ({ handleSubmit, handleReject, invitation, token, provider, isLogged }) => {
+}> = ({ invitation, token, provider, isLogged }) => {
   const classes = useStyles()
   const [t] = useTranslation()
-
-  const [isFormValid, setFormValid] = React.useState(false)
-  const [errors, setErrors] = React.useState()
-  const [hasEmail, setEmail] = React.useState(false)
-  const [input, setInput] = React.useState({
-    email: '',
-    organization: '',
-    token,
-  })
-
-  const handleInputs = (e: FormFieldEvent, err: any) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
-
-    const eventTarget = e.target
-
-    // @ts-ignore
-    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
-  }
-
-  React.useEffect(() => {
-    if (invitation.invitation && invitation.invitation.email && !input.email && !hasEmail) {
-      setEmail(true)
-      setInput({
-        ...input,
-        organization: invitation.invitation.organization,
-        email: invitation.invitation.email,
-      })
-    }
-    // @ts-ignore
-    setFormValid(errors && errors.length === 0)
-  }, [errors, hasEmail, input, invitation])
+  const dispatch = useDispatch()
 
   return (
     <div className={classes.registerContainer}>
       <FormCard
         buttonIcon={isLogged ? null : <VpnKeyRoundedIcon className={classes.ssoSignIcon} />}
         buttonLabel={isLogged ? t('invitationForm.accept') : t('invitationForm.signin', { provider })}
-        buttonDisabled={!isFormValid}
-        handleSubmit={() => isFormValid ? handleSubmit(input.token || '', provider) : () => {
-          // do nothing
-        }}
-        loading={invitation.isRequesting}
+        handleSubmit={() => dispatch(isLogged ? acceptInvitation({ token }) : invitationSignIn({ token, provider }))}
         showReject
         rejectLabel={t('invitationForm.reject')}
-        rejectDisabled={!isFormValid}
         customRejectButtonStyles={classes.rejectButton}
-        handleReject={() => isFormValid ? handleReject(input.token || '') : () => {
-          // do nothing
-        }}
+        handleReject={() => rejectInvitation({ token: token || '' })}
       >
         <div className={classes.fieldContainer}>
-          <FormField
+          <TextField
             id='organization-field'
             label='Organisation'
             variant='outlined'
             type='text'
             name='organization'
-            value={input.organization}
-            onChange={handleInputs}
+            value={invitation.organization}
             autoFocus
             fullWidth
-            disabled={hasEmail}
-            errorPlacing='bottom'
+            disabled
             InputProps={{
               classes: { input: classes.textField },
             }}
           />
         </div>
         <div className={classes.fieldContainer}>
-          <FormField
+          <TextField
             id='email-field'
             label='E-mail'
             variant='outlined'
             type='email'
             placeholder=''
             name='email'
-            value={input.email}
-            onChange={handleInputs}
+            value={invitation.email}
             fullWidth
-            disabled={hasEmail}
-            errorPlacing='bottom'
+            disabled
             InputProps={{
               classes: { input: classes.textField },
             }}
@@ -117,32 +77,30 @@ const InvitationConfirmationForm: React.FC<{
   )
 }
 
-const InvitationForm: React.FC<InvitationFormProps> = ({
-  invitationStore,
-  acceptInvitationWithSignIn,
-  invitationSignIn,
-  acceptInvitation,
-  rejectInvitation,
-  validateToken,
+export const InvitationForm: React.FC<InvitationFormProps> = ({
   isLogged,
   sso,
 }) => {
+  const dispatch = useDispatch()
+  const { invitation, invitationError } = useSelector(invitationFormSelector)
   // get token from url
   const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
-  const invitationCode = qs.parse(window.location.search.slice(1)).code || undefined
   const code = qs.parse(window.location.search.slice(1)).code || undefined
-  const { invitation, invitationError } = invitationStore
   const STATE_STORAGE_INVITATION = 'ssoStateInvitationStorage'
 
   const stateToken = localStorage.getItem(STATE_STORAGE_INVITATION)
 
   React.useEffect(() => {
     if (stateToken && code) {
-      acceptInvitationWithSignIn(stateToken, (sso?.length && sso[0]) || 'keycloak', code)
-    } else if (invitationToken && !invitation?.organization && !invitation?.email && invitationError === undefined) {
-      validateToken(invitationToken)
+      dispatch(acceptInvitationWithSignIn({
+        token: stateToken,
+        provider: (sso?.length && sso[0]) || 'keycloak',
+        code,
+      }))
+    } else if (invitationToken && !invitation.organization && !invitation.email && !invitationError) {
+      dispatch(validateInvitationToken({ token: invitationToken }))
     }
-  }, [invitationToken, invitation, invitationError, stateToken])
+  }, [invitationToken, invitation.organization, invitation.email, invitationError, stateToken, code, sso, dispatch])
 
   return (
     <>
@@ -162,19 +120,17 @@ const InvitationForm: React.FC<InvitationFormProps> = ({
             <InvitationConfirmationForm
               key='invitation-confirmation-1'
               isLogged={isLogged || false}
-              invitation={invitationStore}
+              invitation={invitation}
               token={invitationToken}
               provider={(sso?.length && sso[0]) || ''}
-              handleSubmit={!isLogged ? invitationSignIn : acceptInvitation}
-              handleReject={rejectInvitation}
             />
           }
         </>
       }
       {
-        !invitationToken && !invitationCode &&
+        !invitationToken && !code &&
         <LoadingView
-          isLoading={!!invitationCode}
+          isLoading={!!code}
           isError
           errorMessage='This invitation is invalid or expired.'
         />
@@ -182,5 +138,3 @@ const InvitationForm: React.FC<InvitationFormProps> = ({
     </>
   )
 }
-
-export default InvitationForm

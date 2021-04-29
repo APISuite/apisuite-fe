@@ -25,6 +25,11 @@ import {
   SSOTokenExchangeAction,
   SubmitSignUpDetails,
   ValidateRegistrationTokenAction,
+  AcceptInvitationWithSignInAction,
+  InvitationSignInAction,
+  AcceptInvitationAction,
+  RejectInvitationAction,
+  ValidateInvitationTokenAction,
 } from './actions/types'
 
 import { confirmRegistrationSuccess } from './actions/confirmRegistration'
@@ -32,8 +37,27 @@ import { validateRegistrationTokenError, validateRegistrationTokenSuccess, VALID
 
 import { submitSignUpDetailsError, submitSignUpDetailsSuccess, SUBMIT_SIGN_UP_DETAILS } from './actions/submitSignUpDetails'
 import { ProfileDetailsResponse } from 'components/SignUpForm/types'
+import {
+  acceptInvitationWithSignInSuccess,
+  acceptInvitationWithSignInError,
+  invitationSignInError,
+  acceptInvitationSuccess,
+  acceptInvitationError,
+  rejectInvitationSuccess,
+  rejectInvitationError,
+  validateInvitationTokenSuccess,
+  validateInvitationTokenError,
+  ACCEPT_INVITATION,
+  INVITATION_SIGN_IN,
+  ACCEPT_INVITATION_WITH_SIGN_IN,
+  REJECT_INVITATION,
+  VALIDATE_INVITATION_TOKEN,
+} from './actions/invitation'
+
+import { Invitation } from './types'
 
 const STATE_STORAGE = 'ssoStateStorage'
+const STATE_STORAGE_INVITATION = 'ssoStateInvitationStorage'
 
 function * loginWorker (action: LoginAction) {
   try {
@@ -314,6 +338,106 @@ export function * validateRegisterTokenSaga ({ token }: ValidateRegistrationToke
   }
 }
 
+export function * invitationWithSignInSaga ({ token, code, provider }: AcceptInvitationWithSignInAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/auth/oidc/${provider}/token?invite=true`,
+      method: 'POST',
+      data: { code },
+    })
+
+    yield call(request, {
+      url: `${API_URL}/invites/${token}/accept`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    // FIXME: move to middleware
+    localStorage.removeItem(STATE_STORAGE)
+    localStorage.removeItem(STATE_STORAGE_INVITATION)
+    yield put(loginSuccess({}))
+    yield put(acceptInvitationWithSignInSuccess('/'))
+    yield put(openNotification('success', 'You have accepted your invitation.', 4000))
+  } catch (error) {
+    yield put(acceptInvitationWithSignInError(error))
+  }
+}
+
+export function * invitationSignInSaga ({ token, provider }: InvitationSignInAction) {
+  try {
+    let state = localStorage.getItem(STATE_STORAGE)
+
+    if (!state) {
+      state = stateGenerator()
+      localStorage.setItem(STATE_STORAGE, state)
+    }
+    localStorage.setItem(STATE_STORAGE_INVITATION, token)
+
+    const ssoLoginURL = `${API_URL}/auth/oidc/${provider}?state=${state}&invite=true`
+    const response: { url: string } = yield call(window.fetch, ssoLoginURL)
+
+    window.location.href = response.url
+  } catch (error) {
+    yield put(invitationSignInError(error))
+  }
+}
+
+export function * acceptInvitationSaga ({ token }: AcceptInvitationAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/invites/${token}/accept`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    yield put(openNotification('success', 'You have accepted your invitation.', 4000))
+    yield put(acceptInvitationSuccess({
+      path: '/',
+    }))
+  } catch (error) {
+    yield put(acceptInvitationError({ error: error.message }))
+  }
+}
+
+export function * rejectInvitationSaga ({ token }: RejectInvitationAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/invites/${token}/reject`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    yield put(openNotification('success', 'You have rejected your invitation.', 4000))
+    yield put(rejectInvitationSuccess({ path: '/' }))
+  } catch (error) {
+    yield put(rejectInvitationError({ error: error.message }))
+  }
+}
+
+export function * validateInvitationTokenSaga ({ token }: ValidateInvitationTokenAction) {
+  try {
+    const response: Invitation = yield call(request, {
+      url: `${API_URL}/invites/${token}`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    yield put(validateInvitationTokenSuccess({
+      invitation: response,
+    }))
+  } catch (error) {
+    yield put(validateInvitationTokenError(error.message))
+  }
+}
+
 export function * rootSaga () {
   yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUserWorker)
   yield takeLatest(EXPIRED_SESSION, expiredSessionWorker)
@@ -326,6 +450,11 @@ export function * rootSaga () {
   yield takeLatest(SSO_TOKEN_EXCHANGE, ssoTokenExchangeWorker)
   yield takeLatest(SUBMIT_SIGN_UP_DETAILS, submitSignUpDetailsSaga)
   yield takeLatest(VALIDATE_REGISTRATION_TOKEN, validateRegisterTokenSaga)
+  yield takeLatest(ACCEPT_INVITATION, acceptInvitationSaga)
+  yield takeLatest(INVITATION_SIGN_IN, invitationSignInSaga)
+  yield takeLatest(ACCEPT_INVITATION_WITH_SIGN_IN, invitationWithSignInSaga)
+  yield takeLatest(REJECT_INVITATION, rejectInvitationSaga)
+  yield takeLatest(VALIDATE_INVITATION_TOKEN, validateInvitationTokenSaga)
 }
 
 export default rootSaga

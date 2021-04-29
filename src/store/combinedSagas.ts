@@ -8,13 +8,11 @@ import auth from 'store/auth/sagas'
 import profile from './profile/sagas'
 import security from './security/sagas'
 import subscriptions from './subscriptions/sagas'
-import invitation from 'components/InvitationForm/sagas'
 
 const sagas = [
   apiDetails,
   applications,
   auth,
-  invitation,
   profile,
   security,
   subscriptions,

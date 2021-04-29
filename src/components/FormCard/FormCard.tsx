@@ -8,7 +8,7 @@ import useStyles from './styles'
 const FormCard: React.FC<FormCardProps> = ({
   backLabel,
   buttonIcon,
-  buttonDisabled,
+  buttonDisabled = false,
   buttonLabel,
   children,
   customBackButtonStyles,
@@ -17,7 +17,7 @@ const FormCard: React.FC<FormCardProps> = ({
   error,
   handleBackClick,
   handleSubmit,
-  loading,
+  loading = false,
   showBack = false,
   title,
   showReject = false,

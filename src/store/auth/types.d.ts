@@ -8,6 +8,14 @@ export interface AuthStore {
   providers: null | string[],
   user?: User,
   providerSignupURL: string,
+  invitation: Invitation,
+}
+
+export interface Invitation {
+  email: string,
+  organization: string,
+  isUser: boolean,
+  hasOrganizations: boolean,
 }
 
 export interface User {

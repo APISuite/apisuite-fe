@@ -5,9 +5,7 @@ import { useConfig, useTranslation } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
-import { decodeBase64 } from 'util/decodeBase64'
-
-import InvitationForm from 'components/InvitationForm'
+import { InvitationForm } from 'components/InvitationForm'
 import { SignInForm } from 'components/SignInForm'
 import { SignUpForm } from 'components/SignUpForm'
 
@@ -20,10 +18,10 @@ export const SignInOrUp: React.FC = () => {
   const classes = useStyles()
   const history = useHistory()
   const [t] = useTranslation()
-  const { auth, invitation } = useSelector(signInOrUpSelector)
+  const { auth } = useSelector(signInOrUpSelector)
   const { ownerInfo, portalName, sso } = useConfig()
 
-  const { view: viewParameter, email: emailParameter } = useParams<{ view: string; email: string }>()
+  const { view: viewParameter } = useParams<{ view: string }>()
 
   const [usingSSO, setSSO] = React.useState(false)
   const checkView = (): View => {
@@ -48,7 +46,7 @@ export const SignInOrUp: React.FC = () => {
     if (usingSSO) {
       setSSO(false)
     }
-  }, [sso])
+  }, [sso, usingSSO, view])
 
   const renderRegisterInvitationOption = () => {
     if (auth.authToken) {
@@ -101,7 +99,7 @@ export const SignInOrUp: React.FC = () => {
             {t('signInOrUpView.welcomeTitle')}
           </h1>
           <p className={classes.formSideSubtitle}>
-            {t(view === 'invitation' ? 'signInOrUpView.welcomeSubtitleInvitation' : 'signInOrUpView.welcomeSubtitle', { org: invitation?.invitation?.organization || 'Unknown' })}
+            {t(view === 'invitation' ? 'signInOrUpView.welcomeSubtitleInvitation' : 'signInOrUpView.welcomeSubtitle', { org: auth.invitation?.organization || 'Unknown' })}
           </p>
 
           <div>
@@ -137,9 +135,8 @@ export const SignInOrUp: React.FC = () => {
 
             <div className={classes.form}>
               {view === 'signin' && <SignInForm />}
-              {/* @ts-ignore */}
-              {/* {view === 'signup' && <SignUpForm prefilledEmail={decodeBase64(emailParameter)} />} */}
-              {/* {view === 'invitation' && <InvitationForm isLogged={!!auth.authToken} sso={sso} />} */}
+              {view === 'signup' && <SignUpForm />}
+              {view === 'invitation' && <InvitationForm isLogged={!!auth.authToken} sso={sso} />}
             </div>
             {/* <div className={classes.formFooter}>
               {(view === 'invitation' && !auth.authToken) && <div>Sign Up</div>}
