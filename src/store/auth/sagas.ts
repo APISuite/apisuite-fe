@@ -358,7 +358,7 @@ export function * invitationWithSignInSaga ({ token, code, provider }: AcceptInv
     localStorage.removeItem(STATE_STORAGE)
     localStorage.removeItem(STATE_STORAGE_INVITATION)
     yield put(loginSuccess({}))
-    yield put(acceptInvitationWithSignInSuccess('/'))
+    yield put(acceptInvitationWithSignInSuccess({ path: '/' }))
     yield put(openNotification('success', 'You have accepted your invitation.', 4000))
   } catch (error) {
     yield put(acceptInvitationWithSignInError(error))
