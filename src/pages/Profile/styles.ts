@@ -24,7 +24,7 @@ export default makeStyles((theme) => ({
   },
 
   avatar: {
-    background: '#C8DC8C linear-gradient(270deg, rgba(200, 220, 140, 1) 0%, rgba(25, 165, 140, 1) 100%)',
+    background: theme.palette.gradient.light,
     cursor: 'pointer',
     fontSize: '20px',
     fontWeight: 300,

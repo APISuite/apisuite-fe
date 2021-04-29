@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardAvatar: {
-    background: '#C8DC8C linear-gradient(270deg, rgba(200, 220, 140, 1) 0%, rgba(25, 165, 140, 1) 100%)',
+    background: theme.palette.gradient.light,
     fontSize: '20px',
     fontWeight: 300,
     height: '120px',

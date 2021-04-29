@@ -152,7 +152,7 @@ export default makeStyles((theme) => ({
 
   latestAPIProductUpdateSection: {
     // First color is a fallback one - do not remove!
-    background: '#7DD291 linear-gradient(270deg, rgba(125, 210, 145, 1) 0%, rgba(0, 125, 125, 1) 100%)',
+    background: theme.palette.gradient.dark,
     borderBottom: '4px solid rgba(20, 40, 60, 0.1)',
     height: '335px',
     marginBottom: '-280px',

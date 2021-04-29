@@ -494,7 +494,7 @@ export default makeStyles((theme) => ({
   },
 
   focusedAvatar: {
-    background: '#C8DC8C linear-gradient(270deg, rgba(200, 220, 140, 1) 0%, rgba(25, 165, 140, 1) 100%)',
+    background: theme.palette.gradient.light,
     fontSize: '13.75px',
     fontWeight: 300,
     height: '55px',
@@ -590,7 +590,7 @@ export default makeStyles((theme) => ({
   },
 
   notFocusedAvatar: {
-    background: '#C8DC8C linear-gradient(270deg, rgba(200, 220, 140, 1) 0%, rgba(25, 165, 140, 1) 100%)',
+    background: theme.palette.gradient.light,
     fontSize: '20px',
     fontWeight: 300,
     height: '80px',
