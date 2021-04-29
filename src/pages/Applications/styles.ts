@@ -93,14 +93,14 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardWithAvatarIcon: {
-    color: theme.palette.label,
+    color: theme.palette.grey['300'],
     fontSize: '30px',
     position: 'absolute',
     transform: 'translate(105px, 10px) rotate(45deg)',
   },
 
   clientApplicationCardWithImageIcon: {
-    color: theme.palette.label,
+    color: theme.palette.grey['300'],
     fontSize: '30px',
     position: 'absolute',
     transform: 'translate(165px, 10px) rotate(45deg)',
