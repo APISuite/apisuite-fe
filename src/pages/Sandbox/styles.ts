@@ -113,6 +113,18 @@ export default makeStyles((theme) => ({
     },
   },
 
+  individualStepOne: {
+    color: theme.palette.primary.light,
+  },
+
+  individualStepTwo: {
+    color: theme.palette.primary.main,
+  },
+
+  individualStepThree: {
+    color: theme.palette.primary.dark,
+  },
+
   stepsSectionContainer: {
     display: 'block',
     margin: '0 auto 40px auto',

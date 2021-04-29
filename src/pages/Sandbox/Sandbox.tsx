@@ -209,9 +209,9 @@ export const Sandbox: React.FC = () => {
           <section className={classes.stepsDescriptionContainerTwo}>
             <div className={classes.individualStepsContainer}>
               <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
-                <h1 style={{ color: '#7DD291' }}>1.</h1>
+                <h1 className={classes.individualStepOne}>1.</h1>
 
-                <h3 style={{ color: '#7DD291' }}>
+                <h3 className={classes.individualStepOne}>
                   {t('sandboxPage.stepsSection.individualSteps.stepOne.header')}
                 </h3>
 
@@ -235,9 +235,9 @@ export const Sandbox: React.FC = () => {
               </div>
 
               <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
-                <h1 style={{ color: palette.primary.main }}>2.</h1>
+                <h1 className={classes.individualStepTwo}>2.</h1>
 
-                <h3 style={{ color: palette.primary.main }}>
+                <h3 className={classes.individualStepTwo}>
                   {t('sandboxPage.stepsSection.individualSteps.stepTwo.header')}
                 </h3>
 
@@ -255,9 +255,9 @@ export const Sandbox: React.FC = () => {
               </div>
 
               <div className={classes.individualStep}>
-                <h1 style={{ color: '#007D7D' }}>3.</h1>
+                <h1 className={classes.individualStepThree}>3.</h1>
 
-                <h3 style={{ color: '#007D7D' }}>
+                <h3 className={classes.individualStepThree}>
                   {t('sandboxPage.stepsSection.individualSteps.stepThree.header')}
                 </h3>
 
