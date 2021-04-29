@@ -182,7 +182,7 @@ export const Applications: React.FC = () => {
   }, [user, dispatch])
 
   return (
-    <main>
+    <main className='page-container'>
       {
         // If the user has yet to create/join an organisation, (...)
         !hasCurrentOrgDetails
