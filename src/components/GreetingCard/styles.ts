@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
 
   greetingCardContentsContainer: {
     alignItems: 'center',
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
     display: 'flex',

@@ -257,6 +257,10 @@ export default makeStyles((theme) => ({
     fontWeight: 200,
   },
 
+  pageContentsContainer: {
+    padding: '210px 0px 0px 0px',
+  },
+
   registerNewClientApplicationCardButton: {
     backgroundColor: theme.palette.primary.main,
     border: `1px solid ${theme.palette.primary.main}`,
