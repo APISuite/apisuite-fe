@@ -72,10 +72,9 @@ export default makeStyles((theme) => ({
   },
 
   imageLogo: {
+    width: 100,
     height: 'auto',
-    marginRight: '10px',
-    padding: '5px',
-    width: '60px',
+    marginRight: 10,
   },
 
   leftFooterContentsContainer: {
