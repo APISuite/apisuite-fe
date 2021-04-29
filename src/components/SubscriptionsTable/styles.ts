@@ -67,7 +67,7 @@ export default makeStyles((theme) => ({
   },
 
   apiVersionName: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 300,
     textAlign: 'center',
@@ -96,7 +96,7 @@ export default makeStyles((theme) => ({
   },
 
   chevronIcon: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
   },
 
   deprecatedIcon: {
@@ -116,7 +116,7 @@ export default makeStyles((theme) => ({
   },
 
   noSubsMessage: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 300,
     padding: '10px 0px 10px 12px',
@@ -152,7 +152,7 @@ export default makeStyles((theme) => ({
     },
 
     '& > :last-child': {
-      color: theme.palette.grey[400],
+      color: theme.palette.text.primary,
       fontSize: '16px',
       fontWeight: 300,
     },

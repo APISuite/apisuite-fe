@@ -206,7 +206,7 @@ export default makeStyles((theme) => ({
   },
 
   orgAdditionalDetailsSubtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 300,
     lineHeight: '16.5px',
@@ -232,7 +232,7 @@ export default makeStyles((theme) => ({
   },
 
   orgSubtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '16px',
     fontWeight: 300,
   },
@@ -295,7 +295,7 @@ export default makeStyles((theme) => ({
   },
 
   selectorTitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 300,
     padding: '6px 25px',

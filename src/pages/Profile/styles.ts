@@ -359,7 +359,7 @@ export default makeStyles((theme) => ({
   },
 
   subtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '25px',

@@ -125,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   signUpCompleteSideSubtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '20px',
     fontWeight: 300,
     marginBottom: '40px',

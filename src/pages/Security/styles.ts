@@ -134,7 +134,7 @@ export default makeStyles((theme) => ({
   },
 
   securitySubtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '55px',

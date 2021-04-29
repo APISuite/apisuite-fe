@@ -53,7 +53,7 @@ export default makeStyles((theme) => ({
   },
 
   dialogSubText: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 300,
     lineHeight: '20px',

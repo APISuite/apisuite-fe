@@ -131,7 +131,7 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '& > :first-child': {
-      color: theme.palette.grey[400],
+      color: theme.palette.text.primary,
       fontSize: '14px',
       fontWeight: 400,
       marginBottom: '25px',
@@ -244,7 +244,7 @@ export default makeStyles((theme) => ({
   },
 
   apiProductVersion: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '14px',
     fontWeight: 300,
     marginRight: '14.75px',
@@ -271,14 +271,14 @@ export default makeStyles((theme) => ({
     width: '100%',
 
     '& > :first-child': {
-      color: theme.palette.grey[400],
+      color: theme.palette.text.primary,
       fontSize: '16px',
       fontWeight: 300,
     },
   },
 
   notSelectedAPIProduct: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
   },
 
   regularAPIProductDetailsContainer: {
@@ -322,7 +322,7 @@ export default makeStyles((theme) => ({
     },
 
     '& > :last-child': {
-      color: theme.palette.grey['400'],
+      color: theme.palette.text.primary,
       fontSize: '16px',
       fontWeight: 300,
     },
@@ -342,7 +342,7 @@ export default makeStyles((theme) => ({
     },
 
     '& > :last-child': {
-      color: theme.palette.grey['400'],
+      color: theme.palette.text.primary,
       fontSize: '14px',
       fontWeight: 400,
       lineHeight: '18px',

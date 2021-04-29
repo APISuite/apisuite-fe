@@ -115,7 +115,7 @@ export default makeStyles((theme) => ({
   },
 
   inactiveFilterButtonIcon: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
   },
 
   lastFilterButtonContainer: {

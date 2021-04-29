@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   formSideSubtitle: {
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     fontSize: '20px',
     fontWeight: 300,
     marginBottom: '35px',
@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
   inputField: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.palette.dimensions.borderRadius,
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
   },
 
   inputFieldContainer: {

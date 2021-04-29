@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
   emailTextfield: {
     backgroundColor: theme.palette.background.default,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     width: 220,
   },
 
@@ -59,7 +59,7 @@ export default makeStyles((theme) => ({
 
   header: {
     alignItems: 'center',
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     display: 'flex',
     flexDirection: 'row',
     height: 42,
@@ -106,7 +106,7 @@ export default makeStyles((theme) => ({
   nameTextfield: {
     backgroundColor: theme.palette.background.default,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.grey[400],
+    color: theme.palette.text.primary,
     width: 220,
   },
 
