@@ -1,11 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import qs from 'qs'
 import { useSelector, useDispatch } from 'react-redux'
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
-import {
-  InvitationFormProps,
-} from './types'
-import { TextField, TextFieldProps, useTranslation } from '@apisuite/fe-base'
+import { TextField, useConfig, useTranslation } from '@apisuite/fe-base'
 import {
   acceptInvitationWithSignIn,
   invitationSignIn,
@@ -77,12 +74,10 @@ const InvitationConfirmationForm: React.FC<{
   )
 }
 
-export const InvitationForm: React.FC<InvitationFormProps> = ({
-  isLogged,
-  sso,
-}) => {
+export const InvitationForm = () => {
   const dispatch = useDispatch()
-  const { invitation, invitationError } = useSelector(invitationFormSelector)
+  const { invitation, invitationError, isLogged } = useSelector(invitationFormSelector)
+  const { sso } = useConfig()
   // get token from url
   const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
   const code = qs.parse(window.location.search.slice(1)).code || undefined
@@ -90,17 +85,21 @@ export const InvitationForm: React.FC<InvitationFormProps> = ({
 
   const stateToken = localStorage.getItem(STATE_STORAGE_INVITATION)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (stateToken && code) {
       dispatch(acceptInvitationWithSignIn({
         token: stateToken,
         provider: (sso?.length && sso[0]) || 'keycloak',
         code,
       }))
-    } else if (invitationToken && !invitation.organization && !invitation.email && !invitationError) {
+    }
+  }, [dispatch, stateToken, code, sso])
+
+  useEffect(() => {
+    if (invitationToken && !invitation.organization && !invitation.email && !invitationError) {
       dispatch(validateInvitationToken({ token: invitationToken }))
     }
-  }, [invitationToken, invitation.organization, invitation.email, invitationError, stateToken, code, sso, dispatch])
+  }, [dispatch, invitation.email, invitation.organization, invitationError, invitationToken])
 
   return (
     <>

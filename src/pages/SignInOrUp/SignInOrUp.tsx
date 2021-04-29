@@ -1,5 +1,4 @@
 import React from 'react'
-import qs from 'qs'
 import { useHistory, useParams } from 'react-router'
 import { useConfig, useTranslation } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
@@ -19,11 +18,10 @@ export const SignInOrUp: React.FC = () => {
   const history = useHistory()
   const [t] = useTranslation()
   const { auth } = useSelector(signInOrUpSelector)
-  const { ownerInfo, portalName, sso } = useConfig()
+  const { ownerInfo, portalName } = useConfig()
 
   const { view: viewParameter } = useParams<{ view: string }>()
 
-  const [usingSSO, setSSO] = React.useState(false)
   const checkView = (): View => {
     if (viewParameter === 'signup') return 'signup'
     if (viewParameter === 'invitation') return 'invitation'
@@ -37,16 +35,6 @@ export const SignInOrUp: React.FC = () => {
 
     setView(viewToDisplay)
   }
-
-  React.useEffect(() => {
-    const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
-    if (view === 'invitation' && sso?.length && invitationToken) {
-      setSSO(true)
-    }
-    if (usingSSO) {
-      setSSO(false)
-    }
-  }, [sso, usingSSO, view])
 
   const renderRegisterInvitationOption = () => {
     if (auth.authToken) {
@@ -136,7 +124,7 @@ export const SignInOrUp: React.FC = () => {
             <div className={classes.form}>
               {view === 'signin' && <SignInForm />}
               {view === 'signup' && <SignUpForm />}
-              {view === 'invitation' && <InvitationForm isLogged={!!auth.authToken} sso={sso} />}
+              {view === 'invitation' && <InvitationForm />}
             </div>
             {/* <div className={classes.formFooter}>
               {(view === 'invitation' && !auth.authToken) && <div>Sign Up</div>}
