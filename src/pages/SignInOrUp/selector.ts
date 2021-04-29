@@ -3,8 +3,7 @@ import { Store } from 'store/types'
 
 export const signInOrUpSelector = createSelector(
   ({ auth }: Store) => auth,
-  ({ invitation }: Store) => invitation,
-  (auth, invitation) => {
-    return { auth, invitation }
+  (auth) => {
+    return { auth }
   },
 )

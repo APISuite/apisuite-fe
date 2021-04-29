@@ -9,6 +9,13 @@ import { SSO_PROVIDERS_SUCCESS } from './actions/ssoProviders'
 import { AuthActions } from './actions/types'
 import { COO_KEY } from './middleware'
 import { AuthStore } from './types'
+import {
+  VALIDATE_INVITATION_TOKEN_SUCCESS,
+  ACCEPT_INVITATION_WITH_SIGN_IN_ERROR,
+  ACCEPT_INVITATION_ERROR,
+  INVITATION_SIGN_IN_ERROR,
+  VALIDATE_INVITATION_TOKEN_ERROR,
+} from './actions/invitation'
 
 // FIXME: remove the need for auth cookies as they are no longer used effectively
 const authToken = cookie.get(COO_KEY) || ''
@@ -21,6 +28,12 @@ const initialState: AuthStore = {
   providers: null,
   user: undefined,
   providerSignupURL: '',
+  invitation: {
+    organization: '',
+    email: '',
+    isUser: false,
+    hasOrganizations: false,
+  },
 }
 
 const reducer: Reducer<AuthStore, AuthActions> = (state = initialState, action) => {
@@ -65,8 +78,18 @@ const reducer: Reducer<AuthStore, AuthActions> = (state = initialState, action) 
       })
     }
 
+    case VALIDATE_INVITATION_TOKEN_SUCCESS: {
+      return update(state, {
+        invitation: { $set: action.invitation },
+      })
+    }
+
     case LOGIN_ERROR:
-    case LOGIN_USER_ERROR: {
+    case LOGIN_USER_ERROR:
+    case ACCEPT_INVITATION_WITH_SIGN_IN_ERROR:
+    case ACCEPT_INVITATION_ERROR:
+    case INVITATION_SIGN_IN_ERROR:
+    case VALIDATE_INVITATION_TOKEN_ERROR: {
       return update(state, {
         error: { $set: action.error || 'Whooops, something went wrong...' },
         isAuthorizing: { $set: false },
