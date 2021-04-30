@@ -168,6 +168,10 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'break-spaces',
   },
 
+  notAvailableView: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 }))
 
 export default useStyles

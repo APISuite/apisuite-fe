@@ -52,6 +52,23 @@ export const SignInOrUp: React.FC = () => {
     )
   }
 
+  const shouldRenderNotAvailableView = () => {
+    return (view === 'signin' || view === 'signup') && sso?.length
+  }
+
+  const renderNotAvailableView = () => {
+    return (
+      <div className={classes.notAvailableView}>
+        <h1 className={classes.formSideTitle}>
+          {t('signInOrUpView.welcomeTitle')}
+        </h1>
+        <p className={classes.formSideSubtitle}>
+          {t('signInOrUpView.notAvailableView')}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <main className={classes.mainContainer}>
       <header className={classes.headerContainer}>
@@ -92,53 +109,57 @@ export const SignInOrUp: React.FC = () => {
 
       <section className={classes.pageContentContainer}>
         <div className={classes.formSideContentContainer}>
-          <h1 className={classes.formSideTitle}>
-            {t('signInOrUpView.welcomeTitle')}
-          </h1>
-          <p className={classes.formSideSubtitle}>
-            {t(view === 'invitation' ? 'signInOrUpView.welcomeSubtitleInvitation' : 'signInOrUpView.welcomeSubtitle', { org: auth.invitation?.organization || 'Unknown' })}
-          </p>
+          {shouldRenderNotAvailableView() && renderNotAvailableView()}
+          {!shouldRenderNotAvailableView() &&
+            <>
+              <h1 className={classes.formSideTitle}>
+                {t('signInOrUpView.welcomeTitle')}
+              </h1>
+              <p className={classes.formSideSubtitle}>
+                {t(view === 'invitation' ? 'signInOrUpView.welcomeSubtitleInvitation' : 'signInOrUpView.welcomeSubtitle', { org: auth.invitation?.organization || 'Unknown' })}
+              </p>
 
-          <div>
-            <div className={classes.selector}>
-              {view === 'invitation' ? renderRegisterInvitationOption() : null}
-              {
-                view !== 'invitation' &&
-                <>
-                  <option
-                    className={
-                      view === 'signin'
-                        ? classes.selectedOption
-                        : classes.notSelectedOption
-                    }
-                    onClick={() => changeView('signin')}
-                  >
-                    {t('signInOrUpView.options.signIn')}
-                  </option>
+              <div>
+                <div className={classes.selector}>
+                  {view === 'invitation' ? renderRegisterInvitationOption() : null}
+                  {
+                    view !== 'invitation' &&
+                    <>
+                      <option
+                        className={
+                          view === 'signin'
+                            ? classes.selectedOption
+                            : classes.notSelectedOption
+                        }
+                        onClick={() => changeView('signin')}
+                      >
+                        {t('signInOrUpView.options.signIn')}
+                      </option>
 
-                  <option
-                    className={
-                      view === 'signup'
-                        ? classes.selectedOption
-                        : classes.notSelectedOption
-                    }
-                    onClick={() => changeView('signup')}
-                  >
-                    {t('signInOrUpView.options.signUp')}
-                  </option>
-                </>
-              }
-            </div>
+                      <option
+                        className={
+                          view === 'signup'
+                            ? classes.selectedOption
+                            : classes.notSelectedOption
+                        }
+                        onClick={() => changeView('signup')}
+                      >
+                        {t('signInOrUpView.options.signUp')}
+                      </option>
+                    </>
+                  }
+                </div>
 
-            <div className={classes.form}>
-              {view === 'signin' && <SignInForm />}
-              {view === 'signup' && <SignUpForm />}
-              {view === 'invitation' && <InvitationForm />}
-            </div>
-            <div className={classes.formFooter}>
-              {(view === 'invitation' && !auth.authToken) && renderSignUpFooter(providerSignupURL)}
-            </div>
-          </div>
+                <div className={classes.form}>
+                  {view === 'signin' && <SignInForm />}
+                  {view === 'signup' && <SignUpForm />}
+                  {view === 'invitation' && <InvitationForm />}
+                </div>
+                <div className={classes.formFooter}>
+                  {(view === 'invitation' && !auth.authToken) && renderSignUpFooter(providerSignupURL)}
+                </div>
+              </div>
+            </>}
         </div>
 
         <div className={classes.imageSideContentContainer} />

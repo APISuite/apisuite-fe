@@ -34,3 +34,7 @@ export const ROLES: Roles = {
     level: 5,
   },
 }
+
+export const SSO_STATE_STORAGE = 'ssoStateStorage'
+export const SSO_INVITATION_STATE_STORAGE = 'ssoInvitationStateStorage'
+export const SSO_PROVIDER_STATE_STORAGE = 'attemptingSignInWithProvider'

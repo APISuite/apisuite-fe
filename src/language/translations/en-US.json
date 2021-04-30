@@ -83,7 +83,8 @@
       "signUp": "Sign up"
     },
     "ssoFooterSignUp": "Don't have a {{provider}} account?",
-    "ssoFooterSignUpLink": "Sign Up here."
+    "ssoFooterSignUpLink": "Sign Up here.",
+    "notAvailableView": "This page is not available with SSO enabled. Please use the navigation menu."
   },
   "signInForm": {
     "regularSignInButtonLabel": "Sign in",
