@@ -50,6 +50,7 @@ const InvitationConfirmationForm: React.FC<{
             disabled
             InputProps={{
               classes: { input: classes.textField },
+              margin: 'dense',
             }}
           />
         </div>
@@ -66,6 +67,7 @@ const InvitationConfirmationForm: React.FC<{
             disabled
             InputProps={{
               classes: { input: classes.textField },
+              margin: 'dense',
             }}
           />
         </div>
