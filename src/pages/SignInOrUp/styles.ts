@@ -159,6 +159,15 @@ const useStyles = makeStyles((theme) => ({
   separator: {
     width: '5px',
   },
+
+  invitationFooter: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    whiteSpace: 'break-spaces',
+  },
+
 }))
 
 export default useStyles

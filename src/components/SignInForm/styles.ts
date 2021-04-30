@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.text.primary,
+    margin: 'dense',
   },
 
   inputFieldContainer: {

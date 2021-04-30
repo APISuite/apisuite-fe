@@ -1,12 +1,13 @@
 import React from 'react'
 import { useHistory, useParams } from 'react-router'
-import { useConfig, useTranslation } from '@apisuite/fe-base'
+import { useConfig, useTranslation, Link } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
 import { InvitationForm } from 'components/InvitationForm'
 import { SignInForm } from 'components/SignInForm'
 import { SignUpForm } from 'components/SignUpForm'
+import { linker } from 'util/linker'
 
 import useStyles from './styles'
 import { View } from './types'
@@ -18,7 +19,7 @@ export const SignInOrUp: React.FC = () => {
   const history = useHistory()
   const [t] = useTranslation()
   const { auth } = useSelector(signInOrUpSelector)
-  const { ownerInfo, portalName } = useConfig()
+  const { ownerInfo, portalName, sso, providerSignupURL } = useConfig()
 
   const { view: viewParameter } = useParams<{ view: string }>()
 
@@ -41,6 +42,14 @@ export const SignInOrUp: React.FC = () => {
       return <option className={view === 'invitation' ? classes.selectedOption : classes.notSelectedOption} onClick={() => changeView('invitation')}>{t('login.invitationBtn')}</option>
     }
     return <option className={view === 'invitation' ? classes.selectedOption : classes.notSelectedOption} onClick={() => changeView('invitation')}>{t('login.invitationSignInBtn')}</option>
+  }
+
+  const renderSignUpFooter = (signUpURL: string) => {
+    return (
+      <div className={classes.invitationFooter}>
+        {t('signInOrUpView.ssoFooterSignUp', { provider: sso[0] })} <Link href={linker(signUpURL)}>{t('signInOrUpView.ssoFooterSignUpLink')}</Link>
+      </div>
+    )
   }
 
   return (
@@ -126,9 +135,9 @@ export const SignInOrUp: React.FC = () => {
               {view === 'signup' && <SignUpForm />}
               {view === 'invitation' && <InvitationForm />}
             </div>
-            {/* <div className={classes.formFooter}>
-              {(view === 'invitation' && !auth.authToken) && <div>Sign Up</div>}
-            </div> */}
+            <div className={classes.formFooter}>
+              {(view === 'invitation' && !auth.authToken) && renderSignUpFooter(providerSignupURL)}
+            </div>
           </div>
         </div>
 

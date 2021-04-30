@@ -80,7 +80,9 @@
     "welcomeSubtitleInvitation": "You have been invited to join {{org}}.",
     "options": {
       "signIn": "Sign in",
-      "signUp": "Sign up"
+      "signUp": "Sign up",
+      "ssoFooterSignUp": "Don't have a {{provider}} account?",
+      "ssoFooterSignUpLink": "Sign Up here."
     }
   },
   "signInForm": {
