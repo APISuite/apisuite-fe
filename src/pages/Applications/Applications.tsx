@@ -259,7 +259,7 @@ export const Applications: React.FC = () => {
                     <h1 className={classes.clientApplicationsTitle}>
                       {t('dashboardTab.applicationsSubTab.listOfAppsSection.title')}
                     </h1>
-                    
+
                     <p className={classes.clientApplicationsSubtitle}>
                       {t('dashboardTab.applicationsSubTab.listOfAppsSection.subtitle')}
                     </p>

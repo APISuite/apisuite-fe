@@ -12,8 +12,8 @@ import {
 } from 'store/auth/actions/invitation'
 import { Invitation } from 'store/auth/types'
 import FormCard from 'components/FormCard'
-import { LoadingView } from 'components/SignUpForm/LoadingView'
 import { LOCAL_STORAGE_KEYS } from 'constants/global'
+import { LoadingView } from './LoadingView'
 import useStyles from './styles'
 import { invitationFormSelector } from './selector'
 

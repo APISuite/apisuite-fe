@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { TextField, TextFieldProps, useTranslation } from '@apisuite/fe-base'
 import update from 'immutability-helper'
 
 import FormCard from 'components/FormCard'
 import { notEmpty, isValidEmail } from 'util/forms'
 
+import { signUpFormSelector } from './selector'
 import useStyles from './styles'
-import { ProfileDetailsProps } from './types'
-import { submitProfileDetailsActions } from './ducks'
+import { GenericSignUpFormProps } from './types'
 
-export const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
-  preFilledEmail,
-  token,
-}) => {
-  const dispatch = useDispatch()
+export const ProfileDetailsForm: React.FC<GenericSignUpFormProps> = ({ next, error }) => {
   const classes = useStyles()
   const [t] = useTranslation()
+  // TODO: make a selector just for this component or authError changes that is passed by parent as well
+  // might make this component re-render twice
+  const { isSignUpWorking } = useSelector(signUpFormSelector)
 
   // Form changes logic
   const [state, setState] = useState({
     data: {
-      email: preFilledEmail || '',
+      email: '',
       name: '',
     },
     errors: {
@@ -29,6 +28,11 @@ export const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
       name: '',
     },
   })
+
+  // sync email errors from parent
+  useEffect(() => {
+    setState((s) => ({ ...s, errors: { ...s.errors, email: error } }))
+  }, [error])
 
   const handleInputChanges: TextFieldProps['onChange'] = ({ target }) => {
     setState((s) => {
@@ -45,9 +49,9 @@ export const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
             data: { email: { $set: target.value } },
             errors: {
               email: {
-                $set: register.error === '409' && target.value === register.submittedEmail
-                  ? t('signUpForm.warnings.emailInUse')
-                  : isValidEmail(target.value) ? '' : t('signUpForm.warnings.email'),
+                $set: isValidEmail(target.value) ? '' : t('signUpForm.warnings.email'),
+                // TODO: move to parent
+                // ? t('signUpForm.warnings.emailInUse')
               },
             },
           })
@@ -59,24 +63,6 @@ export const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
     })
   }
 
-  /* Handles a "go back to the sign-up's 'Personal details' section" situation. */
-  useEffect(() => {
-    if (register.back) {
-      const email = register.invitation?.email ?? register.previousData?.personal?.email
-      const name = register.previousData?.personal?.name
-
-      setState((s) => ({
-        ...s,
-        data: { name, email },
-        errors: {
-          name: notEmpty(name) ? '' : t('signUpForm.warnings.profileName'),
-          email: register.error === '409' && email === register.submittedEmail
-            ? t('signUpForm.warnings.emailInUse') : isValidEmail(email) ? '' : t('signUpForm.warnings.email'),
-        },
-      }))
-    }
-  }, [t, register.back, register.previousData, register.invitation.email, register.submittedEmail, register.error])
-
   function formIsValid () {
     const { data, errors } = state
     return data.name.length && data.email.length && !Object.values(errors).some(Boolean)
@@ -85,17 +71,10 @@ export const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
   return (
     <div className={classes.signUpContainer}>
       <FormCard
-        buttonDisabled={
-          !formIsValid() || (register.error === '409' && state.data.email === register.submittedEmail)
-        }
+        buttonDisabled={!formIsValid()}
         buttonLabel={t('signUpForm.nextStepButtonLabel')}
-        handleSubmit={() => {
-          if (formIsValid()) {
-            dispatch(submitProfileDetailsActions.request({ ...state.data, token }))
-          }
-        }}
-        loading={register.isRequesting}
-        showBack={false}
+        handleSubmit={() => formIsValid() && next(state.data.name, state.data.email)}
+        loading={isSignUpWorking}
       >
         <div className={classes.inputFieldContainer}>
           <TextField
@@ -120,12 +99,12 @@ export const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
             id='emailField'
             type='email'
             variant='outlined'
+            margin='dense'
             label={t('signUpForm.fieldLabels.profileEmail')}
             name='email'
             value={state.data.email}
             placeholder=''
             fullWidth
-            disabled={!!register.invitation?.email?.length}
             error={!!state.errors.email}
             helperText={state.errors.email}
             InputProps={{ classes: { input: classes.inputField } }}

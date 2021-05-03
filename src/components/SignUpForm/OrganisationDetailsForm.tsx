@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { TextField, TextFieldProps, useTranslation } from '@apisuite/fe-base'
 
 import FormCard from 'components/FormCard'
 
 import useStyles from './styles'
-import { OrganisationDetailsProps } from './types'
-import { previousStepAction, submitOrganisationDetailsActions } from './ducks'
+import { GenericSignUpFormProps } from './types'
+import { signUpFormSelector } from './selector'
 
-export const OrganisationDetailsForm: React.FC<OrganisationDetailsProps> = ({ register }) => {
-  const dispatch = useDispatch()
+export const OrganisationDetailsForm: React.FC<GenericSignUpFormProps> = ({ next, back, error }) => {
   const classes = useStyles()
   const [t] = useTranslation()
+  // TODO: make a selector just for this component or authError changes that is passed by parent as well
+  // might make this component re-render twice
+  const { isSignUpWorking } = useSelector(signUpFormSelector)
 
   // Form changes logic
   const [state, setState] = useState({
     name: '',
     website: '',
+    error: '',
   })
+
+  // sync organisation errors from parent
+  useEffect(() => {
+    setState((s) => ({ ...s, error }))
+  }, [error])
 
   const handleInputChanges: TextFieldProps['onChange'] = ({ target }) => {
     setState((s) => ({
@@ -25,16 +33,6 @@ export const OrganisationDetailsForm: React.FC<OrganisationDetailsProps> = ({ re
       [target.name]: target.value,
     }))
   }
-
-  /* Handles a "go back to the sign-up's 'Organisation details' section" situation. */
-  useEffect(() => {
-    if (register.back && register.previousData.org) {
-      setState({
-        name: register.previousData?.org?.name,
-        website: register.previousData?.org?.website,
-      })
-    }
-  }, [register.back, register.previousData.org, t])
 
   return (
     <div className={classes.signUpContainer}>
@@ -44,13 +42,10 @@ export const OrganisationDetailsForm: React.FC<OrganisationDetailsProps> = ({ re
         buttonLabel={t('signUpForm.nextStepButtonLabel')}
         handleBackClick={(event) => {
           event.preventDefault()
-
-          dispatch(previousStepAction())
+          back()
         }}
-        handleSubmit={() => {
-          dispatch(submitOrganisationDetailsActions.request(state))
-        }}
-        loading={register.isRequesting}
+        handleSubmit={() => next(state.name, state.website)}
+        loading={isSignUpWorking}
         showBack
       >
         <div className={classes.inputFieldContainer}>
@@ -62,6 +57,8 @@ export const OrganisationDetailsForm: React.FC<OrganisationDetailsProps> = ({ re
             name='name'
             label={t('signUpForm.fieldLabels.orgName')}
             value={state.name}
+            error={!!state.error}
+            helperText={state.error}
             autoFocus
             fullWidth
             InputProps={{ classes: { input: classes.inputField } }}

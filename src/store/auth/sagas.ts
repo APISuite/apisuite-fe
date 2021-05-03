@@ -30,13 +30,14 @@ import {
   AcceptInvitationAction,
   RejectInvitationAction,
   ValidateInvitationTokenAction,
+  SubmitSignUpOrganisation,
+  SubmitSignUpCredentials,
 } from './actions/types'
 
 import { confirmRegistrationSuccess } from './actions/confirmRegistration'
 import { validateRegistrationTokenError, validateRegistrationTokenSuccess, VALIDATE_REGISTRATION_TOKEN } from './actions/validateRegistrationToken'
 
 import { submitSignUpDetailsError, submitSignUpDetailsSuccess, SUBMIT_SIGN_UP_DETAILS } from './actions/submitSignUpDetails'
-import { ProfileDetailsResponse } from 'components/SignUpForm/types'
 import {
   acceptInvitationWithSignInSuccess,
   acceptInvitationWithSignInError,
@@ -55,6 +56,8 @@ import {
 } from './actions/invitation'
 
 import { Invitation } from './types'
+import { submitSignUpCredentialsError, submitSignUpCredentialsSuccess, SUBMIT_SIGN_UP_CREDENTIALS } from './actions/submitSignUpCredentials'
+import { submitSignUpOrganisationError, submitSignUpOrganisationSuccess, SUBMIT_SIGN_UP_ORGANISATION } from './actions/submitSignUpOrganisation'
 
 function * loginWorker (action: LoginAction) {
   try {
@@ -245,13 +248,9 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
   }
 }
 
-// ---
-
-export function * submitSignUpDetailsSaga ({ details }: SubmitSignUpDetails) {
+export function * submitSignUpCredentialsSaga ({ details }: SubmitSignUpCredentials) {
   try {
-    // Personal details submission logic
-
-    const personalDetailsResponse: ProfileDetailsResponse = yield call(request, {
+    const { token }: { token: string } = yield call(request, {
       url: `${API_URL}/registration/user`,
       method: 'POST',
       headers: {
@@ -263,24 +262,38 @@ export function * submitSignUpDetailsSaga ({ details }: SubmitSignUpDetails) {
       }),
     })
 
-    // Organisation details submission logic
+    yield put(submitSignUpCredentialsSuccess({ token }))
+  } catch (error) {
+    yield put(submitSignUpCredentialsError({ error: error.message }))
+  }
+}
 
-    if (details.orgName === '' || (details.orgName === '' && details.website === '')) {
-      yield call(request, {
-        url: `${API_URL}/registration/organization`,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: JSON.stringify({
-          name: details.orgName,
-          website: details.website,
-          registrationToken: personalDetailsResponse.token,
-        }),
-      })
-    }
+export function * submitSignUpOrganisationSaga ({ details }: SubmitSignUpOrganisation) {
+  try {
+    const registrationToken: string = yield select((state: Store) => state.auth.registrationToken)
 
-    // Security details submission logic
+    yield call(request, {
+      url: `${API_URL}/registration/organization`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({
+        name: details.orgName,
+        website: details.website,
+        registrationToken,
+      }),
+    })
+
+    yield put(submitSignUpOrganisationSuccess({}))
+  } catch (error) {
+    yield put(submitSignUpOrganisationError({ error: error.message }))
+  }
+}
+
+export function * submitSignUpDetailsSaga ({ details }: SubmitSignUpDetails) {
+  try {
+    const registrationToken: string = yield select((state: Store) => state.auth.registrationToken)
 
     yield call(request, {
       url: `${API_URL}/registration/security`,
@@ -290,7 +303,7 @@ export function * submitSignUpDetailsSaga ({ details }: SubmitSignUpDetails) {
       },
       data: JSON.stringify({
         password: details.password,
-        registrationToken: personalDetailsResponse.token,
+        registrationToken,
       }),
     })
 
@@ -445,6 +458,8 @@ export function * rootSaga () {
   yield takeLatest(SSO_LOGIN, ssoLoginWorker)
   yield takeLatest(SSO_PROVIDERS, getProviders)
   yield takeLatest(SSO_TOKEN_EXCHANGE, ssoTokenExchangeWorker)
+  yield takeLatest(SUBMIT_SIGN_UP_CREDENTIALS, submitSignUpCredentialsSaga)
+  yield takeLatest(SUBMIT_SIGN_UP_ORGANISATION, submitSignUpOrganisationSaga)
   yield takeLatest(SUBMIT_SIGN_UP_DETAILS, submitSignUpDetailsSaga)
   yield takeLatest(VALIDATE_REGISTRATION_TOKEN, validateRegisterTokenSaga)
   yield takeLatest(ACCEPT_INVITATION, acceptInvitationSaga)

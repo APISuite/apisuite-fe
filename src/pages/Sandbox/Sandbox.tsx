@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useConfig, useTranslation, useTheme, Button } from '@apisuite/fe-base'
+import { useConfig, useTranslation, Button } from '@apisuite/fe-base'
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
 import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
@@ -24,7 +24,6 @@ export const Sandbox: React.FC = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const { palette } = useTheme()
   const { socialURLs, portalName, clientName, supportURL } = useConfig()
   const { auth, subscriptions } = useSelector(sandboxSelector)
 

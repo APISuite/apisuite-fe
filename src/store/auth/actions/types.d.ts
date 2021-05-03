@@ -18,6 +18,8 @@ import {
   INVITATION_SIGN_IN, INVITATION_SIGN_IN_SUCCESS, INVITATION_SIGN_IN_ERROR,
   REJECT_INVITATION, REJECT_INVITATION_SUCCESS, REJECT_INVITATION_ERROR,
 } from './invitation'
+import { SUBMIT_SIGN_UP_CREDENTIALS, SUBMIT_SIGN_UP_CREDENTIALS_ERROR, SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS } from './submitSignUpCredentials'
+import { SUBMIT_SIGN_UP_ORGANISATION, SUBMIT_SIGN_UP_ORGANISATION_ERROR, SUBMIT_SIGN_UP_ORGANISATION_SUCCESS } from './submitSignUpOrganisation'
 
 export type AuthActions =
   LoginAction |
@@ -51,6 +53,12 @@ export type AuthActions =
   SubmitSignUpDetails |
   SubmitSignUpDetailsSuccess |
   SubmitSignUpDetailsError |
+  SubmitSignUpCredentials |
+  SubmitSignUpCredentialsSuccess |
+  SubmitSignUpCredentialsError |
+  SubmitSignUpOrganisation |
+  SubmitSignUpOrganisationSuccess |
+  SubmitSignUpOrganisationError |
   ValidateRegistrationTokenAction |
   ValidateRegistrationTokenActionSuccess |
   ValidateRegistrationTokenActionError |
@@ -208,12 +216,7 @@ export type ConfirmRegistrationActionError = {
 export type SubmitSignUpDetails = {
   type: typeof SUBMIT_SIGN_UP_DETAILS,
   details: {
-    email: string,
-    name: string,
     password: string,
-    orgName?: string,
-    vat?: string,
-    website?: string,
   },
 }
 
@@ -223,6 +226,43 @@ export type SubmitSignUpDetailsSuccess = {
 
 export type SubmitSignUpDetailsError = {
   type: typeof SUBMIT_SIGN_UP_DETAILS_ERROR,
+  error: string,
+}
+
+export type SubmitSignUpCredentials = {
+  type: typeof SUBMIT_SIGN_UP_CREDENTIALS,
+  details: {
+    email: string,
+    name: string,
+  },
+}
+
+export type SubmitSignUpCredentialsSuccess = {
+  type: typeof SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS,
+  token: string,
+}
+
+export type SubmitSignUpCredentialsError = {
+  type: typeof SUBMIT_SIGN_UP_CREDENTIALS_ERROR,
+  error: string,
+}
+
+export type SubmitSignUpOrganisation = {
+  type: typeof SUBMIT_SIGN_UP_ORGANISATION,
+  details: {
+    orgName?: string,
+    // TODO: check with delio if we have this
+    // vat?: string,
+    website?: string,
+  },
+}
+
+export type SubmitSignUpOrganisationSuccess = {
+  type: typeof SUBMIT_SIGN_UP_ORGANISATION_SUCCESS,
+}
+
+export type SubmitSignUpOrganisationError = {
+  type: typeof SUBMIT_SIGN_UP_ORGANISATION_ERROR,
   error: string,
 }
 

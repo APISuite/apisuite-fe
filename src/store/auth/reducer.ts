@@ -16,6 +16,9 @@ import {
   INVITATION_SIGN_IN_ERROR,
   VALIDATE_INVITATION_TOKEN_ERROR,
 } from './actions/invitation'
+import { SUBMIT_SIGN_UP_CREDENTIALS, SUBMIT_SIGN_UP_CREDENTIALS_ERROR, SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS } from './actions/submitSignUpCredentials'
+import { SUBMIT_SIGN_UP_ORGANISATION, SUBMIT_SIGN_UP_ORGANISATION_ERROR, SUBMIT_SIGN_UP_ORGANISATION_SUCCESS } from './actions/submitSignUpOrganisation'
+import { SUBMIT_SIGN_UP_DETAILS, SUBMIT_SIGN_UP_DETAILS_ERROR, SUBMIT_SIGN_UP_DETAILS_SUCCESS } from './actions/submitSignUpDetails'
 
 // FIXME: remove the need for auth cookies as they are no longer used effectively
 const authToken = cookie.get(COO_KEY) || ''
@@ -25,6 +28,7 @@ const initialState: AuthStore = {
   error: undefined,
   isAuthorizing: false,
   isRecoveringPassword: false,
+  isSignUpWorking: false,
   providers: null,
   user: undefined,
   providerSignupURL: '',
@@ -115,6 +119,39 @@ const reducer: Reducer<AuthStore, AuthActions> = (state = initialState, action) 
     case SSO_PROVIDERS_SUCCESS: {
       return update(state, {
         providers: { $set: action.providers },
+      })
+    }
+
+    case SUBMIT_SIGN_UP_CREDENTIALS_ERROR:
+    case SUBMIT_SIGN_UP_ORGANISATION_ERROR:
+    case SUBMIT_SIGN_UP_DETAILS_ERROR: {
+      return update(state, {
+        signUpError: { $set: action.error },
+        isSignUpWorking: { $set: false },
+      })
+    }
+
+    case SUBMIT_SIGN_UP_CREDENTIALS:
+    case SUBMIT_SIGN_UP_ORGANISATION:
+    case SUBMIT_SIGN_UP_DETAILS: {
+      return update(state, {
+        isSignUpWorking: { $set: true },
+      })
+    }
+
+    case SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS: {
+      return update(state, {
+        registrationToken: { $set: action.token },
+        signUpError: { $set: undefined },
+        isSignUpWorking: { $set: false },
+      })
+    }
+
+    case SUBMIT_SIGN_UP_ORGANISATION_SUCCESS:
+    case SUBMIT_SIGN_UP_DETAILS_SUCCESS: {
+      return update(state, {
+        signUpError: { $set: undefined },
+        isSignUpWorking: { $set: false },
       })
     }
 

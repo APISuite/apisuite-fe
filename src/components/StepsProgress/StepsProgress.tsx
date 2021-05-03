@@ -15,10 +15,10 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
   return (
     <ul className={classes.container}>
       {
-        Object.values(steps).slice(0, -1).map((step, index) => {
+        Object.values(steps).map((step, index) => {
           if (index === 0) {
             return (
-              <li key={step} className={classes.stepProgress}>
+              <li key={step.toString()} className={classes.stepProgress}>
                 <span
                   className={clsx(
                     classes.stepCircle,

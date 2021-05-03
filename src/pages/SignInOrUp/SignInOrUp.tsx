@@ -53,7 +53,7 @@ export const SignInOrUp: React.FC = () => {
   }
 
   const shouldRenderNotAvailableView = () => {
-    return (view === 'signin' || view === 'signup') && sso?.length
+    return false // (view === 'signin' || view === 'signup') && sso?.length
   }
 
   const renderNotAvailableView = () => {

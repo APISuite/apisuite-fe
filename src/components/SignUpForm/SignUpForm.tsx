@@ -1,71 +1,83 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import qs from 'qs'
 import { useTranslation } from '@apisuite/fe-base'
 
 import StepsProgress from 'components/StepsProgress'
 
-import { LoadingView } from './LoadingView'
 import { ProfileDetailsForm } from './ProfileDetailsForm'
 import { OrganisationDetailsForm } from './OrganisationDetailsForm'
 import { SecurityDetailsForm } from './SecurityDetailsForm'
 
-import { signUpFormSelector } from './selector'
 import useStyles from './styles'
-import { SignUpFormProps } from './types'
+import { signUpFormSelector } from './selector'
+import { submitSignUpCredentials } from 'store/auth/actions/submitSignUpCredentials'
+import { submitSignUpOrganisation } from 'store/auth/actions/submitSignUpOrganisation'
+import { submitSignUpDetails } from 'store/auth/actions/submitSignUpDetails'
 
-export let steps = {
-  1: 'Step 1',
-  2: 'Step 2',
-  3: 'Step 3',
-  4: 'Success',
-}
-
-export const SignUpForm: React.FC<SignUpFormProps> = ({ preFilledEmail }) => {
+export const SignUpForm: React.FC = () => {
   const dispatch = useDispatch()
   const classes = useStyles()
   const [t] = useTranslation()
-  const register = useSelector(signUpFormSelector)
-
-  const { invitation, invitationError } = register
-
-  // Invitation logic
-
-  // Retrieves the invitation token from the URL
-  const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
+  const { signUpError, isSignUpWorking } = useSelector(signUpFormSelector)
+  const mounted = useRef(false)
+  const submittedStep = useRef(0)
+  const confirmationName = useRef('')
+  const [step, setStep] = useState(1)
 
   useEffect(() => {
-    if (invitationToken && !invitation.email && invitationError === undefined) {
-      dispatch(validateRegisterTokenActions.request(invitationToken))
+    if (mounted.current && !isSignUpWorking && !signUpError) {
+      setStep((s) => Math.min(4, s + 1))
     }
-  }, [invitation, invitationError, invitationToken, dispatch])
 
-  // Steps logic
+    mounted.current = true
+  }, [isSignUpWorking, signUpError])
 
-  const step = register.step
+  function nextStep (firstInput: string, secondInput?: string) {
+    switch (step) {
+      case 1: {
+        confirmationName.current = firstInput
+        dispatch(submitSignUpCredentials({ details: { name: firstInput, email: secondInput! } }))
+        submittedStep.current = 1
+        break
+      }
 
-  const name = 'TODO'
+      case 2: {
+        dispatch(submitSignUpOrganisation({ details: { orgName: firstInput, website: secondInput! } }))
+        submittedStep.current = 2
+        break
+      }
 
-  steps = {
-    ...steps,
+      case 3: {
+        dispatch(submitSignUpDetails({ details: { password: firstInput } }))
+        submittedStep.current = 3
+        break
+      }
+
+      default:
+        break
+    }
+  }
+
+  function prevStep () {
+    setStep((s) => Math.max(1, s - 1))
+  }
+
+  const steps = {
     1: t('signUpForm.steps.profileDetails'),
+    2: t('signUpForm.steps.organisationDetails'),
     3: t('signUpForm.steps.securityDetails'),
   }
 
-  if (invitationToken) {
-    steps[2] = t('signUpForm.steps.organisationDetails')
-  }
-
-  const signUpFormStep = (step: keyof typeof steps) => {
+  const signUpFormStep = (step: number) => {
     switch (step) {
       case 1:
         return (
           <ProfileDetailsForm
             key='profileDetailsForm'
-            preFilledEmail={preFilledEmail}
-            register={register}
-            token={invitationToken}
+            next={nextStep}
+            back={prevStep}
+            error={submittedStep.current === 1 && signUpError ? signUpError : ''}
           />
         )
 
@@ -73,7 +85,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ preFilledEmail }) => {
         return (
           <OrganisationDetailsForm
             key='organisationDetailsForm'
-            register={register}
+            next={nextStep}
+            back={prevStep}
+            error={submittedStep.current === 2 && signUpError ? signUpError : ''}
           />
         )
 
@@ -81,24 +95,24 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ preFilledEmail }) => {
         return (
           <SecurityDetailsForm
             key='securityDetailsForm'
-            register={register}
-            token={invitationToken}
+            next={nextStep}
+            back={prevStep}
+            error={submittedStep.current === 3 && signUpError ? signUpError : ''}
           />
         )
 
-      case 4:
+      default: {
         return (
           <Redirect
             key='redirectToAccountConfirmation'
-            to={`/confirmation/${name}`}
+            to={`/confirmation/${confirmationName.current}`}
           />
         )
+      }
     }
   }
 
-  // 'Sign up' form's views logic
-
-  const signUpFormView = (
+  return (
     <>
       <StepsProgress
         currentStep={step}
@@ -124,34 +138,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ preFilledEmail }) => {
 
         <p className={classes.privacyPolicyDisclaimerText}>.</p>
       </div>
-    </>
-  )
-
-  return (
-    <>
-      {
-        invitationToken
-          ? (
-            <>
-              {
-                invitation.email
-                  ? (
-                    signUpFormView
-                  )
-                  : (
-                    <LoadingView
-                      errorMessage={t('signUpForm.warnings.invalidInvitation')}
-                      isError={!!invitationError}
-                      isLoading={!invitation.email && !invitationError}
-                    />
-                  )
-              }
-            </>
-          )
-          : (
-            signUpFormView
-          )
-      }
     </>
   )
 }
