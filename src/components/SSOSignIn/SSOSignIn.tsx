@@ -2,10 +2,9 @@ import React from 'react'
 import qs from 'qs'
 import { useTranslation } from '@apisuite/fe-base'
 
+import { LOCAL_STORAGE_KEYS } from 'constants/global'
 import useStyles from './styles'
 import { SSOSignInProps } from './types'
-
-const STATE_STORAGE = 'ssoStateStorage'
 
 const SSOSignIn: React.FC<SSOSignInProps> = ({
   ssoTokenExchange,
@@ -20,13 +19,13 @@ const SSOSignIn: React.FC<SSOSignInProps> = ({
     const stateParameter = allURLParameters.state
 
     // Local storage's tidbits of information
-    const stateCodeInLocalStorage = localStorage.getItem(STATE_STORAGE)
-    const providerInLocalStorage = localStorage.getItem('attemptingSignInWithProvider')
+    const stateCodeInLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE)
+    const providerInLocalStorage = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_PROVIDER_STATE_STORAGE)
 
     if (stateParameter === stateCodeInLocalStorage && providerInLocalStorage) {
       ssoTokenExchange({ code: allURLParameters.code, provider: providerInLocalStorage })
     }
-  }, [])
+  }, [ssoTokenExchange])
 
   return (
     <p className={classes.pleaseHoldMessage}>

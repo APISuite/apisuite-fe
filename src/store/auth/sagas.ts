@@ -6,7 +6,7 @@ import stateGenerator from 'util/stateGenerator'
 import { openNotification } from 'store/notificationStack/actions/notification'
 import { Profile } from 'store/profile/types'
 import { API_URL } from 'constants/endpoints'
-import { ROLES } from 'constants/global'
+import { ROLES, LOCAL_STORAGE_KEYS } from 'constants/global'
 import { Store } from 'store/types'
 import { LOGIN, loginError, loginSuccess, loginUserError, loginUserSuccess, LOGIN_SUCCESS, LOGIN_USER } from './actions/login'
 import { EXPIRED_SESSION } from './actions/expiredSession'
@@ -55,9 +55,6 @@ import {
 } from './actions/invitation'
 
 import { Invitation } from './types'
-
-const STATE_STORAGE = 'ssoStateStorage'
-const STATE_STORAGE_INVITATION = 'ssoStateInvitationStorage'
 
 function * loginWorker (action: LoginAction) {
   try {
@@ -205,14 +202,14 @@ function * getProviders () {
 
 function * ssoLoginWorker ({ provider }: SSOLoginAction) {
   try {
-    let state = localStorage.getItem(STATE_STORAGE)
+    let state = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE)
 
     console.log('state', state)
 
     if (!state) {
       state = stateGenerator()
 
-      localStorage.setItem(STATE_STORAGE, state)
+      localStorage.setItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE, state)
     }
 
     const ssoLoginUrl = `${API_URL}/auth/oidc/${provider}?state=${state}`
@@ -236,8 +233,8 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
     })
 
     // FIXME: move to middleware
-    localStorage.removeItem(STATE_STORAGE)
-    localStorage.removeItem('attemptingSignInWithProvider')
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE)
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_PROVIDER_STATE_STORAGE)
 
     yield put(loginSuccess({}))
 
@@ -355,8 +352,8 @@ export function * invitationWithSignInSaga ({ token, code, provider }: AcceptInv
     })
 
     // FIXME: move to middleware
-    localStorage.removeItem(STATE_STORAGE)
-    localStorage.removeItem(STATE_STORAGE_INVITATION)
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE)
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE)
     yield put(loginSuccess({}))
     yield put(acceptInvitationWithSignInSuccess({ path: '/' }))
     yield put(openNotification('success', 'You have accepted your invitation.', 4000))
@@ -367,13 +364,13 @@ export function * invitationWithSignInSaga ({ token, code, provider }: AcceptInv
 
 export function * invitationSignInSaga ({ token, provider }: InvitationSignInAction) {
   try {
-    let state = localStorage.getItem(STATE_STORAGE)
+    let state = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE)
 
     if (!state) {
       state = stateGenerator()
-      localStorage.setItem(STATE_STORAGE, state)
+      localStorage.setItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE, state)
     }
-    localStorage.setItem(STATE_STORAGE_INVITATION, token)
+    localStorage.setItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE, token)
 
     const ssoLoginURL = `${API_URL}/auth/oidc/${provider}?state=${state}&invite=true`
     const response: { url: string } = yield call(window.fetch, ssoLoginURL)

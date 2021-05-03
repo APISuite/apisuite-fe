@@ -35,6 +35,8 @@ export const ROLES: Roles = {
   },
 }
 
-export const SSO_STATE_STORAGE = 'ssoStateStorage'
-export const SSO_INVITATION_STATE_STORAGE = 'ssoInvitationStateStorage'
-export const SSO_PROVIDER_STATE_STORAGE = 'attemptingSignInWithProvider'
+export enum LOCAL_STORAGE_KEYS {
+  SSO_STATE_STORAGE = 'ssoStateStorage',
+  SSO_INVITATION_STATE_STORAGE = 'ssoInvitationStateStorage',
+  SSO_PROVIDER_STATE_STORAGE = 'attemptingSignInWithProvider',
+}

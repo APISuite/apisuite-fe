@@ -5,6 +5,7 @@ import { openNotification } from 'store/notificationStack/actions/notification'
 import { FetchOrgResponse, FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, UpdateProfileResponse } from './types'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
+import { LOCAL_STORAGE_KEYS } from 'constants/global'
 import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, UpdateOrgAction, UpdateProfileAction, SwitchOrgAction } from './actions/types'
 import { fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess, FETCH_TEAM_MEMBERS } from './actions/fetchTeamMembers'
 import { fetchRoleOptionsError, fetchRoleOptionsSuccess, FETCH_ROLE_OPTIONS } from './actions/fetchRoleOptions'
@@ -20,8 +21,6 @@ import { switchOrgError, switchOrgSuccess, SWITCH_ORG } from './actions/switchOr
 import { deleteAccountError, deleteAccountSuccess, DELETE_ACCOUNT } from './actions/deleteAccount'
 import { handleSessionExpire } from 'store/auth/actions/expiredSession'
 import { logout } from 'store/auth/actions/logout'
-
-const STATE_STORAGE = 'ssoStateStorage'
 
 export function * fetchTeamMembersSaga (action: FetchTeamMembersAction) {
   try {
@@ -243,8 +242,8 @@ export function * deleteAccountSaga () {
     })
 
     // FIXME: this should be in the middleware and reacting to deleteAccountSuccess
-    localStorage.removeItem(STATE_STORAGE)
-    localStorage.removeItem('attemptingSignInWithProvider')
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE)
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_PROVIDER_STATE_STORAGE)
 
     yield put(deleteAccountSuccess({}))
     yield put(openNotification('success', 'Account deleted successfully.', 3000))

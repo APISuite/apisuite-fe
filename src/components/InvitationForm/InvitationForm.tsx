@@ -12,8 +12,9 @@ import {
 } from 'store/auth/actions/invitation'
 import { Invitation } from 'store/auth/types'
 import FormCard from 'components/FormCard'
-import useStyles from './styles'
 import { LoadingView } from 'components/SignUpForm/LoadingView'
+import { LOCAL_STORAGE_KEYS } from 'constants/global'
+import useStyles from './styles'
 import { invitationFormSelector } from './selector'
 
 const InvitationConfirmationForm: React.FC<{
@@ -83,9 +84,8 @@ export const InvitationForm = () => {
   // get token from url
   const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
   const code = qs.parse(window.location.search.slice(1)).code || undefined
-  const STATE_STORAGE_INVITATION = 'ssoStateInvitationStorage'
 
-  const stateToken = localStorage.getItem(STATE_STORAGE_INVITATION)
+  const stateToken = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE)
 
   useEffect(() => {
     if (stateToken && code) {

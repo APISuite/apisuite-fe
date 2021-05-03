@@ -11,6 +11,8 @@ import { ROLES } from 'constants/global'
 import { logout } from 'store/auth/actions/logout'
 import SvgIcon from 'components/SvgIcon'
 import Link from 'components/Link'
+import { linker } from 'util/linker'
+import { getSSOLoginURL } from 'util/getSSOLoginURL'
 
 import { useMenu } from './useMenu'
 import useStyles from './styles'
@@ -23,7 +25,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   const classes = useStyles()
   const dispatch = useDispatch()
   const history = useHistory()
-  const { portalName, ownerInfo } = useConfig()
+  const { portalName, ownerInfo, sso, providerSignupURL } = useConfig()
   const { user, userProfile, notificationCards } = useSelector(navigationSelector)
   const { topTabs, initTabs, loginTabs, goBack } = useMenu()
   const tabs = user ? loginTabs : initTabs
@@ -91,6 +93,23 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
     dispatch(toggleNotificationCard())
   }
 
+  const handleSSOTabs = (route: string): { route: string; target: string } => {
+    const res = {
+      route,
+      target: '_blank',
+    }
+    // FIXME: Use ENUM for string comparinsion
+    if (sso.length && route === '/auth/signin') {
+      res.route = getSSOLoginURL(sso)
+      res.target = '_self'
+    }
+    if (sso.length && route === '/auth/signup') {
+      res.route = linker(providerSignupURL)
+    }
+
+    return res
+  }
+
   // main tabs
   const tabsToRender = tabs.map((tab) => {
     // TODO: why is this rule here?
@@ -136,18 +155,22 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           {!expand && tabsToRender}
 
           {/* top tabs are only useful when the user does not exist */}
-          {!user && topTabs.map((tab) => (
-            <Tab
-              key={`nav-tab-${tab.label}`}
-              // we contract the tabs to a smaller size when navigation is expanded
-              className={clsx(classes.tab, { contract: expand })}
-              label={tab.label}
-              value={tab.route}
-              to={tab.route}
-              component={Link}
-              disableRipple
-            />
-          ))}
+          {!user && topTabs.map((tab) => {
+            const tabWithSSO = handleSSOTabs(tab.route)
+            return (
+              <Tab
+                key={`nav-tab-${tab.label}`}
+                // we contract the tabs to a smaller size when navigation is expanded
+                className={clsx(classes.tab, { contract: expand })}
+                externalTarget={tabWithSSO.target}
+                label={tab.label}
+                value={tabWithSSO.route}
+                to={tabWithSSO.route}
+                component={Link}
+                disableRipple
+              />
+            )
+          })}
         </Tabs>
 
         {/* Login info */}
