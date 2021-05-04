@@ -24,10 +24,10 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.on('window:before:load', (win) => {
-  win.fetch = null
-})
+Cypress.on("window:before:load", (win) => {
+  win.fetch = null;
+});
 
-Cypress.Commands.add('testID', (value) => {
-  return cy.get(`[data-testid=${value}]`)
-})
+Cypress.Commands.add("testID", (value) => {
+  return cy.get(`[data-testid=${value}]`);
+});
