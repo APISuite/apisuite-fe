@@ -1,1 +1,1 @@
-export { NotificationStack } from './NotificationStack'
+export { NotificationStack } from "./NotificationStack";

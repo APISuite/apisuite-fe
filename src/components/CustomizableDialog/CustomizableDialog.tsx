@@ -1,10 +1,10 @@
-import React from 'react'
-import { useTranslation, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@apisuite/fe-base'
-import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
-import WarningRoundedIcon from '@material-ui/icons/WarningRounded'
+import React from "react";
+import { useTranslation, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@apisuite/fe-base";
+import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
-import { CustomizableDialogProps } from './types'
-import useStyles from './styles'
+import { CustomizableDialogProps } from "./types";
+import useStyles from "./styles";
 
 const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
   // Props passed by the 'calling' component to be added below
@@ -23,21 +23,21 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
 
   // 'mapStateToProps' props (i.e., coming from the app's Redux 'store') to be added below (if any)
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const [t] = useTranslation()
+  const [t] = useTranslation();
 
   const handleOpenDialog = () => {
-    if (openDialogCallback) openDialogCallback()
-  }
+    if (openDialogCallback) openDialogCallback();
+  };
 
   const handleCloseDialog = () => {
-    if (closeDialogCallback) closeDialogCallback()
-  }
+    if (closeDialogCallback) closeDialogCallback();
+  };
 
   const handleConfirmAction = () => {
-    confirmButtonCallback()
-  }
+    confirmButtonCallback();
+  };
 
   return (
     <Dialog
@@ -47,12 +47,12 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
     >
       <div className={classes.dialogTitleContainer}>
         {
-          optionalTitleIcon === 'info' &&
+          optionalTitleIcon === "info" &&
           <InfoRoundedIcon className={classes.dialogTitleInfoIcon} />
         }
 
         {
-          optionalTitleIcon === 'warning' &&
+          optionalTitleIcon === "warning" &&
           <WarningRoundedIcon className={classes.dialogTitleWarningIcon} />
         }
 
@@ -79,7 +79,7 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
           fullWidth
           onClick={handleCloseDialog}
         >
-          {cancelButtonLabel || t('customizableDialog.cancelButtonLabel')}
+          {cancelButtonLabel || t("customizableDialog.cancelButtonLabel")}
         </Button>
 
         <div>
@@ -88,14 +88,14 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
             fullWidth
             onClick={handleConfirmAction}
           >
-            {confirmButtonLabel || t('customizableDialog.confirmButtonLabel')}
+            {confirmButtonLabel || t("customizableDialog.confirmButtonLabel")}
           </Button>
 
           {providedDialogActions}
         </div>
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default CustomizableDialog
+export default CustomizableDialog;

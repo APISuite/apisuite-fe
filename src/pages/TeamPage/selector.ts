@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect'
-import { Store } from 'store/types'
+import { createSelector } from "reselect";
+import { Store } from "store/types";
 
 export const teamPageSelector = createSelector(
   ({ profile }: Store) => profile,
@@ -11,6 +11,6 @@ export const teamPageSelector = createSelector(
       requestStatuses: profile.requestStatuses,
       roleOptions: profile.roleOptions,
       user: auth.user,
-    }
+    };
   },
-)
+);

@@ -1,6 +1,6 @@
-import { APIVersion } from 'store/subscriptions/types'
-import { APIDetailParams } from '../types'
-import { GET_API_VERSION, GET_API_VERSION_ERROR, GET_API_VERSION_SUCCESS } from './getAPIVersion'
+import { APIVersion } from "store/subscriptions/types";
+import { APIDetailParams } from "../types";
+import { GET_API_VERSION, GET_API_VERSION_ERROR, GET_API_VERSION_SUCCESS } from "./getAPIVersion";
 
 // ACTION TYPES
 export type APIVersionActions =

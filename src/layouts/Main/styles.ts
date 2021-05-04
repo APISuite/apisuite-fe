@@ -1,20 +1,20 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles(({
   root: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   container: {
     flex: 1,
-    '& .page-container': {
-      padding: '210px 0 80px 0',
+    "& .page-container": {
+      padding: "210px 0 80px 0",
     },
   },
   contractible: {
-    '& .page-container': {
+    "& .page-container": {
       paddingTop: 300,
     },
   },
-}))
+}));

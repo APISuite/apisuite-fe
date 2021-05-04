@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation, Button, Avatar, TextField } from '@apisuite/fe-base'
-import Close from '@material-ui/icons/Close'
-import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
-import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'
-import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
-import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
-import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation, Button, Avatar, TextField } from "@apisuite/fe-base";
+import Close from "@material-ui/icons/Close";
+import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
+import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
+import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
+import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 
-import { updateProfile } from 'store/profile/actions/updateProfile'
-import { switchOrg } from 'store/profile/actions/switchOrg'
-import { deleteAccount } from 'store/profile/actions/deleteAccount'
-import { getProfile } from 'store/profile/actions/getProfile'
-import { logout } from 'store/auth/actions/logout'
-import { useForm } from 'util/useForm'
-import { isValidImage, isValidPhoneNumber, isValidURL } from 'util/forms'
-import { Organization } from 'store/profile/types'
-import Select from 'components/Select'
-import { SelectOption } from 'components/Select/types'
+import { updateProfile } from "store/profile/actions/updateProfile";
+import { switchOrg } from "store/profile/actions/switchOrg";
+import { deleteAccount } from "store/profile/actions/deleteAccount";
+import { getProfile } from "store/profile/actions/getProfile";
+import { logout } from "store/auth/actions/logout";
+import { useForm } from "util/useForm";
+import { isValidImage, isValidPhoneNumber, isValidURL } from "util/forms";
+import { Organization } from "store/profile/types";
+import Select from "components/Select";
+import { SelectOption } from "components/Select/types";
 
-import { profileSelector } from './selectors'
-import useStyles from './styles'
+import { profileSelector } from "./selectors";
+import useStyles from "./styles";
 
 export const Profile: React.FC = () => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const [t] = useTranslation()
-  const { profile } = useSelector(profileSelector)
-  const [ssoIsActive, setSSOIsActive] = useState(false)
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const [t] = useTranslation();
+  const { profile } = useSelector(profileSelector);
+  const [ssoIsActive, setSSOIsActive] = useState(false);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
-    dispatch(getProfile({}))
-  }, [dispatch])
+    dispatch(getProfile({}));
+  }, [dispatch]);
 
   useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
@@ -42,9 +42,9 @@ export const Profile: React.FC = () => {
     If 'oidcProvider' amounts to 'null', it means that the user signed in regularly,
     and if not, it means that the user signed in by way of SSO. */
     if (profile.user.oidcProvider) {
-      setSSOIsActive(true)
+      setSSOIsActive(true);
     }
-  }, [profile])
+  }, [profile]);
 
   /*
   User details
@@ -54,27 +54,27 @@ export const Profile: React.FC = () => {
   - 'profile' refers to our stored, back-end approved copy of a user's details.
   */
 
-  let userNameInitials = '...'
+  let userNameInitials = "...";
 
   if (profile.user.name) {
-    const userNameInitialsArray = profile.user.name.split(' ')
+    const userNameInitialsArray = profile.user.name.split(" ");
 
-    userNameInitials = userNameInitialsArray[0].charAt(0).toLocaleUpperCase()
+    userNameInitials = userNameInitialsArray[0].charAt(0).toLocaleUpperCase();
   }
 
-  const [avatarHasBeenClicked, setAvatarHasBeenClicked] = useState(false)
-  const [validImage, setValidImage] = useState<boolean>(true)
+  const [avatarHasBeenClicked, setAvatarHasBeenClicked] = useState(false);
+  const [validImage, setValidImage] = useState<boolean>(true);
 
   const validateAvatar = (avatar: string) => {
-    if (avatar !== '') {
+    if (avatar !== "") {
       (
         async () => {
-          const valid = await isValidImage(avatar)
-          setValidImage(valid)
+          const valid = await isValidImage(avatar);
+          setValidImage(valid);
         }
-      )()
+      )();
     }
-  }
+  };
 
   const {
     formState,
@@ -84,55 +84,55 @@ export const Profile: React.FC = () => {
   } = useForm(
     // Initial user details
     {
-      userAvatarURL: '',
-      userBio: '',
-      userEmailAddress: '',
-      userName: '',
-      userPhoneNumber: '',
+      userAvatarURL: "",
+      userBio: "",
+      userEmailAddress: "",
+      userName: "",
+      userPhoneNumber: "",
     },
     // Rules for the user details
     {
       userAvatarURL: {
         rules: [
           (URI) => {
-            const stringURI = URI.toString()
+            const stringURI = URI.toString();
 
             if (URI === null || stringURI.length === 0) {
               /* Empty URI? That's okay - it just means we don't want,
               or have an image to display on the user's Avatar. */
-              setValidImage(true)
-              return true
+              setValidImage(true);
+              return true;
             } else {
               /* Non-empty URI? Cool! First, we determine if that URI is valid,
               and then we need to check if the URI points to an actual image.
               If any of these conditions are not met, we display an error message. */
-              const doesImageExist = isValidURL(stringURI)
+              const doesImageExist = isValidURL(stringURI);
               if (doesImageExist) {
-                validateAvatar(stringURI)
+                validateAvatar(stringURI);
               }
 
-              return doesImageExist
+              return doesImageExist;
             }
           },
         ],
-        message: t('profileTab.overviewSubTab.warningLabels.userAvatarURL'),
+        message: t("profileTab.overviewSubTab.warningLabels.userAvatarURL"),
       },
 
       userPhoneNumber: {
         rules: [
           (phoneNumber) => {
-            const stringPhoneNumber = phoneNumber.toString()
+            const stringPhoneNumber = phoneNumber.toString();
 
             if (stringPhoneNumber.length === 0) {
-              return true
+              return true;
             } else {
-              return isValidPhoneNumber(phoneNumber)
+              return isValidPhoneNumber(phoneNumber);
             }
           },
         ],
-        message: t('profileTab.overviewSubTab.warningLabels.userPhoneNumber'),
+        message: t("profileTab.overviewSubTab.warningLabels.userPhoneNumber"),
       },
-    })
+    });
 
   /* Whenever the store's 'profile' changes (i.e., upon mounting this component,
   and immediately after saving one's details), our form's values are 'reset'
@@ -140,111 +140,111 @@ export const Profile: React.FC = () => {
   useEffect(() => {
     resetForm(
       {
-        userAvatarURL: profile.user.avatar ? profile.user.avatar : '',
-        userBio: '',
+        userAvatarURL: profile.user.avatar ? profile.user.avatar : "",
+        userBio: "",
         userEmailAddress: profile.user.email,
         userName: profile.user.name,
-        userPhoneNumber: (profile.user.mobile && profile.user.mobile !== '0')
+        userPhoneNumber: (profile.user.mobile && profile.user.mobile !== "0")
           ? profile.user.mobile
-          : '',
+          : "",
       },
-    )
+    );
   // FIXME: adding resetForm to the dependencies causes an infinite loop
-  }, [profile])
+  }, [profile]);
 
   /* Organisation details */
 
-  const [profileHasOrgDetails, setProfileHasOrgDetails] = useState(false)
+  const [profileHasOrgDetails, setProfileHasOrgDetails] = useState(false);
 
   const [currentlySelectedOrganisation, setCurrentlySelectedOrganisation] = useState({
-    group: '',
-    label: '',
-    value: '',
-  })
+    group: "",
+    label: "",
+    value: "",
+  });
 
   const organisationSelector = (organisations: Organization[]) => {
     return organisations.map((organisation) => ({
-      group: '',
+      group: "",
       label: organisation.name,
       value: organisation.id,
-    }))
-  }
+    }));
+  };
 
-  const handleOrganisationSelection = (event: React.ChangeEvent<{}>, selectedOrganisation: SelectOption) => {
-    event.preventDefault()
+  const handleOrganisationSelection = (event: React.ChangeEvent<any>, selectedOrganisation: SelectOption) => {
+    event.preventDefault();
 
     const newlySelectedOrganisation = {
-      group: '',
+      group: "",
       label: selectedOrganisation.label,
       value: selectedOrganisation.value,
-    }
+    };
 
-    setCurrentlySelectedOrganisation(newlySelectedOrganisation)
-  }
+    setCurrentlySelectedOrganisation(newlySelectedOrganisation);
+  };
 
   useEffect(() => {
     // Once our store's 'profile' details load, we check if there's organisation data associated to it
-    const hasOrgDetails = Object.keys(profile.current_org).length !== 0 && profile.current_org.id !== ''
+    const hasOrgDetails = Object.keys(profile.current_org).length !== 0 && profile.current_org.id !== "";
 
-    setProfileHasOrgDetails(hasOrgDetails)
-  }, [profile])
+    setProfileHasOrgDetails(hasOrgDetails);
+  }, [profile]);
 
   useEffect(() => {
     // Once our store's 'profile' details load, we store them locally
     setCurrentlySelectedOrganisation({
-      group: '',
+      group: "",
       label: profile.current_org.name,
       value: profile.current_org.id,
-    })
-  }, [profile])
+    });
+  }, [profile]);
 
   /* All details (i.e., user & organisation details) */
 
-  const updateProfileDetails = (event: React.ChangeEvent<{}>, selectedOrganisation?: SelectOption) => {
-    event.preventDefault()
+  const updateProfileDetails = (event: React.ChangeEvent<any>, selectedOrganisation?: SelectOption) => {
+    event.preventDefault();
 
     if (selectedOrganisation && selectedOrganisation.value) {
       dispatch(updateProfile({
         userId: profile.user.id,
-        avatar: profile.user.avatar ? profile.user.avatar : '',
-        bio: '',
+        avatar: profile.user.avatar ? profile.user.avatar : "",
+        bio: "",
         name: profile.user.name,
-        mobile: profile.user.mobile ? profile.user.mobile : '',
-      }))
+        mobile: profile.user.mobile ? profile.user.mobile : "",
+      }));
     } else {
       dispatch(updateProfile({
         userId: profile.user.id,
         avatar: formState.values.userAvatarURL,
         bio: formState.values.userBio,
         name: formState.values.userName,
-        mobile: formState.values.userPhoneNumber ? formState.values.userPhoneNumber : '',
-      }))
+        mobile: formState.values.userPhoneNumber ? formState.values.userPhoneNumber : "",
+      }));
     }
-  }
+  };
 
-  const switchOrganisation = (event: React.ChangeEvent<{}>) => {
-    event.preventDefault()
+  const switchOrganisation = (event: React.ChangeEvent<any>) => {
+    event.preventDefault();
 
     if (
       currentlySelectedOrganisation &&
       currentlySelectedOrganisation.value &&
       currentlySelectedOrganisation.value !== profile.current_org.id
     ) {
-      dispatch(switchOrg({ id: profile.user.id, orgId: currentlySelectedOrganisation.value }))
+      dispatch(switchOrg({ id: profile.user.id, orgId: currentlySelectedOrganisation.value }));
     }
-  }
+  };
 
   /* Account deletion */
 
-  const [openDialog, setOpenDialog] = useState<boolean>(false)
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const handleDelete = () => {
-    setOpenDialog(true)
-  }
+    setOpenDialog(true);
+  };
 
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+    setOpenDialog(false);
+  };
 
   return (
     <main className='page-container'>
@@ -253,23 +253,23 @@ export const Profile: React.FC = () => {
           <div className={classes.userNameAndRoleContainer}>
             <p className={classes.userName}>
               {
-                profile.user.name !== ''
+                profile.user.name !== ""
                   ? profile.user.name
-                  : t('profileTab.overviewSubTab.loadingDetails')
+                  : t("profileTab.overviewSubTab.loadingDetails")
               }
             </p>
 
             <p className={classes.userRole}>
               {
                 !profileHasOrgDetails
-                  ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser')
+                  ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
                   : (
-                    profile.current_org.role.name === 'admin'
-                      ? t('profileTab.overviewSubTab.roleRelatedLabels.admin')
+                    profile.current_org.role.name === "admin"
+                      ? t("profileTab.overviewSubTab.roleRelatedLabels.admin")
                       : (
-                        profile.current_org.role.name === 'organizationOwner'
-                          ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner')
-                          : t('profileTab.overviewSubTab.roleRelatedLabels.developer')
+                        profile.current_org.role.name === "organizationOwner"
+                          ? t("profileTab.overviewSubTab.roleRelatedLabels.orgOwner")
+                          : t("profileTab.overviewSubTab.roleRelatedLabels.developer")
                       )
                   )
               }
@@ -277,12 +277,12 @@ export const Profile: React.FC = () => {
           </div>
 
           <p className={classes.subtitle}>
-            {t('profileTab.overviewSubTab.subtitle')}
+            {t("profileTab.overviewSubTab.subtitle")}
           </p>
 
           <div>
             <p className={classes.organisationDetailsTitle}>
-              {t('profileTab.overviewSubTab.orgRelatedLabels.selectorTitle')}
+              {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
             </p>
 
             {
@@ -293,14 +293,14 @@ export const Profile: React.FC = () => {
                       className={classes.organisationSelector}
                       customCloseIcon={<ExpandLessRoundedIcon />}
                       customOpenIcon={<ExpandMoreRoundedIcon />}
-                      fieldLabel={t('profileTab.overviewSubTab.orgRelatedLabels.selectorLabel')}
+                      fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
                       onChange={handleOrganisationSelection}
                       options={organisationSelector(profile.orgs_member)}
                       selected={
                         organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
-                          return currentlySelectedOrganisation.value === ''
+                          return currentlySelectedOrganisation.value === ""
                             ? (selectedOrganisation.value === profile.current_org.id)
-                            : (selectedOrganisation.value === currentlySelectedOrganisation.value)
+                            : (selectedOrganisation.value === currentlySelectedOrganisation.value);
                         })
                       }
                     />
@@ -313,7 +313,7 @@ export const Profile: React.FC = () => {
                       }
                       onClick={switchOrganisation}
                     >
-                      {t('profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel')}
+                      {t("profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel")}
                     </Button>
                   </>
                 )
@@ -322,7 +322,7 @@ export const Profile: React.FC = () => {
                     className={classes.createOrganisationButton}
                     href='profile/organisation'
                   >
-                    {t('profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel')}
+                    {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
                   </Button>
                 )
             }
@@ -343,7 +343,7 @@ export const Profile: React.FC = () => {
                 className={classes.otherActionsButtons}
                 href='profile/security'
               >
-                {t('profileTab.overviewSubTab.otherActionsLabels.changePassword')}
+                {t("profileTab.overviewSubTab.otherActionsLabels.changePassword")}
               </Button>
             }
 
@@ -351,7 +351,7 @@ export const Profile: React.FC = () => {
               className={classes.otherActionsButtons}
               href='profile/team'
             >
-              {t('profileTab.overviewSubTab.otherActionsLabels.viewTeam')}
+              {t("profileTab.overviewSubTab.otherActionsLabels.viewTeam")}
             </Button>
           </div>
         </div>
@@ -396,7 +396,7 @@ export const Profile: React.FC = () => {
                           formState.errors.userAvatarURL) || !validImage) &&
                         formState.errorMsgs.userAvatarURL
                       }
-                      label={t('profileTab.overviewSubTab.userRelatedLabels.userAvatarURL')}
+                      label={t("profileTab.overviewSubTab.userRelatedLabels.userAvatarURL")}
                       margin='dense'
                       name='userAvatarURL'
                       onChange={handleChange}
@@ -419,7 +419,7 @@ export const Profile: React.FC = () => {
                   : classes.disabledInputFields
               }
               fullWidth
-              label={t('profileTab.overviewSubTab.userRelatedLabels.userName')}
+              label={t("profileTab.overviewSubTab.userRelatedLabels.userName")}
               margin='dense'
               name='userName'
               onChange={handleChange}
@@ -436,7 +436,7 @@ export const Profile: React.FC = () => {
                   : classes.disabledInputFields
               }
               fullWidth
-              label={t('profileTab.overviewSubTab.userRelatedLabels.userEmailAddress')}
+              label={t("profileTab.overviewSubTab.userRelatedLabels.userEmailAddress")}
               margin='dense'
               name='userEmailAddress'
               onChange={handleChange}
@@ -459,7 +459,7 @@ export const Profile: React.FC = () => {
                       formState.errors.userPhoneNumber &&
                       formState.errorMsgs.userPhoneNumber
                     }
-                    label={t('profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber')}
+                    label={t("profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber")}
                     margin='dense'
                     name='userPhoneNumber'
                     onChange={handleChange}
@@ -477,7 +477,7 @@ export const Profile: React.FC = () => {
                     }
                     onClick={updateProfileDetails}
                   >
-                    {t('profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails')}
+                    {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
                   </Button>
                 </>
               )
@@ -490,14 +490,14 @@ export const Profile: React.FC = () => {
               <p>
                 {
                   !profileHasOrgDetails
-                    ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser')
+                    ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
                     : (
-                      profile.current_org.role.name === 'admin'
-                        ? t('profileTab.overviewSubTab.roleRelatedLabels.admin')
+                      profile.current_org.role.name === "admin"
+                        ? t("profileTab.overviewSubTab.roleRelatedLabels.admin")
                         : (
-                          profile.current_org.role.name === 'organizationOwner'
-                            ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner')
-                            : t('profileTab.overviewSubTab.roleRelatedLabels.developer')
+                          profile.current_org.role.name === "organizationOwner"
+                            ? t("profileTab.overviewSubTab.roleRelatedLabels.orgOwner")
+                            : t("profileTab.overviewSubTab.roleRelatedLabels.developer")
                         )
                     )
                 }
@@ -511,14 +511,14 @@ export const Profile: React.FC = () => {
               className={classes.deleteAccountButton}
               onClick={handleDelete}
             >
-              {t('profileTab.overviewSubTab.otherActionsLabels.deleteAccount')}
+              {t("profileTab.overviewSubTab.otherActionsLabels.deleteAccount")}
             </Button>
 
             <Button
               className={classes.signOutButton}
               onClick={() => dispatch(logout({}))}
             >
-              {t('profileTab.overviewSubTab.otherActionsLabels.signOut')}
+              {t("profileTab.overviewSubTab.otherActionsLabels.signOut")}
             </Button>
           </div>
         </div>
@@ -528,19 +528,19 @@ export const Profile: React.FC = () => {
           <CustomizableDialog
             closeDialogCallback={handleCloseDialog}
             confirmButtonCallback={() => {
-              dispatch(deleteAccount({}))
+              dispatch(deleteAccount({}));
 
-              handleCloseDialog()
+              handleCloseDialog();
             }}
-            confirmButtonLabel={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton')}
+            confirmButtonLabel={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton")}
             open={openDialog}
             optionalTitleIcon='warning'
             providedText={
-              t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningText') +
+              t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningText") +
               ` ${profile.user.email}?`
             }
-            providedSubText={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText')}
-            providedTitle={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle')}
+            providedSubText={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText")}
+            providedTitle={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle")}
           />
         }
       </section>
@@ -553,7 +553,7 @@ export const Profile: React.FC = () => {
 
             <div>
               <p className={classes.infoBoxText}>
-                {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartOne')}
+                {t("profileTab.overviewSubTab.openIDInfoBoxContainerPartOne")}
               </p>
 
               <p className={classes.infoBoxText}>
@@ -563,15 +563,15 @@ export const Profile: React.FC = () => {
                     target='_blank'
                     rel='noopener noreferrer'
                   >
-                    {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartTwo')}
+                    {t("profileTab.overviewSubTab.openIDInfoBoxContainerPartTwo")}
                   </a>
                 </span>
-                <span>{t('profileTab.overviewSubTab.openIDInfoBoxContainerPartThree')}</span>
+                <span>{t("profileTab.overviewSubTab.openIDInfoBoxContainerPartThree")}</span>
               </p>
             </div>
           </div>
         </section>
       }
     </main>
-  )
-}
+  );
+};

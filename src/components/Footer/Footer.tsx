@@ -1,111 +1,111 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useConfig, useTranslation, Fab } from '@apisuite/fe-base'
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import { Menus } from '@apisuite/extension-ui-types'
-import { getMenuEntries } from 'util/extensions'
-import LocaleSelect from 'language/LocaleSelect'
-import { getRoleName } from 'pages/Profile/selectors'
-import SvgIcon from 'components/SvgIcon'
+import React from "react";
+import { useSelector } from "react-redux";
+import { useConfig, useTranslation, Fab } from "@apisuite/fe-base";
+import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import { Menus } from "@apisuite/extension-ui-types";
+import { getMenuEntries } from "util/extensions";
+import LocaleSelect from "language/LocaleSelect";
+import { getRoleName } from "pages/Profile/selectors";
+import SvgIcon from "components/SvgIcon";
 
-import useStyles from './styles'
-import { FooterProps, MenuSection, MenuSections } from './types'
+import useStyles from "./styles";
+import { FooterProps, MenuSection, MenuSections } from "./types";
 
 const SocialLinks = () => {
-  const classes = useStyles()
-  const { socialURLs } = useConfig()
+  const classes = useStyles();
+  const { socialURLs } = useConfig();
 
   if (!socialURLs || !socialURLs.length) {
-    return null
+    return null;
   }
 
   return (
     <div className={classes.iconsContainer}>
       {socialURLs.map((socialUrl, index) => {
         switch (socialUrl.name) {
-          case 'facebook':
-          case 'github':
-          case 'gitlab':
-          case 'instagram':
-          case 'linkedin':
-          case 'reddit':
-          case 'twitter':
+          case "facebook":
+          case "github":
+          case "gitlab":
+          case "instagram":
+          case "linkedin":
+          case "reddit":
+          case "twitter":
             return (
               <a key={`${index}-${socialUrl.name}`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
                 <SvgIcon size={24} name={socialUrl.name} />
               </a>
-            )
+            );
 
           default:
             return (
               <a key={`${index}-web`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
                 <SvgIcon size={24} name='earth' />
               </a>
-            )
+            );
         }
       })}
     </div>
-  )
-}
+  );
+};
 
 const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string }) => {
-  const classes = useStyles()
-  const { socialURLs } = useConfig()
-  const [t] = useTranslation()
+  const classes = useStyles();
+  const { socialURLs } = useConfig();
+  const [t] = useTranslation();
 
   const menuSections: MenuSections = {
     [Menus.FooterProducts]: {
-      title: t('footer.apiProductsMenu.menuTitle'),
+      title: t("footer.apiProductsMenu.menuTitle"),
       entries: [
         {
-          label: t('footer.apiProductsMenu.menuItemOne'),
-          route: '/dashboard/subscriptions',
+          label: t("footer.apiProductsMenu.menuItemOne"),
+          route: "/dashboard/subscriptions",
         },
         {
-          label: t('footer.apiProductsMenu.menuItemTwo'),
-          route: '/documentation',
+          label: t("footer.apiProductsMenu.menuItemTwo"),
+          route: "/documentation",
         },
       ],
     },
 
     [Menus.FooterSupport]: {
-      title: t('footer.supportMenu.menuTitle'),
+      title: t("footer.supportMenu.menuTitle"),
       entries: [
         {
-          label: t('footer.supportMenu.menuItemOne'),
-          route: socialURLs[0]?.url ?? '#',
+          label: t("footer.supportMenu.menuItemOne"),
+          route: socialURLs[0]?.url ?? "#",
         },
         {
-          label: t('footer.supportMenu.menuItemTwo'),
-          route: 'https://cloudoki.atlassian.net/wiki/spaces/APIEC/overview?homepageId=281444539',
+          label: t("footer.supportMenu.menuItemTwo"),
+          route: "https://cloudoki.atlassian.net/wiki/spaces/APIEC/overview?homepageId=281444539",
         },
       ],
     },
 
     [Menus.FooterDashboard]: {
-      title: t('footer.dashboardMenu.menuTitle'),
+      title: t("footer.dashboardMenu.menuTitle"),
       entries: [
         {
-          label: t('footer.dashboardMenu.menuItemOne'),
-          route: '/dashboard/apps',
+          label: t("footer.dashboardMenu.menuItemOne"),
+          route: "/dashboard/apps",
         },
         {
-          label: t('footer.dashboardMenu.menuItemTwo'),
-          route: '/profile/team',
+          label: t("footer.dashboardMenu.menuItemTwo"),
+          route: "/profile/team",
         },
       ],
     },
 
     [Menus.FooterProfile]: {
-      title: t('footer.profileMenu.menuTitle'),
+      title: t("footer.profileMenu.menuTitle"),
       entries: [
         {
-          label: t('footer.profileMenu.menuItemOne'),
-          route: '/profile/security',
+          label: t("footer.profileMenu.menuItemOne"),
+          route: "/profile/security",
         },
         {
-          label: t('footer.profileMenu.menuItemTwo'),
-          route: '/profile/organisation',
+          label: t("footer.profileMenu.menuItemTwo"),
+          route: "/profile/organisation",
         },
       ],
     },
@@ -115,11 +115,11 @@ const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string 
     //   title: t('footer.apisCloudExtensionMenu.menuTitle', { config }),
     //   entries: [],
     // },
-  }
+  };
 
-  const section: MenuSection = menuSections[subMenu]
-  const extensionsMenuEntries = getMenuEntries(subMenu, roleName)
-  const allEntries = [...section.entries, ...extensionsMenuEntries]
+  const section: MenuSection = menuSections[subMenu];
+  const extensionsMenuEntries = getMenuEntries(subMenu, roleName);
+  const allEntries = [...section.entries, ...extensionsMenuEntries];
 
   return (
     <div className={classes.subSection} key={subMenu}>
@@ -127,12 +127,12 @@ const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string 
 
       <>
         {allEntries.map((entry, i) => {
-          const { label, ...anchorProps } = entry
+          const { label, ...anchorProps } = entry;
 
           return (
             <p key={i}>
               {
-                entry.route && entry.route !== '#'
+                entry.route && entry.route !== "#"
                   ? (
                     <a {...anchorProps} href={entry.route} key={i}>
                       {label}
@@ -143,12 +143,12 @@ const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string 
                   )
               }
             </p>
-          )
+          );
         })}
       </>
     </div>
-  )
-}
+  );
+};
 
 // Footer
 
@@ -156,14 +156,14 @@ const Footer: React.FC<FooterProps> = (
   // TODO: Come up with a solution to a bug that manifests upon logging out with this extension active
   // { auth }
 ) => {
-  const classes = useStyles()
-  const roleName = useSelector(getRoleName)
-  const { ownerInfo, portalName } = useConfig()
-  const [t] = useTranslation()
+  const classes = useStyles();
+  const roleName = useSelector(getRoleName);
+  const { ownerInfo, portalName } = useConfig();
+  const [t] = useTranslation();
 
   const handleFabClick = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-  }
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
 
   return (
     <footer className={classes.footer}>
@@ -243,17 +243,17 @@ auth.user?.role.name === 'admin' &&
               rel='noopener noreferrer'
               target='_blank'
             >
-              &copy; {new Date().getFullYear()} {t('footer.copyrights.website')}
+              &copy; {new Date().getFullYear()} {t("footer.copyrights.website")}
             </a>
 
-            <p>{t('footer.copyrights.allRightsReserved')}</p>
+            <p>{t("footer.copyrights.allRightsReserved")}</p>
           </div>
 
           <LocaleSelect />
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

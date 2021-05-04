@@ -1,1 +1,1 @@
-export { default } from './CookiesBanner'
+export { default } from "./CookiesBanner";

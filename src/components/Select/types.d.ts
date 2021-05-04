@@ -4,7 +4,7 @@ export interface SelectProps {
   customOpenIcon?: any,
   disabled?: boolean,
   fieldLabel?: string,
-  onChange?: (event: React.ChangeEvent<{}>, value: any) => void,
+  onChange?: (event: React.ChangeEvent<any>, value: any) => void,
   options: SelectOption[],
   selected?: SelectOption,
 }

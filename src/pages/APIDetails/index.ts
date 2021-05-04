@@ -1,1 +1,1 @@
-export { APIDetails } from './APIDetails'
+export { APIDetails } from "./APIDetails";

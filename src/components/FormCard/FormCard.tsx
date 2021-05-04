@@ -1,9 +1,9 @@
-import React from 'react'
-import { useTranslation, Button } from '@apisuite/fe-base'
+import React from "react";
+import { useTranslation, Button } from "@apisuite/fe-base";
 
-import { FormCardProps } from './types'
+import { FormCardProps } from "./types";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
 const FormCard: React.FC<FormCardProps> = ({
   backLabel,
@@ -26,9 +26,9 @@ const FormCard: React.FC<FormCardProps> = ({
   customRejectButtonStyles,
   handleReject,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const [t] = useTranslation()
+  const [t] = useTranslation();
 
   return (
     <div className={classes.formCard}>
@@ -40,7 +40,6 @@ const FormCard: React.FC<FormCardProps> = ({
         {/* Form fields, among other (optional) things */}
         {children}
 
-        {/* @ts-ignore */}
         <Button
           className={
             buttonDisabled
@@ -49,11 +48,11 @@ const FormCard: React.FC<FormCardProps> = ({
           }
           startIcon={buttonIcon}
           disabled={buttonDisabled}
-          onClick={handleSubmit}
+          onClick={handleSubmit as any}
         >
           {
             loading
-              ? t('formCard.holdMessage')
+              ? t("formCard.holdMessage")
               : buttonLabel
           }
         </Button>
@@ -61,10 +60,9 @@ const FormCard: React.FC<FormCardProps> = ({
         {
           showBack &&
           <div className={classes.backButtonContainer}>
-            {/* @ts-ignore */}
             <Button
               className={customBackButtonStyles || classes.backButton}
-              onClick={handleBackClick}
+              onClick={handleBackClick as any}
             >
               {backLabel}
             </Button>
@@ -90,7 +88,7 @@ const FormCard: React.FC<FormCardProps> = ({
         <div className={classes.errorPlaceholder}>
           <div className={classes.errorAlert}>
             {
-              typeof error === 'string'
+              typeof error === "string"
                 ? error
                 : error.message
             }
@@ -98,7 +96,7 @@ const FormCard: React.FC<FormCardProps> = ({
         </div>
       }
     </div>
-  )
-}
+  );
+};
 
-export default FormCard
+export default FormCard;

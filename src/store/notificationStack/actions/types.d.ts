@@ -1,5 +1,5 @@
-import { NotificationType } from '../types'
-import { CLOSE_NOTIFICATION, OPEN_NOTIFICATION } from './notification'
+import { NotificationType } from "../types";
+import { CLOSE_NOTIFICATION, OPEN_NOTIFICATION } from "./notification";
 
 export type NotificationActions = CloseNotificationAction | OpenNotificationAction
 

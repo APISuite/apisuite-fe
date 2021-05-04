@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React from "react";
 
-import { BaseSvgIconProps } from '../types'
+import { BaseSvgIconProps } from "../types";
 
 const Base: React.FC<BaseSvgIconProps> = ({
   size = 16,
   name,
-  color = 'currentColor',
+  color = "currentColor",
   style,
   children,
   ...rest
@@ -15,7 +15,7 @@ const Base: React.FC<BaseSvgIconProps> = ({
       width={size}
       height={size}
       fill={color}
-      style={{ display: 'block', ...style }}
+      style={{ display: "block", ...style }}
       {...rest}
     >
       {children({
@@ -24,7 +24,7 @@ const Base: React.FC<BaseSvgIconProps> = ({
         color,
       })}
     </svg>
-  )
-}
+  );
+};
 
-export default Base
+export default Base;

@@ -1,50 +1,50 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select } from '@apisuite/fe-base'
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import CheckBoxOutlineBlankRoundedIcon from '@material-ui/icons/CheckBoxOutlineBlankRounded'
-import CheckBoxRoundedIcon from '@material-ui/icons/CheckBoxRounded'
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
-import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
-import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
-import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select } from "@apisuite/fe-base";
+import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import CheckBoxOutlineBlankRoundedIcon from "@material-ui/icons/CheckBoxOutlineBlankRounded";
+import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
+import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
+import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
 
-import { requestAPIAccess } from 'store/applications/actions/requestApiAccess'
-import { allUserAppsSelector, apisByNameSelector } from 'pages/Subscriptions/selectors'
+import { requestAPIAccess } from "store/applications/actions/requestApiAccess";
+import { allUserAppsSelector, apisByNameSelector } from "pages/Subscriptions/selectors";
 
-import { SubscriptionsModalProps } from './types'
-import useStyles from './styles'
+import { SubscriptionsModalProps } from "./types";
+import useStyles from "./styles";
 
 export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalOpen, toggleModal }) => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const { t } = useTranslation()
-  const { portalName, ownerInfo, clientName } = useConfig()
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { portalName, ownerInfo, clientName } = useConfig();
   // FIXME: unify these
-  const apisByName = useSelector(apisByNameSelector)
-  const allUserApps = useSelector(allUserAppsSelector)
+  const apisByName = useSelector(apisByNameSelector);
+  const allUserApps = useSelector(allUserAppsSelector);
 
   /* 'Client app' selection */
 
   const initialClientApp = {
-    clientId: '',
-    clientSecret: '',
-    createdAt: '',
-    description: '',
-    id: '',
-    logo: '',
-    name: '',
-    orgId: '',
-    privacyUrl: '',
-    redirectUrl: '',
-    shortDescription: '',
+    clientId: "",
+    clientSecret: "",
+    createdAt: "",
+    description: "",
+    id: "",
+    logo: "",
+    name: "",
+    orgId: "",
+    privacyUrl: "",
+    redirectUrl: "",
+    shortDescription: "",
     subscriptions: [],
-    supportUrl: '',
-    tosUrl: '',
-    updatedAt: '',
-    websiteUrl: '',
-    youtubeUrl: '',
-  }
+    supportUrl: "",
+    tosUrl: "",
+    updatedAt: "",
+    websiteUrl: "",
+    youtubeUrl: "",
+  };
 
   const [selectedClientApp, setSelectedClientApp] = React.useState(
     allUserApps.length === 1
@@ -52,22 +52,22 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
       ? allUserApps[0]
       // If there's more than one single user app, we leave the 'Client app' selection up to the user
       : initialClientApp,
-  )
+  );
   const [isClientAppSelected, setIsClientAppSelected] = React.useState(
     allUserApps.length === 1,
-  )
+  );
 
   const handleClientAppSelection = (dataOfSelectedApp: any) => {
-    setSelectedClientApp(dataOfSelectedApp)
-    setIsClientAppSelected(true)
-  }
+    setSelectedClientApp(dataOfSelectedApp);
+    setIsClientAppSelected(true);
+  };
 
   /* 'API product' selection */
 
   // const [selectedAPIProducts, setSelectedAPIProducts] = React.useState([])
   const [isAPIProductSelected, setIsAPIProductSelected] = React.useState(
     new Array(apisByName.length).fill(true),
-  )
+  );
 
   /*
   TODO: Keep 'handleAPIProductsSelection' commented - for now, Koen wants all API Products to be selected by default.
@@ -121,23 +121,23 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
   /* Selections reset */
 
   const resetModalSelections = () => {
-    setSelectedClientApp(initialClientApp)
-    setIsClientAppSelected(false)
+    setSelectedClientApp(initialClientApp);
+    setIsClientAppSelected(false);
 
     // setSelectedAPIProducts([])
-    setIsAPIProductSelected(new Array(apisByName.length).fill(true))
+    setIsAPIProductSelected(new Array(apisByName.length).fill(true));
 
-    toggleModal()
-  }
+    toggleModal();
+  };
 
   /* 'API Product' access request */
 
   const handleAPIProductAccessRequest = () => {
-    const idOfSelectedClientApp = Number(selectedClientApp.id)
+    const idOfSelectedClientApp = Number(selectedClientApp.id);
 
-    dispatch(requestAPIAccess({ appId: idOfSelectedClientApp }))
-    resetModalSelections()
-  }
+    dispatch(requestAPIAccess({ appId: idOfSelectedClientApp }));
+    resetModalSelections();
+  };
 
   return (
     <Modal
@@ -173,7 +173,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
               onClick={resetModalSelections}
             >
               <p>
-                {t('dashboardTab.subscriptionsSubTab.subsModal.modalHeader.closeButtonLabel')}
+                {t("dashboardTab.subscriptionsSubTab.subsModal.modalHeader.closeButtonLabel")}
               </p>
 
               <CloseRoundedIcon />
@@ -184,15 +184,15 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
           <div className={classes.modalBodyContainer}>
             {/* Modal's title */}
             <h1 className={classes.header}>
-              {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.header')}
+              {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.header")}
             </h1>
 
             {/* 'Steps' section */}
             <ol className={classes.stepsContainer}>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepOne')}</li>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepTwo')}</li>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepThree')}</li>
-              <li>{t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepFour')}</li>
+              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepOne")}</li>
+              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepTwo")}</li>
+              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepThree")}</li>
+              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepFour")}</li>
             </ol>
 
             <hr className={classes.sectionSeparator} />
@@ -201,7 +201,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
             <div className={classes.clientAppsContainer}>
               <div className={classes.clientAppSelectorContainer}>
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.title')}
+                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.title")}
                 </p>
 
                 <Select
@@ -209,16 +209,16 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   displayEmpty
                   IconComponent={ExpandMoreRoundedIcon}
                   value={
-                    selectedClientApp.id === ''
-                      ? ''
+                    selectedClientApp.id === ""
+                      ? ""
                       : selectedClientApp.name
                   }
                 >
                   <MenuItem disabled value=''>
                     {
                       allUserApps.length > 0
-                        ? t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.moreThanOneApp')
-                        : t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.noApps')
+                        ? t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.moreThanOneApp")
+                        : t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.noApps")
                     }
                   </MenuItem>
 
@@ -232,7 +232,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                         >
                           {userApp.name}
                         </MenuItem>
-                      )
+                      );
                     })
                   }
                 </Select>
@@ -240,7 +240,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
 
               <div className={classes.clientAppNotificationContainer}>
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.subtitle')}
+                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.subtitle")}
                 </p>
 
                 {
@@ -251,7 +251,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
 
                         <p className={classes.infoBoxText}>
                           {t(
-                            'dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationText',
+                            "dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationText",
                             { clientName },
                           )}
                         </p>
@@ -262,7 +262,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                         <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
 
                         <p className={classes.warningBoxText}>
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText')}
+                          {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText")}
                         </p>
                       </div>
                     )
@@ -276,22 +276,22 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
             <div className={classes.apiProductsSubsContainer}>
               <div className={classes.titleAndSubtitleContainer}>
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.title')}
+                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.title")}
                 </p>
 
                 <p>
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.subtitle')}
+                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.subtitle")}
                 </p>
               </div>
 
               <div className={classes.apiProductsSubsTable}>
                 <div className={classes.tableHeader}>
                   <p>
-                    {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.title')}
+                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.title")}
                   </p>
 
                   <p>
-                    {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.subtitle')}
+                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.subtitle")}
                   </p>
                 </div>
 
@@ -331,7 +331,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                                 }
                               </div>
                             </div>
-                          )
+                          );
                         })
                       )
                       : (
@@ -353,12 +353,12 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   className={
                     (selectedClientApp.subscriptions.length === 0)
                       ? (
-                        selectedClientApp.id === ''
+                        selectedClientApp.id === ""
                           ? classes.disabledRequestAccessButton
                           : classes.enabledRequestAccessButton
                       )
                       : (
-                        selectedClientApp.id === ''
+                        selectedClientApp.id === ""
                           ? classes.disabledRevokeAccessButton
                           /* Previously ': classes.enabledRevokeAccessButton'.
                           Go back on this change once the 'revoke' action is possible. */
@@ -373,8 +373,8 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                 >
                   {
                     (selectedClientApp.subscriptions.length === 0)
-                      ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess'))
-                      : (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess'))
+                      ? (t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess"))
+                      : (t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess"))
                   }
                 </Button>
 
@@ -382,7 +382,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   className={classes.enabledOtherButtons}
                   href='/profile/organisation'
                 >
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation')}
+                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation")}
                 </Button>
 
                 <Button
@@ -394,10 +394,10 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   href={
                     isClientAppSelected
                       ? `/dashboard/apps/${selectedClientApp.id}`
-                      : '#'
+                      : "#"
                   }
                 >
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp')}
+                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp")}
                 </Button>
               </div>
 
@@ -406,7 +406,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   className={classes.enabledOtherButtons}
                   onClick={resetModalSelections}
                 >
-                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel')}
+                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel")}
                 </Button>
               </div>
             </div>
@@ -414,5 +414,5 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
         </div>
       </Fade>
     </Modal>
-  )
-}
+  );
+};

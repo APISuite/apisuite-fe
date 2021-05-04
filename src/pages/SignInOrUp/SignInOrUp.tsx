@@ -1,80 +1,80 @@
-import React from 'react'
-import { useHistory, useParams } from 'react-router'
-import { useConfig, useTranslation, Link } from '@apisuite/fe-base'
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
+import React from "react";
+import { useHistory, useParams } from "react-router";
+import { useConfig, useTranslation, Link } from "@apisuite/fe-base";
+import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 
-import { InvitationForm } from 'components/InvitationForm'
-import { SignInForm } from 'components/SignInForm'
-import { SignUpForm } from 'components/SignUpForm'
-import { linker } from 'util/linker'
+import { InvitationForm } from "components/InvitationForm";
+import { SignInForm } from "components/SignInForm";
+import { SignUpForm } from "components/SignUpForm";
+import { linker } from "util/linker";
 
-import useStyles from './styles'
-import { View } from './types'
-import { useSelector } from 'react-redux'
-import { signInOrUpSelector } from './selector'
+import useStyles from "./styles";
+import { View } from "./types";
+import { useSelector } from "react-redux";
+import { signInOrUpSelector } from "./selector";
 
 export const SignInOrUp: React.FC = () => {
-  const classes = useStyles()
-  const history = useHistory()
-  const [t] = useTranslation()
-  const { auth } = useSelector(signInOrUpSelector)
-  const { ownerInfo, portalName, sso, providerSignupURL } = useConfig()
+  const classes = useStyles();
+  const history = useHistory();
+  const [t] = useTranslation();
+  const { auth } = useSelector(signInOrUpSelector);
+  const { ownerInfo, portalName, sso, providerSignupURL } = useConfig();
 
-  const { view: viewParameter } = useParams<{ view: string }>()
+  const { view: viewParameter } = useParams<{ view: string }>();
 
   const checkView = (): View => {
-    if (viewParameter === 'signup') return 'signup'
-    if (viewParameter === 'invitation') return 'invitation'
-    return 'signin'
-  }
+    if (viewParameter === "signup") return "signup";
+    if (viewParameter === "invitation") return "invitation";
+    return "signin";
+  };
 
-  const [view, setView] = React.useState<View>(checkView())
+  const [view, setView] = React.useState<View>(checkView());
 
   const changeView = (viewToDisplay: View) => {
-    history.push(viewToDisplay)
+    history.push(viewToDisplay);
 
-    setView(viewToDisplay)
-  }
+    setView(viewToDisplay);
+  };
 
   const renderRegisterInvitationOption = () => {
     if (auth.authToken) {
-      return <option className={view === 'invitation' ? classes.selectedOption : classes.notSelectedOption} onClick={() => changeView('invitation')}>{t('login.invitationBtn')}</option>
+      return <option className={view === "invitation" ? classes.selectedOption : classes.notSelectedOption} onClick={() => changeView("invitation")}>{t("login.invitationBtn")}</option>;
     }
-    return <option className={view === 'invitation' ? classes.selectedOption : classes.notSelectedOption} onClick={() => changeView('invitation')}>{t('login.invitationSignInBtn')}</option>
-  }
+    return <option className={view === "invitation" ? classes.selectedOption : classes.notSelectedOption} onClick={() => changeView("invitation")}>{t("login.invitationSignInBtn")}</option>;
+  };
 
   const renderSignUpFooter = (signUpURL: string) => {
     return (
       <div className={classes.invitationFooter}>
-        {t('signInOrUpView.ssoFooterSignUp', { provider: sso[0] })} <Link href={linker(signUpURL)}>{t('signInOrUpView.ssoFooterSignUpLink')}</Link>
+        {t("signInOrUpView.ssoFooterSignUp", { provider: sso[0] })} <Link href={linker(signUpURL)}>{t("signInOrUpView.ssoFooterSignUpLink")}</Link>
       </div>
-    )
-  }
+    );
+  };
 
   const shouldRenderNotAvailableView = () => {
-    return false // (view === 'signin' || view === 'signup') && sso?.length
-  }
+    return false; // (view === 'signin' || view === 'signup') && sso?.length
+  };
 
   const renderNotAvailableView = () => {
     return (
       <div className={classes.notAvailableView}>
         <h1 className={classes.formSideTitle}>
-          {t('signInOrUpView.welcomeTitle')}
+          {t("signInOrUpView.welcomeTitle")}
         </h1>
         <p className={classes.formSideSubtitle}>
-          {t('signInOrUpView.notAvailableView')}
+          {t("signInOrUpView.notAvailableView")}
         </p>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <main className={classes.mainContainer}>
       <header className={classes.headerContainer}>
         <div
           className={classes.logoAndNameContainer}
-          onClick={() => history.push('/')}
+          onClick={() => history.push("/")}
         >
           {
             ownerInfo.logo
@@ -98,10 +98,10 @@ export const SignInOrUp: React.FC = () => {
 
         <div
           className={classes.closeButtonContainer}
-          onClick={() => history.push('/')}
+          onClick={() => history.push("/")}
         >
           <p>
-            {t('signInOrUpView.closeButtonLabel')}
+            {t("signInOrUpView.closeButtonLabel")}
           </p>
           <CloseRoundedIcon />
         </div>
@@ -113,50 +113,50 @@ export const SignInOrUp: React.FC = () => {
           {!shouldRenderNotAvailableView() &&
             <>
               <h1 className={classes.formSideTitle}>
-                {t('signInOrUpView.welcomeTitle')}
+                {t("signInOrUpView.welcomeTitle")}
               </h1>
               <p className={classes.formSideSubtitle}>
-                {t(view === 'invitation' ? 'signInOrUpView.welcomeSubtitleInvitation' : 'signInOrUpView.welcomeSubtitle', { org: auth.invitation?.organization || 'Unknown' })}
+                {t(view === "invitation" ? "signInOrUpView.welcomeSubtitleInvitation" : "signInOrUpView.welcomeSubtitle", { org: auth.invitation?.organization || "Unknown" })}
               </p>
 
               <div>
                 <div className={classes.selector}>
-                  {view === 'invitation' ? renderRegisterInvitationOption() : null}
+                  {view === "invitation" ? renderRegisterInvitationOption() : null}
                   {
-                    view !== 'invitation' &&
+                    view !== "invitation" &&
                     <>
                       <option
                         className={
-                          view === 'signin'
+                          view === "signin"
                             ? classes.selectedOption
                             : classes.notSelectedOption
                         }
-                        onClick={() => changeView('signin')}
+                        onClick={() => changeView("signin")}
                       >
-                        {t('signInOrUpView.options.signIn')}
+                        {t("signInOrUpView.options.signIn")}
                       </option>
 
                       <option
                         className={
-                          view === 'signup'
+                          view === "signup"
                             ? classes.selectedOption
                             : classes.notSelectedOption
                         }
-                        onClick={() => changeView('signup')}
+                        onClick={() => changeView("signup")}
                       >
-                        {t('signInOrUpView.options.signUp')}
+                        {t("signInOrUpView.options.signUp")}
                       </option>
                     </>
                   }
                 </div>
 
                 <div className={classes.form}>
-                  {view === 'signin' && <SignInForm />}
-                  {view === 'signup' && <SignUpForm />}
-                  {view === 'invitation' && <InvitationForm />}
+                  {view === "signin" && <SignInForm />}
+                  {view === "signup" && <SignUpForm />}
+                  {view === "invitation" && <InvitationForm />}
                 </div>
                 <div className={classes.formFooter}>
-                  {(view === 'invitation' && !auth.authToken) && renderSignUpFooter(providerSignupURL)}
+                  {(view === "invitation" && !auth.authToken) && renderSignUpFooter(providerSignupURL)}
                 </div>
               </div>
             </>}
@@ -165,5 +165,5 @@ export const SignInOrUp: React.FC = () => {
         <div className={classes.imageSideContentContainer} />
       </section>
     </main>
-  )
-}
+  );
+};

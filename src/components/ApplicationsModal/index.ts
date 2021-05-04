@@ -1,1 +1,1 @@
-export { ApplicationsModal } from './ApplicationsModal'
+export { ApplicationsModal } from "./ApplicationsModal";

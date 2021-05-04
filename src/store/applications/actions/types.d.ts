@@ -1,10 +1,10 @@
-import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from './createApp'
-import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from './deleteApp'
-import { GET_ALL_USER_APPS, GET_ALL_USER_APPS_ERROR, GET_ALL_USER_APPS_SUCCESS } from './getAllUserApps'
-import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_SUCCESS } from './getUserApp'
-import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from './requestApiAccess'
-import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from './updatedApp'
-import { AppData } from '../types'
+import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from "./createApp";
+import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from "./deleteApp";
+import { GET_ALL_USER_APPS, GET_ALL_USER_APPS_ERROR, GET_ALL_USER_APPS_SUCCESS } from "./getAllUserApps";
+import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_SUCCESS } from "./getUserApp";
+import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./requestApiAccess";
+import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./updatedApp";
+import { AppData } from "../types";
 
 export type ApplicationsActions = CreateAppAction |
 CreateAppActionError |

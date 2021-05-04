@@ -1,7 +1,6 @@
-import * as React from 'react'
+import React from "react";
 
 export interface LayoutProps {
   title?: string,
   children: React.ReactNode,
-  contractibleMenu?: boolean,
 }

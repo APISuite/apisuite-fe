@@ -1,4 +1,4 @@
-import { SvgIconProps } from 'components/SvgIcon/types'
+import { SvgIconProps } from "components/SvgIcon/types";
 
 export interface SlideConfig {
   /** key should be unique to leverage render optimization */
@@ -17,5 +17,5 @@ export interface ListConfig {
   key: string,
   title: string,
   desc: string,
-  icon: SvgIconProps['name'],
+  icon: SvgIconProps["name"],
 }

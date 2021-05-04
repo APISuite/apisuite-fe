@@ -1,47 +1,47 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation, Avatar, Button } from '@apisuite/fe-base'
-import HeightRoundedIcon from '@material-ui/icons/HeightRounded'
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
-import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation, Avatar, Button } from "@apisuite/fe-base";
+import HeightRoundedIcon from "@material-ui/icons/HeightRounded";
+import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
+import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
 
-import { AppData, ModalDetails } from 'store/applications/types'
-import { getAllUserApps } from 'store/applications/actions/getAllUserApps'
-import { getSections } from 'util/extensions'
-import { ApplicationsModal } from 'components/ApplicationsModal'
-import Link from 'components/Link'
+import { AppData, ModalDetails } from "store/applications/types";
+import { getAllUserApps } from "store/applications/actions/getAllUserApps";
+import { getSections } from "util/extensions";
+import { ApplicationsModal } from "components/ApplicationsModal";
+import Link from "components/Link";
 
-import adrift from 'assets/adrift.svg'
-import authFundamentals from 'assets/authFundamentals.svg'
-import launchApp from 'assets/launchApp.svg'
+import adrift from "assets/adrift.svg";
+import authFundamentals from "assets/authFundamentals.svg";
+import launchApp from "assets/launchApp.svg";
 
-import { applicationsSelector } from './selector'
-import useStyles from './styles'
+import { applicationsSelector } from "./selector";
+import useStyles from "./styles";
 
 export const Applications: React.FC = () => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const { t } = useTranslation()
-  const { allUserApps, currentOrganisation, user } = useSelector(applicationsSelector)
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { allUserApps, currentOrganisation, user } = useSelector(applicationsSelector);
 
-  const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false)
+  const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false);
 
   /* With every change of our store's 'profile > profile > current_org' section
   (which goes from its initial state, to a filled or completely empty state),
   we do the following check, so as to know what view needs to be shown. */
   useEffect(() => {
-    if (Object.keys(currentOrganisation).length !== 0 && currentOrganisation.id !== '') {
-      setHasCurrentOrgDetails(true)
+    if (Object.keys(currentOrganisation).length !== 0 && currentOrganisation.id !== "") {
+      setHasCurrentOrgDetails(true);
     }
-  }, [currentOrganisation])
+  }, [currentOrganisation]);
 
   /* Modal stuff */
   const [modalDetails, setModalDetails] = useState<ModalDetails>({
     userID: 0,
     userAppID: 0,
-  })
-  const [modalMode, setModalMode] = useState('')
-  const [isModalOpen, setModalOpen] = useState(false)
+  });
+  const [modalMode, setModalMode] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const toggleModal = useCallback((
     modalMode: string,
@@ -51,32 +51,32 @@ export const Applications: React.FC = () => {
     const newModalDetails = {
       userID: userID,
       userAppID: userAppID,
-    }
+    };
 
-    setModalDetails(newModalDetails)
-    setModalMode(modalMode)
-    setModalOpen(!isModalOpen)
-  }, [isModalOpen])
+    setModalDetails(newModalDetails);
+    setModalMode(modalMode);
+    setModalOpen(!isModalOpen);
+  }, [isModalOpen]);
 
-  let allUserAppNames: string[] = []
+  let allUserAppNames: string[] = [];
 
   /* Generates an 'app card' for every app a user has. */
   const appCardGenerator = (allUserAppsArray: AppData[]) => {
     if (allUserAppsArray.length === 0) {
       return (
         <p className={classes.loadingClientApplicationCards}>
-          {t('dashboardTab.applicationsSubTab.listOfAppsSection.loadingApps')}
+          {t("dashboardTab.applicationsSubTab.listOfAppsSection.loadingApps")}
         </p>
-      )
+      );
     }
 
     const allUserAppCardsArray = allUserAppsArray.map((userApp, index) => {
-      const appNameInitialsArray = userApp.name.split(' ')
+      const appNameInitialsArray = userApp.name.split(" ");
       const appNameInitials = appNameInitialsArray.length >= 2
         ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
-        : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`
+        : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`;
 
-      allUserAppNames = [...allUserAppNames, userApp.name]
+      allUserAppNames = [...allUserAppNames, userApp.name];
 
       return (
         <div
@@ -84,20 +84,20 @@ export const Applications: React.FC = () => {
           key={`appCard${index}`}
           onClick={() => {
             if (user) {
-              toggleModal('edit', user.id, userApp.id)
+              toggleModal("edit", user.id, userApp.id);
             }
           }}
         >
           <div className={classes.clientApplicationCardTopSection}>
             <HeightRoundedIcon className={
-              userApp.logo !== ''
+              userApp.logo !== ""
                 ? classes.clientApplicationCardWithImageIcon
                 : classes.clientApplicationCardWithAvatarIcon
             }
             />
 
             {
-              userApp.logo !== ''
+              userApp.logo !== ""
                 ? (
                   <img
                     className={classes.clientApplicationCardImage}
@@ -126,7 +126,7 @@ export const Applications: React.FC = () => {
                   : (
                     userApp.description
                       ? userApp.description
-                      : t('dashboardTab.applicationsSubTab.listOfAppsSection.noAppDescription')
+                      : t("dashboardTab.applicationsSubTab.listOfAppsSection.noAppDescription")
                   )
               }
             </p>
@@ -146,18 +146,18 @@ export const Applications: React.FC = () => {
               <p className={classes.clientApplicationCardStatusText}>
                 {
                   userApp.subscriptions.length === 0
-                    ? t('dashboardTab.applicationsSubTab.listOfAppsSection.draftAppStatus')
-                    : t('dashboardTab.applicationsSubTab.listOfAppsSection.subscribedAppStatus')
+                    ? t("dashboardTab.applicationsSubTab.listOfAppsSection.draftAppStatus")
+                    : t("dashboardTab.applicationsSubTab.listOfAppsSection.subscribedAppStatus")
                 }
               </p>
             </div>
           </div>
         </div>
-      )
-    })
+      );
+    });
 
-    return allUserAppCardsArray
-  }
+    return allUserAppCardsArray;
+  };
 
   /* The following useEffect comes in handy when users want to quickly review & edit an app
   from some other place in our project (say, from the 'API Product' subscription's modal). */
@@ -167,19 +167,19 @@ export const Applications: React.FC = () => {
     - '.split('/')[3]' will amount to 'X', our app's ID.
     - 'parseInt()' will convert the 'X' string into a number.
     */
-    const appIDInURL = parseInt(window.location.pathname.split('/')[3]) || undefined
+    const appIDInURL = parseInt(window.location.pathname.split("/")[3]) || undefined;
 
-    if (appIDInURL !== undefined && user) toggleModal('edit', user.id, appIDInURL)
-  }, [toggleModal, user])
+    if (appIDInURL !== undefined && user) toggleModal("edit", user.id, appIDInURL);
+  }, [toggleModal, user]);
 
   /* Triggers the retrieval and storage (on the app's Store, under 'applications > userApps')
   of all app-related information we presently have on a particular user the first time, and
   following any changes to 'applications > userApps' (i.e., 'allUserApps'). */
   useEffect(() => {
     if (user) {
-      dispatch(getAllUserApps({ userId: user.id }))
+      dispatch(getAllUserApps({ userId: user.id }));
     }
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
   return (
     <main className={classes.pageContentsContainer}>
@@ -197,7 +197,7 @@ export const Applications: React.FC = () => {
                   className={classes.firstUseButton}
                   href='/profile/organisation'
                 >
-                  {t('dashboardTab.applicationsSubTab.noOrganisationsButtonLabel')}
+                  {t("dashboardTab.applicationsSubTab.noOrganisationsButtonLabel")}
                 </Button>
               </div>
 
@@ -205,14 +205,14 @@ export const Applications: React.FC = () => {
                 className={classes.firstUseLink}
                 to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications'
               >
-                {t('dashboardTab.applicationsSubTab.documentationLink')}
+                {t("dashboardTab.applicationsSubTab.documentationLink")}
               </Link>
 
               <div className={classes.warningBox}>
                 <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
 
                 <p className={classes.warningBoxText}>
-                  {t('dashboardTab.applicationsSubTab.noOrganisationWarning')}
+                  {t("dashboardTab.applicationsSubTab.noOrganisationWarning")}
                 </p>
               </div>
             </section>
@@ -229,9 +229,9 @@ export const Applications: React.FC = () => {
                   <div className={classes.firstUseButtonContainer}>
                     <Button
                       className={classes.firstUseButton}
-                      onClick={() => toggleModal('new', 0, 0)}
+                      onClick={() => toggleModal("new", 0, 0)}
                     >
-                      {t('dashboardTab.applicationsSubTab.noApplicationsButtonLabel')}
+                      {t("dashboardTab.applicationsSubTab.noApplicationsButtonLabel")}
                     </Button>
                   </div>
 
@@ -239,7 +239,7 @@ export const Applications: React.FC = () => {
                     className={classes.firstUseLink}
                     to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications'
                   >
-                    {t('dashboardTab.applicationsSubTab.documentationLink')}
+                    {t("dashboardTab.applicationsSubTab.documentationLink")}
                   </Link>
 
                   <hr className={classes.sectionSeparator} />
@@ -247,7 +247,7 @@ export const Applications: React.FC = () => {
                   {/* Subscribed Marketplace applications container */}
                   <div className={classes.hasNoUserAppsButHasMarketplaceAppSubsContainer}>
                     {
-                      getSections('SUBBED_MARKETPLACE_APPS')
+                      getSections("SUBBED_MARKETPLACE_APPS")
                     }
                   </div>
                 </section>
@@ -257,24 +257,24 @@ export const Applications: React.FC = () => {
                 <>
                   <section className={classes.clientApplicationsContentContainer}>
                     <h1 className={classes.clientApplicationsTitle}>
-                      {t('dashboardTab.applicationsSubTab.listOfAppsSection.title')}
+                      {t("dashboardTab.applicationsSubTab.listOfAppsSection.title")}
                     </h1>
 
                     <p className={classes.clientApplicationsSubtitle}>
-                      {t('dashboardTab.applicationsSubTab.listOfAppsSection.subtitle')}
+                      {t("dashboardTab.applicationsSubTab.listOfAppsSection.subtitle")}
                     </p>
 
                     {/* Client applications container */}
                     <div>
                       <p className={classes.clientApplicationsContainerTitle}>
-                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.clientApplicationsTitle')}
+                        {t("dashboardTab.applicationsSubTab.listOfAppsSection.clientApplicationsTitle")}
                       </p>
 
                       <Button
                         className={classes.registerNewClientApplicationCardButton}
-                        onClick={() => toggleModal('new', 0, 0)}
+                        onClick={() => toggleModal("new", 0, 0)}
                       >
-                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel')}
+                        {t("dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel")}
                       </Button>
 
                       <div className={classes.clientApplicationCardsContainer}>
@@ -285,14 +285,14 @@ export const Applications: React.FC = () => {
                     {/* Subscribed Marketplace applications container */}
                     <div>
                       {
-                        getSections('SUBBED_MARKETPLACE_APPS')
+                        getSections("SUBBED_MARKETPLACE_APPS")
                       }
                     </div>
                   </section>
 
                   <section className={classes.knowledgeBaseContentContainer}>
                     <h1 className={classes.knowledgeBaseTitle}>
-                      {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.title')}
+                      {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.title")}
                     </h1>
 
                     <div className={classes.knowledgeBaseCardsContainer}>
@@ -305,11 +305,11 @@ export const Applications: React.FC = () => {
                         <img className={classes.knowledgeBaseCardImage} src={launchApp} />
 
                         <p className={classes.knowledgeBaseCardTitle}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle')}
+                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle")}
                         </p>
 
                         <p className={classes.knowledgeBaseCardDescription}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle')}
+                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle")}
                         </p>
                       </Link>
 
@@ -322,11 +322,11 @@ export const Applications: React.FC = () => {
                         <img className={classes.knowledgeBaseCardImage} src={authFundamentals} />
 
                         <p className={classes.knowledgeBaseCardTitle}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle')}
+                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle")}
                         </p>
 
                         <p className={classes.knowledgeBaseCardDescription}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle')}
+                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle")}
                         </p>
                       </Link>
                     </div>
@@ -343,9 +343,9 @@ export const Applications: React.FC = () => {
           isModalOpen={isModalOpen}
           modalDetails={modalDetails}
           modalMode={modalMode}
-          toggleModal={() => toggleModal('', 0, 0)}
+          toggleModal={() => toggleModal("", 0, 0)}
         />
       }
     </main>
-  )
-}
+  );
+};

@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react'
-import qs from 'qs'
-import { useSelector, useDispatch } from 'react-redux'
-import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
-import { TextField, useConfig, useTranslation } from '@apisuite/fe-base'
+import React, { useEffect } from "react";
+import qs from "qs";
+import { useSelector, useDispatch } from "react-redux";
+import VpnKeyRoundedIcon from "@material-ui/icons/VpnKeyRounded";
+import { TextField, useConfig, useTranslation } from "@apisuite/fe-base";
 import {
   acceptInvitationWithSignIn,
   invitationSignIn,
   acceptInvitation,
   rejectInvitation,
   validateInvitationToken,
-} from 'store/auth/actions/invitation'
-import { Invitation } from 'store/auth/types'
-import FormCard from 'components/FormCard'
-import { LOCAL_STORAGE_KEYS } from 'constants/global'
-import { LoadingView } from './LoadingView'
-import useStyles from './styles'
-import { invitationFormSelector } from './selector'
+} from "store/auth/actions/invitation";
+import { Invitation } from "store/auth/types";
+import FormCard from "components/FormCard";
+import { LOCAL_STORAGE_KEYS } from "constants/global";
+import { LoadingView } from "./LoadingView";
+import useStyles from "./styles";
+import { invitationFormSelector } from "./selector";
 
 const InvitationConfirmationForm: React.FC<{
   invitation: Invitation,
@@ -23,20 +23,20 @@ const InvitationConfirmationForm: React.FC<{
   provider: string,
   isLogged: boolean,
 }> = ({ invitation, token, provider, isLogged }) => {
-  const classes = useStyles()
-  const [t] = useTranslation()
-  const dispatch = useDispatch()
+  const classes = useStyles();
+  const [t] = useTranslation();
+  const dispatch = useDispatch();
 
   return (
     <div className={classes.registerContainer}>
       <FormCard
         buttonIcon={isLogged ? null : <VpnKeyRoundedIcon className={classes.ssoSignIcon} />}
-        buttonLabel={isLogged ? t('invitationForm.accept') : t('invitationForm.signin', { provider })}
+        buttonLabel={isLogged ? t("invitationForm.accept") : t("invitationForm.signin", { provider })}
         handleSubmit={() => dispatch(isLogged ? acceptInvitation({ token }) : invitationSignIn({ token, provider }))}
         showReject
-        rejectLabel={t('invitationForm.reject')}
+        rejectLabel={t("invitationForm.reject")}
         customRejectButtonStyles={classes.rejectButton}
-        handleReject={() => rejectInvitation({ token: token || '' })}
+        handleReject={() => rejectInvitation({ token: token || "" })}
       >
         <div className={classes.fieldContainer}>
           <TextField
@@ -51,7 +51,7 @@ const InvitationConfirmationForm: React.FC<{
             disabled
             InputProps={{
               classes: { input: classes.textField },
-              margin: 'dense',
+              margin: "dense",
             }}
           />
         </div>
@@ -68,40 +68,40 @@ const InvitationConfirmationForm: React.FC<{
             disabled
             InputProps={{
               classes: { input: classes.textField },
-              margin: 'dense',
+              margin: "dense",
             }}
           />
         </div>
       </FormCard>
     </div>
-  )
-}
+  );
+};
 
 export const InvitationForm = () => {
-  const dispatch = useDispatch()
-  const { invitation, invitationError, isLogged } = useSelector(invitationFormSelector)
-  const { sso } = useConfig()
+  const dispatch = useDispatch();
+  const { invitation, invitationError, isLogged } = useSelector(invitationFormSelector);
+  const { sso } = useConfig();
   // get token from url
-  const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
-  const code = qs.parse(window.location.search.slice(1)).code || undefined
+  const invitationToken = qs.parse(window.location.search.slice(1)).token as string || undefined;
+  const code = qs.parse(window.location.search.slice(1)).code as string || undefined;
 
-  const stateToken = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE)
+  const stateToken = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE);
 
   useEffect(() => {
     if (stateToken && code) {
       dispatch(acceptInvitationWithSignIn({
         token: stateToken,
-        provider: (sso?.length && sso[0]) || 'keycloak',
+        provider: (sso?.length && sso[0]) || "keycloak",
         code,
-      }))
+      }));
     }
-  }, [dispatch, stateToken, code, sso])
+  }, [dispatch, stateToken, code, sso]);
 
   useEffect(() => {
     if (invitationToken && !invitation.organization && !invitation.email && !invitationError) {
-      dispatch(validateInvitationToken({ token: invitationToken }))
+      dispatch(validateInvitationToken({ token: invitationToken }));
     }
-  }, [dispatch, invitation.email, invitation.organization, invitationError, invitationToken])
+  }, [dispatch, invitation.email, invitation.organization, invitationError, invitationToken]);
 
   return (
     <>
@@ -123,7 +123,7 @@ export const InvitationForm = () => {
               isLogged={isLogged || false}
               invitation={invitation}
               token={invitationToken}
-              provider={(sso?.length && sso[0]) || ''}
+              provider={(sso?.length && sso[0]) || ""}
             />
           }
         </>
@@ -137,5 +137,5 @@ export const InvitationForm = () => {
         />
       }
     </>
-  )
-}
+  );
+};

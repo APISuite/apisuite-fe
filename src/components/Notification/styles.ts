@@ -1,12 +1,12 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   content: {
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 20,
   },
 
@@ -16,16 +16,16 @@ export default makeStyles((theme) => ({
   },
 
   icon: {
-    alignItems: 'center',
-    display: 'flex',
+    alignItems: "center",
+    display: "flex",
     fontSize: 24,
     marginRight: 10,
   },
 
   snackbar: {
-    display: 'flex',
+    display: "flex",
     margin: 8,
-    position: 'relative',
+    position: "relative",
   },
 
   success: {
@@ -36,4 +36,4 @@ export default makeStyles((theme) => ({
   text: {
     margin: 0,
   },
-}))
+}));

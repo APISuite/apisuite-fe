@@ -2,22 +2,22 @@
  * Webpack DEVELOPMENT configuration file
  */
 
-const path = require('path')
-const webpack = require('webpack')
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
   ],
 
   devServer: {
-    contentBase: path.resolve(__dirname, 'src'),
-    publicPath: '/',
+    contentBase: path.resolve(__dirname, "src"),
+    publicPath: "/",
     historyApiFallback: true,
     port: 9001,
-    host: '0.0.0.0',
+    host: "localhost.develop.apisuite.io",
     noInfo: false,
     inline: true,
     hot: true,
@@ -26,9 +26,9 @@ module.exports = {
       children: false,
       modules: false,
       colors: true,
-      excludeAssets: (assetName) => assetName.endsWith('.map'),
+      excludeAssets: (assetName) => assetName.endsWith(".map"),
     },
   },
 
-  devtool: 'cheap-module-source-map',
-}
+  devtool: "cheap-module-source-map",
+};

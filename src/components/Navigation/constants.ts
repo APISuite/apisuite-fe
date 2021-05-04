@@ -1,5 +1,5 @@
 
 export enum NavigationLeftActionTypes {
-  goBack = 'goBack',
-  openCard = 'openCard',
+  goBack = "goBack",
+  openCard = "openCard",
 }

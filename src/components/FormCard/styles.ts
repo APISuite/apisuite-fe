@@ -1,57 +1,57 @@
 
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 const useStyles = makeStyles((theme) => ({
   backButton: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.label}`,
     color: `${theme.palette.action.active} !important`,
-    fontSize: '16px',
+    fontSize: "16px",
     fontWeight: 500,
-    padding: '7.5px 45px',
-    textTransform: 'none',
-    width: '100%',
+    padding: "7.5px 45px",
+    textTransform: "none",
+    width: "100%",
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.background.default,
     },
   },
 
   backButtonContainer: {
-    margin: '20px 0px',
+    margin: "20px 0px",
   },
 
   disabledNextButton: {
     backgroundColor: `${theme.palette.label} !important`,
     color: `${theme.palette.primary.contrastText} !important`,
-    fontSize: '16px',
+    fontSize: "16px",
     fontWeight: 500,
-    padding: '7.5px 45px',
-    pointerEvents: 'none',
-    textTransform: 'none',
-    width: '100%',
+    padding: "7.5px 45px",
+    pointerEvents: "none",
+    textTransform: "none",
+    width: "100%",
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.label,
     },
   },
   loading: {
-    position: 'relative',
+    position: "relative",
     top: 4,
-    color: 'white',
+    color: "white",
     opacity: 0.5,
   },
 
   enabledNextButton: {
     backgroundColor: theme.palette.primary.main,
     color: `${theme.palette.primary.contrastText} !important`,
-    fontSize: '16px',
+    fontSize: "16px",
     fontWeight: 500,
-    padding: '7.5px 45px',
-    textTransform: 'none',
-    width: '100%',
+    padding: "7.5px 45px",
+    textTransform: "none",
+    width: "100%",
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.secondary,
     },
   },
@@ -60,32 +60,32 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.error.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.background.default,
-    minHeight: '50px',
-    padding: '12px 25px',
+    minHeight: "50px",
+    padding: "12px 25px",
   },
 
   errorPlaceholder: {
-    marginTop: '30px',
-    minHeight: '50px',
+    marginTop: "30px",
+    minHeight: "50px",
   },
 
   formCard: {
-    display: 'block',
+    display: "block",
   },
 
   formTitle: {
     color: theme.palette.primary.contrastText,
-    fontSize: '26px',
+    fontSize: "26px",
     fontWeight: 300,
   },
 
   rejectBtnContainer: {
-    margin: '20px 0px',
+    margin: "20px 0px",
   },
   rejectButton: {
-    backgroundColor: `${theme.palette.grey['50']} !important`,
-    color: `${theme.palette.grey['700']} !important`,
+    backgroundColor: `${theme.palette.grey["50"]} !important`,
+    color: `${theme.palette.grey["700"]} !important`,
   },
-}))
+}));
 
-export default useStyles
+export default useStyles;

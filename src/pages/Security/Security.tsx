@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation, Button, TextField, InputAdornment, IconButton } from '@apisuite/fe-base'
-import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
-import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded'
-import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded'
-import { updatePasswordRequest } from 'store/security/actions/updatePassword'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation, Button, TextField, InputAdornment, IconButton } from "@apisuite/fe-base";
+import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
+import VisibilityOffRoundedIcon from "@material-ui/icons/VisibilityOffRounded";
+import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
+import { updatePasswordRequest } from "store/security/actions/updatePassword";
 
-import { isValidPass } from 'util/forms'
+import { isValidPass } from "util/forms";
 
-import { securitySelector } from './selector'
-import useStyles from './styles'
-import { getProfile } from 'store/profile/actions/getProfile'
+import { securitySelector } from "./selector";
+import useStyles from "./styles";
+import { getProfile } from "store/profile/actions/getProfile";
 
 export const Security: React.FC = () => {
-  const classes = useStyles()
-  const [t] = useTranslation()
-  const dispatch = useDispatch()
-  const { profile } = useSelector(securitySelector)
-  const [ssoIsActive, setSSOIsActive] = React.useState(false)
+  const classes = useStyles();
+  const [t] = useTranslation();
+  const dispatch = useDispatch();
+  const { profile } = useSelector(securitySelector);
+  const [ssoIsActive, setSSOIsActive] = React.useState(false);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
-    dispatch(getProfile({}))
-  }, [dispatch])
+    dispatch(getProfile({}));
+  }, [dispatch]);
 
   useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
@@ -32,58 +32,58 @@ export const Security: React.FC = () => {
     If 'oidcProvider' amounts to 'null', it means that the user signed in regularly,
     and if not, it means that the user signed in by way of SSO. */
     if (profile.user.oidcProvider) {
-      setSSOIsActive(true)
+      setSSOIsActive(true);
     }
-  }, [profile])
+  }, [profile]);
 
-  const [providedPasswords, setProvidedPasswords] = useState(['', ''])
+  const [providedPasswords, setProvidedPasswords] = useState(["", ""]);
 
-  const [showPassword, setShowPassword] = useState([false, false])
+  const [showPassword, setShowPassword] = useState([false, false]);
 
   const handleShowPassword = (event: any, passwordFieldNumber: number) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const newShowPasswordsArray = [...showPassword]
-    newShowPasswordsArray[passwordFieldNumber] = !newShowPasswordsArray[passwordFieldNumber]
+    const newShowPasswordsArray = [...showPassword];
+    newShowPasswordsArray[passwordFieldNumber] = !newShowPasswordsArray[passwordFieldNumber];
 
-    setShowPassword(newShowPasswordsArray)
-  }
+    setShowPassword(newShowPasswordsArray);
+  };
 
   const handlePasswordChanges = (
     changeEvent: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     indexOfChangedPasswordField: number,
   ) => {
-    changeEvent.preventDefault()
+    changeEvent.preventDefault();
 
-    const newPasswords = [...providedPasswords]
-    newPasswords[indexOfChangedPasswordField] = changeEvent.target.value
+    const newPasswords = [...providedPasswords];
+    newPasswords[indexOfChangedPasswordField] = changeEvent.target.value;
 
-    setProvidedPasswords(newPasswords)
-  }
+    setProvidedPasswords(newPasswords);
+  };
 
   const handlePasswordChangeRequest = () => {
-    dispatch(updatePasswordRequest({ oldPassword: providedPasswords[0], newPassword: providedPasswords[1] }))
+    dispatch(updatePasswordRequest({ oldPassword: providedPasswords[0], newPassword: providedPasswords[1] }));
 
-    setProvidedPasswords(['', ''])
-  }
+    setProvidedPasswords(["", ""]);
+  };
 
   return (
     <main className='page-container'>
       <section className={classes.updatePasswordContainer}>
         <p className={classes.securityTitle}>
-          {t('profileTab.securitySubTab.securityTitle')}
+          {t("profileTab.securitySubTab.securityTitle")}
         </p>
 
         <p className={classes.securitySubtitle}>
           {
             !ssoIsActive
-              ? t('profileTab.securitySubTab.securitySubtitleWithoutActiveSSO')
-              : t('profileTab.securitySubTab.securitySubtitleWithActiveSSO')
+              ? t("profileTab.securitySubTab.securitySubtitleWithoutActiveSSO")
+              : t("profileTab.securitySubTab.securitySubtitleWithActiveSSO")
           }
         </p>
 
         <p className={classes.updatePasswordTitle}>
-          {t('profileTab.securitySubTab.updatePasswordTitle')}
+          {t("profileTab.securitySubTab.updatePasswordTitle")}
         </p>
 
         {
@@ -94,7 +94,7 @@ export const Security: React.FC = () => {
 
                 <div>
                   <p className={classes.infoBoxText}>
-                    {t('profileTab.securitySubTab.activeSSOBoxText')}
+                    {t("profileTab.securitySubTab.activeSSOBoxText")}
                   </p>
                 </div>
               </div>
@@ -119,11 +119,11 @@ export const Security: React.FC = () => {
                       </InputAdornment>
                     ),
                   }}
-                  label={t('profileTab.securitySubTab.fieldLabels.currentPasswordFieldLabel')}
+                  label={t("profileTab.securitySubTab.fieldLabels.currentPasswordFieldLabel")}
                   margin='dense'
                   name='currentPassword'
                   onChange={(changeEvent) => handlePasswordChanges(changeEvent, 0)}
-                  type={showPassword[0] ? 'text' : 'password'}
+                  type={showPassword[0] ? "text" : "password"}
                   value={providedPasswords[0]}
                   variant='outlined'
                 />
@@ -144,14 +144,14 @@ export const Security: React.FC = () => {
                   fullWidth
                   helperText={
                     providedPasswords[1].length === 0
-                      ? ''
+                      ? ""
                       : (
                         providedPasswords[0] === providedPasswords[1]
-                          ? t('profileTab.securitySubTab.errorMessages.samePasswordErrorMessage')
+                          ? t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage")
                           : (
                             isValidPass(providedPasswords[1])
-                              ? ''
-                              : t('profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage')
+                              ? ""
+                              : t("profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage")
                           )
                       )
                   }
@@ -170,11 +170,11 @@ export const Security: React.FC = () => {
                       </InputAdornment>
                     ),
                   }}
-                  label={t('profileTab.securitySubTab.fieldLabels.newPasswordFieldLabel')}
+                  label={t("profileTab.securitySubTab.fieldLabels.newPasswordFieldLabel")}
                   margin='dense'
                   name='newPassword'
                   onChange={(changeEvent) => handlePasswordChanges(changeEvent, 1)}
-                  type={showPassword[1] ? 'text' : 'password'}
+                  type={showPassword[1] ? "text" : "password"}
                   value={providedPasswords[1]}
                   variant='outlined'
                 />
@@ -190,7 +190,7 @@ export const Security: React.FC = () => {
                     }
                     onClick={handlePasswordChangeRequest}
                   >
-                    {t('profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel')}
+                    {t("profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel")}
                   </Button>
                 </div>
               </>
@@ -200,11 +200,11 @@ export const Security: React.FC = () => {
         <hr className={classes.sectionSeparator} />
 
         <p className={classes.userActivityTitle}>
-          {t('profileTab.securitySubTab.userActivityTitle')}
+          {t("profileTab.securitySubTab.userActivityTitle")}
         </p>
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default Security
+export default Security;

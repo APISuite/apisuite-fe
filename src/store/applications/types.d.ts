@@ -1,5 +1,5 @@
 
-import { User } from 'containers/Auth/types'
+import { User } from "containers/Auth/types";
 
 export interface Response {
   isError: boolean,

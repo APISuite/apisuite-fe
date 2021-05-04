@@ -1,1 +1,1 @@
-export { default } from './APICatalog'
+export { default } from "./APICatalog";

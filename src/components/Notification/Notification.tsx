@@ -1,10 +1,10 @@
-import * as React from 'react'
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined'
-import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined'
-import { Snackbar } from '@apisuite/fe-base'
-import { NotificationProps } from './types'
-import useStyles from './styles'
-import clsx from 'clsx'
+import React from "react";
+import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
+import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
+import { Snackbar } from "@apisuite/fe-base";
+import { NotificationProps } from "./types";
+import useStyles from "./styles";
+import clsx from "clsx";
 
 const Notification: React.FC<NotificationProps> = ({
   open,
@@ -14,22 +14,22 @@ const Notification: React.FC<NotificationProps> = ({
   timer,
   closeNotification,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const typeIcon = () => {
     switch (type) {
-      case 'success':
-        return <CheckCircleOutlineOutlinedIcon fontSize='inherit' />
-      case 'error':
-        return <CancelOutlinedIcon fontSize='inherit' />
+      case "success":
+        return <CheckCircleOutlineOutlinedIcon fontSize='inherit' />;
+      case "error":
+        return <CancelOutlinedIcon fontSize='inherit' />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const handleClose = () => {
-    closeNotification(notificationNumber)
-  }
+    closeNotification(notificationNumber);
+  };
 
   return (
     <Snackbar
@@ -41,8 +41,8 @@ const Notification: React.FC<NotificationProps> = ({
       <div
         className={clsx(
           classes.content,
-          type === 'success' && classes.success,
-          type === 'error' && classes.error)}
+          type === "success" && classes.success,
+          type === "error" && classes.error)}
       >
         <div className={classes.icon}>
           {typeIcon()}
@@ -50,14 +50,14 @@ const Notification: React.FC<NotificationProps> = ({
         <div
           className={clsx(
             classes.text,
-            type === 'success' && classes.success,
-            type === 'error' && classes.error)}
+            type === "success" && classes.success,
+            type === "error" && classes.error)}
         >
           {msg}
         </div>
       </div>
     </Snackbar>
-  )
-}
+  );
+};
 
-export default Notification
+export default Notification;

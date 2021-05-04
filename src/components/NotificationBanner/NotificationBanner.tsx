@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from "react";
 
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
-import { NotificationBannerProps } from './types'
+import { NotificationBannerProps } from "./types";
 
 const NotificationBanner: React.FC<NotificationBannerProps> = ({
   customNotificationBannerContents,
@@ -12,13 +12,13 @@ const NotificationBanner: React.FC<NotificationBannerProps> = ({
   notificationBannerTitle,
   showNotificationBanner,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  const [showing, setShowing] = React.useState(showNotificationBanner || false)
+  const [showing, setShowing] = React.useState(showNotificationBanner || false);
 
   const handleClose = () => {
-    setShowing(false)
-  }
+    setShowing(false);
+  };
 
   return (
     showing
@@ -47,7 +47,7 @@ const NotificationBanner: React.FC<NotificationBannerProps> = ({
         </section>
       )
       : null
-  )
-}
+  );
+};
 
-export default NotificationBanner
+export default NotificationBanner;

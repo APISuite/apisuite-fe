@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Button } from '@apisuite/fe-base'
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@apisuite/fe-base";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 
-import { notificationCardSelector } from './selector'
-import useStyles from './styles'
-import { NotificationCardProps } from './types'
-import { toggleNotificationCard } from 'store/notificationCards/actions/toggleNotificationCard'
+import { notificationCardSelector } from "./selector";
+import useStyles from "./styles";
+import { NotificationCardProps } from "./types";
+import { toggleNotificationCard } from "store/notificationCards/actions/toggleNotificationCard";
 
 export const NotificationCard: React.FC<NotificationCardProps> = ({
   notificationCardText,
@@ -16,16 +16,16 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
   notificationCardButtonLabel,
   notificationCardButtonLink,
 }) => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
+  const classes = useStyles();
+  const dispatch = useDispatch();
   // Temporary until notification cards become clearer
-  const notificationCards = useSelector(notificationCardSelector)
+  const notificationCards = useSelector(notificationCardSelector);
 
-  const [showing, setShowing] = React.useState(notificationCards.show)
+  const [showing, setShowing] = React.useState(notificationCards.show);
 
   useEffect(() => {
-    setShowing(notificationCards.show)
-  }, [notificationCards.show])
+    setShowing(notificationCards.show);
+  }, [notificationCards.show]);
 
   return (
     <section
@@ -41,7 +41,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
         </p>
 
         {
-          typeof notificationCardText === 'string'
+          typeof notificationCardText === "string"
             ? (
               <p className={classes.notificationCardText}>
                 {notificationCardText}
@@ -79,5 +79,5 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
         onClick={() => dispatch(toggleNotificationCard())}
       />
     </section>
-  )
-}
+  );
+};

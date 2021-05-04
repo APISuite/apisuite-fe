@@ -1,16 +1,16 @@
-import * as React from 'react'
+import React from "react";
 
-import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
+import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
-import { NoticeProps } from './types'
+import { NoticeProps } from "./types";
 
 const Notice: React.FC<NoticeProps> = ({
   noticeIcon,
   noticeText,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.noticeContentsContainer}>
@@ -22,7 +22,7 @@ const Notice: React.FC<NoticeProps> = ({
         {noticeText}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Notice
+export default Notice;

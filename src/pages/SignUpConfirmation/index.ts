@@ -1,1 +1,1 @@
-export { SignUpConfirmation } from './SignUpConfirmation'
+export { SignUpConfirmation } from "./SignUpConfirmation";

@@ -13,7 +13,7 @@ export type SlideContentsObject = {
   slideButton?: boolean,
   slideButtonLabel?: string,
   slideButtonLink?: string,
-  slideContentsPlacement?: 'side-by-side' | 'top-to-bottom',
+  slideContentsPlacement?: "side-by-side" | "top-to-bottom",
   slideForegroundImage?: string,
   slideText?: string,
 }

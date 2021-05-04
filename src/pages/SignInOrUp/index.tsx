@@ -1,1 +1,1 @@
-export { SignInOrUp } from './SignInOrUp'
+export { SignInOrUp } from "./SignInOrUp";

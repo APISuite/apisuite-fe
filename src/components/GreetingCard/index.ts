@@ -1,1 +1,1 @@
-export { default } from './GreetingCard'
+export { default } from "./GreetingCard";

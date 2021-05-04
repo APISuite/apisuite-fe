@@ -1,4 +1,4 @@
-import { DialogProps } from '@apisuite/fe-base'
+import { DialogProps } from "@apisuite/fe-base";
 
 export interface CustomizableDialogProps extends DialogProps {
   // Props passed by the 'calling' component to be added below
@@ -14,7 +14,7 @@ export interface CustomizableDialogProps extends DialogProps {
   },
   open: boolean,
   openDialogCallback?: (...args: any[]) => any,
-  optionalTitleIcon?: 'info' | 'warning',
+  optionalTitleIcon?: "info" | "warning",
   providedDialogActions?: {
     [key: string]: any,
   },

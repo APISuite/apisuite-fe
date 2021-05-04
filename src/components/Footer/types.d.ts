@@ -1,4 +1,4 @@
-import { AuthStore } from 'store/auth/types'
+import { AuthStore } from "store/auth/types";
 export interface FooterProps {
   auth: AuthStore,
 }

@@ -1,35 +1,35 @@
-import update from 'immutability-helper'
+import update from "immutability-helper";
 
-import { ApplicationsStore } from './types'
-import { ApplicationsActions } from './actions/types'
-import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from './actions/createApp'
-import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from './actions/deleteApp'
-import { GET_ALL_USER_APPS_SUCCESS } from './actions/getAllUserApps'
-import { GET_USER_APP_SUCCESS } from './actions/getUserApp'
-import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from './actions/requestApiAccess'
-import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from './actions/updatedApp'
+import { ApplicationsStore } from "./types";
+import { ApplicationsActions } from "./actions/types";
+import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from "./actions/createApp";
+import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from "./actions/deleteApp";
+import { GET_ALL_USER_APPS_SUCCESS } from "./actions/getAllUserApps";
+import { GET_USER_APP_SUCCESS } from "./actions/getUserApp";
+import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./actions/requestApiAccess";
+import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./actions/updatedApp";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
   currentApp: {
-    clientId: '',
-    clientSecret: '',
-    createdAt: '',
-    description: '',
+    clientId: "",
+    clientSecret: "",
+    createdAt: "",
+    description: "",
     id: 0,
     labels: [],
-    logo: '',
-    name: '',
+    logo: "",
+    name: "",
     orgId: 0,
-    privacyUrl: '',
-    redirectUrl: '',
-    shortDescription: '',
+    privacyUrl: "",
+    redirectUrl: "",
+    shortDescription: "",
     subscriptions: [],
-    supportUrl: '',
-    tosUrl: '',
-    updatedAt: '',
-    websiteUrl: '',
-    youtubeUrl: '',
+    supportUrl: "",
+    tosUrl: "",
+    updatedAt: "",
+    websiteUrl: "",
+    youtubeUrl: "",
   },
   createAppStatus: {
     isError: false,
@@ -48,7 +48,7 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
   },
   userApps: [],
-}
+};
 
 /** Reducer */
 export default function reducer (
@@ -62,7 +62,7 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: true },
         },
-      })
+      });
     }
 
     case CREATE_APP_SUCCESS: {
@@ -70,7 +70,7 @@ export default function reducer (
         createAppStatus: {
           isRequesting: { $set: false },
         },
-      })
+      });
     }
 
     case CREATE_APP_ERROR: {
@@ -79,7 +79,7 @@ export default function reducer (
           isError: { $set: true },
           isRequesting: { $set: false },
         },
-      })
+      });
     }
 
     case DELETE_APP: {
@@ -88,7 +88,7 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: true },
         },
-      })
+      });
     }
 
     case DELETE_APP_SUCCESS: {
@@ -96,7 +96,7 @@ export default function reducer (
         deleteAppStatus: {
           isRequesting: { $set: false },
         },
-      })
+      });
     }
 
     case DELETE_APP_ERROR: {
@@ -105,13 +105,13 @@ export default function reducer (
           isError: { $set: true },
           isRequesting: { $set: false },
         },
-      })
+      });
     }
 
     case GET_ALL_USER_APPS_SUCCESS: {
       return update(state, {
         userApps: { $set: action.userApps },
-      })
+      });
     }
 
     case GET_USER_APP_SUCCESS: {
@@ -136,7 +136,7 @@ export default function reducer (
           websiteUrl: { $set: action.appData.websiteUrl },
           youtubeUrl: { $set: action.appData.youtubeUrl },
         },
-      })
+      });
     }
 
     case REQUEST_API_ACCESS: {
@@ -145,7 +145,7 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: true },
         },
-      })
+      });
     }
 
     case REQUEST_API_ACCESS_SUCCESS: {
@@ -153,7 +153,7 @@ export default function reducer (
         requestingAPIAccessStatus: {
           isRequesting: { $set: false },
         },
-      })
+      });
     }
 
     case REQUEST_API_ACCESS_ERROR: {
@@ -162,7 +162,7 @@ export default function reducer (
           isError: { $set: true },
           isRequesting: { $set: false },
         },
-      })
+      });
     }
 
     case UPDATE_APP: {
@@ -171,7 +171,7 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: true },
         },
-      })
+      });
     }
 
     case UPDATE_APP_SUCCESS: {
@@ -193,7 +193,7 @@ export default function reducer (
           websiteUrl: { $set: action.appData.websiteUrl },
           youtubeUrl: { $set: action.appData.youtubeUrl },
         },
-      })
+      });
     }
 
     case UPDATE_APP_ERROR: {
@@ -202,10 +202,10 @@ export default function reducer (
           isError: { $set: true },
           isRequesting: { $set: false },
         },
-      })
+      });
     }
 
     default:
-      return state
+      return state;
   }
 }

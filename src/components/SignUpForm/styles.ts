@@ -1,13 +1,13 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 const useStyles = makeStyles((theme) => ({
   centerContent: {
-    alignItems: 'center',
-    color: 'red',
-    display: 'flex',
+    alignItems: "center",
+    color: "red",
+    display: "flex",
     fontWeight: 500,
-    height: '200px',
-    justifyContent: 'center',
+    height: "200px",
+    justifyContent: "center",
   },
 
   inputField: {
@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   inputFieldContainer: {
-    marginBottom: '25px',
-    marginTop: '25px',
+    marginBottom: "25px",
+    marginTop: "25px",
   },
 
   loading: {
@@ -26,28 +26,28 @@ const useStyles = makeStyles((theme) => ({
   },
 
   privacyPolicyDisclaimerContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '25px',
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "25px",
   },
 
   privacyPolicyDisclaimerLink: {
     color: `${theme.palette.action.active} !important`,
-    fontSize: '12px',
+    fontSize: "12px",
     fontWeight: 400,
   },
 
   privacyPolicyDisclaimerText: {
     color: theme.palette.text.primary,
-    fontSize: '12px',
+    fontSize: "12px",
     fontWeight: 300,
-    marginRight: '3.5px',
+    marginRight: "3.5px",
   },
 
   signUpContainer: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
   },
-}))
+}));
 
-export default useStyles
+export default useStyles;

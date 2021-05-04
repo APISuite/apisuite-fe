@@ -1,5 +1,5 @@
-import { RoleRequirement } from '@apisuite/extension-ui-types'
-import { AuthStore } from 'containers/Auth/types'
+import { RoleRequirement } from "@apisuite/extension-ui-types";
+import { AuthStore } from "containers/Auth/types";
 
 export interface RequireAuthProps {
   auth?: AuthStore,

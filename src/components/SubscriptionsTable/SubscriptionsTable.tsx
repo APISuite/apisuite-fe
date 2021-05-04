@@ -1,29 +1,29 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useTranslation } from '@apisuite/fe-base'
-import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded'
-import MenuOpenRoundedIcon from '@material-ui/icons/MenuOpenRounded'
-import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+import React from "react";
+import { useSelector } from "react-redux";
+import { useTranslation } from "@apisuite/fe-base";
+import ChevronRightRoundedIcon from "@material-ui/icons/ChevronRightRounded";
+import MenuOpenRoundedIcon from "@material-ui/icons/MenuOpenRounded";
+import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
 
-import { apisByNameSelector } from 'pages/Subscriptions/selectors'
-import { AppInfo } from 'store/subscriptions/types'
-import Link from 'components/Link'
+import { apisByNameSelector } from "pages/Subscriptions/selectors";
+import { AppInfo } from "store/subscriptions/types";
+import Link from "components/Link";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
 export const SubscriptionsTable: React.FC = () => {
-  const classes = useStyles()
-  const { t } = useTranslation()
-  const apisByName = useSelector(apisByNameSelector)
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const apisByName = useSelector(apisByNameSelector);
 
   const generateAppIcons = (appNamesArray: AppInfo[]) => {
-    const sortedAppNamesArray = appNamesArray.sort()
+    const sortedAppNamesArray = appNamesArray.sort();
 
     const appIconsArray = sortedAppNamesArray.map((appName, key) => {
-      const appSplitName = appName.appName.split(' ')
+      const appSplitName = appName.appName.split(" ");
       const appInitials = appSplitName.length >= 2
         ? `${appSplitName[0].charAt(0)}${appSplitName[1].charAt(0)}`
-        : appSplitName[0].slice(0, 2)
+        : appSplitName[0].slice(0, 2);
 
       return (
         <p
@@ -32,11 +32,11 @@ export const SubscriptionsTable: React.FC = () => {
         >
           {appInitials}
         </p>
-      )
-    })
+      );
+    });
 
-    return appIconsArray
-  }
+    return appIconsArray;
+  };
 
   const generateTableEntries = () => {
     const tableEntriesArray = apisByName.map((api, index) => {
@@ -67,7 +67,7 @@ export const SubscriptionsTable: React.FC = () => {
                 to={
                   api.versions.length
                     ? `/api-products/details/${api.versions[0].apiId}/spec/${api.versions[0].id}`
-                    : '/api-products'
+                    : "/api-products"
                 }
               >
                 <MenuOpenRoundedIcon />
@@ -100,27 +100,27 @@ export const SubscriptionsTable: React.FC = () => {
                     </div>
                   </div>
                 </Link>
-              )
+              );
             })
           }
         </div>
-      )
-    })
+      );
+    });
 
-    return tableEntriesArray
-  }
+    return tableEntriesArray;
+  };
 
   return (
     <div className={classes.tableContentsContainer}>
       <div className={classes.tableHeader}>
-        <p>{t('dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.title')}</p>
+        <p>{t("dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.title")}</p>
 
-        <p>{t('dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.subtitle')}</p>
+        <p>{t("dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.subtitle")}</p>
       </div>
 
       <div className={classes.tableBody}>
         {generateTableEntries()}
       </div>
     </div>
-  )
-}
+  );
+};

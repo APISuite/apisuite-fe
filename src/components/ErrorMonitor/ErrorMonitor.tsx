@@ -1,32 +1,32 @@
-import * as React from 'react'
+import React from "react";
 // import request from 'util/request'
 // import { API_URL } from 'constants/endpoints'
 
 const styles = {
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '1rem',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "1rem",
   } as React.CSSProperties,
   errorInfo: {
-    color: 'red',
+    color: "red",
   },
-}
+};
 
 class ErrorMonitor extends React.Component {
   public state = {
     hasError: false,
     loadModulesError: false,
-    error: '',
-    errorStack: '',
+    error: "",
+    errorStack: "",
   }
 
   public componentDidCatch (error: any, info: any) {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       // Display fallback UI
-      this.setState({ hasError: true, loadModulesError: error.message.startsWith('Loading'), error, errorStack: info.componentStack })
+      this.setState({ hasError: true, loadModulesError: error.message.startsWith("Loading"), error, errorStack: info.componentStack });
     } else {
       // Log the error to an error reporting service
       // we don't care if it was successful or not
@@ -45,27 +45,27 @@ class ErrorMonitor extends React.Component {
             {this.renderError()}
           </div>
         </div>
-      )
+      );
     }
 
-    return this.props.children
+    return this.props.children;
   }
 
   private handleMouseUp = () => {
-    location.reload()
+    location.reload();
   }
 
   private renderError () {
-    const { error, errorStack, loadModulesError } = this.state
+    const { error, errorStack, loadModulesError } = this.state;
 
-    if (process.env.NODE_ENV === 'development') {
-      const stack = errorStack.split('\n').map((line, indx) => <div key={indx}>{line}</div>)
+    if (process.env.NODE_ENV === "development") {
+      const stack = errorStack.split("\n").map((line, indx) => <div key={indx}>{line}</div>);
 
       return [
         <div key='error'>{error.toString()}</div>,
         ...stack,
         <button key='refresh' onMouseUp={this.handleMouseUp}>RELOAD</button>,
-      ]
+      ];
     }
 
     return (
@@ -74,8 +74,8 @@ class ErrorMonitor extends React.Component {
         {loadModulesError && <div key='message-network'>No Internet connection :(</div>}
         <button key='refresh' onMouseUp={this.handleMouseUp}>RELOAD</button>
       </>
-    )
+    );
   }
 }
 
-export default ErrorMonitor
+export default ErrorMonitor;

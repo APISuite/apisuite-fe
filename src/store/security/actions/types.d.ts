@@ -1,4 +1,4 @@
-import { UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD_REQUEST_ERROR, UPDATE_PASSWORD_REQUEST_SUCCESS } from './updatePassword'
+import { UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD_REQUEST_ERROR, UPDATE_PASSWORD_REQUEST_SUCCESS } from "./updatePassword";
 
 export type SecurityActions =
   UpdatePasswordRequestAction |

@@ -1,4 +1,4 @@
-import { TOGGLE_NOTIFICATION_CARD } from './toggleNotificationCard'
+import { TOGGLE_NOTIFICATION_CARD } from "./toggleNotificationCard";
 
 export type ToggleNotificationCardAction = {
   type: typeof TOGGLE_NOTIFICATION_CARD,

@@ -1,48 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { TextField, TextFieldProps, useTranslation } from '@apisuite/fe-base'
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { TextField, TextFieldProps, useTranslation } from "@apisuite/fe-base";
 
-import FormCard from 'components/FormCard'
+import FormCard from "components/FormCard";
 
-import useStyles from './styles'
-import { GenericSignUpFormProps } from './types'
-import { signUpFormSelector } from './selector'
+import useStyles from "./styles";
+import { GenericSignUpFormProps } from "./types";
+import { signUpFormSelector } from "./selector";
 
 export const OrganisationDetailsForm: React.FC<GenericSignUpFormProps> = ({ next, back, error }) => {
-  const classes = useStyles()
-  const [t] = useTranslation()
+  const classes = useStyles();
+  const [t] = useTranslation();
   // TODO: make a selector just for this component or authError changes that is passed by parent as well
   // might make this component re-render twice
-  const { isSignUpWorking } = useSelector(signUpFormSelector)
+  const { isSignUpWorking } = useSelector(signUpFormSelector);
 
   // Form changes logic
   const [state, setState] = useState({
-    name: '',
-    website: '',
-    error: '',
-  })
+    name: "",
+    website: "",
+    error: "",
+  });
 
   // sync organisation errors from parent
   useEffect(() => {
-    setState((s) => ({ ...s, error }))
-  }, [error])
+    setState((s) => ({ ...s, error }));
+  }, [error]);
 
-  const handleInputChanges: TextFieldProps['onChange'] = ({ target }) => {
+  const handleInputChanges: TextFieldProps["onChange"] = ({ target }) => {
     setState((s) => ({
       ...s,
       [target.name]: target.value,
-    }))
-  }
+    }));
+  };
 
   return (
     <div className={classes.signUpContainer}>
       <FormCard
-        backLabel={t('signUpForm.previousStepButtonLabel')}
+        backLabel={t("signUpForm.previousStepButtonLabel")}
         buttonDisabled={false}
-        buttonLabel={t('signUpForm.nextStepButtonLabel')}
+        buttonLabel={t("signUpForm.nextStepButtonLabel")}
         handleBackClick={(event) => {
-          event.preventDefault()
-          back()
+          event.preventDefault();
+          back();
         }}
         handleSubmit={() => next(state.name, state.website)}
         loading={isSignUpWorking}
@@ -55,7 +55,7 @@ export const OrganisationDetailsForm: React.FC<GenericSignUpFormProps> = ({ next
             margin='dense'
             type='text'
             name='name'
-            label={t('signUpForm.fieldLabels.orgName')}
+            label={t("signUpForm.fieldLabels.orgName")}
             value={state.name}
             error={!!state.error}
             helperText={state.error}
@@ -72,7 +72,7 @@ export const OrganisationDetailsForm: React.FC<GenericSignUpFormProps> = ({ next
             variant='outlined'
             margin='dense'
             type='text'
-            label={t('signUpForm.fieldLabels.orgWebsite')}
+            label={t("signUpForm.fieldLabels.orgWebsite")}
             name='website'
             value={state.website}
             placeholder=''
@@ -83,5 +83,5 @@ export const OrganisationDetailsForm: React.FC<GenericSignUpFormProps> = ({ next
         </div>
       </FormCard>
     </div>
-  )
-}
+  );
+};

@@ -1,42 +1,42 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
-import { useTranslation, CircularProgress } from '@apisuite/fe-base'
-import SwaggerUI from 'swagger-ui-react'
-import 'swagger-ui-react/swagger-ui.css'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { useTranslation, CircularProgress } from "@apisuite/fe-base";
+import SwaggerUI from "swagger-ui-react";
+import "swagger-ui-react/swagger-ui.css";
 
-import { apiDetailsSelector } from './selector'
-import useStyles from './styles'
-import { APIDetailParams } from 'store/apiDetails/types'
-import { geAPIVersion } from 'store/apiDetails/actions/getAPIVersion'
+import { apiDetailsSelector } from "./selector";
+import useStyles from "./styles";
+import { APIDetailParams } from "store/apiDetails/types";
+import { geAPIVersion } from "store/apiDetails/actions/getAPIVersion";
 
 export const APIDetails: React.FC = () => {
-  const classes = useStyles()
-  const { apiId, versionId } = useParams<APIDetailParams>()
-  const [t] = useTranslation()
-  const dispatch = useDispatch()
-  const apiDetails = useSelector(apiDetailsSelector)
+  const classes = useStyles();
+  const { apiId, versionId } = useParams<APIDetailParams>();
+  const [t] = useTranslation();
+  const dispatch = useDispatch();
+  const apiDetails = useSelector(apiDetailsSelector);
 
   useEffect(() => {
     dispatch(geAPIVersion({
       params: {
-        apiId: apiId || '0',
-        versionId: versionId || '0',
+        apiId: apiId || "0",
+        versionId: versionId || "0",
       },
-    }))
-  }, [dispatch, apiId, versionId])
+    }));
+  }, [dispatch, apiId, versionId]);
 
   const hasSpec = (): boolean => {
-    return !!(apiDetails && apiDetails.version && apiDetails.version.spec)
-  }
+    return !!(apiDetails && apiDetails.version && apiDetails.version.spec);
+  };
 
   const getAccessStyle = (): string => {
-    return apiDetails.version.live ? classes.live : classes.docs
-  }
+    return apiDetails.version.live ? classes.live : classes.docs;
+  };
 
   const getBadgeStyle = (): string => {
-    return !apiDetails.version.live ? classes.live : classes.docs
-  }
+    return !apiDetails.version.live ? classes.live : classes.docs;
+  };
 
   return (
     <div className={classes.root}>
@@ -66,12 +66,12 @@ export const APIDetails: React.FC = () => {
             <>
               <div className={`${classes.header} ${classes.docs}`}>&nbsp;</div>
               <div className={classes.centerVertical}>
-                <h2>{t('apidetails.notfound')}</h2>
+                <h2>{t("apidetails.notfound")}</h2>
               </div>
             </>
           }
         </>
       }
     </div>
-  )
-}
+  );
+};

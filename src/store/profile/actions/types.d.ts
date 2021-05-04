@@ -1,17 +1,17 @@
-import { NewOrgInfo, ProfileStore, Role, FetchTeamMembersResponse, GetProfileResponse, ExistingOrgInfo, UpdateProfileResponse } from '../types'
-import { CHANGE_ROLE, CHANGE_ROLE_SUCCESS, CHANGE_ROLE_ERROR } from './changeRole'
-import { CONFIRM_INVITE_MEMBER, CONFIRM_INVITE_MEMBER_SUCCESS, CONFIRM_INVITE_MEMBER_ERROR } from './confirmInviteMember'
-import { CREATE_ORG, CREATE_ORG_SUCCESS, CREATE_ORG_ERROR } from './createOrg'
-import { DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, DELETE_ACCOUNT_ERROR } from './deleteAccount'
-import { FETCH_ORG, FETCH_ORG_SUCCESS, FETCH_ORG_ERROR } from './fetchOrg'
-import { FETCH_ROLE_OPTIONS, FETCH_ROLE_OPTIONS_SUCCESS, FETCH_ROLE_OPTIONS_ERROR } from './fetchRoleOptions'
-import { FETCH_TEAM_MEMBERS, FETCH_TEAM_MEMBERS_SUCCESS, FETCH_TEAM_MEMBERS_ERROR } from './fetchTeamMembers'
-import { GET_PROFILE, GET_PROFILE_SUCCESS, GET_PROFILE_ERROR } from './getProfile'
-import { INVITE_TEAM_MEMBER, INVITE_TEAM_MEMBER_SUCCESS, INVITE_TEAM_MEMBER_ERROR } from './inviteTeamMember'
-import { RESET_PROFILE_ERRORS } from './resetProfileErrors'
-import { SWITCH_ORG, SWITCH_ORG_SUCCESS, SWITCH_ORG_ERROR } from './switchOrg'
-import { UPDATE_ORG, UPDATE_ORG_SUCCESS, UPDATE_ORG_ERROR } from './updateOrg'
-import { UPDATE_PROFILE, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_ERROR } from './updateProfile'
+import { NewOrgInfo, ProfileStore, Role, FetchTeamMembersResponse, GetProfileResponse, ExistingOrgInfo, UpdateProfileResponse } from "../types";
+import { CHANGE_ROLE, CHANGE_ROLE_SUCCESS, CHANGE_ROLE_ERROR } from "./changeRole";
+import { CONFIRM_INVITE_MEMBER, CONFIRM_INVITE_MEMBER_SUCCESS, CONFIRM_INVITE_MEMBER_ERROR } from "./confirmInviteMember";
+import { CREATE_ORG, CREATE_ORG_SUCCESS, CREATE_ORG_ERROR } from "./createOrg";
+import { DELETE_ACCOUNT, DELETE_ACCOUNT_SUCCESS, DELETE_ACCOUNT_ERROR } from "./deleteAccount";
+import { FETCH_ORG, FETCH_ORG_SUCCESS, FETCH_ORG_ERROR } from "./fetchOrg";
+import { FETCH_ROLE_OPTIONS, FETCH_ROLE_OPTIONS_SUCCESS, FETCH_ROLE_OPTIONS_ERROR } from "./fetchRoleOptions";
+import { FETCH_TEAM_MEMBERS, FETCH_TEAM_MEMBERS_SUCCESS, FETCH_TEAM_MEMBERS_ERROR } from "./fetchTeamMembers";
+import { GET_PROFILE, GET_PROFILE_SUCCESS, GET_PROFILE_ERROR } from "./getProfile";
+import { INVITE_TEAM_MEMBER, INVITE_TEAM_MEMBER_SUCCESS, INVITE_TEAM_MEMBER_ERROR } from "./inviteTeamMember";
+import { RESET_PROFILE_ERRORS } from "./resetProfileErrors";
+import { SWITCH_ORG, SWITCH_ORG_SUCCESS, SWITCH_ORG_ERROR } from "./switchOrg";
+import { UPDATE_ORG, UPDATE_ORG_SUCCESS, UPDATE_ORG_ERROR } from "./updateOrg";
+import { UPDATE_PROFILE, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_ERROR } from "./updateProfile";
 
 export type ProfileActions =
 ChangeRoleAction |
@@ -54,9 +54,9 @@ UpdateProfileActionError
 
 export type ChangeRoleAction = {
   type: typeof CHANGE_ROLE,
-  'user_id': string,
-  'org_id': string,
-  'role_id': string,
+  "user_id": string,
+  "org_id": string,
+  "role_id": string,
 }
 
 export type ChangeRoleActionSuccess = {
@@ -89,7 +89,7 @@ export type CreateOrgAction = {
 
 export type CreateOrgActionSuccess = {
   type: typeof CREATE_ORG_SUCCESS,
-  org: ProfileStore['org'],
+  org: ProfileStore["org"],
 }
 
 export type CreateOrgActionError = {
@@ -112,12 +112,12 @@ export type DeleteAccountActionError = {
 
 export type FetchOrgAction = {
   type: typeof FETCH_ORG,
-  'org_id': string,
+  "org_id": string,
 }
 
 export type FetchOrgActionSuccess = {
   type: typeof FETCH_ORG_SUCCESS,
-  org: ProfileStore['org'],
+  org: ProfileStore["org"],
 }
 
 export type FetchOrgActionError = {
@@ -171,7 +171,7 @@ export type GetProfileActionError = {
 export type InviteTeamMemberAction = {
   type: typeof INVITE_TEAM_MEMBER,
   email: string,
-  'role_id': string,
+  "role_id": string,
 }
 
 export type InviteTeamMemberActionSuccess = {

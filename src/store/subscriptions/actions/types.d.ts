@@ -1,4 +1,4 @@
-import { GET_APIS, GET_APIS_SUCCESS, GET_APIS_ERROR } from './getAPIs'
+import { GET_APIS, GET_APIS_SUCCESS, GET_APIS_ERROR } from "./getAPIs";
 
 export interface ApisResponse {
   pagination: {

@@ -1,7 +1,7 @@
-import { User } from 'containers/Auth/types'
-import { RequestStatus } from 'util/request'
+import { User } from "containers/Auth/types";
+import { RequestStatus } from "util/request";
 
-export const roleNameOptions = ['admin', 'organizationOwner', 'developer', ''] as const
+export const roleNameOptions = ["admin", "organizationOwner", "developer", ""] as const;
 
 export type NewOrgInfo = {
   description: string | null,
@@ -19,7 +19,7 @@ export type ExistingOrgInfo = {
   createdAt?: string,
   description: string | null,
   logo: string,
-  'org_code'?: string,
+  "org_code"?: string,
   privacyUrl: string,
   supportUrl: string,
   tosUrl: string,
@@ -34,14 +34,14 @@ export type ProfileStore = {
   org: Organization &
   Pick<
   ExistingOrgInfo,
-  'description' |
-  'logo' |
-  'privacyUrl' |
-  'supportUrl' |
-  'tosUrl' |
-  'vat' |
-  'websiteUrl' |
-  'youtubeUrl'
+  "description" |
+  "logo" |
+  "privacyUrl" |
+  "supportUrl" |
+  "tosUrl" |
+  "vat" |
+  "websiteUrl" |
+  "youtubeUrl"
   >,
   profile: Profile,
   requestStatuses: {
@@ -59,17 +59,17 @@ export type ProfileStore = {
 }
 
 export type Profile = {
-  'current_org': Organization & {
-    'member_since': string,
+  "current_org": Organization & {
+    "member_since": string,
     role: Role,
   },
-  'orgs_member': Organization[],
+  "orgs_member": Organization[],
   user: {
     avatar?: string,
     bio?: string,
     email: string,
     id: string,
-    'last_login': string,
+    "last_login": string,
     mobile?: string,
     name: string,
     oidcProvider: string | null,
@@ -87,9 +87,9 @@ export type Organization = {
 }
 
 export type FetchTeamMembersResponse = {
-  'Organization': Organization,
-  'Role': Role,
-  'User': Pick<User, 'id'> & { name: string },
+  "Organization": Organization,
+  "Role": Role,
+  "User": Pick<User, "id"> & { name: string },
 }
 
 export type FetchRoleOptionsResponse = Role[]

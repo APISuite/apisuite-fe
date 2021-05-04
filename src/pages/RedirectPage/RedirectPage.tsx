@@ -1,48 +1,48 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router'
-import { Redirect } from 'react-router-dom'
-import { useQuery } from 'util/useQuery'
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router";
+import { Redirect } from "react-router-dom";
+import { useQuery } from "util/useQuery";
 
-import { confirmRegistration } from 'store/auth/actions/confirmRegistration'
-import { confirmInviteMember } from 'store/profile/actions/confirmInviteMember'
+import { confirmRegistration } from "store/auth/actions/confirmRegistration";
+import { confirmInviteMember } from "store/profile/actions/confirmInviteMember";
 
 export const RedirectPage: React.FC = () => {
-  const query = useQuery()
-  const token = query.get('token')
-  const redirect = useParams<{ redirect: 'invite' | 'registration' | 'password' }>().redirect
-  const dispatch = useDispatch()
+  const query = useQuery();
+  const token = query.get("token");
+  const redirect = useParams<{ redirect: "invite" | "registration" | "password" }>().redirect;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (token && redirect === 'registration') {
-      dispatch(confirmRegistration({ token }))
+    if (token && redirect === "registration") {
+      dispatch(confirmRegistration({ token }));
     }
 
-    if (token && redirect === 'invite') {
-      dispatch(confirmInviteMember({ token }))
+    if (token && redirect === "invite") {
+      dispatch(confirmInviteMember({ token }));
     }
-  }, [dispatch, token, redirect])
+  }, [dispatch, token, redirect]);
 
   switch (redirect) {
-    case 'registration':
-      return <Redirect to='/auth/signin' />
+    case "registration":
+      return <Redirect to='/auth/signin' />;
 
-    case 'invite':
-      return <Redirect to='/profile/team' />
+    case "invite":
+      return <Redirect to='/profile/team' />;
 
-    case 'password':
+    case "password":
       return (
         <Redirect to={{
-          pathname: '/forgot',
+          pathname: "/forgot",
           state: {
-            stage: 'recover',
+            stage: "recover",
             token: token,
           },
         }}
         />
-      )
+      );
 
     default:
-      return <Redirect to='/' />
+      return <Redirect to='/' />;
   }
-}
+};

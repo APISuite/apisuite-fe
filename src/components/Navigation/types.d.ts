@@ -1,7 +1,7 @@
 // import { NotificationCardsStore } from 'store/notificationCards/types'
 // import { ProfileStore } from 'store/profile/types'
 
-import { NavigationLeftActionTypes } from './constants'
+import { NavigationLeftActionTypes } from "./constants";
 
 export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   // backButtonLabel?: string,

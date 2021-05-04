@@ -4,43 +4,43 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   viewBox?: string,
   /** The icon path name */
   name:
-  | 'autorenew'
-  | 'chevron-up'
-  | 'chevron-left-circle'
-  | 'chevron-right-circle'
-  | 'headset'
-  | 'airplane-landing'
-  | 'paw'
-  | 'infinity'
-  | 'human-pregnant'
-  | 'animation-play-outline'
-  | 'cloud-outline'
-  | 'account-multiple-plus-outline'
-  | 'account-multiple'
-  | 'fingerprint'
-  | 'usb'
-  | 'shield-check-outline'
-  | 'book-open'
-  | 'briefcase'
-  | 'fullscreen'
-  | 'key'
-  | 'earth'
-  | 'twitter'
-  | 'facebook'
-  | 'github'
-  | 'gitlab'
-  | 'linkedin'
-  | 'reddit'
-  | 'instagram'
-  | 'plus'
-  | 'close'
-  | 'dots-vrtical'
-  | 'circle'
-  | 'launch'
-  | 'cloud-upload'
-  | 'code'
-  | 'content-copy'
-  | 'logout',
+  | "autorenew"
+  | "chevron-up"
+  | "chevron-left-circle"
+  | "chevron-right-circle"
+  | "headset"
+  | "airplane-landing"
+  | "paw"
+  | "infinity"
+  | "human-pregnant"
+  | "animation-play-outline"
+  | "cloud-outline"
+  | "account-multiple-plus-outline"
+  | "account-multiple"
+  | "fingerprint"
+  | "usb"
+  | "shield-check-outline"
+  | "book-open"
+  | "briefcase"
+  | "fullscreen"
+  | "key"
+  | "earth"
+  | "twitter"
+  | "facebook"
+  | "github"
+  | "gitlab"
+  | "linkedin"
+  | "reddit"
+  | "instagram"
+  | "plus"
+  | "close"
+  | "dots-vrtical"
+  | "circle"
+  | "launch"
+  | "cloud-upload"
+  | "code"
+  | "content-copy"
+  | "logout",
   /** The fill to be applied to the vector */
   color?: string,
 }
@@ -56,7 +56,7 @@ export interface InternalSvgIconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 export interface CallableSvgIconProps extends InternalSvgIconProps {
-  name: SvgIconProps['name'],
+  name: SvgIconProps["name"],
 }
 
 export interface IconPaths {

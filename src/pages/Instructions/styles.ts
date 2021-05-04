@@ -1,12 +1,12 @@
 
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   clipboardIcon: {
-    cursor: 'pointer',
+    cursor: "pointer",
     zIndex: 1,
 
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.primary.main,
     },
   },
@@ -19,54 +19,54 @@ export default makeStyles((theme) => ({
   },
 
   content: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     width: 688,
   },
 
   contentContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    margin: '0 auto',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    margin: "0 auto",
     maxWidth: 900,
-    transform: 'translateX(-8px)',
+    transform: "translateX(-8px)",
   },
 
   description: {
-    display: 'flex',
+    display: "flex",
     marginBottom: 20,
     marginTop: 0,
     padding: 0,
-    textAlign: 'justify',
+    textAlign: "justify",
   },
 
   iconRow: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
     backgroundColor: theme.palette.text.primary,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     borderTopLeftRadius: theme.palette.dimensions.borderRadius,
     borderTopRightRadius: theme.palette.dimensions.borderRadius,
     color: theme.palette.primary.contrastText,
-    display: 'flex',
+    display: "flex",
     height: 40,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     marginTop: 0,
     paddingLeft: 20,
     paddingRight: 20,
   },
 
   mainContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     marginBottom: 100,
-    width: '100%',
+    width: "100%",
   },
 
   navigation: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     width: 300,
   },
 
@@ -79,8 +79,8 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     marginBottom: 20,
-    overflow: 'hidden',
-    width: '100%',
+    overflow: "hidden",
+    width: "100%",
   },
 
   noteContent: {
@@ -90,19 +90,19 @@ export default makeStyles((theme) => ({
   },
 
   noteTitle: {
-    color: 'black',
+    color: "black",
     fontSize: 16,
     fontWeight: 400,
   },
 
   root: {
     backgroundColor: theme.palette.grey[50],
-    minHeight: '100%',
+    minHeight: "100%",
   },
 
   sideMenuContainer: {
     paddingLeft: 40,
-    position: 'sticky',
+    position: "sticky",
     top: 180,
   },
 
@@ -121,4 +121,4 @@ export default makeStyles((theme) => ({
     fontSize: 26,
     fontWeight: 300,
   },
-}))
+}));

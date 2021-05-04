@@ -1,33 +1,33 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   hideNotificationCardContentsContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: theme.palette.background.default,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    height: '0px',
-    justifyContent: 'space-between',
-    margin: 'auto',
-    maxWidth: '900px',
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    height: "0px",
+    justifyContent: "space-between",
+    margin: "auto",
+    maxWidth: "900px",
     opacity: 0,
-    padding: '20px 40px',
-    transition: 'opacity 0.35s, height 0.35s',
-    width: '100%',
+    padding: "20px 40px",
+    transition: "opacity 0.35s, height 0.35s",
+    width: "100%",
 
-    '& > div': {
-      display: 'none',
+    "& > div": {
+      display: "none",
     },
 
-    '& > a': {
-      display: 'none',
+    "& > a": {
+      display: "none",
     },
 
-    '& > svg': {
-      display: 'none',
+    "& > svg": {
+      display: "none",
     },
 
   },
@@ -35,73 +35,73 @@ export default makeStyles((theme) => ({
   notificationCardButton: {
     backgroundColor: theme.palette.secondary.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    boxShadow: 'none',
+    boxShadow: "none",
     color: `${theme.palette.primary.contrastText} !important`,
-    display: 'inline-block',
-    fontSize: '16px',
+    display: "inline-block",
+    fontSize: "16px",
     fontWeight: 600,
-    padding: '12px 20px',
-    position: 'relative',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'none',
+    padding: "12px 20px",
+    position: "relative",
+    textAlign: "center",
+    textDecoration: "none",
+    textTransform: "none",
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.secondary,
     },
   },
 
   notificationCardCloseButton: {
     color: theme.palette.grey[300],
-    cursor: 'pointer',
-    height: '24px',
-    width: '24px',
+    cursor: "pointer",
+    height: "24px",
+    width: "24px",
   },
 
   notificationCardText: {
     color: theme.palette.text.primary,
-    fontSize: '20px',
+    fontSize: "20px",
     fontWeight: 300,
-    maxWidth: '542.5px',
-    width: '100%',
+    maxWidth: "542.5px",
+    width: "100%",
   },
 
   notificationCardTitle: {
     color: theme.palette.secondary.main,
-    fontSize: '27px',
+    fontSize: "27px",
     fontWeight: 400,
-    marginBottom: '12px',
-    maxWidth: '542.5px',
-    width: '100%',
+    marginBottom: "12px",
+    maxWidth: "542.5px",
+    width: "100%",
   },
 
   showNotificationCardContentsContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: theme.palette.background.default,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    height: '150px',
-    justifyContent: 'space-between',
-    margin: 'auto',
-    maxWidth: '900px',
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    height: "150px",
+    justifyContent: "space-between",
+    margin: "auto",
+    maxWidth: "900px",
     opacity: 1,
-    padding: '20px 40px',
-    transition: 'opacity 0.35s, height 0.35s',
-    width: '100%',
+    padding: "20px 40px",
+    transition: "opacity 0.35s, height 0.35s",
+    width: "100%",
 
-    '& > div': {
-      display: 'initial',
+    "& > div": {
+      display: "initial",
     },
 
-    '& > a': {
-      display: 'initial',
+    "& > a": {
+      display: "initial",
     },
 
-    '& > svg': {
-      display: 'initial',
+    "& > svg": {
+      display: "initial",
     },
   },
-}))
+}));

@@ -1,18 +1,18 @@
-import * as React from 'react'
-import { NavMenuProps } from './types'
-import useStyles from './styles'
-import Scrollspy from 'react-scrollspy'
+import React from "react";
+import { NavMenuProps } from "./types";
+import useStyles from "./styles";
+import Scrollspy from "react-scrollspy";
 
 const NavMenu: React.FC<NavMenuProps> = ({ options }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const getItems = () => {
-    const items = []
+    const items = [];
     for (let indx = 0; indx < options.length; indx++) {
-      items.push(`step-${indx + 1}`)
+      items.push(`step-${indx + 1}`);
     }
-    return items
-  }
+    return items;
+  };
 
   return (
     <Scrollspy offset={170} items={getItems()} currentClassName={classes.selected}>
@@ -25,7 +25,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ options }) => {
         </div>
       ))}
     </Scrollspy>
-  )
-}
+  );
+};
 
-export default NavMenu
+export default NavMenu;

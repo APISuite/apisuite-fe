@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect'
-import { Store } from 'store/types'
+import { createSelector } from "reselect";
+import { Store } from "store/types";
 
 export const applicationsSelector = createSelector(
   ({ applications }: Store) => applications,
@@ -10,6 +10,6 @@ export const applicationsSelector = createSelector(
       allUserApps: applications.userApps,
       currentOrganisation: profile.profile.current_org,
       user: auth.user,
-    }
+    };
   },
-)
+);

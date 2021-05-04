@@ -1,25 +1,25 @@
-import React from 'react'
-import { useHistory, useParams } from 'react-router'
-import { useConfig, useTranslation } from '@apisuite/fe-base'
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
-import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
+import React from "react";
+import { useHistory, useParams } from "react-router";
+import { useConfig, useTranslation } from "@apisuite/fe-base";
+import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
 export const SignUpConfirmation: React.FC = () => {
-  const classes = useStyles()
-  const [t] = useTranslation()
-  const history = useHistory()
-  const { ownerInfo, portalName } = useConfig()
-  const { name } = useParams<{ name: string }>()
+  const classes = useStyles();
+  const [t] = useTranslation();
+  const history = useHistory();
+  const { ownerInfo, portalName } = useConfig();
+  const { name } = useParams<{ name: string }>();
 
   return (
     <main className={classes.mainContainer}>
       <header className={classes.headerContainer}>
         <div
           className={classes.logoAndNameContainer}
-          onClick={() => history.push('/')}
+          onClick={() => history.push("/")}
         >
           {
             ownerInfo.logo
@@ -43,10 +43,10 @@ export const SignUpConfirmation: React.FC = () => {
 
         <div
           className={classes.closeButtonContainer}
-          onClick={() => history.push('/')}
+          onClick={() => history.push("/")}
         >
           <p>
-            {t('signInOrUpView.closeButtonLabel')}
+            {t("signInOrUpView.closeButtonLabel")}
           </p>
 
           <CloseRoundedIcon />
@@ -56,16 +56,16 @@ export const SignUpConfirmation: React.FC = () => {
       <section className={classes.pageContentContainer}>
         <div className={classes.signUpCompleteSideContentContainer}>
           <h1 className={classes.signUpCompleteSideTitle}>
-            {t('signUpConfirmation.titleText')}
+            {t("signUpConfirmation.titleText")}
             {name}!
           </h1>
 
           <p className={classes.signUpCompleteSideSubtitle}>
-            <>{t('signUpConfirmation.subtitleTextPartOne')}</>
+            <>{t("signUpConfirmation.subtitleTextPartOne")}</>
             <span className={classes.signUpCompleteSideSubtitleBoldPart}>
-              {t('signUpConfirmation.subtitleTextPartTwo')}
+              {t("signUpConfirmation.subtitleTextPartTwo")}
             </span>
-            <>{t('signUpConfirmation.subtitleTextPartThree')}</>
+            <>{t("signUpConfirmation.subtitleTextPartThree")}</>
           </p>
 
           <div className={classes.infoBox}>
@@ -73,7 +73,7 @@ export const SignUpConfirmation: React.FC = () => {
 
             <div>
               <p className={classes.infoBoxText}>
-                {t('signUpConfirmation.infoBoxText')}
+                {t("signUpConfirmation.infoBoxText")}
               </p>
             </div>
           </div>
@@ -82,7 +82,7 @@ export const SignUpConfirmation: React.FC = () => {
         <div className={classes.imageSideContentContainer} />
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default SignUpConfirmation
+export default SignUpConfirmation;

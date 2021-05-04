@@ -1,21 +1,21 @@
-import * as React from 'react'
+import React from "react";
 
-import Link from 'components/Link'
+import Link from "components/Link";
 
-import { Avatar } from '@apisuite/fe-base'
+import { Avatar } from "@apisuite/fe-base";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
-import { APICatalogProps, APIDetails } from './types'
+import { APICatalogProps, APIDetails } from "./types";
 
 const APICatalog: React.FC<APICatalogProps> = ({
   apisToDisplay,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const generateAPICatalogEntry = (apiDetails: APIDetails, index: number) => {
-    const apiSplitName = apiDetails.apiName.split(' ')
-    const apiInitials = apiSplitName[0].slice(0, 2)
+    const apiSplitName = apiDetails.apiName.split(" ");
+    const apiInitials = apiSplitName[0].slice(0, 2);
 
     return (
       <div
@@ -49,7 +49,7 @@ ${apiDetails.apiAccess
             >
               {`v${apiDetails.apiVersion}`}
             </span>
-            <>{apiDetails.apiAccess ? 'Production access' : 'API Documentation'}</>
+            <>{apiDetails.apiAccess ? "Production access" : "API Documentation"}</>
           </p>
 
           <p className={classes.apiCatalogEntryDescription}>
@@ -57,11 +57,11 @@ ${apiDetails.apiAccess
           </p>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const apiCatalogEntries = apisToDisplay.map((apiDetails, index) => {
-    if (!apiDetails) return <div key={`apiCatalogEntry${index}`} />
+    if (!apiDetails) return <div key={`apiCatalogEntry${index}`} />;
     if (apiDetails.hasMoreDetails) {
       return (
         <Link
@@ -70,13 +70,13 @@ ${apiDetails.apiAccess
         >
           {generateAPICatalogEntry(apiDetails, index)}
         </Link>
-      )
+      );
     } else {
-      return generateAPICatalogEntry(apiDetails, index)
+      return generateAPICatalogEntry(apiDetails, index);
     }
-  })
+  });
 
-  return <>{apiCatalogEntries}</>
-}
+  return <>{apiCatalogEntries}</>;
+};
 
-export default APICatalog
+export default APICatalog;

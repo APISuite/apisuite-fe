@@ -1,4 +1,4 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   actions: {
@@ -14,21 +14,21 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[900],
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     color: theme.palette.primary.contrastText,
-    cursor: 'pointer',
-    display: 'inline-block',
+    cursor: "pointer",
+    display: "inline-block",
     fontWeight: 500,
     marginRight: 16,
-    padding: '8px 24px',
+    padding: "8px 24px",
 
-    '&:disabled': {
+    "&:disabled": {
       backgroundColor: theme.palette.grey[400],
     },
   },
 
   contentContainer: {
-    margin: '0 auto',
+    margin: "0 auto",
     maxWidth: 900,
-    transform: 'translateX(-8px)',
+    transform: "translateX(-8px)",
   },
 
   emailTextfield: {
@@ -39,63 +39,63 @@ export default makeStyles((theme) => ({
   },
 
   errorAlert: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: theme.palette.error.main,
-    border: 'solid',
+    border: "solid",
     borderColor: theme.palette.error.main,
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderWidth: 1,
     color: theme.palette.primary.contrastText,
-    display: 'flex',
+    display: "flex",
     fontSize: 13,
     minHeight: 20,
-    padding: '2px 15px',
+    padding: "2px 15px",
   },
 
   errorPlaceholder: {
-    display: 'flex',
+    display: "flex",
     marginTop: 10,
   },
 
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     color: theme.palette.text.primary,
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     height: 42,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     paddingLeft: 10,
-    width: '100%',
+    width: "100%",
   },
 
   inviteCard: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: theme.palette.background.default,
     border: 1,
     borderColor: theme.palette.grey[300],
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    borderStyle: 'solid',
-    cursor: 'pointer',
-    display: 'flex',
+    borderStyle: "solid",
+    cursor: "pointer",
+    display: "flex",
     height: 82,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     marginTop: 24,
-    overflow: 'hidden',
-    padding: '12px 30px 12px 10px',
-    width: '100%',
+    overflow: "hidden",
+    padding: "12px 30px 12px 10px",
+    width: "100%",
   },
 
   loading: {
     color: theme.palette.primary.contrastText,
     opacity: 0.5,
-    position: 'relative',
+    position: "relative",
     top: 4,
   },
 
   loadingPage: {
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'center',
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
   },
 
   name: {
@@ -112,15 +112,15 @@ export default makeStyles((theme) => ({
 
   root: {
     backgroundColor: theme.palette.grey[100],
-    minHeight: '100%',
+    minHeight: "100%",
   },
 
   row: {
-    borderTop: '1px solid ' + theme.palette.grey[300],
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '16px 30px 16px 10px',
-    width: '100%',
+    borderTop: "1px solid " + theme.palette.grey[300],
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "16px 30px 16px 10px",
+    width: "100%",
   },
 
   select: {
@@ -128,18 +128,18 @@ export default makeStyles((theme) => ({
   },
 
   table: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: theme.palette.background.default,
     border: 1,
     borderColor: theme.palette.grey[300],
     borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    borderStyle: 'solid',
-    cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    width: '100%',
+    borderStyle: "solid",
+    cursor: "pointer",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    overflow: "hidden",
+    width: "100%",
   },
 
   title: {
@@ -147,4 +147,4 @@ export default makeStyles((theme) => ({
     fontWeight: 300,
     marginBottom: 54,
   },
-}))
+}));

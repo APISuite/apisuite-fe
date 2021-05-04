@@ -1,10 +1,10 @@
-import { RouteProps } from 'react-router'
-import { TabProps } from 'components/Navigation/types'
-import { LoginAction } from 'store/auth/actions/types'
+import { RouteProps } from "react-router";
+import { TabProps } from "components/Navigation/types";
+import { LoginAction } from "store/auth/actions/types";
 
 export interface AppDispatchToProps {
   getProfile: () => void,
-  loginUser: (payload: Omit<LoginAction, 'type'>) => void,
+  loginUser: (payload: Omit<LoginAction, "type">) => void,
 }
 
 export type AppRouteProps = RouteProps & {

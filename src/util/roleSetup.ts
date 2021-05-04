@@ -28,52 +28,52 @@ export type RoleConfig = {
  */
 export const roleSetup = (roleReqs: RoleReqs): RoleConfig | false => {
   if (!roleReqs) {
-    return false
+    return false;
   }
 
-  const roleConfig: RoleConfig = {}
+  const roleConfig: RoleConfig = {};
   for (const value of roleReqs) {
-    const prefix = value[0]
-    const type = prefix === '+' ? 'required' : (prefix === '!' ? 'forbidden' : 'selection')
-    const clean = type === 'selection' ? value : value.slice(1)
+    const prefix = value[0];
+    const type = prefix === "+" ? "required" : (prefix === "!" ? "forbidden" : "selection");
+    const clean = type === "selection" ? value : value.slice(1);
     roleConfig[type] = roleConfig[type] || []
-    ;(roleConfig[type] as string[]).push(clean)
+    ;(roleConfig[type] as string[]).push(clean);
   }
 
-  return roleConfig
-}
+  return roleConfig;
+};
 
 export const validateRoleConfig = (roleReqs: RoleReqs, roles: string[] = []) => {
-  const roleConfig = roleSetup(roleReqs)
+  const roleConfig = roleSetup(roleReqs);
   if (!roleConfig) {
-    return true
+    return true;
   }
 
-  const { required, forbidden, selection } = roleConfig
+  const { required, forbidden, selection } = roleConfig;
 
   if (required) {
     const intersection =
-      required.filter((role) => roles.includes(role))
+      required.filter((role) => roles.includes(role));
     if (intersection.length < required.length) {
-      return false
+      return false;
     }
   }
 
   if (forbidden) {
     const intersection =
-      forbidden.filter((role) => roles.includes(role))
+      forbidden.filter((role) => roles.includes(role));
     if (intersection.length) {
-      return false
+      return false;
     }
   }
 
   if (selection) {
     const intersection =
-      selection.filter((role) => roles.includes(role))
+      selection.filter((role) => roles.includes(role));
     if (!intersection.length) {
-      return false
+      return false;
     }
   }
 
-  return true
-}
+  return true;
+};

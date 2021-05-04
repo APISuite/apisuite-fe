@@ -1,9 +1,9 @@
-import React from 'react'
-import { TextField } from '@apisuite/fe-base'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import React from "react";
+import { TextField } from "@apisuite/fe-base";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
-import { SelectProps, SelectOption } from './types'
-import useStyles from './styles'
+import { SelectProps, SelectOption } from "./types";
+import useStyles from "./styles";
 
 const Select: React.FC<SelectProps> = ({
   customCloseIcon,
@@ -13,7 +13,7 @@ const Select: React.FC<SelectProps> = ({
   selected,
   ...rest
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <Autocomplete
@@ -37,7 +37,7 @@ const Select: React.FC<SelectProps> = ({
       )}
       value={selected}
     />
-  )
-}
+  );
+};
 
-export default Select
+export default Select;

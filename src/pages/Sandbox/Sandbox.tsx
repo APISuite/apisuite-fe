@@ -1,44 +1,44 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useConfig, useTranslation, Button } from '@apisuite/fe-base'
-import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
-import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
-import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
-import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useConfig, useTranslation, Button } from "@apisuite/fe-base";
+import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
+import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRounded";
+import ControlCameraRoundedIcon from "@material-ui/icons/ControlCameraRounded";
+import FlightLandRoundedIcon from "@material-ui/icons/FlightLandRounded";
 
-import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
-import APICatalog from 'components/APICatalog'
-import { Carousel } from 'components/Carousel'
-import Notice from 'components/Notice'
+import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
+import APICatalog from "components/APICatalog";
+import { Carousel } from "components/Carousel";
+import Notice from "components/Notice";
 
-import carouselBackground from 'assets/space-background.svg'
-import carouselSlide1 from 'assets/carousel-slide-1.svg'
-import carouselSlide2 from 'assets/carousel-slide-2.svg'
-import carouselSlide3 from 'assets/carousel-slide-3.svg'
+import carouselBackground from "assets/space-background.svg";
+import carouselSlide1 from "assets/carousel-slide-1.svg";
+import carouselSlide2 from "assets/carousel-slide-2.svg";
+import carouselSlide3 from "assets/carousel-slide-3.svg";
 
-import { sandboxSelector } from './selector'
-import useStyles from './styles'
-import { getAPIs } from 'store/subscriptions/actions/getAPIs'
+import { sandboxSelector } from "./selector";
+import useStyles from "./styles";
+import { getAPIs } from "store/subscriptions/actions/getAPIs";
 
 export const Sandbox: React.FC = () => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const { t } = useTranslation()
-  const { socialURLs, portalName, clientName, supportURL } = useConfig()
-  const { auth, subscriptions } = useSelector(sandboxSelector)
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { socialURLs, portalName, clientName, supportURL } = useConfig();
+  const { auth, subscriptions } = useSelector(sandboxSelector);
 
-  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([])
+  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([]);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
-    dispatch(getAPIs({}))
-  }, [dispatch])
+    dispatch(getAPIs({}));
+  }, [dispatch]);
 
   useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'API Catalog' section. */
-    const allAvailableAPIs = subscriptions.apis
+    const allAvailableAPIs = subscriptions.apis;
 
     if (allAvailableAPIs.length) {
       const newRecentlyAddedAPIs = allAvailableAPIs.map((api) => {
@@ -49,22 +49,22 @@ export const Sandbox: React.FC = () => {
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
-          apiDescription: api?.docs?.info || 'No description presently available.',
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : 'No version available',
+          apiDescription: api?.docs?.info || "No description presently available.",
+          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
-          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : '',
+          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
           /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has
           its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
-        }
-      })
+        };
+      });
 
-      const twoMostRecentlyAddedAPIs = [newRecentlyAddedAPIs[0], newRecentlyAddedAPIs[1]]
+      const twoMostRecentlyAddedAPIs = [newRecentlyAddedAPIs[0], newRecentlyAddedAPIs[1]];
 
-      setRecentlyAddedAPIs(twoMostRecentlyAddedAPIs)
+      setRecentlyAddedAPIs(twoMostRecentlyAddedAPIs);
     }
-  }, [subscriptions])
+  }, [subscriptions]);
 
   return (
     <main className='page-container'>
@@ -87,45 +87,45 @@ export const Sandbox: React.FC = () => {
             ? [
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel'),
-                slideButtonLink: '/auth/signup',
-                slideContentsPlacement: 'top-to-bottom',
+                slideButtonLabel: t("sandboxPage.newSlides.slideOne.slideButtonLabel"),
+                slideButtonLink: "/auth/signup",
+                slideContentsPlacement: "top-to-bottom",
                 slideForegroundImage: carouselSlide1,
-                slideText: t('sandboxPage.newSlides.slideOne.slideText'),
+                slideText: t("sandboxPage.newSlides.slideOne.slideText"),
               },
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel'),
-                slideButtonLink: '/api-products',
-                slideContentsPlacement: 'side-by-side',
+                slideButtonLabel: t("sandboxPage.newSlides.slideTwo.slideButtonLabel"),
+                slideButtonLink: "/api-products",
+                slideContentsPlacement: "side-by-side",
                 slideForegroundImage: carouselSlide2,
-                slideText: t('sandboxPage.newSlides.slideTwo.slideText'),
+                slideText: t("sandboxPage.newSlides.slideTwo.slideText"),
               },
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel'),
-                slideButtonLink: '/documentation',
-                slideContentsPlacement: 'side-by-side',
+                slideButtonLabel: t("sandboxPage.newSlides.slideThree.slideButtonLabel"),
+                slideButtonLink: "/documentation",
+                slideContentsPlacement: "side-by-side",
                 slideForegroundImage: carouselSlide3,
-                slideText: t('sandboxPage.newSlides.slideThree.slideText'),
+                slideText: t("sandboxPage.newSlides.slideThree.slideText"),
               },
             ]
             : [
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel'),
-                slideButtonLink: '/api-products',
-                slideContentsPlacement: 'side-by-side',
+                slideButtonLabel: t("sandboxPage.newSlides.slideTwo.slideButtonLabel"),
+                slideButtonLink: "/api-products",
+                slideContentsPlacement: "side-by-side",
                 slideForegroundImage: carouselSlide2,
-                slideText: t('sandboxPage.newSlides.slideTwo.slideText'),
+                slideText: t("sandboxPage.newSlides.slideTwo.slideText"),
               },
               {
                 slideButton: true,
-                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel'),
-                slideButtonLink: '/documentation',
-                slideContentsPlacement: 'side-by-side',
+                slideButtonLabel: t("sandboxPage.newSlides.slideThree.slideButtonLabel"),
+                slideButtonLink: "/documentation",
+                slideContentsPlacement: "side-by-side",
                 slideForegroundImage: carouselSlide3,
-                slideText: t('sandboxPage.newSlides.slideThree.slideText'),
+                slideText: t("sandboxPage.newSlides.slideThree.slideText"),
               },
             ]}
           slidingAnimationDuration={1500}
@@ -136,7 +136,7 @@ export const Sandbox: React.FC = () => {
       {/* 'Steps' section */}
       <section className={classes.stepsSectionContainer}>
         <h1 className={classes.sectionIntroHeading}>
-          {t('sandboxPage.stepsSection.intro')}
+          {t("sandboxPage.stepsSection.intro")}
         </h1>
 
         <section className={classes.stepsSectionDescriptionsContainer}>
@@ -144,16 +144,16 @@ export const Sandbox: React.FC = () => {
             <h3 className={classes.stepsDescriptionHeading}>
               {
                 !auth.user
-                  ? t('sandboxPage.stepsSection.notLoggedIn.heading')
-                  : t('sandboxPage.stepsSection.loggedIn.heading')
+                  ? t("sandboxPage.stepsSection.notLoggedIn.heading")
+                  : t("sandboxPage.stepsSection.loggedIn.heading")
               }
             </h3>
 
             <p className={classes.stepsDescriptionParagraphOne}>
               {
                 !auth.user
-                  ? t('sandboxPage.stepsSection.notLoggedIn.paragraphOne')
-                  : `${portalName} ${t('sandboxPage.stepsSection.loggedIn.paragraphOne')}`
+                  ? t("sandboxPage.stepsSection.notLoggedIn.paragraphOne")
+                  : `${portalName} ${t("sandboxPage.stepsSection.loggedIn.paragraphOne")}`
               }
             </p>
 
@@ -161,16 +161,16 @@ export const Sandbox: React.FC = () => {
               <span>
                 {
                   !auth.user
-                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartOne')
-                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartOne')
+                    ? t("sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartOne")
+                    : t("sandboxPage.stepsSection.loggedIn.paragraphTwoPartOne")
                 }
               </span>
 
               <>
                 {
                   !auth.user
-                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartTwo')
-                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartTwo')
+                    ? t("sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartTwo")
+                    : t("sandboxPage.stepsSection.loggedIn.paragraphTwoPartTwo")
                 }
               </>
             </p>
@@ -183,24 +183,24 @@ export const Sandbox: React.FC = () => {
               }
               href={
                 !auth.user
-                  ? '/auth/signup'
+                  ? "/auth/signup"
                   : supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
               }
               rel={
                 auth.user
-                  ? 'noopener noreferrer'
-                  : ''
+                  ? "noopener noreferrer"
+                  : ""
               }
               target={
                 auth.user
-                  ? '_blank'
-                  : ''
+                  ? "_blank"
+                  : ""
               }
             >
               {
                 !auth.user
-                  ? t('sandboxPage.stepsSection.notLoggedIn.buttonLabel')
-                  : t('sandboxPage.stepsSection.loggedIn.buttonLabel')
+                  ? t("sandboxPage.stepsSection.notLoggedIn.buttonLabel")
+                  : t("sandboxPage.stepsSection.loggedIn.buttonLabel")
               }
             </Button>
           </section>
@@ -211,16 +211,16 @@ export const Sandbox: React.FC = () => {
                 <h1 className={classes.individualStepOne}>1.</h1>
 
                 <h3 className={classes.individualStepOne}>
-                  {t('sandboxPage.stepsSection.individualSteps.stepOne.header')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepOne.header")}
                 </h3>
 
                 <p>
                   <span>
-                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne')}
+                    {t("sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne")}
                   </span>
 
                   <>
-                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo')}
+                    {t("sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo")}
                   </>
                 </p>
 
@@ -229,7 +229,7 @@ export const Sandbox: React.FC = () => {
                   disabled={!auth.user}
                   href='/dashboard/apps'
                 >
-                  {t('sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel")}
                 </Button>
               </div>
 
@@ -237,11 +237,11 @@ export const Sandbox: React.FC = () => {
                 <h1 className={classes.individualStepTwo}>2.</h1>
 
                 <h3 className={classes.individualStepTwo}>
-                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.header')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepTwo.header")}
                 </h3>
 
                 <p>
-                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.paragraph')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepTwo.paragraph")}
                 </p>
 
                 <Button
@@ -249,7 +249,7 @@ export const Sandbox: React.FC = () => {
                   disabled={!auth.user}
                   href='/dashboard/subscriptions'
                 >
-                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel")}
                 </Button>
               </div>
 
@@ -257,11 +257,11 @@ export const Sandbox: React.FC = () => {
                 <h1 className={classes.individualStepThree}>3.</h1>
 
                 <h3 className={classes.individualStepThree}>
-                  {t('sandboxPage.stepsSection.individualSteps.stepThree.header')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepThree.header")}
                 </h3>
 
                 <p>
-                  {t('sandboxPage.stepsSection.individualSteps.stepThree.paragraph')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepThree.paragraph")}
                 </p>
 
                 <Button
@@ -269,7 +269,7 @@ export const Sandbox: React.FC = () => {
                   disabled={!auth.user}
                   href='/dashboard/test'
                 >
-                  {t('sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel')}
+                  {t("sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel")}
                 </Button>
               </div>
             </div>
@@ -282,13 +282,13 @@ export const Sandbox: React.FC = () => {
       {/* 'API Catalog' section */}
       <section className={classes.apiCatalogSectionContainer}>
         <h1 className={classes.sectionIntroHeading}>
-          {t('sandboxPage.apiCatalog.intro')}
+          {t("sandboxPage.apiCatalog.intro")}
         </h1>
 
         <section className={classes.apiCatalogContainer}>
           {
             recentlyAddedAPIs.length === 0
-              ? <p>{t('sandboxPage.apiCatalog.paragraph')}</p>
+              ? <p>{t("sandboxPage.apiCatalog.paragraph")}</p>
               : <APICatalog apisToDisplay={recentlyAddedAPIs} />
           }
         </section>
@@ -301,10 +301,10 @@ export const Sandbox: React.FC = () => {
             noticeIcon={<CheckCircleOutlineRoundedIcon />}
             noticeText={
               <p>
-                {portalName} {t('sandboxPage.notice.maintainedBy')} {clientName}.
-                {t('sandboxPage.notice.visitUs')}
+                {portalName} {t("sandboxPage.notice.maintainedBy")} {clientName}.
+                {t("sandboxPage.notice.visitUs")}
                 <a
-                  href={socialURLs[0]?.url ?? '#'}
+                  href={socialURLs[0]?.url ?? "#"}
                   rel='noopener noreferrer'
                   target='_blank'
                 >
@@ -317,5 +317,5 @@ export const Sandbox: React.FC = () => {
         </section>
       )}
     </main>
-  )
-}
+  );
+};

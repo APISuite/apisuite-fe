@@ -1,11 +1,11 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react", "cypress"],
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "cypress"],
   "extends": [
-    "standard",
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "standard-react",
+    "plugin:react/recommended",
     "plugin:react-hooks/recommended"
   ],
   "settings": {
@@ -15,21 +15,19 @@
   },
   "env": {
     "browser": true,
-    "node": true,
-    "es6": true,
-    "jest": true,
-    "cypress/globals": true
+    "es6": true
   },
   "rules": {
     "react/prop-types": "off",
-    "semi": "error",
+    "react/display-name": "off",
+    "semi": ["error", "always"],
+    "quotes": ["error", "double", { "avoidEscape": true }],
+    "quote-props": ["error", "as-needed"],
     "prefer-const": "error",
     "no-var": "error",
     "comma-dangle": ["error", "always-multiline"],
     "max-len": ["error", { "code": 120, "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreRegExpLiterals": true }],
     "no-prototype-builtins": "off",
-    "quote-props": ["error", "as-needed", {"unnecessary": false}],
-    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unused-vars": ["error", {
       "vars": "all",
@@ -44,13 +42,25 @@
     "@typescript-eslint/member-ordering": ["error"],
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/no-var-requires": "off"
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   },
   "overrides": [
     {
-      "files": ["webpack.config.ts", "*.js"],
+      "files": ["*.js"],
+      "env": {
+        "node": true
+      },
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": ["cypress/*"],
+      "env": {
+        "es6": true,
+        "jest": true,
+        "cypress/globals": true
       }
     }
   ]

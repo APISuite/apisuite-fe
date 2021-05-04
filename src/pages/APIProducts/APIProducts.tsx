@@ -1,62 +1,62 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation, Button, InputBase } from '@apisuite/fe-base'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation, Button, InputBase } from "@apisuite/fe-base";
 
-import APICatalog from 'components/APICatalog'
-import { APIDetails } from 'components/APICatalog/types'
-import { SubscriptionsModal } from 'components/SubscriptionsModal'
+import APICatalog from "components/APICatalog";
+import { APIDetails } from "components/APICatalog/types";
+import { SubscriptionsModal } from "components/SubscriptionsModal";
 
 // TODO: Uncomment once this view does account for 'sandbox' accessible API products.
 // import SubscriptionsRoundedIcon from '@material-ui/icons/SubscriptionsRounded'
-import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
-import PowerRoundedIcon from '@material-ui/icons/PowerRounded'
-import SearchRoundedIcon from '@material-ui/icons/SearchRounded'
-import apiProductCard from 'assets/apiProductCard.svg'
+import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRounded";
+import PowerRoundedIcon from "@material-ui/icons/PowerRounded";
+import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
+import apiProductCard from "assets/apiProductCard.svg";
 
-import useStyles from './styles'
-import { apiProductsSelector } from './selector'
-import { getAPIs } from 'store/subscriptions/actions/getAPIs'
-import { getAllUserApps } from 'store/applications/actions/getAllUserApps'
+import useStyles from "./styles";
+import { apiProductsSelector } from "./selector";
+import { getAPIs } from "store/subscriptions/actions/getAPIs";
+import { getAllUserApps } from "store/applications/actions/getAllUserApps";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
 export const APIProducts: React.FC = () => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const { t } = useTranslation()
-  const { auth, subscriptions } = useSelector(apiProductsSelector)
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { auth, subscriptions } = useSelector(apiProductsSelector);
 
   const initialAPIState: APIDetails = {
     apiAccess: false,
-    apiDescription: '',
-    apiName: '',
-    apiRoutingId: '',
-    apiVersion: '',
+    apiDescription: "",
+    apiName: "",
+    apiRoutingId: "",
+    apiVersion: "",
     hasMoreDetails: false,
     id: 0,
-  }
+  };
 
-  const [recentlyUpdatedAPIs, setRecentlyUpdatedAPIs] = useState<APIDetails[]>([])
-  const [latestUpdatedAPI, setLatestUpdatedAPI] = useState(initialAPIState)
+  const [recentlyUpdatedAPIs, setRecentlyUpdatedAPIs] = useState<APIDetails[]>([]);
+  const [latestUpdatedAPI, setLatestUpdatedAPI] = useState(initialAPIState);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
-    dispatch(getAPIs({}))
-  }, [dispatch])
+    dispatch(getAPIs({}));
+  }, [dispatch]);
 
   useEffect(() => {
     /* Triggers the retrieval and storage of all app-related information we presently
     have on a given user. */
     if (auth?.user) {
-      dispatch(getAllUserApps({ userId: auth.user.id }))
+      dispatch(getAllUserApps({ userId: auth.user.id }));
     }
-  }, [auth, dispatch])
+  }, [auth, dispatch]);
 
   useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'All API products' section. */
-    const allAvailableAPIs = subscriptions.apis
+    const allAvailableAPIs = subscriptions.apis;
 
     if (allAvailableAPIs.length) {
       const newRecentlyUpdatedAPIs: APIDetails[] = allAvailableAPIs.map((api) => {
@@ -68,51 +68,51 @@ export const APIProducts: React.FC = () => {
           /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
           'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
           link to its corresponding 'API Details' view if it has versions. */
-          apiDescription: api?.docs?.info || 'No description presently available.',
+          apiDescription: api?.docs?.info || "No description presently available.",
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
-          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : '',
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : 'No version available',
+          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
+          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
-        }
-      })
+        };
+      });
 
-      setRecentlyUpdatedAPIs(newRecentlyUpdatedAPIs)
-      setLatestUpdatedAPI(newRecentlyUpdatedAPIs[0])
+      setRecentlyUpdatedAPIs(newRecentlyUpdatedAPIs);
+      setLatestUpdatedAPI(newRecentlyUpdatedAPIs[0]);
     }
-  }, [subscriptions])
+  }, [subscriptions]);
 
   // API filtering logic
 
-  const [filteredAPIs, setFilteredAPIs] = useState<any[]>([])
-  const [apiFilters, setAPIFilters] = useState<any[]>(['', false, false, false])
+  const [filteredAPIs, setFilteredAPIs] = useState<any[]>([]);
+  const [apiFilters, setAPIFilters] = useState<any[]>(["", false, false, false]);
 
   const handleAPIFiltering = (
     changeEvent?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     buttonFilterIndex?: number,
   ) => {
-    const apisToFilter: APIDetails[] = recentlyUpdatedAPIs
-    let newFilteredAPIs: APIDetails[] = []
-    const newAPIFilters = apiFilters
+    const apisToFilter: APIDetails[] = recentlyUpdatedAPIs;
+    let newFilteredAPIs: APIDetails[] = [];
+    const newAPIFilters = apiFilters;
 
     // Filtering by access type
-    let productionAccessibleAPIs: APIDetails[] = []
-    const sandboxAccessibleAPIs: APIDetails[] = []
-    let documentationAccessibleAPIs: APIDetails[] = []
+    let productionAccessibleAPIs: APIDetails[] = [];
+    const sandboxAccessibleAPIs: APIDetails[] = [];
+    let documentationAccessibleAPIs: APIDetails[] = [];
 
     if (buttonFilterIndex) {
       if (newAPIFilters[buttonFilterIndex] === false) {
-        newAPIFilters[buttonFilterIndex] = true
+        newAPIFilters[buttonFilterIndex] = true;
       } else {
-        newAPIFilters[buttonFilterIndex] = false
+        newAPIFilters[buttonFilterIndex] = false;
       }
     }
 
     if (newAPIFilters[1]) {
       productionAccessibleAPIs = apisToFilter.filter((api) => {
-        return api.apiAccess === true
-      })
+        return api.apiAccess === true;
+      });
     }
 
     if (newAPIFilters[2]) {
@@ -122,47 +122,47 @@ export const APIProducts: React.FC = () => {
 
     if (newAPIFilters[3]) {
       documentationAccessibleAPIs = apisToFilter.filter((api) => {
-        return api.apiAccess === false
-      })
+        return api.apiAccess === false;
+      });
     }
 
     newFilteredAPIs = newFilteredAPIs.concat(
       productionAccessibleAPIs,
       sandboxAccessibleAPIs,
       documentationAccessibleAPIs,
-    )
+    );
 
     // Filtering by name
 
-    let textFilterContents = apiFilters[0]
+    let textFilterContents = apiFilters[0];
 
     if (changeEvent) {
-      textFilterContents = changeEvent?.target.value
+      textFilterContents = changeEvent?.target.value;
 
-      newAPIFilters[0] = textFilterContents
+      newAPIFilters[0] = textFilterContents;
     }
 
     if (newFilteredAPIs.length) {
       newFilteredAPIs = newFilteredAPIs.filter((api) => {
-        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase())
-      })
+        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase());
+      });
     } else {
       newFilteredAPIs = apisToFilter.filter((api) => {
-        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase())
-      })
+        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase());
+      });
     }
 
-    setFilteredAPIs(newFilteredAPIs)
-    setAPIFilters(newAPIFilters)
-  }
+    setFilteredAPIs(newFilteredAPIs);
+    setAPIFilters(newAPIFilters);
+  };
 
   /* Modal stuff */
 
-  const [isModalOpen, setModalOpen] = React.useState(false)
+  const [isModalOpen, setModalOpen] = React.useState(false);
 
   const toggleModal = () => {
-    setModalOpen(!isModalOpen)
-  }
+    setModalOpen(!isModalOpen);
+  };
 
   return (
     <main className='page-container'>
@@ -176,7 +176,7 @@ export const APIProducts: React.FC = () => {
 
           <div className={classes.latestAPIProductDetails}>
             <p className={classes.latestAPIProductTitle}>
-              {t('apiProductsTab.latestAPIProductTitle')}
+              {t("apiProductsTab.latestAPIProductTitle")}
             </p>
 
             <div className={classes.apiProductNameAndVersion}>
@@ -184,7 +184,7 @@ export const APIProducts: React.FC = () => {
                 {
                   latestUpdatedAPI.apiName
                     ? latestUpdatedAPI.apiName
-                    : t('apiProductsTab.retrievingAPIProductMessage')
+                    : t("apiProductsTab.retrievingAPIProductMessage")
                 }
               </p>
 
@@ -202,7 +202,7 @@ ${latestUpdatedAPI.apiAccess
                 {
                   latestUpdatedAPI.apiVersion
                     ? `v${latestUpdatedAPI.apiVersion}`
-                    : '...'
+                    : "..."
                 }
               </p>
             </div>
@@ -213,10 +213,10 @@ ${latestUpdatedAPI.apiAccess
                 href={
                   (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
                     ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
-                    : '#'
+                    : "#"
                 }
               >
-                {t('apiProductsTab.apiProductButtons.viewDetailsButtonLabel')}
+                {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
               </Button>
 
               {
@@ -225,7 +225,7 @@ ${latestUpdatedAPI.apiAccess
                   className={classes.subscribeButton}
                   onClick={toggleModal}
                 >
-                  {t('apiProductsTab.apiProductButtons.subscribeButtonLabel')}
+                  {t("apiProductsTab.apiProductButtons.subscribeButtonLabel")}
                 </Button>
               }
             </div>
@@ -249,15 +249,15 @@ ${latestUpdatedAPI.apiAccess
                       <p>
                         {
                           latestUpdatedAPI.apiAccess
-                            ? t('apiProductsTab.productionAccess')
-                            : t('apiProductsTab.documentationAccess')
+                            ? t("apiProductsTab.productionAccess")
+                            : t("apiProductsTab.documentationAccess")
                         }
                       </p>
                     </>
                   )
                   : (
                     <a href='/auth/signup'>
-                      {t('apiProductsTab.registerForMoreMessage')}
+                      {t("apiProductsTab.registerForMoreMessage")}
                     </a>
                   )
               }
@@ -275,7 +275,7 @@ ${latestUpdatedAPI.apiAccess
               <SearchRoundedIcon />
             }
             onChange={(changeEvent) => handleAPIFiltering(changeEvent, undefined)}
-            placeholder={t('apiProductsTab.textFilterPlaceholder')}
+            placeholder={t("apiProductsTab.textFilterPlaceholder")}
           />
 
           <div
@@ -285,7 +285,7 @@ ${latestUpdatedAPI.apiAccess
                 : classes.inactiveFilterButtonContainer
             }
             onClick={() => handleAPIFiltering(undefined, 1)}
-            title={t('apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible')}
+            title={t("apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible")}
           >
             <PowerRoundedIcon
               className={
@@ -326,7 +326,7 @@ apiFilters[2]
                 )
             }
             onClick={() => handleAPIFiltering(undefined, 3)}
-            title={t('apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible')}
+            title={t("apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible")}
           >
             <ChromeReaderModeRoundedIcon
               className={
@@ -345,7 +345,7 @@ apiFilters[2]
             ? (
               <div className={classes.retrievingAPIProductMessageContainer}>
                 <p>
-                  {t('apiProductsTab.retrievingAPIProductMessage')}
+                  {t("apiProductsTab.retrievingAPIProductMessage")}
                 </p>
               </div>
             )
@@ -373,5 +373,5 @@ apiFilters[2]
         />
       }
     </main>
-  )
-}
+  );
+};

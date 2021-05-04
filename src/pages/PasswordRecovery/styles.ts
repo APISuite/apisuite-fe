@@ -1,4 +1,4 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 const useStyles = makeStyles((theme) => ({
   boldText: {
@@ -6,124 +6,124 @@ const useStyles = makeStyles((theme) => ({
   },
 
   closeButtonContainer: {
-    alignItems: 'center',
-    cursor: 'pointer',
-    display: 'flex',
+    alignItems: "center",
+    cursor: "pointer",
+    display: "flex",
 
-    '& > p': {
+    "& > p": {
       color: theme.palette.secondary.main,
-      fontSize: '14px',
+      fontSize: "14px",
       fontWeight: 300,
-      marginRight: '15px',
-      textDecoration: 'underline',
+      marginRight: "15px",
+      textDecoration: "underline",
     },
 
-    '& > svg': {
+    "& > svg": {
       color: theme.palette.secondary.main,
-      height: '25px',
-      width: '25px',
+      height: "25px",
+      width: "25px",
     },
   },
 
   form: {
-    maxWidth: '600px',
+    maxWidth: "600px",
   },
 
   formSideContentContainer: {
-    padding: '200px 80px',
-    width: '65%',
+    padding: "200px 80px",
+    width: "65%",
 
-    '@media (min-width: 1440px)': {
-      padding: '200px 80px',
-      width: '55%',
+    "@media (min-width: 1440px)": {
+      padding: "200px 80px",
+      width: "55%",
     },
   },
 
   formSideSubtitle: {
     color: theme.palette.text.primary,
-    fontSize: '20px',
+    fontSize: "20px",
     fontWeight: 300,
-    marginBottom: '35px',
-    maxWidth: '600px',
+    marginBottom: "35px",
+    maxWidth: "600px",
   },
 
   formSideTitle: {
     color: theme.palette.secondary.main,
-    fontSize: '42px',
+    fontSize: "42px",
     fontWeight: 700,
-    marginBottom: '5px',
-    maxWidth: '600px',
+    marginBottom: "5px",
+    maxWidth: "600px",
   },
 
   headerContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    minWidth: '1024px',
-    padding: '15px 80px',
-    position: 'absolute',
-    width: '100%',
+    display: "flex",
+    justifyContent: "space-between",
+    minWidth: "1024px",
+    padding: "15px 80px",
+    position: "absolute",
+    width: "100%",
     zIndex: 1,
   },
 
   iconLogo: {
     color: theme.palette.primary.main,
-    height: 'auto',
-    marginRight: '10px',
-    width: '60px',
+    height: "auto",
+    marginRight: "10px",
+    width: "60px",
   },
 
   imageLogo: {
-    height: 'auto',
-    marginRight: '10px',
-    padding: '5px',
-    width: '60px',
+    height: "auto",
+    marginRight: "10px",
+    padding: "5px",
+    width: "60px",
   },
 
   imageSideContentContainer: {
-    padding: '245px 0px',
-    width: '35%',
+    padding: "245px 0px",
+    width: "35%",
 
-    '@media (min-width: 768px)': {
-      padding: '255px 0px',
+    "@media (min-width: 768px)": {
+      padding: "255px 0px",
     },
 
-    '@media (min-width: 1440px)': {
-      padding: '175px 0px',
-      width: '45%',
+    "@media (min-width: 1440px)": {
+      padding: "175px 0px",
+      width: "45%",
     },
   },
 
   image: {
-    maxWidth: '80%',
+    maxWidth: "80%",
 
-    '@media (min-width: 1440px)': {
-      maxWidth: '500px',
+    "@media (min-width: 1440px)": {
+      maxWidth: "500px",
     },
   },
 
   infoBox: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: theme.palette.info.light,
     borderRadius: theme.palette.dimensions.borderRadius,
-    display: 'flex',
-    height: '100%',
-    marginBottom: '25px',
-    maxHeight: '65px',
-    maxWidth: '600px',
-    textAlign: 'left',
+    display: "flex",
+    height: "100%",
+    marginBottom: "25px",
+    maxHeight: "65px",
+    maxWidth: "600px",
+    textAlign: "left",
   },
 
   infoBoxIcon: {
-    fill: '#46b5ef',
-    transform: 'translate(7px, -7px)',
+    fill: "#46b5ef",
+    transform: "translate(7px, -7px)",
   },
 
   infoBoxText: {
-    color: '#035E86',
-    fontSize: '14px',
+    color: "#035E86",
+    fontSize: "14px",
     fontWeight: 400,
-    lineHeight: '18px',
-    margin: '0px 10px 0px 15px',
+    lineHeight: "18px",
+    margin: "0px 10px 0px 15px",
   },
 
   inputField: {
@@ -133,13 +133,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   inputFieldContainer: {
-    marginBottom: '35px',
+    marginBottom: "35px",
   },
 
   logoAndNameContainer: {
-    alignItems: 'center',
-    cursor: 'pointer',
-    display: 'flex',
+    alignItems: "center",
+    cursor: "pointer",
+    display: "flex",
   },
 
   mainContainer: {
@@ -148,17 +148,17 @@ const useStyles = makeStyles((theme) => ({
 
   pageContentContainer: {
     backgroundColor: theme.palette.background.default,
-    display: 'flex',
-    height: '100vh',
-    minWidth: '1024px',
-    width: '100%',
+    display: "flex",
+    height: "100vh",
+    minWidth: "1024px",
+    width: "100%",
   },
 
   portalName: {
     color: theme.palette.secondary.main,
-    fontSize: '24px',
+    fontSize: "24px",
     fontWeight: 500,
   },
-}))
+}));
 
-export default useStyles
+export default useStyles;

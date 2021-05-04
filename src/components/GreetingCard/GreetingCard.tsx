@@ -1,8 +1,8 @@
-import React from 'react'
-import { Button } from '@apisuite/fe-base'
+import React from "react";
+import { Button } from "@apisuite/fe-base";
 
-import useStyles from './styles'
-import { GreetingCardProps } from './types'
+import useStyles from "./styles";
+import { GreetingCardProps } from "./types";
 
 const GreetingCard: React.FC<GreetingCardProps> = ({
   greetingCardText,
@@ -11,12 +11,12 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
   greetingCardButtonLabel,
   greetingCardButtonLink,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <section className={classes.greetingCardContentsContainer}>
       {
-        typeof greetingCardText === 'string'
+        typeof greetingCardText === "string"
           ? (
             <p className={classes.greetingCardText}>
               {greetingCardText}
@@ -48,7 +48,7 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
           )
       }
     </section>
-  )
-}
+  );
+};
 
-export default GreetingCard
+export default GreetingCard;

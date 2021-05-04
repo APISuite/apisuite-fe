@@ -1,119 +1,119 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import clsx from 'clsx'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
-import { useConfig, Tabs, Tab, Avatar } from '@apisuite/fe-base'
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
-import RoomServiceRoundedIcon from '@material-ui/icons/RoomServiceRounded'
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import clsx from "clsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { useConfig, Tabs, Tab, Avatar } from "@apisuite/fe-base";
+import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import PowerSettingsNewRoundedIcon from "@material-ui/icons/PowerSettingsNewRounded";
+import RoomServiceRoundedIcon from "@material-ui/icons/RoomServiceRounded";
 
-import { ROLES } from 'constants/global'
-import { logout } from 'store/auth/actions/logout'
-import SvgIcon from 'components/SvgIcon'
-import Link from 'components/Link'
-import { linker } from 'util/linker'
-import { getSSOLoginURL } from 'util/getSSOLoginURL'
+import { ROLES } from "constants/global";
+import { logout } from "store/auth/actions/logout";
+import SvgIcon from "components/SvgIcon";
+import Link from "components/Link";
+import { linker } from "util/linker";
+import { getSSOLoginURL } from "util/getSSOLoginURL";
 
-import { useMenu } from './useMenu'
-import useStyles from './styles'
-import { navigationSelector } from './selector'
-import { NavigationProps } from './types'
-import { NavigationLeftActionTypes } from './constants'
-import { toggleNotificationCard } from 'store/notificationCards/actions/toggleNotificationCard'
+import { useMenu } from "./useMenu";
+import useStyles from "./styles";
+import { navigationSelector } from "./selector";
+import { NavigationProps } from "./types";
+import { NavigationLeftActionTypes } from "./constants";
+import { toggleNotificationCard } from "store/notificationCards/actions/toggleNotificationCard";
 
 export const Navigation: React.FC<NavigationProps> = ({ contractible = false, className, ...rest }) => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const { portalName, ownerInfo, sso, providerSignupURL } = useConfig()
-  const { user, userProfile, notificationCards } = useSelector(navigationSelector)
-  const { topTabs, initTabs, loginTabs, goBack } = useMenu()
-  const tabs = user ? loginTabs : initTabs
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { portalName, ownerInfo, sso, providerSignupURL } = useConfig();
+  const { user, userProfile, notificationCards } = useSelector(navigationSelector);
+  const { topTabs, initTabs, loginTabs, goBack } = useMenu();
+  const tabs = user ? loginTabs : initTabs;
 
   const { activeTab, subTabs, activeSubTab } = useMemo(() => {
-    const activeTab = tabs.find((tab) => tab.active)
-    const subTabs = activeTab ? activeTab.subTabs : []
-    const activeSubTab = subTabs?.find((tab) => tab.active)
+    const activeTab = tabs.find((tab) => tab.active);
+    const subTabs = activeTab ? activeTab.subTabs : [];
+    const activeSubTab = subTabs?.find((tab) => tab.active);
 
-    return { activeTab, subTabs, activeSubTab }
-  }, [tabs])
+    return { activeTab, subTabs, activeSubTab };
+  }, [tabs]);
 
   // Expand functionality
   // Note: contractible prop was not changed to prevent breaking changes
-  const [expand, setExpand] = useState(contractible)
+  const [expand, setExpand] = useState(contractible);
 
   // sync expand with contractible
   useEffect(() => {
-    setExpand(contractible)
-  }, [contractible])
+    setExpand(contractible);
+  }, [contractible]);
 
   // sync notifications amount
-  const [amountOfNotifications, setAmountOfNotifications] = useState(0)
+  const [amountOfNotifications, setAmountOfNotifications] = useState(0);
 
   useEffect(() => {
-    if (user?.role.name !== 'admin') {
+    if (user?.role.name !== "admin") {
       if (amountOfNotifications !== notificationCards.instanceOwnerNotificationCardsData.length) {
-        setAmountOfNotifications(notificationCards.instanceOwnerNotificationCardsData.length)
+        setAmountOfNotifications(notificationCards.instanceOwnerNotificationCardsData.length);
       }
     } else {
       if (amountOfNotifications !== notificationCards.nonInstanceOwnerNotificationCardsData.length) {
-        setAmountOfNotifications(notificationCards.nonInstanceOwnerNotificationCardsData.length)
+        setAmountOfNotifications(notificationCards.nonInstanceOwnerNotificationCardsData.length);
       }
     }
-  }, [notificationCards, amountOfNotifications, user?.role.name])
+  }, [notificationCards, amountOfNotifications, user?.role.name]);
 
   // for go back label click
-  const handleGoBackClick = useCallback(() => history.goBack(), [history])
+  const handleGoBackClick = useCallback(() => history.back(), [history]);
 
   const scrollHandler = useCallback(() => {
-    const notScrolled = window.scrollY < 1
+    const notScrolled = window.scrollY < 1;
 
     if (notScrolled !== expand) {
       // if not scrolled expand
-      setExpand(notScrolled)
+      setExpand(notScrolled);
     }
-  }, [expand])
+  }, [expand]);
 
   useEffect(() => {
     // we only listen to scroll if contractible is enabled
     if (!contractible) {
-      return
+      return;
     }
 
-    window.addEventListener('scroll', scrollHandler)
+    window.addEventListener("scroll", scrollHandler);
 
     return () => {
-      window.removeEventListener('scroll', scrollHandler)
-    }
-  }, [contractible, scrollHandler])
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, [contractible, scrollHandler]);
 
   // toggle card
   function handleNotificationClick () {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-    dispatch(toggleNotificationCard())
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    dispatch(toggleNotificationCard());
   }
 
   const handleSSOTabs = (route: string): { route: string; target: string } => {
     const res = {
       route,
-      target: '_blank',
-    }
+      target: "_blank",
+    };
     // FIXME: Use ENUM for string comparinsion
-    if (sso.length && route === '/auth/signin') {
-      res.route = getSSOLoginURL(sso)
-      res.target = '_self'
+    if (sso.length && route === "/auth/signin") {
+      res.route = getSSOLoginURL(sso);
+      res.target = "_self";
     }
-    if (sso.length && route === '/auth/signup') {
-      res.route = linker(providerSignupURL)
+    if (sso.length && route === "/auth/signup") {
+      res.route = linker(providerSignupURL);
     }
 
-    return res
-  }
+    return res;
+  };
 
   // main tabs
   const tabsToRender = tabs.map((tab) => {
     // TODO: why is this rule here?
-    if (tab.isProfileTab) return null
+    if (tab.isProfileTab) return null;
 
     return (
       <Tab
@@ -129,13 +129,13 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         component={Link}
         disableRipple
       />
-    )
-  })
+    );
+  });
 
   return (
     <div className={clsx(classes.root, className, { expand })} {...rest}>
       <header className={clsx({ expand })}>
-        <Link className={classes.logoLink} to={user?.role.name === ROLES.admin.value ? '/dashboard' : '/'}>
+        <Link className={classes.logoLink} to={user?.role.name === ROLES.admin.value ? "/dashboard" : "/"}>
           {/* Portal logo image */}
           {ownerInfo.logo && <img className={classes.logoImage} src={ownerInfo.logo} />}
           {/* Portal logo fallback */}
@@ -156,7 +156,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
           {/* top tabs are only useful when the user does not exist */}
           {!user && topTabs.map((tab) => {
-            const tabWithSSO = handleSSOTabs(tab.route)
+            const tabWithSSO = handleSSOTabs(tab.route);
             return (
               <Tab
                 key={`nav-tab-${tab.label}`}
@@ -169,7 +169,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
                 component={Link}
                 disableRipple
               />
-            )
+            );
           })}
         </Tabs>
 
@@ -244,7 +244,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
                 className={clsx(classes.subTab, { [classes.activeTab]: tab.active, expand })}
                 label={tab.isLogout ? <PowerSettingsNewRoundedIcon /> : tab.label}
                 value={tab.route}
-                component={tab.isLogout ? 'div' : Link}
+                component={tab.isLogout ? "div" : Link}
                 onClick={tab.isLogout ? () => dispatch(logout({})) : undefined}
                 to={tab.isLogout ? undefined : tab.route}
                 disableRipple
@@ -254,5 +254,5 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         </nav>
       )}
     </div>
-  )
-}
+  );
+};

@@ -1,14 +1,14 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   menuItem: {
     fontSize: 16,
-    '& a': {
-      textDecoration: 'none',
+    "& a": {
+      textDecoration: "none",
     },
     paddingBottom: 10,
     paddingLeft: 10,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderLeftWidth: 1,
     borderRightWidth: 0,
     borderTopWidth: 0,
@@ -25,4 +25,4 @@ export default makeStyles((theme) => ({
     borderTopWidth: 0,
     borderBottomWidth: 0,
   },
-}))
+}));

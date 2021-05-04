@@ -1,125 +1,125 @@
-import React, { useEffect, useState } from 'react'
-import { useTranslation, Button, CircularProgress, TextField, TextFieldProps } from '@apisuite/fe-base'
+import React, { useEffect, useState } from "react";
+import { useTranslation, Button, CircularProgress, TextField, TextFieldProps } from "@apisuite/fe-base";
 
-import { ROLES } from 'constants/global'
-import Select from 'components/Select'
-import { FetchTeamMembersResponse, Role } from 'store/profile/types'
-import { User } from 'store/auth/types'
-import { isValidEmail } from 'util/forms'
+import { ROLES } from "constants/global";
+import Select from "components/Select";
+import { FetchTeamMembersResponse, Role } from "store/profile/types";
+import { User } from "store/auth/types";
+import { isValidEmail } from "util/forms";
 
-import { SelectOption } from 'components/Select/types'
+import { SelectOption } from "components/Select/types";
 
-import useStyles from './styles'
-import { useDispatch, useSelector } from 'react-redux'
-import { teamPageSelector } from './selector'
-import { fetchTeamMembers } from 'store/profile/actions/fetchTeamMembers'
-import { fetchRoleOptions } from 'store/profile/actions/fetchRoleOptions'
-import { changeRole } from 'store/profile/actions/changeRole'
-import { resetProfileErrors } from 'store/profile/actions/resetProfileErrors'
-import { inviteTeamMember } from 'store/profile/actions/inviteTeamMember'
+import useStyles from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import { teamPageSelector } from "./selector";
+import { fetchTeamMembers } from "store/profile/actions/fetchTeamMembers";
+import { fetchRoleOptions } from "store/profile/actions/fetchRoleOptions";
+import { changeRole } from "store/profile/actions/changeRole";
+import { resetProfileErrors } from "store/profile/actions/resetProfileErrors";
+import { inviteTeamMember } from "store/profile/actions/inviteTeamMember";
 
 const AUTHORIZED_ROLES = [
   ROLES.admin.value,
   ROLES.organizationOwner.value,
-]
+];
 
 export const TeamPage: React.FC = () => {
-  const classes = useStyles()
-  const dispatch = useDispatch()
-  const { t } = useTranslation()
-  const { currentOrganisation, members, roleOptions, user, requestStatuses } = useSelector(teamPageSelector)
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { currentOrganisation, members, roleOptions, user, requestStatuses } = useSelector(teamPageSelector);
 
-  const [inviteVisible, showInvite] = useState(false)
+  const [inviteVisible, showInvite] = useState(false);
 
   const [input, setInput] = useState({
-    email: '',
-    roleId: '',
-  })
+    email: "",
+    roleId: "",
+  });
 
   const selectOptions = (roles: Role[]) => {
     return roles.map(role => ({
       label: ROLES[role.name]?.label,
       value: role.id,
-      group: 'Role',
-    }))
-  }
+      group: "Role",
+    }));
+  };
 
-  const handleInputs: TextFieldProps['onChange'] = ({ target }) => {
+  const handleInputs: TextFieldProps["onChange"] = ({ target }) => {
     setInput({
       ...input,
       [target.name]: target.value,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     // TODO: why check if currentOrganisation has keys?
-    if (Object.keys(currentOrganisation).length && currentOrganisation.id !== '') {
-      dispatch(fetchTeamMembers({}))
-      dispatch(fetchRoleOptions({}))
+    if (Object.keys(currentOrganisation).length && currentOrganisation.id !== "") {
+      dispatch(fetchTeamMembers({}));
+      dispatch(fetchRoleOptions({}));
     }
-  }, [dispatch, currentOrganisation])
+  }, [dispatch, currentOrganisation]);
 
-  function chooseRole (e: React.ChangeEvent<{}>, option: SelectOption) {
+  function chooseRole (e: React.ChangeEvent<any>, option: SelectOption) {
     if (e && option) {
       setInput({
         ...input,
         roleId: option.value,
-      })
+      });
     }
   }
 
-  const handleChangeRole = (userId: number, orgId: string) => (e: React.ChangeEvent<{}>, option: SelectOption) => {
-    e.preventDefault()
+  const handleChangeRole = (userId: number, orgId: string) => (e: React.ChangeEvent<any>, option: SelectOption) => {
+    e.preventDefault();
     // TODO: review; there's is something wrongly typed somewhere
     if (option.value) {
       dispatch(changeRole({
-        'org_id': orgId.toString(),
-        'user_id': userId.toString(),
-        'role_id': option.value.toString(),
-      }))
+        org_id: orgId.toString(),
+        user_id: userId.toString(),
+        role_id: option.value.toString(),
+      }));
     }
-  }
+  };
 
   const toggle = () => {
-    showInvite(true)
-  }
+    showInvite(true);
+  };
 
   const inputErrors = {
     email: input.email.length > 0 && !isValidEmail(input.email),
     role: !input.roleId,
-  }
+  };
 
   const canInvite = (role: string) => {
-    return AUTHORIZED_ROLES.includes(role)
-  }
+    return AUTHORIZED_ROLES.includes(role);
+  };
 
   const isEmpty = (members: FetchTeamMembersResponse[], roleOptions: Role[]) => {
     // check if the arrays contain empty data
-    const hasEmptyMember = members.every((m) => !(m.Organization?.id && m.Role?.id && m.User?.id))
-    const hasEmptyRole = roleOptions.every((r) => !(r?.id && r?.name))
+    const hasEmptyMember = members.every((m) => !(m.Organization?.id && m.Role?.id && m.User?.id));
+    const hasEmptyRole = roleOptions.every((r) => !(r?.id && r?.name));
 
-    return hasEmptyMember || hasEmptyRole
-  }
+    return hasEmptyMember || hasEmptyRole;
+  };
 
   const getUserMemberRole = (user: User) => {
-    const member = members.find((member) => user.id === member.User?.id)
-    return member?.Role || user.role
-  }
+    const member = members.find((member) => user.id === member.User?.id);
+    return member?.Role || user.role;
+  };
 
   useEffect(() => {
     if (requestStatuses.inviteMemberRequest.invited || requestStatuses.inviteMemberRequest.error) {
-      showInvite(false)
-      dispatch(resetProfileErrors({}))
-      setInput((s) => ({ ...s, email: '' }))
+      showInvite(false);
+      dispatch(resetProfileErrors({}));
+      setInput((s) => ({ ...s, email: "" }));
     }
-  }, [requestStatuses.inviteMemberRequest, dispatch])
+  }, [requestStatuses.inviteMemberRequest, dispatch]);
 
   const inviteCard = () => (
     <form
       className={classes.inviteCard}
       onSubmit={(e) => {
-        e.preventDefault()
-        dispatch(inviteTeamMember({ email: input.email, 'role_id': input.roleId.toString() }))
+        e.preventDefault();
+        dispatch(inviteTeamMember({ email: input.email, role_id: input.roleId.toString() }));
       }}
     >
       <Button
@@ -130,7 +130,7 @@ export const TeamPage: React.FC = () => {
         {
           requestStatuses.inviteMemberRequest.isRequesting
             ? <CircularProgress className={classes.loading} size={20} />
-            : t('rbac.team.send')
+            : t("rbac.team.send")
         }
       </Button>
 
@@ -139,7 +139,7 @@ export const TeamPage: React.FC = () => {
         error={inputErrors.email}
         fullWidth={false}
         // FIXME: not translated
-        helperText={inputErrors.email && 'Please insert a valid email.'}
+        helperText={inputErrors.email && "Please insert a valid email."}
         id='email-field'
         InputProps={{
           classes: { input: classes.emailTextfield },
@@ -159,14 +159,14 @@ export const TeamPage: React.FC = () => {
         options={selectOptions(roleOptions)}
       />
     </form>
-  )
+  );
 
   const showMembers = () => (
     <>
       <div className={classes.table}>
         <div className={classes.header}>
-          <div>{t('rbac.team.header')}</div>
-          <div className={classes.actions}>{t('rbac.team.actions')}</div>
+          <div>{t("rbac.team.header")}</div>
+          <div className={classes.actions}>{t("rbac.team.actions")}</div>
         </div>
 
         {
@@ -187,7 +187,7 @@ export const TeamPage: React.FC = () => {
                 user &&
                 <Select
                   className={classes.select}
-                  disabled={getUserMemberRole(user).name === 'developer' || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level}
+                  disabled={getUserMemberRole(user).name === "developer" || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level}
                   onChange={handleChangeRole(member.User.id, member.Organization.id)}
                   options={selectOptions(roleOptions)}
                   selected={selectOptions(roleOptions).find(option => option.label === ROLES[member.Role.name].label)}
@@ -202,19 +202,19 @@ export const TeamPage: React.FC = () => {
         !inviteVisible && user
           ? (
             canInvite(getUserMemberRole(user).name) &&
-            <Button className={classes.btn} onClick={toggle} style={{ marginTop: 24 }}>{t('rbac.team.invite')} </Button>
+            <Button className={classes.btn} onClick={toggle} style={{ marginTop: 24 }}>{t("rbac.team.invite")} </Button>
           )
           : inviteCard()
       }
     </>
-  )
+  );
 
-  const loading = requestStatuses.getMembersRequest.isRequesting || requestStatuses.getRolesRequest.isRequesting
+  const loading = requestStatuses.getMembersRequest.isRequesting || requestStatuses.getRolesRequest.isRequesting;
 
   return (
     <div className={`page-container ${classes.root}`}>
       <section className={classes.contentContainer}>
-        <h1 className={classes.title}>{t('rbac.team.title')}</h1>
+        <h1 className={classes.title}>{t("rbac.team.title")}</h1>
 
         <>
           {
@@ -228,5 +228,5 @@ export const TeamPage: React.FC = () => {
         </>
       </section>
     </div>
-  )
-}
+  );
+};

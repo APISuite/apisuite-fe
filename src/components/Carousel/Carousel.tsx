@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useRef } from 'react'
-import ReactSlidy from 'react-slidy/lib'
-import { useTheme, Fade, Button } from '@apisuite/fe-base'
-import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded'
-import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUncheckedRounded'
-import clsx from 'clsx'
+import React, { useCallback, useEffect, useRef } from "react";
+import ReactSlidy from "react-slidy/lib";
+import { useTheme, Fade, Button } from "@apisuite/fe-base";
+import RadioButtonCheckedRoundedIcon from "@material-ui/icons/RadioButtonCheckedRounded";
+import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
+import clsx from "clsx";
 
-import useStyles from './styles'
-import { CarouselSlideProps, CarouselProps } from './types'
+import useStyles from "./styles";
+import { CarouselSlideProps, CarouselProps } from "./types";
 
-import 'react-slidy/lib/index.scss'
+import "react-slidy/lib/index.scss";
 
 // Carousel slides
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
@@ -21,13 +21,13 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   carouselSlideImage,
   carouselSlideText,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div
       className={clsx(classes.carouselSlideOuterContainer, {
-        [classes.sideBySideSlideContentsPlacement]: carouselSlideContentsPlacement === 'side-by-side',
-        [classes.topToBottomSlideContentsPlacement]: carouselSlideContentsPlacement !== 'side-by-side',
+        [classes.sideBySideSlideContentsPlacement]: carouselSlideContentsPlacement === "side-by-side",
+        [classes.topToBottomSlideContentsPlacement]: carouselSlideContentsPlacement !== "side-by-side",
       })}
     >
       {
@@ -52,8 +52,8 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const Carousel: React.FC<CarouselProps> = ({
   carouselBackgroundColor,
@@ -67,45 +67,45 @@ export const Carousel: React.FC<CarouselProps> = ({
   slidingAnimationDuration,
   timeBetweenSlides,
 }) => {
-  const classes = useStyles()
-  const { palette } = useTheme()
-  const timer = useRef<ReturnType<typeof setInterval>>()
-  const [slideNumber, setSlideNumber] = React.useState(initialSlide || 0)
+  const classes = useStyles();
+  const { palette } = useTheme();
+  const timer = useRef<ReturnType<typeof setInterval>>();
+  const [slideNumber, setSlideNumber] = React.useState(initialSlide || 0);
 
   const handleCarouselSlideChange = (newSlideNumber: number) => {
-    setSlideNumber(newSlideNumber)
-  }
+    setSlideNumber(newSlideNumber);
+  };
 
-  const [isHoveringSlide, setIsHoveringSlide] = React.useState(false)
+  const [isHoveringSlide, setIsHoveringSlide] = React.useState(false);
 
   const runSlides = useCallback(() => {
     if (!isHoveringSlide) {
       if (slideNumber < (slidesArray.length - 1)) {
-        setSlideNumber((s) => s + 1)
+        setSlideNumber((s) => s + 1);
       } else {
-        setSlideNumber(0)
+        setSlideNumber(0);
       }
     }
-  }, [slideNumber, isHoveringSlide, slidesArray])
+  }, [slideNumber, isHoveringSlide, slidesArray]);
 
   useEffect(() => {
     if (slidesAutoPlay) {
       timer.current = setInterval(() => {
-        runSlides()
+        runSlides();
       // TODO: fix type
-      }, timeBetweenSlides) as any
+      }, timeBetweenSlides) as any;
     }
 
     return () => {
-      timer.current && clearInterval(timer.current)
-    }
-  }, [runSlides, timeBetweenSlides, slidesAutoPlay])
+      timer.current && clearInterval(timer.current);
+    };
+  }, [runSlides, timeBetweenSlides, slidesAutoPlay]);
 
   const carouselSlides = slidesArray.map((slide, index) =>
     <div
       key={`slide_${index}`}
-      onMouseEnter={() => { setIsHoveringSlide(true) }}
-      onMouseLeave={() => { setIsHoveringSlide(false) }}
+      onMouseEnter={() => { setIsHoveringSlide(true); }}
+      onMouseLeave={() => { setIsHoveringSlide(false); }}
     >
       <CarouselSlide
         carouselSlideButton={slide.slideButton}
@@ -116,7 +116,7 @@ export const Carousel: React.FC<CarouselProps> = ({
         carouselSlideText={slide.slideText}
       />
     </div>,
-  )
+  );
 
   const carouselSliderIconButtons = iconsOfSliderButtonsArray ? (iconsOfSliderButtonsArray.map((icon, index) =>
     <button
@@ -144,7 +144,7 @@ export const Carousel: React.FC<CarouselProps> = ({
         index === slideNumber ? <RadioButtonCheckedRoundedIcon /> : <RadioButtonUncheckedRoundedIcon />
       }
     </button>,
-  ))
+  ));
 
   return (
     <>
@@ -158,8 +158,8 @@ export const Carousel: React.FC<CarouselProps> = ({
             carouselBackgroundImage
               ? {
                 background: `url(${carouselBackgroundImage})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
               }
               // TODO: update this config
               : { backgroundColor: carouselBackgroundColor || palette.grey[700] }
@@ -184,5 +184,5 @@ export const Carousel: React.FC<CarouselProps> = ({
         </div>
       </Fade>
     </>
-  )
-}
+  );
+};

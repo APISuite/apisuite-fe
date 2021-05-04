@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect'
-import { Store } from 'store/types'
+import { createSelector } from "reselect";
+import { Store } from "store/types";
 
 export const invitationFormSelector = createSelector(
   ({ auth }: Store) => auth,
@@ -8,4 +8,4 @@ export const invitationFormSelector = createSelector(
     invitation: auth.invitation,
     invitationError: auth.error,
   }),
-)
+);

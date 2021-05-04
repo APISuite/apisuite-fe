@@ -1,12 +1,12 @@
-import { Extension as ExtensionV1 } from '@apisuite/extension-ui-types/v1'
-import { injectReducer, injectSaga } from 'store'
-import { getCloudUrlForSubdomainSuffix } from 'constants/endpoints'
+import { Extension as ExtensionV1 } from "@apisuite/extension-ui-types/v1";
+import { injectReducer, injectSaga } from "store";
+import { getCloudUrlForSubdomainSuffix } from "constants/endpoints";
 import request, {
   axios,
   apiRequest,
   requestInform,
   apiRequestInform,
-} from 'util/request'
+} from "util/request";
 
 export const paramsV1 = {
   getCloudUrlForSubdomainSuffix,
@@ -21,7 +21,7 @@ export const paramsV1 = {
     requestInform,
     apiRequestInform,
   },
-}
+};
 
 /**
  * Given an Extension class and the extension's configuration, creates an
@@ -41,17 +41,17 @@ export const paramsV1 = {
  */
 export const instanceExtension = <T, U extends any[]> (
   Extension: { new (...args: U): T },
-  config: U[0]['config'],
+  config: U[0]["config"],
 ): T => {
-  const E = Extension as unknown as ExtensionV1
+  const E = Extension as unknown as ExtensionV1;
   switch (E.protocolVersion) {
-    case '1': {
-      const args = [[{ core: paramsV1, config }]] as any[]
-      return new Extension(...args[0])
+    case "1": {
+      const args = [[{ core: paramsV1, config }]] as any[];
+      return new Extension(...args[0]);
     }
     default: {
-      const args = [[{ core: paramsV1, config }]] as any[]
-      return new Extension(...args[0])
+      const args = [[{ core: paramsV1, config }]] as any[];
+      return new Extension(...args[0]);
     }
   }
-}
+};

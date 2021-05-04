@@ -1,7 +1,7 @@
-import { makeStyles } from '@apisuite/fe-base'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles(({
   root: {
-    height: '100%',
+    height: "100%",
   },
-}))
+}));

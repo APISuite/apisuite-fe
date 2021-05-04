@@ -1,115 +1,115 @@
-import update from 'immutability-helper'
+import update from "immutability-helper";
 
-import { ProfileActions } from './actions/types'
-import { RESET_PROFILE_ERRORS } from './actions/resetProfileErrors'
-import { FETCH_TEAM_MEMBERS, FETCH_TEAM_MEMBERS_ERROR, FETCH_TEAM_MEMBERS_SUCCESS } from './actions/fetchTeamMembers'
-import { INVITE_TEAM_MEMBER, INVITE_TEAM_MEMBER_ERROR, INVITE_TEAM_MEMBER_SUCCESS } from './actions/inviteTeamMember'
-import { GET_PROFILE_SUCCESS } from './actions/getProfile'
-import { UPDATE_PROFILE, UPDATE_PROFILE_ERROR, UPDATE_PROFILE_SUCCESS } from './actions/updateProfile'
-import { FETCH_ORG, FETCH_ORG_ERROR, FETCH_ORG_SUCCESS } from './actions/fetchOrg'
-import { CREATE_ORG, CREATE_ORG_ERROR, CREATE_ORG_SUCCESS } from './actions/createOrg'
-import { UPDATE_ORG, UPDATE_ORG_ERROR, UPDATE_ORG_SUCCESS } from './actions/updateOrg'
-import { SWITCH_ORG, SWITCH_ORG_ERROR, SWITCH_ORG_SUCCESS } from './actions/switchOrg'
-import { FETCH_ROLE_OPTIONS_SUCCESS } from './actions/fetchRoleOptions'
-import { CHANGE_ROLE, CHANGE_ROLE_ERROR, CHANGE_ROLE_SUCCESS } from './actions/changeRole'
-import { DELETE_ACCOUNT, DELETE_ACCOUNT_ERROR, DELETE_ACCOUNT_SUCCESS } from './actions/deleteAccount'
-import { LogoutAction } from 'store/auth/actions/types'
-import { ProfileStore } from './types'
-import { LOGOUT } from 'store/auth/actions/logout'
+import { ProfileActions } from "./actions/types";
+import { RESET_PROFILE_ERRORS } from "./actions/resetProfileErrors";
+import { FETCH_TEAM_MEMBERS, FETCH_TEAM_MEMBERS_ERROR, FETCH_TEAM_MEMBERS_SUCCESS } from "./actions/fetchTeamMembers";
+import { INVITE_TEAM_MEMBER, INVITE_TEAM_MEMBER_ERROR, INVITE_TEAM_MEMBER_SUCCESS } from "./actions/inviteTeamMember";
+import { GET_PROFILE_SUCCESS } from "./actions/getProfile";
+import { UPDATE_PROFILE, UPDATE_PROFILE_ERROR, UPDATE_PROFILE_SUCCESS } from "./actions/updateProfile";
+import { FETCH_ORG, FETCH_ORG_ERROR, FETCH_ORG_SUCCESS } from "./actions/fetchOrg";
+import { CREATE_ORG, CREATE_ORG_ERROR, CREATE_ORG_SUCCESS } from "./actions/createOrg";
+import { UPDATE_ORG, UPDATE_ORG_ERROR, UPDATE_ORG_SUCCESS } from "./actions/updateOrg";
+import { SWITCH_ORG, SWITCH_ORG_ERROR, SWITCH_ORG_SUCCESS } from "./actions/switchOrg";
+import { FETCH_ROLE_OPTIONS_SUCCESS } from "./actions/fetchRoleOptions";
+import { CHANGE_ROLE, CHANGE_ROLE_ERROR, CHANGE_ROLE_SUCCESS } from "./actions/changeRole";
+import { DELETE_ACCOUNT, DELETE_ACCOUNT_ERROR, DELETE_ACCOUNT_SUCCESS } from "./actions/deleteAccount";
+import { LogoutAction } from "store/auth/actions/types";
+import { ProfileStore } from "./types";
+import { LOGOUT } from "store/auth/actions/logout";
 
 const initialState: ProfileStore = {
   members: [{
-    'Organization': {
-      id: '',
-      name: '',
+    Organization: {
+      id: "",
+      name: "",
     },
-    'User': {
-      name: '',
+    User: {
+      name: "",
       id: 0,
     },
-    'Role': {
-      name: '',
-      id: '',
+    Role: {
+      name: "",
+      id: "",
     },
   }],
   profile: {
-    'current_org': {
-      name: '',
-      id: '',
-      'member_since': '',
+    current_org: {
+      name: "",
+      id: "",
+      member_since: "",
       role: {
-        name: '',
-        id: '',
+        name: "",
+        id: "",
       },
     },
-    'orgs_member': [{
-      id: '',
-      name: '',
+    orgs_member: [{
+      id: "",
+      name: "",
     }],
     user: {
-      email: '',
-      id: '',
-      'last_login': '',
-      name: '',
+      email: "",
+      id: "",
+      last_login: "",
+      name: "",
       oidcProvider: null,
     },
   },
   roleOptions: [{
-    name: '',
-    id: '',
+    name: "",
+    id: "",
   }],
   org: {
-    description: '',
-    id: '',
-    logo: '',
-    name: '',
-    privacyUrl: '',
-    supportUrl: '',
-    tosUrl: '',
-    vat: '',
-    websiteUrl: '',
-    youtubeUrl: '',
+    description: "",
+    id: "",
+    logo: "",
+    name: "",
+    privacyUrl: "",
+    supportUrl: "",
+    tosUrl: "",
+    vat: "",
+    websiteUrl: "",
+    youtubeUrl: "",
   },
   requestStatuses: {
     getMembersRequest: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
     getRolesRequest: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
     inviteMemberRequest: {
       isRequesting: false,
       invited: false,
-      error: '',
+      error: "",
     },
     updateProfileRequest: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
     createOrgRequest: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
     updateOrgRequest: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
     switchOrgRequest: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
     changeRoleRequest: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
     deleteAccount: {
       isRequesting: false,
-      error: '',
+      error: "",
     },
   },
-}
+};
 
 export default function profileReducer (
   state = initialState,
@@ -118,26 +118,26 @@ export default function profileReducer (
   switch (action.type) {
     // General actions
     case LOGOUT: {
-      return initialState
+      return initialState;
     }
 
     case RESET_PROFILE_ERRORS: {
       return update(state, {
         requestStatuses: {
           inviteMemberRequest: {
-            error: { $set: '' },
+            error: { $set: "" },
           },
           updateProfileRequest: {
-            error: { $set: '' },
+            error: { $set: "" },
           },
           updateOrgRequest: {
-            error: { $set: '' },
+            error: { $set: "" },
           },
           changeRoleRequest: {
-            error: { $set: '' },
+            error: { $set: "" },
           },
         },
-      })
+      });
     }
 
     // Team members
@@ -148,7 +148,7 @@ export default function profileReducer (
             isRequesting: { $set: true },
           },
         },
-      })
+      });
     }
 
     case FETCH_TEAM_MEMBERS_SUCCESS: {
@@ -162,7 +162,7 @@ export default function profileReducer (
           },
         },
         members: { $set: action.members },
-      })
+      });
     }
 
     case FETCH_TEAM_MEMBERS_ERROR: {
@@ -172,7 +172,7 @@ export default function profileReducer (
             isRequesting: { $set: false },
           },
         },
-      })
+      });
     }
 
     case INVITE_TEAM_MEMBER: {
@@ -181,10 +181,10 @@ export default function profileReducer (
           inviteMemberRequest: {
             isRequesting: { $set: true },
             invited: { $set: false },
-            error: { $set: '' },
+            error: { $set: "" },
           },
         },
-      })
+      });
     }
 
     case INVITE_TEAM_MEMBER_SUCCESS: {
@@ -195,7 +195,7 @@ export default function profileReducer (
             invited: { $set: true },
           },
         },
-      })
+      });
     }
 
     case INVITE_TEAM_MEMBER_ERROR: {
@@ -207,7 +207,7 @@ export default function profileReducer (
             error: { $set: action.error },
           },
         },
-      })
+      });
     }
 
     // Profile details
@@ -217,7 +217,7 @@ export default function profileReducer (
         'Profile -> Overview' view to NOT be rendered as a result of an error
         ('profile' being 'undefined'). */
         profile: { $set: action.profile },
-      })
+      });
     }
 
     case UPDATE_PROFILE: {
@@ -225,10 +225,10 @@ export default function profileReducer (
         requestStatuses: {
           updateProfileRequest: {
             isRequesting: { $set: true },
-            error: { $set: '' },
+            error: { $set: "" },
           },
         },
-      })
+      });
     }
 
     case UPDATE_PROFILE_SUCCESS: {
@@ -238,7 +238,7 @@ export default function profileReducer (
             isRequesting: { $set: false },
           },
         },
-      })
+      });
     }
 
     case UPDATE_PROFILE_ERROR: {
@@ -249,7 +249,7 @@ export default function profileReducer (
             error: { $set: action.error },
           },
         },
-      })
+      });
     }
 
     // Organisation details
@@ -260,7 +260,7 @@ export default function profileReducer (
             isRequesting: { $set: true },
           },
         },
-      })
+      });
     }
 
     case FETCH_ORG_SUCCESS: {
@@ -275,7 +275,7 @@ export default function profileReducer (
         'Profile -> Organisation' view to NOT be rendered as a result of an error
         ('org' being 'undefined'). */
         org: { $set: action.org },
-      })
+      });
     }
 
     case FETCH_ORG_ERROR: {
@@ -285,7 +285,7 @@ export default function profileReducer (
             isRequesting: { $set: false },
           },
         },
-      })
+      });
     }
 
     case CREATE_ORG: {
@@ -293,10 +293,10 @@ export default function profileReducer (
         requestStatuses: {
           createOrgRequest: {
             isRequesting: { $set: true },
-            error: { $set: '' },
+            error: { $set: "" },
           },
         },
-      })
+      });
     }
 
     case CREATE_ORG_SUCCESS: {
@@ -308,7 +308,7 @@ export default function profileReducer (
         },
 
         org: { $set: action.org },
-      })
+      });
     }
 
     case CREATE_ORG_ERROR: {
@@ -319,7 +319,7 @@ export default function profileReducer (
             error: { $set: action.error },
           },
         },
-      })
+      });
     }
 
     case UPDATE_ORG: {
@@ -327,10 +327,10 @@ export default function profileReducer (
         requestStatuses: {
           updateOrgRequest: {
             isRequesting: { $set: true },
-            error: { $set: '' },
+            error: { $set: "" },
           },
         },
-      })
+      });
     }
 
     case UPDATE_ORG_SUCCESS: {
@@ -340,7 +340,7 @@ export default function profileReducer (
             isRequesting: { $set: false },
           },
         },
-      })
+      });
     }
 
     case UPDATE_ORG_ERROR: {
@@ -351,7 +351,7 @@ export default function profileReducer (
             error: { $set: action.error },
           },
         },
-      })
+      });
     }
 
     case SWITCH_ORG: {
@@ -359,10 +359,10 @@ export default function profileReducer (
         requestStatuses: {
           switchOrgRequest: {
             isRequesting: { $set: true },
-            error: { $set: '' },
+            error: { $set: "" },
           },
         },
-      })
+      });
     }
 
     case SWITCH_ORG_SUCCESS: {
@@ -372,7 +372,7 @@ export default function profileReducer (
             isRequesting: { $set: false },
           },
         },
-      })
+      });
     }
 
     case SWITCH_ORG_ERROR: {
@@ -383,14 +383,14 @@ export default function profileReducer (
             error: { $set: action.error },
           },
         },
-      })
+      });
     }
 
     // User's role
     case FETCH_ROLE_OPTIONS_SUCCESS: {
       return update(state, {
         roleOptions: { $set: action.roles },
-      })
+      });
     }
 
     case CHANGE_ROLE: {
@@ -398,10 +398,10 @@ export default function profileReducer (
         requestStatuses: {
           changeRoleRequest: {
             isRequesting: { $set: true },
-            error: { $set: '' },
+            error: { $set: "" },
           },
         },
-      })
+      });
     }
 
     case CHANGE_ROLE_SUCCESS: {
@@ -411,7 +411,7 @@ export default function profileReducer (
             isRequesting: { $set: false },
           },
         },
-      })
+      });
     }
 
     case CHANGE_ROLE_ERROR: {
@@ -422,7 +422,7 @@ export default function profileReducer (
             error: { $set: action.error },
           },
         },
-      })
+      });
     }
 
     // User's account deletion
@@ -433,7 +433,7 @@ export default function profileReducer (
             isRequesting: { $set: true },
           },
         },
-      })
+      });
     }
 
     case DELETE_ACCOUNT_SUCCESS:
@@ -444,10 +444,10 @@ export default function profileReducer (
             isRequesting: { $set: false },
           },
         },
-      })
+      });
     }
 
     default:
-      return state
+      return state;
   }
 }

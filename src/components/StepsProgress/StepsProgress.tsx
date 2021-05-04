@@ -1,16 +1,16 @@
-import * as React from 'react'
+import React from "react";
 
-import { StepsProgressProps } from './types'
+import { StepsProgressProps } from "./types";
 
-import useStyles from './styles'
+import useStyles from "./styles";
 
-import clsx from 'clsx'
+import clsx from "clsx";
 
 const StepsProgress: React.FC<StepsProgressProps> = ({
   currentStep,
   steps,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <ul className={classes.container}>
@@ -35,12 +35,12 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
                       index + 1 === currentStep && classes.stepTitleCurrent,
                     )
                   }
-                  style={{ transform: 'translateX(-32px) translateY(24px)' }}
+                  style={{ transform: "translateX(-32px) translateY(24px)" }}
                 >
                   {step}
                 </label>
               </li>
-            )
+            );
           }
 
           return (
@@ -71,11 +71,11 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
                 {step}
               </label>
             </li>
-          )
+          );
         })
       }
     </ul>
-  )
-}
+  );
+};
 
-export default StepsProgress
+export default StepsProgress;

@@ -1,18 +1,18 @@
-import * as React from 'react'
-import { LayoutProps } from './types'
-import useStyles from './styles'
+import React from "react";
+import { LayoutProps } from "./types";
+import useStyles from "./styles";
 
 const EssentialLayout: React.FC<LayoutProps> = ({
   // title,
   children,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default EssentialLayout
+export default EssentialLayout;
