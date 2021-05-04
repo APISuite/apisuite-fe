@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useConfig, Tabs, Tab, Avatar } from "@apisuite/fe-base";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
 import PowerSettingsNewRoundedIcon from "@material-ui/icons/PowerSettingsNewRounded";
@@ -63,7 +63,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   }, [notificationCards, amountOfNotifications, user?.role.name]);
 
   // for go back label click
-  const handleGoBackClick = useCallback(() => history.back(), [history]);
+  const handleGoBackClick = useCallback(() => history.goBack(), [history]);
 
   const scrollHandler = useCallback(() => {
     const notScrolled = window.scrollY < 1;

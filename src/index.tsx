@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { Router } from "react-router";
+import { Router } from "react-router-dom";
 import { ConfigProvider } from "@apisuite/fe-base";
 import store, { history } from "store";
 import { API_URL } from "constants/endpoints";

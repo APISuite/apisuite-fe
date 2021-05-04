@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams } from "react-router-dom";
 import { useConfig, useTranslation } from "@apisuite/fe-base";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";

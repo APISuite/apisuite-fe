@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import update from "immutability-helper";
 import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps } from "@apisuite/fe-base";
 import Visibility from "@material-ui/icons/Visibility";

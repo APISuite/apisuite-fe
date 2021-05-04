@@ -5,7 +5,6 @@ import { AuthStore } from "store/auth/types";
 import { NotificationCardsStore } from "./notificationCards/types";
 import { NotificationStackStore } from "./notificationStack/types";
 import { ProfileStore } from "store/profile/types";
-import { RouterState } from "connected-react-router";
 import { SubscriptionsStore } from "./subscriptions/types";
 
 export interface Store {
@@ -17,6 +16,5 @@ export interface Store {
   notificationCards: NotificationCardsStore,
   profile: ProfileStore,
   register: any,
-  router: RouterState,
   subscriptions: SubscriptionsStore,
 }

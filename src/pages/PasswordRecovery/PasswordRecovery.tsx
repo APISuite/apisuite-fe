@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useConfig, useTranslation, IconButton, InputAdornment, TextField, TextFieldProps } from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router-dom";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
@@ -22,7 +22,7 @@ export const PasswordRecovery: React.FC = () => {
   const dispatch = useDispatch();
   const { ownerInfo, portalName, supportURL } = useConfig();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<any>();
   const [t] = useTranslation();
   const auth = useSelector(passwordRecoverySelector);
   const stage = location.state?.stage ?? "forgot";
@@ -74,7 +74,6 @@ export const PasswordRecovery: React.FC = () => {
     setUserHasSubmitted(true);
 
     if (stage === "recover") {
-      // FIXME: use middleware do not pass history in actions
       dispatch(recoverPassword({ token: location.state.token, password: state.userInput }));
     } else {
       dispatch(forgotPassword({ email: state.userInput }));

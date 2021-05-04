@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { useQuery } from "util/useQuery";
 
 import { confirmRegistration } from "store/auth/actions/confirmRegistration";

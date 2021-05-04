@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch } from "react-router-dom";
 import { Layouts } from "@apisuite/extension-ui-types";
 
 import { getRoutes } from "util/extensions";
@@ -108,7 +108,7 @@ function RouteWrapper ({
         />
       );
     });
-  }, [Component, render, auth, role, layoutProps]);
+  }, [Component, render, auth, role, Layout, layoutProps]);
 
   return (
     <Route render={renderFunc} {...rest} />

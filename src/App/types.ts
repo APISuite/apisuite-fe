@@ -1,4 +1,4 @@
-import { RouteProps } from "react-router";
+import { RouteProps } from "react-router-dom";
 import { TabProps } from "components/Navigation/types";
 import { LoginAction } from "store/auth/actions/types";
 
