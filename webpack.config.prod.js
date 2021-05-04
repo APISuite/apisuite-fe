@@ -9,6 +9,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const RobotstxtPlugin = require("robotstxt-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { version } = require("./package.json");
 
 module.exports = {
   mode: "production",
@@ -23,6 +24,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       favicon: path.resolve(__dirname, "src", "favicon.ico"),
       template: path.resolve(__dirname, "src", "index.html"),
+      version,
       minify: {
         collapseWhitespace: true,
       },
