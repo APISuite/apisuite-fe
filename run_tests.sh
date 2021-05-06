@@ -10,6 +10,8 @@ set -e
 # Email       : delio@cloudoki.com
 ###################################################################
 
+. ./generate_envfile.sh
+
 . ./install_dependencies.sh
 
 CONFIG=develop
