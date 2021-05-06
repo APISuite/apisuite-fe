@@ -18,5 +18,7 @@ if [[ "$CIRCLE_BRANCH" = "staging" || "$CIRCLE_BRANCH" = "production" ]]; then
   CONFIG=$CIRCLE_BRANCH
 fi
 
+echo "127.0.0.1 localhost.develop.apisuite.io" >> /etc/hosts
+
 npm install
 npm run test
