@@ -19,7 +19,4 @@ if [[ "$CIRCLE_BRANCH" = "staging" || "$CIRCLE_BRANCH" = "production" ]]; then
 fi
 
 npm install
-npm run pretest
-
-# NOTE: running pretest only for now (lint/types) since there are still no cypress tests
-# npm run test
+npm run test
