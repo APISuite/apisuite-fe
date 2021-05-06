@@ -20,5 +20,7 @@ fi
 
 echo 127.0.0.1 localhost.develop.apisuite.io | sudo tee -a /etc/hosts
 
+sudo cat /etc/hosts
+
 npm install
 npm run test
