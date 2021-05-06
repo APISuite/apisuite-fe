@@ -9,12 +9,8 @@
     "@babel/typescript"
   ],
   "env": {
-    "dev": {
+    "development": {
       "plugins": ["react-hot-loader/babel"]
-    },
-    "test": {
-      "presets": [["@babel/env"]],
-      "plugins": ["@babel/plugin-transform-runtime"]
     },
     "production": {
       "plugins": ["babel-plugin-jsx-remove-data-test-id"]

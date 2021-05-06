@@ -1,0 +1,27 @@
+{
+  "user": {
+    "id": 1,
+    "name": "Jane Doe",
+    "bio": "",
+    "email": "janedoe@apisuite.com",
+    "mobile": "0",
+    "avatar": "https://api.develop.apisuite.io/media/users-avatars-1.jpeg",
+    "last_login": "2021-05-06T10:40:40.702Z",
+    "oidcProvider": null
+  },
+  "orgs_member": [
+    {
+      "id": 1,
+      "name": "ACME"
+    }
+  ],
+  "current_org": {
+    "name": "ACME",
+    "id": 1,
+    "member_since": "2021-02-24T07:47:53.839Z",
+    "role": {
+      "name": "admin",
+      "id": 2
+    }
+  }
+}

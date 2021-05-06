@@ -7,8 +7,10 @@ import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
 import PowerSettingsNewRoundedIcon from "@material-ui/icons/PowerSettingsNewRounded";
 import RoomServiceRoundedIcon from "@material-ui/icons/RoomServiceRounded";
 
+import { testIds } from "testIds";
 import { ROLES } from "constants/global";
 import { logout } from "store/auth/actions/logout";
+import { toggleNotificationCard } from "store/notificationCards/actions/toggleNotificationCard";
 import SvgIcon from "components/SvgIcon";
 import Link from "components/Link";
 import { linker } from "util/linker";
@@ -19,7 +21,6 @@ import useStyles from "./styles";
 import { navigationSelector } from "./selector";
 import { NavigationProps } from "./types";
 import { NavigationLeftActionTypes } from "./constants";
-import { toggleNotificationCard } from "store/notificationCards/actions/toggleNotificationCard";
 
 export const Navigation: React.FC<NavigationProps> = ({ contractible = false, className, ...rest }) => {
   const classes = useStyles();
@@ -133,7 +134,11 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   });
 
   return (
-    <div className={clsx(classes.root, className, { expand })} {...rest}>
+    <div
+      {...rest}
+      data-test-id={testIds.navigation}
+      className={clsx(classes.root, className, { expand })}
+    >
       <header className={clsx({ expand })}>
         <Link className={classes.logoLink} to={user?.role.name === ROLES.admin.value ? "/dashboard" : "/"}>
           {/* Portal logo image */}

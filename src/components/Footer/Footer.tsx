@@ -10,6 +10,7 @@ import SvgIcon from "components/SvgIcon";
 
 import useStyles from "./styles";
 import { FooterProps, MenuSection, MenuSections } from "./types";
+import { testIds } from "testIds";
 
 const SocialLinks = () => {
   const classes = useStyles();
@@ -166,7 +167,10 @@ const Footer: React.FC<FooterProps> = (
   };
 
   return (
-    <footer className={classes.footer}>
+    <footer
+      data-test-id={testIds.footer}
+      className={classes.footer}
+    >
       <div className={classes.footerToTopShortcutContainer}>
         <Fab size='small' onClick={handleFabClick}>
           <SvgIcon name='chevron-up' size={24} />

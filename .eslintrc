@@ -15,7 +15,8 @@
   },
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "node": true
   },
   "rules": {
     "react/prop-types": "off",
@@ -48,19 +49,18 @@
   "overrides": [
     {
       "files": ["*.js"],
-      "env": {
-        "node": true
-      },
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
     },
     {
-      "files": ["cypress/*"],
+      "files": ["cypress/**/*"],
       "env": {
-        "es6": true,
-        "jest": true,
-        "cypress/globals": true
+        "cypress/globals": true,
+        "node": true
+      },
+      "rules": {
+        "@typescript-eslint/triple-slash-reference": "off"
       }
     }
   ]

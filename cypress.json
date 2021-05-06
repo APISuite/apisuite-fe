@@ -1,4 +1,6 @@
 {
+  "viewportWidth": 1200,
+  "viewportHeight": 600,
   "baseUrl": "http://localhost:9001",
   "video": false,
   "testFiles": "**/*.spec.{js,jsx,ts,tsx}"

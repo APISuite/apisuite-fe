@@ -14,6 +14,7 @@ import useStyles from "./styles";
 import { signinFormSelector } from "./selector";
 import { ssoProviders } from "store/auth/actions/ssoProviders";
 import { login } from "store/auth/actions/login";
+import { testIds } from "testIds";
 
 export const SignInForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -138,6 +139,7 @@ export const SignInForm: React.FC = () => {
       >
         <div className={classes.inputFieldContainer}>
           <TextField
+            data-test-id={testIds.signInEmail}
             id='emailField'
             variant='outlined'
             margin='dense'
@@ -157,6 +159,7 @@ export const SignInForm: React.FC = () => {
 
         <div className={classes.inputFieldContainer}>
           <TextField
+            data-test-id={testIds.signInPwd}
             id='passwordField'
             variant='outlined'
             margin='dense'
