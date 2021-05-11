@@ -31,11 +31,3 @@ function render (Component: React.ElementType) {
 }
 
 render(App);
-
-// Enable HMR for js files
-if (module.hot) {
-  module.hot.accept("./App", () => {
-    const NextApp = require("./App").default;
-    render(NextApp);
-  });
-}
