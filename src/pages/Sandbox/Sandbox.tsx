@@ -176,11 +176,10 @@ export const Sandbox: React.FC = () => {
             </p>
 
             <Button
-              className={
-                !auth.user
-                  ? classes.stepsDescriptionRegisterButton
-                  : classes.stepsDescriptionContactSupportButton
-              }
+              className={classes.stepsDescriptionSupportButton}
+              variant="contained"
+              color="primary"
+              disableElevation
               href={
                 !auth.user
                   ? "/auth/signup"
@@ -226,6 +225,9 @@ export const Sandbox: React.FC = () => {
 
                 <Button
                   className={classes.individualStepButton}
+                  color="primary"
+                  variant="outlined"
+                  fullWidth
                   disabled={!auth.user}
                   href='/dashboard/apps'
                 >
@@ -246,6 +248,9 @@ export const Sandbox: React.FC = () => {
 
                 <Button
                   className={classes.individualStepButton}
+                  color="primary"
+                  variant="outlined"
+                  fullWidth
                   disabled={!auth.user}
                   href='/dashboard/subscriptions'
                 >
@@ -266,6 +271,9 @@ export const Sandbox: React.FC = () => {
 
                 <Button
                   className={classes.individualStepButton}
+                  color="primary"
+                  variant="outlined"
+                  fullWidth
                   disabled={!auth.user}
                   href='/dashboard/test'
                 >

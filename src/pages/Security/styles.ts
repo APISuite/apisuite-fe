@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
   disabledUpdatePasswordButton: {
     backgroundColor: theme.palette.secondary.main,
     border: `1px solid ${theme.palette.secondary.main}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: "none",
     fontSize: "16px",
@@ -21,7 +21,6 @@ export default makeStyles((theme) => ({
     padding: "12px 20px",
     pointerEvents: "none",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
@@ -31,7 +30,7 @@ export default makeStyles((theme) => ({
   enabledUpdatePasswordButton: {
     backgroundColor: theme.palette.secondary.main,
     border: `1px solid ${theme.palette.secondary.main}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: "pointer",
     fontSize: "16px",
@@ -40,7 +39,6 @@ export default makeStyles((theme) => ({
     marginRight: "15px",
     padding: "12px 20px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
@@ -50,7 +48,7 @@ export default makeStyles((theme) => ({
   forgotPasswordButton: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.action.active} !important`,
     fontSize: "16px",
     fontWeight: 500,
@@ -62,7 +60,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     height: "100%",
     marginBottom: "25px",
@@ -120,7 +118,7 @@ export default makeStyles((theme) => ({
 
   sectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     marginBottom: "25px",
     maxWidth: "900px",
     width: "100%",

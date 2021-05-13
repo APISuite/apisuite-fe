@@ -3,7 +3,7 @@ import { makeStyles } from "@apisuite/fe-base";
 export default makeStyles((theme) => ({
   content: {
     alignItems: "center",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",

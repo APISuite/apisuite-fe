@@ -645,52 +645,40 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </p>
 
                   <TextField
-                    className={
-                      modalMode === "new"
-                        ? classes.disabledClientIDInputField
-                        /* TODO: Previously 'enabledClientIDInputField'.
-                        Revisit once it is possible to generate/edit new client IDs. */
-                        : classes.disabledClientIDInputField
-                    }
                     fullWidth
                     InputProps={{
                       endAdornment:
-                        <InputAdornment position='end'>
+                        <InputAdornment position="end">
                           <FileCopyOutlinedIcon />
                         </InputAdornment>,
                     }}
                     label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
-                    margin='dense'
-                    name='appClientID'
+                    margin="dense"
+                    name="appClientID"
                     onChange={handleChange}
-                    type='text'
+                    type="text"
                     value={formState.values.appClientID}
-                    variant='outlined'
+                    variant="outlined"
+                    disabled
                   />
 
                   <div className={classes.clientSecretInputFieldContainer}>
                     <TextField
-                      className={
-                        modalMode === "new"
-                          ? classes.disabledClientSecretInputField
-                          /* TODO: Previously 'enabledClientSecretInputField'.
-                          Revisit once it is possible to generate/edit new client secrets. */
-                          : classes.disabledClientSecretInputField
-                      }
                       fullWidth
                       InputProps={{
                         endAdornment:
-                          <InputAdornment position='end'>
+                          <InputAdornment position="end">
                             <FileCopyOutlinedIcon />
                           </InputAdornment>,
                       }}
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
-                      margin='dense'
-                      name='appClientSecret'
+                      margin="dense"
+                      name="appClientSecret"
                       onChange={handleChange}
-                      type='text'
+                      type="text"
                       value={formState.values.appClientSecret}
-                      variant='outlined'
+                      variant="outlined"
+                      disabled
                     />
 
                     <div
@@ -949,17 +937,19 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <>
                         <div>
                           <Button
-                            className={
-                              formState.values.appName.length !== 0 &&
+                            disabled={
+                              !(formState.values.appName.length !== 0 &&
                                 formState.values.appRedirectURI !== "http://" &&
                                 formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
-                                validImage
-                                ? classes.enabledAddOrEditButton
-                                : classes.disabledAddOrEditButton
+                                validImage)
                             }
+                            color="primary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
                             onClick={createNewApp}
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.addAppButtonLabel")}
@@ -992,13 +982,14 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <>
                         <div>
                           <Button
-                            className={
-                              formState.isDirty &&
-                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                                validImage
-                                ? classes.enabledAddOrEditButton
-                                : classes.disabledAddOrEditButton
+                            disabled={
+                              !(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                              && validImage)
                             }
+                            color="primary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
                             onClick={_updateApp}
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}

@@ -306,11 +306,10 @@ export const Profile: React.FC = () => {
                     />
 
                     <Button
-                      className={
-                        currentlySelectedOrganisation.value !== profile.current_org.id
-                          ? classes.enabledOrganisationButton
-                          : classes.disabledOrganisationButton
-                      }
+                      disabled={currentlySelectedOrganisation.value === profile.current_org.id}
+                      size="large"
+                      variant="outlined"
+                      color="secondary"
                       onClick={switchOrganisation}
                     >
                       {t("profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel")}
@@ -341,6 +340,9 @@ export const Profile: React.FC = () => {
               !ssoIsActive &&
               <Button
                 className={classes.otherActionsButtons}
+                color="primary"
+                variant="outlined"
+                size="large"
                 href='profile/security'
               >
                 {t("profileTab.overviewSubTab.otherActionsLabels.changePassword")}
@@ -349,6 +351,9 @@ export const Profile: React.FC = () => {
 
             <Button
               className={classes.otherActionsButtons}
+              color="primary"
+              variant="outlined"
+              size="large"
               href='profile/team'
             >
               {t("profileTab.overviewSubTab.otherActionsLabels.viewTeam")}
@@ -388,7 +393,6 @@ export const Profile: React.FC = () => {
                 avatarHasBeenClicked
                   ? (
                     <TextField
-                      className={classes.inputFields}
                       error={(formState.touched.userAvatarURL && formState.errors.userAvatarURL) || !validImage}
                       fullWidth
                       helperText={
@@ -412,46 +416,39 @@ export const Profile: React.FC = () => {
 
             <hr className={classes.formSectionSeparator} />
 
-            <TextField
-              className={
-                !ssoIsActive
-                  ? classes.inputFields
-                  : classes.disabledInputFields
-              }
-              fullWidth
-              label={t("profileTab.overviewSubTab.userRelatedLabels.userName")}
-              margin='dense'
-              name='userName'
-              onChange={handleChange}
-              onFocus={handleFocus}
-              type='text'
-              value={formState.values.userName}
-              variant='outlined'
-            />
+            <div className={classes.spaceHorizontal}>
+              <TextField
+                disabled={ssoIsActive}
+                fullWidth
+                label={t("profileTab.overviewSubTab.userRelatedLabels.userName")}
+                margin='dense'
+                name='userName'
+                onChange={handleChange}
+                onFocus={handleFocus}
+                type='text'
+                value={formState.values.userName}
+                variant='outlined'
+              />
 
-            <TextField
-              className={
-                !ssoIsActive
-                  ? classes.inputFields
-                  : classes.disabledInputFields
-              }
-              fullWidth
-              label={t("profileTab.overviewSubTab.userRelatedLabels.userEmailAddress")}
-              margin='dense'
-              name='userEmailAddress'
-              onChange={handleChange}
-              onFocus={handleFocus}
-              type='email'
-              value={formState.values.userEmailAddress}
-              variant='outlined'
-            />
+              <TextField
+                disabled={ssoIsActive}
+                fullWidth
+                label={t("profileTab.overviewSubTab.userRelatedLabels.userEmailAddress")}
+                margin='dense'
+                name='userEmailAddress'
+                onChange={handleChange}
+                onFocus={handleFocus}
+                type='email'
+                value={formState.values.userEmailAddress}
+                variant='outlined'
+              />
+            </div>
 
             {
               !ssoIsActive &&
               (
                 <>
                   <TextField
-                    className={classes.inputFields}
                     error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
                     fullWidth
                     helperText={
@@ -509,13 +506,20 @@ export const Profile: React.FC = () => {
           <div className={classes.otherActionsContainerTwo}>
             <Button
               className={classes.deleteAccountButton}
+              color="primary"
+              variant="contained"
+              disableElevation
+              size="large"
               onClick={handleDelete}
             >
               {t("profileTab.overviewSubTab.otherActionsLabels.deleteAccount")}
             </Button>
 
             <Button
-              className={classes.signOutButton}
+              className={classes.otherActionsButtons}
+              color="primary"
+              variant="outlined"
+              size="large"
               onClick={() => dispatch(logout({}))}
             >
               {t("profileTab.overviewSubTab.otherActionsLabels.signOut")}

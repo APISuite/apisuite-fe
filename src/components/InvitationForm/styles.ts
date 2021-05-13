@@ -12,15 +12,14 @@ const useStyles = makeStyles((theme) => ({
   rejectButton: {
     backgroundColor: "white",
     border: `1px solid ${theme.palette.grey[400]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.grey[800],
     fontSize: "16px",
     fontWeight: 500,
-    textTransform: "none",
   },
   textField: {
     backgroundColor: "white",
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     fontSize: "16px",
     fontWeight: 500,
     "& div > input": {

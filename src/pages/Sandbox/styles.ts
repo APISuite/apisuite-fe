@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
 
   sectionSeparator: {
     border: `1px solid ${theme.palette.grey["300"]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     maxWidth: "900px",
     width: "100%",
   },
@@ -89,27 +89,8 @@ export default makeStyles((theme) => ({
   },
 
   individualStepButton: {
-    backgroundColor: theme.palette.secondary.main,
-    borderColor: theme.palette.secondary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.background.default,
-    fontSize: "16px",
-    fontWeight: 500,
-    textTransform: "inherit",
-    width: "100%",
-
-    "&:active, &:hover, &:link, &:visited": {
-      backgroundColor: theme.palette.secondary.main,
-      borderColor: theme.palette.secondary.main,
-      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-      color: theme.palette.background.default,
-    },
-
-    "&.MuiButton-root.Mui-disabled": {
-      backgroundColor: theme.palette.grey[300],
-      borderColor: theme.palette.grey[300],
-      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-      color: theme.palette.background.default,
+    "& > span": {
+      color: theme.palette.primary.main,
     },
   },
 
@@ -145,40 +126,8 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
 
-  stepsDescriptionContactSupportButton: {
-    backgroundColor: theme.palette.warning.main,
-    borderColor: theme.palette.warning.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.background.default,
-    fontSize: "16px",
-    fontWeight: 500,
-    textTransform: "inherit",
-    width: "160px",
-
-    "&:active, &:hover, &:link, &:visited": {
-      backgroundColor: theme.palette.warning.main,
-      borderColor: theme.palette.warning.main,
-      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-      color: theme.palette.background.default,
-    },
-  },
-
-  stepsDescriptionRegisterButton: {
-    backgroundColor: theme.palette.secondary.main,
-    borderColor: theme.palette.secondary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.background.default,
-    fontSize: "16px",
-    fontWeight: 500,
-    textTransform: "inherit",
-    width: "135px",
-
-    "&:active, &:hover, &:link, &:visited": {
-      backgroundColor: theme.palette.secondary.main,
-      borderColor: theme.palette.secondary.main,
-      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-      color: theme.palette.background.default,
-    },
+  stepsDescriptionSupportButton: {
+    color: `${theme.palette.secondary.contrastText} !important`,
   },
 
   stepsSectionDescriptionsContainer: {

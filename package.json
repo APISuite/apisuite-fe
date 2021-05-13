@@ -25,7 +25,7 @@
     "convert-translation": "./node_modules/.bin/convert-translation"
   },
   "dependencies": {
-    "@apisuite/fe-base": "1.0.0-next.4",
+    "@apisuite/fe-base": "1.0.0-next.5",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.58",
     "axios": "0.21.1",

@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     display: "flex",
     height: "100%",
     marginBottom: "25px",
@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
 
   inputField: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
   },
 

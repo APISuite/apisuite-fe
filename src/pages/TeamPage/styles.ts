@@ -10,21 +10,6 @@ export default makeStyles((theme) => ({
     fontSize: 14,
   },
 
-  btn: {
-    backgroundColor: theme.palette.grey[900],
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.primary.contrastText,
-    cursor: "pointer",
-    display: "inline-block",
-    fontWeight: 500,
-    marginRight: 16,
-    padding: "8px 24px",
-
-    "&:disabled": {
-      backgroundColor: theme.palette.grey[400],
-    },
-  },
-
   contentContainer: {
     margin: "0 auto",
     maxWidth: 900,
@@ -33,7 +18,7 @@ export default makeStyles((theme) => ({
 
   emailTextfield: {
     backgroundColor: theme.palette.background.default,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: theme.palette.text.primary,
     width: 220,
   },
@@ -43,7 +28,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.error.main,
     border: "solid",
     borderColor: theme.palette.error.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     borderWidth: 1,
     color: theme.palette.primary.contrastText,
     display: "flex",
@@ -73,7 +58,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     border: 1,
     borderColor: theme.palette.grey[300],
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     borderStyle: "solid",
     cursor: "pointer",
     display: "flex",
@@ -105,7 +90,7 @@ export default makeStyles((theme) => ({
 
   nameTextfield: {
     backgroundColor: theme.palette.background.default,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: theme.palette.text.primary,
     width: 220,
   },
@@ -132,7 +117,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     border: 1,
     borderColor: theme.palette.grey[300],
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     borderStyle: "solid",
     cursor: "pointer",
     display: "flex",

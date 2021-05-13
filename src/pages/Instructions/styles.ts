@@ -12,8 +12,8 @@ export default makeStyles((theme) => ({
   },
 
   codeBlock: {
-    borderBottomLeftRadius: theme.palette.dimensions.borderRadius,
-    borderBottomRightRadius: theme.palette.dimensions.borderRadius,
+    borderBottomLeftRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
@@ -46,8 +46,8 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.text.primary,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopLeftRadius: theme.palette.dimensions.borderRadius,
-    borderTopRightRadius: theme.palette.dimensions.borderRadius,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     display: "flex",
     height: 40,
@@ -77,7 +77,7 @@ export default makeStyles((theme) => ({
 
   noteContainer: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     marginBottom: 20,
     overflow: "hidden",
     width: "100%",

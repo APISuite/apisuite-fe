@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
 
   modalContentsContainer: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     boxShadow: "0px 0px 20px 0px rgba(0,0,0,0.3)",
     height: "100%",
     /* The 'outline' property is necessary to remove
@@ -104,7 +104,7 @@ export default makeStyles((theme) => ({
 
   sectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     margin: "25px 0px",
     width: "100%",
   },
@@ -153,7 +153,7 @@ export default makeStyles((theme) => ({
     "& > :last-child": {
       color: theme.palette.action.active,
       border: `1px solid ${theme.palette.grey[400]}`,
-      borderRadius: theme.palette.dimensions.borderRadius,
+      borderRadius: theme.shape.borderRadius,
       height: "40px",
       maxWidth: "420px",
       width: "100%",
@@ -179,7 +179,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     display: "flex",
     height: "100%",
     marginBottom: "25px",
@@ -203,7 +203,7 @@ export default makeStyles((theme) => ({
   warningBox: {
     alignItems: "center",
     backgroundColor: "#FFDCB9",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     height: "100%",
     marginBottom: "25px",
@@ -299,8 +299,8 @@ export default makeStyles((theme) => ({
   tableBody: {
     backgroundColor: theme.palette.grey[50],
     border: `1px solid ${theme.palette.grey[300]}`,
-    borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
-    borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderBottomLeftRadius: `${theme.shape.borderRadius}px`,
+    borderBottomRightRadius: `${theme.shape.borderRadius}px`,
     borderTop: "none",
     width: "100%",
   },
@@ -308,8 +308,8 @@ export default makeStyles((theme) => ({
   tableHeader: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey[300]}`,
-    borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
-    borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderTopLeftRadius: `${theme.shape.borderRadius}px`,
+    borderTopRightRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     justifyContent: "space-between",
     padding: "10px 55px 10px 40px",
@@ -362,7 +362,7 @@ export default makeStyles((theme) => ({
   disabledOtherButtons: {
     backgroundColor: theme.palette.background.default,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.action.active} !important`,
     cursor: "pointer",
     fontSize: "16px",
@@ -372,7 +372,6 @@ export default makeStyles((theme) => ({
     padding: "12px 21px",
     pointerEvents: "none",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.background.default,
@@ -382,7 +381,7 @@ export default makeStyles((theme) => ({
   disabledRequestAccessButton: {
     backgroundColor: theme.palette.secondary.main,
     border: `1px solid ${theme.palette.secondary.main}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     fontSize: "16px",
     fontWeight: 500,
@@ -390,7 +389,6 @@ export default makeStyles((theme) => ({
     padding: "12px 21px",
     pointerEvents: "none",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
@@ -400,7 +398,7 @@ export default makeStyles((theme) => ({
   disabledRevokeAccessButton: {
     backgroundColor: theme.palette.warning.main,
     border: `1px solid ${theme.palette.warning.main}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     fontSize: "16px",
     fontWeight: 500,
@@ -408,7 +406,6 @@ export default makeStyles((theme) => ({
     padding: "12px 21px",
     pointerEvents: "none",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.warning.main,
@@ -418,7 +415,7 @@ export default makeStyles((theme) => ({
   enabledOtherButtons: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.action.active} !important`,
     cursor: "pointer",
     fontSize: "16px",
@@ -426,7 +423,6 @@ export default makeStyles((theme) => ({
     marginLeft: "25px",
     padding: "12px 21px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.background.default,
@@ -436,7 +432,7 @@ export default makeStyles((theme) => ({
   enabledRequestAccessButton: {
     backgroundColor: theme.palette.primary.main,
     border: `1px solid ${theme.palette.primary.main}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     cursor: "pointer",
     fontSize: "16px",
@@ -444,7 +440,6 @@ export default makeStyles((theme) => ({
     opacity: 1,
     padding: "12px 21px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
@@ -454,7 +449,7 @@ export default makeStyles((theme) => ({
   enabledRevokeAccessButton: {
     backgroundColor: theme.palette.warning.main,
     border: `1px solid ${theme.palette.warning.main}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.background.default} !important`,
     cursor: "pointer",
     fontSize: "16px",

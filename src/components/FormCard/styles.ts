@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     fontWeight: 500,
     padding: "7.5px 45px",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     padding: "7.5px 45px",
     pointerEvents: "none",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -48,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     fontWeight: 500,
     padding: "7.5px 45px",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -58,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
   errorAlert: {
     backgroundColor: theme.palette.error.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: theme.palette.background.default,
     minHeight: "50px",
     padding: "12px 25px",

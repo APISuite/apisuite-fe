@@ -32,7 +32,7 @@ export default makeStyles((theme) => ({
   clientApplicationCardBottomSection: {
     backgroundColor: "#F5F5F5",
     border: `1px solid ${theme.palette.grey["300"]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     borderTop: "none",
     borderTopLeftRadius: "0px",
     borderTopRightRadius: "0px",
@@ -88,7 +88,7 @@ export default makeStyles((theme) => ({
     border: `1px solid ${theme.palette.grey["300"]}`,
     borderBottomLeftRadius: "0px",
     borderBottomRightRadius: "0px",
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     textAlign: "center",
   },
 
@@ -151,7 +151,6 @@ export default makeStyles((theme) => ({
     color: `${theme.palette.primary.contrastText} !important`,
     padding: "12px 21px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
@@ -180,7 +179,7 @@ export default makeStyles((theme) => ({
   },
 
   firstUseLink: {
-    color: `${theme.palette.grey[300]} !important`,
+    color: `${theme.palette.label} !important`,
   },
 
   hasNoUserAppsButHasMarketplaceAppSubsContainer: {
@@ -189,7 +188,7 @@ export default makeStyles((theme) => ({
 
   knowledgeBaseCard: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     boxShadow: "1px 0px 10px 0px rgba(0, 0, 0, 0.05)",
     height: "310px",
     padding: "24px 40px 40px 40px",
@@ -269,14 +268,13 @@ export default makeStyles((theme) => ({
   registerNewClientApplicationCardButton: {
     backgroundColor: theme.palette.primary.main,
     border: `1px solid ${theme.palette.primary.main}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.primary.contrastText} !important`,
     fontSize: "16px",
     fontWeight: 500,
     marginBottom: "40px",
     padding: "6px 21px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
@@ -285,7 +283,7 @@ export default makeStyles((theme) => ({
 
   sectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     margin: "25px 0px",
     width: "100%",
   },
@@ -299,7 +297,7 @@ export default makeStyles((theme) => ({
   warningBox: {
     alignItems: "center",
     backgroundColor: "#FFDCB9",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     height: "40px",
     marginTop: "40px",

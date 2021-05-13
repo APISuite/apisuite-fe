@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
   inputField: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: theme.palette.text.primary,
   },
 

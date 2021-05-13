@@ -16,7 +16,7 @@ export default makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   badge: {
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     fontSize: ".7em",
     lineHeight: "1em",
     padding: "5px",

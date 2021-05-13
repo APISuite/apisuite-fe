@@ -3,14 +3,13 @@ import { makeStyles } from "@apisuite/fe-base";
 export default makeStyles((theme) => ({
   addSubscriptionButton: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: "pointer",
     fontSize: "16px",
     fontWeight: 500,
     padding: "12px 21px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
@@ -50,7 +49,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     height: "75px",
     marginLeft: "auto",

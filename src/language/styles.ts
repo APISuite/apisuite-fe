@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   languageSelector: {
     backgroundColor: theme.palette.common.white,
     borderColor: theme.palette.grey[400],
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.text.primary} !important`,
     fontSize: "14px",
     fontWeight: 300,
@@ -13,7 +13,6 @@ export default makeStyles((theme) => ({
     position: "relative",
     textIndent: "10px",
     textOverflow: "ellipsis",
-    textTransform: "none",
     whiteSpace: "nowrap",
     width: "180px",
 

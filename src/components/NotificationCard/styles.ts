@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   hideNotificationCardContentsContainer: {
     alignItems: "center",
     backgroundColor: theme.palette.background.default,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
     display: "flex",
     flexDirection: "row",
@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
 
   notificationCardButton: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     boxShadow: "none",
     color: `${theme.palette.primary.contrastText} !important`,
     display: "inline-block",
@@ -44,7 +44,6 @@ export default makeStyles((theme) => ({
     position: "relative",
     textAlign: "center",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.secondary,
@@ -78,7 +77,7 @@ export default makeStyles((theme) => ({
   showNotificationCardContentsContainer: {
     alignItems: "center",
     backgroundColor: theme.palette.background.default,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
     display: "flex",
     flexDirection: "row",

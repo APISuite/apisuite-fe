@@ -62,7 +62,7 @@ export default makeStyles((theme) => ({
 
   disabledUpdateDetailsButton: {
     backgroundColor: theme.palette.label,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     cursor: "none",
     fontWeight: 500,
@@ -71,7 +71,6 @@ export default makeStyles((theme) => ({
     padding: "6px 0px",
     pointerEvents: "none",
     textAlign: "center",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -81,7 +80,7 @@ export default makeStyles((theme) => ({
 
   disabledCreateOrgButton: {
     backgroundColor: "#99e6cc",
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     cursor: "none",
     fontWeight: 500,
@@ -95,7 +94,7 @@ export default makeStyles((theme) => ({
 
   enabledCreateOrgButton: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     cursor: "pointer",
     fontWeight: 500,
@@ -103,7 +102,6 @@ export default makeStyles((theme) => ({
     maxWidth: "185px",
     padding: "6px 0px",
     textAlign: "center",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -113,7 +111,7 @@ export default makeStyles((theme) => ({
 
   enabledUpdateDetailsButton: {
     backgroundColor: theme.palette.action.active,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     cursor: "pointer",
     fontWeight: 500,
@@ -121,7 +119,6 @@ export default makeStyles((theme) => ({
     maxWidth: "95px",
     padding: "6px 0px",
     textAlign: "center",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -131,7 +128,7 @@ export default makeStyles((theme) => ({
 
   firstSectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     marginBottom: "25px",
     marginTop: "15px",
     maxWidth: "900px",
@@ -261,7 +258,7 @@ export default makeStyles((theme) => ({
     "& > :last-child": {
       backgroundColor: theme.palette.background.default,
       border: `1px solid ${theme.palette.grey[300]}`,
-      borderRadius: theme.palette.dimensions.borderRadius,
+      borderRadius: theme.shape.borderRadius,
       color: theme.palette.action.active,
       cursor: "pointer",
       height: "40px",
@@ -280,7 +277,7 @@ export default makeStyles((theme) => ({
 
   secondSectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     marginBottom: "15px",
     marginTop: "0px",
     maxWidth: "900px",

@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   apiCatalogEntry: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey["300"]}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     height: "200px",
     marginBottom: "20px",
@@ -51,7 +51,7 @@ export default makeStyles((theme) => ({
   },
 
   apiCatalogEntryVersion: {
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     marginRight: "8px",
     padding: "5px 10px",
   },

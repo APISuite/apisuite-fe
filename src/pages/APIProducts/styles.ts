@@ -80,7 +80,7 @@ export default makeStyles((theme) => ({
 
     // Access type
     "& > :last-child": {
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.main,
       fontSize: "14px",
       fontWeight: 300,
       textAlign: "left",
@@ -95,7 +95,7 @@ export default makeStyles((theme) => ({
 
   documentationAccess: {
     backgroundColor: theme.palette.action.active,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     padding: "4px 8px",
   },
 
@@ -162,7 +162,7 @@ export default makeStyles((theme) => ({
 
   productionAccess: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     padding: "4px 8px",
   },
 
@@ -178,19 +178,18 @@ export default makeStyles((theme) => ({
 
   sandboxAccess: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     padding: "4px 8px",
   },
 
   subscribeButton: {
     backgroundColor: theme.palette.background.default,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.secondary} !important`,
     fontSize: "16px",
     fontWeight: 500,
     padding: "12px 20px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.background.default,
@@ -201,7 +200,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderBottomRightRadius: "0px",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     borderTopRightRadius: "0px",
     maxWidth: "325px",
     padding: "2.5px 12px",
@@ -218,18 +217,17 @@ export default makeStyles((theme) => ({
   },
 
   viewDetailsButton: {
-    backgroundColor: theme.palette.secondary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
     fontSize: "16px",
     fontWeight: 500,
-    marginRight: "12px",
+    marginRight: 12,
     padding: "12px 20px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.dark,
     },
   },
 }));

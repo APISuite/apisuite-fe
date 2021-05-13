@@ -210,7 +210,6 @@ export const Dashboard: React.FC = () => {
                 }
               </div>
             }
-            greetingCardButtonClassName={classes.customGreetingCardButton}
             greetingCardButtonLabel={
               typeOfUser !== "admin"
                 ? (

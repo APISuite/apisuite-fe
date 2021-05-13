@@ -43,14 +43,9 @@ export default makeStyles((theme) => ({
   },
 
   footerToTopShortcutContainer: {
-    // Middle of our layout's minimum width ('1024px')
-    left: "512px",
+    left: "50%",
     position: "absolute",
     transform: "translateY(-60px)",
-
-    "@media (min-width: 1024px)": {
-      left: "50%",
-    },
   },
 
   iconLogo: {

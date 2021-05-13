@@ -21,14 +21,9 @@ export default makeStyles((theme) => ({
       color: theme.palette.secondary.contrastText,
 
       "&.expand": {
-        borderBottom: `1px solid ${theme.palette.secondary.contrastText}`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
         paddingTop: 25,
       },
-    },
-
-    "& h3": {
-      fontSize: "24px",
-      fontWeight: 300,
     },
 
     "& nav": {
@@ -50,7 +45,7 @@ export default makeStyles((theme) => ({
     transition: "none !important",
   },
   positionBottomTabIndicator: {
-    backgroundColor: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
     height: 3,
     top: 0,
     transition: "none !important",
@@ -61,6 +56,7 @@ export default makeStyles((theme) => ({
     justifyContent: "flex-end",
     margin: "0 50px",
     color: theme.palette.secondary.contrastText,
+    transform: "translateY(-2px)",
   },
   space: {
     flex: 1,
@@ -88,7 +84,6 @@ export default makeStyles((theme) => ({
     minWidth: "unset",
     opacity: 1,
     padding: "40px 16px",
-    textTransform: "none",
     "&.contract": {
       padding: 16,
     },
@@ -105,7 +100,6 @@ export default makeStyles((theme) => ({
     minWidth: "unset",
     opacity: 1,
     padding: 16,
-    textTransform: "none",
     "&.expand": {
       color: theme.palette.secondary.contrastText,
     },
@@ -117,8 +111,7 @@ export default makeStyles((theme) => ({
     transition: "none !important",
   },
   subTabAlternativeIndicator: {
-    // TODO: this should be secondary.light - ask designer
-    backgroundColor: theme.palette.info.main,
+    backgroundColor: theme.palette.primary.light,
     height: 3,
     bottom: 3,
     transition: "none !important",
@@ -148,6 +141,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "flex",
+    color: theme.palette.label,
 
     "& > span": {
       fontSize: "16px",
@@ -182,7 +176,7 @@ export default makeStyles((theme) => ({
       width: 24,
       height: 24,
       textAlign: "center",
-      borderRadius: theme.palette.dimensions.borderRadius,
+      borderRadius: theme.shape.borderRadius,
       pointerEvents: "none",
       backgroundColor: theme.palette.secondary.main,
       color: theme.palette.secondary.contrastText,

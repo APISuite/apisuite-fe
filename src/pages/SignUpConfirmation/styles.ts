@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     padding: "12px 35px 12px 10px",
     textAlign: "left",

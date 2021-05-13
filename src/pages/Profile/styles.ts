@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
 
   alternativeSectionSeparator: {
     border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     margin: "32.5px 0px",
     maxWidth: "900px",
     width: "100%",
@@ -43,96 +43,22 @@ export default makeStyles((theme) => ({
   },
   createOrganisationButton: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: "pointer",
     fontSize: "16px",
     fontWeight: 500,
     padding: "12px 20px",
     textDecoration: "none",
-    textTransform: "none",
   },
 
   deleteAccountButton: {
-    backgroundColor: theme.palette.error.main,
-    border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: `${theme.palette.primary.contrastText} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    padding: "12px 20px",
-    textDecoration: "none",
-    textTransform: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.error.main,
-    },
-  },
-
-  disabledInputFields: {
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    marginBottom: "25px",
-    marginTop: "0px",
-    maxWidth: "270px",
-    pointerEvents: "none",
-    width: "100%",
-
-    // Text field's label styles
-    "& > label": {
-      color: theme.palette.label,
-    },
-
-    "& label.Mui-focused": {
-      color: `${theme.palette.action.focus} !important`,
-    },
-
-    // Text field's input outline styles
-    "& .MuiOutlinedInput-root": {
-      "&:hover fieldset": {
-        borderColor: `${theme.palette.grey[300]} !important`,
-      },
-
-      "&.Mui-focused fieldset": {
-        borderColor: `${theme.palette.action.focus} !important`,
-      },
-    },
-
-    // Text field's input text styles
-    "& .MuiInputBase-root": {
-      "& .MuiInputBase-input": {
-        backgroundColor: "#DCDFE2",
-        borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-        color: theme.palette.label,
-      },
-
-      "& .MuiInputAdornment-root": {
-        color: theme.palette.label,
-        pointerEvents: "none",
-      },
-    },
-  },
-
-  disabledOrganisationButton: {
-    backgroundColor: theme.palette.secondary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.primary.contrastText} !important`,
-    cursor: "none",
-    fontSize: "16px",
-    fontWeight: 500,
-    opacity: 0.5,
-    padding: "12px 20px",
-    pointerEvents: "none",
-    textDecoration: "none",
-    textTransform: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
+    marginRight: 12,
   },
 
   disabledUpdateDetailsButton: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: "none",
     fontSize: "16px",
@@ -144,24 +70,7 @@ export default makeStyles((theme) => ({
     padding: "12px 20px",
     pointerEvents: "none",
     textDecoration: "none",
-    textTransform: "none",
     width: "100%",
-
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
-  },
-
-  enabledOrganisationButton: {
-    backgroundColor: theme.palette.secondary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.primary.contrastText} !important`,
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: 500,
-    padding: "12px 20px",
-    textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
@@ -170,7 +79,7 @@ export default makeStyles((theme) => ({
 
   enabledUpdateDetailsButton: {
     backgroundColor: theme.palette.secondary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: "none",
     fontSize: "16px",
@@ -180,7 +89,6 @@ export default makeStyles((theme) => ({
     maxWidth: "270px",
     padding: "12px 20px",
     textDecoration: "none",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -191,14 +99,14 @@ export default makeStyles((theme) => ({
   formFieldsContainer: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     marginBottom: "35px",
     textAlign: "center",
   },
 
   formSectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     margin: "0px 0px 20px 0px",
     maxWidth: "320px",
     width: "100%",
@@ -207,7 +115,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     height: "100%",
     padding: "12px 12px",
@@ -226,39 +134,6 @@ export default makeStyles((theme) => ({
     fontWeight: 400,
     lineHeight: "18px",
     margin: "0px 0px 5px 2.5px",
-  },
-
-  inputFields: {
-    marginBottom: "15px",
-    maxWidth: "270px",
-    width: "100%",
-
-    // Text field's label styles
-    "& > label": {
-      color: theme.palette.label,
-    },
-
-    "& label.Mui-focused": {
-      color: `${theme.palette.action.focus} !important`,
-    },
-
-    // Text field's input outline styles
-    "& .MuiOutlinedInput-root": {
-      "&:hover fieldset": {
-        borderColor: `${theme.palette.grey[300]} !important`,
-      },
-
-      "&.Mui-focused fieldset": {
-        borderColor: `${theme.palette.action.focus} !important`,
-      },
-    },
-
-    // Text field's input text styles
-    "& .MuiInputBase-root": {
-      "& .MuiInputBase-input": {
-        color: theme.palette.action.active,
-      },
-    },
   },
 
   leftSideDetailsContainer: {
@@ -303,20 +178,7 @@ export default makeStyles((theme) => ({
   },
 
   otherActionsButtons: {
-    backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.label}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    color: `${theme.palette.action.active} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    marginRight: "15px",
-    padding: "12px 20px",
-    textDecoration: "none",
-    textTransform: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.primary.contrastText,
-    },
+    color: `${theme.palette.primary.main} !important`,
   },
 
   otherActionsContainerOne: {
@@ -330,7 +192,7 @@ export default makeStyles((theme) => ({
 
   regularSectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     margin: "32.5px 0px 32.5px 0px",
     maxWidth: "900px",
     width: "100%",
@@ -344,14 +206,13 @@ export default makeStyles((theme) => ({
   signOutButton: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.action.active} !important`,
     fontSize: "16px",
     fontWeight: 500,
     marginLeft: "15px",
     padding: "12px 20px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.background.paper,
@@ -368,7 +229,7 @@ export default makeStyles((theme) => ({
   userDetailsContainer: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
   },
 
   userName: {
@@ -391,7 +252,7 @@ export default makeStyles((theme) => ({
 
   userRole: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.secondary.contrastText,
     fontSize: "14px",
     fontWeight: 300,
@@ -401,7 +262,7 @@ export default makeStyles((theme) => ({
   userStatusAndType: {
     alignItems: "center",
     display: "flex",
-    margin: "0px 25px 20px 25px",
+    margin: "20px 25px",
 
     "& > :first-child": {
       color: theme.palette.primary.main,
@@ -415,5 +276,9 @@ export default makeStyles((theme) => ({
       fontWeight: 300,
       textAlign: "left",
     },
+  },
+
+  spaceHorizontal: {
+    padding: "0 12px",
   },
 }));

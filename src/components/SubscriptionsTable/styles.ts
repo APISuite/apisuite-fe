@@ -84,7 +84,7 @@ export default makeStyles((theme) => ({
 
   appNameIcon: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     fontSize: "14px",
     fontWeight: 300,
@@ -101,7 +101,7 @@ export default makeStyles((theme) => ({
 
   deprecatedIcon: {
     backgroundColor: theme.palette.warning.main,
-    borderRadius: theme.palette.dimensions.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     marginRight: "20px",
     padding: "5px",
@@ -125,8 +125,8 @@ export default makeStyles((theme) => ({
   tableBody: {
     backgroundColor: theme.palette.grey[50],
     border: `1px solid ${theme.palette.grey["300"]}`,
-    borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
-    borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderBottomLeftRadius: `${theme.shape.borderRadius}px`,
+    borderBottomRightRadius: `${theme.shape.borderRadius}px`,
     borderTop: "none",
     width: "100%",
   },
@@ -138,8 +138,8 @@ export default makeStyles((theme) => ({
   tableHeader: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey[300]}`,
-    borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
-    borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderTopLeftRadius: `${theme.shape.borderRadius}px`,
+    borderTopRightRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     justifyContent: "space-between",
     padding: "10px 47.5px 10px 40px",

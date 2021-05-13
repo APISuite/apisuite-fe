@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     padding: "7.5px 45px",
     pointerEvents: "none",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     fontWeight: 500,
     padding: "7.5px 45px",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {
@@ -47,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
   inputField: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: theme.palette.text.primary,
   },
 
@@ -70,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
   separatorLine: {
     backgroundColor: theme.palette.grey[200],
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     height: "1px",
     width: "100%",
   },

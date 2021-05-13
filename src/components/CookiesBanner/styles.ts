@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 
   cookiesConsentButton: {
     backgroundColor: `${theme.palette.background.default} !important`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px !important`,
+    borderRadius: `${theme.shape.borderRadius}px !important`,
     color: `${theme.palette.primary.main} !important`,
     padding: "12px 20px !important",
     fontSize: "16px !important",

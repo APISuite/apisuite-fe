@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     fontWeight: 500,
     padding: "7.5px 45px",
-    textTransform: "none",
     width: "100%",
 
     "&:hover": {

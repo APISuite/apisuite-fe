@@ -6,8 +6,6 @@ import { GreetingCardProps } from "./types";
 
 const GreetingCard: React.FC<GreetingCardProps> = ({
   greetingCardText,
-  greetingCardButtonAction,
-  greetingCardButtonClassName,
   greetingCardButtonLabel,
   greetingCardButtonLink,
 }) => {
@@ -25,28 +23,16 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
           : greetingCardText
       }
 
-      {
-        greetingCardButtonClassName
-          ? (
-            <Button
-              className={greetingCardButtonClassName}
-              href={greetingCardButtonLink}
-              onClick={greetingCardButtonAction}
-            >
-              {greetingCardButtonLabel}
-            </Button>
-          )
-          : (
-            <Button
-              className={classes.greetingCardButton}
-              fullWidth
-              href={greetingCardButtonLink}
-              onClick={greetingCardButtonAction}
-            >
-              {greetingCardButtonLabel}
-            </Button>
-          )
-      }
+      <Button
+        className={classes.greetingCardButton}
+        href={greetingCardButtonLink}
+        variant="contained"
+        disableElevation
+        color="secondary"
+        size="large"
+      >
+        {greetingCardButtonLabel}
+      </Button>
     </section>
   );
 };

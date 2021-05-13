@@ -3,7 +3,7 @@ import { makeStyles } from "@apisuite/fe-base";
 export default makeStyles((theme) => ({
   carouselSlideButtonStyling: {
     backgroundColor: theme.palette.primary.main,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.primary.contrastText} !important`,
     cursor: "pointer",
     fontSize: "16px",
@@ -11,7 +11,6 @@ export default makeStyles((theme) => ({
     margin: "0px auto",
     padding: "17px 40px",
     textDecoration: "none",
-    textTransform: "none",
     width: "200px",
 
     "&:hover": {
@@ -63,13 +62,13 @@ export default makeStyles((theme) => ({
     transform: "translateY(-20px)",
 
     "& > :first-child": {
-      borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
-      borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+      borderBottomLeftRadius: `${theme.shape.borderRadius}px`,
+      borderTopLeftRadius: `${theme.shape.borderRadius}px`,
     },
 
     "& > :last-child": {
-      borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
-      borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
+      borderBottomRightRadius: `${theme.shape.borderRadius}px`,
+      borderTopRightRadius: `${theme.shape.borderRadius}px`,
     },
   },
 

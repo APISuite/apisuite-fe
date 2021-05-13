@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
 
   actionsCatalogEntry: {
     /* This outline sets the color of every catalog entry's innermost borders. */
-    outline: `1px solid ${theme.palette.grey[200]}`,
+    outline: `1px solid ${theme.palette.primary.light}`,
     textAlign: "center",
     width: "300px",
 

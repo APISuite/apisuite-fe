@@ -12,7 +12,6 @@ module.exports = {
   ],
 
   devServer: {
-    public: "/",
     historyApiFallback: true,
     port: 9001,
     host: "localhost.develop.apisuite.io",

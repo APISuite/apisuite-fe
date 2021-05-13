@@ -123,9 +123,11 @@ export const TeamPage: React.FC = () => {
       }}
     >
       <Button
-        className={classes.btn}
         disabled={input.email.length === 0 || inputErrors.email || inputErrors.role}
         type='submit'
+        color="secondary"
+        variant="contained"
+        disableElevation
       >
         {
           requestStatuses.inviteMemberRequest.isRequesting
@@ -202,7 +204,15 @@ export const TeamPage: React.FC = () => {
         !inviteVisible && user
           ? (
             canInvite(getUserMemberRole(user).name) &&
-            <Button className={classes.btn} onClick={toggle} style={{ marginTop: 24 }}>{t("rbac.team.invite")} </Button>
+            <Button
+              onClick={toggle}
+              style={{ marginTop: 24 }}
+              color="primary"
+              variant="contained"
+              disableElevation
+            >
+              {t("rbac.team.invite")}
+            </Button>
           )
           : inviteCard()
       }
