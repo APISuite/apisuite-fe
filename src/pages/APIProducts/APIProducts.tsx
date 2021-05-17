@@ -72,7 +72,7 @@ export const APIProducts: React.FC = () => {
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
+          apiVersion: api.apiVersions.length ? `v${api.apiVersions[0].version}` : "No version available",
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
         };
@@ -201,7 +201,7 @@ ${latestUpdatedAPI.apiAccess
               >
                 {
                   latestUpdatedAPI.apiVersion
-                    ? `v${latestUpdatedAPI.apiVersion}`
+                    ? latestUpdatedAPI.apiVersion
                     : "..."
                 }
               </p>
