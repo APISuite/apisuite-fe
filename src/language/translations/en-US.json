@@ -18,7 +18,7 @@
       "intro": "Let's make things easy.",
       "notLoggedIn": {
         "heading": "Create a developer account first.",
-        "paragraphOne": "Our API Portal enables you to register a free team-based account without on the fly.",
+        "paragraphOne": "Our API Portal enables you to register a free team-based account on the fly.",
         "paragraphTwoPartOne": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.",
         "paragraphTwoPartTwo": "Not sure how to get there? The onboarding documentation will help you along.",
         "buttonLabel": "Sign up now"
