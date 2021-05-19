@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  useTranslation,
   Avatar,
   Button,
   Fade,
@@ -11,7 +10,7 @@ import {
   Modal,
   TextField,
   useConfig,
-  useTheme,
+  useTranslation,
 } from "@apisuite/fe-base";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
@@ -22,17 +21,17 @@ import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
-import { useForm } from "util/useForm";
-import { isValidImage, isValidURL } from "util/forms";
-import { getUserApp } from "store/applications/actions/getUserApp";
-import { createApp } from "store/applications/actions/createApp";
-import { updateApp } from "store/applications/actions/updatedApp";
-import { deleteApp } from "store/applications/actions/deleteApp";
-import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
-
 import { ApplicationsModalProps } from "./types";
-import useStyles from "./styles";
 import { applicationsModalSelector } from "./selector";
+import { createApp } from "store/applications/actions/createApp";
+import { deleteApp } from "store/applications/actions/deleteApp";
+import { getSections } from "util/extensions";
+import { getUserApp } from "store/applications/actions/getUserApp";
+import { isValidImage, isValidURL } from "util/forms";
+import { updateApp } from "store/applications/actions/updatedApp";
+import { useForm } from "util/useForm";
+import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import useStyles from "./styles";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
@@ -47,10 +46,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
 
   const { ownerInfo, portalName } = useConfig();
-
-  const theme = useTheme();
-
-  console.log("theme", theme);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
@@ -929,6 +924,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <hr className={classes.regularSectionSeparator} />
 
+              {
+                getSections("MARKETPLACE_APP_VISIBILITY")
+              }
+
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
                 {
@@ -984,7 +983,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           <Button
                             disabled={
                               !(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
-                              && validImage)
+                                && validImage)
                             }
                             color="primary"
                             variant="contained"
