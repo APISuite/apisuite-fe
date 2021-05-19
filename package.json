@@ -13,7 +13,7 @@
     "prebuild": "npm run lint",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "pretest": "npm run lint",
-    "test": "start-server-and-test dev http://localhost:9001 cy:run",
+    "test": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test dev https://localhost:9001 cy:run",
     "commit": "git-cz",
     "prestart": "npm run build",
     "start": "serve -l 8080 -s dist",

@@ -1,7 +1,7 @@
 {
   "viewportWidth": 1200,
   "viewportHeight": 600,
-  "baseUrl": "http://localhost.develop.apisuite.io:9001",
+  "baseUrl": "https://localhost.develop.apisuite.io:9001",
   "video": false,
   "testFiles": "**/*.spec.{js,jsx,ts,tsx}"
 }
