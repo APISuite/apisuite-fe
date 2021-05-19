@@ -5,13 +5,12 @@ import {
   Avatar,
   Button,
   Fade,
-  InputAdornment,
   Menu,
   MenuItem,
   Modal,
   TextField,
   useConfig,
-  useTheme,
+  IconButton,
 } from "@apisuite/fe-base";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
@@ -47,10 +46,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
 
   const { ownerInfo, portalName } = useConfig();
-
-  const theme = useTheme();
-
-  console.log("theme", theme);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
@@ -380,6 +375,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     toggleModal();
   };
 
+  const copyToClipboard = (value: string) => {
+    navigator.clipboard.writeText(value);
+  };
+
   return (
     <>
       <Modal
@@ -646,33 +645,34 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     <>.</>
                   </p>
 
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      endAdornment:
-                        <InputAdornment position="end">
-                          <FileCopyOutlinedIcon />
-                        </InputAdornment>,
-                    }}
-                    label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
-                    margin="dense"
-                    name="appClientID"
-                    onChange={handleChange}
-                    type="text"
-                    value={formState.values.appClientID}
-                    variant="outlined"
-                    disabled
-                  />
+
+                  <div className={classes.row}>
+                    <TextField
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
+                      margin="dense"
+                      name="appClientID"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appClientID}
+                      variant="outlined"
+                      disabled
+                    />
+
+                    <div className={classes.rowCta}>
+                      <IconButton
+                        size="medium"
+                        disabled={!formState.values.appClientID}
+                        onClick={() => copyToClipboard(formState.values.appClientID)}
+                      >
+                        <FileCopyOutlinedIcon />
+                      </IconButton>
+                    </div>
+                  </div>
 
                   <div className={classes.clientSecretInputFieldContainer}>
                     <TextField
                       fullWidth
-                      InputProps={{
-                        endAdornment:
-                          <InputAdornment position="end">
-                            <FileCopyOutlinedIcon />
-                          </InputAdornment>,
-                      }}
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
                       margin="dense"
                       name="appClientSecret"
@@ -682,6 +682,16 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       variant="outlined"
                       disabled
                     />
+
+                    <div className={classes.copyCta}>
+                      <IconButton
+                        size="medium"
+                        disabled={!formState.values.appClientSecret}
+                        onClick={() => copyToClipboard(formState.values.appClientSecret)}
+                      >
+                        <FileCopyOutlinedIcon />
+                      </IconButton>
+                    </div>
 
                     <div
                       className={
