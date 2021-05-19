@@ -13,7 +13,6 @@ module.exports = {
   ],
 
   devServer: {
-    http2: true,
     https: {
       key: fs.readFileSync("./ssl/localhost.develop.apisuite.io-key.pem"),
       cert: fs.readFileSync("./ssl/localhost.develop.apisuite.io.pem"),
