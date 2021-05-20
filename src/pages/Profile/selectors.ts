@@ -10,3 +10,8 @@ export const profileSelector = createSelector(
   ({ profile }: Store) => profile,
   ({ profile }) => ({ profile }),
 );
+
+export const getSSOAccountURLSelector = createSelector(
+  ({ profile }: Store) => profile,
+  (profile) => profile.profile?.ssoAccountURL,
+);
