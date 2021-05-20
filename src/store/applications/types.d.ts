@@ -32,6 +32,7 @@ export interface AppData {
   supportUrl: string,
   tosUrl: string,
   updatedAt: string,
+  visibility: string,
   websiteUrl: string,
   youtubeUrl: string,
 }

@@ -41,8 +41,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   toggleModal,
 }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+
   const { t } = useTranslation();
+
+  const dispatch = useDispatch();
+
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
 
   const { ownerInfo, portalName } = useConfig();
@@ -107,6 +110,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appShortDescription: "",
       appSupportURL: "",
       appTermsURL: "",
+      appVisibility: "private",
       appWebsiteURL: "",
       appYouTubeURL: "",
     },
@@ -183,6 +187,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           : "",
         appSupportURL: mostRecentlySelectedAppDetails.supportUrl ? mostRecentlySelectedAppDetails.supportUrl : "",
         appTermsURL: mostRecentlySelectedAppDetails.tosUrl ? mostRecentlySelectedAppDetails.tosUrl : "",
+        appVisibility: mostRecentlySelectedAppDetails.visibility ? mostRecentlySelectedAppDetails.visibility : "private",
         appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
         appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
       });
@@ -199,6 +204,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appShortDescription: "",
         appSupportURL: "",
         appTermsURL: "",
+        appVisibility: "private",
         appWebsiteURL: "",
         appYouTubeURL: "",
       });
@@ -300,11 +306,21 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
+  // 1. Support functions
+
+  // 1.a. Label checking
+
   const checkForLabels = (stringOfLabels: string) => {
     return stringOfLabels.length ? stringOfLabels.split(" ") : [];
   };
 
-  // Creating an app
+  // 1.b. App visibility handling
+
+  const handleAppVisibility = (selectedAppVisibility: string) => {
+    formState.values.appVisibility = selectedAppVisibility;
+  };
+
+  // 2. Creating an app
 
   const createNewApp = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
@@ -319,6 +335,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       shortDescription: formState.values.appShortDescription,
       supportUrl: formState.values.appSupportURL,
       tosUrl: formState.values.appTermsURL,
+      visibility: formState.values.appVisibility,
       websiteUrl: formState.values.appWebsiteURL,
       youtubeUrl: formState.values.appYouTubeURL,
     };
@@ -328,7 +345,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     toggleModal();
   };
 
-  // Updating an app
+  // 3. Updating an app
 
   const _updateApp = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
@@ -344,6 +361,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       shortDescription: formState.values.appShortDescription,
       supportUrl: formState.values.appSupportURL,
       tosUrl: formState.values.appTermsURL,
+      visibility: formState.values.appVisibility,
       websiteUrl: formState.values.appWebsiteURL,
       youtubeUrl: formState.values.appYouTubeURL,
     };
@@ -353,7 +371,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     toggleModal();
   };
 
-  // Deleting an app
+  // 4. Deleting an app
 
   const [openDialog, setOpenDialog] = React.useState(false);
 
@@ -389,6 +407,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appShortDescription: "",
             appSupportURL: "",
             appTermsURL: "",
+            appVisibility: "private",
             appWebsiteURL: "",
             appYouTubeURL: "",
           });
@@ -714,19 +733,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     value={formState.values.appFullDescription}
                     variant='outlined'
                   />
-
-                  <TextField
-                    className={classes.inputFields}
-                    fullWidth
-                    helperText={t("dashboardTab.applicationsSubTab.appModal.appLabelsFieldHelperText")}
-                    label={t("dashboardTab.applicationsSubTab.appModal.appLabelsFieldLabel")}
-                    margin='dense'
-                    name='appLabels'
-                    onChange={handleChange}
-                    type='text'
-                    value={formState.values.appLabels}
-                    variant='outlined'
-                  />
                 </div>
 
                 {/* 'Optional URLs' subsection */}
@@ -924,8 +930,18 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <hr className={classes.regularSectionSeparator} />
 
+              {/* The following code checks if a Marketplace extension's section exists,
+and if it does, it passes along the form's state, and any necessary logic
+to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
               {
-                getSections("MARKETPLACE_APP_VISIBILITY")
+                getSections(
+                  "MARKETPLACE_APP_VISIBILITY",
+                  {
+                    formState,
+                    handleAppVisibility,
+                    handleChange,
+                  }
+                )
               }
 
               {/* 'App action' buttons section */}

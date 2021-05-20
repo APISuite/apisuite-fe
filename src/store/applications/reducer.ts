@@ -1,7 +1,7 @@
 import update from "immutability-helper";
 
-import { ApplicationsStore } from "./types";
 import { ApplicationsActions } from "./actions/types";
+import { ApplicationsStore } from "./types";
 import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from "./actions/createApp";
 import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS_SUCCESS } from "./actions/getAllUserApps";
@@ -28,6 +28,7 @@ const initialState: ApplicationsStore = {
     supportUrl: "",
     tosUrl: "",
     updatedAt: "",
+    visibility: "",
     websiteUrl: "",
     youtubeUrl: "",
   },
@@ -133,6 +134,7 @@ export default function reducer (
           supportUrl: { $set: action.appData.supportUrl },
           tosUrl: { $set: action.appData.tosUrl },
           updatedAt: { $set: action.appData.updatedAt },
+          visibility: { $set: action.appData.visibility },
           websiteUrl: { $set: action.appData.websiteUrl },
           youtubeUrl: { $set: action.appData.youtubeUrl },
         },
@@ -190,6 +192,7 @@ export default function reducer (
           shortDescription: { $set: action.appData.shortDescription },
           supportUrl: { $set: action.appData.supportUrl },
           tosUrl: { $set: action.appData.tosUrl },
+          visibility: { $set: action.appData.visibility },
           websiteUrl: { $set: action.appData.websiteUrl },
           youtubeUrl: { $set: action.appData.youtubeUrl },
         },
