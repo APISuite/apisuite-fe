@@ -240,7 +240,7 @@ export const Profile: React.FC = () => {
   };
 
   const redirectToIdentityProvider = (identityProviderURL: string) => {
-    window.location.href = identityProviderURL;
+    window.open(identityProviderURL, "_blank");
   };
 
   /* Account deletion */

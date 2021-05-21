@@ -81,7 +81,6 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
-    cursor: "none",
     fontSize: "16px",
     fontWeight: 500,
     height: "40px",
