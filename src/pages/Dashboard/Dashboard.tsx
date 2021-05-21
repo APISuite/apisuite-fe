@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useConfig, useTranslation } from "@apisuite/fe-base";
+import { Trans, useConfig, useTranslation } from "@apisuite/fe-base";
 import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
 
 import { DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
@@ -252,34 +252,29 @@ export const Dashboard: React.FC = () => {
 
         {/* Notice */}
         {
-          hasSocials() &&
-          <section className={classes.noticeContainer}>
-            <Notice
-              noticeIcon={
-                <CheckCircleOutlineRoundedIcon />
-              }
-              noticeText={
-                <p>
-                  <>{portalName} {t("sandboxPage.notice.maintainedBy")} {clientName}.</>
-                  {
-                    hasSocials() && (
-                      <>
-                        <> {t("sandboxPage.notice.visitUs")} </>
+          hasSocials() && (
+            <section className={classes.noticeContainer}>
+              <Notice
+                noticeIcon={
+                  <CheckCircleOutlineRoundedIcon />
+                }
+                noticeText={
+                  <p>
+                    <Trans i18nKey="sandboxPage.notice" values={{ portalName, clientName, url: socialURLs[0].url }}>
+                      {[
                         <a
-                          href={hasSocials() ? socialURLs[0].url : "#"}
+                          key="sandboxPage.notice"
+                          href={socialURLs[0].url}
                           rel='noopener noreferrer'
                           target='_blank'
-                        >
-                          {hasSocials() ? socialURLs[0].url : ""}
-                        </a>
-                        <>.</>
-                      </>
-                    )
-                  }
-                </p>
-              }
-            />
-          </section>
+                        />,
+                      ]}
+                    </Trans>
+                  </p>
+                }
+              />
+            </section>
+          )
         }
       </main>
 

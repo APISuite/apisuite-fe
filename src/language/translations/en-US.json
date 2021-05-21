@@ -53,10 +53,7 @@
       "intro": "API Catalog recent additions",
       "paragraph": "No APIs have been recently added."
     },
-    "notice": {
-      "maintainedBy": "is maintained by",
-      "visitUs": "You can visit us at"
-    }
+    "notice": "{{portalName}} is maintained by {{clientName}}. You can visit us at <0>{{url}}</0>."
   },
   "cookiesConsentBanner": {
     "intro": "Your Privacy.",
