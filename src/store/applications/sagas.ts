@@ -19,10 +19,15 @@ import { openNotification } from "store/notificationStack/actions/notification";
 
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
+    console.log(
+      "metadata", action.appData.metadata,
+    );
+
     const data = {
       description: action.appData.description,
       labels: action.appData.labels,
       logo: action.appData.logo,
+      metadata: action.appData.metadata,
       name: action.appData.name,
       privacyUrl: action.appData.privacyUrl,
       redirectUrl: action.appData.redirectUrl,
@@ -57,6 +62,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       description: action.appData.description,
       labels: action.appData.labels,
       logo: action.appData.logo,
+      metadata: action.appData.metadata,
       name: action.appData.name,
       privacyUrl: action.appData.privacyUrl,
       redirectUrl: action.appData.redirectUrl,
@@ -87,6 +93,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
         id: response.id,
         labels: response.labels,
         logo: response.logo,
+        metadata: response.metadata,
         name: response.name,
         orgId: response.orgId,
         privacyUrl: response.privacyUrl,
@@ -185,6 +192,7 @@ export function * getAllUserAppsActionSaga () {
         id: userApp.id,
         labels: userApp.labels,
         logo: userApp.logo,
+        metadata: userApp.metadata,
         name: userApp.name,
         orgId: userApp.orgId,
         privacyUrl: userApp.privacyUrl,
@@ -229,6 +237,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
         id: userApp.id,
         labels: userApp.labels,
         logo: userApp.logo,
+        metadata: userApp.metadata,
         name: userApp.name,
         orgId: userApp.orgId,
         privacyUrl: userApp.privacyUrl,

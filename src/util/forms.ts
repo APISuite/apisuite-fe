@@ -74,3 +74,7 @@ export const notEmpty = (value: string | number) => {
 export const isValidName = (name: string) => {
   return (name && name.length > 0);
 };
+
+export const isValidAppMetaKey = (appMetaKey: string) => {
+  return appMetaKey.length < 30 && /^[A-Za-z0-9-_]+$/.test(appMetaKey);
+};

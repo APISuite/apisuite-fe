@@ -34,6 +34,14 @@ export interface AppData {
   updatedAt: string,
   websiteUrl: string,
   youtubeUrl: string,
+  metadata: Metadata[],
+}
+
+export interface Metadata {
+  key: string,
+  value: string,
+  title: string,
+  description: string,
 }
 
 export interface ModalDetails {
@@ -64,6 +72,7 @@ export interface CreateAppActionData {
   description: string,
   labels: string[],
   logo: string,
+  metadata: Metadata[],
   name: string,
   privacyUrl: string,
   redirectUrl: string,
@@ -79,6 +88,7 @@ export interface UpdateAppActionData {
   id: number,
   labels: string[],
   logo: string,
+  metadata: Metadata[],
   name: string,
   privacyUrl: string,
   redirectUrl: string,

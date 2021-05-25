@@ -248,6 +248,50 @@ export default makeStyles((theme) => ({
     },
   },
 
+  customPropsFieldsContainer: {
+    border: "1px solid #BAC0C6",
+    borderRadius: 4,
+    padding: "18px 12px",
+
+    "& > :first-child": {
+      width: 400,
+    },
+  },
+
+  customPropsFieldsInnerContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+
+    "& > div": {
+      marginBottom: 0,
+      width: 270,
+    },
+  },
+
+  customPropsTextContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    
+    "& > :first-child": {
+      color: theme.palette.secondary.main,
+      fontSize: "16px",
+      fontWeight: 500,
+      lineHeight: "20px",
+      marginBottom: "37.5px",
+      marginRight: 40,
+      width: 460,
+    },
+
+    "& > :last-child": {
+      color: theme.palette.text.primary,
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "17px",
+      marginBottom: "40px",
+      width: 400,
+    },
+  },
+
   disabledClientSecretInputFieldRefreshButton: {
     border: `1px solid ${theme.palette.action.disabledBackground}`,
     borderRadius: theme.shape.borderRadius,

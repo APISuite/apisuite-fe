@@ -22,7 +22,7 @@ import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
 import { useForm } from "util/useForm";
-import { isValidImage, isValidURL } from "util/forms";
+import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { createApp } from "store/applications/actions/createApp";
 import { updateApp } from "store/applications/actions/updatedApp";
@@ -109,6 +109,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appTermsURL: "",
       appWebsiteURL: "",
       appYouTubeURL: "",
+      appMetaKey: "",
+      appMetaValue: "",
+      appMetaTitle: "",
+      appMetaDescription: "",
     },
     // Rules for (some) app details
     {
@@ -185,6 +189,18 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appTermsURL: mostRecentlySelectedAppDetails.tosUrl ? mostRecentlySelectedAppDetails.tosUrl : "",
         appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
         appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
+        appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
+          ? mostRecentlySelectedAppDetails.metadata[0].key
+          : "",
+        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
+          ? mostRecentlySelectedAppDetails.metadata[0].value
+          : "",
+        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
+          ? mostRecentlySelectedAppDetails.metadata[0].title
+          : "",
+        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
+          ? mostRecentlySelectedAppDetails.metadata[0].description
+          : "",
       });
     } else {
       resetForm({
@@ -201,6 +217,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appTermsURL: "",
         appWebsiteURL: "",
         appYouTubeURL: "",
+        appMetaKey: "",
+        appMetaValue: "",
+        appMetaTitle: "",
+        appMetaDescription: "",
       });
     }
   }, [modalMode, mostRecentlySelectedAppDetails]);
@@ -315,6 +335,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       description: formState.values.appFullDescription,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
+      metadata: [{
+        key: formState.values.appMetaKey,
+        value: formState.values.appMetaValue,
+        title: formState.values.appMetaTitle,
+        description: formState.values.appMetaDescription,
+      }],
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
@@ -340,6 +366,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       id: modalDetails.userAppID,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
+      metadata: [{
+        key: formState.values.appMetaKey,
+        value: formState.values.appMetaValue,
+        title: formState.values.appMetaTitle,
+        description: formState.values.appMetaDescription,
+      }],
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
@@ -397,6 +429,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appTermsURL: "",
             appWebsiteURL: "",
             appYouTubeURL: "",
+            appMetaKey: "",
+            appMetaValue: "",
+            appMetaTitle: "",
+            appMetaDescription: "",
           });
           toggleModal();
         }}
@@ -941,6 +977,79 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <hr className={classes.regularSectionSeparator} />
 
+              {/* 'Metadata' section */}
+              <div>
+                {/* 'Custom properties' text */}
+                <div className={classes.customPropsTextContainer}>
+                  <p>
+                    Custom properties
+                  </p>
+
+                  <p>
+                    You can add additional metadata to this application by way of custom properties.
+                  </p>
+                </div>
+
+                {/* 'Custom properties' fields */}
+                <div className={classes.customPropsFieldsContainer}>
+                  <TextField
+                    className={classes.inputFields}
+                    error={formState.values.appMetaKey.length !== 0 && !isValidAppMetaKey(formState.values.appMetaKey)}
+                    fullWidth
+                    helperText='Maximum of 30 characters. Only lower case letters, numerals, and underscores (e.g., "key_value").'
+                    label="Key value"
+                    margin="dense"
+                    name="appMetaKey"
+                    onChange={handleChange}
+                    type="text"
+                    value={formState.values.appMetaKey}
+                    variant="outlined"
+                  />
+
+                  <div className={classes.customPropsFieldsInnerContainer}>
+                    <TextField
+                      className={classes.inputFields}
+                      error={formState.values.appMetaKey.length !== 0 && formState.values.appMetaValue.length === 0}
+                      fullWidth
+                      label="Value"
+                      margin="dense"
+                      name="appMetaValue"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appMetaValue}
+                      variant="outlined"
+                    />
+
+                    <TextField
+                      className={classes.inputFields}
+                      error={formState.values.appMetaKey.length !== 0 && formState.values.appMetaTitle.length === 0}
+                      fullWidth
+                      label="Title"
+                      margin="dense"
+                      name="appMetaTitle"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appMetaTitle}
+                      variant="outlined"
+                    />
+
+                    <TextField
+                      className={classes.inputFields}
+                      fullWidth
+                      label="Description"
+                      margin="dense"
+                      name="appMetaDescription"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appMetaDescription}
+                      variant="outlined"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <hr className={classes.regularSectionSeparator} />
+
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
                 {
@@ -950,13 +1059,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <div>
                           <Button
                             disabled={
-                              !(formState.values.appName.length !== 0 &&
+                              !(
+                                formState.values.appName.length !== 0 &&
                                 formState.values.appRedirectURI !== "http://" &&
                                 formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
+                                (
+                                  formState.values.appMetaKey.length !== 0 &&
+                                  isValidAppMetaKey(formState.values.appMetaKey) &&
+                                  formState.values.appMetaValue.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0
+                                ) &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
-                                validImage)
+                                validImage
+                              )
                             }
                             color="primary"
                             variant="contained"
@@ -995,8 +1113,17 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <div>
                           <Button
                             disabled={
-                              !(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
-                              && validImage)
+                              !(
+                                formState.isDirty &&
+                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                                (
+                                  formState.values.appMetaKey.length !== 0 &&
+                                  isValidAppMetaKey(formState.values.appMetaKey) &&
+                                  formState.values.appMetaValue.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0
+                                ) &&
+                                validImage)
                             }
                             color="primary"
                             variant="contained"
