@@ -18,6 +18,7 @@ import Close from "@material-ui/icons/Close";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
+import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
@@ -982,11 +983,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Custom properties' text */}
                 <div className={classes.customPropsTextContainer}>
                   <p>
-                    Custom properties
+                    {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
                   </p>
 
                   <p>
-                    You can add additional metadata to this application by way of custom properties.
+                    {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
                   </p>
                 </div>
 
@@ -996,8 +997,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     className={classes.inputFields}
                     error={formState.values.appMetaKey.length !== 0 && !isValidAppMetaKey(formState.values.appMetaKey)}
                     fullWidth
-                    helperText='Maximum of 30 characters. Only lower case letters, numerals, and underscores (e.g., "key_value").'
-                    label="Key value"
+                    helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
+                    label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
                     margin="dense"
                     name="appMetaKey"
                     onChange={handleChange}
@@ -1011,7 +1012,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       className={classes.inputFields}
                       error={formState.values.appMetaKey.length !== 0 && formState.values.appMetaValue.length === 0}
                       fullWidth
-                      label="Value"
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
                       margin="dense"
                       name="appMetaValue"
                       onChange={handleChange}
@@ -1024,7 +1025,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       className={classes.inputFields}
                       error={formState.values.appMetaKey.length !== 0 && formState.values.appMetaTitle.length === 0}
                       fullWidth
-                      label="Title"
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
                       margin="dense"
                       name="appMetaTitle"
                       onChange={handleChange}
@@ -1036,7 +1037,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     <TextField
                       className={classes.inputFields}
                       fullWidth
-                      label="Description"
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.descriptionFieldLabel")}
                       margin="dense"
                       name="appMetaDescription"
                       onChange={handleChange}
@@ -1044,6 +1045,36 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       value={formState.values.appMetaDescription}
                       variant="outlined"
                     />
+                  </div>
+                </div>
+
+                <div className={classes.addCustomPropsContainer}>
+                  <Button
+                    className={classes.addCustomPropsButton}
+                    disabled
+                  >
+                    {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
+                  </Button>
+
+                  <div className={classes.infoBox}>
+                    <InfoRoundedIcon className={classes.infoBoxIcon} />
+
+                    <div>
+                      <p className={classes.infoBoxText}>
+                        <>
+                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText")}
+                        </>
+                        <a
+                          className={classes.infoBoxLink}
+                          href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties'
+                          rel='noopener noreferrer'
+                          target='_blank'
+                        >
+                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxLinkText")}
+                        </a>
+                        <>.</>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

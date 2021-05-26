@@ -91,6 +91,24 @@ export default makeStyles((theme) => ({
 
   /* 1.2 Modal's body */
 
+  addCustomPropsButton: {
+    // TODO: Button is temporarily disabled, hence the following 'background-color'.
+    // Remove once 'custom properties' feature is fully complete.
+    backgroundColor: "rgba(0, 0, 0, 0.12)",
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.text.hint,
+    fontSize: 16,
+    fontWeight: 500,
+    height: 42,
+    padding: "6px 21px",
+    textDecoration: "none",
+  },
+
+  addCustomPropsContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
   additionalInfoSubSectionTitle: {
     color: theme.palette.secondary.main,
     fontSize: "16px",
@@ -249,8 +267,9 @@ export default makeStyles((theme) => ({
   },
 
   customPropsFieldsContainer: {
-    border: "1px solid #BAC0C6",
-    borderRadius: 4,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: theme.shape.borderRadius,
+    marginBottom: 24,
     padding: "18px 12px",
 
     "& > :first-child": {
@@ -271,7 +290,7 @@ export default makeStyles((theme) => ({
   customPropsTextContainer: {
     display: "flex",
     justifyContent: "space-between",
-    
+
     "& > :first-child": {
       color: theme.palette.secondary.main,
       fontSize: "16px",
@@ -454,8 +473,14 @@ export default makeStyles((theme) => ({
   },
 
   infoBoxIcon: {
+    alignSelf: "flex-start",
     fill: "#46B5EF",
-    transform: "translate(-2.5px, -40px)",
+    marginRight: 5,
+  },
+
+  infoBoxLink: {
+    fontWeight: 700,
+    textDecoration: "none",
   },
 
   infoBoxText: {
@@ -597,6 +622,29 @@ export default makeStyles((theme) => ({
     width: "400px",
   },
 
+
+  row: {
+    alignItems: "center",
+    display: "flex",
+    position: "relative",
+  },
+
+  rowCta: {
+    background: theme.palette.common.white,
+    border: `1px solid ${theme.palette.action.disabled}`,
+    borderBottomRightRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
+    height: 40,
+    marginBottom: 4,
+    marginTop: 8,
+    position: "absolute",
+    right: 0,
+
+    "& > button": {
+      transform: "translateY(-4px)",
+    },
+  },
+
   sectionContainer: {
     display: "flex",
   },
@@ -619,25 +667,5 @@ export default makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: "14px",
     margin: "0px 12px 0px 12px",
-  },
-  row: {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-  },
-
-  rowCta: {
-    position: "absolute",
-    right: 0,
-    border: `1px solid ${theme.palette.action.disabled}`,
-    background: theme.palette.common.white,
-    borderTopRightRadius: theme.shape.borderRadius,
-    borderBottomRightRadius: theme.shape.borderRadius,
-    height: 40,
-    marginTop: 8,
-    marginBottom: 4,
-    "& > button": {
-      transform: "translateY(-4px)",
-    },
   },
 }));

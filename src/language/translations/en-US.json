@@ -357,7 +357,22 @@
         "subSectionLabelOne": "General information",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
         "subSectionLabelThree": "Redirect URI",
-        "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
+        "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us.",
+        "customProps": {
+          "title": "Custom properties",
+          "subtitle": "You can add additional metadata to this application by way of custom properties.",
+          "keyFieldLabel": "Key",
+          "keyFieldHelperText": "Maximum of 30 characters. Only lower case letters, numerals, and underscores (e.g., \"key_value\").",
+          "valueFieldLabel": "Value",
+          "titleFieldLabel": "Title",
+          "descriptionFieldLabel": "Description",
+          "addCustomPropsButtonLabel": "Add new property",
+          "infoBoxRegularText": "Read more on how to optimize the use of custom properties, and check some examples in our ",
+          "infoBoxLinkText": "documentation",
+          "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
+          "subSectionLabelThree": "Redirect URI",
+          "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
+        }
       }
     },
     "testSubTab": {
