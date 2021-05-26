@@ -227,7 +227,25 @@ export default makeStyles((theme) => ({
   },
 
   clientSecretInputFieldContainer: {
+    position: "relative",
     display: "flex",
+    alignItems: "center",
+    background: theme.palette.common.white,
+  },
+
+  copyCta: {
+    position: "absolute",
+    right: 50,
+    border: `1px solid ${theme.palette.action.disabled}`,
+    background: theme.palette.common.white,
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
+    height: 40,
+    marginTop: 8,
+    marginBottom: 4,
+    "& > button": {
+      transform: "translateY(-4px)",
+    },
   },
 
   disabledClientSecretInputFieldRefreshButton: {
@@ -237,7 +255,6 @@ export default makeStyles((theme) => ({
     height: 40,
     marginLeft: 10,
     padding: "7px 0px",
-    marginTop: 9,
     pointerEvents: "none",
     textAlign: "center",
     width: 47,
@@ -558,5 +575,25 @@ export default makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: "14px",
     margin: "0px 12px 0px 12px",
+  },
+  row: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+  },
+
+  rowCta: {
+    position: "absolute",
+    right: 0,
+    border: `1px solid ${theme.palette.action.disabled}`,
+    background: theme.palette.common.white,
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
+    height: 40,
+    marginTop: 8,
+    marginBottom: 4,
+    "& > button": {
+      transform: "translateY(-4px)",
+    },
   },
 }));

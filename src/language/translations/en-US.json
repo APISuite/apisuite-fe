@@ -18,7 +18,7 @@
       "intro": "Let's make things easy.",
       "notLoggedIn": {
         "heading": "Create a developer account first.",
-        "paragraphOne": "Our API Portal enables you to register a free team-based account without on the fly.",
+        "paragraphOne": "Our API Portal enables you to register a free team-based account on the fly.",
         "paragraphTwoPartOne": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.",
         "paragraphTwoPartTwo": "Not sure how to get there? The onboarding documentation will help you along.",
         "buttonLabel": "Sign up now"
@@ -53,10 +53,7 @@
       "intro": "API Catalog recent additions",
       "paragraph": "No APIs have been recently added."
     },
-    "notice": {
-      "maintainedBy": "is maintained by",
-      "visitUs": "You can visit us at"
-    }
+    "notice": "{{portalName}} is maintained by {{clientName}}. You can visit us at <0>{{url}}</0>."
   },
   "cookiesConsentBanner": {
     "intro": "Your Privacy.",
@@ -75,6 +72,7 @@
   },
   "signInOrUpView": {
     "closeButtonLabel": "close",
+    "invalid": "This invitation is not valid!",
     "welcomeTitle": "Welcome",
     "welcomeSubtitle": "Please, feel free to sign in, or sign up for free.",
     "welcomeSubtitleInvitation": "You have been invited to join {{org}}.",
@@ -321,7 +319,7 @@
         "appClientSecretFieldLabel": "Client Secret",
         "appFullDescriptionFieldLabel": "Full description",
         "appLabelsFieldLabel": "Labels",
-        "appLabelsFieldHelperText": "Each provided label should be separated by a space.",
+        "appLabelsFieldHelperText": "Each provided label should be separated by a comma.",
         "appNameFieldLabel": "Application name",
         "appPrivacyPolicyFieldLabel": "Privacy Policy URL",
         "appPrivacyPolicyURLFieldLabel": "Privacy Policy URL",
@@ -542,6 +540,7 @@
     "loginBtn": "Login",
     "registerBtn": "Register",
     "invitationSignInBtn": "Sign in to accept invitation",
+    "invitationSignUpBtn": "Sign up to accept invitation",
     "invitationBtn": "Invitation"
   },
   "forgotPassword": {
@@ -594,7 +593,22 @@
   },
   "invitationForm": {
     "accept": "Accept invitation",
+    "backToPortal": "Go back to the Portal",
+    "contact": "You can also contact us directly through our <0>Customer Suport</0>.",
+    "invalid": "Please contact <0>{{org}}</0> and request another invite.",
+    "inviteSignIn": "Sign in",
+    "inviteSignUp": "Sign up",
+    "name": "Your profile name",
+    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy</0>.",
     "reject": "Reject invitation",
-    "signin": "Sign in with {{provider}}"
+    "signin": "Sign in with {{provider}}",
+    "warnings": {
+      "name": "Please fill in your profile name.",
+      "password": "Please fill in your password."
+    }
+  },
+  "applications": {
+    "requestAPIAcessSuccess": "Access requested successfully.",
+    "requestAPIAcessError": "Failed to request access."
   }
 }

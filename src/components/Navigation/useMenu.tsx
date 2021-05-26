@@ -175,10 +175,13 @@ export function useMenu () {
             label: "Overview",
             route: "/dashboard",
           },
+          /*
+          This page is currently breaking, but it's being fixed in another branch. Keep it hidden for the time being.
           {
             label: "Team",
             route: "/profile/team",
           },
+          */
           {
             label: "Subscriptions",
             route: "/dashboard/subscriptions",

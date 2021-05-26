@@ -12,6 +12,8 @@ import { REQUEST_API_ACCESS, requestAPIAccessError, requestAPIAccessSuccess } fr
 import { Store } from "store/types";
 import { UPDATE_APP, updateAppError, updateAppSuccess } from "./actions/updatedApp";
 import request from "util/request";
+import { i18n } from "@apisuite/fe-base";
+import { openNotification } from "store/notificationStack/actions/notification";
 
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
@@ -155,9 +157,11 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
     });
 
     yield put(requestAPIAccessSuccess({}));
+    yield put(openNotification("success", i18n.t("applications.requestAPIAcessSuccess"), 3000));
   } catch (error) {
     yield put(requestAPIAccessError({}));
     yield put(handleSessionExpire({}));
+    yield put(openNotification("error", i18n.t("applications.requestAPIAcessError"), 3000));
   }
 }
 

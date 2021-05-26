@@ -47,7 +47,7 @@ ${apiDetails.apiAccess
 `
               }
             >
-              {`v${apiDetails.apiVersion}`}
+              {apiDetails.apiVersion}
             </span>
             <>{apiDetails.apiAccess ? "Production access" : "API Documentation"}</>
           </p>

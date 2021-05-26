@@ -4,7 +4,13 @@ import cookie from "js-cookie";
 
 import { LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_USER_ERROR, LOGIN_USER_SUCCESS } from "./actions/login";
 import { LOGOUT, LOGOUT_ERROR } from "./actions/logout";
-import { ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS, ACCEPT_INVITATION_SUCCESS } from "./actions/invitation";
+import {
+  ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS,
+  ACCEPT_INVITATION_SUCCESS,
+  INVITATION_SIGN_IN_SUCCESS,
+  INVITATION_SIGN_UP_SUCCESS,
+  REJECT_INVITATION_SUCCESS,
+} from "./actions/invitation";
 
 export const COO_KEY = "apiSuiteSession";
 export const COO_KEY_MAX_AGE = 30 * 24 * 60; // <-- 1 month
@@ -34,7 +40,10 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
     cookie.remove(COO_KEY, { path: "/" });
     history.replace("/auth/signin");
   } else if (action.type === ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS ||
-    action.type === ACCEPT_INVITATION_SUCCESS) {
+    action.type === ACCEPT_INVITATION_SUCCESS ||
+    action.type === INVITATION_SIGN_IN_SUCCESS ||
+    action.type === INVITATION_SIGN_UP_SUCCESS ||
+    action.type === REJECT_INVITATION_SUCCESS) {
     history.push(action.path);
   }
 };

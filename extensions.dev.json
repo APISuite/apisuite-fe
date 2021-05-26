@@ -1,7 +1,7 @@
 {
   "extensions": [
     {
-      "path": "github:Cloudoki/apisuite-cloud-extension-ui#v1.0.25",
+      "path": "github:Cloudoki/apisuite-cloud-extension-ui#v1.0.26",
       "name": "@apisuite/extension-cloud-extension-ui",
       "className": "CloudExtension",
       "config": {
@@ -10,13 +10,13 @@
       }
     },
     {
-      "path": "github:APISuite/apisuite-marketplace-extension-ui#v1.0.8",
+      "path": "github:APISuite/apisuite-marketplace-extension-ui#v1.0.9",
       "name": "@apisuite/apisuite-marketplace-extension-ui",
       "className": "MarketplaceExtension",
       "config": {}
     },
     {
-      "path": "github:APISuite/apisuite-billing-extension-ui#v1.0.6",
+      "path": "github:APISuite/apisuite-billing-extension-ui#v1.0.7",
       "name": "@apisuite/apisuite-billing-extension-ui",
       "className": "BillingExtension",
       "config": {}

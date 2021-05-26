@@ -39,7 +39,7 @@ npm run build
 ```
 
 
-Go to [http://localhost.develop.apisuite.io:9001](http://localhost.develop.apisuite.io:9001)
+Go to [https://localhost.develop.apisuite.io:9001](https://localhost.develop.apisuite.io:9001)
 
 ## Extending the APISuite Portal
 

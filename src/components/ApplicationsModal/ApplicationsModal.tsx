@@ -4,7 +4,7 @@ import {
   Avatar,
   Button,
   Fade,
-  InputAdornment,
+  IconButton,
   Menu,
   MenuItem,
   Modal,
@@ -177,7 +177,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : "",
         appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
-          ? mostRecentlySelectedAppDetails.labels.join(" ")
+          ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
         appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
@@ -310,9 +310,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   // 1.a. Label checking
 
-  const checkForLabels = (stringOfLabels: string) => {
-    return stringOfLabels.length ? stringOfLabels.split(" ") : [];
-  };
+  const checkForLabels = (labels: string) => (
+    labels.split(",")
+      .map((l) => l.trim())
+      .filter(Boolean)
+  );
 
   // 1.b. App visibility handling
 
@@ -389,6 +391,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     handleCloseDialog();
 
     toggleModal();
+  };
+
+  const copyToClipboard = (value: string) => {
+    navigator.clipboard.writeText(value);
   };
 
   return (
@@ -658,33 +664,34 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     <>.</>
                   </p>
 
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      endAdornment:
-                        <InputAdornment position="end">
-                          <FileCopyOutlinedIcon />
-                        </InputAdornment>,
-                    }}
-                    label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
-                    margin="dense"
-                    name="appClientID"
-                    onChange={handleChange}
-                    type="text"
-                    value={formState.values.appClientID}
-                    variant="outlined"
-                    disabled
-                  />
+
+                  <div className={classes.row}>
+                    <TextField
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
+                      margin="dense"
+                      name="appClientID"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appClientID}
+                      variant="outlined"
+                      disabled
+                    />
+
+                    <div className={classes.rowCta}>
+                      <IconButton
+                        size="medium"
+                        disabled={!formState.values.appClientID}
+                        onClick={() => copyToClipboard(formState.values.appClientID)}
+                      >
+                        <FileCopyOutlinedIcon />
+                      </IconButton>
+                    </div>
+                  </div>
 
                   <div className={classes.clientSecretInputFieldContainer}>
                     <TextField
                       fullWidth
-                      InputProps={{
-                        endAdornment:
-                          <InputAdornment position="end">
-                            <FileCopyOutlinedIcon />
-                          </InputAdornment>,
-                      }}
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
                       margin="dense"
                       name="appClientSecret"
@@ -694,6 +701,16 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       variant="outlined"
                       disabled
                     />
+
+                    <div className={classes.copyCta}>
+                      <IconButton
+                        size="medium"
+                        disabled={!formState.values.appClientSecret}
+                        onClick={() => copyToClipboard(formState.values.appClientSecret)}
+                      >
+                        <FileCopyOutlinedIcon />
+                      </IconButton>
+                    </div>
 
                     <div
                       className={

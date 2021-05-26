@@ -27,12 +27,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   centerContent: {
-    display: "flex",
-    justifyContent: "center",
     alignItems: "center",
-    height: "200px",
-    color: "red",
-    fontWeight: 500,
+    color: theme.palette.grey[400],
+    display: "flex",
+    flexDirection: "column",
+    fontWeight: 300,
+    height: 200,
+    justifyContent: "space-evenly",
   },
   loading: {
     color: theme.palette.secondary.main,
@@ -42,6 +43,36 @@ const useStyles = makeStyles((theme) => ({
     left: "20px",
     position: "absolute",
     top: "11.5px",
+  },
+  privacyPolicyDisclaimerContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "25px",
+  },
+  privacyPolicyDisclaimerLink: {
+    color: `${theme.palette.action.active} !important`,
+    fontSize: "12px",
+    fontWeight: 400,
+  },
+  privacyPolicyDisclaimerText: {
+    color: theme.palette.text.primary,
+    fontSize: "12px",
+    fontWeight: 300,
+    marginRight: "3.5px",
+  },
+  forgotPasswordLink: {
+    color: `${theme.palette.grey[400]} !important`,
+    cursor: "pointer",
+    display: "flex",
+    fontSize: "14px",
+    fontWeight: 400,
+    justifyContent: "center",
+    marginTop: "25px",
+    textDecoration: "underline",
+
+    "&:hover": {
+      color: `${theme.palette.grey[400]} !important`,
+    },
   },
 }));
 

@@ -13,10 +13,14 @@ import { SSO_PROVIDERS, SSO_PROVIDERS_ERROR, SSO_PROVIDERS_SUCCESS } from "./sso
 import { SSO_TOKEN_EXCHANGE, SSO_TOKEN_EXCHANGE_ERROR, SSO_TOKEN_EXCHANGE_SUCCESS } from "./ssoTokenExchange";
 import {
   VALIDATE_INVITATION_TOKEN, VALIDATE_INVITATION_TOKEN_SUCCESS, VALIDATE_INVITATION_TOKEN_ERROR,
-  ACCEPT_INVITATION_WITH_SIGN_IN, ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS, ACCEPT_INVITATION_WITH_SIGN_IN_ERROR,
+  ACCEPT_INVITATION_WITH_SSO_SIGN_IN,
+  ACCEPT_INVITATION_WITH_SSO_SIGN_IN_SUCCESS,
+  ACCEPT_INVITATION_WITH_SSO_SIGN_IN_ERROR,
   ACCEPT_INVITATION, ACCEPT_INVITATION_SUCCESS, ACCEPT_INVITATION_ERROR,
-  INVITATION_SIGN_IN, INVITATION_SIGN_IN_SUCCESS, INVITATION_SIGN_IN_ERROR,
+  INVITATION_SSO_SIGN_IN, INVITATION_SSO_SIGN_IN_SUCCESS, INVITATION_SSO_SIGN_IN_ERROR,
   REJECT_INVITATION, REJECT_INVITATION_SUCCESS, REJECT_INVITATION_ERROR,
+  INVITATION_SIGN_IN, INVITATION_SIGN_IN_SUCCESS, INVITATION_SIGN_IN_ERROR,
+  INVITATION_SIGN_UP, INVITATION_SIGN_UP_SUCCESS, INVITATION_SIGN_UP_ERROR,
 } from "./invitation";
 import { SUBMIT_SIGN_UP_CREDENTIALS, SUBMIT_SIGN_UP_CREDENTIALS_ERROR, SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS } from "./submitSignUpCredentials";
 import { SUBMIT_SIGN_UP_ORGANISATION, SUBMIT_SIGN_UP_ORGANISATION_ERROR, SUBMIT_SIGN_UP_ORGANISATION_SUCCESS } from "./submitSignUpOrganisation";
@@ -71,12 +75,18 @@ export type AuthActions =
   AcceptInvitationWithSignInAction |
   AcceptInvitationWithSignInActionSuccess |
   AcceptInvitationWithSignInActionError |
+  InvitationSSOSignInAction |
+  InvitationSSOSignInActionSuccess |
+  InvitationSSOSignInActionError |
+  RejectInvitationAction |
+  RejectInvitationActionSuccess |
+  RejectInvitationActionError |
   InvitationSignInAction |
   InvitationSignInActionSuccess |
   InvitationSignInActionError |
-  RejectInvitationAction |
-  RejectInvitationActionSuccess |
-  RejectInvitationActionError
+  InvitationSignUpAction |
+  InvitationSignUpActionSuccess |
+  InvitationSignUpActionError
 
 export type LoginAction = {
   type: typeof LOGIN,
@@ -300,18 +310,18 @@ export type ValidateInvitationTokenActionError = {
   error: string,
 }
 
-export type AcceptInvitationWithSignInAction = {
+export type AcceptInvitationWithSSOSignInAction = {
   type: typeof ACCEPT_INVITATION_WITH_SIGN_IN,
   token: string,
   provider: string,
   code: string,
 }
 
-export type AcceptInvitationWithSignInActionSuccess = {
+export type AcceptInvitationWithSSOSignInActionSuccess = {
   type: typeof ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS,
 }
 
-export type AcceptInvitationWithSignInActionError = {
+export type AcceptInvitationWithSSOSignInActionError = {
   type: typeof ACCEPT_INVITATION_WITH_SIGN_IN_ERROR,
   error: string,
 }
@@ -331,18 +341,18 @@ export type AcceptInvitationActionError = {
   error: string,
 }
 
-export type InvitationSignInAction = {
-  type: typeof INVITATION_SIGN_IN,
+export type InvitationSSOSignInAction = {
+  type: typeof INVITATION_SSO_SIGN_IN,
   token: string,
   provider: string,
 }
 
-export type InvitationSignInActionSuccess = {
-  type: typeof INVITATION_SIGN_IN_SUCCESS,
+export type InvitationSSOSignInActionSuccess = {
+  type: typeof INVITATION_SSO_SIGN_IN_SUCCESS,
 }
 
-export type InvitationSignInActionError = {
-  type: typeof INVITATION_SIGN_IN_ERROR,
+export type InvitationSSOSignInActionError = {
+  type: typeof INVITATION_SSO_SIGN_IN_ERROR,
   error: string,
 }
 
@@ -358,5 +368,37 @@ export type RejectInvitationActionSuccess = {
 
 export type RejectInvitationActionError = {
   type: typeof REJECT_INVITATION_ERROR,
+  error: string,
+}
+
+export type InvitationSignInAction = {
+  type: typeof INVITATION_SIGN_IN,
+  token: string,
+  email: string,
+  password: string,
+}
+
+export type InvitationSignInActionSuccess = {
+  type: typeof INVITATION_SIGN_IN_SUCCESS,
+}
+
+export type InvitationSignInActionError = {
+  type: typeof INVITATION_SIGN_IN_ERROR,
+  error: string,
+}
+
+export type InvitationSignUpAction = {
+  type: typeof INVITATION_SIGN_UP,
+  token: string,
+  name: string,
+  password: string,
+}
+
+export type InvitationSignUpActionSuccess = {
+  type: typeof INVITATION_SIGN_UP_SUCCESS,
+}
+
+export type InvitationSignUpActionError = {
+  type: typeof INVITATION_SIGN_UP_ERROR,
   error: string,
 }

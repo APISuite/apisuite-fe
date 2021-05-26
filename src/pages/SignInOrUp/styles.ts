@@ -26,6 +26,19 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "550px",
   },
 
+  ssoButton: {
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
+    fontSize: "16px",
+    fontWeight: 500,
+    padding: "7.5px 45px",
+    width: "100%",
+
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
+
   formFooter: {
     maxWidth: "550px",
   },
