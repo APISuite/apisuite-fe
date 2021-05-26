@@ -17,10 +17,6 @@ import { openNotification } from "store/notificationStack/actions/notification";
 
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
-    console.log(
-      "metadata", action.appData.metadata,
-    );
-
     const data = {
       description: action.appData.description,
       labels: action.appData.labels,
