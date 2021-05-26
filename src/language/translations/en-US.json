@@ -610,5 +610,9 @@
   "applications": {
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access."
+  },
+  "navigation": {
+    "signin": "Sign in",
+    "signup": "Register"
   }
 }

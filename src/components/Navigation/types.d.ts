@@ -1,19 +1,11 @@
 // import { NotificationCardsStore } from 'store/notificationCards/types'
 // import { ProfileStore } from 'store/profile/types'
 
+import { GridProps } from "@apisuite/fe-base";
 import { NavigationLeftActionTypes } from "./constants";
 
-export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
-  // backButtonLabel?: string,
+export interface NavigationProps extends GridProps {
   contractible?: boolean,
-  // logout: () => void,
-  // // Temporary until notification cards become clearer
-  // notificationCards: NotificationCardsStore,
-  // profile: ProfileStore,
-  // showBackButton?: boolean,
-  // // Temporary until notification cards become clearer
-  // toggleInstanceOwnerNotificationCards: () => void,
-  // toggleNonInstanceOwnerNotificationCards: () => void,
 }
 
 export interface TabMenus {

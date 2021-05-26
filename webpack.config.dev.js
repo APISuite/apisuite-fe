@@ -8,6 +8,10 @@ const webpack = require("webpack");
 module.exports = {
   mode: "development",
 
+  snapshot: {
+    managedPaths: [],
+  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
   ],
