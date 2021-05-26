@@ -76,5 +76,5 @@ export const isValidName = (name: string) => {
 };
 
 export const isValidAppMetaKey = (appMetaKey: string) => {
-  return appMetaKey.length < 30 && /^[A-Za-z0-9-_]+$/.test(appMetaKey);
+  return appMetaKey.length < 30 && /^meta_[A-Za-z0-9_]+$/.test(appMetaKey);
 };

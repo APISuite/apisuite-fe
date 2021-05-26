@@ -110,7 +110,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appTermsURL: "",
       appWebsiteURL: "",
       appYouTubeURL: "",
-      appMetaKey: "",
+      appMetaKey: "meta_",
       appMetaValue: "",
       appMetaTitle: "",
       appMetaDescription: "",
@@ -218,7 +218,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appTermsURL: "",
         appWebsiteURL: "",
         appYouTubeURL: "",
-        appMetaKey: "",
+        appMetaKey: "meta_",
         appMetaValue: "",
         appMetaTitle: "",
         appMetaDescription: "",
@@ -430,7 +430,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appTermsURL: "",
             appWebsiteURL: "",
             appYouTubeURL: "",
-            appMetaKey: "",
+            appMetaKey: "meta_",
             appMetaValue: "",
             appMetaTitle: "",
             appMetaDescription: "",
@@ -995,7 +995,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <div className={classes.customPropsFieldsContainer}>
                   <TextField
                     className={classes.inputFields}
-                    error={formState.values.appMetaKey.length !== 0 && !isValidAppMetaKey(formState.values.appMetaKey)}
+                    error={
+                      formState.values.appMetaKey.length !== 0 &&
+                      formState.values.appMetaKey !== "meta_" &&
+                      !isValidAppMetaKey(formState.values.appMetaKey)
+                    }
                     fullWidth
                     helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
                     label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
@@ -1010,7 +1014,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   <div className={classes.customPropsFieldsInnerContainer}>
                     <TextField
                       className={classes.inputFields}
-                      error={formState.values.appMetaKey.length !== 0 && formState.values.appMetaValue.length === 0}
+                      error={
+                        formState.values.appMetaKey.length !== 0 &&
+                        formState.values.appMetaKey !== "meta_" &&
+                        formState.values.appMetaValue.length === 0
+                      }
                       fullWidth
                       label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
                       margin="dense"
@@ -1023,7 +1031,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                     <TextField
                       className={classes.inputFields}
-                      error={formState.values.appMetaKey.length !== 0 && formState.values.appMetaTitle.length === 0}
+                      error={
+                        formState.values.appMetaKey.length !== 0 &&
+                        formState.values.appMetaKey !== "meta_" &&
+                        formState.values.appMetaTitle.length === 0
+                      }
                       fullWidth
                       label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
                       margin="dense"
