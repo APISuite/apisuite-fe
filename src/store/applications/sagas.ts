@@ -1,21 +1,19 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 
 import { API_URL } from "constants/endpoints";
-import request from "util/request";
-
-import { Store } from "store/types";
 import { AppData } from "./types";
+import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { CreateAppAction, DeleteAppAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction } from "./actions/types";
-import { createAppSuccess, createAppError, CREATE_APP } from "./actions/createApp";
-import { updateAppError, updateAppSuccess, UPDATE_APP } from "./actions/updatedApp";
-import { deleteAppError, deleteAppSuccess, DELETE_APP } from "./actions/deleteApp";
-import { getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess, GET_ALL_USER_APPS } from "./actions/getAllUserApps";
-import { requestAPIAccessError, requestAPIAccessSuccess, REQUEST_API_ACCESS } from "./actions/requestApiAccess";
-import { getUserAppError, getUserAppSuccess, GET_USER_APP } from "./actions/getUserApp";
+import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
+import { GET_ALL_USER_APPS, getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess } from "./actions/getAllUserApps";
+import { GET_USER_APP, getUserAppError, getUserAppSuccess } from "./actions/getUserApp";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
+import { REQUEST_API_ACCESS, requestAPIAccessError, requestAPIAccessSuccess } from "./actions/requestApiAccess";
+import { Store } from "store/types";
+import { UPDATE_APP, updateAppError, updateAppSuccess } from "./actions/updatedApp";
+import request from "util/request";
 import { i18n } from "@apisuite/fe-base";
 import { openNotification } from "store/notificationStack/actions/notification";
-
 
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
@@ -34,6 +32,7 @@ export function * createAppActionSaga (action: CreateAppAction) {
       shortDescription: action.appData.shortDescription,
       supportUrl: action.appData.supportUrl,
       tosUrl: action.appData.tosUrl,
+      visibility: action.appData.visibility,
       websiteUrl: action.appData.websiteUrl,
       youtubeUrl: action.appData.youtubeUrl,
     };
@@ -69,6 +68,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       shortDescription: action.appData.shortDescription,
       supportUrl: action.appData.supportUrl,
       tosUrl: action.appData.tosUrl,
+      visibility: action.appData.visibility,
       websiteUrl: action.appData.websiteUrl,
       youtubeUrl: action.appData.youtubeUrl,
     };
@@ -103,6 +103,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
         supportUrl: response.supportUrl,
         tosUrl: response.tosUrl,
         updatedAt: response.updatedAt,
+        visibility: response.visibility,
         websiteUrl: response.websiteUrl,
         youtubeUrl: response.youtubeUrl,
       },
@@ -202,6 +203,7 @@ export function * getAllUserAppsActionSaga () {
         supportUrl: userApp.supportUrl,
         tosUrl: userApp.tosUrl,
         updatedAt: userApp.updatedAt,
+        visibility: userApp.visibility,
         websiteUrl: userApp.websiteUrl,
         youtubeUrl: userApp.youtubeUrl,
       }
@@ -247,6 +249,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
         supportUrl: userApp.supportUrl,
         tosUrl: userApp.tosUrl,
         updatedAt: userApp.updatedAt,
+        visibility: userApp.visibility,
         websiteUrl: userApp.websiteUrl,
         youtubeUrl: userApp.youtubeUrl,
       }

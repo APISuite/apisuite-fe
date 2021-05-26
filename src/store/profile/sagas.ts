@@ -1,26 +1,26 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 
-import request from "util/request";
-import { openNotification } from "store/notificationStack/actions/notification";
-import { FetchOrgResponse, FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, UpdateProfileResponse } from "./types";
-import { Store } from "store/types";
 import { API_URL } from "constants/endpoints";
-import { LOCAL_STORAGE_KEYS } from "constants/global";
-import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, UpdateOrgAction, UpdateProfileAction, SwitchOrgAction } from "./actions/types";
-import { fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess, FETCH_TEAM_MEMBERS } from "./actions/fetchTeamMembers";
-import { fetchRoleOptionsError, fetchRoleOptionsSuccess, FETCH_ROLE_OPTIONS } from "./actions/fetchRoleOptions";
-import { inviteTeamMemberError, inviteTeamMemberSuccess, INVITE_TEAM_MEMBER } from "./actions/inviteTeamMember";
-import { confirmInviteMemberSuccess, confirmInviteMemberError, CONFIRM_INVITE_MEMBER } from "./actions/confirmInviteMember";
-import { changeRoleError, changeRoleSuccess, CHANGE_ROLE } from "./actions/changeRole";
-import { getProfile, getProfileError, getProfileSuccess, GET_PROFILE } from "./actions/getProfile";
-import { updateProfileError, updateProfileSuccess, UPDATE_PROFILE } from "./actions/updateProfile";
-import { fetchOrg, fetchOrgError, fetchOrgSuccess, FETCH_ORG } from "./actions/fetchOrg";
-import { createOrgError, createOrgSuccess, CREATE_ORG } from "./actions/createOrg";
-import { updateOrgError, updateOrgSuccess, UPDATE_ORG } from "./actions/updateOrg";
-import { switchOrgError, switchOrgSuccess, SWITCH_ORG } from "./actions/switchOrg";
-import { deleteAccountError, deleteAccountSuccess, DELETE_ACCOUNT } from "./actions/deleteAccount";
+import { CHANGE_ROLE, changeRoleError, changeRoleSuccess } from "./actions/changeRole";
+import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, SwitchOrgAction, UpdateOrgAction, UpdateProfileAction } from "./actions/types";
+import { CONFIRM_INVITE_MEMBER, confirmInviteMemberError, confirmInviteMemberSuccess } from "./actions/confirmInviteMember";
+import { CREATE_ORG, createOrgError, createOrgSuccess } from "./actions/createOrg";
+import { DELETE_ACCOUNT, deleteAccountError, deleteAccountSuccess } from "./actions/deleteAccount";
+import { FETCH_ORG, fetchOrg, fetchOrgError, fetchOrgSuccess } from "./actions/fetchOrg";
+import { FETCH_ROLE_OPTIONS, fetchRoleOptionsError, fetchRoleOptionsSuccess } from "./actions/fetchRoleOptions";
+import { FETCH_TEAM_MEMBERS, fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess } from "./actions/fetchTeamMembers";
+import { FetchOrgResponse, FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, UpdateProfileResponse } from "./types";
+import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
+import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
+import { LOCAL_STORAGE_KEYS } from "constants/global";
 import { logout } from "store/auth/actions/logout";
+import { openNotification } from "store/notificationStack/actions/notification";
+import { Store } from "store/types";
+import { SWITCH_ORG, switchOrgError, switchOrgSuccess } from "./actions/switchOrg";
+import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOrg";
+import { UPDATE_PROFILE, updateProfileError, updateProfileSuccess } from "./actions/updateProfile";
+import request from "util/request";
 
 export function * fetchTeamMembersSaga (action: FetchTeamMembersAction) {
   try {
@@ -132,7 +132,7 @@ export function * getProfileSaga () {
   }
 }
 
-export function * updateProfileSaga ({ userId, ...rest }: UpdateProfileAction) {
+export function * updateProfileSaga ({ userId, type, ...rest }: UpdateProfileAction) {
   try {
     const response: UpdateProfileResponse = yield call(request, {
       // url: `${API_URL}/users/profile/update`,
@@ -203,7 +203,7 @@ export function * updateOrgSaga ({ orgId, orgInfo }: UpdateOrgAction) {
       headers: {
         "content-type": "application/json",
       },
-      data: JSON.stringify({ orgId, orgInfo }),
+      data: JSON.stringify(orgInfo),
     });
 
     yield put(updateOrgSuccess({}));

@@ -215,8 +215,6 @@ function * ssoLoginWorker ({ provider }: SSOLoginAction) {
   try {
     let state = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE);
 
-    console.log("state", state);
-
     if (!state) {
       state = stateGenerator();
 
