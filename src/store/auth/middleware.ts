@@ -4,13 +4,7 @@ import cookie from "js-cookie";
 
 import { LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_USER_ERROR, LOGIN_USER_SUCCESS } from "./actions/login";
 import { LOGOUT, LOGOUT_ERROR } from "./actions/logout";
-import {
-  ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS,
-  ACCEPT_INVITATION_SUCCESS,
-  INVITATION_SIGN_IN_SUCCESS,
-  INVITATION_SIGN_UP_SUCCESS,
-  REJECT_INVITATION_SUCCESS,
-} from "./actions/invitation";
+import { REJECT_INVITATION_SUCCESS } from "./actions/invitation";
 
 export const COO_KEY = "apiSuiteSession";
 export const COO_KEY_MAX_AGE = 30 * 24 * 60; // <-- 1 month
@@ -23,27 +17,13 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
       expires: new Date(new Date().getTime() + COO_KEY_MAX_AGE * 60 * 1000),
       path: "/",
     });
-  } else if (action.type === LOGIN_USER_SUCCESS) {
-    const location = history.location;
-
-    if (location.pathname.startsWith("/auth") && location.pathname.indexOf("invitation") === -1) {
-      if (action.user.role.name === "admin") {
-        history.replace("/dashboard");
-      } else {
-        history.replace("/");
-      }
-    }
   } else if (action.type === LOGIN_ERROR || action.type === LOGIN_USER_ERROR) {
     cookie.remove(COO_KEY, { path: "/" });
     history.replace("/auth/signin");
   } else if (action.type === LOGOUT || action.type === LOGOUT_ERROR) {
     cookie.remove(COO_KEY, { path: "/" });
     history.replace("/auth/signin");
-  } else if (action.type === ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS ||
-    action.type === ACCEPT_INVITATION_SUCCESS ||
-    action.type === INVITATION_SIGN_IN_SUCCESS ||
-    action.type === INVITATION_SIGN_UP_SUCCESS ||
-    action.type === REJECT_INVITATION_SUCCESS) {
+  } else if (action.type === REJECT_INVITATION_SUCCESS || action.type === LOGIN_USER_SUCCESS) {
     history.push(action.path);
   }
 };

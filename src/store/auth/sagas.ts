@@ -1,5 +1,6 @@
 import { call, delay, put, select, takeLatest } from "redux-saga/effects";
 import qs from "qs";
+import { DefaultConfig } from "@apisuite/fe-base";
 
 import request from "util/request";
 import stateGenerator from "util/stateGenerator";
@@ -98,20 +99,28 @@ function * loginUserWorker () {
       method: "GET",
     });
 
-    const profileHasOrgDetails = Object.keys(profile.current_org).length !== 0;
-
     const user = profile.user;
     const userId = user.id;
     const userName = user.name.split(" ");
+    const currentOrg = profile.current_org;
+
+    // TODO: better types for this response
+    const settings: { navigation: DefaultConfig["navigation"] } = yield call(request, {
+      url: `${API_URL}/settings`,
+      method: "GET",
+    });
+
+    const path = settings?.navigation[currentOrg?.role?.name || "baseUser"]?.events.afterLogin ?? "/";
 
     yield put(loginUserSuccess({
+      path,
       user: {
         fName: userName[0],
         lName: userName[userName.length - 1],
         id: Number(userId),
         role: {
-          id: profileHasOrgDetails ? profile.current_org.role.id : `${ROLES.baseUser.level}`,
-          name: profileHasOrgDetails ? profile.current_org.role.name : ROLES.baseUser.value,
+          id: currentOrg?.role?.id ?? `${ROLES.baseUser.level}`,
+          name: currentOrg?.role?.name ?? ROLES.baseUser.value,
         },
       },
     }));
@@ -250,7 +259,7 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
     yield put(loginSuccess({}));
 
     // FIXME: move to middleware
-    window.location.href = "/auth";
+    // window.location.href = "/auth";
   } catch (error) {
     yield put(loginError({ error: error.message }));
   }
@@ -376,7 +385,7 @@ export function * invitationWithSSOSignInSaga ({ token, code, provider }: Accept
     localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_STATE_STORAGE);
     localStorage.removeItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE);
     yield put(loginSuccess({}));
-    yield put(acceptInvitationWithSSOSignInSuccess({ path: "/" }));
+    yield put(acceptInvitationWithSSOSignInSuccess({}));
     yield put(openNotification("success", "You have accepted your invitation.", 4000));
   } catch (error) {
     yield put(acceptInvitationWithSSOSignInError(error));
@@ -413,9 +422,8 @@ export function * acceptInvitationSaga ({ token }: AcceptInvitationAction) {
     });
 
     yield put(openNotification("success", "You have accepted your invitation.", 4000));
-    yield put(acceptInvitationSuccess({
-      path: "/",
-    }));
+    yield put(loginSuccess({}));
+    yield put(acceptInvitationSuccess({}));
   } catch (error) {
     yield put(acceptInvitationError({ error: error.message }));
   }
@@ -478,7 +486,7 @@ export function * invitationSignInSaga ({ token, email, password }: InvitationSi
     });
 
     yield put(loginSuccess({}));
-    yield put(invitationSignInSuccess({ path: "/" }));
+    yield put(invitationSignInSuccess({}));
     yield put(openNotification("success", "You have accepted your invitation.", 4000));
   } catch (error) {
     yield put(invitationSignInError(error));

@@ -1,6 +1,8 @@
+import { Role } from "store/profile/types";
+
 export interface RoleLevel {
   label: string,
-  value: string,
+  value: Role["name"],
   level: number,
 }
 

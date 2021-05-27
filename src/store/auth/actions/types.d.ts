@@ -111,6 +111,7 @@ export type LoginUserAction = {
 export type LoginUserActionSuccess = {
   type: typeof LOGIN_USER_SUCCESS,
   user: User,
+  path: string,
 }
 
 export type LoginUserActionError = {
@@ -333,7 +334,6 @@ export type AcceptInvitationAction = {
 
 export type AcceptInvitationActionSuccess = {
   type: typeof ACCEPT_INVITATION_SUCCESS,
-  path: string,
 }
 
 export type AcceptInvitationActionError = {
