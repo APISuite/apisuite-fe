@@ -158,6 +158,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         display="flex"
         flexDirection="row"
         flexWrap="nowrap"
+        pt={expand ? 2 : undefined}
         mx={6}
         borderBottom={expand ? `1px solid ${palette.primary.light}` : undefined}
       >

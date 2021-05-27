@@ -18,7 +18,8 @@ export default makeStyles((theme) => ({
     backgroundPosition: "center -320px",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    height: "300px",
+    // FIXME: this should be in sync with the transparent navigation no?
+    height: 300,
     position: "absolute",
     top: 0,
     transition: "height 0.5s",
@@ -31,7 +32,8 @@ export default makeStyles((theme) => ({
     backgroundPosition: "center -320px",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    height: "206px",
+    // FIXME: this should be in sync with the transparent navigation no?
+    height: 213,
     position: "absolute",
     top: 0,
     transition: "height 0.5s",
