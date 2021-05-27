@@ -16,7 +16,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   const { navigation, portalName, ownerInfo } = useConfig();
   const { t } = useTranslation();
   const { user, userProfile } = useSelector(navigationSelector);
-  const role = user ? user.role.name : "anonymous";
+  const role = user.role?.name ?? "anonymous";
 
   // Expand functionality
   // Note: contractible prop was not changed to prevent breaking changes
