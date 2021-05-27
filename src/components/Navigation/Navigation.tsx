@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { matchPath } from "react-router";
 import { Avatar, Box, Grid, Icon, TabConfig, Typography, useConfig, useTheme, useTranslation } from "@apisuite/fe-base";
 
+import { testIds } from "testIds";
 import { logout } from "store/auth/actions/logout";
 import Link from "components/Link";
 
@@ -140,6 +141,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
   return (
     <Grid
+      data-test-id={testIds.navigation}
       {...rest}
       component={Box}
       container

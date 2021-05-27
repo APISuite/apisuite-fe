@@ -8,10 +8,6 @@ describe("Landing Page", () => {
     cy.visit("/");
   });
 
-  it("should show a navigation bar and start expanded", () => {
-    cy.testID(testIds.navigation).should("have.class", "expand");
-  });
-
   it("should show a privacy notice with an accept CTA", () => {
     cy.testID(testIds.cookieConsent).get("button").contains("I Accept").should("be.visible");
   });

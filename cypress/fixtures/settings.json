@@ -281,5 +281,475 @@
     "nprogress": {
       "color": "#000"
     }
+  },
+  "navigation": {
+    "title": {
+      "route": "/",
+      "iconFallbackName": "circle"
+    },
+    "anonymous": {
+      "tabs": [
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Marketplace",
+            "key": ""
+          },
+          "action": "/marketplace"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Support",
+            "key": ""
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": true,
+          "label": {
+            "type": "text",
+            "fallback": "Register",
+            "key": ""
+          },
+          "action": "/auth/signup"
+        },
+        {
+          "fixed": true,
+          "label": {
+            "type": "text",
+            "fallback": "Sign in",
+            "key": "common.signin"
+          },
+          "action": "/auth/signin"
+        }
+      ],
+      "events": {
+        "afterLogin": ""
+      }
+    },
+    "baseUser": {
+      "tabs": [
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Marketplace"
+          },
+          "action": "/marketplace"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Support"
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Dashboard"
+          },
+          "action": "/dashboard",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview",
+                "key": ""
+              },
+              "action": "/dashboard"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Billing",
+                "key": ""
+              },
+              "action": "/billing"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Services",
+                "key": ""
+              },
+              "action": "/dashboard/apps"
+            }
+          ]
+        },
+        {
+          "fixed": true,
+          "label": {
+            "type": "avatar"
+          },
+          "action": "/profile",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview",
+                "key": ""
+              },
+              "action": "/profile"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Security",
+                "key": ""
+              },
+              "action": "/profile/security"
+            }
+          ]
+        }
+      ],
+      "events": {
+        "afterLogin": "/marketplace"
+      }
+    },
+    "developer": {
+      "tabs": [
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Marketplace"
+          },
+          "action": "/marketplace"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Documentation"
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Support"
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Dashboard"
+          },
+          "action": "/dashboard",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview",
+                "key": ""
+              },
+              "action": "/dashboard"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Billing",
+                "key": ""
+              },
+              "action": "/billing"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Services",
+                "key": ""
+              },
+              "action": "/dashboard/apps"
+            }
+          ]
+        },
+        {
+          "fixed": true,
+          "label": {
+            "type": "avatar"
+          },
+          "action": "/profile",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview"
+              },
+              "action": "/profile"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Security"
+              },
+              "action": "/profile/security"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Team"
+              },
+              "action": "/profile/team"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Organisation"
+              },
+              "action": "/profile/organisation"
+            }
+          ]
+        }
+      ],
+      "events": {
+        "afterLogin": "/"
+      }
+    },
+    "organizationOwner": {
+      "tabs": [
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Marketplace"
+          },
+          "action": "/marketplace"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Documentation"
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Support"
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Dashboard"
+          },
+          "action": "/dashboard",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview"
+              },
+              "action": "/dashboard"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Billing"
+              },
+              "action": "/billing"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Services"
+              },
+              "action": "/dashboard/apps"
+            }
+          ]
+        },
+        {
+          "fixed": true,
+          "label": {
+            "type": "avatar"
+          },
+          "action": "/profile",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview"
+              },
+              "action": "/profile"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Security"
+              },
+              "action": "/profile/security"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Team"
+              },
+              "action": "/profile/team"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Organisation"
+              },
+              "action": "/profile/organisation",
+              "backAction": {
+                "route": "/profile",
+                "fallback": "Back to Profile",
+                "iconName": "arrow_back_ios"
+              }
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "icon",
+                "iconName": "logout"
+              },
+              "action": "$logout"
+            }
+          ]
+        }
+      ],
+      "events": {
+        "afterLogin": "/dashboard"
+      }
+    },
+    "admin": {
+      "tabs": [
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Marketplace"
+          },
+          "action": "/marketplace"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Documentation"
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Support"
+          },
+          "action": "https://google.com"
+        },
+        {
+          "fixed": false,
+          "label": {
+            "type": "text",
+            "fallback": "Dashboard"
+          },
+          "action": "/dashboard",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview"
+              },
+              "action": "/dashboard"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Billing"
+              },
+              "action": "/billing"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Services"
+              },
+              "action": "/dashboard/apps"
+            }
+          ]
+        },
+        {
+          "fixed": true,
+          "label": {
+            "type": "avatar"
+          },
+          "action": "/profile",
+          "subTabs": [
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Overview"
+              },
+              "action": "/profile"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Security"
+              },
+              "action": "/profile/security"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Team"
+              },
+              "action": "/profile/team"
+            },
+            {
+              "fixed": false,
+              "label": {
+                "type": "text",
+                "fallback": "Organisation"
+              },
+              "action": "/profile/organisation"
+            }
+          ]
+        }
+      ],
+      "events": {
+        "afterLogin": "/dashboard/admin"
+      }
+    }
   }
 }
