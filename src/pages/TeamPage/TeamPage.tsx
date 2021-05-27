@@ -89,7 +89,7 @@ export const TeamPage: React.FC = () => {
     role: !input.roleId,
   };
 
-  const canInvite = (role: string) => {
+  const canInvite = (role: User["role"]["name"]) => {
     return AUTHORIZED_ROLES.includes(role);
   };
 
