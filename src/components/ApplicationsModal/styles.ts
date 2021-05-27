@@ -91,6 +91,24 @@ export default makeStyles((theme) => ({
 
   /* 1.2 Modal's body */
 
+  addCustomPropsButton: {
+    // TODO: Button is temporarily disabled, hence the following 'background-color'.
+    // Remove once 'custom properties' feature is fully complete.
+    backgroundColor: "rgba(0, 0, 0, 0.12)",
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.text.hint,
+    fontSize: 16,
+    fontWeight: 500,
+    height: 42,
+    padding: "6px 21px",
+    textDecoration: "none",
+  },
+
+  addCustomPropsContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
   additionalInfoSubSectionTitle: {
     color: theme.palette.secondary.main,
     fontSize: "16px",
@@ -245,6 +263,51 @@ export default makeStyles((theme) => ({
     marginBottom: 4,
     "& > button": {
       transform: "translateY(-4px)",
+    },
+  },
+
+  customPropsFieldsContainer: {
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: theme.shape.borderRadius,
+    marginBottom: 24,
+    padding: "18px 12px",
+
+    "& > :first-child": {
+      width: 400,
+    },
+  },
+
+  customPropsFieldsInnerContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+
+    "& > div": {
+      marginBottom: 0,
+      width: 270,
+    },
+  },
+
+  customPropsTextContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+
+    "& > :first-child": {
+      color: theme.palette.secondary.main,
+      fontSize: "16px",
+      fontWeight: 500,
+      lineHeight: "20px",
+      marginBottom: "37.5px",
+      marginRight: 40,
+      width: 460,
+    },
+
+    "& > :last-child": {
+      color: theme.palette.text.primary,
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "17px",
+      marginBottom: "40px",
+      width: 400,
     },
   },
 
@@ -410,8 +473,14 @@ export default makeStyles((theme) => ({
   },
 
   infoBoxIcon: {
+    alignSelf: "flex-start",
     fill: "#46B5EF",
-    transform: "translate(-2.5px, -40px)",
+    marginRight: 5,
+  },
+
+  infoBoxLink: {
+    fontWeight: 700,
+    textDecoration: "none",
   },
 
   infoBoxText: {
@@ -469,6 +538,13 @@ export default makeStyles((theme) => ({
   leftSubSectionContainer: {
     marginRight: "40px",
     width: "460px",
+  },
+
+  metaPrefix: {
+    "& > p": {
+      marginRight: -8,
+      paddingTop: 1,
+    },
   },
 
   modalBodyContainer: {
@@ -553,6 +629,29 @@ export default makeStyles((theme) => ({
     width: "400px",
   },
 
+
+  row: {
+    alignItems: "center",
+    display: "flex",
+    position: "relative",
+  },
+
+  rowCta: {
+    background: theme.palette.common.white,
+    border: `1px solid ${theme.palette.action.disabled}`,
+    borderBottomRightRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
+    height: 40,
+    marginBottom: 4,
+    marginTop: 8,
+    position: "absolute",
+    right: 0,
+
+    "& > button": {
+      transform: "translateY(-4px)",
+    },
+  },
+
   sectionContainer: {
     display: "flex",
   },
@@ -576,24 +675,19 @@ export default makeStyles((theme) => ({
     fontSize: "14px",
     margin: "0px 12px 0px 12px",
   },
-  row: {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-  },
 
-  rowCta: {
-    position: "absolute",
-    right: 0,
-    border: `1px solid ${theme.palette.action.disabled}`,
-    background: theme.palette.common.white,
-    borderTopRightRadius: theme.shape.borderRadius,
-    borderBottomRightRadius: theme.shape.borderRadius,
-    height: 40,
-    marginTop: 8,
-    marginBottom: 4,
-    "& > button": {
-      transform: "translateY(-4px)",
-    },
+  title: {
+    color: theme.palette.secondary.main,
+    fontSize: "16px",
+    fontWeight: 500,
+    lineHeight: "20px",
+    marginBottom: "37.5px",
+  },
+  description: {
+    color: theme.palette.grey[300],
+    fontSize: "14px",
+    fontWeight: 400,
+    lineHeight: "17px",
+    marginBottom: "22.5px",
   },
 }));

@@ -5,6 +5,8 @@ import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_SUCCESS } from "./getUse
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./updatedApp";
 import { AppData } from "../types";
+import { UPLOAD_APP_MEDIA, UPLOAD_APP_MEDIA_ERROR, UPLOAD_APP_MEDIA_SUCCESS } from "./appMediaUpload";
+import { DELETE_APP_MEDIA, DELETE_APP_MEDIA_ERROR, DELETE_APP_MEDIA_SUCCESS } from "./deleteAppMedia";
 
 export type ApplicationsActions = CreateAppAction |
 CreateAppActionError |
@@ -24,7 +26,13 @@ RequestAPIAccessActionSuccess |
 RequestAPIAccessActionError |
 UpdateAppAction |
 UpdateAppActionSuccess |
-UpdateAppActionError
+UpdateAppActionError |
+UploadAppMediaAction |
+UploadAppMediaActionSuccess |
+UploadAppMediaActionError |
+DeleteAppMediaAction |
+DeleteAppMediaActionSuccess |
+DeleteAppMediaActionError
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
@@ -108,4 +116,50 @@ export type GetAllUserAppsActionSuccess = {
 export type GetAllUserAppsActionError = {
   type: typeof GET_ALL_USER_APPS_ERROR,
   userApps: AppData[],
+}
+
+export type UploadAppMediaAction = {
+  type: typeof UPLOAD_APP_MEDIA,
+  appId: number,
+  media: FormData,
+}
+
+export type UploadAppMediaActionSuccess = {
+  type: typeof UPLOAD_APP_MEDIA_SUCCESS,
+  savedImages: SaveImages[],
+  errors: MediaError[],
+}
+
+export type UploadAppMediaActionError = {
+  type: typeof UPLOAD_APP_MEDIA_ERROR,
+}
+
+export type DeleteAppMediaAction = {
+  type: typeof DELETE_APP_MEDIA,
+  appId: number,
+  media: string,
+}
+
+export type DeleteAppMediaActionSuccess = {
+  type: typeof DELETE_APP_MEDIA_SUCCESS,
+  deleted: string,
+}
+
+export type DeleteAppMediaActionError = {
+  type: typeof DELETE_APP_MEDIA_ERROR,
+}
+
+export type SavedImages = {
+  file: string,
+  url: string,
+}
+
+export type MediaError = {
+  file: string,
+  error: string,
+}
+
+export type UploadResponse = {
+  savedImages: SaveImages[],
+  errors: MediaError[],
 }

@@ -65,7 +65,7 @@ export default makeStyles((theme) => ({
     fontWeight: 500,
     height: "40px",
     margin: "10px auto",
-    maxWidth: "270px",
+    maxWidth: "320px",
     opacity: 0.5,
     padding: "12px 20px",
     pointerEvents: "none",
@@ -81,12 +81,11 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     borderRadius: theme.shape.borderRadius,
     color: `${theme.palette.primary.contrastText} !important`,
-    cursor: "none",
     fontSize: "16px",
     fontWeight: 500,
     height: "40px",
     margin: "10px auto",
-    maxWidth: "270px",
+    maxWidth: "320px",
     padding: "12px 20px",
     textDecoration: "none",
     width: "100%",
@@ -183,6 +182,10 @@ export default makeStyles((theme) => ({
 
   otherActionsContainerOne: {
     display: "flex",
+
+    "& > :first-child": {
+      marginRight: 12,
+    },
   },
 
   otherActionsContainerTwo: {

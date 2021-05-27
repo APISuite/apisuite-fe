@@ -42,6 +42,7 @@ const initialState: ProfileStore = {
         id: "",
       },
     },
+    ssoAccountURL: "",
     orgs_member: [{
       id: "",
       name: "",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Avatar, Button, TextField, useTranslation } from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, Button, Avatar, TextField } from "@apisuite/fe-base";
 import Close from "@material-ui/icons/Close";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
@@ -8,25 +8,29 @@ import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 
-import { updateProfile } from "store/profile/actions/updateProfile";
-import { switchOrg } from "store/profile/actions/switchOrg";
 import { deleteAccount } from "store/profile/actions/deleteAccount";
 import { getProfile } from "store/profile/actions/getProfile";
-import { logout } from "store/auth/actions/logout";
-import { useForm } from "util/useForm";
+import { getSSOAccountURLSelector, profileSelector } from "./selectors";
 import { isValidImage, isValidPhoneNumber, isValidURL } from "util/forms";
+import { logout } from "store/auth/actions/logout";
 import { Organization } from "store/profile/types";
-import Select from "components/Select";
 import { SelectOption } from "components/Select/types";
-
-import { profileSelector } from "./selectors";
+import { switchOrg } from "store/profile/actions/switchOrg";
+import { updateProfile } from "store/profile/actions/updateProfile";
+import { useForm } from "util/useForm";
+import Select from "components/Select";
 import useStyles from "./styles";
 
 export const Profile: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+
   const [t] = useTranslation();
+
+  const dispatch = useDispatch();
+
   const { profile } = useSelector(profileSelector);
+  const ssoAccountURL = useSelector(getSSOAccountURLSelector);
+
   const [ssoIsActive, setSSOIsActive] = useState(false);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export const Profile: React.FC = () => {
   useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
     field to determine whether the user signed in regularly or by way of SSO.
-
+    
     If 'oidcProvider' amounts to 'null', it means that the user signed in regularly,
     and if not, it means that the user signed in by way of SSO. */
     if (profile.user.oidcProvider) {
@@ -48,7 +52,7 @@ export const Profile: React.FC = () => {
 
   /*
   User details
-
+  
   Note:
   - 'formState' refers to our own, local copy of a user's details.
   - 'profile' refers to our stored, back-end approved copy of a user's details.
@@ -107,6 +111,7 @@ export const Profile: React.FC = () => {
               and then we need to check if the URI points to an actual image.
               If any of these conditions are not met, we display an error message. */
               const doesImageExist = isValidURL(stringURI);
+
               if (doesImageExist) {
                 validateAvatar(stringURI);
               }
@@ -149,7 +154,7 @@ export const Profile: React.FC = () => {
           : "",
       },
     );
-  // FIXME: adding resetForm to the dependencies causes an infinite loop
+    // FIXME: adding resetForm to the dependencies causes an infinite loop
   }, [profile]);
 
   /* Organisation details */
@@ -180,6 +185,18 @@ export const Profile: React.FC = () => {
     };
 
     setCurrentlySelectedOrganisation(newlySelectedOrganisation);
+  };
+
+  const switchOrganisation = (event: React.ChangeEvent<any>) => {
+    event.preventDefault();
+
+    if (
+      currentlySelectedOrganisation &&
+      currentlySelectedOrganisation.value &&
+      currentlySelectedOrganisation.value !== profile.current_org.id
+    ) {
+      dispatch(switchOrg({ id: profile.user.id, orgId: currentlySelectedOrganisation.value }));
+    }
   };
 
   useEffect(() => {
@@ -222,16 +239,8 @@ export const Profile: React.FC = () => {
     }
   };
 
-  const switchOrganisation = (event: React.ChangeEvent<any>) => {
-    event.preventDefault();
-
-    if (
-      currentlySelectedOrganisation &&
-      currentlySelectedOrganisation.value &&
-      currentlySelectedOrganisation.value !== profile.current_org.id
-    ) {
-      dispatch(switchOrg({ id: profile.user.id, orgId: currentlySelectedOrganisation.value }));
-    }
+  const redirectToIdentityProvider = (identityProviderURL: string) => {
+    window.open(identityProviderURL, "_blank");
   };
 
   /* Account deletion */
@@ -442,43 +451,55 @@ export const Profile: React.FC = () => {
                 value={formState.values.userEmailAddress}
                 variant='outlined'
               />
+
+              {
+                !ssoIsActive
+                  ? (
+                    <>
+                      <TextField
+                        error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
+                        fullWidth
+                        helperText={
+                          formState.touched.userPhoneNumber &&
+                          formState.errors.userPhoneNumber &&
+                          formState.errorMsgs.userPhoneNumber
+                        }
+                        label={t("profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber")}
+                        margin='dense'
+                        name='userPhoneNumber'
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                        type='tel'
+                        value={formState.values.userPhoneNumber}
+                        variant='outlined'
+                      />
+
+                      <Button
+                        className={
+                          formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                            ? classes.enabledUpdateDetailsButton
+                            : classes.disabledUpdateDetailsButton
+                        }
+                        onClick={updateProfileDetails}
+                      >
+                        {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
+                      </Button>
+                    </>
+                  )
+                  : (
+                    <Button
+                      className={
+                        ssoAccountURL
+                          ? classes.enabledUpdateDetailsButton
+                          : classes.disabledUpdateDetailsButton
+                      }
+                      onClick={() => redirectToIdentityProvider(ssoAccountURL)}
+                    >
+                      {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
+                    </Button>
+                  )
+              }
             </div>
-
-            {
-              !ssoIsActive &&
-              (
-                <>
-                  <TextField
-                    error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
-                    fullWidth
-                    helperText={
-                      formState.touched.userPhoneNumber &&
-                      formState.errors.userPhoneNumber &&
-                      formState.errorMsgs.userPhoneNumber
-                    }
-                    label={t("profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber")}
-                    margin='dense'
-                    name='userPhoneNumber'
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    type='tel'
-                    value={formState.values.userPhoneNumber}
-                    variant='outlined'
-                  />
-
-                  <Button
-                    className={
-                      formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
-                        ? classes.enabledUpdateDetailsButton
-                        : classes.disabledUpdateDetailsButton
-                    }
-                    onClick={updateProfileDetails}
-                  >
-                    {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
-                  </Button>
-                </>
-              )
-            }
 
             <div className={classes.userStatusAndType}>
               {/* A mere dot */}

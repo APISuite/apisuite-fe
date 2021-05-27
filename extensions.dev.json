@@ -10,7 +10,7 @@
       }
     },
     {
-      "path": "github:APISuite/apisuite-marketplace-extension-ui#v1.0.9",
+      "path": "github:APISuite/apisuite-marketplace-extension-ui#v1.0.10",
       "name": "@apisuite/apisuite-marketplace-extension-ui",
       "className": "MarketplaceExtension",
       "config": {}
