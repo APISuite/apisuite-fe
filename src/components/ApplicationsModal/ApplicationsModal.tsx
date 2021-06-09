@@ -72,6 +72,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false);
   const [validImage, setValidImage] = React.useState<boolean>(true);
+  const [visibilityChanged, setVisibilityChange] = React.useState<boolean>(false);
 
   const validateAvatar = (avatar: string) => {
     if (avatar !== "") {
@@ -352,6 +353,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const handleAppVisibility = (selectedAppVisibility: string) => {
     formState.values.appVisibility = selectedAppVisibility;
+    setVisibilityChange(formState.values.appVisibility !== mostRecentlySelectedAppDetails.visibility);
   };
 
   const getFormMetadata = () => {
@@ -457,6 +459,41 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appId: mostRecentlySelectedAppDetails.id,
       media: file,
     }));
+  };
+
+  const validMetadata = () => {
+    if (formState.values.appMetaKey.length === 0) {
+      return formState.values.appMetaValue.length === 0 &&
+      formState.values.appMetaTitle.length === 0 &&
+      formState.values.appMetaTitle.length === 0;
+    } else {
+      return isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
+      formState.values.appMetaValue.length !== 0 &&
+      formState.values.appMetaTitle.length !== 0 &&
+      formState.values.appMetaTitle.length !== 0;
+    }
+  };
+
+  const hasChanged = () => {
+    // FIXME: the form needs to be replaced
+    // formState.errors does not update on error so this was needed
+    const required = [
+      formState.values.appName.length !== 0,
+      formState.values.appRedirectURI.length !== 0,
+    ];
+
+    const hasRequired = required.every((val) => val);
+
+    const changed = [
+      formState.isDirty,
+      visibilityChanged,
+    ];
+
+    return (formState.isValid || Object.keys(formState.errors).length === 0) 
+      && hasRequired
+      && changed.some((v) => v)
+      && validMetadata()
+      && validImage;
   };
 
   return (
@@ -1227,22 +1264,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                                 formState.values.appRedirectURI !== "http://" &&
                                 formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
-                                (
-                                  (
-                                    formState.values.appMetaKey.length === 0 &&
-                                    formState.values.appMetaValue.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0
-                                  )
-                                  ||
-                                  (
-                                    formState.values.appMetaKey.length !== 0 &&
-                                    isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
-                                    formState.values.appMetaValue.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0
-                                  )
-                                ) &&
+                                validMetadata() &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
                                 validImage
@@ -1287,30 +1309,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                       <>
                         <div>
                           <Button
-                            disabled={
-                              !(
-                                formState.isDirty &&
-                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                                (
-                                  // No metadata? No problem.
-                                  (
-                                    formState.values.appMetaKey.length === 0 &&
-                                    formState.values.appMetaValue.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0
-                                  )
-                                  ||
-                                  // Metadata? Then, we need all mandatory fields to be filled in.
-                                  (
-                                    formState.values.appMetaKey.length !== 0 &&
-                                    isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
-                                    formState.values.appMetaValue.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0
-                                  )
-                                ) &&
-                                validImage)
-                            }
+                            disabled={!hasChanged()}
                             color="primary"
                             variant="contained"
                             size="large"

@@ -42,7 +42,9 @@ function * getAPIVersionSaga (action: GetAPIVersionAction) {
     yield put(geAPIVersionSuccess({ version }));
   } catch (error) {
     yield put(geAPIVersionError(error));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 

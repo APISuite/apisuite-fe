@@ -20,7 +20,9 @@ function * getAPIsSaga () {
   } catch (error) {
     // TODO: decide and implement error handling
     yield put(getAPIsError({}));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 

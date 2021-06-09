@@ -38,7 +38,9 @@ export function * fetchTeamMembersSaga (action: FetchTeamMembersAction) {
     yield put(fetchTeamMembersSuccess({ members }));
   } catch (error) {
     yield put(fetchTeamMembersError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -52,7 +54,9 @@ export function * fetchRoleOptionsSaga () {
     yield put(fetchRoleOptionsSuccess({ roles }));
   } catch (error) {
     yield put(fetchRoleOptionsError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -75,7 +79,9 @@ export function * inviteMemberSaga ({ type, ...rest }: InviteTeamMemberAction) {
     yield put(inviteTeamMemberError({ error: error.message || "Invitation failed." }));
     // FIXME: not translated
     yield put(openNotification("error", "Error inviting member.", 3000));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -114,7 +120,9 @@ export function * changeRoleSaga ({ type, ...rest }: ChangeRoleAction) {
   } catch (error) {
     yield put(changeRoleError({ error: error.message }));
     yield put(openNotification("error", "Failed to update role.", 3000));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -131,7 +139,9 @@ export function * getProfileSaga () {
     yield put(getProfileSuccess({ profile }));
   } catch (error) {
     yield put(getProfileError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -151,7 +161,9 @@ export function * updateProfileSaga ({ userId, type, ...rest }: UpdateProfileAct
     yield put(getProfile({}));
   } catch (error) {
     yield put(updateProfileError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -175,7 +187,9 @@ export function * fetchOrgSaga (action: FetchOrgAction) {
     yield put(fetchOrgSuccess({ org }));
   } catch (error) {
     yield put(fetchOrgError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -194,7 +208,9 @@ export function * createOrgSaga ({ newOrgInfo }: CreateOrgAction) {
     yield put(openNotification("success", "Your organisation was successfully created!", 3000));
   } catch (error) {
     yield put(createOrgError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -214,7 +230,9 @@ export function * updateOrgSaga ({ orgId, orgInfo }: UpdateOrgAction) {
     yield put(openNotification("success", "Your organisation was successfully updated!", 3000));
   } catch (error) {
     yield put(updateOrgError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -233,7 +251,9 @@ export function * switchOrgSaga ({ type, ...props }: SwitchOrgAction) {
     yield put(getProfile({}));
   } catch (error) {
     yield put(switchOrgError({ error: error.message }));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -254,7 +274,9 @@ export function * deleteAccountSaga () {
   } catch (error) {
     yield put(deleteAccountError({ error: error.message }));
     yield put(openNotification("error", `Failed to delete account. ${error.message}`, 3000));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
