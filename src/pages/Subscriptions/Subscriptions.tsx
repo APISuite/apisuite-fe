@@ -46,7 +46,7 @@ export const Subscriptions: React.FC = () => {
       {
         subscriptions.apis.length === 0
           ? (
-            <>
+            <Box display="flex" alignItems="center" flexDirection="column">
               <div className={classes.noDataToShowImageContainer}>
                 <img className={classes.noDataToShowImage} src={rocket} />
               </div>
@@ -61,13 +61,16 @@ export const Subscriptions: React.FC = () => {
                 {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
               </Button>
 
-              <Link
-                className={classes.noDataToShowLink}
-                to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
-              >
-                {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.linkText")}
-              </Link>
-            </>
+              <Box pt={2}>
+                <Typography variant="body1" style={{ color: palette.text.secondary }}>
+                  <Link
+                    to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
+                  >
+                    {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.linkText")}
+                  </Link>
+                </Typography>
+              </Box>
+            </Box>
           )
           : (
             <>

@@ -365,15 +365,18 @@ export const Profile: React.FC = () => {
               )
             }
 
-            <Button
-              color="primary"
-              variant="contained"
-              size="large"
-              disableElevation
-              href='profile/team'
-            >
-              {t("profileTab.overviewSubTab.otherActionsLabels.viewTeam")}
-            </Button>
+            {
+              profileHasOrgDetails && 
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                disableElevation
+                href='profile/team'
+              >
+                {t("profileTab.overviewSubTab.otherActionsLabels.viewTeam")}
+              </Button>
+            }
           </Box>
         </Grid>
 

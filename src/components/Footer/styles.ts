@@ -46,6 +46,7 @@ export default makeStyles((theme) => ({
     left: "50%",
     position: "absolute",
     transform: "translateY(-60px)",
+    marginLeft: "-20px",
   },
 
   iconLogo: {

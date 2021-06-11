@@ -41,8 +41,4 @@ export default makeStyles((theme) => ({
     marginBottom: "40px",
   },
 
-  noDataToShowLink: {
-    color: `${theme.palette.grey[300]} !important`,
-    marginTop: "15px",
-  },
 }));

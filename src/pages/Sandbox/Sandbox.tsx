@@ -324,11 +324,10 @@ export const Sandbox: React.FC = () => {
             {t("sandboxPage.apiCatalog.intro")}
           </Typography>
         </Box>
-        {console.log({ recentlyAddedAPIs })}
 
         <Box mb={6}>
-          {!recentlyAddedAPIs.length ? <APICatalog apisToDisplay={recentlyAddedAPIs} />
-            : <Typography variant="body1">{t("sandboxPage.apiCatalog.paragraph")}</Typography>}
+          {!recentlyAddedAPIs.length ? <Typography variant="body1">{t("sandboxPage.apiCatalog.paragraph")}</Typography>
+            : <APICatalog apisToDisplay={recentlyAddedAPIs} />}
         </Box>
 
         {socialURLs.length > 0 && (

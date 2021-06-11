@@ -19,6 +19,10 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
     <Grid
       component={Box}
       container
+      xs
+      spacing={3}
+      display="flex"
+      justifyContent="start"
     >
       {apisToDisplay.map((apiDetails) => {
         if (!apiDetails) return null;
@@ -30,10 +34,10 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
             key={apiDetails.id}
             component={Box}
             clone
-            xs
+            xs={5}
             container
             p={3}
-            mr={3}
+            m={1.5}
             height={200}
             onClick={handleOnCardClick(apiDetails)}
           >

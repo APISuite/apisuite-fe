@@ -297,7 +297,7 @@ export const Applications: React.FC = () => {
                 <CardContent style={{ 
                   display: "flex",
                   alignItems: "center",
-                  minHeight: "390px",
+                  minHeight: "337px",
                   justifyContent: "center",
                 }} className={classes.clientApplicationCardBottomSection}>
                   <Button

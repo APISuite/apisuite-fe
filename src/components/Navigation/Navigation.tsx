@@ -79,7 +79,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
     if (label.type === "text") {
       LabelComponent = (
-        <Typography variant={subTab ? "subtitle1" : "h6"} style={active ? { fontWeight: 400 } : undefined}>
+        <Typography variant={subTab ? "subtitle1" : "h6"} style={active ? { fontWeight: 700 } : undefined}>
           {t([label.key || "", label.fallback || ""])}
         </Typography>
       );
