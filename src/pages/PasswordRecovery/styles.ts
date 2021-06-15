@@ -25,10 +25,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  form: {
-    maxWidth: "600px",
-  },
-
   formSideContentContainer: {
     padding: "200px 80px",
     width: "65%",
@@ -37,22 +33,6 @@ const useStyles = makeStyles((theme) => ({
       padding: "200px 80px",
       width: "55%",
     },
-  },
-
-  formSideSubtitle: {
-    color: theme.palette.text.primary,
-    fontSize: "20px",
-    fontWeight: 300,
-    marginBottom: "35px",
-    maxWidth: "600px",
-  },
-
-  formSideTitle: {
-    color: theme.palette.secondary.main,
-    fontSize: "42px",
-    fontWeight: 700,
-    marginBottom: "5px",
-    maxWidth: "600px",
   },
 
   headerContainer: {
@@ -101,39 +81,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  infoBox: {
-    alignItems: "center",
-    backgroundColor: theme.palette.info.light,
-    borderRadius: theme.shape.borderRadius,
-    display: "flex",
-    height: "100%",
-    marginBottom: "25px",
-    maxHeight: "65px",
-    maxWidth: "600px",
-    textAlign: "left",
-  },
-
-  infoBoxIcon: {
-    fill: "#46b5ef",
-    transform: "translate(7px, -7px)",
-  },
-
-  infoBoxText: {
-    color: "#035E86",
-    fontSize: "14px",
-    fontWeight: 400,
-    lineHeight: "18px",
-    margin: "0px 10px 0px 15px",
-  },
-
   inputField: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
     color: theme.palette.text.primary,
-  },
-
-  inputFieldContainer: {
-    marginBottom: "35px",
   },
 
   logoAndNameContainer: {
@@ -156,8 +107,6 @@ const useStyles = makeStyles((theme) => ({
 
   portalName: {
     color: theme.palette.secondary.main,
-    fontSize: "24px",
-    fontWeight: 500,
   },
 }));
 

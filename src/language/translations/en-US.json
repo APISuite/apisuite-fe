@@ -157,6 +157,7 @@
     "recoveryEmailHasBeenSentPartTwo": "If you have an",
     "recoveryEmailHasBeenSentPartThree": "account registered with",
     "recoveryEmailHasBeenSentPartFour": ", you will receive a link to recover your password.",
+    "infoBoxText": "If the e-mail we've just sent you does not show up on your inbox, please check your Spam or Junk folders or, ultimately, <0>contact support</0>.",
     "infoBoxTextPartOne": "If the e-mail we've just sent you does not show up on your inbox, please check your Spam or Junk folders or, ultimately,",
     "infoBoxTextPartTwo": "contact support",
     "togglePasswordVisibilityARIALabel": "Toggle password visibility"

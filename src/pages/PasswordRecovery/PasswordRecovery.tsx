@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useConfig, useTranslation, IconButton, InputAdornment, TextField, TextFieldProps } from "@apisuite/fe-base";
+import {
+  useConfig, useTheme, useTranslation, Box, Grid, Icon, IconButton,
+  InputAdornment, TextField, TextFieldProps, Trans, Typography,
+} from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
 import FormCard from "components/FormCard";
+import Link from "components/Link";
+import { Logo } from "components/Logo";
+import Notice from "components/Notice";
+import { recoverPassword } from "store/auth/actions/recoverPassword";
+import { forgotPassword } from "store/auth/actions/forgotPassword";
 import { isValidEmail, isValidPass } from "util/forms";
 import keyIllustration from "assets/keyIllustration.svg";
 
 import { passwordRecoverySelector } from "./selector";
 import useStyles from "./styles";
-import { recoverPassword } from "store/auth/actions/recoverPassword";
-import { forgotPassword } from "store/auth/actions/forgotPassword";
 
 export const PasswordRecovery: React.FC = () => {
   const SIGN_IN = "/auth/signin";
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { ownerInfo, portalName, supportURL } = useConfig();
+  const { ownerInfo, navigation, portalName, supportURL } = useConfig();
+  const { palette } = useTheme();
   const history = useHistory();
   const location = useLocation<any>();
   const [t] = useTranslation();
@@ -95,33 +99,28 @@ export const PasswordRecovery: React.FC = () => {
           className={classes.logoAndNameContainer}
           onClick={() => history.push(SIGN_IN)}
         >
-          {
-            ownerInfo.logo ? (
-              <img
-                className={classes.imageLogo}
-                src={ownerInfo.logo}
-              />
-            )
-              : (
-                <AmpStoriesRoundedIcon
-                  className={classes.iconLogo}
-                />
-              )
-          }
+          <Box fontSize="60px">
+            <Logo
+              src={ownerInfo.logo}
+              icon={navigation.title.iconFallbackName}
+            />
+          </Box>
 
-          <h3 className={classes.portalName}>
+          <Typography className={classes.portalName} variant="h3">
             {portalName}
-          </h3>
+          </Typography>
         </div>
 
         <div
           className={classes.closeButtonContainer}
           onClick={() => history.push("/auth/signin")}
         >
-          <p>
-            {t("passwordRecovery.closeButtonLabel")}
-          </p>
-          <CloseRoundedIcon />
+          <Box>
+            <Typography variant="caption" gutterBottom>
+              {t("passwordRecovery.closeButtonLabel")}
+            </Typography>
+          </Box>
+          <Icon>close</Icon>
         </div>
       </header>
 
@@ -130,24 +129,34 @@ export const PasswordRecovery: React.FC = () => {
           {
             !emailHasBeenSent
               ? (
-                <>
-                  <h1 className={classes.formSideTitle}>
-                    {
-                      stage === "forgot"
-                        ? t("passwordRecovery.forgotPasswordTitle")
-                        : t("passwordRecovery.recoverPasswordTitle")
-                    }
-                  </h1>
+                <Grid container>
+                  <Grid item md={10}>
+                    <Box clone mb={5}>
+                      <Typography variant="h1">
+                        {
+                          stage === "forgot"
+                            ? t("passwordRecovery.forgotPasswordTitle")
+                            : t("passwordRecovery.recoverPasswordTitle")
+                        }
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item md />
 
-                  <p className={classes.formSideSubtitle}>
-                    {
-                      stage === "forgot"
-                        ? t("passwordRecovery.forgotPasswordSubtitle")
-                        : t("passwordRecovery.recoverPasswordSubtitle")
-                    }
-                  </p>
+                  <Grid item md={10}>
+                    <Box mb={2}>
+                      <Typography variant="body1">
+                        {
+                          stage === "forgot"
+                            ? t("passwordRecovery.forgotPasswordSubtitle")
+                            : t("passwordRecovery.recoverPasswordSubtitle")
+                        }
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item md />
 
-                  <div className={classes.form}>
+                  <Grid item md={10}>
                     <FormCard
                       buttonDisabled={!!state.error.length}
                       buttonLabel={
@@ -158,7 +167,7 @@ export const PasswordRecovery: React.FC = () => {
                       handleSubmit={handleSubmission}
                       loading={auth.isRecoveringPassword}
                     >
-                      <div className={classes.inputFieldContainer}>
+                      <Box mb={4}>
                         {
                           stage === "forgot"
                             ? (
@@ -209,43 +218,57 @@ export const PasswordRecovery: React.FC = () => {
                               />
                             )
                         }
-                      </div>
+                      </Box>
                     </FormCard>
-                  </div>
-                </>
+                  </Grid>
+                </Grid>
               )
               : (
-                <>
-                  <h1 className={classes.formSideTitle}>
-                    {t("passwordRecovery.recoveryEmailHasBeenSentPartOne")}
-                  </h1>
+                <Grid container spacing={3}>
+                  <Grid item md={10}>
+                    <Box clone mb={5}>
+                      <Typography variant="h1">
+                        {t("passwordRecovery.recoveryEmailHasBeenSentPartOne")}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item md />
 
-                  <p className={classes.formSideSubtitle}>
-                    <>{t("passwordRecovery.recoveryEmailHasBeenSentPartTwo")} </>
-                    <span className={classes.boldText}>{portalName} </span>
-                    <>{t("passwordRecovery.recoveryEmailHasBeenSentPartThree")} </>
-                    <span className={classes.boldText}>{state.userInput}</span>
-                    <>{t("passwordRecovery.recoveryEmailHasBeenSentPartFour")}</>
-                  </p>
+                  <Grid item md={10}>
+                    <Box clone mb={2}>
+                      <Typography variant="body1">
+                        <>{t("passwordRecovery.recoveryEmailHasBeenSentPartTwo")} </>
+                        <span className={classes.boldText}>{portalName} </span>
+                        <>{t("passwordRecovery.recoveryEmailHasBeenSentPartThree")} </>
+                        <span className={classes.boldText}>{state.userInput}</span>
+                        <>{t("passwordRecovery.recoveryEmailHasBeenSentPartFour")}</>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid item md />
 
-                  <div className={classes.infoBox}>
-                    <InfoRoundedIcon className={classes.infoBoxIcon} />
-
-                    <div>
-                      <p className={classes.infoBoxText}>
-                        <>{t("passwordRecovery.infoBoxTextPartOne")} </>
-                        <a
-                          href={supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
-                          rel='noopener noreferrer'
-                          target='_blank'
-                        >
-                          {t("passwordRecovery.infoBoxTextPartTwo")}
-                        </a>
-                        <>.</>
-                      </p>
-                    </div>
-                  </div>
-                </>
+                  <Grid item md={10}>
+                    <Notice
+                      noticeIcon={<Icon>info</Icon>}
+                      noticeText={
+                        <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+                          <Trans i18nKey="passwordRecovery.infoBoxText">
+                            {[
+                              <Link
+                                key="passwordRecovery.infoBoxText"
+                                to={supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
+                                rel='noopener noreferrer'
+                                target='_blank'
+                              />,
+                            ]}
+                          </Trans>
+                        </Typography>
+                      }
+                      type="info"
+                    />
+                  </Grid>
+                  <Grid item md />
+                </Grid>
               )
           }
         </div>
