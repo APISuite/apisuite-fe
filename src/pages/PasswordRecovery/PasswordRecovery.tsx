@@ -18,6 +18,7 @@ import { recoverPassword } from "store/auth/actions/recoverPassword";
 import { forgotPassword } from "store/auth/actions/forgotPassword";
 
 export const PasswordRecovery: React.FC = () => {
+  const SIGN_IN = "/auth/signin";
   const classes = useStyles();
   const dispatch = useDispatch();
   const { ownerInfo, portalName, supportURL } = useConfig();
@@ -75,6 +76,7 @@ export const PasswordRecovery: React.FC = () => {
 
     if (stage === "recover") {
       dispatch(recoverPassword({ token: location.state.token, password: state.userInput }));
+      history.push(SIGN_IN);
     } else {
       dispatch(forgotPassword({ email: state.userInput }));
     }
@@ -91,7 +93,7 @@ export const PasswordRecovery: React.FC = () => {
       <header className={classes.headerContainer}>
         <div
           className={classes.logoAndNameContainer}
-          onClick={() => history.push("/auth/signin")}
+          onClick={() => history.push(SIGN_IN)}
         >
           {
             ownerInfo.logo ? (
