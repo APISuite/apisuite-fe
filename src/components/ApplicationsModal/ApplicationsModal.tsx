@@ -655,6 +655,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     name='appName'
                     onChange={handleChange}
                     onFocus={handleFocus}
+                    required
                     type='text'
                     value={formState.values.appName}
                     variant='outlined'
@@ -798,6 +799,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     margin='dense'
                     name='appRedirectURI'
                     onChange={handleChange}
+                    required
                     type='url'
                     value={formState.values.appRedirectURI}
                     variant='outlined'
