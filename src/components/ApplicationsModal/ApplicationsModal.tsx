@@ -1,46 +1,30 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Avatar,
-  Box,
-  Button,
-  Fade,
-  Grid,
-  Icon,
-  IconButton,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  Modal,
-  TextField,
-  Trans,
-  Typography,
-  useConfig,
-  useTheme,
-  useTranslation,
+  Avatar, Box, Button, Fade, Grid, Icon,
+  IconButton, InputAdornment, Menu, MenuItem, Modal, TextField,
+  Trans, Typography, useConfig, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
 
-import { applicationsModalSelector } from "./selector";
+import { Logo } from "components/Logo";
+import { MediaUpload } from "components/MediaUpload";
+import { PageContainer } from "components/PageContainer";
+import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import Link from "components/Link";
+import Notice from "components/Notice";
 import { createApp } from "store/applications/actions/createApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
 import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
-import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
-import Link from "components/Link";
-import { Logo } from "components/Logo";
-import { MediaUpload } from "components/MediaUpload";
-import Notice from "components/Notice";
-
 import { getSections } from "util/extensions";
 import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
 import { useForm } from "util/useForm";
-
-import { ApplicationsModalProps } from "./types";
+import { applicationsModalSelector } from "./selector";
 import useStyles from "./styles";
-import { PageContainer } from "components/PageContainer";
+import { ApplicationsModalProps } from "./types";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
@@ -50,15 +34,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   toggleModal,
 }) => {
   const classes = useStyles();
-
-  const { t } = useTranslation();
-
-  const dispatch = useDispatch();
   const { palette } = useTheme();
-
+  const { t } = useTranslation();
+  const { navigation, ownerInfo, portalName } = useConfig();
+  const dispatch = useDispatch();
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
-
-  const { ownerInfo, portalName, navigation } = useConfig();
 
   const metadataKeyDefaultPrefix = "meta_";
 
@@ -68,7 +48,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     if (modalDetails.userAppID && modalDetails.userID) {
       dispatch(getUserApp({ appId: modalDetails.userAppID, orgId: modalDetails.userID }));
     }
-  }, [modalMode, modalDetails, dispatch]);
+  }, [dispatch, modalDetails, modalMode]);
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false);
   const [validImage, setValidImage] = React.useState<boolean>(true);
@@ -117,6 +97,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appClientSecret: "",
       appFullDescription: "",
       appLabels: "",
+      appMetaDescription: "",
+      appMetaKey: "",
+      appMetaTitle: "",
+      appMetaValue: "",
       appName: "",
       appPrivacyURL: "",
       appRedirectURI: "https://",
@@ -126,10 +110,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appVisibility: "private",
       appWebsiteURL: "",
       appYouTubeURL: "",
-      appMetaKey: "",
-      appMetaValue: "",
-      appMetaTitle: "",
-      appMetaDescription: "",
     },
     // Rules for (some) app details
     {
@@ -201,6 +181,18 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
+        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
+          ? mostRecentlySelectedAppDetails.metadata[0].description
+          : "",
+        appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
+          ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
+          : "",
+        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
+          ? mostRecentlySelectedAppDetails.metadata[0].title
+          : "",
+        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
+          ? mostRecentlySelectedAppDetails.metadata[0].value
+          : "",
         appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : "",
@@ -212,18 +204,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appVisibility: mostRecentlySelectedAppDetails.visibility ? mostRecentlySelectedAppDetails.visibility : "private",
         appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
         appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
-        appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
-          ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
-          : "",
-        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
-          ? mostRecentlySelectedAppDetails.metadata[0].value
-          : "",
-        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
-          ? mostRecentlySelectedAppDetails.metadata[0].title
-          : "",
-        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
-          ? mostRecentlySelectedAppDetails.metadata[0].description
-          : "",
       });
     } else {
       resetForm({
@@ -232,6 +212,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientSecret: "",
         appFullDescription: "",
         appLabels: "",
+        appMetaDescription: "",
+        appMetaKey: "",
+        appMetaTitle: "",
+        appMetaValue: "",
         appName: "",
         appPrivacyURL: "",
         appRedirectURI: "https://",
@@ -241,10 +225,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appVisibility: "private",
         appWebsiteURL: "",
         appYouTubeURL: "",
-        appMetaKey: "",
-        appMetaValue: "",
-        appMetaTitle: "",
-        appMetaDescription: "",
       });
     }
   }, [modalMode, mostRecentlySelectedAppDetails]);
@@ -469,13 +449,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const validMetadata = () => {
     if (formState.values.appMetaKey.length === 0) {
       return formState.values.appMetaValue.length === 0 &&
-      formState.values.appMetaTitle.length === 0 &&
-      formState.values.appMetaTitle.length === 0;
+        formState.values.appMetaTitle.length === 0 &&
+        formState.values.appMetaTitle.length === 0;
     } else {
       return isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
-      formState.values.appMetaValue.length !== 0 &&
-      formState.values.appMetaTitle.length !== 0 &&
-      formState.values.appMetaTitle.length !== 0;
+        formState.values.appMetaValue.length !== 0 &&
+        formState.values.appMetaTitle.length !== 0 &&
+        formState.values.appMetaTitle.length !== 0;
     }
   };
 
@@ -494,7 +474,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       visibilityChanged,
     ];
 
-    return (formState.isValid || Object.keys(formState.errors).length === 0) 
+    return (formState.isValid || Object.keys(formState.errors).length === 0)
       && hasRequired
       && changed.some((v) => v)
       && validMetadata()
@@ -511,6 +491,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appClientSecret: "",
             appFullDescription: "",
             appLabels: "",
+            appMetaDescription: "",
+            appMetaKey: "",
+            appMetaTitle: "",
+            appMetaValue: "",
             appName: "",
             appPrivacyURL: "",
             appRedirectURI: "https://",
@@ -520,10 +504,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appVisibility: "private",
             appWebsiteURL: "",
             appYouTubeURL: "",
-            appMetaKey: "",
-            appMetaValue: "",
-            appMetaTitle: "",
-            appMetaDescription: "",
           });
           toggleModal();
           mostRecentlySelectedAppDetails.media = [];
@@ -538,13 +518,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {
                   <Box fontSize="60px">
                     <Logo
-                      src={ownerInfo.logo}
                       icon={navigation.title.iconFallbackName}
+                      src={ownerInfo.logo}
                     />
                   </Box>
                 }
 
-                <Typography variant="h3" display="block" gutterBottom>
+                <Typography display="block" gutterBottom variant="h3">
                   {portalName}
                 </Typography>
               </div>
@@ -554,7 +534,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 onClick={toggleModal}
               >
                 <Box>
-                  <Typography variant="caption" display="block" gutterBottom>
+                  <Typography display="block" gutterBottom variant="caption">
                     {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
                   </Typography>
                 </Box>
@@ -570,7 +550,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 modalMode === "new"
                   ? (
                     <Box py={3}>
-                      <Typography variant="h2" display="block" gutterBottom>
+                      <Typography display="block" gutterBottom variant="h2">
                         {t("dashboardTab.applicationsSubTab.appModal.newAppLabel")}
                       </Typography>
                     </Box>
@@ -578,7 +558,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   : (
                     <div className={classes.editApplicationHeaderContainer}>
                       <Box>
-                        <Typography variant="h2" display="block" gutterBottom>
+                        <Typography display="block" gutterBottom variant="h2">
                           {mostRecentlySelectedAppDetails.name}
                         </Typography>
                       </Box>
@@ -600,8 +580,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             <Icon fontSize="small">circle</Icon>
                           </Box>
 
-                          <Box pb={1.5} clone>
-                            <Typography variant="body2" style={{ color: palette.text.secondary }}>
+                          <Box clone pb={1.5}>
+                            <Typography style={{ color: palette.text.secondary }} variant="body2">
                               {
                                 mostRecentlySelectedAppDetails.subscriptions.length === 0
                                   ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
@@ -621,17 +601,19 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <Grid item md={12} spacing={3}>
                   <Grid item md={6} spacing={3}>
                     <Box pb={1.5}>
-                      <Typography variant="h6" display="block" gutterBottom>
+                      <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
                       </Typography>
                     </Box>
+
                     <Box pb={5}>
-                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo")}
                       </Typography>
                     </Box>
                   </Grid>
                 </Grid>
+
                 <Grid item md={6} spacing={3}>
 
                   <TextField
@@ -765,19 +747,20 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <Grid md={12} spacing={3}>
                   <Grid md={6} spacing={3}>
                     <Box pb={1.5}>
-                      <Typography variant="h6" display="block" gutterBottom>
+                      <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
                       </Typography>
                     </Box>
+
                     <Box pb={5}>
-                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
                         <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour">
                           {[
                             <Link
                               key="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour"
-                              to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2"
                               rel='noopener noreferrer'
                               target='_blank'
+                              to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2"
                             />,
                           ]}
                         </Trans>
@@ -785,6 +768,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     </Box>
                   </Grid>
                 </Grid>
+
                 <Grid item md={6} spacing={3}>
                   <TextField
                     className={classes.inputFields}
@@ -810,6 +794,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <Grid item md={6} spacing={3}>
                   <div className={classes.row}>
                     <TextField
+                      disabled
                       fullWidth
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
                       margin="dense"
@@ -818,14 +803,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       type="text"
                       value={formState.values.appClientID}
                       variant="outlined"
-                      disabled
                     />
 
                     <div className={classes.rowCta}>
                       <IconButton
-                        size="medium"
                         disabled={!formState.values.appClientID}
                         onClick={() => copyToClipboard(formState.values.appClientID)}
+                        size="medium"
                       >
                         <Icon>content_copy</Icon>
                       </IconButton>
@@ -834,6 +818,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                   <div className={classes.clientSecretInputFieldContainer}>
                     <TextField
+                      disabled
                       fullWidth
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
                       margin="dense"
@@ -842,14 +827,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       type="text"
                       value={formState.values.appClientSecret}
                       variant="outlined"
-                      disabled
                     />
 
                     <div className={classes.copyCta}>
                       <IconButton
-                        size="medium"
                         disabled={!formState.values.appClientSecret}
                         onClick={() => copyToClipboard(formState.values.appClientSecret)}
+                        size="medium"
                       >
                         <Icon>content_copy</Icon>
                       </IconButton>
@@ -878,12 +862,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <Grid md={12} spacing={3}>
                   <Grid md={6} spacing={3}>
                     <Box pb={1.5}>
-                      <Typography variant="h6" display="block" gutterBottom>
+                      <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
                       </Typography>
                     </Box>
+
                     <Box pb={5}>
-                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelSix")}
                       </Typography>
                     </Box>
@@ -1099,16 +1084,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 modalMode !== "new" && <>
                   <hr className={classes.regularSectionSeparator} />
 
-                  <Grid container direction="row" justify="space-between" alignItems="center">
+                  <Grid alignItems="center" container direction="row" justify="space-between">
                     <Grid md={12} spacing={3}>
                       <Grid md={6} spacing={3}>
                         <Box pb={1.5}>
-                          <Typography variant="h6" display="block" gutterBottom>
+                          <Typography display="block" gutterBottom variant="h6">
                             {t("mediaUpload.title")}
                           </Typography>
                         </Box>
+
                         <Box pb={5}>
-                          <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                          <Typography
+                            display="block"
+                            gutterBottom
+                            style={{ color: palette.text.secondary }}
+                            variant="body2"
+                          >
                             {t("mediaUpload.description")}
                           </Typography>
                         </Box>
@@ -1117,10 +1108,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                     <Grid item md={12}>
                       <MediaUpload
-                        images={mostRecentlySelectedAppDetails.media || []}
                         accept="image/*"
-                        onFileLoaded={uploadMedia}
+                        images={mostRecentlySelectedAppDetails.media || []}
                         onDeletePressed={deleteMedia}
+                        onFileLoaded={uploadMedia}
                       />
                     </Grid>
                   </Grid>
@@ -1128,18 +1119,36 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               }
 
               <hr className={classes.regularSectionSeparator} />
+              {/*
+              FIXME: the hr above should be rendered by the extension
+              TODO: document getSections so that comments like this are not needed
+              The following code checks if a Marketplace extension's section exists,
+and if it does, it passes along the form's state, and any necessary logic
+to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
+              {
+                getSections(
+                  "MARKETPLACE_APP_VISIBILITY",
+                  {
+                    formState,
+                    handleAppVisibility,
+                    handleChange,
+                  }
+                )
+              }
+
               {/* 'Metadata' section */}
               <div>
                 {/* 'Custom properties' text */}
                 <Grid md={12} spacing={3}>
                   <Grid md={6} spacing={3}>
                     <Box pb={1.5}>
-                      <Typography variant="h6" display="block" gutterBottom>
+                      <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
                       </Typography>
                     </Box>
+
                     <Box pb={5}>
-                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
                         {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
                       </Typography>
                     </Box>
@@ -1227,7 +1236,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                   <Grid item md={6} spacing={3}>
                     <Notice
-                      type="info"
                       noticeIcon={<Icon>info</Icon>}
                       noticeText={
                         <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
@@ -1243,25 +1251,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           </Trans>
                         </Typography>
                       }
+                      type="info"
                     />
                   </Grid>
                 </Grid>
               </div>
 
               <hr className={classes.regularSectionSeparator} />
-              {/* The following code checks if a Marketplace extension's section exists,
-and if it does, it passes along the form's state, and any necessary logic
-to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
-              {
-                getSections(
-                  "MARKETPLACE_APP_VISIBILITY",
-                  {
-                    formState,
-                    handleAppVisibility,
-                    handleChange,
-                  }
-                )
-              }
 
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
@@ -1271,6 +1267,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                       <Grid container>
                         <Grid item md={6} spacing={3}>
                           <Button
+                            color="primary"
                             disabled={
                               !(
                                 formState.values.appName.length !== 0 &&
@@ -1283,11 +1280,10 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                                 validImage
                               )
                             }
-                            color="primary"
-                            variant="contained"
-                            size="large"
                             disableElevation
                             onClick={createNewApp}
+                            size="large"
+                            variant="contained"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.addAppButtonLabel")}
                           </Button>
@@ -1302,18 +1298,19 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
 
                         <Grid item md={6} spacing={3}>
                           <Notice
-                            type="info"
                             noticeIcon={<Icon>query_builder</Icon>}
                             noticeText={
                               <Box display="flex" flexDirection="column">
-                                <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+                                <Typography display="block" style={{ color: palette.info.dark }} variant="body2">
                                   {t("dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel")}
                                 </Typography>
-                                <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+
+                                <Typography display="block" style={{ color: palette.info.dark }} variant="body2">
                                   {t("dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel")}
                                 </Typography>
                               </Box>
                             }
+                            type="info"
                           />
                         </Grid>
                       </Grid>
@@ -1322,12 +1319,12 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                       <>
                         <div>
                           <Button
-                            disabled={!hasChanged()}
                             color="primary"
-                            variant="contained"
-                            size="large"
+                            disabled={!hasChanged()}
                             disableElevation
                             onClick={_updateApp}
+                            size="large"
+                            variant="contained"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
                           </Button>

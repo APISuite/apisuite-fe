@@ -1,35 +1,36 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  useTheme, useTranslation, Avatar, Box, Button,
-  Card, CardContent, Grid, Icon, Trans, Typography,
+  Avatar, Box, Button, Card, CardContent,
+  Grid, Icon, Trans, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
-
-import { AppData, ModalDetails } from "store/applications/types";
-import { getAllUserApps } from "store/applications/actions/getAllUserApps";
-import { getSections } from "util/extensions";
-import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
-import { ApplicationsModal } from "components/ApplicationsModal";
-import Link from "components/Link";
-import Notice from "components/Notice";
-import { PageContainer } from "components/PageContainer";
-import { ROLES } from "constants/global";
 
 import adrift from "assets/adrift.svg";
 import authFundamentals from "assets/authFundamentals.svg";
 import launchApp from "assets/launchApp.svg";
-
+import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
+import { ApplicationsModal } from "components/ApplicationsModal";
+import { PageContainer } from "components/PageContainer";
+import Link from "components/Link";
+import Notice from "components/Notice";
+import { ROLES } from "constants/global";
+import { AppData, ModalDetails } from "store/applications/types";
+import { getAllUserApps } from "store/applications/actions/getAllUserApps";
+import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
 
 export const Applications: React.FC = () => {
-  const MARKETPLACE_SECTION = "SUBBED_MARKETPLACE_APPS";
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
   const { palette } = useTheme();
-  const { allUserApps, currentOrganisation, user } = useSelector(applicationsSelector);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const {
+    allUserApps, createUserAppStatus, currentOrganisation, deleteUserAppStatus, updateUserAppStatus, user,
+  } = useSelector(applicationsSelector);
+
+  const MARKETPLACE_SECTION = "SUBBED_MARKETPLACE_APPS";
 
   const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false);
 
@@ -69,14 +70,18 @@ export const Applications: React.FC = () => {
 
   const getCardContent = (app: AppData) => {
     return <>
-      <Box py={1.5} clone>
-        <Typography variant="h4" className={classes.clientApplicationCardTitle}>
+      <Box clone py={1.5}>
+        <Typography className={classes.clientApplicationCardTitle} variant="h4">
           {app.name}
         </Typography>
       </Box>
 
-      <Box pb={1.5} clone>
-        <Typography variant="body1" className={classes.clientApplicationCardDescription} style={{ color: palette.text.secondary }}>
+      <Box clone pb={1.5}>
+        <Typography
+          className={classes.clientApplicationCardDescription}
+          style={{ color: palette.text.secondary }}
+          variant="body1"
+        >
           {
             app.shortDescription
               ? app.shortDescription
@@ -89,7 +94,7 @@ export const Applications: React.FC = () => {
         </Typography>
       </Box>
 
-      <Box pt={1.5} display="flex">
+      <Box display="flex" pt={1.5}>
         {/* A mere dot */}
         <Box
           className={
@@ -104,8 +109,8 @@ export const Applications: React.FC = () => {
           <Icon fontSize="small">circle</Icon>
         </Box>
 
-        <Box pb={1.5} clone>
-          <Typography variant="body2" style={{ color: palette.text.secondary }}>
+        <Box clone pb={1.5}>
+          <Typography style={{ color: palette.text.secondary }} variant="body2">
             {
               app.subscriptions.length === 0
                 ? t("dashboardTab.applicationsSubTab.listOfAppsSection.draftAppStatus")
@@ -121,7 +126,7 @@ export const Applications: React.FC = () => {
   const appCardGenerator = (allUserAppsArray: AppData[]) => {
     if (allUserAppsArray.length === 0) {
       return (
-        <Typography variant="body1" style={{ color: palette.text.primary }}>
+        <Typography style={{ color: palette.text.primary }} variant="body1">
           {t("dashboardTab.applicationsSubTab.listOfAppsSection.loadingApps")}
         </Typography>
       );
@@ -138,27 +143,29 @@ export const Applications: React.FC = () => {
       return (
         <Grid item key={`appCard${index}`} xs={4}>
           <ApplicationCard
-            media={<Box textAlign="center" >
-              {
-                userApp.logo !== ""
-                  ? (
-                    <Avatar
-                      className={classes.clientApplicationCardAvatar}
-                      src={userApp.logo}
-                    />
-                  )
-                  : (
-                    <Avatar
-                      className={classes.clientApplicationCardAvatar}
-                    >
-                      {appNameInitials}
-                    </Avatar>
-                  )
-              }
-            </Box>}
             cardContent={getCardContent(userApp)}
             contentStyle={classes.clientApplicationCardBottomSection}
             icon="open_in_full"
+            media={
+              <Box textAlign="center">
+                {
+                  userApp.logo !== ""
+                    ? (
+                      <Avatar
+                        className={classes.clientApplicationCardAvatar}
+                        src={userApp.logo}
+                      />
+                    )
+                    : (
+                      <Avatar
+                        className={classes.clientApplicationCardAvatar}
+                      >
+                        {appNameInitials}
+                      </Avatar>
+                    )
+                }
+              </Box>
+            }
             onClick={() => {
               if (user) {
                 toggleModal("edit", user.id, userApp.id);
@@ -192,11 +199,11 @@ export const Applications: React.FC = () => {
     if (user) {
       dispatch(getAllUserApps({ userId: user.id }));
     }
-  }, [user, dispatch]);
+  }, [createUserAppStatus, deleteUserAppStatus, dispatch, updateUserAppStatus, user]);
 
   const renderNoOrgView = () => (
-    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <Box pb={5} textAlign="center" clone>
+    <Box alignItems="center" display="flex" flexDirection="column" justifyContent="center">
+      <Box clone pb={5} textAlign="center">
         <img className={classes.firstUseImage} src={adrift} />
       </Box>
 
@@ -207,16 +214,16 @@ export const Applications: React.FC = () => {
         {t("dashboardTab.applicationsSubTab.noOrganisationsButtonLabel")}
       </Button>
 
-      <Box py={3} clone>
-        <Typography variant="body1" align="center">
+      <Box clone py={3}>
+        <Typography align="center" variant="body1">
           <Trans i18nKey="dashboardTab.applicationsSubTab.documentationLink">
             {[
               <Link
                 key="dashboardTab.applicationsSubTab.documentationLink"
-                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications"
                 rel='noopener noreferrer'
-                target='_blank'
                 style={{ color: palette.text.secondary }}
+                target='_blank'
+                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications"
               />,
             ]}
           </Trans>
@@ -224,20 +231,20 @@ export const Applications: React.FC = () => {
       </Box>
 
       <Notice
-        type="warning"
         noticeIcon={<Icon>warning_amber</Icon>}
         noticeText={
-          <Typography variant="body2" align="center" style={{ color: palette.warning.dark }}>
+          <Typography align="center" style={{ color: palette.warning.dark }} variant="body2">
             {t("dashboardTab.applicationsSubTab.noOrganisationWarning")}
           </Typography>
         }
+        type="warning"
       />
     </Box>
   );
 
   const renderNoAppsView = () => (
-    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <Box pb={5} textAlign="center" clone>
+    <Box alignItems="center" display="flex" flexDirection="column" justifyContent="center">
+      <Box clone pb={5} textAlign="center">
         <img className={classes.firstUseImage} src={adrift} />
       </Box>
 
@@ -248,16 +255,16 @@ export const Applications: React.FC = () => {
         {t("dashboardTab.applicationsSubTab.noApplicationsButtonLabel")}
       </Button>
 
-      <Box py={3} clone>
-        <Typography variant="body1" align="center">
+      <Box clone py={3}>
+        <Typography align="center" variant="body1">
           <Trans i18nKey="dashboardTab.applicationsSubTab.documentationLink">
             {[
               <Link
                 key="dashboardTab.applicationsSubTab.documentationLink"
-                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications"
                 rel='noopener noreferrer'
-                target='_blank'
                 style={{ color: palette.text.secondary }}
+                target='_blank'
+                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications"
               />,
             ]}
           </Trans>
@@ -268,7 +275,7 @@ export const Applications: React.FC = () => {
 
       {/* Subscribed Marketplace applications container */}
       <Box width={1}>
-        { getSections(MARKETPLACE_SECTION) }
+        {getSections(MARKETPLACE_SECTION)}
       </Box>
     </Box>
   );
@@ -283,7 +290,7 @@ export const Applications: React.FC = () => {
         </Box>
 
         <Box pb={5}>
-          <Typography variant="body1" style={{ color: palette.text.secondary }}>
+          <Typography style={{ color: palette.text.secondary }} variant="body1">
             {t("dashboardTab.applicationsSubTab.listOfAppsSection.subtitle")}
           </Typography>
         </Box>
@@ -294,12 +301,15 @@ export const Applications: React.FC = () => {
             {appCardGenerator(allUserApps)}
             <Grid item key="appCard-addNew" xs={4}>
               <Card elevation={1}>
-                <CardContent style={{ 
-                  display: "flex",
-                  alignItems: "center",
-                  minHeight: "337px",
-                  justifyContent: "center",
-                }} className={classes.clientApplicationCardBottomSection}>
+                <CardContent
+                  className={classes.clientApplicationCardBottomSection}
+                  style={{
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    minHeight: "337px",
+                  }}
+                >
                   <Button
                     className={classes.registerNewClientApplicationCardButton}
                     onClick={() => toggleModal("new", 0, 0)}
@@ -314,12 +324,12 @@ export const Applications: React.FC = () => {
 
         {/* Subscribed Marketplace applications container */}
         <Box width={1}>
-          { getSections(MARKETPLACE_SECTION) }
+          {getSections(MARKETPLACE_SECTION)}
         </Box>
       </Box>
 
       <Box width={1}>
-        <Box py={2} clone>
+        <Box clone py={2}>
           <Typography variant="h3">
             {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.title")}
           </Typography>
@@ -327,59 +337,68 @@ export const Applications: React.FC = () => {
 
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Link to='/documentation' style={{ textDecoration: "none" }}>
+            <Link style={{ textDecoration: "none" }} to='/documentation'>
               <ApplicationCard
-                media={<Box px={5} py={3}>
-                  <img
-                    src={launchApp}
-                    title="Documentation Image"
-                    style={{ height: "120px", maxHeight: "120px" }}
-                  />
-                </Box>}
-                cardContent={<>
-                  <Box px={3} pb={3} clone>
-                    <Typography variant="h3" style={{ color: palette.primary.main }}>
-                      {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle")}
-                    </Typography>
-                  </Box>
+                cardContent={
+                  <>
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.primary.main }} variant="h3">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle")}
+                      </Typography>
+                    </Box>
 
-                  <Box px={3} pb={3} clone>
-                    <Typography variant="body1" style={{ color: palette.text.secondary }}>
-                      {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle")}
-                    </Typography>
-                  </Box>
-                </>}
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.text.secondary }} variant="body1">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle")}
+                      </Typography>
+                    </Box>
+                  </>
+                }
                 icon="open_in_new"
+                media={
+                  <Box px={5} py={3}>
+                    <img
+                      src={launchApp}
+                      style={{ height: "120px", maxHeight: "120px" }}
+                      title="Documentation Image"
+                    />
+                  </Box>
+                }
               />
             </Link>
           </Grid>
+
           <Grid item xs={6}>
             <Link
               style={{ textDecoration: "none" }}
               to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2'
             >
               <ApplicationCard
-                media={<Box px={5} py={3}>
-                  <img
-                    src={authFundamentals}
-                    title="Auth Fundamentals Image"
-                    style={{ height: "120px", maxHeight: "120px" }}
-                  />
-                </Box>}
-                cardContent={<>
-                  <Box px={3} pb={3} clone>
-                    <Typography variant="h3" style={{ color: palette.primary.main }}>
-                      {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle")}
-                    </Typography>
-                  </Box>
+                cardContent={
+                  <>
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.primary.main }} variant="h3">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle")}
+                      </Typography>
+                    </Box>
 
-                  <Box px={3} pb={3} clone>
-                    <Typography variant="body1" style={{ color: palette.text.secondary }}>
-                      {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle")}
-                    </Typography>
-                  </Box>
-                </>}
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.text.secondary }} variant="body1">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle")}
+                      </Typography>
+                    </Box>
+                  </>
+                }
                 icon="open_in_new"
+                media={
+                  <Box px={5} py={3}>
+                    <img
+                      src={authFundamentals}
+                      style={{ height: "120px", maxHeight: "120px" }}
+                      title="Auth Fundamentals Image"
+                    />
+                  </Box>
+                }
               />
             </Link>
           </Grid>
@@ -393,7 +412,7 @@ export const Applications: React.FC = () => {
       {
         user?.role.id === `${ROLES.baseUser.level}` ?
           <Box width={1}>
-            { getSections(MARKETPLACE_SECTION) }
+            {getSections(MARKETPLACE_SECTION)}
           </Box>
           // If the user has yet to create/join an organisation, (...)
           : !hasCurrentOrgDetails
