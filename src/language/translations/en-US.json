@@ -364,6 +364,9 @@
           "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
           "subSectionLabelThree": "Redirect URI",
           "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
+        },
+        "errors": {
+          "shortDescriptionLimit": "The short description has a maximum limit of 60 characters."
         }
       }
     },

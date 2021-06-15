@@ -160,6 +160,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
+      appShortDescription: {
+        rules: [(text) => text.toString().length <= 60],
+        message: t("dashboardTab.applicationsSubTab.appModal.errors.shortDescriptionLimit"),
+      },
+
       appSupportURL: {
         rules: [(URI) => uriBasicChecks(URI)],
         message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
@@ -657,7 +662,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                   <TextField
                     className={classes.inputFields}
+                    error={formState.errors.appShortDescription}
                     fullWidth
+                    helperText={
+                      formState.errors.appShortDescription
+                        ? formState.errorMsgs.appShortDescription
+                        : ""
+                    }
                     label={t("dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel")}
                     margin='dense'
                     name='appShortDescription'
