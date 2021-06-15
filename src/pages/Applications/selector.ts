@@ -8,7 +8,10 @@ export const applicationsSelector = createSelector(
   (applications, profile, auth) => {
     return {
       allUserApps: applications.userApps,
+      createUserAppStatus: applications.createAppStatus,
       currentOrganisation: profile.profile.current_org,
+      deleteUserAppStatus: applications.deleteAppStatus,
+      updateUserAppStatus: applications.updateAppStatus,
       user: auth.user,
     };
   },
