@@ -10,7 +10,7 @@ import { isValidEmail } from "util/forms";
 import SSOForm from "components/SSOForm";
 
 import useStyles from "./styles";
-import { signinFormSelector } from "./selector";
+import { signInFormSelector } from "./selector";
 import { ssoProviders } from "store/auth/actions/ssoProviders";
 import { login } from "store/auth/actions/login";
 import { testIds } from "testIds";
@@ -18,7 +18,7 @@ import Link from "components/Link";
 
 export const SignInForm: React.FC = () => {
   const dispatch = useDispatch();
-  const auth = useSelector(signinFormSelector);
+  const auth = useSelector(signInFormSelector);
   const classes = useStyles();
   const { palette } = useTheme();
   const { t } = useTranslation();

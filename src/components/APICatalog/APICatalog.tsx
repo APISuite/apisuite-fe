@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Avatar, Box, Grid, Paper, Typography, useTheme } from "@apisuite/fe-base";
+import { Avatar, Box, Grid, Paper, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import { Tag } from "components/Tag";
 import useStyles from "./styles";
@@ -10,6 +10,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
   const classes = useStyles();
   const { palette } = useTheme();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleOnCardClick = (details: APIDetails) => () => {
     history.push(`/api-products/details/${details.id}/spec/${details.apiRoutingId}`);
@@ -65,8 +66,12 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
                 </Typography>
 
                 <Typography variant="subtitle1" gutterBottom>
-                  {/* FIXME: not translated */}
-                  <Tag v={apiDetails.apiVersion} color={tagColor} /> {apiDetails.apiAccess ? "Production access" : "API Documentation"}
+                  <Tag v={apiDetails.apiVersion} color={tagColor} />
+                  {
+                    apiDetails.apiAccess
+                      ? t("sandboxPage.apiCatalog.productionAccess")
+                      : t("sandboxPage.apiCatalog.documentationAccess")
+                  }
                 </Typography>
 
                 <Box

@@ -16,10 +16,6 @@ const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
       <div
         className={classes.actionsCatalogEntry}
         key={`actionsCatalogEntry${index}`}
-        style={{
-          borderBottom: `2px solid ${palette.primary.main}`,
-          borderRight: `2px solid ${palette.primary.main}`,
-        }}
       >
         <img
           className={actionDetails.actionLink === "" ? classes.disabledAction : ""}

@@ -16,12 +16,14 @@ export default makeStyles((theme) => ({
   },
 
   actionsCatalogEntry: {
+    alignItems: "center",
+    borderBottom: `2px solid ${theme.palette.primary.main}`,
+    borderRight: `2px solid ${theme.palette.primary.main}`,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: 300,
     height: 184,
+    justifyContent: "center",
+    width: 300,
 
     "& > img": {
       height: 56,

@@ -48,7 +48,9 @@
     },
     "apiCatalog": {
       "intro": "API Catalog recent additions",
-      "paragraph": "No APIs have been recently added."
+      "paragraph": "No APIs have been recently added.",
+      "productionAccess": " Production access",
+      "documentationAccess": " API Documentation"
     },
     "notice": "{{portalName}} is maintained by {{clientName}}. You can visit us at <0>{{url}}</0>."
   },

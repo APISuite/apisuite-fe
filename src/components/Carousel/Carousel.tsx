@@ -100,8 +100,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     if (slidesAutoPlay) {
       timer.current = setInterval(() => {
         runSlides();
-      // TODO: fix type
-      }, timeBetweenSlides) as any;
+      }, timeBetweenSlides) as NodeJS.Timeout;
     }
 
     return () => {
@@ -162,16 +161,13 @@ export const Carousel: React.FC<CarouselProps> = ({
       >
         <div
           className={classes.carouselSlider}
-          style={
-            carouselBackgroundImage
-              ? {
-                background: `url(${carouselBackgroundImage})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-              }
-              // TODO: update this config
-              : { backgroundColor: carouselBackgroundColor || palette.grey[700] }
-          }
+          style={{
+            background: carouselBackgroundImage
+              ? `url(${carouselBackgroundImage})`
+              : (carouselBackgroundColor || palette.grey[700]),
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
         >
           <ReactSlidy
             initialSlide={initialSlide || 0}

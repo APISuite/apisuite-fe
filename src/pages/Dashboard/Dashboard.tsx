@@ -120,8 +120,7 @@ export const Dashboard: React.FC = () => {
                     },
                     {
                       actionImage: fingerprintSVG,
-                      // TODO: Create an 'Update your password' view or mechanism, and link to it
-                      actionLink: "",
+                      actionLink: "/profile/security",
                       actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.fingerprint"),
                     },
                     {
