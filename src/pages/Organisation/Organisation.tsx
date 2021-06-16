@@ -12,7 +12,7 @@ import { fetchOrg } from "store/profile/actions/fetchOrg";
 import { createOrg } from "store/profile/actions/createOrg";
 import { updateOrg } from "store/profile/actions/updateOrg";
 import { PageContainer } from "components/PageContainer";
-
+import { ROLES } from "constants/global";
 import { organisationSelector } from "./selector";
 import useStyles from "./styles";
 
@@ -25,7 +25,7 @@ export const Organisation: React.FC = () => {
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
-    if (auth.user?.role.id !== "5") {
+    if (auth.user?.role.id !== `${ROLES.baseUser.level}`) {
       dispatch(fetchOrg({ org_id: profile.current_org.id }));
     }
   }, [auth, dispatch, profile.current_org.id]);
