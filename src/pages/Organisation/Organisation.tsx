@@ -20,13 +20,15 @@ export const Organisation: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { profile, org } = useSelector(organisationSelector);
+  const { auth, profile, org } = useSelector(organisationSelector);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
-    dispatch(fetchOrg({ org_id: profile.current_org.id }));
-  }, [dispatch, profile.current_org.id]);
+    if (auth.user?.role.id !== "5") {
+      dispatch(fetchOrg({ org_id: profile.current_org.id }));
+    }
+  }, [auth, dispatch, profile.current_org.id]);
 
   /*
   Organisation details
