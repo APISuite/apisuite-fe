@@ -66,7 +66,14 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
                 </Typography>
 
                 <Typography variant="subtitle1" gutterBottom>
-                  <Tag v={apiDetails.apiVersion} color={tagColor} />
+                  <Tag
+                    color={tagColor}
+                    v={
+                      apiDetails.apiVersion === "No version available"
+                        ? apiDetails.apiVersion
+                        : `v${apiDetails.apiVersion}`
+                    }
+                  />
                   {
                     apiDetails.apiAccess
                       ? t("sandboxPage.apiCatalog.productionAccess")
