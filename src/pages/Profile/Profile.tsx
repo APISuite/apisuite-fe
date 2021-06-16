@@ -115,7 +115,7 @@ export const Profile: React.FC = () => {
               const doesImageExist = isValidURL(stringURI);
 
               if (doesImageExist) {
-                debounce("PROVILE_VALIDATE_AVATAR_REQUEST", () => validateAvatar(stringURI));
+                debounce("PROFILE_VALIDATE_AVATAR_REQUEST", () => validateAvatar(stringURI));
               }
 
               return doesImageExist;
