@@ -22,28 +22,13 @@ export const isValidURL = (url: any) => {
   return re.test(String(url).toLowerCase());
 };
 
-export const isValidImage = async (imageURL: any) => {
-  try {
-    const requestResponseCors = await fetch(imageURL);
-
-    if (requestResponseCors.status >= 100 && requestResponseCors.status < 400) {
-      return !!requestResponseCors.ok;
-    }
-  } catch (e) {
-    try {
-      const requestResponseNoCors = await fetch(imageURL, {
-        mode: "no-cors",
-      });
-
-      if (requestResponseNoCors.status >= 100 && requestResponseNoCors.status < 400) {
-        return !!requestResponseNoCors.ok;
-      }
-    } catch (error) {
-      return false;
-    }
-  }
-
-  return false;
+export const isValidImage = async (imageURL: string) => {
+  return new Promise<boolean>((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(img.width > 0);
+    img.onerror = () => resolve(false);
+    img.src = imageURL;
+  });
 };
 
 export const isValidPhoneNumber = (number: any) => {

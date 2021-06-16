@@ -17,6 +17,7 @@ import { SelectOption } from "components/Select/types";
 import { switchOrg } from "store/profile/actions/switchOrg";
 import { updateProfile } from "store/profile/actions/updateProfile";
 import { useForm } from "util/useForm";
+import { debounce } from "util/debounce";
 import Select from "components/Select";
 import useStyles from "./styles";
 import Notice from "components/Notice";
@@ -78,6 +79,7 @@ export const Profile: React.FC = () => {
         }
       )();
     }
+    setValidImage(false);
   };
 
   const {
@@ -113,7 +115,7 @@ export const Profile: React.FC = () => {
               const doesImageExist = isValidURL(stringURI);
 
               if (doesImageExist) {
-                validateAvatar(stringURI);
+                debounce("PROVILE_VALIDATE_AVATAR_REQUEST", () => validateAvatar(stringURI));
               }
 
               return doesImageExist;
