@@ -1,9 +1,9 @@
-export const isValidEmail = (email: any) => {
+export const isValidEmail = (email: string) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return re.test(String(email).toLowerCase());
 };
 
-export const isValidURL = (url: any) => {
+export const isValidURL = (url: string) => {
   /*
   The following regular expression was changed from
 
@@ -22,7 +22,7 @@ export const isValidURL = (url: any) => {
   return re.test(String(url).toLowerCase());
 };
 
-export const isValidImage = async (imageURL: string) => {
+export const isValidImage = (imageURL: string) => {
   return new Promise<boolean>((resolve) => {
     const img = new Image();
     img.onload = () => resolve(img.width > 0);
@@ -31,12 +31,12 @@ export const isValidImage = async (imageURL: string) => {
   });
 };
 
-export const isValidPhoneNumber = (number: any) => {
+export const isValidPhoneNumber = (number: string | number) => {
   const re = /^(\+|00)[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]{6,14}$/;
-  return re.test(number);
+  return re.test(String(number));
 };
 
-export const isValidRecoveryCode = (code: any) => {
+export const isValidRecoveryCode = (code: string) => {
   const re = /^[\d\w]{5}-[\d\w]{5}$/;
   return re.test(code);
 };
