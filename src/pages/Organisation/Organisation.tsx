@@ -25,7 +25,7 @@ export const Organisation: React.FC = () => {
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
-    if (auth.user?.role.id !== `${ROLES.baseUser.level}`) {
+    if (auth.user?.role.id !== `${ROLES.baseUser.value}`) {
       dispatch(fetchOrg({ org_id: profile.current_org.id }));
     }
   }, [auth, dispatch, profile.current_org.id]);
