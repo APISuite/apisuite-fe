@@ -352,7 +352,7 @@
         "subSectionLabelFour": "The client credentials for <0>OAuth2 secured API access</0>.",
         "subSectionLabelOne": "General information",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
-        "subSectionLabelThree": "Redirect URI",
+        "subSectionLabelThree": "Access details",
         "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us.",
         "customProps": {
           "title": "Custom properties",

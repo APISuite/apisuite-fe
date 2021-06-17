@@ -741,6 +741,45 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <hr className={classes.alternativeSectionSeparator} />
 
+              {
+                modalMode !== "new" &&
+                <>
+                  <Grid alignItems="center" container direction="row" justify="space-between">
+                    <Grid md={12} spacing={3}>
+                      <Grid md={6} spacing={3}>
+                        <Box pb={1.5}>
+                          <Typography display="block" gutterBottom variant="h6">
+                            {t("mediaUpload.title")}
+                          </Typography>
+                        </Box>
+
+                        <Box pb={5}>
+                          <Typography
+                            display="block"
+                            gutterBottom
+                            style={{ color: palette.text.secondary }}
+                            variant="body2"
+                          >
+                            {t("mediaUpload.description")}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    </Grid>
+
+                    <Grid item md={12}>
+                      <MediaUpload
+                        accept="image/*"
+                        images={mostRecentlySelectedAppDetails.media || []}
+                        onDeletePressed={deleteMedia}
+                        onFileLoaded={uploadMedia}
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <hr className={classes.regularSectionSeparator} />
+                </>
+              }
+
               {/* 'Access details' section */}
               <Grid container>
                 {/* 'Redirect URI' subsection */}
@@ -1080,45 +1119,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
               </Grid>
 
-              {
-                modalMode !== "new" && <>
-                  <hr className={classes.regularSectionSeparator} />
-
-                  <Grid alignItems="center" container direction="row" justify="space-between">
-                    <Grid md={12} spacing={3}>
-                      <Grid md={6} spacing={3}>
-                        <Box pb={1.5}>
-                          <Typography display="block" gutterBottom variant="h6">
-                            {t("mediaUpload.title")}
-                          </Typography>
-                        </Box>
-
-                        <Box pb={5}>
-                          <Typography
-                            display="block"
-                            gutterBottom
-                            style={{ color: palette.text.secondary }}
-                            variant="body2"
-                          >
-                            {t("mediaUpload.description")}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    </Grid>
-
-                    <Grid item md={12}>
-                      <MediaUpload
-                        accept="image/*"
-                        images={mostRecentlySelectedAppDetails.media || []}
-                        onDeletePressed={deleteMedia}
-                        onFileLoaded={uploadMedia}
-                      />
-                    </Grid>
-                  </Grid>
-                </>
-              }
-
-              <hr className={classes.regularSectionSeparator} />
               {/*
               FIXME: the hr above should be rendered by the extension
               TODO: document getSections so that comments like this are not needed
