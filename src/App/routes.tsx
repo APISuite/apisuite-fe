@@ -15,6 +15,7 @@ import { APIDetails } from "pages/APIDetails";
 import { APIProducts } from "pages/APIProducts";
 import { Applications } from "pages/Applications";
 import { Dashboard } from "pages/Dashboard";
+import { HomePageRedirect } from "pages/HomePageRedirect";
 import Instructions from "pages/Instructions";
 import { Organisation } from "pages/Organisation";
 import { PasswordRecovery } from "pages/PasswordRecovery";
@@ -53,7 +54,8 @@ const extensionsRoutes = getRoutes().map(
 );
 
 export const routesConfig: AppRouteProps[] = [
-  { path: "/", exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
+  { path: "/", exact: true, component: HomePageRedirect },
+  { path: "/home", exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
   { path: "/api-products", exact: true, component: APIProducts, layoutProps: { contractibleMenu: true } },
   { path: "/api-products/details/:apiId/spec/:versionId", exact: true, component: APIDetails },
   { path: "/auth/:view?/:email?", exact: true, component: SignInOrUp, layout: EssentialLayout },

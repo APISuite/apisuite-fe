@@ -1,0 +1,1 @@
+export { HomePageRedirect } from "./HomePageRedirect";
