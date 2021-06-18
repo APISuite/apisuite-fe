@@ -24,6 +24,7 @@ export function * createAppActionSaga (action: CreateAppAction) {
   try {
     const data = {
       description: action.appData.description,
+      directUrl: action.appData.directUrl,
       labels: action.appData.labels,
       logo: action.appData.logo,
       metadata: action.appData.metadata,
@@ -62,6 +63,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
   try {
     const data = {
       description: action.appData.description,
+      directUrl: action.appData.directUrl,
       labels: action.appData.labels,
       logo: action.appData.logo,
       metadata: action.appData.metadata,
@@ -93,6 +95,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
         clientSecret: response.clientSecret,
         createdAt: response.createdAt,
         description: response.description,
+        directUrl: response.directUrl,
         id: response.id,
         labels: response.labels,
         logo: response.logo,
@@ -200,6 +203,7 @@ export function * getAllUserAppsActionSaga () {
         clientSecret: userApp.clientSecret,
         createdAt: userApp.createdAt,
         description: userApp.description,
+        directUrl: userApp.directUrl,
         id: userApp.id,
         labels: userApp.labels,
         logo: userApp.logo,
@@ -248,6 +252,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
       clientSecret: response.clientSecret,
       createdAt: response.createdAt,
       description: response.description,
+      directUrl: response.directUrl,
       id: response.id,
       labels: response.labels,
       logo: response.logo,

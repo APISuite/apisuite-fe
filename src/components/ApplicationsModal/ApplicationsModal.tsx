@@ -95,6 +95,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appAvatarURL: "",
       appClientID: "",
       appClientSecret: "",
+      appDirectURL: "https://",
       appFullDescription: "",
       appLabels: "",
       appMetaDescription: "",
@@ -128,6 +129,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           return validURL;
         }],
         message: t("dashboardTab.applicationsSubTab.appModal.appAvatarURLError"),
+      },
+
+      appDirectURL: {
+        rules: [(URI) => uriBasicChecks(URI)],
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
       appPrivacyURL: {
@@ -177,6 +183,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appAvatarURL: mostRecentlySelectedAppDetails.logo ? mostRecentlySelectedAppDetails.logo : "",
         appClientID: mostRecentlySelectedAppDetails.clientId ? mostRecentlySelectedAppDetails.clientId : "",
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : "",
+        appDirectURL: mostRecentlySelectedAppDetails.directUrl ? mostRecentlySelectedAppDetails.directUrl : "",
         appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
@@ -210,6 +217,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appAvatarURL: "",
         appClientID: "",
         appClientSecret: "",
+        appDirectURL: "https://",
         appFullDescription: "",
         appLabels: "",
         appMetaDescription: "",
@@ -357,6 +365,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
+      directUrl: formState.values.appDirectURL,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       metadata: getFormMetadata(),
@@ -383,6 +392,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
+      directUrl: formState.values.appDirectURL,
       id: modalDetails.userAppID,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
@@ -489,6 +499,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appAvatarURL: "",
             appClientID: "",
             appClientSecret: "",
+            appDirectURL: "https://",
             appFullDescription: "",
             appLabels: "",
             appMetaDescription: "",
@@ -1120,9 +1131,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               </Grid>
 
               {/*
-              FIXME: the hr above should be rendered by the extension
-              TODO: document getSections so that comments like this are not needed
-              The following code checks if a Marketplace extension's section exists,
+TODO: document getSections so that comments like this are not needed
+The following code checks if a Marketplace extension's section exists,
 and if it does, it passes along the form's state, and any necessary logic
 to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
               {

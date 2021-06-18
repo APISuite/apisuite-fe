@@ -18,6 +18,7 @@ const initialState: ApplicationsStore = {
     clientSecret: "",
     createdAt: "",
     description: "",
+    directUrl: "",
     id: 0,
     labels: [],
     logo: "",
@@ -126,6 +127,7 @@ export default function reducer (
           clientSecret: { $set: action.appData.clientSecret },
           createdAt: { $set: action.appData.createdAt },
           description: { $set: action.appData.description },
+          directUrl: { $set: action.appData.directUrl },
           id: { $set: action.appData.id },
           labels: { $set: action.appData.labels },
           logo: { $set: action.appData.logo },
@@ -190,6 +192,7 @@ export default function reducer (
 
         currentApp: {
           description: { $set: action.appData.description },
+          directUrl: { $set: action.appData.directUrl },
           labels: { $set: action.appData.labels },
           logo: { $set: action.appData.logo },
           metadata: { $set: action.appData.metadata },

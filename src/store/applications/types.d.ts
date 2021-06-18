@@ -20,6 +20,7 @@ export interface AppData {
   clientSecret: string,
   createdAt: string,
   description: string,
+  directUrl: string,
   id: number,
   labels: string[],
   logo: string,
