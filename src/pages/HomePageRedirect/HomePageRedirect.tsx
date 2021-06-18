@@ -2,8 +2,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PageEntry } from "@apisuite/extension-ui-types";
+import { getRoleName } from "pages/Profile/selectors";
 import { getRoutes } from "util/extensions";
-import { getRoleName } from "./selectors";
 
 export const HomePageRedirect: React.FC = () => {
   const roleName = useSelector(getRoleName);
