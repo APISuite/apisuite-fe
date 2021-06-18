@@ -607,10 +607,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               }
 
               {/* 'General information' section */}
-              <Grid container>
+              <Grid container spacing={3}>
                 {/* 'App name and short description' subsection */}
-                <Grid item md={12} spacing={3}>
-                  <Grid item md={6} spacing={3}>
+                <Grid item md={12}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
@@ -625,7 +625,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </Grid>
                 </Grid>
 
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
 
                   <TextField
                     className={classes.inputFields}
@@ -755,9 +755,9 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               {
                 modalMode !== "new" &&
                 <>
-                  <Grid alignItems="center" container direction="row" justify="space-between">
-                    <Grid md={12} spacing={3}>
-                      <Grid md={6} spacing={3}>
+                  <Grid alignItems="center" container direction="row" justify="space-between" spacing={3}>
+                    <Grid item md={12}>
+                      <Grid item md={6}>
                         <Box pb={1.5}>
                           <Typography display="block" gutterBottom variant="h6">
                             {t("mediaUpload.title")}
@@ -792,10 +792,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               }
 
               {/* 'Access details' section */}
-              <Grid container>
+              <Grid container spacing={3}>
                 {/* 'Redirect URI' subsection */}
-                <Grid md={12} spacing={3}>
-                  <Grid md={6} spacing={3}>
+                <Grid item md={12}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
@@ -819,7 +819,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </Grid>
                 </Grid>
 
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
                   <TextField
                     className={classes.inputFields}
                     error={formState.errors.appRedirectURI}
@@ -841,7 +841,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
 
                 {/* 'Client credentials' subsection */}
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
                   <div className={classes.row}>
                     <TextField
                       disabled
@@ -907,10 +907,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               <hr className={classes.regularSectionSeparator} />
 
               {/* 'Additional information' section */}
-              <Grid container>
+              <Grid container spacing={3}>
                 {/* 'Full description' subsection */}
-                <Grid md={12} spacing={3}>
-                  <Grid md={6} spacing={3}>
+                <Grid item md={12}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
@@ -924,7 +924,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     </Box>
                   </Grid>
                 </Grid>
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
 
                   <TextField
                     className={classes.inputFields}
@@ -942,7 +942,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
 
                 {/* 'Optional URLs' subsection */}
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
                   <div className={classes.appURLFieldWrapper}>
                     <TextField
                       className={classes.inputFields}
@@ -1146,8 +1146,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               {/* 'Metadata' section */}
               <div>
                 {/* 'Custom properties' text */}
-                <Grid md={12} spacing={3}>
-                  <Grid md={6} spacing={3}>
+                <Grid container spacing={3}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
@@ -1231,8 +1231,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </div>
                 </div>
 
-                <Grid container>
-                  <Grid item md={6} spacing={3}>
+                <Grid container spacing={3}>
+                  <Grid item md={6}>
                     <Button
                       className={classes.addCustomPropsButton}
                       disabled
@@ -1241,7 +1241,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     </Button>
                   </Grid>
 
-                  <Grid item md={6} spacing={3}>
+                  <Grid item md={6}>
                     <Notice
                       noticeIcon={<Icon>info</Icon>}
                       noticeText={
@@ -1271,8 +1271,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {
                   modalMode === "new"
                     ? (
-                      <Grid container>
-                        <Grid item md={6} spacing={3}>
+                      <Grid container spacing={3}>
+                        <Grid item md={6}>
                           <Button
                             color="primary"
                             disabled={
@@ -1303,7 +1303,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           </Button>
                         </Grid>
 
-                        <Grid item md={6} spacing={3}>
+                        <Grid item md={6}>
                           <Notice
                             noticeIcon={<Icon>query_builder</Icon>}
                             noticeText={
