@@ -95,7 +95,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appAvatarURL: "",
       appClientID: "",
       appClientSecret: "",
-      appDirectURL: "https://",
+      appDirectURL: "",
       appFullDescription: "",
       appLabels: "",
       appMetaDescription: "",
@@ -217,7 +217,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appAvatarURL: "",
         appClientID: "",
         appClientSecret: "",
-        appDirectURL: "https://",
+        appDirectURL: "",
         appFullDescription: "",
         appLabels: "",
         appMetaDescription: "",
@@ -499,7 +499,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appAvatarURL: "",
             appClientID: "",
             appClientSecret: "",
-            appDirectURL: "https://",
+            appDirectURL: "",
             appFullDescription: "",
             appLabels: "",
             appMetaDescription: "",
@@ -1130,14 +1130,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
               </Grid>
 
-              {/*
-TODO: document getSections so that comments like this are not needed
-The following code checks if a Marketplace extension's section exists,
-and if it does, it passes along the form's state, and any necessary logic
-to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
+              <hr className={classes.regularSectionSeparator} />
+
               {
                 getSections(
-                  "MARKETPLACE_APP_VISIBILITY",
+                  "MARKETPLACE_APP_SETTINGS",
                   {
                     formState,
                     handleAppVisibility,

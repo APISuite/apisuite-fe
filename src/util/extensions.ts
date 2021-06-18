@@ -38,6 +38,10 @@ export const getRoutes = () => {
     .filter(Boolean);
 };
 
+/**
+* The following code checks if an extension's section exists, and if it does,
+* it optionally passes something along to it (e.g., some form's state, a function, whatever one might want/need).
+*/
 export const getSections = (section: string, args?: Record<string, unknown>) => {
   return extensions
     .reduce((accum: any[], ext: Extension) => {
