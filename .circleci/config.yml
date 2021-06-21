@@ -3,22 +3,27 @@ version: 2.1
 executors:
   node14-executor:
     docker:
-      - image: circleci/node:14.15.0
+      - image: circleci/node:14.16.1
 
 jobs:
   test:
     executor: node14-executor
     steps:
       - checkout
-      - run:
-          name: Run tests
-          command: ./run_tests.sh
+      - run: ./prepare_tests.sh
+      - run: npm test
+      - run: cp -r ../.ssh/ .
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
 
   release:
     executor: node14-executor
     steps:
-      - checkout
-      - run: npm install
+      - attach_workspace:
+          at: ~/
+      - run: cp -r .ssh ../.ssh && rm -rf .ssh
       - run: GH_TOKEN=$GH_TOKEN npx semantic-release
       - persist_to_workspace:
           root: ~/

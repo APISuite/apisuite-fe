@@ -192,6 +192,7 @@ export const SignInOrUp: React.FC = () => {
                 variant="contained"
                 color="primary"
                 fullWidth
+                disabled={!providerSignupURL}
                 href={view === "signin" ? getSSOLoginURL(sso) : linker(providerSignupURL)}>
                 {t(view === "signin" ? "signInOrUpView.options.signIn" : "signInOrUpView.options.signUp")}
               </Button>
