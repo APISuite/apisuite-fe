@@ -8,11 +8,12 @@ import useStyles from "./styles";
 import CookiesBanner from "components/CookiesBanner";
 import { authSelector } from "./selector";
 import { loginUser } from "store/auth/actions/login";
+import { DESTINATION_PATH } from "constants/global";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const auth = useSelector(authSelector);
 
   useEffect(() => {
@@ -30,6 +31,14 @@ export const App: React.FC = () => {
       dispatch(getProfile({}));
     }
   }, [auth.user, dispatch]);
+
+  useEffect(() => {
+    const query = new URLSearchParams(search);
+    const destinationPath = query.get("destinationPath");
+    if (destinationPath) {
+      localStorage.setItem(DESTINATION_PATH, destinationPath);
+    }
+  }, [search]);
 
   return (
     <div className={classes.root}>

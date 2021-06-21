@@ -2,6 +2,8 @@ import { AnyAction, Dispatch } from "redux";
 import { History } from "history";
 import cookie from "js-cookie";
 
+import { DESTINATION_PATH } from "constants/global";
+
 import { LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_USER_ERROR, LOGIN_USER_SUCCESS } from "./actions/login";
 import { LOGOUT, LOGOUT_ERROR } from "./actions/logout";
 import { REJECT_INVITATION_SUCCESS } from "./actions/invitation";
@@ -36,6 +38,12 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
       path: "/",
     });
 
-    history.push(action.path);
+    const destinationPath = localStorage.getItem(DESTINATION_PATH);
+    if (destinationPath) {
+      localStorage.removeItem(DESTINATION_PATH);
+      history.push(destinationPath);
+    } else {
+      history.push(action.path);
+    }
   }
 };

@@ -40,3 +40,5 @@ export enum LOCAL_STORAGE_KEYS {
   SSO_INVITATION_STATE_STORAGE = "ssoInvitationStateStorage",
   SSO_PROVIDER_STATE_STORAGE = "attemptingSignInWithProvider",
 }
+
+export const DESTINATION_PATH = "APIS_DESTINATION_RETURN_TO_PATH";
