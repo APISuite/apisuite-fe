@@ -180,37 +180,29 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   useEffect(() => {
     if (modalMode === "edit") {
       resetForm({
-        appAvatarURL: mostRecentlySelectedAppDetails.logo ? mostRecentlySelectedAppDetails.logo : "",
-        appClientID: mostRecentlySelectedAppDetails.clientId ? mostRecentlySelectedAppDetails.clientId : "",
-        appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : "",
-        appDirectURL: mostRecentlySelectedAppDetails.directUrl ? mostRecentlySelectedAppDetails.directUrl : "",
-        appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : "",
+        appAvatarURL: mostRecentlySelectedAppDetails.logo ?? "",
+        appClientID: mostRecentlySelectedAppDetails.clientId ?? "",
+        appClientSecret: mostRecentlySelectedAppDetails.clientSecret ?? "",
+        appDirectURL: mostRecentlySelectedAppDetails.directUrl ?? "",
+        appFullDescription: mostRecentlySelectedAppDetails.description ?? "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
-        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
-          ? mostRecentlySelectedAppDetails.metadata[0].description
-          : "",
+        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description ?? "",
         appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
           ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
           : "",
-        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
-          ? mostRecentlySelectedAppDetails.metadata[0].title
-          : "",
-        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
-          ? mostRecentlySelectedAppDetails.metadata[0].value
-          : "",
-        appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
-        appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
-        appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : "",
-        appShortDescription: mostRecentlySelectedAppDetails.shortDescription
-          ? mostRecentlySelectedAppDetails.shortDescription
-          : "",
-        appSupportURL: mostRecentlySelectedAppDetails.supportUrl ? mostRecentlySelectedAppDetails.supportUrl : "",
-        appTermsURL: mostRecentlySelectedAppDetails.tosUrl ? mostRecentlySelectedAppDetails.tosUrl : "",
-        appVisibility: mostRecentlySelectedAppDetails.visibility ? mostRecentlySelectedAppDetails.visibility : "private",
-        appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
-        appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
+        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title ?? "",
+        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value ?? "",
+        appName: mostRecentlySelectedAppDetails.name ?? "",
+        appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ?? "",
+        appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ?? "",
+        appShortDescription: mostRecentlySelectedAppDetails.shortDescription ?? "",
+        appSupportURL: mostRecentlySelectedAppDetails.supportUrl ?? "",
+        appTermsURL: mostRecentlySelectedAppDetails.tosUrl ?? "",
+        appVisibility: mostRecentlySelectedAppDetails.visibility ?? "private",
+        appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ?? "",
+        appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ?? "",
       });
     } else {
       resetForm({
