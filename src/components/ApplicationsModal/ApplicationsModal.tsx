@@ -1383,6 +1383,9 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
       {
         openDialog &&
         <CustomizableDialog
+          cancelButtonProps={{
+            variant:"outlined",
+          }}
           closeDialogCallback={handleCloseDialog}
           confirmButtonCallback={_deleteApp}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel")}
@@ -1397,9 +1400,15 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
       {
         openCloseWarning &&
         <CustomizableDialog
+          cancelButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.cancelButtonLabel")}
+          cancelButtonStyle={classes.cancelButton}
           closeDialogCallback={handleCloseEditWarning}
           confirmButtonCallback={dialogFunctions[confirmAction]}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.confirmButtonLabel")}
+          confirmButtonStyle={classes.confirmButton}
+          confirmButtonProps={{
+            variant:"outlined",
+          }}
           open={openCloseWarning}
           optionalTitleIcon='warning'
           providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.subText")}

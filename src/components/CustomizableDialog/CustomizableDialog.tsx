@@ -1,7 +1,11 @@
 import React from "react";
-import { useTranslation, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@apisuite/fe-base";
+import {
+  useTheme, useTranslation, Button, Dialog, DialogActions,
+  DialogContent, DialogContentText, DialogTitle, Typography,
+} from "@apisuite/fe-base";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
+import clsx from "clsx";
 
 import { CustomizableDialogProps } from "./types";
 import useStyles from "./styles";
@@ -9,9 +13,13 @@ import useStyles from "./styles";
 const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
   // Props passed by the 'calling' component to be added below
   cancelButtonLabel,
+  cancelButtonProps,
+  cancelButtonStyle,
   closeDialogCallback,
   confirmButtonCallback,
   confirmButtonLabel,
+  confirmButtonProps,
+  confirmButtonStyle,
   open,
   openDialogCallback,
   optionalTitleIcon,
@@ -26,6 +34,8 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
   const classes = useStyles();
 
   const [t] = useTranslation();
+
+  const { palette } = useTheme();
 
   const handleOpenDialog = () => {
     if (openDialogCallback) openDialogCallback();
@@ -62,21 +72,21 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
       </div>
 
       <DialogContent className={classes.dialogContentContainer}>
-        <DialogContentText className={classes.dialogText}>
-          {providedText}
+        <DialogContentText>
+          <Typography variant="body1" style={{ color: palette.text.primary }}>{providedText}</Typography>
         </DialogContentText>
 
-        <DialogContentText className={classes.dialogSubText}>
-          {providedSubText}
+        <DialogContentText>
+          <Typography variant="subtitle2">{providedSubText}</Typography>
         </DialogContentText>
 
-        {providedDialogContent}
+        <Typography variant="body2">{providedDialogContent}</Typography>
       </DialogContent>
 
       <DialogActions className={classes.dialogActionsContainer}>
         <Button
-          className={classes.cancelButton}
-          fullWidth
+          className={clsx(classes.cancelButton, cancelButtonStyle)}
+          {...cancelButtonProps}
           onClick={handleCloseDialog}
         >
           {cancelButtonLabel || t("customizableDialog.cancelButtonLabel")}
@@ -84,8 +94,8 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
 
         <div>
           <Button
-            className={classes.confirmButton}
-            fullWidth
+            className={clsx(classes.confirmButton, confirmButtonStyle)}
+            {...confirmButtonProps}
             onClick={handleConfirmAction}
           >
             {confirmButtonLabel || t("customizableDialog.confirmButtonLabel")}

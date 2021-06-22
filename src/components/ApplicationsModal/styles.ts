@@ -71,8 +71,16 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     margin: "0 auto",
-    maxWidth: "900px",
-    width: "100%",
+    width: "calc(100% - 24px)",
+    [theme.breakpoints.up("md")]: {
+      maxWidth: theme.breakpoints.values.md - 24,
+    },
+    [theme.breakpoints.up("lg")]: {
+      maxWidth: theme.breakpoints.values.md - 24,
+    },
+    [theme.breakpoints.up("xl")]: {
+      maxWidth: theme.breakpoints.values.md - 24,
+    },
   },
 
   newApplicationHeader: {
@@ -81,8 +89,6 @@ export default makeStyles((theme) => ({
 
   portalName: {
     color: theme.palette.secondary.main,
-    fontSize: "24px",
-    fontWeight: 500,
   },
 
   /* 1.2 Modal's body */
@@ -93,8 +99,6 @@ export default makeStyles((theme) => ({
     backgroundColor: "rgba(0, 0, 0, 0.12)",
     borderRadius: theme.shape.borderRadius,
     color: theme.palette.text.hint,
-    fontSize: 16,
-    fontWeight: 500,
     height: 42,
     padding: "6px 21px",
     textDecoration: "none",
@@ -107,8 +111,6 @@ export default makeStyles((theme) => ({
 
   additionalInfoSubSectionTitle: {
     color: theme.palette.secondary.main,
-    fontSize: "16px",
-    fontWeight: 500,
     lineHeight: "20px",
     marginBottom: "37.5px",
   },
@@ -126,16 +128,12 @@ export default makeStyles((theme) => ({
 
   appAvatarSubSectionDescription: {
     color: theme.palette.text.primary,
-    fontSize: "14px",
-    fontWeight: 400,
     lineHeight: "17px",
     marginBottom: "25px",
   },
 
   appNameAndShortDescriptionSubSectionTitle: {
     color: theme.palette.secondary.main,
-    fontSize: "16px",
-    fontWeight: 500,
     lineHeight: "20px",
     marginBottom: "40px",
   },
@@ -677,5 +675,19 @@ export default makeStyles((theme) => ({
     fontWeight: 400,
     lineHeight: "17px",
     marginBottom: "22.5px",
+  },
+  cancelButton: {
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.primary.contrastText} !important`,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
+  confirmButton: {
+    backgroundColor: theme.palette.background.default,
+    color: `${theme.palette.action.active} !important`,
+    "&:hover": {
+      backgroundColor: theme.palette.background.default,
+    },
   },
 }));

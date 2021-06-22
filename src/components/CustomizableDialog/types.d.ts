@@ -3,12 +3,14 @@ import { DialogProps } from "@apisuite/fe-base";
 export interface CustomizableDialogProps extends DialogProps {
   // Props passed by the 'calling' component to be added below
   cancelButtonLabel?: string,
+  cancelButtonStyle?: string,
   cancelButtonProps?: {
     [key: string]: any,
   },
   closeDialogCallback?: (...args: any[]) => any,
   confirmButtonCallback: (...args: any[]) => any,
   confirmButtonLabel?: string,
+  confirmButtonStyle?: string,
   confirmButtonProps?: {
     [key: string]: any,
   },
