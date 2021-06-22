@@ -565,15 +565,8 @@ export default makeStyles((theme) => ({
   },
 
   otherButtons: {
-    backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.action.active} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    marginLeft: "25px",
-    padding: "6px 21px",
-    textDecoration: "none",
+    marginLeft: theme.spacing(3),
+    padding: theme.spacing(.75, 2.75),
 
     "&:hover": {
       backgroundColor: theme.palette.background.default,
@@ -681,13 +674,6 @@ export default makeStyles((theme) => ({
     color: `${theme.palette.primary.contrastText} !important`,
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
-    },
-  },
-  confirmButton: {
-    backgroundColor: theme.palette.background.default,
-    color: `${theme.palette.action.active} !important`,
-    "&:hover": {
-      backgroundColor: theme.palette.background.default,
     },
   },
 }));

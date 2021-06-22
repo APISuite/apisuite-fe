@@ -1311,6 +1311,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           <Button
                             className={classes.otherButtons}
                             onClick={() => checkNextAction("toggleModal")}
+                            color="primary"
+                            variant="outlined"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel")}
                           </Button>
@@ -1352,6 +1354,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           <Button
                             className={classes.otherButtons}
                             onClick={() => checkNextAction("subscriptions")}
+                            color="primary"
+                            variant="outlined"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.appSubsButtonLabel")}
                           </Button>
@@ -1367,6 +1371,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <Button
                           className={classes.otherButtons}
                           onClick={() => checkNextAction("toggleModal")}
+                          color="primary"
+                          variant="outlined"
                         >
                           {t("dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel")}
                         </Button>
@@ -1384,10 +1390,15 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         <CustomizableDialog
           cancelButtonProps={{
             variant:"outlined",
+            color: "primary",
           }}
           closeDialogCallback={handleCloseDialog}
           confirmButtonCallback={_deleteApp}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel")}
+          confirmButtonProps={{
+            variant: "contained",
+            color: "primary",
+          }}
           open={openDialog}
           optionalTitleIcon='warning'
           providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialogSubText")}
@@ -1400,13 +1411,16 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         openCloseWarning &&
         <CustomizableDialog
           cancelButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.cancelButtonLabel")}
-          cancelButtonStyle={classes.cancelButton}
+          cancelButtonProps={{
+            variant: "contained",
+            color: "primary",
+          }}
           closeDialogCallback={handleCloseEditWarning}
           confirmButtonCallback={dialogFunctions[confirmAction]}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.confirmButtonLabel")}
-          confirmButtonStyle={classes.confirmButton}
           confirmButtonProps={{
-            variant:"outlined",
+            variant: "outlined",
+            color: "primary",
           }}
           open={openCloseWarning}
           optionalTitleIcon='warning'

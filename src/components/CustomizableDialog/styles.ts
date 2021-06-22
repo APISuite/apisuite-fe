@@ -2,24 +2,7 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   cancelButton: {
-    backgroundColor: theme.palette.background.default,
-    color: `${theme.palette.action.active} !important`,
     marginRight: theme.spacing(1),
-    padding: theme.spacing(0.75, 2.5),
-
-    "&:hover": {
-      backgroundColor: theme.palette.background.default,
-    },
-  },
-
-  confirmButton: {
-    backgroundColor: theme.palette.error.main,
-    color: `${theme.palette.primary.contrastText} !important`,
-    padding: theme.spacing(0.75, 2.5),
-
-    "&:hover": {
-      backgroundColor: theme.palette.error.main,
-    },
   },
 
   dialogActionsContainer: {
@@ -29,6 +12,11 @@ export default makeStyles((theme) => ({
 
   dialogContentContainer: {
     padding: theme.spacing(2.5, 3),
+  },
+
+  dialogTitleCenter: {
+    display: "flex",
+    alignItems: "center",
   },
 
   dialogTitleContainer: {

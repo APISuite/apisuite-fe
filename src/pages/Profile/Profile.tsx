@@ -601,13 +601,20 @@ export const Profile: React.FC = () => {
       {
         openDialog &&
           <CustomizableDialog
-            closeDialogCallback={handleCloseDialog}
+            closeDialogCallback={handleCloseDialog}cancelButtonProps={{
+              variant:"outlined",
+              color: "primary",
+            }}
             confirmButtonCallback={() => {
               dispatch(deleteAccount({}));
 
               handleCloseDialog();
             }}
             confirmButtonLabel={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton")}
+            confirmButtonProps={{
+              variant: "contained",
+              color: "primary",
+            }}
             open={openDialog}
             optionalTitleIcon='warning'
             providedText={

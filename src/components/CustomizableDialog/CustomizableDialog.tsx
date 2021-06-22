@@ -67,17 +67,19 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
         }
 
         <DialogTitle>
-          {providedTitle}
+          <Typography variant="h6" style={{ lineHeight: "initial" }}>{providedTitle}</Typography>
         </DialogTitle>
       </div>
 
       <DialogContent className={classes.dialogContentContainer}>
         <DialogContentText>
-          <Typography variant="body1" style={{ color: palette.text.primary }}>{providedText}</Typography>
+          <Typography variant="body1" style={{ color: palette.text.primary }}>
+            <strong>{providedText}</strong>
+          </Typography>
         </DialogContentText>
 
         <DialogContentText>
-          <Typography variant="subtitle2">{providedSubText}</Typography>
+          <Typography variant="body2" style={{ color: palette.text.secondary }}>{providedSubText}</Typography>
         </DialogContentText>
 
         <Typography variant="body2">{providedDialogContent}</Typography>
@@ -94,7 +96,7 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
 
         <div>
           <Button
-            className={clsx(classes.confirmButton, confirmButtonStyle)}
+            className={confirmButtonStyle}
             {...confirmButtonProps}
             onClick={handleConfirmAction}
           >
