@@ -292,7 +292,7 @@ const InvitationConfirmationForm: React.FC<{
           className={classes.forgotPasswordLink}
           onClick={() => history.push("/forgot")}
         >
-          {t("signInForm.forgotPasswordLinkLabel")}
+          <Typography variant="caption">{t("signInForm.forgotPasswordLinkLabel")}</Typography>
         </a>
       }
     </div>

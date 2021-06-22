@@ -550,14 +550,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             {/* Modal header */}
             <div className={classes.modalHeaderContainer}>
               <div className={classes.logoAndNameContainer}>
-                {
-                  <Box fontSize="60px">
-                    <Logo
-                      icon={navigation.title.iconFallbackName}
-                      src={ownerInfo.logo}
-                    />
-                  </Box>
-                }
+                <Box>
+                  <Logo
+                    icon={navigation.title.iconFallbackName}
+                    src={ownerInfo.logo}
+                  />
+                </Box>
 
                 <Typography display="block" gutterBottom variant="h3">
                   {portalName}

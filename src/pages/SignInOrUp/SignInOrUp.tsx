@@ -1,10 +1,14 @@
 import React from "react";
 import qs from "qs";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, Button, Grid, Icon, Tabs, Tab, Typography, useConfig, useTheme, useTranslation, Trans } from "@apisuite/fe-base";
-import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import {
+  Box, Button, Grid, Icon,
+  Tabs, Tab, Typography,
+  useConfig, useTheme, useTranslation, Trans,
+} from "@apisuite/fe-base";
 
 import { InvitationForm } from "components/InvitationForm";
+import { Logo } from "components/Logo";
 import { SignInForm } from "components/SignInForm";
 import { SignUpForm } from "components/SignUpForm";
 import Link from "components/Link";
@@ -22,7 +26,7 @@ export const SignInOrUp: React.FC = () => {
   const history = useHistory();
   const [t] = useTranslation();
   const { auth } = useSelector(signInOrUpSelector);
-  const { ownerInfo, portalName, providerSignupURL, sso } = useConfig();
+  const { navigation, ownerInfo, portalName, providerSignupURL, sso } = useConfig();
 
   const { view: viewParameter } = useParams<{ view: string }>();
 
@@ -71,6 +75,10 @@ export const SignInOrUp: React.FC = () => {
     return (view === "signin" || view === "signup") && !!sso.length;
   };
 
+  const goHome = () => {
+    history.push("/");
+  };
+
   return (
     <Grid
       component={Box}
@@ -89,19 +97,13 @@ export const SignInOrUp: React.FC = () => {
         <Grid
           component={Box}
           container
-          onClick={() => history.push("/")}
+          onClick={goHome}
+          className={classes.logo}
         >
-          {ownerInfo.logo ? (
-            <img
-              className={classes.imageLogo}
-              src={ownerInfo.logo}
-            />
-          ) : (
-            <AmpStoriesRoundedIcon
-              className={classes.iconLogo}
-            />
-          )}
-
+          <Logo
+            icon={navigation.title.iconFallbackName}
+            src={ownerInfo.logo}
+          />
           <Typography variant="h3">
             {portalName}
           </Typography>
@@ -112,7 +114,8 @@ export const SignInOrUp: React.FC = () => {
           justifyContent="flex-end"
           alignItems="center"
           color={palette.common.white}
-          onClick={() => history.push("/")}
+          onClick={goHome}
+          className={classes.close}
         >
           <Box mr={1} clone>
             <Typography variant="body2" color="inherit">
@@ -210,14 +213,18 @@ export const SignInOrUp: React.FC = () => {
 
           {(view === "invitation" && !auth.authToken && !!sso?.length && invitationHasNoError()) && (
             <Box
+              display="flex"
+              justifyContent="center"
               maxWidth={550}
               margin={`${spacing(2)} auto`}
             >
-              <Trans i18nKey="signInOrUpView.ssoFooterSignUp" values={{ provider: sso[0] }}>
-                {[
-                  <Link key="signInOrUpView.ssoFooterSignUp" to={linker(providerSignupURL)} />,
-                ]}
-              </Trans>
+              <Typography variant="caption">
+                <Trans i18nKey="signInOrUpView.ssoFooterSignUp" values={{ provider: sso[0] }}>
+                  {[
+                    <Link key="signInOrUpView.ssoFooterSignUp" to={linker(providerSignupURL)} />,
+                  ]}
+                </Trans>
+              </Typography>
             </Box>
           )}
         </Grid>

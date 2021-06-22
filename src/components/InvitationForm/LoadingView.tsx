@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { CircularProgress } from "@apisuite/fe-base";
+import { CircularProgress, Typography } from "@apisuite/fe-base";
 
 import useStyles from "./styles";
 
@@ -15,7 +15,7 @@ export const LoadingView: React.FC<{
     <div className={classes.centerContent}>
       {isLoading && <CircularProgress size={50} className={classes.loading} />}
 
-      {(isError && errorMessage) && <p>{errorMessage}</p>}
+      {(isError && errorMessage) && <Typography variant="body2">{errorMessage}</Typography>}
       {isError && children}
     </div>
   );

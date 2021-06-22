@@ -27,11 +27,7 @@ export default makeStyles((theme) => ({
     display: "flex",
 
     "& > p": {
-      color: theme.palette.label,
-      fontSize: "14px",
-      fontWeight: 300,
-      marginRight: "15px",
-      textDecoration: "underline",
+      marginRight: theme.spacing(1),
     },
 
     "& > svg": {

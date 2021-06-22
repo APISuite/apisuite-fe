@@ -111,7 +111,7 @@ export const SignInForm: React.FC = () => {
             <div className={classes.separatorLine} />
 
             <div className={classes.separatorText}>
-              <p>{t("signInForm.separatorLabel")}</p>
+              <Typography variant="body2">{t("signInForm.separatorLabel")}</Typography>
             </div>
 
             <div className={classes.separatorLine} />
