@@ -67,7 +67,7 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
         }
 
         <DialogTitle>
-          <Typography variant="h6" style={{ lineHeight: "initial" }}>{providedTitle}</Typography>
+          <Typography variant="h6" className={classes.dialogTitleCenter}>{providedTitle}</Typography>
         </DialogTitle>
       </div>
 
