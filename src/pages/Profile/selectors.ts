@@ -7,8 +7,9 @@ export const getRoleName = createSelector(
 );
 
 export const profileSelector = createSelector(
+  ({ auth }: Store) => auth,
   ({ profile }: Store) => profile,
-  ({ profile }) => ({ profile }),
+  (auth, profile) => ({ profile: profile.profile, user: auth.user }),
 );
 
 export const getSSOAccountURLSelector = createSelector(

@@ -7,9 +7,10 @@ import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 
+import { ROLES } from "constants/global";
 import { deleteAccount } from "store/profile/actions/deleteAccount";
 import { getProfile } from "store/profile/actions/getProfile";
-import { getSSOAccountURLSelector, profileSelector } from "./selectors";
+import { getRoleName, getSSOAccountURLSelector, profileSelector } from "./selectors";
 import { isValidImage, isValidPhoneNumber, isValidURL } from "util/forms";
 import { logout } from "store/auth/actions/logout";
 import { Organization } from "store/profile/types";
@@ -29,8 +30,9 @@ export const Profile: React.FC = () => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const [t] = useTranslation();
-  const { profile } = useSelector(profileSelector);
+  const { profile, user } = useSelector(profileSelector);
   const ssoAccountURL = useSelector(getSSOAccountURLSelector);
+  const roleName = useSelector(getRoleName);
 
   const [ssoIsActive, setSSOIsActive] = useState(false);
 
@@ -257,6 +259,10 @@ export const Profile: React.FC = () => {
     setOpenDialog(false);
   };
 
+  const isBaseUser = () => {
+    return (profileHasOrgDetails ? roleName : user?.role.name) === ROLES.baseUser.value;
+  };
+
   return (
     <PageContainer>
       <Grid container>
@@ -293,55 +299,57 @@ export const Profile: React.FC = () => {
             </Typography>
           </Box>
 
-          <Box mt={3}>
-            <Typography variant="h3">
-              {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
-            </Typography>
-          </Box>
-
-          {!!profile.orgs_member.length && (
+          {!isBaseUser() && <>
             <Box mt={3}>
-              <Select
-                customCloseIcon={<ExpandLessRoundedIcon />}
-                customOpenIcon={<ExpandMoreRoundedIcon />}
-                fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
-                onChange={handleOrganisationSelection}
-                options={organisationSelector(profile.orgs_member)}
-                selected={
-                  organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
-                    return currentlySelectedOrganisation.value === ""
-                      ? (selectedOrganisation.value === profile.current_org.id)
-                      : (selectedOrganisation.value === currentlySelectedOrganisation.value);
-                  })
-                }
-              />
-
-              <Box clone mt={3}>
-                <Button
-                  disabled={currentlySelectedOrganisation.value === profile.current_org.id}
-                  size="large"
-                  color="primary"
-                  variant="contained"
-                  disableElevation
-                  onClick={switchOrganisation}
-                >
-                  {t("profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel")}
-                </Button>
-              </Box>
+              <Typography variant="h3">
+                {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
+              </Typography>
             </Box>
-          )}
 
-          {!profile.orgs_member.length && (
-            <Button
-              color="primary"
-              variant="contained"
-              disableElevation
-              size="large"
-              href='profile/organisation'
-            >
-              {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
-            </Button>
-          )}
+            {!!profile.orgs_member.length && (
+              <Box mt={3}>
+                <Select
+                  customCloseIcon={<ExpandLessRoundedIcon />}
+                  customOpenIcon={<ExpandMoreRoundedIcon />}
+                  fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
+                  onChange={handleOrganisationSelection}
+                  options={organisationSelector(profile.orgs_member)}
+                  selected={
+                    organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
+                      return currentlySelectedOrganisation.value === ""
+                        ? (selectedOrganisation.value === profile.current_org.id)
+                        : (selectedOrganisation.value === currentlySelectedOrganisation.value);
+                    })
+                  }
+                />
+
+                <Box clone mt={3}>
+                  <Button
+                    disabled={currentlySelectedOrganisation.value === profile.current_org.id}
+                    size="large"
+                    color="primary"
+                    variant="contained"
+                    disableElevation
+                    onClick={switchOrganisation}
+                  >
+                    {t("profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel")}
+                  </Button>
+                </Box>
+              </Box>
+            )}
+
+            {!profile.orgs_member.length && (
+              <Button
+                color="primary"
+                variant="contained"
+                disableElevation
+                size="large"
+                href='profile/organisation'
+              >
+                {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
+              </Button>
+            )}
+          </>}
 
           <Box my={4}>
             <Divider />
