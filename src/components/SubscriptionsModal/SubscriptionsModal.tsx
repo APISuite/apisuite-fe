@@ -349,7 +349,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   color="primary"
                   size="large"
                   disableElevation
-                  disabled={!!selectedClientApp.subscriptions.length || !selectedClientApp.id?.toString().length}
+                  disabled={!!selectedClientApp.subscriptions.length || !selectedClientApp.id}
                   onClick={handleAPIProductAccessRequest}
                 >
                   {
