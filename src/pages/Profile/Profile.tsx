@@ -531,13 +531,12 @@ export const Profile: React.FC = () => {
                 )}
               </Box>
 
-              {/* FIXME: use i18n interpolation */}
               <div className={classes.userStatusAndType}>
-                {/* A mere dot */}
                 <Box className={classes.userStatusIcon}>
                   <Icon fontSize="small">circle</Icon>
                 </Box>
 
+                {/* FIXME: use i18n interpolation */}
                 <Typography variant="body2" color="textSecondary">
                   {
                     !profileHasOrgDetails
