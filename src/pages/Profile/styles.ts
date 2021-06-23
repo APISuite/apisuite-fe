@@ -37,15 +37,14 @@ export default makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
 
+  userStatusIcon: {
+    color: theme.palette.primary.main,
+    marginRight: theme.spacing(1),
+  },
+
   userStatusAndType: {
     alignItems: "center",
     display: "flex",
-    margin: "20px 25px",
-
-    "& > :first-child": {
-      color: theme.palette.primary.main,
-      fontSize: "14px",
-      marginRight: "12px",
-    },
+    margin: theme.spacing(2.5, 3),
   },
 }));

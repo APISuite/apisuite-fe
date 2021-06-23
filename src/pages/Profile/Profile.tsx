@@ -534,7 +534,9 @@ export const Profile: React.FC = () => {
               {/* FIXME: use i18n interpolation */}
               <div className={classes.userStatusAndType}>
                 {/* A mere dot */}
-                <span>&#9679;</span>
+                <Box className={classes.userStatusIcon}>
+                  <Icon fontSize="small">circle</Icon>
+                </Box>
 
                 <Typography variant="body2" color="textSecondary">
                   {
