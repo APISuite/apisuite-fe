@@ -276,7 +276,6 @@
           },
           "buttons": {
             "requestAccess": "Request access",
-            "revokeAccess": "Revoke access",
             "reviewOrganisation": "Review organisation",
             "reviewApp": "Review app",
             "cancel": "Cancel"

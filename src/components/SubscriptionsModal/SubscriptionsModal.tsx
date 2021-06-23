@@ -349,13 +349,11 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   color="primary"
                   size="large"
                   disableElevation
-                  disabled={!selectedClientApp.subscriptions.length || !selectedClientApp.id?.toString().length}
+                  disabled={!!selectedClientApp.subscriptions.length || !selectedClientApp.id?.toString().length}
                   onClick={handleAPIProductAccessRequest}
                 >
                   {
-                    !selectedClientApp.id?.toString().length
-                      ? (t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess"))
-                      : (t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess"))
+                    t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess")
                   }
                 </Button>
 
