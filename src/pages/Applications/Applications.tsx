@@ -413,7 +413,7 @@ export const Applications: React.FC = () => {
   return (
     <PageContainer>
       {
-        user?.role.name === `${ROLES.baseUser.label}` ?
+        user?.role.name === `${ROLES.baseUser.value}` ?
           <Box width={1}>
             {getSections(MARKETPLACE_SECTION)}
           </Box>
