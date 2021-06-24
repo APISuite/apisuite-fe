@@ -11,6 +11,7 @@ export const applicationsSelector = createSelector(
       createUserAppStatus: applications.createAppStatus,
       currentOrganisation: profile.profile.current_org,
       deleteUserAppStatus: applications.deleteAppStatus,
+      org: profile.org,
       updateUserAppStatus: applications.updateAppStatus,
       user: auth.user,
     };

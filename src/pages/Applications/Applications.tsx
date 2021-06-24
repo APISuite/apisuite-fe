@@ -21,6 +21,7 @@ import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
 import { useParams } from "react-router-dom";
+import { Organization, Role } from "store/profile/types";
 
 export const Applications: React.FC = () => {
   const classes = useStyles();
@@ -28,21 +29,25 @@ export const Applications: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
-    allUserApps, createUserAppStatus, currentOrganisation, deleteUserAppStatus, updateUserAppStatus, user,
+    allUserApps, createUserAppStatus, currentOrganisation, deleteUserAppStatus, org, updateUserAppStatus, user,
   } = useSelector(applicationsSelector);
 
   const MARKETPLACE_SECTION = "SUBBED_MARKETPLACE_APPS";
 
   const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false);
 
+  const isOrg = (_org: Organization | Organization & { member_since: string; role: Role }) => {
+    return Object.keys(_org).length !== 0 && _org.id !== "";
+  };
+
   /* With every change of our store's 'profile > profile > current_org' section
   (which goes from its initial state, to a filled or completely empty state),
   we do the following check, so as to know what view needs to be shown. */
   useEffect(() => {
-    if (Object.keys(currentOrganisation).length !== 0 && currentOrganisation.id !== "") {
+    if (isOrg(currentOrganisation) || isOrg(org)) {
       setHasCurrentOrgDetails(true);
     }
-  }, [currentOrganisation]);
+  }, [currentOrganisation, org]);
 
   /* Modal stuff */
   const [modalDetails, setModalDetails] = useState<ModalDetails>({
