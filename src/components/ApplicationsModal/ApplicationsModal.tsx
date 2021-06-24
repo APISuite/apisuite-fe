@@ -54,7 +54,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   const checkNextAction = (fn: string) => {
-    if (newHasChanged() || hasChanged()) {
+    if (newHasChanged() || hasChanged() || formState.isDirty) {
       setConfirmAction(fn);
       return setOpenCloseWarning(true);
     }
