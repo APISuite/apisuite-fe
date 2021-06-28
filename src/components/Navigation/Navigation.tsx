@@ -16,8 +16,9 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   const { palette, zIndex, spacing } = useTheme();
   const { navigation, portalName, ownerInfo } = useConfig();
   const { t } = useTranslation();
-  const { user, userProfile } = useSelector(navigationSelector);
-  const role = user?.role?.name ?? "anonymous";
+  const { user, currentOrg } = useSelector(navigationSelector);
+  // FIXME: checking the id because profile is never undefined
+  const role = currentOrg?.role?.id ? currentOrg.role.name : "anonymous";
 
   // Expand functionality
   // Note: contractible prop was not changed to prevent breaking changes
@@ -63,14 +64,14 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       LabelComponent = (
         <Box display="flex" flexDirection="row" alignItems="center">
           {/* Only show name if navigation expanded */}
-          {expand && <Typography variant="subtitle1">{userProfile.name}</Typography>}
+          {expand && <Typography variant="subtitle1">{user?.name}</Typography>}
           {expand && <Box width={spacing(1.5)} />}
 
           <Avatar
             alt="User's photo"
-            src={userProfile.avatar}
+            src={user?.avatar}
           >
-            {userProfile.name.charAt(0).toLocaleUpperCase()}
+            {user?.name.charAt(0).toLocaleUpperCase()}
           </Avatar>
         </Box>
       );

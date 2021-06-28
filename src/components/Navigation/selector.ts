@@ -2,8 +2,8 @@ import { createSelector } from "reselect";
 import { Store } from "store/types";
 
 export const navigationSelector = createSelector(
-  ({ auth }: Store) => auth.user,
   ({ profile }: Store) => profile.profile.user,
+  ({ profile }: Store) => profile.profile.current_org,
   ({ notificationCards }: Store) => notificationCards,
-  (user, userProfile, notificationCards) => ({ user, userProfile, notificationCards }),
+  (user, currentOrg, notificationCards) => ({ user, currentOrg, notificationCards }),
 );
