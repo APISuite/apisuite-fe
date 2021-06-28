@@ -471,16 +471,13 @@ export const Profile: React.FC = () => {
 
                 <Box my={3}>
                   <TextField
-                    disabled={ssoIsActive}
-                    fullWidth
                     label={t("profileTab.overviewSubTab.userRelatedLabels.userEmailAddress")}
-                    margin='dense'
-                    name='userEmailAddress'
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    type='email'
                     value={formState.values.userEmailAddress}
+                    type='email'
                     variant='outlined'
+                    margin='dense'
+                    disabled
+                    fullWidth
                   />
                 </Box>
 
