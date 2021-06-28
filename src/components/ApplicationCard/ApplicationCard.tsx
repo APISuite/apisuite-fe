@@ -11,6 +11,8 @@ import { ApplicationCardProps } from "./types";
 export const ApplicationCard: React.FC<ApplicationCardProps> = ({
   media,
   cardContent,
+  children,
+  className,
   contentStyle,
   icon="",
   onClick,
@@ -20,6 +22,7 @@ export const ApplicationCard: React.FC<ApplicationCardProps> = ({
 
   return (
     <Card
+      className={className}
       style={{ cursor: "pointer" }}
       onClick={onClick ? onClick : () => {
         //do nothing
@@ -42,7 +45,7 @@ export const ApplicationCard: React.FC<ApplicationCardProps> = ({
       {media}
 
       <CardContent className={contentStyle}>
-        {cardContent}
+        {cardContent || children}
       </CardContent>
     </Card>
   );

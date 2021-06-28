@@ -1,8 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Avatar, Box, Grid, Paper, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
+import { Avatar, Box, Grid, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import { Tag } from "components/Tag";
+import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
 import useStyles from "./styles";
 import { APICatalogProps, APIDetails } from "./types";
 
@@ -15,17 +16,15 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
   const { t } = useTranslation();
 
   const handleOnCardClick = (details: APIDetails) => () => {
-    history.push(`/api-products/details/${details.id}/spec/${details.apiRoutingId}`);
+    history.push(`/api-products/details/${details.id}/spec/${details.apiRoutingId || 0}`);
   };
 
   return (
     <Grid
       component={Box}
       container
-      xs
       spacing={3}
-      display="flex"
-      justifyContent="start"
+      justifyContent="space-between"
     >
       {apisToDisplay.map((apiDetails) => {
         if (!apiDetails) return null;
@@ -35,18 +34,18 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
         return (
           <Grid
             data-test-id={testIds.apiCatalogCard}
+            item
             key={apiDetails.id}
-            component={Box}
-            clone
-            xs={5}
-            container
-            p={3}
-            m={1.5}
-            height={200}
-            onClick={handleOnCardClick(apiDetails)}
+            xs={6}
           >
-            <Paper variant="outlined">
-              <Grid data-test-id={testIds.apiCardAvatar} item xs={2}>
+            <ApplicationCard className={classes.card} onClick={handleOnCardClick(apiDetails)}>
+              <Grid
+                component={Box}
+                data-test-id={testIds.apiCardAvatar}
+                item
+                xs={2}
+                pl={2}
+              >
                 <Avatar
                   classes={{
                     colorDefault: apiDetails.apiAccess
@@ -87,7 +86,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
                   </Typography>
                 </Box>
               </Grid>
-            </Paper>
+            </ApplicationCard>
           </Grid>
         );
       })}
