@@ -1,5 +1,6 @@
 export type APICatalogProps = {
   apisToDisplay: APIDetails[],
+  limit?: number,
 }
 
 export type APIDetails = {

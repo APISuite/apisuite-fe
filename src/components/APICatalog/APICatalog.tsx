@@ -9,7 +9,7 @@ import { APICatalogProps, APIDetails } from "./types";
 
 import { testIds } from "testIds";
 
-const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
+const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
   const classes = useStyles();
   const { palette } = useTheme();
   const history = useHistory();
@@ -26,7 +26,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
       spacing={3}
       justifyContent="space-between"
     >
-      {apisToDisplay.map((apiDetails) => {
+      {apisToDisplay.slice(0, limit).map((apiDetails) => {
         if (!apiDetails) return null;
 
         const tagColor = apiDetails.apiAccess ? palette.primary.main : palette.secondary.light;

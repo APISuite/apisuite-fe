@@ -337,7 +337,7 @@ export const Sandbox: React.FC = () => {
           {!recentlyAddedAPIs.length ? <Typography data-test-id={testIds.recentAdditionsEmpty} variant="body1">
             {t("sandboxPage.apiCatalog.paragraph")}
           </Typography>
-            : <APICatalog apisToDisplay={recentlyAddedAPIs} />}
+            : <APICatalog apisToDisplay={recentlyAddedAPIs} limit={2} />}
         </Box>
 
         {socialURLs.length > 0 && (

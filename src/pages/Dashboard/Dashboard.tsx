@@ -240,7 +240,7 @@ export const Dashboard: React.FC = () => {
                 {
                   recentlyAddedAPIs.length === 0
                     ? <p data-test-id={testIds.recentAdditionsEmpty}>{t("sandboxPage.apiCatalog.paragraph")}</p>
-                    : <APICatalog apisToDisplay={recentlyAddedAPIs} />
+                    : <APICatalog apisToDisplay={recentlyAddedAPIs} limit={2} />
                 }
               </Grid>
             </>
