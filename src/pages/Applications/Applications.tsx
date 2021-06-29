@@ -205,7 +205,7 @@ export const Applications: React.FC = () => {
       !deleteUserAppStatus.isRequesting &&
       !updateUserAppStatus.isRequesting
     ) {
-      dispatch(getAllUserApps({ userId: user.id }));
+      dispatch(getAllUserApps({}));
     }
   }, [createUserAppStatus, deleteUserAppStatus, dispatch, updateUserAppStatus, user]);
 
@@ -436,16 +436,13 @@ export const Applications: React.FC = () => {
             )
       }
 
-      {
-        isModalOpen &&
-        <ApplicationsModal
-          allUserAppNames={allUserAppNames}
-          isModalOpen={isModalOpen}
-          modalDetails={modalDetails}
-          modalMode={modalMode}
-          toggleModal={() => toggleModal("", 0, 0)}
-        />
-      }
+      <ApplicationsModal
+        allUserAppNames={allUserAppNames}
+        isModalOpen={isModalOpen}
+        modalDetails={modalDetails}
+        modalMode={modalMode}
+        toggleModal={() => toggleModal("", 0, 0)}
+      />
     </PageContainer>
   );
 };

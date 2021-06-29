@@ -136,25 +136,15 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
     });
 
     if (action.orgId) {
-      yield put(getAllUserApps({ userId: action.orgId }));
+      yield put(getAllUserApps({}));
     }
 
     yield put(deleteAppSuccess({}));
   } catch (error) {
-    /* TODO: Review the 'checkStatus' function in 'util/request.ts',
-    as this Saga considers a response from the server whose status
-    code is 204 (i.e., a 'No Content') as an error. */
-    if (error.status === 204) {
-      if (action.orgId) {
-        yield put(getAllUserApps({ userId: action.orgId }));
-      }
+    yield put(deleteAppError({}));
 
-      yield put(deleteAppSuccess({}));
-    } else {
-      yield put(deleteAppError({}));
-      if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
-        yield put(handleSessionExpire({}));
-      }
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
     }
   }
 }
@@ -176,6 +166,10 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
 
     yield put(requestAPIAccessSuccess({}));
     yield put(openNotification("success", i18n.t("applications.requestAPIAcessSuccess"), 3000));
+
+    // We need to get the APPs info after
+    // since the previous request returns `no content` and might not change in a near future
+    yield put(getAllUserApps({}));
   } catch (error) {
     yield put(requestAPIAccessError({}));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {

@@ -29,7 +29,7 @@ export const Subscriptions: React.FC = () => {
     have all the information it needs. */
     if (auth.user) {
       dispatch(getAPIs({}));
-      dispatch(getAllUserApps({ userId: auth.user.id }));
+      dispatch(getAllUserApps({}));
     }
   }, [auth.user, dispatch]);
 
@@ -42,95 +42,95 @@ export const Subscriptions: React.FC = () => {
   };
 
   return (
-    <PageContainer>
-      {
-        subscriptions.apis.length === 0
-          ? (
-            <Box display="flex" alignItems="center" flexDirection="column">
-              <div className={classes.noDataToShowImageContainer}>
-                <img className={classes.noDataToShowImage} src={rocket} />
-              </div>
+    <>
+      <PageContainer>
+        {
+          subscriptions.apis.length === 0
+            ? (
+              <Box display="flex" alignItems="center" flexDirection="column">
+                <div className={classes.noDataToShowImageContainer}>
+                  <img className={classes.noDataToShowImage} src={rocket} />
+                </div>
 
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                disableElevation
-                onClick={toggleModal}
-              >
-                {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  disableElevation
+                  onClick={toggleModal}
+                >
+                  {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
+                </Button>
 
-              <Box pt={2}>
-                <Typography variant="body1" style={{ color: palette.text.secondary }}>
-                  <Link
-                    to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
-                  >
-                    {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.linkText")}
-                  </Link>
+                <Box pt={2}>
+                  <Typography variant="body1" style={{ color: palette.text.secondary }}>
+                    <Link
+                      to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
+                    >
+                      {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.linkText")}
+                    </Link>
+                  </Typography>
+                </Box>
+              </Box>
+            )
+            : (
+              <>
+                <Typography variant="h2">
+                  {t("dashboardTab.subscriptionsSubTab.hasDataToShow.title")}
                 </Typography>
-              </Box>
-            </Box>
-          )
-          : (
-            <>
-              <Typography variant="h2">
-                {t("dashboardTab.subscriptionsSubTab.hasDataToShow.title")}
-              </Typography>
 
-              <Box mt={1.5}>
-                <Typography variant="body1" color="textSecondary">
-                  {t("dashboardTab.subscriptionsSubTab.hasDataToShow.description")}
-                </Typography>
-              </Box>
+                <Box mt={1.5}>
+                  <Typography variant="body1" color="textSecondary">
+                    {t("dashboardTab.subscriptionsSubTab.hasDataToShow.description")}
+                  </Typography>
+                </Box>
 
-              <Box
-                my={4}
-                display="flex"
-                flexDirection="row"
-              >
-                <SubscriptionsTable />
-              </Box>
+                <Box
+                  my={4}
+                  display="flex"
+                  flexDirection="row"
+                >
+                  <SubscriptionsTable />
+                </Box>
 
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                disableElevation
-                onClick={toggleModal}
-              >
-                {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  disableElevation
+                  onClick={toggleModal}
+                >
+                  {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
+                </Button>
 
-              <Box mt={5}>
-                <Notice
-                  noticeIcon={<Icon>support</Icon>}
-                  noticeText={
-                    <Typography variant="body2" align="center" style={{ color: palette.info.contrastText }}>
-                      <Trans i18nKey="dashboardTab.subscriptionsSubTab.hasDataToShow.notificationText">
-                        {[
-                          <Link
-                            key="dashboardTab.subscriptionsSubTab.hasDataToShow.notificationText"
-                            to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions"
-                            rel='noopener noreferrer'
-                            target='_blank'
-                          />,
-                        ]}
-                      </Trans>
-                    </Typography>
-                  }
-                />
-              </Box>
-            </>
-          )
-      }
+                <Box mt={5}>
+                  <Notice
+                    noticeIcon={<Icon>support</Icon>}
+                    noticeText={
+                      <Typography variant="body2" align="center" style={{ color: palette.info.contrastText }}>
+                        <Trans i18nKey="dashboardTab.subscriptionsSubTab.hasDataToShow.notificationText">
+                          {[
+                            <Link
+                              key="dashboardTab.subscriptionsSubTab.hasDataToShow.notificationText"
+                              to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions"
+                              rel='noopener noreferrer'
+                              target='_blank'
+                            />,
+                          ]}
+                        </Trans>
+                      </Typography>
+                    }
+                  />
+                </Box>
+              </>
+            )
+        }
+      </PageContainer>
 
-      {isModalOpen && (
-        <SubscriptionsModal
-          isModalOpen={isModalOpen}
-          toggleModal={toggleModal}
-        />
-      )}
-    </PageContainer>
+      <SubscriptionsModal
+        isModalOpen={isModalOpen}
+        toggleModal={toggleModal}
+      />
+    </>
   );
 };

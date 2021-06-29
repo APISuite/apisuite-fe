@@ -104,7 +104,6 @@ export type GetUserAppActionError = {
 
 export type GetAllUserAppsAction = {
   type: typeof GET_ALL_USER_APPS,
-  userId: number,
 }
 
 export type GetAllUserAppsActionSuccess = {
