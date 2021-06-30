@@ -91,16 +91,6 @@ export default makeStyles((theme) => ({
     padding: "160px 60px 0px 60px",
   },
 
-  retrievingAPIProductMessageContainer: {
-    textAlign: "center",
-
-    "& > :first-child": {
-      color: theme.palette.secondary.main,
-      fontSize: "16px",
-      fontWeight: 300,
-    },
-  },
-
   textFilter: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,

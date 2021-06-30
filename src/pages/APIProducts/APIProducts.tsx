@@ -2,11 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation, Button, InputBase, Box, Typography, Chip, useTheme, Icon } from "@apisuite/fe-base";
 
-import { API_DOCS_CONTENT_TARGET } from "constants/global";
-import APICatalog from "components/APICatalog";
-import { APIDetails } from "components/APICatalog/types";
-import { SubscriptionsModal } from "components/SubscriptionsModal";
-
 // TODO: Uncomment once this view does account for 'sandbox' accessible API products.
 // import SubscriptionsRoundedIcon from '@material-ui/icons/SubscriptionsRounded'
 import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRounded";
@@ -14,11 +9,17 @@ import PowerRoundedIcon from "@material-ui/icons/PowerRounded";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import apiProductCard from "assets/apiProductCard.svg";
 
-import useStyles from "./styles";
-import { apiProductsSelector } from "./selector";
+import { API_DOCS_CONTENT_TARGET } from "constants/global";
+import APICatalog from "components/APICatalog";
+import { APIDetails } from "components/APICatalog/types";
+import { SubscriptionsModal } from "components/SubscriptionsModal";
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import { getAllUserApps } from "store/applications/actions/getAllUserApps";
 import { PageContainer } from "components/PageContainer";
+import Link from "components/Link";
+
+import useStyles from "./styles";
+import { apiProductsSelector } from "./selector";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -234,7 +235,7 @@ export const APIProducts: React.FC = () => {
               alignItems="center"
               height={50}
             >
-              {auth.user && (
+              {!auth.user && (
                 <>
                   <Icon fontSize="small">circle</Icon>
 
@@ -250,10 +251,12 @@ export const APIProducts: React.FC = () => {
                 </>
               )}
 
-              {!auth.user &&(
-                <a href='/auth/signup'>
-                  {t("apiProductsTab.registerForMoreMessage")}
-                </a>
+              {auth.user &&(
+                <Typography variant="body1">
+                  <Link to="/auth/signup">
+                    {t("apiProductsTab.registerForMoreMessage")}
+                  </Link>
+                </Typography>
               )}
             </Box>
           </Box>
@@ -318,11 +321,9 @@ export const APIProducts: React.FC = () => {
           {
             recentlyUpdatedAPIs.length === 0
               ? (
-                <div className={classes.retrievingAPIProductMessageContainer}>
-                  <p>
-                    {t("apiProductsTab.retrievingAPIProductMessage")}
-                  </p>
-                </div>
+                <Typography variant="body1" align="center">
+                  {t("apiProductsTab.retrievingAPIProductMessage")}
+                </Typography>
               )
               : (
                 (apiFilters[0].length === 0 && !apiFilters[1] && !apiFilters[2] && !apiFilters[3])
