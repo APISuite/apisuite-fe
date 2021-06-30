@@ -200,7 +200,7 @@ users.forEach(user => {
         cy.testID(testIds.actionsEntry).eq(4).parent().should("have.attr", "href", "/dashboard/subscriptions");
         cy.testID(testIds.actionsEntry).eq(4).should("have.text", enUS.dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api);
 
-        cy.testID(testIds.actionsEntry).eq(5).parent().should("have.attr", "href", `/${settings.supportURL}`);
+        cy.testID(testIds.actionsEntry).eq(5).parent().should("have.attr", "href", settings.supportURL);
         cy.testID(testIds.actionsEntry).eq(5).should("have.text", enUS.dashboardTab.landingPageSubTab.regularUser.actionsCatalog.support);
       });
 
