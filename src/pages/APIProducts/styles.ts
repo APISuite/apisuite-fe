@@ -77,10 +77,10 @@ export default makeStyles((theme) => ({
     /* The 'box-shadow' property was not generating the
     intended shadow, so 'filter' was used instead. */
     filter: "drop-shadow(0px 5px 2.5px rgba(0, 0, 0, 0.25))",
-    height: 185,
+    width: 380,
+    height: "auto",
     marginRight: 40,
-    width: 320,
-    transform: "translateY(25%)",
+    position: "absolute",
   },
 
   latestAPIProductUpdateSection: {
@@ -88,7 +88,7 @@ export default makeStyles((theme) => ({
     background: theme.palette.gradient.dark,
     borderBottom: "4px solid rgba(20, 40, 60, 0.1)",
     width: "100%",
-    padding: "180px 60px 0px 60px",
+    padding: "160px 60px 0px 60px",
   },
 
   retrievingAPIProductMessageContainer: {

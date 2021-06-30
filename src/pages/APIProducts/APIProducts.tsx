@@ -172,11 +172,13 @@ export const APIProducts: React.FC = () => {
     <main>
       {/* 'Latest API product update' section */}
       <section className={classes.latestAPIProductUpdateSection}>
-        <PageContainer disablePaddingY display="flex">
+        <PageContainer disablePaddingY display="flex" position="relative">
           <img
             className={classes.latestAPIProductImage}
             src={apiProductCard}
           />
+
+          <Box width={800} />
 
           <Box
             display="flex"
