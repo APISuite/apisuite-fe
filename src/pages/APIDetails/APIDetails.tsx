@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useTranslation, CircularProgress } from "@apisuite/fe-base";
+import { useTranslation, CircularProgress, Typography } from "@apisuite/fe-base";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
@@ -48,12 +48,9 @@ export const APIDetails: React.FC = () => {
           )}
 
           {!hasSpec() && (
-            <>
-              <div className={`${classes.header} ${classes.docs}`}>&nbsp;</div>
-              <div className={classes.centerVertical}>
-                <h2>{t("apidetails.notfound")}</h2>
-              </div>
-            </>
+            <div className={classes.centerVertical}>
+              <Typography variant="h2">{t("apidetails.notfound")}</Typography>
+            </div>
           )}
         </>
       }

@@ -1,13 +1,6 @@
 import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
-  header: {
-    height: "280px",
-    display: "flex",
-    padding: "0 50px 20px 50px",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-  },
   badge: {
     borderRadius: `${theme.shape.borderRadius}px`,
     fontSize: ".7em",
@@ -18,10 +11,6 @@ export default makeStyles((theme) => ({
   },
   live: {
     backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.secondary.contrastText,
-  },
-  docs: {
-    backgroundColor: theme.palette.action.active,
     color: theme.palette.secondary.contrastText,
   },
   centerVertical: {
