@@ -1,9 +1,8 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useConfig, useTranslation } from "@apisuite/fe-base";
-import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
+import { useConfig, useTheme, useTranslation, Box, Grid, Icon, Typography } from "@apisuite/fe-base";
+import { Logo } from "components/Logo";
+import Notice from "components/Notice";
 
 import useStyles from "./styles";
 
@@ -11,77 +10,102 @@ export const SignUpConfirmation: React.FC = () => {
   const classes = useStyles();
   const [t] = useTranslation();
   const history = useHistory();
-  const { ownerInfo, portalName } = useConfig();
+  const { navigation, ownerInfo, portalName } = useConfig();
+  const { breakpoints, palette, zIndex } = useTheme();
   const { name } = useParams<{ name: string }>();
 
+  // FIXME subtitleTextPartOne Two and Three should use interpolation
   return (
-    <main className={classes.mainContainer}>
-      <header className={classes.headerContainer}>
-        <div
-          className={classes.logoAndNameContainer}
+    <Grid
+      component={Box}
+      container
+      direction="row"
+      minHeight="100%"
+    >
+      <Box
+        display="flex"
+        flexWrap="nowrap"
+        position="absolute"
+        width="100%"
+        p={6}
+        zIndex={zIndex.appBar}
+      >
+        <Grid
+          component={Box}
+          container
           onClick={() => history.push("/")}
+          className={classes.logo}
         >
-          {
-            ownerInfo.logo
-              ? (
-                <img
-                  className={classes.imageLogo}
-                  src={ownerInfo.logo}
-                />
-              )
-              : (
-                <AmpStoriesRoundedIcon
-                  className={classes.iconLogo}
-                />
-              )
-          }
-
-          <h3 className={classes.portalName}>
+          <Logo
+            icon={navigation.title.iconFallbackName}
+            src={ownerInfo.logo}
+          />
+          <Typography variant="h3">
             {portalName}
-          </h3>
-        </div>
+          </Typography>
+        </Grid>
 
-        <div
-          className={classes.closeButtonContainer}
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          color={palette.common.white}
           onClick={() => history.push("/")}
+          className={classes.close}
         >
-          <p>
-            {t("signInOrUpView.closeButtonLabel")}
-          </p>
+          <Box mr={1} clone>
+            <Typography variant="body2" color="inherit">
+              {t("signInOrUpView.closeButtonLabel")}
+            </Typography>
+          </Box>
 
-          <CloseRoundedIcon />
-        </div>
-      </header>
+          <Icon>close</Icon>
+        </Box>
+      </Box>
 
-      <section className={classes.pageContentContainer}>
-        <div className={classes.signUpCompleteSideContentContainer}>
-          <h1 className={classes.signUpCompleteSideTitle}>
-            {t("signUpConfirmation.titleText")}
-            {name}!
-          </h1>
+      <Grid
+        alignSelf="center"
+        component={Box}
+        container
+        direction="column"
+        item
+        py={20}
+        px={6}
+        maxWidth={breakpoints.values.sm}
+        margin="auto"
+      >
+        <Grid item md>
+          <Box pt={5} pb={5}>
+            <Typography variant="h1">
+              {t("signUpConfirmation.titleText")}
+              {name}!
+            </Typography>
+          </Box>
 
-          <p className={classes.signUpCompleteSideSubtitle}>
-            <>{t("signUpConfirmation.subtitleTextPartOne")}</>
-            <span className={classes.signUpCompleteSideSubtitleBoldPart}>
-              {t("signUpConfirmation.subtitleTextPartTwo")}
-            </span>
-            <>{t("signUpConfirmation.subtitleTextPartThree")}</>
-          </p>
+          <Box pb={10}>
+            <Typography variant="h5" color="textSecondary">
+              <>{t("signUpConfirmation.subtitleTextPartOne")}</>
+              <b>
+                {t("signUpConfirmation.subtitleTextPartTwo")}
+              </b>
+              <>{t("signUpConfirmation.subtitleTextPartThree")}</>
+            </Typography>
+          </Box>
+        </Grid>
 
-          <div className={classes.infoBox}>
-            <InfoRoundedIcon className={classes.infoBoxIcon} />
-
-            <div>
-              <p className={classes.infoBoxText}>
-                {t("signUpConfirmation.infoBoxText")}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className={classes.imageSideContentContainer} />
-      </section>
-    </main>
+        <Grid item md>
+          <Notice noticeText={
+            <Typography
+              variant="body2"
+              style={{ color: palette.info.contrastText }}
+            >
+              {t("signUpConfirmation.infoBoxText")} 
+            </Typography>
+          }/>
+        </Grid>
+      </Grid>
+      <Grid item md className={classes.imageSideContentContainer} />
+    </Grid>
   );
 };
 
