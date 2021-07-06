@@ -84,11 +84,11 @@ export const SignUpConfirmation: React.FC = () => {
 
           <Box pb={5}>
             <Typography variant="body1" color="textSecondary">
-              <>{t("signUpConfirmation.subtitleTextPartOne")}</>
+              {t("signUpConfirmation.subtitleTextPartOne")}
               <b>
                 {t("signUpConfirmation.subtitleTextPartTwo")}
               </b>
-              <>{t("signUpConfirmation.subtitleTextPartThree")}</>
+              {t("signUpConfirmation.subtitleTextPartThree")}
             </Typography>
           </Box>
         </Grid>
