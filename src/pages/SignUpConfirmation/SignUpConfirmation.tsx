@@ -75,15 +75,15 @@ export const SignUpConfirmation: React.FC = () => {
         margin="auto"
       >
         <Grid item md>
-          <Box pt={5} pb={5}>
+          <Box pb={3}>
             <Typography variant="h1">
               {t("signUpConfirmation.titleText")}
               {name}!
             </Typography>
           </Box>
 
-          <Box pb={10}>
-            <Typography variant="h5" color="textSecondary">
+          <Box pb={5}>
+            <Typography variant="body1" color="textSecondary">
               <>{t("signUpConfirmation.subtitleTextPartOne")}</>
               <b>
                 {t("signUpConfirmation.subtitleTextPartTwo")}
@@ -99,7 +99,7 @@ export const SignUpConfirmation: React.FC = () => {
               variant="body2"
               style={{ color: palette.info.contrastText }}
             >
-              {t("signUpConfirmation.infoBoxText")} 
+              {t("signUpConfirmation.infoBoxText")}
             </Typography>
           }/>
         </Grid>
