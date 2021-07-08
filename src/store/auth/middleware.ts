@@ -6,7 +6,7 @@ import { DESTINATION_PATH } from "constants/global";
 
 import { LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_USER_ERROR, LOGIN_USER_SUCCESS } from "./actions/login";
 import { LOGOUT, LOGOUT_ERROR } from "./actions/logout";
-import { REJECT_INVITATION_SUCCESS } from "./actions/invitation";
+import { INVITATION_SIGN_UP_SUCCESS, REJECT_INVITATION_SUCCESS } from "./actions/invitation";
 
 export const COO_KEY = "apiSuiteSession";
 export const HACK_KEY = "hk";
@@ -29,7 +29,10 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
     cookie.remove(COO_KEY, { path: "/" });
     cookie.remove(HACK_KEY, { path: "/" });
     history.replace("/auth/signin");
-  } else if (action.type === REJECT_INVITATION_SUCCESS) {
+  } else if (
+    action.type === REJECT_INVITATION_SUCCESS ||
+    action.type === INVITATION_SIGN_UP_SUCCESS
+  ) {
     history.push(action.path);
     // FIXME: this is an hack
   } else if (!cookie.get(HACK_KEY) && action.type === LOGIN_USER_SUCCESS) {
