@@ -304,7 +304,7 @@ const InvitationConfirmationForm: React.FC<{
 export const InvitationForm = () => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
-  const { invitation, invitationError, isLogged } = useSelector(invitationFormSelector);
+  const { invitation, invitationError, isLogged, user } = useSelector(invitationFormSelector);
   const { sso, supportURL } = useConfig();
   // get token from url
   const invitationToken = qs.parse(window.location.search.slice(1)).token as string || undefined;
@@ -328,13 +328,23 @@ export const InvitationForm = () => {
     }
   }, [dispatch, invitation.email, invitation.organization, invitationError, invitationToken]);
 
+  const isInvitedUser = (email: string) => {
+    if (user.email === email) {
+      return true;
+    } else if (user.email.length === 0) {
+      return true;
+    }
+    return false;
+  };
+
   const getErrorView = () => {
+    const key = !isInvitedUser(invitation?.email) ? "invitationForm.invalidUser" : "invitationForm.invalid";
     return (
       <>
         <div>
           <Typography variant="caption" display="block" gutterBottom>
             <Trans
-              i18nKey="invitationForm.invalid"
+              i18nKey={key}
               values={{ org: invitation.organization }}>
               {[
                 <strong key="org-name-1" />,
@@ -368,16 +378,16 @@ export const InvitationForm = () => {
         invitationToken &&
         <>
           {
-            !invitation?.email &&
+            (!invitation?.email || !isInvitedUser(invitation?.email)) &&
             <LoadingView
-              isLoading={!invitation?.email && !invitationError}
-              isError={!!invitationError}
+              isLoading={!invitation?.email && !invitationError && !isInvitedUser(invitation?.email)}
+              isError={!!invitationError || !isInvitedUser(invitation?.email)}
             >
               {getErrorView()}
             </LoadingView>
           }
           {
-            invitation?.email &&
+            (invitation?.email && isInvitedUser(invitation?.email)) &&
             <InvitationConfirmationForm
               key="invitation-confirmation-1"
               isLogged={isLogged || false}
