@@ -453,6 +453,10 @@ export default makeStyles((theme) => ({
     zIndex: 2,
   },
 
+  fullDescriptionField: {
+    maxWidth: "none !important",
+  },
+
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
@@ -617,7 +621,6 @@ export default makeStyles((theme) => ({
   rightSubSectionContainer: {
     width: "400px",
   },
-
 
   row: {
     alignItems: "center",

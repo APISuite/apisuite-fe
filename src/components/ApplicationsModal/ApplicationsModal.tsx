@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   Avatar, Box, Button, Fade, Grid, Icon, IconButton, InputAdornment, Menu, MenuItem,
-  Modal, TextField, Theme, Tooltip, Trans, Typography, useConfig, useTheme, useTranslation, withStyles,
+  Modal, TextField, Trans, Typography, useConfig, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
 
@@ -26,6 +26,7 @@ import { useForm } from "util/useForm";
 import { applicationsModalSelector } from "./selector";
 import useStyles from "./styles";
 import { ApplicationsModalProps } from "./types";
+import CustomizableTooltip from "components/CustomizableTooltip";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
@@ -515,19 +516,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       validImage;
   };
 
-  // Markdown icon's tooltip
-  const MarkdownTooltip = withStyles((theme: Theme) => ({
-    arrow: {
-      color: theme.palette.info.light,
-    },
-
-    tooltip: {
-      backgroundColor: theme.palette.info.light,
-      color: theme.palette.info.dark,
-      padding: "0px 12px",
-    },
-  }))(Tooltip);
-
   return (
     <>
       <Modal
@@ -786,7 +774,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                 <Grid item md={12}>
                   <TextField
-                    className={classes.inputFields}
+                    className={clsx(classes.inputFields, classes.fullDescriptionField)}
                     fullWidth
                     label={t("dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel")}
                     margin='dense'
@@ -794,7 +782,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     name='appFullDescription'
                     onChange={handleChange}
                     rows={9}
-                    style={{ maxWidth: "none" }}
                     type='text'
                     value={formState.values.appFullDescription}
                     variant='outlined'
@@ -804,16 +791,15 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           className={classes.markdownIcon}
                           position="end"
                         >
-                          <MarkdownTooltip
-                            arrow
-                            title={
+                          <CustomizableTooltip
+                            tooltipContent={
                               <Typography variant='caption'>
                                 {t("dashboardTab.applicationsSubTab.appModal.markdownTooltipText")}
-                              </Typography>}
-                            TransitionComponent={Fade}
+                              </Typography>
+                            }
                           >
                             <img src={markdownIcon} style={{ height: 24, width: 24 }} />
-                          </MarkdownTooltip>
+                          </CustomizableTooltip>
                         </InputAdornment>
                       ),
                     }}
