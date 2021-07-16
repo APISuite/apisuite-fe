@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-  Avatar, Box, Button, Fade, Grid, Icon,
-  IconButton, InputAdornment, Menu, MenuItem, Modal, TextField,
-  Trans, Typography, useConfig, useTheme, useTranslation,
+  Avatar, Box, Button, Fade, Grid, Icon, IconButton, InputAdornment, Menu, MenuItem,
+  Modal, TextField, Theme, Tooltip, Trans, Typography, useConfig, useTheme, useTranslation, withStyles,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
 
+import markdownIcon from "assets/markdownIcon.svg";
 import { Logo } from "components/Logo";
 import { MediaUpload } from "components/MediaUpload";
 import { PageContainer } from "components/PageContainer";
@@ -48,7 +48,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     setOpenCloseWarning(false);
   };
 
-  const dialogFunctions: { [index:string] : () => void } = {
+  const dialogFunctions: { [index: string]: () => void } = {
     toggleModal: toggleModal,
     subscriptions: () => history.push("/dashboard/subscriptions"),
   };
@@ -506,14 +506,27 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const newHasChanged = () => {
     return formState.values.appName.length !== 0 &&
-    formState.values.appRedirectURI !== "http://" &&
-    formState.values.appRedirectURI !== "https://" &&
-    formState.values.appRedirectURI.length !== 0 &&
-    validMetadata() &&
-    (formState.isValid || Object.keys(formState.errors).length === 0) &&
-    !(allUserAppNames.includes(formState.values.appName)) &&
-    validImage;
+      formState.values.appRedirectURI !== "http://" &&
+      formState.values.appRedirectURI !== "https://" &&
+      formState.values.appRedirectURI.length !== 0 &&
+      validMetadata() &&
+      (formState.isValid || Object.keys(formState.errors).length === 0) &&
+      !(allUserAppNames.includes(formState.values.appName)) &&
+      validImage;
   };
+
+  // Markdown icon's tooltip
+  const MarkdownTooltip = withStyles((theme: Theme) => ({
+    arrow: {
+      color: theme.palette.info.light,
+    },
+
+    tooltip: {
+      backgroundColor: theme.palette.info.light,
+      color: theme.palette.info.dark,
+      padding: "0px 12px",
+    },
+  }))(Tooltip);
 
   return (
     <>
@@ -770,6 +783,40 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     />
                   </div>
                 </Grid>
+
+                <Grid item md={12}>
+                  <TextField
+                    className={classes.inputFields}
+                    fullWidth
+                    label={t("dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel")}
+                    margin='dense'
+                    multiline
+                    name='appFullDescription'
+                    onChange={handleChange}
+                    rows={9}
+                    style={{ maxWidth: "none" }}
+                    type='text'
+                    value={formState.values.appFullDescription}
+                    variant='outlined'
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          className={classes.markdownIcon}
+                          position="end"
+                        >
+                          <MarkdownTooltip
+                            arrow
+                            title={<Typography variant='caption'>Markdown is supported</Typography>}
+                            TransitionComponent={Fade}
+                          >
+                            <img src={markdownIcon} style={{ height: 24, width: 24 }} />
+                          </MarkdownTooltip>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+
               </Grid>
 
               <hr className={classes.alternativeSectionSeparator} />
@@ -930,7 +977,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               {/* 'Additional information' section */}
               <Grid container spacing={3}>
-                {/* 'Full description' subsection */}
+                {/* Section's intro */}
                 <Grid item md={12}>
                   <Grid item md={6}>
                     <Box pb={1.5}>
@@ -945,22 +992,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       </Typography>
                     </Box>
                   </Grid>
-                </Grid>
-                <Grid item md={6}>
-
-                  <TextField
-                    className={classes.inputFields}
-                    fullWidth
-                    label={t("dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel")}
-                    margin='dense'
-                    multiline
-                    name='appFullDescription'
-                    onChange={handleChange}
-                    rows={4}
-                    type='text'
-                    value={formState.values.appFullDescription}
-                    variant='outlined'
-                  />
                 </Grid>
 
                 {/* 'Optional URLs' subsection */}
@@ -1387,7 +1418,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         openDialog &&
         <CustomizableDialog
           cancelButtonProps={{
-            variant:"outlined",
+            variant: "outlined",
             color: "primary",
           }}
           closeDialogCallback={handleCloseDialog}

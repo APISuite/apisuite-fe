@@ -504,7 +504,8 @@ export default makeStyles((theme) => ({
 
       // Multiline text field's styles
       "&.MuiInputBase-multiline": {
-        height: "104.5px",
+        height: 200,
+        maxWidth: "none",
       },
     },
 
@@ -524,6 +525,15 @@ export default makeStyles((theme) => ({
   leftSubSectionContainer: {
     marginRight: "40px",
     width: "460px",
+  },
+
+  markdownIcon: {
+    bottom: theme.spacing(1),
+    color: theme.palette.text.hint,
+    height: theme.spacing(3),
+    position: "absolute",
+    right: theme.spacing(1),
+    width: theme.spacing(3),
   },
 
   metaPrefix: {
@@ -662,6 +672,7 @@ export default makeStyles((theme) => ({
     lineHeight: "20px",
     marginBottom: "37.5px",
   },
+
   description: {
     color: theme.palette.grey[300],
     fontSize: "14px",
