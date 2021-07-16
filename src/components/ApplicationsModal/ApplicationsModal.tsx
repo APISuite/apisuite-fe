@@ -806,7 +806,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         >
                           <MarkdownTooltip
                             arrow
-                            title={<Typography variant='caption'>Markdown is supported</Typography>}
+                            title={
+                              <Typography variant='caption'>
+                                {t("dashboardTab.applicationsSubTab.appModal.markdownTooltipText")}
+                              </Typography>}
                             TransitionComponent={Fade}
                           >
                             <img src={markdownIcon} style={{ height: 24, width: 24 }} />

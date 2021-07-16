@@ -530,10 +530,10 @@ export default makeStyles((theme) => ({
   markdownIcon: {
     bottom: theme.spacing(1),
     color: theme.palette.text.hint,
-    height: theme.spacing(3),
+    height: 24,
     position: "absolute",
     right: theme.spacing(1),
-    width: theme.spacing(3),
+    width: 24,
   },
 
   metaPrefix: {

@@ -312,6 +312,7 @@
         "appClientIDFieldLabel": "Client ID",
         "appClientSecretFieldLabel": "Client Secret",
         "appFullDescriptionFieldLabel": "Full description",
+        "markdownTooltipText": "Markdown is supported",
         "appLabelsFieldLabel": "Labels",
         "appLabelsFieldHelperText": "Each provided label should be separated by a comma.",
         "appNameFieldLabel": "Application name",
