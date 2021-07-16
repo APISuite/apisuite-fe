@@ -3,7 +3,7 @@ import { Fade, Theme, Tooltip, withStyles } from "@apisuite/fe-base";
 
 import { CustomizableTooltipProps } from "./types";
 
-const CustomizableTooltip: React.FC<CustomizableTooltipProps> = ({
+export const CustomizableTooltip: React.FC<CustomizableTooltipProps> = ({
   children,
   tooltipContent,
 }) => {
@@ -31,5 +31,3 @@ const CustomizableTooltip: React.FC<CustomizableTooltipProps> = ({
     </StyledTooltip>
   );
 };
-
-export default CustomizableTooltip;

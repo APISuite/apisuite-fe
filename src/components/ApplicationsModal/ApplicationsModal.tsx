@@ -8,6 +8,7 @@ import {
 import clsx from "clsx";
 
 import markdownIcon from "assets/markdownIcon.svg";
+import { CustomizableTooltip } from "components/CustomizableTooltip";
 import { Logo } from "components/Logo";
 import { MediaUpload } from "components/MediaUpload";
 import { PageContainer } from "components/PageContainer";
@@ -26,7 +27,6 @@ import { useForm } from "util/useForm";
 import { applicationsModalSelector } from "./selector";
 import useStyles from "./styles";
 import { ApplicationsModalProps } from "./types";
-import CustomizableTooltip from "components/CustomizableTooltip";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
