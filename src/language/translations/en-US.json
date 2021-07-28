@@ -655,6 +655,7 @@
     "uploadError": "Error uploading media."
   },
   "fallbacks": {
+    "noContract": "No contract provided.",
     "noDescription": "No description presently available.",
     "noVersion": "No version available"
   },

@@ -39,52 +39,64 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
             xs={6}
           >
             <ApplicationCard className={classes.card} onClick={handleOnCardClick(apiDetails)}>
-              <Grid
-                component={Box}
-                data-test-id={testIds.apiCardAvatar}
-                item
-                xs={2}
-                pl={2}
-              >
-                <Avatar
-                  classes={{
-                    colorDefault: apiDetails.apiAccess
-                      ? classes.colorsOfProductionAPI : classes.colorsOfAPIDocumentation,
-                  }}
+              <Grid container>
+                <Grid
+                  data-test-id={testIds.apiCardAvatar}
+                  component={Box}
+                  item
+                  xs={1}
                 >
-                  {apiDetails.apiName.slice(0, 2)}
-                </Avatar>
-              </Grid>
+                  <Avatar
+                    classes={{
+                      colorDefault: apiDetails.apiAccess
+                        ? classes.colorsOfProductionAPI : classes.colorsOfAPIDocumentation,
+                    }}
+                  >
+                    {apiDetails.apiName.slice(0, 2)}
+                  </Avatar>
+                </Grid>
 
-              <Grid
-                component={Box}
-                item
-                xs={10}
-                pt={1}
-                pl={2}
-              >
-                <Typography data-test-id={testIds.apiCardName} variant="h5" gutterBottom>
-                  {apiDetails.apiName}
-                </Typography>
-
-                <Typography variant="subtitle1" gutterBottom>
-                  <Tag v={apiDetails.apiVersion} color={tagColor}/>
-                  {
-                    apiDetails.apiAccess
-                      ? <span data-test-id={testIds.apiCardAccessType}>{t("sandboxPage.apiCatalog.productionAccess")}</span>
-                      : <span data-test-id={testIds.apiCardAccessType}>{t("sandboxPage.apiCatalog.documentationAccess")}</span>
-                  }
-                </Typography>
-
-                <Box
-                  maxHeight={50}
-                  overflow="hidden"
-                  clone
+                <Grid
+                  component={Box}
+                  item
+                  pl={2}
+                  pt={1}
+                  xs={11}
                 >
-                  <Typography data-test-id={testIds.apiCardDescription} variant="subtitle1">
+                  <Typography data-test-id={testIds.apiCardName} variant="h5">
+                    {apiDetails.apiName}
+                  </Typography>
+
+                  <Typography variant="body1">
+                    {apiDetails.apiContract}
+                  </Typography>
+
+                  <Box mb={1.5} mt={1}>
+                    <Typography variant="subtitle1">
+                      <Tag color={tagColor} v={apiDetails.apiVersion} />
+
+                      <Box data-test-id={testIds.apiCardAccessType} component="span" ml={1}>
+                        {
+                          apiDetails.apiAccess
+                            ? t("sandboxPage.apiCatalog.productionAccess")
+                            : t("sandboxPage.apiCatalog.documentationAccess")
+                        }
+                      </Box>
+                    </Typography>
+                  </Box>
+
+                  <Typography
+                    data-test-id={testIds.apiCardDescription}
+                    style={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                    variant="subtitle1"
+                  >
                     {apiDetails.apiDescription}
                   </Typography>
-                </Box>
+                </Grid>
               </Grid>
             </ApplicationCard>
           </Grid>

@@ -2,7 +2,7 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   card: {
-    height: 200,
+    height: 184,
   },
 
   colorsOfAPIDocumentation: {

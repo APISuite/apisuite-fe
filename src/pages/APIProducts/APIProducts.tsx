@@ -32,6 +32,7 @@ export const APIProducts: React.FC = () => {
 
   const initialAPIState: APIDetails = {
     apiAccess: false,
+    apiContract: "",
     apiDescription: "",
     apiName: "",
     apiRoutingId: "",
@@ -69,14 +70,15 @@ export const APIProducts: React.FC = () => {
           its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
-          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
-          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
-          link to its corresponding 'API Details' view if it has versions. */
+          apiContract: api.apiVersions.length ? api.apiVersions[0].title : t("fallbacks.noContract"),
           apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
-          apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
+          apiName: api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
           apiVersion: api.apiVersions.length ? api.apiVersions[0].version : t("fallbacks.noVersion"),
+          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
+          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
+          link to its corresponding 'API Details' view if it has versions. */
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
         };
