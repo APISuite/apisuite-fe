@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
   },
 
   colorsOfAPIDocumentation: {
-    backgroundColor: theme.palette.action.active,
+    backgroundColor: theme.palette.secondary.main,
     color: theme.palette.background.default,
   },
 

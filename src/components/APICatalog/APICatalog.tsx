@@ -1,8 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Avatar, Box, Grid, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
+import { Avatar, Box, Chip, Grid, Typography, useTranslation } from "@apisuite/fe-base";
 
-import { Tag } from "components/Tag";
 import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
 import useStyles from "./styles";
 import { APICatalogProps, APIDetails } from "./types";
@@ -11,8 +10,9 @@ import { testIds } from "testIds";
 
 const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
   const classes = useStyles();
-  const { palette } = useTheme();
+
   const history = useHistory();
+
   const { t } = useTranslation();
 
   const handleOnCardClick = (details: APIDetails) => () => {
@@ -29,7 +29,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
       {apisToDisplay.slice(0, limit).map((apiDetails) => {
         if (!apiDetails) return null;
 
-        const tagColor = apiDetails.apiAccess ? palette.primary.main : palette.secondary.light;
+        const chipColor = apiDetails.apiAccess ? "primary" : "secondary";
 
         return (
           <Grid
@@ -73,7 +73,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
 
                   <Box mb={1.5} mt={1}>
                     <Typography variant="subtitle1">
-                      <Tag color={tagColor} v={apiDetails.apiVersion} />
+                      <Chip color={chipColor} label={apiDetails.apiVersion} />
 
                       <Box data-test-id={testIds.apiCardAccessType} component="span" ml={1}>
                         {
