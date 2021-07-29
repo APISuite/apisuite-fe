@@ -73,7 +73,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
 
                   <Box mb={1.5} mt={1}>
                     <Typography variant="subtitle1">
-                      <Chip color={chipColor} label={apiDetails.apiVersion} />
+                      <Chip data-test-id={testIds.apiCardVersion} color={chipColor} label={apiDetails.apiVersion} />
 
                       <Box data-test-id={testIds.apiCardAccessType} component="span" ml={1}>
                         {
