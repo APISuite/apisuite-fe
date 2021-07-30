@@ -19,6 +19,7 @@ import {
 import { SUBMIT_SIGN_UP_CREDENTIALS, SUBMIT_SIGN_UP_CREDENTIALS_ERROR, SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS } from "./actions/submitSignUpCredentials";
 import { SUBMIT_SIGN_UP_ORGANISATION, SUBMIT_SIGN_UP_ORGANISATION_ERROR, SUBMIT_SIGN_UP_ORGANISATION_SUCCESS } from "./actions/submitSignUpOrganisation";
 import { SUBMIT_SIGN_UP_DETAILS, SUBMIT_SIGN_UP_DETAILS_ERROR, SUBMIT_SIGN_UP_DETAILS_SUCCESS } from "./actions/submitSignUpDetails";
+import { CLEAR_SIGN_UP_DETAILS_ACTION } from "./actions/clearSignUpDetails";
 
 // FIXME: remove the need for auth cookies as they are no longer used effectively
 const authToken = cookie.get(COO_KEY) || "";
@@ -38,6 +39,11 @@ const initialState: AuthStore = {
     isUser: false,
     hasOrganizations: false,
   },
+
+  signUpName: "",
+  signUpEmail: "",
+  signUpOrgName: "",
+  signUpOrgWebsite: "",
 };
 
 const reducer: Reducer<AuthStore, AuthActions> = (state = initialState, action) => {
@@ -130,14 +136,35 @@ const reducer: Reducer<AuthStore, AuthActions> = (state = initialState, action) 
     case SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS: {
       return update(state, {
         registrationToken: { $set: action.token },
+        signUpName: { $set: action.signUpName },
+        signUpEmail: { $set: action.signUpEmail },
         signUpError: { $set: undefined },
         isSignUpWorking: { $set: false },
       });
     }
 
-    case SUBMIT_SIGN_UP_ORGANISATION_SUCCESS:
+    case SUBMIT_SIGN_UP_ORGANISATION_SUCCESS: {
+      return update(state, {
+        signUpOrgName: { $set: action.signUpOrgName },
+        signUpOrgWebsite: { $set: action.signUpOrgWebsite },
+        signUpError: { $set: undefined },
+        isSignUpWorking: { $set: false },
+      });
+    }
+
     case SUBMIT_SIGN_UP_DETAILS_SUCCESS: {
       return update(state, {
+        signUpError: { $set: undefined },
+        isSignUpWorking: { $set: false },
+      });
+    }
+
+    case CLEAR_SIGN_UP_DETAILS_ACTION: {
+      return update(state, {
+        signUpName: { $set: "" },
+        signUpEmail: { $set: "" },
+        signUpOrgName: { $set: "" },
+        signUpOrgWebsite: { $set: "" },
         signUpError: { $set: undefined },
         isSignUpWorking: { $set: false },
       });

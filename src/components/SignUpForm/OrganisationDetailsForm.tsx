@@ -6,7 +6,7 @@ import FormCard from "components/FormCard";
 
 import useStyles from "./styles";
 import { GenericSignUpFormProps } from "./types";
-import { signUpFormSelector } from "./selector";
+import { orgDetailsSelector, signUpFormSelector } from "./selector";
 
 export const OrganisationDetailsForm: React.FC<GenericSignUpFormProps> = ({ next, back, error }) => {
   const classes = useStyles();
@@ -14,11 +14,12 @@ export const OrganisationDetailsForm: React.FC<GenericSignUpFormProps> = ({ next
   // TODO: make a selector just for this component or authError changes that is passed by parent as well
   // might make this component re-render twice
   const { isSignUpWorking } = useSelector(signUpFormSelector);
+  const { signUpOrgName, signUpOrgWebsite } = useSelector(orgDetailsSelector);
 
   // Form changes logic
   const [state, setState] = useState({
-    name: "",
-    website: "",
+    name: signUpOrgName || "",
+    website: signUpOrgWebsite || "",
     error: "",
   });
 

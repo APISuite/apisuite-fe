@@ -12,6 +12,11 @@ export interface AuthStore {
   providerSignupURL: string,
   invitation: Invitation,
   registrationToken?: string,
+
+  signUpName: string,
+  signUpEmail: string,
+  signUpOrgName: string,
+  signUpOrgWebsite: string,
 }
 
 export interface Invitation {

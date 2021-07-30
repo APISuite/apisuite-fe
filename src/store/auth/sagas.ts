@@ -277,7 +277,7 @@ export function * submitSignUpCredentialsSaga ({ details }: SubmitSignUpCredenti
       }),
     });
 
-    yield put(submitSignUpCredentialsSuccess({ token }));
+    yield put(submitSignUpCredentialsSuccess({ token, signUpName: details.name, signUpEmail: details.email }));
   } catch (error) {
     yield put(submitSignUpCredentialsError({ error: error.message }));
   }
@@ -300,7 +300,7 @@ export function * submitSignUpOrganisationSaga ({ details }: SubmitSignUpOrganis
       }),
     });
 
-    yield put(submitSignUpOrganisationSuccess({}));
+    yield put(submitSignUpOrganisationSuccess({ signUpOrgName: details.orgName, signUpOrgWebsite: details.website }));
   } catch (error) {
     yield put(submitSignUpOrganisationError({ error: error.message }));
   }

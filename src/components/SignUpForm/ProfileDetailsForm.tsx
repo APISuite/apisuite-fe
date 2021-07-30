@@ -6,7 +6,7 @@ import update from "immutability-helper";
 import FormCard from "components/FormCard";
 import { notEmpty, isValidEmail } from "util/forms";
 
-import { signUpFormSelector } from "./selector";
+import { credentialsSelector, signUpFormSelector } from "./selector";
 import useStyles from "./styles";
 import { GenericSignUpFormProps } from "./types";
 
@@ -16,12 +16,13 @@ export const ProfileDetailsForm: React.FC<GenericSignUpFormProps> = ({ next, err
   // TODO: make a selector just for this component or authError changes that is passed by parent as well
   // might make this component re-render twice
   const { isSignUpWorking } = useSelector(signUpFormSelector);
+  const { signUpName, signUpEmail } = useSelector(credentialsSelector);
 
   // Form changes logic
   const [state, setState] = useState({
     data: {
-      email: "",
-      name: "",
+      email: signUpEmail || "",
+      name: signUpName || "",
     },
     errors: {
       email: "",

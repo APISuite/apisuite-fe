@@ -24,6 +24,7 @@ import {
 } from "./invitation";
 import { SUBMIT_SIGN_UP_CREDENTIALS, SUBMIT_SIGN_UP_CREDENTIALS_ERROR, SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS } from "./submitSignUpCredentials";
 import { SUBMIT_SIGN_UP_ORGANISATION, SUBMIT_SIGN_UP_ORGANISATION_ERROR, SUBMIT_SIGN_UP_ORGANISATION_SUCCESS } from "./submitSignUpOrganisation";
+import { CLEAR_SIGN_UP_DETAILS_ACTION } from "./clearSignUpDetails";
 
 export type AuthActions =
   LoginAction |
@@ -86,7 +87,8 @@ export type AuthActions =
   InvitationSignInActionError |
   InvitationSignUpAction |
   InvitationSignUpActionSuccess |
-  InvitationSignUpActionError
+  InvitationSignUpActionError |
+  ClearSignUpDetailsAction
 
 export type LoginAction = {
   type: typeof LOGIN,
@@ -251,6 +253,8 @@ export type SubmitSignUpCredentials = {
 export type SubmitSignUpCredentialsSuccess = {
   type: typeof SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS,
   token: string,
+  signUpName: string,
+  signUpEmail: string,
 }
 
 export type SubmitSignUpCredentialsError = {
@@ -262,14 +266,14 @@ export type SubmitSignUpOrganisation = {
   type: typeof SUBMIT_SIGN_UP_ORGANISATION,
   details: {
     orgName?: string,
-    // TODO: check with delio if we have this
-    // vat?: string,
     website?: string,
   },
 }
 
 export type SubmitSignUpOrganisationSuccess = {
   type: typeof SUBMIT_SIGN_UP_ORGANISATION_SUCCESS,
+  signUpOrgName?: string,
+  signUpOrgWebsite?: string,
 }
 
 export type SubmitSignUpOrganisationError = {
@@ -402,3 +406,8 @@ export type InvitationSignUpActionError = {
   type: typeof INVITATION_SIGN_UP_ERROR,
   error: string,
 }
+
+export type ClearSignUpDetailsAction = {
+  type: typeof CLEAR_SIGN_UP_DETAILS_ACTION,
+}
+

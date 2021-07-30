@@ -17,12 +17,14 @@ import { linker } from "util/linker";
 
 import useStyles from "./styles";
 import { View } from "./types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInOrUpSelector } from "./selector";
+import { clearSignUpDetailsAction } from "store/auth/actions/clearSignUpDetails";
 
 export const SignInOrUp: React.FC = () => {
   const classes = useStyles();
   const { palette, zIndex, breakpoints, spacing } = useTheme();
+  const dispatch = useDispatch();
   const history = useHistory();
   const [t] = useTranslation();
   const { auth } = useSelector(signInOrUpSelector);
@@ -76,6 +78,8 @@ export const SignInOrUp: React.FC = () => {
   };
 
   const goHome = () => {
+    dispatch(clearSignUpDetailsAction({}));
+
     history.push("/");
   };
 
