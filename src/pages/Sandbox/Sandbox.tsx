@@ -53,7 +53,7 @@ export const Sandbox: React.FC = () => {
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
           apiContract: api.apiVersions.length ? api.apiVersions[0].title : t("fallbacks.noContract"),
           apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
-          apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
+          apiName: api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
           apiVersion: api.apiVersions.length ? api.apiVersions[0].version : t("fallbacks.noVersion"),

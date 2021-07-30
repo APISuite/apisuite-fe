@@ -87,11 +87,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
 
                   <Typography
                     data-test-id={testIds.apiCardDescription}
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
+                    noWrap
                     variant="subtitle1"
                   >
                     {apiDetails.apiDescription}
