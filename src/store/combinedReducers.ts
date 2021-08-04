@@ -7,6 +7,7 @@ import { combineReducers } from "redux";
 import apiDetails from "./apiDetails/reducer";
 import applications from "./applications/reducer";
 import auth from "./auth/reducer";
+import gatewaySettingsReducer from "./gatewaySettings/reducer";
 // Temporary until notification cards become clearer
 import notificationCards from "./notificationCards/reducer";
 import notifications from "./notificationStack/reducer";
@@ -20,6 +21,7 @@ export default (additionalReducers: Record<string, any[]> = {}) => {
     apiDetails: [apiDetails],
     applications: [applications],
     auth: [auth],
+    gatewaySettings: [gatewaySettingsReducer],
     notifications: [notifications],
     // Temporary until notification cards become clearer
     notificationCards: [notificationCards],

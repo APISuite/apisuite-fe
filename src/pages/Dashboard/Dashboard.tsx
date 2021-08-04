@@ -25,23 +25,26 @@ import teamSVG from "assets/icons/Team.svg";
 import { dashboardSelector } from "./selector";
 import useStyles from "./styles";
 import Link from "components/Link";
+import { getGatewaySettingsAction } from "store/gatewaySettings/actions/getGatewaySettings";
 
 export const Dashboard: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { palette } = useTheme();
   const { t } = useTranslation();
-  const { socialURLs, supportURL, clientName, portalName } = useConfig();
-  const { auth, subscriptions, notificationCards, profile } = useSelector(dashboardSelector);
+  const dispatch = useDispatch();
+  const { clientName, portalName, socialURLs, supportURL } = useConfig();
+  const { auth, gatewaySettings, notificationCards, profile, subscriptions } = useSelector(dashboardSelector);
 
   const typeOfUser = auth.user!.role.name;
 
   const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([]);
 
   useEffect(() => {
-    /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
-    of all API-related information we presently have. */
+    /* Triggers the retrieval and storage of:
+    - All API-related information we presently have (on the app's Store, under 'subscriptions');
+    - The portal owner's gateway settings (on the app's Store, under 'gatewaySettings'). */
     dispatch(getAPIs({}));
+    dispatch(getGatewaySettingsAction({}));
   }, [dispatch]);
 
   useEffect(() => {
@@ -73,6 +76,29 @@ export const Dashboard: React.FC = () => {
       setRecentlyAddedAPIs(newRecentlyAddedAPIs);
     }
   }, [subscriptions]);
+
+  const renderGatewaySettingsBanner = () => {
+    return typeOfUser === "admin" && !gatewaySettings.configuration.apiKey.length &&
+      <NotificationBanner
+        customNotificationBannerContents={
+          <Typography variant="body1" className={classes.customNotificationBannerParagraph}>
+            {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartOne")}
+
+            <br />
+
+            <a
+              href='/dashboard/admin/integrations'
+            >
+              {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartTwo")}
+            </a>
+          </Typography>
+        }
+        notificationBannerTitle={
+          t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.title")
+        }
+        showNotificationBanner
+      />;
+  };
 
   return (
     <>
@@ -270,32 +296,8 @@ export const Dashboard: React.FC = () => {
         </Container>
       </main>
 
-      {/* Notification banner */}
-      {
-        typeOfUser !== "admin"
-          ? null
-          : (
-            <NotificationBanner
-              customNotificationBannerContents={
-                <Typography variant="body1" className={classes.customNotificationBannerParagraph}>
-                  {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartOne")}
-
-                  <br />
-
-                  <a
-                    href='/dashboard/admin/integrations'
-                  >
-                    {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartTwo")}
-                  </a>
-                </Typography>
-              }
-              notificationBannerTitle={
-                t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.title")
-              }
-              showNotificationBanner
-            />
-          )
-      }
+      {/* 'Gateway settings' notification banner */}
+      {renderGatewaySettingsBanner()}
     </>
   );
 };

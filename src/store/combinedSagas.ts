@@ -5,6 +5,7 @@
 import apiDetails from "./apiDetails/sagas";
 import applications from "store/applications/sagas";
 import auth from "store/auth/sagas";
+import gatewaySettings from "./gatewaySettings/sagas";
 import profile from "./profile/sagas";
 import security from "./security/sagas";
 import subscriptions from "./subscriptions/sagas";
@@ -13,6 +14,7 @@ const sagas = [
   apiDetails,
   applications,
   auth,
+  gatewaySettings,
   profile,
   security,
   subscriptions,
