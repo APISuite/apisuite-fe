@@ -336,6 +336,7 @@ export default function profileReducer (
 
     case UPDATE_ORG_SUCCESS: {
       return update(state, {
+        org: { $set: action.updatedOrgDetails },
         requestStatuses: {
           updateOrgRequest: {
             isRequesting: { $set: false },

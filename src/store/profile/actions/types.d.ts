@@ -1,4 +1,4 @@
-import { NewOrgInfo, ProfileStore, Role, FetchTeamMembersResponse, GetProfileResponse, ExistingOrgInfo, UpdateProfileResponse } from "../types";
+import { NewOrgInfo, ProfileStore, Role, FetchTeamMembersResponse, GetProfileResponse, ExistingOrgInfo, UpdateProfileResponse, UpdateOrgResponse } from "../types";
 import { CHANGE_ROLE, CHANGE_ROLE_SUCCESS, CHANGE_ROLE_ERROR } from "./changeRole";
 import { CONFIRM_INVITE_MEMBER, CONFIRM_INVITE_MEMBER_SUCCESS, CONFIRM_INVITE_MEMBER_ERROR } from "./confirmInviteMember";
 import { CREATE_ORG, CREATE_ORG_SUCCESS, CREATE_ORG_ERROR } from "./createOrg";
@@ -210,6 +210,7 @@ export type UpdateOrgAction = {
 
 export type UpdateOrgActionSuccess = {
   type: typeof UPDATE_ORG_SUCCESS,
+  updatedOrgDetails: UpdateOrgResponse,
 }
 
 export type UpdateOrgActionError = {
