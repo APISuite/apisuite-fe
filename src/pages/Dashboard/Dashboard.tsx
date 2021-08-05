@@ -272,7 +272,6 @@ export const Dashboard: React.FC = () => {
         </Container>
       </main>
 
-      {/* 'Gateway settings' notification banner */}
       {getSections(DASHBOARD_POST_CONTENT)}
     </>
   );
