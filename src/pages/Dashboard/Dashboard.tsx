@@ -6,9 +6,11 @@ import { API_DOCS_CONTENT_TARGET, DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NO
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import ActionsCatalog from "components/ActionsCatalog";
 import APICatalog from "components/APICatalog";
+import Link from "components/Link";
 import Notice from "components/Notice";
-import NotificationBanner from "components/NotificationBanner";
 import { NotificationCard } from "components/NotificationCard";
+import { dashboardSelector } from "./selector";
+import { getSections } from "util/extensions";
 
 import { testIds } from "testIds";
 
@@ -22,9 +24,7 @@ import shieldSVG from "assets/icons/Shield.svg";
 import supportSVG from "assets/icons/Support.svg";
 import teamSVG from "assets/icons/Team.svg";
 
-import { dashboardSelector } from "./selector";
 import useStyles from "./styles";
-import Link from "components/Link";
 
 export const Dashboard: React.FC = () => {
   const classes = useStyles();
@@ -33,6 +33,8 @@ export const Dashboard: React.FC = () => {
   const { t } = useTranslation();
   const { socialURLs, supportURL, clientName, portalName } = useConfig();
   const { auth, subscriptions, notificationCards, profile } = useSelector(dashboardSelector);
+
+  const GATEWAY_SETTINGS_NOTIFICATION_BANNER = "GATEWAY_SETTINGS_NOTIFICATION_BANNER";
 
   const typeOfUser = auth.user!.role.name;
 
@@ -270,32 +272,8 @@ export const Dashboard: React.FC = () => {
         </Container>
       </main>
 
-      {/* Notification banner */}
-      {
-        typeOfUser !== "admin"
-          ? null
-          : (
-            <NotificationBanner
-              customNotificationBannerContents={
-                <Typography variant="body1" className={classes.customNotificationBannerParagraph}>
-                  {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartOne")}
-
-                  <br />
-
-                  <a
-                    href='/dashboard/admin/integrations'
-                  >
-                    {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartTwo")}
-                  </a>
-                </Typography>
-              }
-              notificationBannerTitle={
-                t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.title")
-              }
-              showNotificationBanner
-            />
-          )
-      }
+      {/* 'Gateway settings' notification banner */}
+      {getSections(GATEWAY_SETTINGS_NOTIFICATION_BANNER)}
     </>
   );
 };

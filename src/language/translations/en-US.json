@@ -193,11 +193,6 @@
           "greetingCardTextPartOne": "Hi",
           "greetingCardTextPartTwo": "As Account owner, you have a personalised administrator dashboard. You also have access to account management and a slightly different navigation.",
           "greetingCardButtonLabel": "Go to Admin area"
-        },
-        "notificationBanner": {
-          "title": "Don’t forget to connect your gateway",
-          "textPartOne": "The usability of your API Portal cloud account will increase dramatically by connecting it to your gateway.",
-          "textPartTwo": "Let’s start!"
         }
       },
       "regularUser": {
