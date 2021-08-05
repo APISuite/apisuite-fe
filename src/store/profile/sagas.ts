@@ -7,10 +7,10 @@ import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgA
 import { CONFIRM_INVITE_MEMBER, confirmInviteMemberError, confirmInviteMemberSuccess } from "./actions/confirmInviteMember";
 import { CREATE_ORG, createOrgError, createOrgSuccess } from "./actions/createOrg";
 import { DELETE_ACCOUNT, deleteAccountError, deleteAccountSuccess } from "./actions/deleteAccount";
-import { FETCH_ORG, fetchOrg, fetchOrgError, fetchOrgSuccess } from "./actions/fetchOrg";
+import { FETCH_ORG, fetchOrgError, fetchOrgSuccess } from "./actions/fetchOrg";
 import { FETCH_ROLE_OPTIONS, fetchRoleOptionsError, fetchRoleOptionsSuccess } from "./actions/fetchRoleOptions";
 import { FETCH_TEAM_MEMBERS, fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess } from "./actions/fetchTeamMembers";
-import { FetchOrgResponse, FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, UpdateProfileResponse } from "./types";
+import { FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, OrgDetailsResponse, UpdateProfileResponse } from "./types";
 import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
@@ -23,7 +23,7 @@ import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOr
 import { UPDATE_PROFILE, updateProfileError, updateProfileSuccess } from "./actions/updateProfile";
 import request from "util/request";
 
-export function * fetchTeamMembersSaga (action: FetchTeamMembersAction) {
+export function* fetchTeamMembersSaga(action: FetchTeamMembersAction) {
   try {
     let orgID = action.orgID;
 
@@ -45,7 +45,7 @@ export function * fetchTeamMembersSaga (action: FetchTeamMembersAction) {
   }
 }
 
-export function * fetchRoleOptionsSaga () {
+export function* fetchRoleOptionsSaga() {
   try {
     const roles: FetchRoleOptionsResponse = yield call(request, {
       url: `${API_URL}/roles`,
@@ -61,7 +61,7 @@ export function * fetchRoleOptionsSaga () {
   }
 }
 
-export function * inviteMemberSaga ({ type, ...rest }: InviteTeamMemberAction) {
+export function* inviteMemberSaga({ type, ...rest }: InviteTeamMemberAction) {
   try {
     yield call(request, {
       url: `${API_URL}/users/invite`,
@@ -83,7 +83,7 @@ export function * inviteMemberSaga ({ type, ...rest }: InviteTeamMemberAction) {
   }
 }
 
-export function * confirmInviteSaga ({ token }: ConfirmInviteMemberAction) {
+export function* confirmInviteSaga({ token }: ConfirmInviteMemberAction) {
   try {
     yield call(request, {
       url: `${API_URL}/users/invite/confirm`,
@@ -101,7 +101,7 @@ export function * confirmInviteSaga ({ token }: ConfirmInviteMemberAction) {
   }
 }
 
-export function * changeRoleSaga ({ type, ...rest }: ChangeRoleAction) {
+export function* changeRoleSaga({ type, ...rest }: ChangeRoleAction) {
   try {
     yield call(request, {
       url: `${API_URL}/organizations/assign`,
@@ -124,7 +124,7 @@ export function * changeRoleSaga ({ type, ...rest }: ChangeRoleAction) {
   }
 }
 
-export function * getProfileSaga () {
+export function* getProfileSaga() {
   try {
     const profile: GetProfileResponse = yield call(request, {
       url: `${API_URL}/users/profile`,
@@ -143,7 +143,7 @@ export function * getProfileSaga () {
   }
 }
 
-export function * updateProfileSaga ({ userId, type, ...rest }: UpdateProfileAction) {
+export function* updateProfileSaga({ userId, type, ...rest }: UpdateProfileAction) {
   try {
     const response: UpdateProfileResponse = yield call(request, {
       // url: `${API_URL}/users/profile/update`,
@@ -165,7 +165,7 @@ export function * updateProfileSaga ({ userId, type, ...rest }: UpdateProfileAct
   }
 }
 
-export function * fetchOrgSaga (action: FetchOrgAction) {
+export function* fetchOrgSaga(action: FetchOrgAction) {
   try {
     let orgId = action.org_id;
 
@@ -174,7 +174,7 @@ export function * fetchOrgSaga (action: FetchOrgAction) {
       orgId = yield select((state: Store) => state.profile.profile.current_org.id);
     }
 
-    const org: FetchOrgResponse = yield call(request, {
+    const org: OrgDetailsResponse = yield call(request, {
       url: `${API_URL}/organizations/${orgId}`,
       method: "GET",
       headers: {
@@ -191,9 +191,9 @@ export function * fetchOrgSaga (action: FetchOrgAction) {
   }
 }
 
-export function * createOrgSaga ({ newOrgInfo }: CreateOrgAction) {
+export function* createOrgSaga({ newOrgInfo }: CreateOrgAction) {
   try {
-    const org: FetchOrgResponse = yield call(request, {
+    const org: OrgDetailsResponse = yield call(request, {
       url: `${API_URL}/organizations/`,
       method: "POST",
       headers: {
@@ -212,9 +212,9 @@ export function * createOrgSaga ({ newOrgInfo }: CreateOrgAction) {
   }
 }
 
-export function * updateOrgSaga ({ orgId, orgInfo }: UpdateOrgAction) {
+export function* updateOrgSaga({ orgId, orgInfo }: UpdateOrgAction) {
   try {
-    yield call(request, {
+    const updatedOrgDetails: OrgDetailsResponse = yield call(request, {
       url: `${API_URL}/organizations/${orgId}`,
       method: "PUT",
       headers: {
@@ -223,8 +223,7 @@ export function * updateOrgSaga ({ orgId, orgInfo }: UpdateOrgAction) {
       data: JSON.stringify(orgInfo),
     });
 
-    yield put(updateOrgSuccess({}));
-    yield put(fetchOrg({ org_id: orgId }));
+    yield put(updateOrgSuccess({ updatedOrgDetails }));
     yield put(openNotification("success", "Your organisation was successfully updated!", 3000));
   } catch (error) {
     yield put(updateOrgError({ error: error.message }));
@@ -234,7 +233,7 @@ export function * updateOrgSaga ({ orgId, orgInfo }: UpdateOrgAction) {
   }
 }
 
-export function * switchOrgSaga ({ type, ...props }: SwitchOrgAction) {
+export function* switchOrgSaga({ type, ...props }: SwitchOrgAction) {
   try {
     yield call(request, {
       url: `${API_URL}/users/${props.id}/organizations/${props.orgId}`,
@@ -255,7 +254,7 @@ export function * switchOrgSaga ({ type, ...props }: SwitchOrgAction) {
   }
 }
 
-export function * deleteAccountSaga () {
+export function* deleteAccountSaga() {
   try {
     yield call(request, {
       url: `${API_URL}/users`,
@@ -278,7 +277,7 @@ export function * deleteAccountSaga () {
   }
 }
 
-function * rootSaga () {
+function* rootSaga() {
   yield takeLatest(CHANGE_ROLE, changeRoleSaga);
   yield takeLatest(CONFIRM_INVITE_MEMBER, confirmInviteSaga);
   yield takeLatest(CREATE_ORG, createOrgSaga);

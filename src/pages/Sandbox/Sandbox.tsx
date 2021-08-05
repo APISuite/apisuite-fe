@@ -39,7 +39,6 @@ export const Sandbox: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("Subscriptions", subscriptions);
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'API Catalog' section. */
     const allAvailableAPIs = subscriptions.apis;

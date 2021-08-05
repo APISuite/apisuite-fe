@@ -102,4 +102,4 @@ export type UpdateProfileResponse = {
   success: boolean,
 }
 
-export type FetchOrgResponse = Organization & ExistingOrgInfo
+export type OrgDetailsResponse = Organization & ExistingOrgInfo
