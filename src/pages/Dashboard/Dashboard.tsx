@@ -34,7 +34,7 @@ export const Dashboard: React.FC = () => {
   const { socialURLs, supportURL, clientName, portalName } = useConfig();
   const { auth, subscriptions, notificationCards, profile } = useSelector(dashboardSelector);
 
-  const GATEWAY_SETTINGS_NOTIFICATION_BANNER = "GATEWAY_SETTINGS_NOTIFICATION_BANNER";
+  const DASHBOARD_POST_CONTENT = "DASHBOARD_POST_CONTENT";
 
   const typeOfUser = auth.user!.role.name;
 
@@ -273,7 +273,7 @@ export const Dashboard: React.FC = () => {
       </main>
 
       {/* 'Gateway settings' notification banner */}
-      {getSections(GATEWAY_SETTINGS_NOTIFICATION_BANNER)}
+      {getSections(DASHBOARD_POST_CONTENT)}
     </>
   );
 };
