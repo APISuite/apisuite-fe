@@ -454,7 +454,7 @@ export const Profile: React.FC = () => {
                               size="large"
                               variant="contained"
                             >
-                              Update image
+                              {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileImageButtonLabel")}
                             </Button>
                           </Box>
                         }

@@ -423,6 +423,7 @@
         "changePassword": "Change password",
         "viewTeam": "View team",
         "updateProfileDetails": "Update",
+        "updateProfileImageButtonLabel": "Update image",
         "signOut": "Sign out",
         "deleteAccount": "Delete account",
         "deleteAccountModalConfirmButton": "Delete account",
