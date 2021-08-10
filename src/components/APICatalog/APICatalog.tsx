@@ -46,7 +46,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                   apiDetails.apiContract === t("fallbacks.noContract") && classes.contractlessAPIProduct,
                 )
               }
-              onClick={apiDetails.apiContract ? handleOnCardClick(apiDetails) : () => null}
+              onClick={handleOnCardClick(apiDetails)}
             >
               <Grid container>
                 <Grid
