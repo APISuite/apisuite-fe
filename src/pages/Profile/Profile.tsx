@@ -46,7 +46,7 @@ export const Profile: React.FC = () => {
   useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
     field to determine whether the user signed in regularly or by way of SSO.
-
+    
     If 'oidcProvider' amounts to 'null', it means that the user signed in regularly,
     and if not, it means that the user signed in by way of SSO. */
     if (profile.user.oidcProvider) {
@@ -56,7 +56,7 @@ export const Profile: React.FC = () => {
 
   /*
   User details
-
+  
   Note:
   - 'formState' refers to our own, local copy of a user's details.
   - 'profile' refers to our stored, back-end approved copy of a user's details.
@@ -418,25 +418,47 @@ export const Profile: React.FC = () => {
                 {
                   avatarHasBeenClicked
                     ? (
-                      <Box px={1.5} pb={2}>
-                        <TextField
-                          error={(formState.touched.userAvatarURL && formState.errors.userAvatarURL) || !validImage}
-                          fullWidth
-                          helperText={
-                            ((formState.touched.userAvatarURL &&
-                          formState.errors.userAvatarURL) || !validImage) &&
-                        formState.errorMsgs.userAvatarURL
-                          }
-                          label={t("profileTab.overviewSubTab.userRelatedLabels.userAvatarURL")}
-                          margin='dense'
-                          name='userAvatarURL'
-                          onChange={handleChange}
-                          onFocus={handleFocus}
-                          type='url'
-                          value={formState.values.userAvatarURL}
-                          variant='outlined'
-                        />
-                      </Box>
+                      <>
+                        <Box px={1.5} pb={2}>
+                          <TextField
+                            error={(formState.touched.userAvatarURL && formState.errors.userAvatarURL) || !validImage}
+                            fullWidth
+                            helperText={
+                              ((formState.touched.userAvatarURL &&
+                                formState.errors.userAvatarURL) || !validImage) &&
+                              formState.errorMsgs.userAvatarURL
+                            }
+                            label={t("profileTab.overviewSubTab.userRelatedLabels.userAvatarURL")}
+                            margin='dense'
+                            name='userAvatarURL'
+                            onChange={handleChange}
+                            onFocus={handleFocus}
+                            type='url'
+                            value={formState.values.userAvatarURL}
+                            variant='outlined'
+                          />
+                        </Box>
+
+                        {
+                          ssoIsActive &&
+                          <Box pb={3} textAlign="center">
+                            <Button
+                              color="primary"
+                              disableElevation
+                              disabled={
+                                !formState.dirty.userAvatarURL ||
+                                formState.errors.userAvatarURL ||
+                                !validImage
+                              }
+                              onClick={updateProfileDetails}
+                              size="large"
+                              variant="contained"
+                            >
+                              Update image
+                            </Button>
+                          </Box>
+                        }
+                      </>
                     )
                     : null
                 }
@@ -477,8 +499,8 @@ export const Profile: React.FC = () => {
                       fullWidth
                       helperText={
                         formState.touched.userPhoneNumber &&
-                      formState.errors.userPhoneNumber &&
-                      formState.errorMsgs.userPhoneNumber
+                        formState.errors.userPhoneNumber &&
+                        formState.errorMsgs.userPhoneNumber
                       }
                       label={t("profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber")}
                       margin='dense'
@@ -590,27 +612,27 @@ export const Profile: React.FC = () => {
 
       {
         openDialog &&
-          <CustomizableDialog
-            closeDialogCallback={handleCloseDialog}cancelButtonProps={{
-              variant:"outlined",
-              color: "primary",
-            }}
-            confirmButtonCallback={() => {
-              dispatch(deleteAccount({}));
+        <CustomizableDialog
+          closeDialogCallback={handleCloseDialog} cancelButtonProps={{
+            variant: "outlined",
+            color: "primary",
+          }}
+          confirmButtonCallback={() => {
+            dispatch(deleteAccount({}));
 
-              handleCloseDialog();
-            }}
-            confirmButtonLabel={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton")}
-            confirmButtonStyle={classes.deleteAccountButtonStyles}
-            open={openDialog}
-            optionalTitleIcon='warning'
-            providedText={
-              t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningText") +
-              ` ${profile.user.email}?`
-            }
-            providedSubText={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText")}
-            providedTitle={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle")}
-          />
+            handleCloseDialog();
+          }}
+          confirmButtonLabel={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton")}
+          confirmButtonStyle={classes.deleteAccountButtonStyles}
+          open={openDialog}
+          optionalTitleIcon='warning'
+          providedText={
+            t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningText") +
+            ` ${profile.user.email}?`
+          }
+          providedSubText={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText")}
+          providedTitle={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle")}
+        />
       }
     </PageContainer>
   );
