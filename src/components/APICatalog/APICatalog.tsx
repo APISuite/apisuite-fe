@@ -43,7 +43,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
               className={
                 clsx(
                   classes.card,
-                  apiDetails.apiContract === t("fallbacks.noContract") && classes.contractlessAPIProduct,
+                  !apiDetails.apiContract.length && classes.contractlessAPIProduct,
                 )
               }
               onClick={handleOnCardClick(apiDetails)}
@@ -77,7 +77,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                   </Typography>
 
                   <Typography variant="body1">
-                    {apiDetails.apiContract}
+                    {apiDetails.apiContract.length ? apiDetails.apiContract : t("fallbacks.noContract")}
                   </Typography>
 
                   <Box mb={1.5} mt={1}>
