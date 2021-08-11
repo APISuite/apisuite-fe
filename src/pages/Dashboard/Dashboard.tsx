@@ -58,7 +58,7 @@ export const Dashboard: React.FC = () => {
           its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
-          apiContract: api.apiVersions.length ? api.apiVersions[0].title : "",
+          apiContract: api.apiVersions.length ? api.apiVersions[0].title : t("fallbacks.noContract"),
           apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
           apiName: api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
