@@ -7,6 +7,7 @@ import useStyles from "./styles";
 import { APICatalogProps, APIDetails } from "./types";
 
 import { testIds } from "testIds";
+import clsx from "clsx";
 
 const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
   const classes = useStyles();
@@ -38,7 +39,15 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
             key={apiDetails.id}
             xs={6}
           >
-            <ApplicationCard className={classes.card} onClick={handleOnCardClick(apiDetails)}>
+            <ApplicationCard
+              className={
+                clsx(
+                  classes.card,
+                  !apiDetails.hasMoreDetails && classes.contractlessAPIProduct,
+                )
+              }
+              onClick={handleOnCardClick(apiDetails)}
+            >
               <Grid container>
                 <Grid
                   data-test-id={testIds.apiCardAvatar}
