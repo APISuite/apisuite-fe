@@ -6,6 +6,15 @@ export default makeStyles((theme) => ({
     fontSize: 14,
   },
 
+  deleteAppButtonStyles: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+
+    "&:hover": {
+      backgroundColor: theme.palette.error.main,
+    },
+  },
+
   emailTextfield: {
     backgroundColor: theme.palette.background.default,
     borderRadius: `${theme.shape.borderRadius}px`,
