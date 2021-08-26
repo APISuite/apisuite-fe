@@ -48,6 +48,16 @@ export default makeStyles((theme) => ({
     padding: "4px 8px",
   },
 
+  documentationLink: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.shape.borderRadius}px`,
+    color: `${theme.palette.primary.contrastText} !important`,
+    cursor: "pointer",
+    fontWeight: 500,
+    padding: theme.spacing(1.5, 2.5),
+    textDecoration: "none",
+  },
+
   filtersContainer: {
     display: "flex",
     justifyContent: "flex-end",
@@ -89,6 +99,11 @@ export default makeStyles((theme) => ({
     borderBottom: "4px solid rgba(20, 40, 60, 0.1)",
     width: "100%",
     padding: "160px 60px 0px 60px",
+  },
+
+  noAPIProductsIllustration: {
+    height: "auto",
+    width: 500,
   },
 
   textFilter: {

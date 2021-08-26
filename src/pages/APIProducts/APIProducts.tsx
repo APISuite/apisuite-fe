@@ -8,6 +8,7 @@ import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRoun
 import PowerRoundedIcon from "@material-ui/icons/PowerRounded";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import apiProductCard from "assets/apiProductCard.svg";
+import noAPIProducts from "assets/noAPIProducts.svg";
 
 import { API_DOCS_CONTENT_TARGET } from "constants/global";
 import APICatalog from "components/APICatalog";
@@ -56,7 +57,7 @@ export const APIProducts: React.FC = () => {
     /* Triggers the retrieval and storage of all app-related information we presently
     have on a given user. */
     if (auth?.user) {
-      dispatch(getAllUserApps({orgID: profile.current_org.id}));
+      dispatch(getAllUserApps({ orgID: profile.current_org.id }));
     }
   }, [auth, dispatch, profile]);
 
@@ -90,6 +91,198 @@ export const APIProducts: React.FC = () => {
       setLatestUpdatedAPI(newRecentlyUpdatedAPIs[0]);
     }
   }, [subscriptions]);
+
+  // 'Latest API product update' section  
+
+  const generateLatestAPIProductContents = () => {
+    return recentlyUpdatedAPIs.length ? (
+      <>
+        <Box mt={1.5} mb={3}>
+          <Typography variant="h4" color="inherit">
+            {latestUpdatedAPI.apiName} &nbsp;
+            <Chip label={latestUpdatedAPI.apiVersion} color="secondary" />
+          </Typography>
+        </Box>
+
+        <div className={classes.apiProductButtons}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            disableElevation
+            href={
+              (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
+                ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
+                : "#"
+            }
+          >
+            {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
+          </Button>
+
+          {
+            auth.user && (
+              <Box clone ml={1}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={toggleModal}
+                >
+                  {t("apiProductsTab.apiProductButtons.subscribeButtonLabel")}
+                </Button>
+              </Box>
+            )
+          }
+        </div>
+
+        <Box
+          display="flex"
+          alignItems="center"
+          height={50}
+        >
+          {
+            auth.user && (
+              <>
+                <Icon fontSize="small">circle</Icon>
+
+                &nbsp;
+
+                <Typography variant="body2" color="secondary">
+                  {
+                    latestUpdatedAPI.apiAccess
+                      ? t("apiProductsTab.productionAccess")
+                      : t("apiProductsTab.documentationAccess")
+                  }
+                </Typography>
+              </>
+            )}
+
+          {
+            !auth.user && (
+              <Typography variant="body1">
+                <Link to="/auth/signup">
+                  {t("apiProductsTab.registerForMoreMessage")}
+                </Link>
+              </Typography>
+            )
+          }
+        </Box>
+      </>
+    ) : (
+      <Box mt={1.5} mb={15}>
+        <Typography variant="h4" color="inherit">
+          {t("apiProductsTab.noAPIProducts.comingSoon")}
+        </Typography>
+      </Box>
+    );
+  };
+
+  // 'All API products' section  
+
+  const generateAllAPIProductContents = () => {
+    return recentlyUpdatedAPIs.length ? (
+      <>
+        <div className={classes.filtersContainer}>
+          <InputBase
+            className={classes.textFilter}
+            endAdornment={
+              <SearchRoundedIcon />
+            }
+            onChange={(changeEvent) => handleAPIFiltering(changeEvent, undefined)}
+            placeholder={t("apiProductsTab.textFilterPlaceholder")}
+          />
+
+          <div
+            className={
+              apiFilters[1]
+                ? classes.activeFilterButtonContainer
+                : classes.inactiveFilterButtonContainer
+            }
+            onClick={() => handleAPIFiltering(undefined, 1)}
+            title={t("apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible")}
+          >
+            <PowerRoundedIcon
+              className={
+                apiFilters[1]
+                  ? classes.activeProductionAccessFilterButtonIcon
+                  : classes.inactiveFilterButtonIcon
+              }
+            />
+          </div>
+
+          <div
+            className={
+              apiFilters[3]
+                ? (
+                  `${classes.activeFilterButtonContainer} ${classes.lastFilterButtonContainer}`
+                )
+                : (
+                  `${classes.inactiveFilterButtonContainer} ${classes.lastFilterButtonContainer}`
+                )
+            }
+            onClick={() => handleAPIFiltering(undefined, 3)}
+            title={t("apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible")}
+          >
+            <ChromeReaderModeRoundedIcon
+              className={
+                apiFilters[3]
+                  ? classes.activeDocumentationAccessFilterButtonIcon
+                  : classes.inactiveFilterButtonIcon
+              }
+            />
+          </div>
+        </div>
+
+        {!recentlyUpdatedAPIs.length && (
+          <Typography align="center" variant="body1">
+            {t("apiProductsTab.retrievingAPIProductMessage")}
+          </Typography>
+        )}
+
+        {!!recentlyUpdatedAPIs.length && (
+          <div className={classes.apiCatalogContainer}>
+            <APICatalog
+              apisToDisplay={
+                apiFilters[0].length === 0 && !apiFilters[1] && !apiFilters[2] && !apiFilters[3]
+                  ? recentlyUpdatedAPIs : filteredAPIs}
+            />
+          </div>
+        )}
+      </>
+    ) : (
+      <Box m='auto' textAlign='center' width={675}>
+        <Box mt={9.125}>
+          <img
+            className={classes.noAPIProductsIllustration}
+            src={noAPIProducts}
+          />
+        </Box>
+
+        <Box mt={4}>
+          <Typography style={{ color: palette.action.active }} variant="h3">
+            {t("apiProductsTab.noAPIProducts.text")}
+          </Typography>
+        </Box>
+
+        <Box mt={3}>
+          <Typography style={{ color: palette.text.primary }} variant="body1">
+            {t("apiProductsTab.noAPIProducts.subText")}
+          </Typography>
+        </Box>
+
+        <Box mb={12.5} mt={5}>
+          <Typography variant="body1">
+            <Link
+              className={classes.documentationLink}
+              to="/documentation"
+            >
+              {t("apiProductsTab.noAPIProducts.documentationButtonLabel")}
+            </Link>
+          </Typography>
+        </Box>
+      </Box>
+    );
+  };
 
   // API filtering logic
 
@@ -195,73 +388,7 @@ export const APIProducts: React.FC = () => {
               <b>{t("apiProductsTab.latestAPIProductTitle")}</b>
             </Typography>
 
-            <Box mt={1.5} mb={3}>
-              <Typography variant="h4" color="inherit">
-                {latestUpdatedAPI.apiName} &nbsp;
-                <Chip label={latestUpdatedAPI.apiVersion} color="secondary" />
-              </Typography>
-            </Box>
-
-            <div className={classes.apiProductButtons}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                disableElevation
-                href={
-                  (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
-                    ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
-                    : "#"
-                }
-              >
-                {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
-              </Button>
-
-              {
-                auth.user && (
-                  <Box clone ml={1}>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      size="large"
-                      onClick={toggleModal}
-                    >
-                      {t("apiProductsTab.apiProductButtons.subscribeButtonLabel")}
-                    </Button>
-                  </Box>
-                )
-              }
-            </div>
-
-            <Box
-              display="flex"
-              alignItems="center"
-              height={50}
-            >
-              {auth.user && (
-                <>
-                  <Icon fontSize="small">circle</Icon>
-
-                  &nbsp;
-
-                  <Typography variant="body2" color="secondary">
-                    {
-                      latestUpdatedAPI.apiAccess
-                        ? t("apiProductsTab.productionAccess")
-                        : t("apiProductsTab.documentationAccess")
-                    }
-                  </Typography>
-                </>
-              )}
-
-              {!auth.user &&(
-                <Typography variant="body1">
-                  <Link to="/auth/signup">
-                    {t("apiProductsTab.registerForMoreMessage")}
-                  </Link>
-                </Typography>
-              )}
-            </Box>
+            {generateLatestAPIProductContents()}
           </Box>
         </PageContainer>
       </section>
@@ -269,72 +396,7 @@ export const APIProducts: React.FC = () => {
       {/* 'All API products' section */}
       <Box my={5}>
         <PageContainer disablePaddingY>
-          <div className={classes.filtersContainer}>
-            <InputBase
-              className={classes.textFilter}
-              endAdornment={
-                <SearchRoundedIcon />
-              }
-              onChange={(changeEvent) => handleAPIFiltering(changeEvent, undefined)}
-              placeholder={t("apiProductsTab.textFilterPlaceholder")}
-            />
-
-            <div
-              className={
-                apiFilters[1]
-                  ? classes.activeFilterButtonContainer
-                  : classes.inactiveFilterButtonContainer
-              }
-              onClick={() => handleAPIFiltering(undefined, 1)}
-              title={t("apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible")}
-            >
-              <PowerRoundedIcon
-                className={
-                  apiFilters[1]
-                    ? classes.activeProductionAccessFilterButtonIcon
-                    : classes.inactiveFilterButtonIcon
-                }
-              />
-            </div>
-
-            <div
-              className={
-                apiFilters[3]
-                  ? (
-                    `${classes.activeFilterButtonContainer} ${classes.lastFilterButtonContainer}`
-                  )
-                  : (
-                    `${classes.inactiveFilterButtonContainer} ${classes.lastFilterButtonContainer}`
-                  )
-              }
-              onClick={() => handleAPIFiltering(undefined, 3)}
-              title={t("apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible")}
-            >
-              <ChromeReaderModeRoundedIcon
-                className={
-                  apiFilters[3]
-                    ? classes.activeDocumentationAccessFilterButtonIcon
-                    : classes.inactiveFilterButtonIcon
-                }
-              />
-            </div>
-          </div>
-
-          {!recentlyUpdatedAPIs.length && (
-            <Typography variant="body1" align="center">
-              {t("apiProductsTab.retrievingAPIProductMessage")}
-            </Typography>
-          )}
-
-          {!!recentlyUpdatedAPIs.length && (
-            <div className={classes.apiCatalogContainer}>
-              <APICatalog
-                apisToDisplay={
-                  apiFilters[0].length === 0 && !apiFilters[1] && !apiFilters[2] && !apiFilters[3]
-                    ? recentlyUpdatedAPIs : filteredAPIs}
-              />
-            </div>
-          )}
+          {generateAllAPIProductContents()}
         </PageContainer>
       </Box>
 

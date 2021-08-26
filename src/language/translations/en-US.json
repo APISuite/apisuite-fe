@@ -175,7 +175,13 @@
     "productionAccess": "Production access",
     "documentationAccess": "API Documentation",
     "registerForMoreMessage": "Sign up for more options",
-    "textFilterPlaceholder": "Filter..."
+    "textFilterPlaceholder": "Filter...",
+    "noAPIProducts": {
+      "comingSoon": "Coming soon!",
+      "text": "No API Products available",
+      "subText": "While we are still working on adding our API Products, you can read all of the documentation related to the portal and be ready once our API Products are launched.",
+      "documentationButtonLabel": "Read documentation"
+    }
   },
   "dashboardTab": {
     "landingPageSubTab": {
