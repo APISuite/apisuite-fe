@@ -175,7 +175,7 @@ export const TeamPage: React.FC = () => {
 
   // Options menu
 
-  const optionsArray = [t("rbac.team.options.removeUserFromTeam")];
+  const optionsArray = [t("rbac.team.options.removeUser")];
 
   const [anchorElement, setAnchorElement] = React.useState(null);
   const open = Boolean(anchorElement);
@@ -319,13 +319,13 @@ export const TeamPage: React.FC = () => {
         }}
         closeDialogCallback={() => setRemoveUserDialogOpen(false)}
         confirmButtonCallback={() => null}
-        confirmButtonLabel={t("rbac.team.dialogs.removeUserFromTeam.confirmButtonLabel")}
+        confirmButtonLabel={t("rbac.team.dialogs.removeUser.confirmButtonLabel")}
         confirmButtonStyle={classes.deleteAppButtonStyles}
         open={removeUserDialogOpen}
         optionalTitleIcon="warning"
-        providedSubText={t("rbac.team.dialogs.removeUserFromTeam.subText")}
-        providedText={t("rbac.team.dialogs.removeUserFromTeam.text")}
-        providedTitle={t("rbac.team.dialogs.removeUserFromTeam.title")}
+        providedSubText={t("rbac.team.dialogs.removeUser.subText")}
+        providedText={t("rbac.team.dialogs.removeUser.text")}
+        providedTitle={t("rbac.team.dialogs.removeUser.title")}
       />
     </>
   );
