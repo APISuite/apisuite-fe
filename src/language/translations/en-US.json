@@ -577,10 +577,10 @@
       "invite": "Invite member",
       "send": "Send",
       "options": {
-        "removeUserFromTeam": "Remove user from team"
+        "removeUser": "Remove user from team"
       },
       "dialogs": {
-        "removeUserFromTeam": {
+        "removeUser": {
           "title": "Remove user from team?",
           "text": "Are you sure you want to remove the selected user from your team?",
           "subText": "You may re-invite the selected user at a later time.",
