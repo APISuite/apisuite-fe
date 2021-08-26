@@ -1253,7 +1253,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                     <Grid item md={12}>
                       <MediaUpload
-                        accept="image/jpg, image/jpeg, image/png, image/gif"
+                        accept="image/jpg, image/jpeg, image/png, image/gif, image/svg"
                         images={mostRecentlySelectedAppDetails.media || []}
                         onDeletePressed={deleteMedia}
                         onFileLoaded={uploadMedia}

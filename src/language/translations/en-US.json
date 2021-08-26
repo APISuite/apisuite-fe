@@ -655,7 +655,7 @@
     "deleteSuccess": "Media deleted successfully.",
     "deleteError": "Error deleting media.",
     "dragdrop": "Drag and drop files or click",
-    "helperText": "Only JPG/JPEG/PNG/GIF images are supported. The maximum image size is 2 MB.",
+    "helperText": "Only JPG/JPEG/PNG/GIF/SVG images are supported. The maximum image size is 2 MB.",
     "legend": "Uploaded Files",
     "title": "Content Preview",
     "uploadSuccess": "Media uploaded successfully.",
