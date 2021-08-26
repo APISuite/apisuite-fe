@@ -23,7 +23,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     backgroundColor: theme.palette.grey[50],
     display: "flex",
-    padding: theme.spacing(1, 3),
+    padding: theme.spacing(2, 3),
 
     // Dialog's optional title icon
     "& > :first-child": {

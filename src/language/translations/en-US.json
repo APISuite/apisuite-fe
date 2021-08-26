@@ -581,7 +581,18 @@
       "header": "Organisation members",
       "actions": "User role",
       "invite": "Invite member",
-      "send": "send"
+      "send": "Send",
+      "options": {
+        "removeUser": "Remove user from team"
+      },
+      "dialogs": {
+        "removeUser": {
+          "title": "Remove user from team?",
+          "text": "Are you sure you want to remove the selected user from your team?",
+          "subText": "You may re-invite the selected user at a later time.",
+          "confirmButtonLabel": "Remove user from team"
+        }
+      }
     }
   },
   "warnings": {
@@ -650,7 +661,7 @@
     "deleteSuccess": "Media deleted successfully.",
     "deleteError": "Error deleting media.",
     "dragdrop": "Drag and drop files or click",
-    "helperText": "Only JPG/JPEG/PNG/GIF images are supported. The maximum image size is 2 MB.",
+    "helperText": "Only JPG/JPEG/PNG/GIF/SVG images are supported. The maximum image size is 2 MB.",
     "legend": "Uploaded Files",
     "title": "Content Preview",
     "uploadSuccess": "Media uploaded successfully.",
