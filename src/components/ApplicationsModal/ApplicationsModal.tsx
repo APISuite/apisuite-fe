@@ -8,7 +8,7 @@ import {
   TextField, Trans, Typography, useConfig, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
-import { useForm, Controller } from "react-hook-form";
+import { useFieldArray, useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -138,7 +138,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       yup.object().shape({
         description: yup.string(),
         key: yup.string().test("isKeyValid", t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText"), (value: string|undefined) => {
-          return !isValidAppMetaKey(`${metadataKeyDefaultPrefix}${value}`);
+          return isValidAppMetaKey(`${currMeta === -1 ? metadataKeyDefaultPrefix : ""}${value}`);
         }).required(),
         title: yup.string().when("key", {
           is: (key: string) => {
@@ -201,7 +201,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     register,
     reset,
     setValue,
-    trigger,
+    watch,
   } = useForm({
     defaultValues: {
       appAvatarURL: "",
@@ -211,10 +211,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appDescription: "",
       appLabels: "",
       appMetadata: [] as Metadata[],
-      appMetaDescription: "",
-      appMetaKey: "",
-      appMetaTitle: "",
-      appMetaValue: "",
       appName: "",
       appPrivacyURL: "",
       appRedirectURI: "https://",
@@ -228,6 +224,25 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     mode: "onChange",
     resolver: yupResolver(appSchema),
     reValidateMode: "onChange",
+  });
+
+  const { append, fields, remove, update } = useFieldArray({
+    control,
+    name: "appMetadata",
+  });
+  const watchAppMetadata = watch("appMetadata");
+  const controlledMetadataFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchAppMetadata[index],
+    };
+  });
+
+  const [metadataFormValues, setMetadataFormValues] = React.useState({
+    appMetaDescription: "",
+    appMetaKey: "",
+    appMetaTitle: "",
+    appMetaValue: "",
   });
 
   /*
@@ -247,10 +262,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
         appMetadata: mostRecentlySelectedAppDetails.metadata || [],
-        appMetaDescription: "",
-        appMetaKey: "",
-        appMetaTitle: "",
-        appMetaValue: "",
         appName: mostRecentlySelectedAppDetails.name ?? "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ?? "",
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ?? "",
@@ -270,10 +281,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appDescription: "",
         appLabels: "",
         appMetadata: [],
-        appMetaDescription: "",
-        appMetaKey: "",
-        appMetaTitle: "",
-        appMetaValue: "",
         appName: "",
         appPrivacyURL: "",
         appRedirectURI: "https://",
@@ -480,29 +487,25 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   const validMetadata = () => {
-    if (getValues("appMetaKey").length === 0) {
-      return getValues("appMetaValue").length === 0 &&
-        getValues("appMetaTitle").length === 0 &&
-        getValues("appMetaTitle").length === 0;
+    if (metadataFormValues.appMetaKey.length === 0) {
+      return metadataFormValues.appMetaValue.length === 0 &&
+        metadataFormValues.appMetaTitle.length === 0;
     } else {
-      return isValidAppMetaKey(`${metadataKeyDefaultPrefix}${getValues("appMetaKey")}`) &&
-        getValues("appMetaValue").length !== 0 &&
-        getValues("appMetaTitle").length !== 0 &&
-        getValues("appMetaTitle").length !== 0;
+      return isValidAppMetaKey(`${metadataKeyDefaultPrefix}${metadataFormValues.appMetaKey}`) &&
+        metadataFormValues.appMetaValue.length !== 0 &&
+        metadataFormValues.appMetaTitle.length !== 0;
     }
   };
 
   const hasChanged = () => {
     return (isValid || Object.keys(errors).length === 0)
-      && (isDirty || deletedMeta)
-      && validMetadata();
+      && isDirty && validMetadata();
   };
 
   const [anchorEl, setAnchorEl] = React.useState<{ [x: number]: EventTarget & HTMLButtonElement}|null>(null);
   const [addMeta, setAddMeta] = React.useState(getValues("appMetadata").length > 0);
   const [currMeta, setCurrMeta] = React.useState(-1);
   const [editedMeta, setEditedMeta] = React.useState<Metadata|null>(null);
-  const [deletedMeta, setDeletedMeta] = React.useState(false);
 
   const handleClick = (currentTarget: EventTarget & HTMLButtonElement, index = 0) => {
     setAnchorEl({
@@ -519,24 +522,17 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     setEditedMeta(metadata);
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = (index: number) => {
     setCurrMeta(-1);
     setEditedMeta(null);
+    const metadata = getValues("appMetadata");
+    update(index, metadata[index]);
   };
 
   const handleCancel = (index: number) => {
     setCurrMeta(-1);
-    const metadata = getValues("appMetadata");
     if (editedMeta) {
-      metadata[index] = editedMeta;
-      reset({
-        ...getValues(),
-        appMetadata: metadata,
-      }, {
-        keepErrors: true,
-        keepDirty: true,
-      });
-      trigger("appMetadata");
+      update(index, editedMeta);
       setEditedMeta(null);
     }
   };
@@ -551,42 +547,39 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     setCurrMeta(-1);
     const metadata = getValues("appMetadata");
     metadata.splice(index, 1);
-    reset({
-      ...getValues(),
-      appMetadata: metadata,
-    }, {
-      keepErrors: true,
-      keepDirty: true,
-    });
-    trigger("appMetadata");
     if (!metadata.length) {
       setAddMeta(true);
     }
-    setDeletedMeta(true);
+    remove(index);
   };
 
   const saveMetadata = () => {
-    const metadata = getValues("appMetadata");
-    metadata.push({
-      key: `${metadataKeyDefaultPrefix}${getValues("appMetaKey")}`,
-      value: getValues("appMetaValue"),
-      title: getValues("appMetaTitle"),
-      description: getValues("appMetaDescription") || "",
+    append({
+      key: `${metadataKeyDefaultPrefix}${metadataFormValues.appMetaKey}`,
+      value: metadataFormValues.appMetaValue,
+      title: metadataFormValues.appMetaTitle,
+      description: metadataFormValues.appMetaDescription || "",
     });
-    reset({
-      ...getValues(),
-      appMetadata: metadata,
+    setMetadataFormValues({
       appMetaDescription: "",
       appMetaKey: "",
       appMetaTitle: "",
       appMetaValue: "",
-    },
-    {
-      keepErrors: true,
-      keepDirty: true,
     });
-    trigger("appMetadata");
     setAddMeta(false);
+  };
+
+  const updateMetaValues = (name: string, value: string) => {
+    setMetadataFormValues({
+      ...metadataFormValues,
+      [name]: value,
+    });
+  };
+
+  const appMetadataHasErrors = (index: number, prop: string) => {
+    return errors && errors.appMetadata
+      && errors.appMetadata.length > 0
+      && Object.keys(errors.appMetadata[index] || {}).filter(mdta => mdta === prop).length > 0;
   };
 
   const editMetadataView = () => {
@@ -596,72 +589,57 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           <TableBody>
             <TableRow style={{ verticalAlign: "baseline" }}>
               <TableCell scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5), paddingTop: spacing(5) }}>
-                <Controller
-                  control={control}
+                <TextField
+                  className={clsx(classes.inputFields, classes.inputNoMargin)}
+                  error={
+                    metadataFormValues.appMetaKey.length !== 0 &&
+                    !isValidAppMetaKey(`${metadataKeyDefaultPrefix}${metadataFormValues.appMetaKey}`)
+                  }
+                  fullWidth
+                  helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
+                  InputProps={{
+                    startAdornment: <InputAdornment className={classes.metaPrefix} position="start">{metadataKeyDefaultPrefix}</InputAdornment>,
+                  }}
+                  label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
+                  onChange={(e) => updateMetaValues(e.target.name, e.target.value)}
+                  margin="dense"
                   name="appMetaKey"
-                  render={({ field }) => (
-                    <TextField
-                      className={clsx(classes.inputFields, classes.inputNoMargin)}
-                      error={
-                        getValues("appMetaKey").length !== 0 &&
-                        !isValidAppMetaKey(`${metadataKeyDefaultPrefix}${getValues("appMetaKey")}`)
-                      }
-                      {...field}
-                      fullWidth
-                      helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
-                      InputProps={{
-                        startAdornment: <InputAdornment className={classes.metaPrefix} position="start">{metadataKeyDefaultPrefix}</InputAdornment>,
-                      }}
-                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
-                      margin="dense"
-                      type="text"
-                      variant="outlined"
-                    />
-                  )}
+                  type="text"
+                  variant="outlined"
                 />
               </TableCell>
 
               <TableCell scope="row" style={{ borderBottom: "none" }}>
-                <Controller
-                  control={control}
+                <TextField
+                  className={clsx(classes.inputFields, classes.inputNoMargin)}
+                  error={
+                    metadataFormValues.appMetaKey.length !== 0 &&
+                    metadataFormValues.appMetaValue.length === 0
+                  }
+                  fullWidth
+                  label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
+                  onChange={(e) => updateMetaValues(e.target.name, e.target.value)}
+                  margin="dense"
                   name="appMetaValue"
-                  render={({ field }) => (
-                    <TextField
-                      className={clsx(classes.inputFields, classes.inputNoMargin)}
-                      error={
-                        getValues("appMetaKey").length !== 0 &&
-                        getValues("appMetaValue").length === 0
-                      }
-                      {...field}
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
-                      margin="dense"
-                      type="text"
-                      variant="outlined"
-                    />
-                  )}
+                  type="text"
+                  variant="outlined"
                 />
               </TableCell>
 
               <TableCell scope="row" style={{ borderBottom: "none", paddingRight: spacing(5) }}>
-                <Controller
-                  control={control}
+                <TextField
+                  className={clsx(classes.inputFields, classes.inputNoMargin)}
+                  error={
+                    metadataFormValues.appMetaKey.length !== 0 &&
+                    metadataFormValues.appMetaTitle.length === 0
+                  }
+                  fullWidth
+                  label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
+                  onChange={(e) => updateMetaValues(e.target.name, e.target.value)}
+                  margin="dense"
                   name="appMetaTitle"
-                  render={({ field }) => (
-                    <TextField
-                      className={clsx(classes.inputFields, classes.inputNoMargin)}
-                      error={
-                        getValues("appMetaKey").length !== 0 &&
-                        getValues("appMetaTitle").length === 0
-                      }
-                      {...field}
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
-                      margin="dense"
-                      type="text"
-                      variant="outlined"
-                    />
-                  )}
+                  type="text"
+                  variant="outlined"
                 />
               </TableCell>
 
@@ -669,20 +647,16 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
             <TableRow>
               <TableCell colSpan={3} scope="row" style={{ borderBottom: "none", padding: spacing(0, 5) }}>
-                <Controller
-                  control={control}
+                <TextField
+                  className={clsx(classes.inputFields, classes.inputFullWidth)}
+                  fullWidth
+                  label={t("dashboardTab.applicationsSubTab.appModal.customProps.descriptionFieldLabel")}
+                  onChange={(e) => updateMetaValues(e.target.name, e.target.value)}
+                  margin="dense"
                   name="appMetaDescription"
-                  render={({ field }) => (
-                    <TextField
-                      className={clsx(classes.inputFields, classes.inputFullWidth)}
-                      {...field}
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.descriptionFieldLabel")}
-                      margin="dense"
-                      type="text"
-                      variant="outlined"
-                    />
-                  )}
+                  type="text"
+                  value={metadataFormValues.appMetaDescription}
+                  variant="outlined"
                 />
               </TableCell>
             </TableRow>
@@ -723,10 +697,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           </TableHead>
 
           <TableBody>
-            {getValues("appMetadata").map((mdata, index) => ([
+            {controlledMetadataFields.map((mdata, index) => ([
               <TableRow
                 className={clsx({[classes.tableRow]: index%2 === 0})}
-                key={`${mdata.key}_key_${index}`}
+                key={`${mdata.id}`}
                 style={{ verticalAlign: "baseline" }}
               >
                 <TableCell scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5) }}>
@@ -737,6 +711,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <TextField
                         className={clsx(classes.inputFields, classes.inputNoMargin)}
                         disabled={currMeta !== index}
+                        error={appMetadataHasErrors(index, "key")}
                         {...field}
                         fullWidth
                         helperText={currMeta === index && t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
@@ -757,6 +732,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <TextField
                         className={clsx(classes.inputFields, classes.inputNoMargin)}
                         disabled={currMeta !== index}
+                        error={appMetadataHasErrors(index, "value")}
                         {...field}
                         label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
                         margin="dense"
@@ -775,6 +751,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <TextField
                         className={clsx(classes.inputFields, classes.inputNoMargin)}
                         disabled={currMeta !== index}
+                        error={appMetadataHasErrors(index, "title")}
                         {...field}
                         label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
                         margin="dense"
@@ -836,7 +813,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <TableCell scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5) }}>
                   <Button
                     color="primary"
-                    onClick={handleSaveChanges}
+                    disabled={errors && errors.appMetadata && Object.keys(errors.appMetadata[index] || {}).length > 0}
+                    onClick={() => handleSaveChanges(index)}
                     variant="contained"
                   >
                     {t("dashboardTab.applicationsSubTab.appModal.customProps.saveChanges")}
@@ -948,10 +926,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appDescription: "",
             appLabels: "",
             appMetadata: [],
-            appMetaDescription: "",
-            appMetaKey: "",
-            appMetaTitle: "",
-            appMetaValue: "",
             appName: "",
             appPrivacyURL: "",
             appRedirectURI: "https://",
