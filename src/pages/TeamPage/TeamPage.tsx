@@ -8,11 +8,11 @@ import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog
 import { changeRole } from "store/profile/actions/changeRole";
 import { fetchRoleOptions } from "store/profile/actions/fetchRoleOptions";
 import { fetchTeamMembers } from "store/profile/actions/fetchTeamMembers";
-import { FetchTeamMembersResponse, Role } from "store/profile/types";
 import { inviteTeamMember } from "store/profile/actions/inviteTeamMember";
 import { removeTeamMember } from "store/profile/actions/removeTeamMember";
 import { resetProfileErrors } from "store/profile/actions/resetProfileErrors";
 import { User } from "store/auth/types";
+import { FetchTeamMembersResponse, Role } from "store/profile/types";
 import { teamPageSelector } from "./selector";
 import useStyles from "./styles";
 import { isValidEmail } from "util/forms";
@@ -31,12 +31,25 @@ export const TeamPage: React.FC = () => {
   const { spacing } = useTheme();
   const { currentOrganisation, members, requestStatuses, roleOptions, user } = useSelector(teamPageSelector);
 
-  const [inviteVisible, showInvite] = useState(false);
+  useEffect(() => {
+    if (currentOrganisation.id !== "") {
+      dispatch(fetchTeamMembers({}));
+      dispatch(fetchRoleOptions({}));
+    }
+  }, [dispatch, currentOrganisation]);
 
-  const [input, setInput] = useState({
-    email: "",
-    roleId: "",
-  });
+  // Role selection
+
+  const getUserMemberRole = (user: User) => {
+    const member = members.find((member) => user.id === member.User?.id);
+    return member?.Role || user.role;
+  };
+
+  const changeRoleDisabled = (member: FetchTeamMembersResponse) => {
+    if (!user) return true;
+
+    return getUserMemberRole(user).name === "developer" || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level;
+  };
 
   const selectOptions = (roles: Role[]) => {
     return roles.map(role => ({
@@ -45,20 +58,6 @@ export const TeamPage: React.FC = () => {
       group: "Role",
     }));
   };
-
-  const handleInputs: TextFieldProps["onChange"] = ({ target }) => {
-    setInput({
-      ...input,
-      [target.name]: target.value,
-    });
-  };
-
-  useEffect(() => {
-    if (currentOrganisation.id !== "") {
-      dispatch(fetchTeamMembers({}));
-      dispatch(fetchRoleOptions({}));
-    }
-  }, [dispatch, currentOrganisation]);
 
   function chooseRole({ target }: React.ChangeEvent<any>) {
     setInput({
@@ -78,8 +77,28 @@ export const TeamPage: React.FC = () => {
     }
   };
 
+  // Team member invitation
+
+  const [inviteVisible, showInvite] = useState(false);
+
+  const canInvite = (role: User["role"]["name"]) => {
+    return AUTHORIZED_ROLES.includes(role);
+  };
+
   const toggle = () => {
     showInvite(true);
+  };
+
+  const [input, setInput] = useState({
+    email: "",
+    roleId: "",
+  });
+
+  const handleInputs: TextFieldProps["onChange"] = ({ target }) => {
+    setInput({
+      ...input,
+      [target.name]: target.value,
+    });
   };
 
   const inputErrors = {
@@ -87,42 +106,18 @@ export const TeamPage: React.FC = () => {
     role: !input.roleId,
   };
 
-  const canInvite = (role: User["role"]["name"]) => {
-    return AUTHORIZED_ROLES.includes(role);
-  };
-
-  const getUserMemberRole = (user: User) => {
-    const member = members.find((member) => user.id === member.User?.id);
-    return member?.Role || user.role;
-  };
-
-  const changeRoleDisabled = (member: FetchTeamMembersResponse) => {
-    if (!user) return true;
-
-    return getUserMemberRole(user).name === "developer" || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level;
-  };
-
-  useEffect(() => {
-    if (requestStatuses.inviteMemberRequest.invited || requestStatuses.inviteMemberRequest.error) {
-      showInvite(false);
-      dispatch(resetProfileErrors({}));
-      setInput((s) => ({ ...s, email: "" }));
-    }
-  }, [requestStatuses.inviteMemberRequest, dispatch]);
-
   const inviteCard = () => (
     <form
       className={classes.inviteCard}
       onSubmit={(e) => {
         e.preventDefault();
         dispatch(inviteTeamMember({
-          orgID: currentOrganisation.id,
           email: input.email,
+          orgID: currentOrganisation.id,
           role_id: input.roleId.toString(),
         }));
       }}
     >
-
       <TextField
         autoFocus
         error={inputErrors.email}
@@ -133,34 +128,34 @@ export const TeamPage: React.FC = () => {
           classes: { input: classes.emailTextfield },
         }}
         label='E-mail'
+        margin="dense"
         name='email'
         onChange={handleInputs}
         placeholder='john.doe@email.com'
         type='email'
         value={input.email}
         variant='outlined'
-        margin="dense"
       />
 
       <Box width={248}>
         <Select
-          value={input.roleId}
-          variant="outlined"
+          fullWidth
           margin="dense"
           onChange={chooseRole}
-          fullWidth
+          value={input.roleId}
+          variant="outlined"
         >
           {selectOptions(roleOptions).map((opt) => <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>)}
         </Select>
       </Box>
 
       <Button
-        disabled={input.email.length === 0 || inputErrors.email || inputErrors.role}
-        type='submit'
         color="primary"
-        variant="contained"
-        size="large"
+        disabled={input.email.length === 0 || inputErrors.email || inputErrors.role}
         disableElevation
+        size="large"
+        type='submit'
+        variant="contained"
       >
         {
           requestStatuses.inviteMemberRequest.isRequesting
@@ -172,6 +167,14 @@ export const TeamPage: React.FC = () => {
   );
 
   const loading = requestStatuses.getMembersRequest.isRequesting || requestStatuses.getRolesRequest.isRequesting;
+
+  useEffect(() => {
+    if (requestStatuses.inviteMemberRequest.invited || requestStatuses.inviteMemberRequest.error) {
+      showInvite(false);
+      dispatch(resetProfileErrors({}));
+      setInput((s) => ({ ...s, email: "" }));
+    }
+  }, [requestStatuses.inviteMemberRequest, dispatch]);
 
   // Options menu
 
@@ -200,10 +203,10 @@ export const TeamPage: React.FC = () => {
 
   const canRemoveFromTeam = (member: FetchTeamMembersResponse) => {
     const currentUser = user;
-    
+
     // If we do not have our current user's data, we do not allow for any sort of team member removal.
     if (!currentUser) return false;
-    
+
     /* If our current user is either an admin or an org owner, and is NOT the only team member,
     we allow for team member removal. */
     if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && members.length > 1) return true;
@@ -216,7 +219,7 @@ export const TeamPage: React.FC = () => {
 
   const [removeUserDialogOpen, setRemoveUserDialogOpen] = useState(false);
   const [idOfMemberToRemove, setIdOfMemberToRemove] = useState("");
-  
+
   const removeFromTeam = () => {
     setRemoveUserDialogOpen(false);
 
@@ -245,14 +248,14 @@ export const TeamPage: React.FC = () => {
               {t("rbac.team.title")}
             </Typography>
 
-            <Box mt={1.5} mb={5}>
-              <Typography variant="body1" color="textSecondary">
+            <Box mb={5} mt={1.5}>
+              <Typography color="textSecondary" variant="body1">
                 {t("rbac.team.subtitle")}
               </Typography>
             </Box>
 
             {loading && (
-              <Box display="flex" justifyContent="center" alignItems="center">
+              <Box alignItems="center" display="flex" justifyContent="center">
                 <CircularProgress size={50} />
               </Box>
             )}
@@ -263,35 +266,44 @@ export const TeamPage: React.FC = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell style={{ paddingLeft: spacing(5) }}>{t("rbac.team.header")}</TableCell>
-                      <TableCell align="center">{t("rbac.team.actions")}</TableCell>
+                      <TableCell style={{ paddingLeft: spacing(5) }}>
+                        {t("rbac.team.header")}
+                      </TableCell>
+
+                      <TableCell align="center">
+                        {t("rbac.team.actions")}
+                      </TableCell>
                     </TableRow>
                   </TableHead>
 
                   <TableBody>
                     {members.map((member) => (
-                      <TableRow key={member.User.id} className={classes.tableRow}>
+                      <TableRow className={classes.tableRow} key={member.User.id}>
                         <TableCell scope="row" style={{ paddingLeft: spacing(5) }}>
                           {member.User.name}
+
                           <br />
-                          <Typography variant="body2" color="textSecondary">
+
+                          <Typography color="textSecondary" variant="body2">
                             {ROLES[member.Role.name]?.label}
                           </Typography>
                         </TableCell>
 
                         <TableCell width={205}>
                           <Select
-                            variant="outlined"
-                            value={member.Role.name}
-                            margin="dense"
-                            fullWidth
                             disabled={changeRoleDisabled(member)}
+                            fullWidth
+                            margin="dense"
                             onChange={handleChangeRole(member.User.id, member.Organization.id)}
+                            value={member.Role.name}
+                            variant="outlined"
                           >
                             {Object.entries(ROLES)
                               // eslint-disable-next-line @typescript-eslint/no-unused-vars
                               .map(([_, role]) => (
-                                <MenuItem key={role.value} value={role.value}>{role.label}</MenuItem>
+                                <MenuItem key={role.value} value={role.value}>
+                                  {role.label}
+                                </MenuItem>
                               ))}
                           </Select>
                         </TableCell>
@@ -332,11 +344,11 @@ export const TeamPage: React.FC = () => {
 
             {!inviteVisible && user ? canInvite(getUserMemberRole(user).name) && (
               <Button
+                color="primary"
+                disableElevation
                 onClick={toggle}
                 style={{ marginTop: 24 }}
-                color="primary"
                 variant="contained"
-                disableElevation
               >
                 {t("rbac.team.invite")}
               </Button>
