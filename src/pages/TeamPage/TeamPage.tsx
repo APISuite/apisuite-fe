@@ -206,7 +206,7 @@ export const TeamPage: React.FC = () => {
   // Option 1 - Remove user from Team
 
   const canRemoveFromTeam = (
-    currentUser: User,
+    currentUser: User | undefined,
     teamMembers: FetchTeamMembersResponse[],
     providedMember: FetchTeamMembersResponse,
   ) => {
@@ -318,7 +318,7 @@ export const TeamPage: React.FC = () => {
 
                         <TableCell align="center" width={70}>
                           <IconButton
-                            disabled={!canRemoveFromTeam(user!, members, member)}
+                            disabled={!canRemoveFromTeam(user, members, member)}
                             onClick={(clickEvent) => {
                               handleMenuClick(clickEvent);
                               setIdOfMemberToRemove(member.User.id);
