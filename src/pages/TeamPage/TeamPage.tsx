@@ -48,7 +48,11 @@ export const TeamPage: React.FC = () => {
   const changeRoleDisabled = (member: FetchTeamMembersResponse) => {
     if (!user) return true;
 
-    return getUserMemberRole(user).name === "developer" || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level;
+    return (
+      getUserMemberRole(user).name === ROLES.developer.value ||
+      user.id === member.User.id ||
+      ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level
+    );
   };
 
   const selectOptions = (roles: Role[]) => {
@@ -201,18 +205,20 @@ export const TeamPage: React.FC = () => {
 
   // Option 1 - Remove user from Team
 
-  const canRemoveFromTeam = (member: FetchTeamMembersResponse) => {
-    const currentUser = user;
-
+  const canRemoveFromTeam = (providedMember: FetchTeamMembersResponse) => {
     // If we do not have our current user's data, we do not allow for any sort of team member removal.
-    if (!currentUser) return false;
+    if (!user) return false;
 
-    /* If our current user is either an admin or an org owner, and is NOT the only team member,
-    we allow for team member removal. */
-    if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && members.length > 1) return true;
+    /* If our current user is either an admin or an org owner, and he is NOT the only team member with that
+    particular role, we allow for self & team member removal. */
+    const membersWithSameRole = members.filter((member) => {
+      user.id === member.User.id && member.Role.name === getUserMemberRole(user).name;
+    });
+
+    if (AUTHORIZED_ROLES.includes(getUserMemberRole(user).name) && membersWithSameRole.length > 1) return true;
 
     /* If our current user is a developer, we allow for self-removal from a team, but not anything else. */
-    if (currentUser.id === member.User.id && getUserMemberRole(currentUser).name === "developer") return true;
+    if (user.id === providedMember.User.id && getUserMemberRole(user).name === ROLES.developer.value) return true;
 
     return false;
   };

@@ -99,9 +99,6 @@ export function* removeMemberSaga(action: RemoveTeamMemberAction) {
 
     yield put(removeTeamMemberSuccess({}));
     yield put(openNotification("success", i18n.t("messages.removeMember.success"), 3000));
-
-    // If the user removes himself from a team, redirect him to the 'Profile' for him to potentially choose a new org
-    if (action.idOfCurrentUser === action.idOfUserToRemove) window.location.href = "/profile";
   } catch (error) {
     yield put(removeTeamMemberError({ error: error.message || "Invitation failed." }));
     yield put(openNotification("error", i18n.t("messages.removeMember.error"), 3000));
