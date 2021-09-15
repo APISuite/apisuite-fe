@@ -3,7 +3,7 @@ import { i18n } from "@apisuite/fe-base";
 
 import { API_URL } from "constants/endpoints";
 import { CHANGE_ROLE, changeRoleError, changeRoleSuccess } from "./actions/changeRole";
-import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, SwitchOrgAction, UpdateOrgAction, UpdateProfileAction } from "./actions/types";
+import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, RemoveTeamMemberAction, SwitchOrgAction, UpdateOrgAction, UpdateProfileAction } from "./actions/types";
 import { CONFIRM_INVITE_MEMBER, confirmInviteMemberError, confirmInviteMemberSuccess } from "./actions/confirmInviteMember";
 import { CREATE_ORG, createOrgError, createOrgSuccess } from "./actions/createOrg";
 import { DELETE_ACCOUNT, deleteAccountError, deleteAccountSuccess } from "./actions/deleteAccount";
@@ -17,6 +17,7 @@ import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } fr
 import { LOCAL_STORAGE_KEYS } from "constants/global";
 import { logout } from "store/auth/actions/logout";
 import { openNotification } from "store/notificationStack/actions/notification";
+import { removeTeamMemberError, removeTeamMemberSuccess, REMOVE_TEAM_MEMBER } from "./actions/removeTeamMember";
 import { Store } from "store/types";
 import { SWITCH_ORG, switchOrgError, switchOrgSuccess } from "./actions/switchOrg";
 import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOrg";
@@ -80,6 +81,30 @@ export function* inviteMemberSaga(action: InviteTeamMemberAction) {
   } catch (error) {
     yield put(inviteTeamMemberError({ error: error.message || "Invitation failed." }));
     yield put(openNotification("error", i18n.t("messages.inviteMember.error"), 3000));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
+
+export function* removeMemberSaga(action: RemoveTeamMemberAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/organizations/${action.orgID}/users/${action.idOfUserToRemove}`,
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+
+    yield put(removeTeamMemberSuccess({}));
+    yield put(openNotification("success", i18n.t("messages.removeMember.success"), 3000));
+
+    // If the user removes himself from a team, redirect him to the 'Profile' for him to potentially choose a new org
+    if (action.idOfCurrentUser === action.idOfUserToRemove) window.location.href = "/profile";
+  } catch (error) {
+    yield put(removeTeamMemberError({ error: error.message || "Invitation failed." }));
+    yield put(openNotification("error", i18n.t("messages.removeMember.error"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -290,6 +315,7 @@ function* rootSaga() {
   yield takeLatest(FETCH_TEAM_MEMBERS, fetchTeamMembersSaga);
   yield takeLatest(GET_PROFILE, getProfileSaga);
   yield takeLatest(INVITE_TEAM_MEMBER, inviteMemberSaga);
+  yield takeLatest(REMOVE_TEAM_MEMBER, removeMemberSaga);
   yield takeLatest(SWITCH_ORG, switchOrgSaga);
   yield takeLatest(UPDATE_ORG, updateOrgSaga);
   yield takeLatest(UPDATE_PROFILE, updateProfileSaga);

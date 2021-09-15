@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, CircularProgress, Grid, IconButton, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, TextFieldProps, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import { ROLES } from "constants/global";
-import { FetchTeamMembersResponse, Role } from "store/profile/types";
-import { User } from "store/auth/types";
-import { isValidEmail } from "util/forms";
-
-import useStyles from "./styles";
-import { useDispatch, useSelector } from "react-redux";
-import { teamPageSelector } from "./selector";
-import { fetchTeamMembers } from "store/profile/actions/fetchTeamMembers";
-import { fetchRoleOptions } from "store/profile/actions/fetchRoleOptions";
-import { changeRole } from "store/profile/actions/changeRole";
-import { resetProfileErrors } from "store/profile/actions/resetProfileErrors";
-import { inviteTeamMember } from "store/profile/actions/inviteTeamMember";
 import { PageContainer } from "components/PageContainer";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import { changeRole } from "store/profile/actions/changeRole";
+import { fetchRoleOptions } from "store/profile/actions/fetchRoleOptions";
+import { fetchTeamMembers } from "store/profile/actions/fetchTeamMembers";
+import { FetchTeamMembersResponse, Role } from "store/profile/types";
+import { inviteTeamMember } from "store/profile/actions/inviteTeamMember";
+import { removeTeamMember } from "store/profile/actions/removeTeamMember";
+import { resetProfileErrors } from "store/profile/actions/resetProfileErrors";
+import { User } from "store/auth/types";
+import { teamPageSelector } from "./selector";
+import useStyles from "./styles";
+import { isValidEmail } from "util/forms";
+
+import { ROLES } from "constants/global";
 
 const AUTHORIZED_ROLES = [
   ROLES.admin.value,
@@ -28,7 +29,7 @@ export const TeamPage: React.FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { spacing } = useTheme();
-  const { currentOrganisation, members, roleOptions, user, requestStatuses } = useSelector(teamPageSelector);
+  const { currentOrganisation, members, requestStatuses, roleOptions, user } = useSelector(teamPageSelector);
 
   const [inviteVisible, showInvite] = useState(false);
 
@@ -53,8 +54,7 @@ export const TeamPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // TODO: why check if currentOrganisation has keys?
-    if (Object.keys(currentOrganisation).length && currentOrganisation.id !== "") {
+    if (currentOrganisation.id !== "") {
       dispatch(fetchTeamMembers({}));
       dispatch(fetchRoleOptions({}));
     }
@@ -198,7 +198,43 @@ export const TeamPage: React.FC = () => {
 
   // Option 1 - Remove user from Team
 
+  const canRemoveFromTeam = (member: FetchTeamMembersResponse) => {
+    const currentUser = user;
+    
+    // If we do not have our current user's data, we do not allow for any sort of team member removal.
+    if (!currentUser) return false;
+    
+    /* If our current user is either an admin or an org owner, and is NOT the only team member,
+    we allow for team member removal. */
+    if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && members.length > 1) return true;
+
+    /* If our current user is a developer, we allow for self-removal from a team, but not anything else. */
+    if (currentUser.id === member.User.id && getUserMemberRole(currentUser).name === "developer") return true;
+
+    return false;
+  };
+
   const [removeUserDialogOpen, setRemoveUserDialogOpen] = useState(false);
+  const [idOfMemberToRemove, setIdOfMemberToRemove] = useState("");
+  
+  const removeFromTeam = () => {
+    setRemoveUserDialogOpen(false);
+
+    dispatch(removeTeamMember({
+      orgID: currentOrganisation.id,
+      idOfCurrentUser: user!.id.toString(),
+      idOfUserToRemove: idOfMemberToRemove,
+    }));
+
+    setIdOfMemberToRemove("");
+  };
+
+  useEffect(() => {
+    if (requestStatuses.removeMemberRequest.removed) {
+      dispatch(fetchTeamMembers({}));
+      dispatch(fetchRoleOptions({}));
+    }
+  }, [dispatch, requestStatuses]);
 
   return (
     <>
@@ -262,8 +298,11 @@ export const TeamPage: React.FC = () => {
 
                         <TableCell align="center" width={70}>
                           <IconButton
-                            disabled={user && getUserMemberRole(user).name !== AUTHORIZED_ROLES[1]}
-                            onClick={handleMenuClick}
+                            disabled={!canRemoveFromTeam(member)}
+                            onClick={(clickEvent) => {
+                              handleMenuClick(clickEvent);
+                              setIdOfMemberToRemove(member.User.id);
+                            }}
                           >
                             <MoreVertIcon />
                           </IconButton>
@@ -317,8 +356,11 @@ export const TeamPage: React.FC = () => {
           color: "primary",
           variant: "outlined",
         }}
-        closeDialogCallback={() => setRemoveUserDialogOpen(false)}
-        confirmButtonCallback={() => null}
+        closeDialogCallback={() => {
+          setRemoveUserDialogOpen(false);
+          setIdOfMemberToRemove("");
+        }}
+        confirmButtonCallback={() => removeFromTeam()}
         confirmButtonLabel={t("rbac.team.dialogs.removeUser.confirmButtonLabel")}
         confirmButtonStyle={classes.deleteAppButtonStyles}
         open={removeUserDialogOpen}

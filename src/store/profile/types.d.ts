@@ -51,6 +51,7 @@ export type ProfileStore = {
     getMembersRequest: RequestStatus,
     getRolesRequest: RequestStatus,
     inviteMemberRequest: RequestStatus & { invited: boolean },
+    removeMemberRequest: RequestStatus & { removed: boolean },
     switchOrgRequest: RequestStatus,
     updateOrgRequest: RequestStatus,
     updateProfileRequest: RequestStatus,
