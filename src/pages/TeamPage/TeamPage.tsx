@@ -205,20 +205,22 @@ export const TeamPage: React.FC = () => {
 
   // Option 1 - Remove user from Team
 
-  const canRemoveFromTeam = (providedMember: FetchTeamMembersResponse) => {
-    // If we do not have our current user's data, we do not allow for any sort of team member removal.
-    if (!user) return false;
+  const canRemoveFromTeam = (
+    currentUser: User,
+    teamMembers: FetchTeamMembersResponse[],
+    providedMember: FetchTeamMembersResponse,
+  ) => {
+    if (!currentUser) return false;
 
-    /* If our current user is either an admin or an org owner, and he is NOT the only team member with that
-    particular role, we allow for self & team member removal. */
-    const membersWithSameRole = members.filter((member) => {
-      user.id === member.User.id && member.Role.name === getUserMemberRole(user).name;
+    const membersWithSameRole = teamMembers.filter((teamMember: FetchTeamMembersResponse) => {
+      currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
     });
 
-    if (AUTHORIZED_ROLES.includes(getUserMemberRole(user).name) && membersWithSameRole.length > 1) return true;
+    if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && membersWithSameRole.length > 0) return true;
 
-    /* If our current user is a developer, we allow for self-removal from a team, but not anything else. */
-    if (user.id === providedMember.User.id && getUserMemberRole(user).name === ROLES.developer.value) return true;
+    if (currentUser.id === providedMember.User.id && getUserMemberRole(currentUser).name === ROLES.developer.value) {
+      return true;
+    }
 
     return false;
   };
@@ -316,7 +318,7 @@ export const TeamPage: React.FC = () => {
 
                         <TableCell align="center" width={70}>
                           <IconButton
-                            disabled={!canRemoveFromTeam(member)}
+                            disabled={!canRemoveFromTeam(user!, members, member)}
                             onClick={(clickEvent) => {
                               handleMenuClick(clickEvent);
                               setIdOfMemberToRemove(member.User.id);
