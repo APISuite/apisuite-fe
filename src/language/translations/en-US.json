@@ -423,7 +423,10 @@
         "selectorTitle": "Linked organisation",
         "selectorLabel": "Organisations",
         "createOrgButtonLabel": "Create your organisation",
-        "switchOrgButtonLabel": "Switch"
+        "switchOrgButtonLabel": "Switch",
+        "noOrgSubtitle": "You aren't part of any organisation.",
+        "infoBoxTitle": "Change your current role!",
+        "infoBoxText": "Create an organisation and you will be able to create your own Client Applications, manage your team and more. Read more on our guide for base users <0>here</0>."
       },
       "otherActionsLabels": {
         "changePassword": "Change password",

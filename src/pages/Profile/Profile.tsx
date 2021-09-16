@@ -288,6 +288,71 @@ export const Profile: React.FC = () => {
             </Typography>
           </Box>
 
+          {isBaseUser() && <>
+            <Box mt={3}>
+              <Typography variant="h3">
+                {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
+              </Typography>
+            </Box>
+
+            <Box mt={1.5}>
+              <Typography variant="body1">
+                {t("profileTab.overviewSubTab.orgRelatedLabels.noOrgSubtitle")}
+              </Typography>
+            </Box>
+            
+            <Box mt={3}>
+              <Link to="profile/organisation" style={{ textDecoration: "none" }}>
+                <Button
+                  color="primary"
+                  disableElevation
+                  size="large"
+                  variant="contained"
+                >
+                  {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
+                </Button>
+              </Link>
+            </Box>
+
+            <Box mt={3}>
+              <Notice
+                noticeIcon={<Icon>info</Icon>}
+                noticeText={
+                  <>
+                    <Typography
+                      display="block"
+                      style={{
+                        color: palette.info.dark,
+                        fontWeight: 700,
+                      }}
+                      variant="body2"
+                    >
+                      {t("profileTab.overviewSubTab.orgRelatedLabels.infoBoxTitle")}
+                    </Typography>
+
+                    <Typography
+                      display="block"
+                      style={{ color: palette.info.dark }}
+                      variant="body2"
+                    >
+                      <Trans i18nKey="profileTab.overviewSubTab.orgRelatedLabels.infoBoxText">
+                        {[
+                          <Link
+                            key="profileTab.overviewSubTab.orgRelatedLabels.infoBoxText"
+                            to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1721106456/The+guide+for+normal+users"
+                            rel='noopener noreferrer'
+                            target='_blank'
+                          />,
+                        ]}
+                      </Trans>
+                    </Typography>
+                  </>
+                }
+                type="info"
+              />
+            </Box>
+          </>}
+
           {!isBaseUser() && <>
             <Box mt={3}>
               <Typography data-test-id={testIds.profileOverviewSelectorTitle} variant="h3">
