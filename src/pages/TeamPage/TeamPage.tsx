@@ -212,14 +212,21 @@ export const TeamPage: React.FC = () => {
   ) => {
     if (!currentUser) return false;
 
-    let membersWithSameRole: FetchTeamMembersResponse[] = [];
-    membersWithSameRole = teamMembers.filter((teamMember: FetchTeamMembersResponse) => {
-      return currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
-    });
+    if (teamMembers.length === 1) return true;
 
-    if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && membersWithSameRole.length > 0) return true;
+    const membersWithSameRole: FetchTeamMembersResponse[] = teamMembers.filter(
+      (teamMember: FetchTeamMembersResponse) => {
+        return currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
+      }
+    );
 
-    if (currentUser.id === providedMember.User.id && getUserMemberRole(currentUser).name === ROLES.developer.value) {
+    if (currentUser.id === providedMember.User.id) {
+      if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && membersWithSameRole.length) return true;
+
+      if (getUserMemberRole(currentUser).name === ROLES.developer.value) return true;
+    }
+    
+    if (ROLES[getUserMemberRole(currentUser).name].level <= ROLES[providedMember.Role.name].level) {
       return true;
     }
 
