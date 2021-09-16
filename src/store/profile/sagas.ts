@@ -99,6 +99,7 @@ export function* removeMemberSaga(action: RemoveTeamMemberAction) {
 
     yield put(removeTeamMemberSuccess({}));
     yield put(openNotification("success", i18n.t("messages.removeMember.success"), 3000));
+    if (action.idOfCurrentUser === action.idOfUserToRemove.toString()) yield put(logout({}));
   } catch (error) {
     yield put(removeTeamMemberError({ error: error.message || "Invitation failed." }));
     yield put(openNotification("error", i18n.t("messages.removeMember.error"), 3000));

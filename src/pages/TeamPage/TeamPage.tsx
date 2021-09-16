@@ -229,14 +229,14 @@ export const TeamPage: React.FC = () => {
   const [removeUserDialogOpen, setRemoveUserDialogOpen] = useState(false);
   const [idOfMemberToRemove, setIdOfMemberToRemove] = useState("");
 
-  const removeFromTeam = () => {
+  const removeFromTeam = (
+    orgID: string,
+    idOfCurrentUser: string,
+    idOfUserToRemove: string,
+  ) => {
     setRemoveUserDialogOpen(false);
 
-    dispatch(removeTeamMember({
-      orgID: currentOrganisation.id,
-      idOfCurrentUser: user!.id.toString(),
-      idOfUserToRemove: idOfMemberToRemove,
-    }));
+    dispatch(removeTeamMember({ orgID, idOfCurrentUser, idOfUserToRemove }));
 
     setIdOfMemberToRemove("");
   };
@@ -381,7 +381,7 @@ export const TeamPage: React.FC = () => {
           setRemoveUserDialogOpen(false);
           setIdOfMemberToRemove("");
         }}
-        confirmButtonCallback={() => removeFromTeam()}
+        confirmButtonCallback={() => removeFromTeam(currentOrganisation.id, user!.id.toString(), idOfMemberToRemove)}
         confirmButtonLabel={t("rbac.team.dialogs.removeUser.confirmButtonLabel")}
         confirmButtonStyle={classes.deleteAppButtonStyles}
         open={removeUserDialogOpen}
