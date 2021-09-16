@@ -213,7 +213,7 @@ export const TeamPage: React.FC = () => {
     if (!currentUser) return false;
 
     const membersWithSameRole = teamMembers.filter((teamMember: FetchTeamMembersResponse) => {
-      currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
+      return currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
     });
 
     if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && membersWithSameRole.length > 0) return true;
