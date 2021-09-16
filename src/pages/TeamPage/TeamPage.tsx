@@ -212,7 +212,8 @@ export const TeamPage: React.FC = () => {
   ) => {
     if (!currentUser) return false;
 
-    const membersWithSameRole = teamMembers.filter((teamMember: FetchTeamMembersResponse) => {
+    let membersWithSameRole: FetchTeamMembersResponse[] = [];
+    membersWithSameRole = teamMembers.filter((teamMember: FetchTeamMembersResponse) => {
       return currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
     });
 
