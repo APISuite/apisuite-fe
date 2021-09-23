@@ -4,6 +4,7 @@ import { ProfileActions } from "./actions/types";
 import { RESET_PROFILE_ERRORS } from "./actions/resetProfileErrors";
 import { FETCH_TEAM_MEMBERS, FETCH_TEAM_MEMBERS_ERROR, FETCH_TEAM_MEMBERS_SUCCESS } from "./actions/fetchTeamMembers";
 import { INVITE_TEAM_MEMBER, INVITE_TEAM_MEMBER_ERROR, INVITE_TEAM_MEMBER_SUCCESS } from "./actions/inviteTeamMember";
+import { REMOVE_TEAM_MEMBER, REMOVE_TEAM_MEMBER_ERROR, REMOVE_TEAM_MEMBER_SUCCESS } from "./actions/removeTeamMember";
 import { GET_PROFILE_SUCCESS } from "./actions/getProfile";
 import { UPDATE_PROFILE, UPDATE_PROFILE_ERROR, UPDATE_PROFILE_SUCCESS } from "./actions/updateProfile";
 import { FETCH_ORG, FETCH_ORG_ERROR, FETCH_ORG_SUCCESS } from "./actions/fetchOrg";
@@ -85,6 +86,11 @@ const initialState: ProfileStore = {
       invited: false,
       error: "",
     },
+    removeMemberRequest: {
+      isRequesting: false,
+      removed: false,
+      error: "",
+    },
     updateProfileRequest: {
       isRequesting: false,
       error: "",
@@ -112,7 +118,7 @@ const initialState: ProfileStore = {
   },
 };
 
-export default function profileReducer (
+export default function profileReducer(
   state = initialState,
   action: ProfileActions | LogoutAction,
 ): ProfileStore {
@@ -126,6 +132,9 @@ export default function profileReducer (
       return update(state, {
         requestStatuses: {
           inviteMemberRequest: {
+            error: { $set: "" },
+          },
+          removeMemberRequest: {
             error: { $set: "" },
           },
           updateProfileRequest: {
@@ -147,6 +156,10 @@ export default function profileReducer (
         requestStatuses: {
           getMembersRequest: {
             isRequesting: { $set: true },
+          },
+          removeMemberRequest: {
+            isRequesting: { $set: false },
+            removed: { $set: false },
           },
         },
       });
@@ -205,6 +218,41 @@ export default function profileReducer (
           inviteMemberRequest: {
             isRequesting: { $set: false },
             invited: { $set: false },
+            error: { $set: action.error },
+          },
+        },
+      });
+    }
+
+    case REMOVE_TEAM_MEMBER: {
+      return update(state, {
+        requestStatuses: {
+          removeMemberRequest: {
+            isRequesting: { $set: true },
+            removed: { $set: false },
+            error: { $set: "" },
+          },
+        },
+      });
+    }
+
+    case REMOVE_TEAM_MEMBER_SUCCESS: {
+      return update(state, {
+        requestStatuses: {
+          removeMemberRequest: {
+            isRequesting: { $set: false },
+            removed: { $set: true },
+          },
+        },
+      });
+    }
+
+    case REMOVE_TEAM_MEMBER_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          removeMemberRequest: {
+            isRequesting: { $set: false },
+            removed: { $set: false },
             error: { $set: action.error },
           },
         },

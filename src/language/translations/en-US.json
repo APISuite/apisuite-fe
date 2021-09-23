@@ -679,6 +679,10 @@
     "inviteMember": {
       "success": "Member was successfully invited.",
       "error": "Error inviting member."
+    },
+    "removeMember": {
+      "success": "Member was successfully removed.",
+      "error": "Error removing member."
     }
   }
 }

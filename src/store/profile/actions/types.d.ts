@@ -8,49 +8,53 @@ import { FETCH_ROLE_OPTIONS, FETCH_ROLE_OPTIONS_SUCCESS, FETCH_ROLE_OPTIONS_ERRO
 import { FETCH_TEAM_MEMBERS, FETCH_TEAM_MEMBERS_SUCCESS, FETCH_TEAM_MEMBERS_ERROR } from "./fetchTeamMembers";
 import { GET_PROFILE, GET_PROFILE_SUCCESS, GET_PROFILE_ERROR } from "./getProfile";
 import { INVITE_TEAM_MEMBER, INVITE_TEAM_MEMBER_SUCCESS, INVITE_TEAM_MEMBER_ERROR } from "./inviteTeamMember";
+import { REMOVE_TEAM_MEMBER, REMOVE_TEAM_MEMBER_SUCCESS, REMOVE_TEAM_MEMBER_ERROR } from "./removeTeamMember";
 import { RESET_PROFILE_ERRORS } from "./resetProfileErrors";
 import { SWITCH_ORG, SWITCH_ORG_SUCCESS, SWITCH_ORG_ERROR } from "./switchOrg";
 import { UPDATE_ORG, UPDATE_ORG_SUCCESS, UPDATE_ORG_ERROR } from "./updateOrg";
 import { UPDATE_PROFILE, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_ERROR } from "./updateProfile";
 
 export type ProfileActions =
-ChangeRoleAction |
-ChangeRoleActionSuccess |
-ChangeRoleActionError |
-ConfirmInviteMemberAction |
-ConfirmInviteMemberActionSuccess |
-ConfirmInviteMemberActionError |
-CreateOrgAction |
-CreateOrgActionSuccess |
-CreateOrgActionError |
-DeleteAccountAction |
-DeleteAccountActionSuccess |
-DeleteAccountActionError |
-FetchOrgAction |
-FetchOrgActionSuccess |
-FetchOrgActionError |
-FetchRoleOptionsAction |
-FetchRoleOptionsActionSuccess |
-FetchRoleOptionsActionError |
-FetchTeamMembersAction |
-FetchTeamMembersActionSuccess |
-FetchTeamMembersActionError |
-GetProfileAction |
-GetProfileActionSuccess |
-GetProfileActionError |
-InviteTeamMemberAction |
-InviteTeamMemberActionSuccess |
-InviteTeamMemberActionError |
-ResetProfileErrorsAction |
-SwitchOrgAction |
-SwitchOrgActionSuccess |
-SwitchOrgActionError |
-UpdateOrgAction |
-UpdateOrgActionSuccess |
-UpdateOrgActionError |
-UpdateProfileAction |
-UpdateProfileActionSuccess |
-UpdateProfileActionError
+  ChangeRoleAction |
+  ChangeRoleActionSuccess |
+  ChangeRoleActionError |
+  ConfirmInviteMemberAction |
+  ConfirmInviteMemberActionSuccess |
+  ConfirmInviteMemberActionError |
+  CreateOrgAction |
+  CreateOrgActionSuccess |
+  CreateOrgActionError |
+  DeleteAccountAction |
+  DeleteAccountActionSuccess |
+  DeleteAccountActionError |
+  FetchOrgAction |
+  FetchOrgActionSuccess |
+  FetchOrgActionError |
+  FetchRoleOptionsAction |
+  FetchRoleOptionsActionSuccess |
+  FetchRoleOptionsActionError |
+  FetchTeamMembersAction |
+  FetchTeamMembersActionSuccess |
+  FetchTeamMembersActionError |
+  GetProfileAction |
+  GetProfileActionSuccess |
+  GetProfileActionError |
+  InviteTeamMemberAction |
+  InviteTeamMemberActionSuccess |
+  InviteTeamMemberActionError |
+  RemoveTeamMemberAction |
+  RemoveTeamMemberActionSuccess |
+  RemoveTeamMemberActionError |
+  ResetProfileErrorsAction |
+  SwitchOrgAction |
+  SwitchOrgActionSuccess |
+  SwitchOrgActionError |
+  UpdateOrgAction |
+  UpdateOrgActionSuccess |
+  UpdateOrgActionError |
+  UpdateProfileAction |
+  UpdateProfileActionSuccess |
+  UpdateProfileActionError
 
 export type ChangeRoleAction = {
   type: typeof CHANGE_ROLE,
@@ -181,6 +185,22 @@ export type InviteTeamMemberActionSuccess = {
 
 export type InviteTeamMemberActionError = {
   type: typeof INVITE_TEAM_MEMBER_ERROR,
+  error: string,
+}
+
+export type RemoveTeamMemberAction = {
+  type: typeof REMOVE_TEAM_MEMBER,
+  orgID: string,
+  idOfCurrentUser: string,
+  idOfUserToRemove: string,
+}
+
+export type RemoveTeamMemberActionSuccess = {
+  type: typeof REMOVE_TEAM_MEMBER_SUCCESS,
+}
+
+export type RemoveTeamMemberActionError = {
+  type: typeof REMOVE_TEAM_MEMBER_ERROR,
   error: string,
 }
 
