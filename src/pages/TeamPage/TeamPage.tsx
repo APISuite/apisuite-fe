@@ -74,9 +74,9 @@ export const TeamPage: React.FC = () => {
     // TODO: review; there's is something wrongly typed somewhere
     if (target.value) {
       dispatch(changeRole({
-        org_id: orgId.toString(),
-        user_id: userId.toString(),
-        role_id: target.value,
+        org_id: orgId,
+        user_id: `${userId.toString()}`,
+        role_id: `${ROLES[target.value].level}`,
       }));
     }
   };
