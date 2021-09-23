@@ -6,11 +6,13 @@ import { NotificationCardsStore } from "./notificationCards/types";
 import { NotificationStackStore } from "./notificationStack/types";
 import { ProfileStore } from "store/profile/types";
 import { SubscriptionsStore } from "./subscriptions/types";
+import { MarkdownPageStore } from "./markdownPages/types";
 
 export interface Store {
   apiDetails: APIVersionStore,
   applications: ApplicationsStore,
   auth: AuthStore,
+  markdownPages: MarkdownPageStore,
   notifications: NotificationStackStore,
   // Temporary until notification cards become clearer
   notificationCards: NotificationCardsStore,
