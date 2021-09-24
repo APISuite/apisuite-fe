@@ -127,15 +127,14 @@ export function* confirmInviteSaga({ token }: ConfirmInviteMemberAction) {
   }
 }
 
-export function* changeRoleSaga({ type, ...rest }: ChangeRoleAction) {
+export function* changeRoleSaga(action: ChangeRoleAction) {
   try {
     yield call(request, {
-      url: `${API_URL}/organizations/assign`,
-      method: "POST",
+      url: `${API_URL}/organizations/${action.org_id}/users/${action.user_id}/roles/${action.role_id}`,
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      data: JSON.stringify({ ...rest }),
     });
 
     yield put(changeRoleSuccess({}));
