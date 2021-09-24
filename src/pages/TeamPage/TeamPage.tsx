@@ -60,7 +60,7 @@ export const TeamPage: React.FC = () => {
       label: ROLES[role.name]?.label,
       value: role.id,
       group: "Role",
-    }));
+    })).filter((role) => role.label !== ROLES.baseUser.label);
   };
 
   function chooseRole({ target }: React.ChangeEvent<any>) {
@@ -312,16 +312,12 @@ export const TeamPage: React.FC = () => {
                             fullWidth
                             margin="dense"
                             onChange={handleChangeRole(member.User.id, member.Organization.id)}
-                            value={member.Role.name}
+                            value={member.Role.id}
                             variant="outlined"
                           >
-                            {Object.entries(ROLES)
-                              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                              .map(([_, role]) => (
-                                <MenuItem key={role.value} value={role.value}>
-                                  {role.label}
-                                </MenuItem>
-                              ))}
+                            {selectOptions(roleOptions).map((opt) => (
+                              <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+                            ))}
                           </Select>
                         </TableCell>
 

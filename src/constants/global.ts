@@ -17,7 +17,7 @@ export const ROLES: Roles = {
 
   // Non-instance owners
   organizationOwner: {
-    label: "Organization Owner",
+    label: "Organisation Owner",
     value: "organizationOwner",
     level: 3,
   },
