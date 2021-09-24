@@ -70,12 +70,12 @@ export const TeamPage: React.FC = () => {
     });
   }
 
-  const handleChangeRole = (userId: number, orgId: string) => ({ target }: React.ChangeEvent<any>) => {
+  const handleChangeRole = (userId: string, orgId: string) => ({ target }: React.ChangeEvent<any>) => {
     // TODO: review; there's is something wrongly typed somewhere
     if (target.value) {
       dispatch(changeRole({
-        org_id: orgId.toString(),
-        user_id: userId.toString(),
+        org_id: orgId,
+        user_id: userId,
         role_id: target.value,
       }));
     }
