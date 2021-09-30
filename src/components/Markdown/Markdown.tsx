@@ -8,7 +8,7 @@ import { debounce } from "util/debounce";
 
 import { getPageContent } from "./selectors";
 import useStyles from "./styles";
-import { MarkdownProps } from "./types";
+import { MarkdownProps, TOCHeader } from "./types";
 
 export const Markdown: React.FC<MarkdownProps> = ({
   page,
@@ -36,7 +36,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
   };
 
   const editorRef = useRef<Editor>(null);
-  const [headings, setHeaders] = useState<{ title: string; level: number; id: string }[] | undefined>(undefined);
+  const [headings, setHeaders] = useState<TOCHeader[] | undefined>(undefined);
   const [elementsIds, setElements] = useState<(HTMLElement|null)[]>([]);
   const [active, setActive] = useState<string|null>(null);
 
@@ -58,12 +58,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
   const checkActiveSection = useCallback(() => {
     const buffer = 10;
     const elements = elementsIds.map((el) => ({ el, y: el?.getBoundingClientRect().top }));
-    const activeEl = elements.find(({y}) => {
-      if (y) {
-        return (y >= OFFSET - buffer && y < OFFSET + buffer);
-      }
-      return false;
-    });
+    const activeEl = elements.find(({y}) => y && (y >= OFFSET - buffer && y < OFFSET + buffer));
     if (activeEl && activeEl.el) {
       setActive(activeEl.el.id);
     } else {
@@ -107,11 +102,11 @@ export const Markdown: React.FC<MarkdownProps> = ({
     }
   };
 
-  const generateSideNav = () => {
-    if (headings && headings.length) {
+  const generateSideNav = (tocHeaders: TOCHeader[] | undefined) => {
+    if (tocHeaders && tocHeaders.length) {
       return <Grid item md={3}>
         <div className={classes.sideMenuContainer}>
-          {headings.map((header, idx) => (
+          {tocHeaders.map((header, idx) => (
             <div
               className={classes.menuItem}
               key={`${header.id}-${idx}`}
@@ -134,8 +129,8 @@ export const Markdown: React.FC<MarkdownProps> = ({
     return <></>;
   };
 
-  const getContent = () => {
-    if (isRequesting) {
+  const getContent = (requesting: boolean) => {
+    if (requesting) {
       return <CircularProgress />;
     }
 
@@ -149,8 +144,8 @@ export const Markdown: React.FC<MarkdownProps> = ({
 
   return (
     <Grid container item spacing={2}>
-      {generateSideNav()}
-      <Grid item md>{getContent()}</Grid>
+      {generateSideNav(headings)}
+      <Grid item md>{getContent(isRequesting)}</Grid>
     </Grid>
   );
 };
