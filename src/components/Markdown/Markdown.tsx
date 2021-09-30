@@ -1,4 +1,4 @@
-import { useTheme, CircularProgress, Grid } from "@apisuite/fe-base";
+import { useTheme, CircularProgress, Grid, Typography } from "@apisuite/fe-base";
 import clsx from "clsx";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import { MarkdownProps } from "./types";
 
 export const Markdown: React.FC<MarkdownProps> = ({
   page,
+  defaultValue,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -39,50 +40,6 @@ export const Markdown: React.FC<MarkdownProps> = ({
   const [elementsIds, setElements] = useState<(HTMLElement|null)[]>([]);
   const [active, setActive] = useState<string|null>(null);
 
-  const text = `
-# h1 Heading
-## h2 Heading
-### h3 Heading
-#### h4 Heading
-##### h5 Heading
-###### h6 Heading
-
-
-## Horizontal Rules
-
-___
-
----
-
-***
-
-
-## Typographic replacements
-
-Enable typographer option to see result.
-
-(c) (C) (r) (R) (tm) (TM) (p) (P) +-
-
-test.. test... test..... test?..... test!....
-
-!!!!!! ???? ,,  -- ---
-
-"Smartypants, double quotes" and 'single quotes'
-
-
-## Emphasis
-
-**This is bold text**
-
-__This is bold text__
-
-*This is italic text*
-
-_This is italic text_
-
-~~Strikethrough~~
-  `;
-
   useEffect(() => {
     dispatch(getMarkdownPage({ page }));
   }, [dispatch, page]);
@@ -90,8 +47,11 @@ _This is italic text_
   useEffect(() => {
     if (!isRequesting) {
       const heading = editorRef.current?.getHeadings();
-      setHeaders(heading);
-      setElements(heading?.map((h) => document.getElementById(h.id)) || []);
+      if (heading) {
+        const filtered = heading.filter(h => h.level === 2);
+        setHeaders(filtered);
+        setElements(filtered.map((h) => document.getElementById(h.id)) || []);
+      }
     }
   }, [editorRef, isRequesting]);
 
@@ -118,6 +78,8 @@ _This is italic text_
       }
       if (activeElement) {
         setActive(activeElement.id);
+      } else if (elementsIds) {
+        setActive(elementsIds[elementsIds.length - 1]?.id || "");
       }
     }
   }, [elementsIds]);
@@ -146,20 +108,24 @@ _This is italic text_
   };
 
   const generateSideNav = () => {
-    if (headings) {
+    if (headings && headings.length) {
       return <Grid item md={3}>
         <div className={classes.sideMenuContainer}>
           {headings.map((header, idx) => (
             <div
-              className={clsx(
-                classes.menuItem,
-                (header.id === active || (active === null && idx === 0)) && classes.selected,
-              )}
+              className={classes.menuItem}
               key={`${header.id}-${idx}`}
               onClick={() => scrollToHash(header.id)}
               ref={React.createRef()}
             >
-              {header.title}
+              <Typography
+                className={clsx(
+                  classes.item,
+                  (header.id === active || (active === null && idx === 0)) && classes.selected,
+                )}
+                variant="body1">
+                {header.title}
+              </Typography>
             </div>
           ))}
         </div>
@@ -177,7 +143,7 @@ _This is italic text_
       readOnly
       ref={editorRef}
       theme={customTheme}
-      value={error ? text : content}
+      value={error ? defaultValue : content}
     />;
   };
 

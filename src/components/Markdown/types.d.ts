@@ -1,4 +1,4 @@
-export type MarkdownProps = {
-  // the content to get
+export interface MarkdownProps {
   page: string,
-};
+  defaultValue: string,
+}
