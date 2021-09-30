@@ -81,10 +81,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
-    if (modalDetails.userAppID && modalDetails.userID) {
+    if (modalDetails.userAppID && modalDetails.userID && profile.current_org.id) {
       dispatch(getUserApp({ orgID: profile.current_org.id, appId: modalDetails.userAppID }));
     }
-  }, [dispatch, modalDetails, modalMode]);
+  }, [dispatch, modalDetails, modalMode, profile]);
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false);
 
