@@ -21,6 +21,20 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   // FIXME: checking the id because profile is never undefined
   const role = currentOrg?.role?.id ? currentOrg.role.name : user.id ? ROLES.baseUser.value : "anonymous";
 
+  const [isMaxWidth, setIsMaxWidth] = useState(window.innerWidth <= 1024);
+
+  const resizeHandler = useCallback(() => {
+    setIsMaxWidth(window.innerWidth <= 1024);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeHandler);
+
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, [setIsMaxWidth, resizeHandler]);
+
   // Expand functionality
   // Note: contractible prop was not changed to prevent breaking changes
   const [expand, setExpand] = useState(contractible);
@@ -60,6 +74,13 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
     let LabelComponent;
     const key = `nav-tab-${label.key}${label.type}${label.fallback}${label.iconName}`;
     let active = !!matchPath(location.pathname, { path: action, exact });
+    const pathLvls = location.pathname.split("/").filter(p => !!p);
+    const actionLvls = action.split("/").filter(a => !!a);
+    const actionLvl2 = actionLvls.slice(1);
+    // check action value only the from second level forward
+    if (subTab && !active && actionLvl2.length && pathLvls[0] === actionLvls[0]) {
+      active = actionLvl2.every(lvl => pathLvls.includes(lvl));
+    }
 
     if (label.type === "avatar") {
       LabelComponent = (
@@ -169,12 +190,15 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
     >
       {/* Top nav */}
       <Box
+        borderBottom={expand ? `1px solid ${palette.primary.light}` : undefined}
         display="flex"
         flexDirection="row"
         flexWrap="nowrap"
         pt={expand ? 2 : undefined}
-        mx={6}
-        borderBottom={expand ? `1px solid ${palette.primary.light}` : undefined}
+        style={{
+          marginLeft: !isMaxWidth ? spacing(6) : spacing(4),
+          marginRight: !isMaxWidth ? spacing(6) : spacing(4),
+        }}
       >
         {/* Logo & Title */}
         <Box
@@ -236,7 +260,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
       {/* Bottom nav */}
       {/* At least one tab must match the path for it to appear */}
-      {subTabs?.find((tab) => matchPath(location.pathname, { path: tab.action, exact: true })) && (
+      {subTabs?.find((tab) => matchPath(location.pathname, { path: tab.action, exact: false })) && (
         <Box
           data-test-id={testIds.navigationSubNav}
           display="flex"
