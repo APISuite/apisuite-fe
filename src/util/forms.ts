@@ -18,7 +18,7 @@ export const isValidURL = (url: string) => {
   because the BE requires the presence of 'http://' or 'https://' in its
   URLs in order to create an app.
   */
-  const re = /^(http:\/\/|https:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,=.]+$/;
+  const re = /^(http:\/\/|https:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&%'()*+,=.]+$/;
   return re.test(String(url).toLowerCase());
 };
 
