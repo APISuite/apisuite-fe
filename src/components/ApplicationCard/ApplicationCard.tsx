@@ -17,7 +17,7 @@ export const ApplicationCard: React.FC<ApplicationCardProps> = ({
   icon="",
   onClick,
 }) => {
-  const { palette } = useTheme();
+  const { palette, spacing } = useTheme();
   const [isOver, setOver] = useState(false);
 
   return (
@@ -37,14 +37,14 @@ export const ApplicationCard: React.FC<ApplicationCardProps> = ({
     >
       {
         icon && <Box position="relative">
-          <Box p={1} right="0" position="absolute">
+          <Box right="0" position="absolute">
             <Icon style={{ color: isOver ? palette.grey["700"] : palette.label }}>{icon}</Icon>
           </Box>
         </Box>
       }
       {media}
 
-      <CardContent className={contentStyle}>
+      <CardContent className={contentStyle} style={{ padding: spacing(3) }}>
         {cardContent || children}
       </CardContent>
     </Card>

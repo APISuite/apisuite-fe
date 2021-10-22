@@ -167,15 +167,16 @@
       "viewDetailsButtonLabel": "View details",
       "subscribeButtonLabel": "Subscribe",
       "tooltipLabels": {
-        "productionAccessible": "Production accessible APIs",
-        "sandboxAccessible": "Sandbox accessible APIs",
-        "documentationAccessible": "Documentation accessible APIs"
+        "productionAccessible": "Production access",
+        "sandboxAccessible": "Sandbox access",
+        "documentationAccessible": "API Documentation"
       }
     },
     "productionAccess": "Production access",
     "documentationAccess": "API Documentation",
     "registerForMoreMessage": "Sign up for more options",
-    "textFilterPlaceholder": "Filter...",
+    "textFilterPlaceholder": "Search for products",
+    "filterBy": "Filter by",
     "noAPIProducts": {
       "comingSoon": "Coming soon!",
       "text": "No API Products available",

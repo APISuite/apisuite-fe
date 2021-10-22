@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Avatar, Box, Chip, Grid, Typography, useTranslation } from "@apisuite/fe-base";
+import { Avatar, Box, Chip, Grid, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
 import useStyles from "./styles";
@@ -11,6 +11,7 @@ import clsx from "clsx";
 
 const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
   const classes = useStyles();
+  const { palette, spacing } = useTheme();
 
   const history = useHistory();
 
@@ -29,8 +30,6 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
     >
       {apisToDisplay.slice(0, limit).map((apiDetails) => {
         if (!apiDetails) return null;
-
-        const chipColor = apiDetails.apiAccess ? "primary" : "secondary";
 
         return (
           <Grid
@@ -58,8 +57,10 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                   <Avatar
                     classes={{
                       colorDefault: apiDetails.apiAccess
-                        ? classes.colorsOfProductionAPI : classes.colorsOfAPIDocumentation,
+                        ? classes.colorsOfProductionAPI
+                        : classes.colorsOfAPIDocumentation,
                     }}
+                    style={{ fontSize: 16, fontWeight: 300 }}
                   >
                     {apiDetails.apiName.slice(0, 2)}
                   </Avatar>
@@ -69,35 +70,52 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                   component={Box}
                   item
                   pl={2}
-                  pt={1}
                   xs={11}
                 >
-                  <Typography data-test-id={testIds.apiCardName} variant="h5">
+                  <Typography data-test-id={testIds.apiCardName} variant="h5" style={{ fontWeight: 300 }}>
                     {apiDetails.apiName}
                   </Typography>
 
-                  <Typography variant="body1">
-                    {apiDetails.apiContract}
+                  <Typography variant="h6">
+                    {
+                      apiDetails.apiContract !== t("fallbacks.noContract")
+                        ? apiDetails.apiContract
+                        : ""
+                    }
                   </Typography>
 
-                  <Box mb={1.5} mt={1}>
-                    <Typography variant="subtitle1">
-                      <Chip data-test-id={testIds.apiCardVersion} color={chipColor} label={apiDetails.apiVersion} />
+                  <Box my={1.5} style={{ display: "flex" }}>
+                    {
+                      apiDetails.apiContract !== t("fallbacks.noContract") &&
+                        (
+                          <Chip
+                            data-test-id={testIds.apiCardVersion}
+                            color="secondary"
+                            label={apiDetails.apiVersion}
+                            size="small"
+                            style={{ marginRight: spacing(1.5) }}
+                            variant="outlined"
+                          />
+                        )
+                    }
 
-                      <Box data-test-id={testIds.apiCardAccessType} component="span" ml={1}>
-                        {
-                          apiDetails.apiAccess
-                            ? t("sandboxPage.apiCatalog.productionAccess")
-                            : t("sandboxPage.apiCatalog.documentationAccess")
-                        }
-                      </Box>
-                    </Typography>
+                    <Chip
+                      data-test-id={testIds.apiCardAccessType}
+                      className={apiDetails.apiAccess ? classes.prodChip : classes.docsChip}
+                      label={
+                        apiDetails.apiAccess
+                          ? t("sandboxPage.apiCatalog.productionAccess")
+                          : t("sandboxPage.apiCatalog.documentationAccess")
+                      }
+                      size="small"
+                    />
                   </Box>
 
                   <Typography
                     data-test-id={testIds.apiCardDescription}
                     noWrap
-                    variant="subtitle1"
+                    style={{ color: palette.text.secondary }}
+                    variant="body2"
                   >
                     {apiDetails.apiDescription}
                   </Typography>

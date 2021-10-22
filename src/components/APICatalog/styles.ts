@@ -18,4 +18,14 @@ export default makeStyles((theme) => ({
   contractlessAPIProduct: {
     pointerEvents: "none",
   },
+
+  docsChip: {
+    backgroundColor: theme.palette.grey[300],
+    color: theme.palette.common.white,
+  },
+
+  prodChip: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
 }));

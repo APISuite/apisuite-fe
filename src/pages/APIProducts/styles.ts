@@ -1,6 +1,20 @@
 import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
+  activeFilter: {
+    color: theme.palette.info.main,
+    marginRight: 0,
+
+    "& > :first-child": {
+      color: theme.palette.info.main,
+    },
+
+    "& > :last-child": {
+      fontSize: "14px",
+      fontWeight: 500,
+    },
+  },
+
   activeDocumentationAccessFilterButtonIcon: {
     color: theme.palette.action.active,
   },
@@ -33,7 +47,6 @@ export default makeStyles((theme) => ({
   apiProductButtons: {
     display: "flex",
     height: "40px",
-    marginBottom: "6px",
   },
 
   apiProductVersion: {
@@ -48,6 +61,12 @@ export default makeStyles((theme) => ({
     padding: "4px 8px",
   },
 
+  docsAccessibleChip: {
+    backgroundColor: theme.palette.grey[300],
+    color: theme.palette.text.primary,
+    fontWeight: 300,
+  },
+
   documentationLink: {
     backgroundColor: theme.palette.primary.main,
     borderRadius: `${theme.shape.borderRadius}px`,
@@ -59,23 +78,19 @@ export default makeStyles((theme) => ({
   },
 
   filtersContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    paddingBottom: theme.spacing(4),
-  },
-
-  inactiveFilterButtonContainer: {
     alignItems: "center",
-    backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.label}`,
-    borderLeft: "none",
-    cursor: "pointer",
     display: "flex",
-    padding: "0px 6px",
+    justifyContent: "space-between",
   },
 
-  inactiveFilterButtonIcon: {
-    color: theme.palette.text.primary,
+  inactiveFilter: {
+    color: theme.palette.grey[400],
+    marginRight: 0,
+
+    "& > :last-child": {
+      fontSize: "14px",
+      fontWeight: 300,
+    },
   },
 
   lastFilterButtonContainer: {
@@ -87,9 +102,9 @@ export default makeStyles((theme) => ({
     /* The 'box-shadow' property was not generating the
     intended shadow, so 'filter' was used instead. */
     filter: "drop-shadow(0px 5px 2.5px rgba(0, 0, 0, 0.25))",
-    width: 380,
+    width: 325,
     height: "auto",
-    marginRight: 40,
+    marginRight: theme.spacing(3),
     position: "absolute",
   },
 
@@ -97,8 +112,9 @@ export default makeStyles((theme) => ({
     // First color is a fallback one - do not remove!
     background: theme.palette.gradient.dark,
     borderBottom: "4px solid rgba(20, 40, 60, 0.1)",
+    height: 350,
     width: "100%",
-    padding: "160px 60px 0px 60px",
+    padding: theme.spacing(22.5, 7.5, 0, 7.5),
   },
 
   noAPIProductsIllustration: {
@@ -106,13 +122,25 @@ export default makeStyles((theme) => ({
     width: 500,
   },
 
+  notShowingFilters: {
+    marginBottom: theme.spacing(5),
+  },
+
+  prodAccessibleChip: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.text.primary,
+    fontWeight: 300,
+  },
+
+  showingFilters: {
+    marginBottom: theme.spacing(3),
+  },
+
   textFilter: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
-    borderBottomRightRadius: "0px",
     borderRadius: `${theme.shape.borderRadius}px`,
-    borderTopRightRadius: "0px",
-    maxWidth: "325px",
+    maxWidth: "670px",
     padding: "2.5px 12px",
     width: "100%",
 
