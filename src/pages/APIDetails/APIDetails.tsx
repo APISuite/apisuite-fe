@@ -6,7 +6,7 @@ import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
 import { APIDetailParams } from "store/apiDetails/types";
-import { geAPIVersion } from "store/apiDetails/actions/getAPIVersion";
+import { getAPIVersion } from "store/apiDetails/actions/getAPIVersion";
 import { PageContainer } from "components/PageContainer";
 
 import { apiDetailsSelector } from "./selector";
@@ -20,7 +20,7 @@ export const APIDetails: React.FC = () => {
   const apiDetails = useSelector(apiDetailsSelector);
 
   useEffect(() => {
-    dispatch(geAPIVersion({
+    dispatch(getAPIVersion({
       params: {
         apiId: apiId || "0",
         versionId: versionId || "0",

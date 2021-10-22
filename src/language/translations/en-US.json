@@ -681,7 +681,7 @@
   },
   "fallbacks": {
     "noContract": "No contract provided.",
-    "noDescription": "No description presently available.",
+    "noDescription": "This product doesn't have a contract yet.",
     "noVersion": "No version available"
   },
   "messages": {

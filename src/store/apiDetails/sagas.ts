@@ -5,8 +5,8 @@ import {
 } from "redux-saga/effects";
 import {
   GET_API_VERSION,
-  geAPIVersionSuccess,
-  geAPIVersionError,
+  getAPIVersionSuccess,
+  getAPIVersionError,
 } from "./actions/getAPIVersion";
 import { API_URL } from "constants/endpoints";
 import request from "util/request";
@@ -39,9 +39,9 @@ function * getAPIVersionSaga (action: GetAPIVersionAction) {
       return v.id === Number(action.params.versionId);
     }) || emptyVersion;
 
-    yield put(geAPIVersionSuccess({ version }));
+    yield put(getAPIVersionSuccess({ version }));
   } catch (error) {
-    yield put(geAPIVersionError(error));
+    yield put(getAPIVersionError(error));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }

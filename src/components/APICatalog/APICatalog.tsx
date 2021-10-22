@@ -76,13 +76,13 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                     {apiDetails.apiName}
                   </Typography>
 
-                  <Typography variant="h6">
-                    {
-                      apiDetails.apiContract !== t("fallbacks.noContract")
-                        ? apiDetails.apiContract
-                        : ""
-                    }
-                  </Typography>
+                  {
+                    apiDetails.apiContract !== t("fallbacks.noContract") && (
+                      <Typography variant="h6">
+                        {apiDetails.apiContract}
+                      </Typography>
+                    )
+                  }
 
                   <Box my={1.5} style={{ display: "flex" }}>
                     {
