@@ -96,91 +96,94 @@ export const APIProducts: React.FC = () => {
 
   // 'Latest API product update' section
 
-  const generateLatestAPIProductContents = () => {
-    if (recentlyUpdatedAPIs.length) {
+  const generateLatestAPIProductContents = (
+    apiDetails: APIDetails[],
+    mostRecentAPI: APIDetails
+  ) => {
+    if (!apiDetails.length) {
       return (
-        <>
-          <Box mb={1}>
-            <Typography variant="h3" style={{ color: palette.secondary.main, fontWeight: 500 }}>
-              {latestUpdatedAPI.apiName}
-            </Typography>
-          </Box>
-  
-          <Box mb={3} style={{ alignItems: "center", display: "flex" }}>
-            {
-              latestUpdatedAPI.apiContract !== t("fallbacks.noContract") && (
-                <>
-                  <Typography variant="h5" style={{ color: palette.secondary.main, fontWeight: 300, marginRight: spacing(2) }}>
-                    {latestUpdatedAPI.apiContract}
-                  </Typography>
-  
-                  <Chip
-                    color="secondary"
-                    label={latestUpdatedAPI.apiVersion}
-                    size="small"
-                    style={{ marginRight: spacing(1.5) }}
-                    variant="outlined"
-                  />
-                </>
-              )
-            }
-  
-            <Chip
-              className={clsx({
-                [classes.prodAccessibleChip]: latestUpdatedAPI.apiAccess,
-                [classes.docsAccessibleChip]: !latestUpdatedAPI.apiAccess,
-              })}
-              label={
-                latestUpdatedAPI.apiAccess ? t("apiProductsTab.productionAccess") : t("apiProductsTab.documentationAccess")
-              }
-              size="small"
-            />
-          </Box>
-  
-          <div className={classes.apiProductButtons}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              disableElevation
-              href={
-                (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
-                  ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
-                  : "#"
-              }
-            >
-              {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
-            </Button>
-  
-            {
-              auth.user && latestUpdatedAPI.apiContract === t("fallbacks.noContract") && (
-                <Box clone ml={1}>
-                  <Button
-                    onClick={toggleModal}
-                    size="large"
-                    style={{
-                      backgroundColor: palette.common.white,
-                      border: "none",
-                      outline: `1px solid ${palette.secondary.main}`,
-                    }}
-                    variant="outlined"
-                  >
-                    {t("apiProductsTab.apiProductButtons.subscribeButtonLabel")}
-                  </Button>
-                </Box>
-              )
-            }
-          </div>
-        </>
+        <Box mt={1.5} mb={15}>
+          <Typography variant="h4" color="inherit">
+            {t("apiProductsTab.noAPIProducts.comingSoon")}
+          </Typography>
+        </Box>
       );
     }
 
     return (
-      <Box mt={1.5} mb={15}>
-        <Typography variant="h4" color="inherit">
-          {t("apiProductsTab.noAPIProducts.comingSoon")}
-        </Typography>
-      </Box>
+      <>
+        <Box mb={1}>
+          <Typography variant="h3" style={{ color: palette.secondary.main, fontWeight: 500 }}>
+            {mostRecentAPI.apiName}
+          </Typography>
+        </Box>
+  
+        <Box mb={3} style={{ alignItems: "center", display: "flex" }}>
+          {
+            mostRecentAPI.apiContract !== t("fallbacks.noContract") && (
+              <>
+                <Typography variant="h5" style={{ color: palette.secondary.main, fontWeight: 300, marginRight: spacing(2) }}>
+                  {mostRecentAPI.apiContract}
+                </Typography>
+  
+                <Chip
+                  color="secondary"
+                  label={mostRecentAPI.apiVersion}
+                  size="small"
+                  style={{ marginRight: spacing(1.5) }}
+                  variant="outlined"
+                />
+              </>
+            )
+          }
+  
+          <Chip
+            className={clsx({
+              [classes.prodAccessibleChip]: mostRecentAPI.apiAccess,
+              [classes.docsAccessibleChip]: !mostRecentAPI.apiAccess,
+            })}
+            label={
+              mostRecentAPI.apiAccess ? t("apiProductsTab.productionAccess") : t("apiProductsTab.documentationAccess")
+            }
+            size="small"
+          />
+        </Box>
+  
+        <div className={classes.apiProductButtons}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            disableElevation
+            href={
+              (mostRecentAPI.id && mostRecentAPI.apiRoutingId)
+                ? `/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId}`
+                : "#"
+            }
+          >
+            {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
+          </Button>
+  
+          {
+            auth.user && mostRecentAPI.apiContract === t("fallbacks.noContract") && (
+              <Box clone ml={1}>
+                <Button
+                  onClick={toggleModal}
+                  size="large"
+                  style={{
+                    backgroundColor: palette.common.white,
+                    border: "none",
+                    outline: `1px solid ${palette.secondary.main}`,
+                  }}
+                  variant="outlined"
+                >
+                  {t("apiProductsTab.apiProductButtons.subscribeButtonLabel")}
+                </Button>
+              </Box>
+            )
+          }
+        </div>
+      </>
     );
   };
 
@@ -188,14 +191,54 @@ export const APIProducts: React.FC = () => {
 
   const [showFilters, setShowFilters] = useState(false);
 
-  const generateAllAPIProductContents = () => {
-    return recentlyUpdatedAPIs.length ? (
+  const generateAllAPIProductContents = (
+    apiDetails: APIDetails[],
+    displayFilters: boolean,
+    apiFiltersStatus: [string, boolean, boolean, boolean],
+  ) => {
+    if (!apiDetails.length) {
+      return (
+        <Box m='auto' textAlign='center' width={675}>
+          <Box mt={9.125}>
+            <img
+              className={classes.noAPIProductsIllustration}
+              src={noAPIProducts}
+            />
+          </Box>
+
+          <Box mt={4}>
+            <Typography style={{ color: palette.action.active }} variant="h3">
+              {t("apiProductsTab.noAPIProducts.text")}
+            </Typography>
+          </Box>
+
+          <Box mt={3}>
+            <Typography style={{ color: palette.text.primary }} variant="body1">
+              {t("apiProductsTab.noAPIProducts.subText")}
+            </Typography>
+          </Box>
+
+          <Box mb={12.5} mt={5}>
+            <Typography variant="body1">
+              <Link
+                className={classes.documentationLink}
+                to="/documentation"
+              >
+                {t("apiProductsTab.noAPIProducts.documentationButtonLabel")}
+              </Link>
+            </Typography>
+          </Box>
+        </Box>
+      );
+    }
+
+    return (
       <>
         <Box
           className={
             clsx(classes.filtersContainer, {
-              [classes.showingFilters]: showFilters,
-              [classes.notShowingFilters]: !showFilters,
+              [classes.showingFilters]: displayFilters,
+              [classes.notShowingFilters]: !displayFilters,
             })
           }
         >
@@ -210,7 +253,7 @@ export const APIProducts: React.FC = () => {
 
           <Box
             style={{ alignItems: "center", display: "flex" }}
-            onClick={() => setShowFilters(!showFilters)}
+            onClick={() => setShowFilters(!displayFilters)}
           >
             <Box mr={1}>
               <FilterListRoundedIcon />
@@ -223,7 +266,7 @@ export const APIProducts: React.FC = () => {
             </Box>
 
             {
-              showFilters
+              displayFilters
                 ? <ExpandLessRoundedIcon />
                 : <ExpandMoreRoundedIcon />
             }
@@ -231,19 +274,19 @@ export const APIProducts: React.FC = () => {
         </Box>
 
         {
-          showFilters && (
+          displayFilters && (
             <Box style={{ alignItems: "right", display: "flex", justifyContent: "flex-end" }} mb={3} mt={3}>
               <Box mr={1.5}>
                 <FormControlLabel
                   className={
                     clsx({
-                      [classes.activeFilter]: apiFilters[3],
-                      [classes.inactiveFilter]: !apiFilters[3],
+                      [classes.activeFilter]: apiFiltersStatus[3],
+                      [classes.inactiveFilter]: !apiFiltersStatus[3],
                     })
                   }
                   control={
                     <Checkbox
-                      checked={apiFilters[3]}
+                      checked={apiFiltersStatus[3]}
                       name="documentationAccessible"
                       onChange={() => handleAPIFiltering(undefined, 3)}
                     />
@@ -256,13 +299,13 @@ export const APIProducts: React.FC = () => {
                 <FormControlLabel
                   className={
                     clsx({
-                      [classes.activeFilter]: apiFilters[1],
-                      [classes.inactiveFilter]: !apiFilters[1],
+                      [classes.activeFilter]: apiFiltersStatus[1],
+                      [classes.inactiveFilter]: !apiFiltersStatus[1],
                     })
                   }
                   control={
                     <Checkbox
-                      checked={apiFilters[1]}
+                      checked={apiFiltersStatus[1]}
                       name="productionAccessible"
                       onChange={() => handleAPIFiltering(undefined, 1)}
                     />
@@ -277,13 +320,13 @@ export const APIProducts: React.FC = () => {
                 <FormControlLabel
                   className={
                     clsx({
-                      [classes.activeFilter]: apiFilters[3],
-                      [classes.inactiveFilter]: !apiFilters[3],
+                      [classes.activeFilter]: apiFiltersStatus[3],
+                      [classes.inactiveFilter]: !apiFiltersStatus[3],
                     })
                   }
                   control={
                     <Checkbox
-                      checked={apiFilters[2]}
+                      checked={apiFiltersStatus[2]}
                       name="sandboxAccessible"
                       onChange={() => handleAPIFiltering(undefined, 2)}
                     />
@@ -295,61 +338,29 @@ export const APIProducts: React.FC = () => {
           )
         }
 
-        {!recentlyUpdatedAPIs.length && (
+        {!apiDetails.length && (
           <Typography align="center" variant="body1">
             {t("apiProductsTab.retrievingAPIProductMessage")}
           </Typography>
         )}
 
-        {!!recentlyUpdatedAPIs.length && (
+        {!!apiDetails.length && (
           <Box className={classes.apiCatalogContainer}>
             <APICatalog
               apisToDisplay={
-                apiFilters[0].length === 0 && !apiFilters[1] && !apiFilters[2] && !apiFilters[3]
-                  ? recentlyUpdatedAPIs : filteredAPIs}
+                apiFiltersStatus[0].length === 0 && !apiFiltersStatus[1] && !apiFiltersStatus[2] && !apiFiltersStatus[3]
+                  ? apiDetails : filteredAPIs}
             />
           </Box>
         )}
       </>
-    ) : (
-      <Box m='auto' textAlign='center' width={675}>
-        <Box mt={9.125}>
-          <img
-            className={classes.noAPIProductsIllustration}
-            src={noAPIProducts}
-          />
-        </Box>
-
-        <Box mt={4}>
-          <Typography style={{ color: palette.action.active }} variant="h3">
-            {t("apiProductsTab.noAPIProducts.text")}
-          </Typography>
-        </Box>
-
-        <Box mt={3}>
-          <Typography style={{ color: palette.text.primary }} variant="body1">
-            {t("apiProductsTab.noAPIProducts.subText")}
-          </Typography>
-        </Box>
-
-        <Box mb={12.5} mt={5}>
-          <Typography variant="body1">
-            <Link
-              className={classes.documentationLink}
-              to="/documentation"
-            >
-              {t("apiProductsTab.noAPIProducts.documentationButtonLabel")}
-            </Link>
-          </Typography>
-        </Box>
-      </Box>
     );
   };
 
   // API filtering logic
 
   const [filteredAPIs, setFilteredAPIs] = useState<any[]>([]);
-  const [apiFilters, setAPIFilters] = useState<any[]>(["", false, false, false]);
+  const [apiFilters, setAPIFilters] = useState<[string, boolean, boolean, boolean]>(["", false, false, false]);
 
   const handleAPIFiltering = (
     changeEvent?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -448,7 +459,7 @@ export const APIProducts: React.FC = () => {
               <b>{t("apiProductsTab.latestAPIProductTitle")}</b>
             </Typography>
 
-            {generateLatestAPIProductContents()}
+            {generateLatestAPIProductContents(recentlyUpdatedAPIs, latestUpdatedAPI)}
           </Box>
         </PageContainer>
       </section>
@@ -456,7 +467,7 @@ export const APIProducts: React.FC = () => {
       {/* 'All API products' section */}
       <Box my={5}>
         <PageContainer disablePaddingY>
-          {generateAllAPIProductContents()}
+          {generateAllAPIProductContents(recentlyUpdatedAPIs, showFilters, apiFilters)}
         </PageContainer>
       </Box>
 
