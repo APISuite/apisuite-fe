@@ -96,84 +96,86 @@ export const APIProducts: React.FC = () => {
 
   // 'Latest API product update' section
 
-  console.log("latestUpdatedAPI", latestUpdatedAPI);
-
   const generateLatestAPIProductContents = () => {
-    return recentlyUpdatedAPIs.length ? (
-      <>
-        <Box mb={1}>
-          <Typography variant="h3" style={{ color: palette.secondary.main, fontWeight: 500 }}>
-            {latestUpdatedAPI.apiName}
-          </Typography>
-        </Box>
-
-        <Box mb={3} style={{ alignItems: "center", display: "flex" }}>
-          {
-            latestUpdatedAPI.apiContract !== t("fallbacks.noContract") && (
-              <>
-                <Typography variant="h5" style={{ color: palette.secondary.main, fontWeight: 300, marginRight: spacing(2) }}>
-                  {latestUpdatedAPI.apiContract}
-                </Typography>
-
-                <Chip
-                  color="secondary"
-                  label={latestUpdatedAPI.apiVersion}
-                  size="small"
-                  style={{ marginRight: spacing(1.5) }}
-                  variant="outlined"
-                />
-              </>
-            )
-          }
-
-          <Chip
-            className={clsx({
-              [classes.prodAccessibleChip]: latestUpdatedAPI.apiAccess,
-              [classes.docsAccessibleChip]: !latestUpdatedAPI.apiAccess,
-            })}
-            label={
-              latestUpdatedAPI.apiAccess ? t("apiProductsTab.productionAccess") : t("apiProductsTab.documentationAccess")
+    if (recentlyUpdatedAPIs.length) {
+      return (
+        <>
+          <Box mb={1}>
+            <Typography variant="h3" style={{ color: palette.secondary.main, fontWeight: 500 }}>
+              {latestUpdatedAPI.apiName}
+            </Typography>
+          </Box>
+  
+          <Box mb={3} style={{ alignItems: "center", display: "flex" }}>
+            {
+              latestUpdatedAPI.apiContract !== t("fallbacks.noContract") && (
+                <>
+                  <Typography variant="h5" style={{ color: palette.secondary.main, fontWeight: 300, marginRight: spacing(2) }}>
+                    {latestUpdatedAPI.apiContract}
+                  </Typography>
+  
+                  <Chip
+                    color="secondary"
+                    label={latestUpdatedAPI.apiVersion}
+                    size="small"
+                    style={{ marginRight: spacing(1.5) }}
+                    variant="outlined"
+                  />
+                </>
+              )
             }
-            size="small"
-          />
-        </Box>
-
-        <div className={classes.apiProductButtons}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            disableElevation
-            href={
-              (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
-                ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
-                : "#"
+  
+            <Chip
+              className={clsx({
+                [classes.prodAccessibleChip]: latestUpdatedAPI.apiAccess,
+                [classes.docsAccessibleChip]: !latestUpdatedAPI.apiAccess,
+              })}
+              label={
+                latestUpdatedAPI.apiAccess ? t("apiProductsTab.productionAccess") : t("apiProductsTab.documentationAccess")
+              }
+              size="small"
+            />
+          </Box>
+  
+          <div className={classes.apiProductButtons}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              disableElevation
+              href={
+                (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
+                  ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
+                  : "#"
+              }
+            >
+              {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
+            </Button>
+  
+            {
+              auth.user && latestUpdatedAPI.apiContract === t("fallbacks.noContract") && (
+                <Box clone ml={1}>
+                  <Button
+                    onClick={toggleModal}
+                    size="large"
+                    style={{
+                      backgroundColor: palette.common.white,
+                      border: "none",
+                      outline: `1px solid ${palette.secondary.main}`,
+                    }}
+                    variant="outlined"
+                  >
+                    {t("apiProductsTab.apiProductButtons.subscribeButtonLabel")}
+                  </Button>
+                </Box>
+              )
             }
-          >
-            {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
-          </Button>
+          </div>
+        </>
+      );
+    }
 
-          {
-            auth.user && latestUpdatedAPI.apiContract === t("fallbacks.noContract") && (
-              <Box clone ml={1}>
-                <Button
-                  onClick={toggleModal}
-                  size="large"
-                  style={{
-                    backgroundColor: palette.common.white,
-                    border: "none",
-                    outline: `1px solid ${palette.secondary.main}`,
-                  }}
-                  variant="outlined"
-                >
-                  {t("apiProductsTab.apiProductButtons.subscribeButtonLabel")}
-                </Button>
-              </Box>
-            )
-          }
-        </div>
-      </>
-    ) : (
+    return (
       <Box mt={1.5} mb={15}>
         <Typography variant="h4" color="inherit">
           {t("apiProductsTab.noAPIProducts.comingSoon")}

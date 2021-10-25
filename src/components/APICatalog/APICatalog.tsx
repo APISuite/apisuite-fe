@@ -60,9 +60,10 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                         ? classes.colorsOfProductionAPI
                         : classes.colorsOfAPIDocumentation,
                     }}
-                    style={{ fontSize: 16, fontWeight: 300 }}
                   >
-                    {apiDetails.apiName.slice(0, 2)}
+                    <Typography variant="body1" style={{ fontWeight: 300 }}>
+                      {apiDetails.apiName.slice(0, 2)}
+                    </Typography>
                   </Avatar>
                 </Grid>
 
