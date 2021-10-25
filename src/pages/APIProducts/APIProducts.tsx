@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, Button, InputBase, Box, Typography, Chip, useTheme, FormControlLabel, Checkbox } from "@apisuite/fe-base";
+import { useTranslation, Button, InputBase, Box, Typography, Chip, useTheme, FormControlLabel, Checkbox, Icon } from "@apisuite/fe-base";
 
 // TODO: Uncomment once this view does account for 'sandbox' accessible API products.
 // import SubscriptionsRoundedIcon from '@material-ui/icons/SubscriptionsRounded'
-import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
-import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import apiProductCard from "assets/apiProductCard.svg";
@@ -24,6 +22,7 @@ import useStyles from "./styles";
 import { apiProductsSelector } from "./selector";
 import { profileSelector } from "pages/Profile/selectors";
 import clsx from "clsx";
+import { APIFilters } from "./types";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -75,7 +74,7 @@ export const APIProducts: React.FC = () => {
           its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
-          apiContract: api.apiVersions.length ? api.apiVersions[0].title : t("fallbacks.noContract"),
+          apiContract: api.apiVersions.length ? api.apiVersions[0].title : null,
           apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
           apiName: api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
@@ -120,7 +119,7 @@ export const APIProducts: React.FC = () => {
   
         <Box mb={3} style={{ alignItems: "center", display: "flex" }}>
           {
-            mostRecentAPI.apiContract !== t("fallbacks.noContract") && (
+            mostRecentAPI.apiContract && (
               <>
                 <Typography variant="h5" style={{ color: palette.secondary.main, fontWeight: 300, marginRight: spacing(2) }}>
                   {mostRecentAPI.apiContract}
@@ -151,21 +150,18 @@ export const APIProducts: React.FC = () => {
   
         <div className={classes.apiProductButtons}>
           <Button
-            variant="contained"
             color="primary"
-            size="large"
+            disabled={!(mostRecentAPI.id && mostRecentAPI.apiRoutingId)}
             disableElevation
-            href={
-              (mostRecentAPI.id && mostRecentAPI.apiRoutingId)
-                ? `/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId}`
-                : "#"
-            }
+            href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId}`}
+            size="large"
+            variant="contained"
           >
             {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
           </Button>
   
           {
-            auth.user && mostRecentAPI.apiContract === t("fallbacks.noContract") && (
+            auth.user && mostRecentAPI.apiContract && (
               <Box clone ml={1}>
                 <Button
                   onClick={toggleModal}
@@ -194,7 +190,7 @@ export const APIProducts: React.FC = () => {
   const generateAllAPIProductContents = (
     apiDetails: APIDetails[],
     displayFilters: boolean,
-    apiFiltersStatus: [string, boolean, boolean, boolean],
+    apiFiltersStatus: APIFilters,
   ) => {
     if (!apiDetails.length) {
       return (
@@ -267,8 +263,8 @@ export const APIProducts: React.FC = () => {
 
             {
               displayFilters
-                ? <ExpandLessRoundedIcon />
-                : <ExpandMoreRoundedIcon />
+                ? <Icon>expand_more</Icon>
+                : <Icon>expand_less</Icon>
             }
           </Box>
         </Box>
@@ -360,7 +356,7 @@ export const APIProducts: React.FC = () => {
   // API filtering logic
 
   const [filteredAPIs, setFilteredAPIs] = useState<any[]>([]);
-  const [apiFilters, setAPIFilters] = useState<[string, boolean, boolean, boolean]>(["", false, false, false]);
+  const [apiFilters, setAPIFilters] = useState<APIFilters>(["", false, false, false]);
 
   const handleAPIFiltering = (
     changeEvent?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
