@@ -263,8 +263,8 @@ export const APIProducts: React.FC = () => {
 
             {
               displayFilters
-                ? <Icon>expand_more</Icon>
-                : <Icon>expand_less</Icon>
+                ? <Icon>expand_less</Icon>
+                : <Icon>expand_more</Icon>
             }
           </Box>
         </Box>
@@ -435,7 +435,7 @@ export const APIProducts: React.FC = () => {
   };
 
   return (
-    <main style={{ backgroundColor: palette.grey[100], paddingBottom: spacing(5) }}>
+    <main style={{ backgroundColor: palette.grey[100], height: "100%", paddingBottom: spacing(5) }}>
       {/* 'Latest API product update' section */}
       <section className={classes.latestAPIProductUpdateSection}>
         <PageContainer disablePaddingY display="flex" position="relative">

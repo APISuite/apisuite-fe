@@ -4,35 +4,32 @@ import { API_URL } from "constants/endpoints";
 import request from "util/request";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { getAPIsError, getAPIsSuccess, GET_APIS } from "./actions/getAPIs";
-
-/**
- * Takes a list of items and builds a string usable as a URL query string.
- * Ex.: buildQueryParameters([1,2], 'user') => 'user=1&user=2'
- * */
-function buildQueryParameters(items: string[], paramName: string): string {
-  let params = "";
-  for (let i = 0; i < items.length; i++) {
-    if (i === 0) {
-      params = `${paramName}=${items[i]}`;
-      continue;
-    }
-    params += `&${paramName}=${items[i]}`;
-  }
-  return params;
-}
+import qs from "qs";
 
 function * getAPIsSaga () {
   try {
-    const pagination = "page=1&pageSize=100";
+    const pagination = qs.stringify({
+      page: 1,
+      pageSize: 100,
+    });
+
     let getAPIsUrl = `${API_URL}/apis?${pagination}`;
 
-    const typeParams = buildQueryParameters(["production, documentation"], "type");
-    const sortParams = buildQueryParameters(["published"], "sort_by");
-    const orderParams = buildQueryParameters(["asc"], "order");
+    const queryParams = qs.stringify(
+      {
+        type: ["production", "documentation"],
+        sort_by: ["published"],
+        order: ["asc"],
+      },
+      {
+        indices: false,
+      }
+    );
+
     const name = "";
     const search = "";
 
-    const params = [typeParams, sortParams, orderParams, name, search]
+    const params = [queryParams, name, search]
       .filter((p) => p.length)
       .join("&");
 
