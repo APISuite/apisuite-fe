@@ -34,7 +34,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
         cy.setSession();
@@ -69,7 +69,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
         cy.setSession();
@@ -169,7 +169,7 @@ users.forEach(user => {
       beforeEach(() => {
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
         cy.setSession();
@@ -240,7 +240,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
         cy.setSession();
@@ -280,7 +280,7 @@ users.forEach(user => {
       });
 
       it("should show the section title and a message mentioning the absence of APIs", () => {
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis_empty.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis_empty.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
@@ -295,7 +295,7 @@ users.forEach(user => {
 
       //TODO: Test needs business confirmation related to the amount of API products being displayed
       xit("should show the section title and a card for each recent API added", () => {
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
@@ -333,7 +333,7 @@ users.forEach(user => {
       });
 
       it("should show the section title and a card for each recent API added without version", () => {
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis_noversion.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis_noversion.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
@@ -363,7 +363,7 @@ users.forEach(user => {
 
     context("Portal Owner Info Panel", () => {
       beforeEach(() => {
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
@@ -398,7 +398,7 @@ users.forEach(user => {
 
     context("Footer", () => {
       beforeEach(() => {
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/apis?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
