@@ -46,7 +46,7 @@ export const Profile: React.FC = () => {
   useEffect(() => {
     /* Once our store's 'profile' details load, we check its 'oidcProvider'
     field to determine whether the user signed in regularly or by way of SSO.
-    
+
     If 'oidcProvider' amounts to 'null', it means that the user signed in regularly,
     and if not, it means that the user signed in by way of SSO. */
     if (profile.user.oidcProvider) {
@@ -56,7 +56,7 @@ export const Profile: React.FC = () => {
 
   /*
   User details
-  
+
   Note:
   - 'formState' refers to our own, local copy of a user's details.
   - 'profile' refers to our stored, back-end approved copy of a user's details.
@@ -104,25 +104,17 @@ export const Profile: React.FC = () => {
       userAvatarURL: {
         rules: [
           (URI) => {
-            const stringURI = URI.toString();
-
-            if (URI === null || stringURI.length === 0) {
-              /* Empty URI? That's okay - it just means we don't want,
-              or have an image to display on the user's Avatar. */
+            if (!URI || !URI.toString().length) {
               setValidImage(true);
               return true;
-            } else {
-              /* Non-empty URI? Cool! First, we determine if that URI is valid,
-              and then we need to check if the URI points to an actual image.
-              If any of these conditions are not met, we display an error message. */
-              const doesImageExist = isValidURL(stringURI);
-
-              if (doesImageExist) {
-                debounce("PROFILE_VALIDATE_AVATAR_REQUEST", () => validateAvatar(stringURI));
-              }
-
-              return doesImageExist;
             }
+
+            const stringURI = URI.toString();
+            const doesImageExist = isValidURL(stringURI);
+            if (doesImageExist) {
+              debounce("PROFILE_VALIDATE_AVATAR_REQUEST", () => validateAvatar(stringURI));
+            }
+            return doesImageExist;
           },
         ],
         message: t("profileTab.overviewSubTab.warningLabels.userAvatarURL"),
@@ -300,7 +292,7 @@ export const Profile: React.FC = () => {
                 {t("profileTab.overviewSubTab.orgRelatedLabels.noOrgSubtitle")}
               </Typography>
             </Box>
-            
+
             <Box mt={3}>
               <Link to="profile/organisation" style={{ textDecoration: "none" }}>
                 <Button
