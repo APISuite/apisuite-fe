@@ -153,6 +153,14 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
           label={t("apiProductDetails.selectorLabel")}
           renderValue={() => `${apiDetails.name} (${apiDetails.version!.version})`}
         >
+          <MenuItem
+            disabled
+            key="disabledSelectorOption"
+            value={apiDetails.version?.id}
+          >
+            {`${apiDetails.version?.title} (${apiDetails.version?.version})`}
+          </MenuItem>
+
           {generateSelectorOptions(apiDetails.otherVersions)}
         </Select>
 
@@ -170,15 +178,13 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
                 style={{ marginRight: spacing(1.5) }}
               />
 
-              <Chip
-                className={apiDetails.version!.live ? classes.prodChip : classes.deprecatedChip}
-                label={
-                  apiDetails.version!.live
-                    ? t("apiProductDetails.liveAPIProductChip")
-                    : t("apiProductDetails.deprecatedAPIProductChip")
-                }
-                size="small"
-              />
+              {apiDetails.version!.live &&
+                <Chip
+                  className={classes.prodChip}
+                  label={t("apiProductDetails.liveAPIProductChip")}
+                  size="small"
+                />
+              }
             </Box>
           </Grid>
 

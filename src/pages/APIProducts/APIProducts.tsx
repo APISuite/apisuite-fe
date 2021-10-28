@@ -242,7 +242,7 @@ export const APIProducts: React.FC = () => {
           />
 
           <Box
-            style={{ alignItems: "center", display: "flex" }}
+            style={{ alignItems: "center", display: "flex", cursor: "pointer" }}
             onClick={() => setShowFilters(!displayFilters)}
           >
             <Box mr={1}>
