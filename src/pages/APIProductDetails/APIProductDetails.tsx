@@ -71,8 +71,6 @@ export const APIProductDetails: React.FC = () => {
       let name = "";
       let otherAPIVersions: APIVersion[] = [];
 
-      console.log("SUBSCRIPTIONS", subscriptions);
-
       subscriptions.apis.forEach((api) => {
         if (api.id === apiDetails.version.apiId) {
           currentAPI = api;
@@ -103,8 +101,6 @@ export const APIProductDetails: React.FC = () => {
         version: apiDetails.version,
       });
     }
-
-    console.log("subscriptions", subscriptions);
   }, [apiDetails, allUserApps, subscriptions]);
 
   // TODO: Temporary placeholders until API is reworked to support carousel highlight cards.
