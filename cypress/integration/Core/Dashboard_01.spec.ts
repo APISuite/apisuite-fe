@@ -352,7 +352,7 @@ users.forEach(user => {
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardName)
           .should("have.text", apis_noversion.rows[0].name);
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardVersion)
-          .should("not.exist");
+          .should("have.text", enUS.fallbacks.noVersion);
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardAccessType)
           .should("have.text", " API Documentation");
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardDescription)

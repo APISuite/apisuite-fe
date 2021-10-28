@@ -48,3 +48,10 @@ export enum API_DOCS_CONTENT_TARGET {
   USE_CASE = "use_case",
   HIGHLIGHT = "highlight",
 }
+
+export enum Filter {
+  text = "text",
+  prod = "prod",
+  sandbox = "sandbox",
+  docs = "docs"
+}

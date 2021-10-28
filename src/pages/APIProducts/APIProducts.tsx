@@ -2,27 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation, Button, InputBase, Box, Typography, Chip, useTheme, FormControlLabel, Checkbox, Icon } from "@apisuite/fe-base";
 
-// TODO: Uncomment once this view does account for 'sandbox' accessible API products.
-// import SubscriptionsRoundedIcon from '@material-ui/icons/SubscriptionsRounded'
-import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
-import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 import apiProductCard from "assets/apiProductCard.svg";
 import noAPIProducts from "assets/noAPIProducts.svg";
-
-import { API_DOCS_CONTENT_TARGET } from "constants/global";
-import APICatalog from "components/APICatalog";
+import { API_DOCS_CONTENT_TARGET, Filter } from "constants/global";
 import { APIDetails } from "components/APICatalog/types";
-import { SubscriptionsModal } from "components/SubscriptionsModal";
-import { getAPIs } from "store/subscriptions/actions/getAPIs";
-import { getAllUserApps } from "store/applications/actions/getAllUserApps";
 import { PageContainer } from "components/PageContainer";
+import { SubscriptionsModal } from "components/SubscriptionsModal";
+import APICatalog from "components/APICatalog";
 import Link from "components/Link";
-
+import { getAllUserApps } from "store/applications/actions/getAllUserApps";
+import { getAPIs } from "store/subscriptions/actions/getAPIs";
+import { APIFilters } from "./types";
 import useStyles from "./styles";
 import { apiProductsSelector } from "./selector";
 import { profileSelector } from "pages/Profile/selectors";
 import clsx from "clsx";
-import { APIFilters } from "./types";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -241,9 +235,9 @@ export const APIProducts: React.FC = () => {
           <InputBase
             className={classes.textFilter}
             endAdornment={
-              <SearchRoundedIcon />
+              <Icon>search</Icon>
             }
-            onChange={(changeEvent) => handleAPIFiltering(changeEvent, undefined)}
+            onChange={(changeEvent) => handleAPIFiltering(changeEvent)}
             placeholder={t("apiProductsTab.textFilterPlaceholder")}
           />
 
@@ -252,7 +246,7 @@ export const APIProducts: React.FC = () => {
             onClick={() => setShowFilters(!displayFilters)}
           >
             <Box mr={1}>
-              <FilterListRoundedIcon />
+              <Icon>filter_list</Icon>
             </Box>
 
             <Box mr={1}>
@@ -276,15 +270,15 @@ export const APIProducts: React.FC = () => {
                 <FormControlLabel
                   className={
                     clsx({
-                      [classes.activeFilter]: apiFiltersStatus[3],
-                      [classes.inactiveFilter]: !apiFiltersStatus[3],
+                      [classes.activeFilter]: apiFiltersStatus.docs,
+                      [classes.inactiveFilter]: !apiFiltersStatus.docs,
                     })
                   }
                   control={
                     <Checkbox
-                      checked={apiFiltersStatus[3]}
+                      checked={!!apiFiltersStatus.docs}
                       name="documentationAccessible"
-                      onChange={() => handleAPIFiltering(undefined, 3)}
+                      onChange={() => handleAPIFiltering(undefined, Filter.docs)}
                     />
                   }
                   label={t("apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible")}
@@ -295,15 +289,15 @@ export const APIProducts: React.FC = () => {
                 <FormControlLabel
                   className={
                     clsx({
-                      [classes.activeFilter]: apiFiltersStatus[1],
-                      [classes.inactiveFilter]: !apiFiltersStatus[1],
+                      [classes.activeFilter]: apiFiltersStatus.prod,
+                      [classes.inactiveFilter]: !apiFiltersStatus.prod,
                     })
                   }
                   control={
                     <Checkbox
-                      checked={apiFiltersStatus[1]}
+                      checked={!!apiFiltersStatus.prod}
                       name="productionAccessible"
-                      onChange={() => handleAPIFiltering(undefined, 1)}
+                      onChange={() => handleAPIFiltering(undefined, Filter.prod)}
                     />
                   }
                   label={t("apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible")}
@@ -316,15 +310,15 @@ export const APIProducts: React.FC = () => {
                 <FormControlLabel
                   className={
                     clsx({
-                      [classes.activeFilter]: apiFiltersStatus[3],
-                      [classes.inactiveFilter]: !apiFiltersStatus[3],
+                      [classes.activeFilter]: apiFiltersStatus.sandbox,
+                      [classes.inactiveFilter]: !apiFiltersStatus.sandbox,
                     })
                   }
                   control={
                     <Checkbox
-                      checked={apiFiltersStatus[2]}
+                      checked={!!apiFiltersStatus.sandbox}
                       name="sandboxAccessible"
-                      onChange={() => handleAPIFiltering(undefined, 2)}
+                      onChange={() => handleAPIFiltering(undefined, Filter.sandbox)}
                     />
                   }
                   label={t("apiProductsTab.apiProductButtons.tooltipLabels.sandboxAccessible")}
@@ -344,8 +338,15 @@ export const APIProducts: React.FC = () => {
           <Box className={classes.apiCatalogContainer}>
             <APICatalog
               apisToDisplay={
-                apiFiltersStatus[0].length === 0 && !apiFiltersStatus[1] && !apiFiltersStatus[2] && !apiFiltersStatus[3]
-                  ? apiDetails : filteredAPIs}
+                (
+                  apiFiltersStatus.text.length === 0 &&
+                  !apiFiltersStatus.prod &&
+                  !apiFiltersStatus.sandbox &&
+                  !apiFiltersStatus.docs
+                )
+                  ? apiDetails
+                  : filteredAPIs
+              }
             />
           </Box>
         )}
@@ -356,41 +357,46 @@ export const APIProducts: React.FC = () => {
   // API filtering logic
 
   const [filteredAPIs, setFilteredAPIs] = useState<any[]>([]);
-  const [apiFilters, setAPIFilters] = useState<APIFilters>(["", false, false, false]);
+  const [apiFilters, setAPIFilters] = useState<APIFilters>({
+    text: "",
+    prod: false,
+    sandbox: false,
+    docs: false,
+  });
 
   const handleAPIFiltering = (
     changeEvent?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-    buttonFilterIndex?: number,
+    buttonFilter?: Filter.prod | Filter.sandbox | Filter.docs,
   ) => {
     const apisToFilter: APIDetails[] = recentlyUpdatedAPIs;
     let newFilteredAPIs: APIDetails[] = [];
-    const newAPIFilters = apiFilters;
+    const newAPIFilters: APIFilters = apiFilters;
 
     // Filtering by access type
     let productionAccessibleAPIs: APIDetails[] = [];
     const sandboxAccessibleAPIs: APIDetails[] = [];
     let documentationAccessibleAPIs: APIDetails[] = [];
 
-    if (buttonFilterIndex) {
-      if (newAPIFilters[buttonFilterIndex] === false) {
-        newAPIFilters[buttonFilterIndex] = true;
+    if (buttonFilter) {
+      if (newAPIFilters[buttonFilter] === false) {
+        newAPIFilters[buttonFilter] = true;
       } else {
-        newAPIFilters[buttonFilterIndex] = false;
+        newAPIFilters[buttonFilter] = false;
       }
     }
 
-    if (newAPIFilters[1]) {
+    if (newAPIFilters.prod) {
       productionAccessibleAPIs = apisToFilter.filter((api) => {
         return api.apiAccess === true;
       });
     }
 
-    if (newAPIFilters[2]) {
+    if (newAPIFilters.sandbox) {
       /* TODO: Fully handle this case once we have the means to
       determine if a particular API product is 'sandbox' accessible. */
     }
 
-    if (newAPIFilters[3]) {
+    if (newAPIFilters.docs) {
       documentationAccessibleAPIs = apisToFilter.filter((api) => {
         return api.apiAccess === false;
       });
@@ -404,12 +410,12 @@ export const APIProducts: React.FC = () => {
 
     // Filtering by name
 
-    let textFilterContents = apiFilters[0];
+    let textFilterContents = apiFilters.text;
 
     if (changeEvent) {
       textFilterContents = changeEvent?.target.value;
 
-      newAPIFilters[0] = textFilterContents;
+      newAPIFilters.text = textFilterContents;
     }
 
     if (newFilteredAPIs.length) {

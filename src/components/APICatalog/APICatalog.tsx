@@ -21,8 +21,6 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
     history.push(`/api-products/details/${details.id}/spec/${details.apiRoutingId || 0}`);
   };
 
-  console.log("apisToDisplay", apisToDisplay);
-
   return (
     <Grid
       component={Box}
@@ -104,7 +102,10 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
 
                     <Chip
                       data-test-id={testIds.apiCardAccessType}
-                      className={apiDetails.apiAccess ? classes.prodChip : classes.docsChip}
+                      className={clsx({
+                        [classes.prodChip]: apiDetails.apiAccess,
+                        [classes.docsChip]: !apiDetails.apiAccess,
+                      })}
                       label={
                         apiDetails.apiAccess
                           ? t("sandboxPage.apiCatalog.productionAccess")

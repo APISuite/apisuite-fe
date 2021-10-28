@@ -1,6 +1,8 @@
-export type APIFilters = [
-  textFilter: string,
-  prodFilter: boolean,
-  sandboxFilter: boolean,
-  docsFilter: boolean,
-]
+import { Filter } from "constants/global";
+
+export type APIFilters = {
+  [Filter.text]: string,
+  [Filter.prod]: boolean,
+  [Filter.sandbox]: boolean,
+  [Filter.docs]: boolean,
+}
