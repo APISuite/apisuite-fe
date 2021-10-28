@@ -63,7 +63,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     toggleModal: toggleModal,
     regularGoToSubsView: () => history.push("/dashboard/subscriptions"),
     alternativeGoToSubsView: () => history.push("/dashboard/subscriptions", {
-      fromAppsView: true,
+      redirected: true,
       appID: history.location.state?.appID || modalDetails.userAppID,
     }),
   };
@@ -79,13 +79,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   const checkHistory = (history: any) => {
-    history.location.state?.fromSubsModal
+    history.location.state?.redirected
       ? checkNextAction("alternativeGoToSubsView")
       : checkNextAction("toggleModal");
   };
 
   const confirmButtonAction = () => {
-    if (modalMode !== "new" || history.location.state?.fromSubsModal) {
+    if (modalMode !== "new" || history.location.state?.redirected) {
       dialogFunctions["alternativeGoToSubsView"]();
     } else {
       if (buttonClicked === "subs") {
@@ -1685,7 +1685,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            onClick={() =>  modalMode !== "new" || history.location.state?.fromSubsModal
+                            onClick={() =>  modalMode !== "new" || history.location.state?.redirected
                               ? checkNextAction("alternativeGoToSubsView")
                               : checkNextAction("regularGoToSubsView")}
                             color="primary"

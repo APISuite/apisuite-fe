@@ -9,7 +9,7 @@ import apis_noversion from "../../fixtures/apis/apis_noversion.json";
 import settings_socialURLs from "../../fixtures/settings/settings_socialURLs.json";
 import settings from "../../fixtures/settings/settings.json";
 
-const apiQueryParameters = "?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc";
+const apiQueryParameters = "?page=1&pageSize=100&type=cloud&type=local&sort_by=published&order=asc";
 
 describe("Home Page - Unauthenticated User", () => {
 

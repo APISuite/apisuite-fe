@@ -1,0 +1,1 @@
+export { APIProductDetails } from "./APIProductDetails";

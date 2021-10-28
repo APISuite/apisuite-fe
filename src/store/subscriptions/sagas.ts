@@ -17,7 +17,7 @@ function * getAPIsSaga () {
 
     const queryParams = qs.stringify(
       {
-        type: ["production", "documentation"],
+        type: ["cloud", "local"],
         sort_by: ["published"],
         order: ["asc"],
       },

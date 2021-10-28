@@ -25,7 +25,7 @@ const users: { type: roles; filename: string; name: string }[] = [
   },
 ];
 
-const apiQueryParameters = "?page=1&pageSize=100&type=production&type=documentation&sort_by=published&order=asc";
+const apiQueryParameters = "?page=1&pageSize=100&type=cloud&type=local&sort_by=published&order=asc";
 
 users.forEach(user => {
 

@@ -184,6 +184,29 @@
       "documentationButtonLabel": "Read documentation"
     }
   },
+  "apiProductDetails": {
+    "productionAccess": "Production access",
+    "documentationAccess": "API Documentation",
+    "appsSubbedTitle": "Applications subscribed to this product:",
+    "noAppsSubbedText": "No applications are subscribed to this product yet.",
+    "subscribeButtonLabel": "Subscribe product",
+    "apiPublicationsTitle": "API Publications",
+    "noContractText": "This product doesn’t have a contract yet.",
+    "noContractSubtext": "We have not added a contract entry to this API Product yet. Once we add a contract to this API Product, you will be able to subscribe to its APIs!",
+    "useThisAPITitle": "Use this API to...",
+    "apiFeaturesTitle": "API features",
+    "tosLinkLabel": "Terms of Service",
+    "contactLinkLabel": "Contact",
+    "licenseLinkLabel": "License",
+    "externalDocsLinkLabel": "External Documentation",
+    "downloadContractButtonLabel": "Download contract",
+    "liveAPIProductChip": "Live",
+    "deprecatedAPIProductChip": "Deprecated",
+    "selectorLabel": "Select OpenAPI Contract",
+    "apiInfoTab": "API Info",
+    "apiContractTab": "API Contract",
+    "noAPIProductOrDetailsError": "The selected API Product either doesn't exist, or has any details."
+  },
   "dashboardTab": {
     "landingPageSubTab": {
       "adminUser": {

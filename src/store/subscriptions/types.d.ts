@@ -2,10 +2,13 @@ export interface Api {
   apiVersions: APIVersion[],
   baseUri?: string,
   baseUriSandbox?: string,
+  createdAt?: string,
   docs?: ApiDocs[],
   id: number,
   name: string,
   publishedAt?: string,
+  type?: string,
+  updatedAt?: string,
 }
 
 export interface SubscriptionsStore {
