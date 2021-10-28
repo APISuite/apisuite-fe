@@ -339,13 +339,13 @@ export const APIProducts: React.FC = () => {
             <APICatalog
               apisToDisplay={
                 (
-                  apiFiltersStatus.text.length === 0 &&
-                  !apiFiltersStatus.prod &&
-                  !apiFiltersStatus.sandbox &&
-                  !apiFiltersStatus.docs
+                  apiFiltersStatus.text.length ||
+                  apiFiltersStatus.prod ||
+                  apiFiltersStatus.sandbox ||
+                  apiFiltersStatus.docs
                 )
-                  ? apiDetails
-                  : filteredAPIs
+                  ? filteredAPIs
+                  : apiDetails
               }
             />
           </Box>
@@ -378,13 +378,9 @@ export const APIProducts: React.FC = () => {
     let documentationAccessibleAPIs: APIDetails[] = [];
 
     if (buttonFilter) {
-      if (newAPIFilters[buttonFilter] === false) {
-        newAPIFilters[buttonFilter] = true;
-      } else {
-        newAPIFilters[buttonFilter] = false;
-      }
+      newAPIFilters[buttonFilter] = !newAPIFilters[buttonFilter];
     }
-
+    
     if (newAPIFilters.prod) {
       productionAccessibleAPIs = apisToFilter.filter((api) => {
         return api.apiAccess === true;
