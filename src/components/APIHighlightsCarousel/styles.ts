@@ -14,6 +14,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     border: "none",
     color: theme.palette.action.focus,
+    cursor: "pointer",
     height: "40px",
     marginRight: theme.spacing(1.5),
     width: "40px",

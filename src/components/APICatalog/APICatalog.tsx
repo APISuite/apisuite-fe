@@ -39,12 +39,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
             xs={6}
           >
             <ApplicationCard
-              className={
-                clsx(
-                  classes.card,
-                  !apiDetails.hasMoreDetails && classes.contractlessAPIProduct,
-                )
-              }
+              className={classes.card}
               onClick={handleOnCardClick(apiDetails)}
             >
               <Grid container>

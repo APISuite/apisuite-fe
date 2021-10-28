@@ -155,7 +155,6 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
         >
           <MenuItem
             disabled
-            key="disabledSelectorOption"
             value={apiDetails.version?.id}
           >
             {`${apiDetails.version?.title} (${apiDetails.version?.version})`}
@@ -241,7 +240,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
   return (
     <Box className={classes.contentContainer} mb={7.5} mx='auto'>
       <Grid container>
-        <Grid item md={!currentAPIDetails.version ? 9 : 12}>
+        <Grid item md={!currentAPIDetails.version?.id ? 9 : 12}>
           <Box mt={5} mb={3}>
             <Typography display="block" style={{ color: palette.text.primary }} variant="h4">
               {t("apiProductDetails.apiPublicationsTitle")}
@@ -249,7 +248,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
 
             <Box mt={3}>
               {
-                !currentAPIDetails.version
+                !currentAPIDetails.version?.id
                   ? (
                     <>
                       <Box>
@@ -281,7 +280,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
         </Grid>
 
         {
-          !currentAPIDetails.version && (
+          !currentAPIDetails.version?.id && (
             <Grid item md={3}>
               <Box mt={7}>
                 <img src={noContracts} />

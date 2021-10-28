@@ -2,14 +2,10 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   appBubbles: {
-    textDecoration: "none",
-
-    "& > div": {
-      backgroundColor: theme.palette.secondary.light,
-      fontSize: 16,
-      fontWeight: 300,
-      margin: theme.spacing(0, 1.25, 1.25, 0),
-    },
+    backgroundColor: theme.palette.secondary.light,
+    fontSize: 16,
+    fontWeight: 300,
+    margin: theme.spacing(0, 1.25, 1.25, 0),
   },
 
   contentContainer: {

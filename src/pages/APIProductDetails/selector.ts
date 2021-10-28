@@ -14,6 +14,7 @@ export const apiDetailsSelector = createSelector(
       orgDetails: profile.profile.current_org,
       requested: apiDetails.requested,
       subscriptions,
+      userDetails: profile.profile.user,
     };
   },
 );

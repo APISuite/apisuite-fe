@@ -9,6 +9,7 @@ import useStyles from "./styles";
 
 export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
   currentAPIDetails,
+  userDetails,
 }) => {
   const classes = useStyles();
   const { palette } = useTheme();
@@ -18,23 +19,9 @@ export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
   const generateSubbedAppBubbles = (apiDetails: CurrentAPIDetails) => {
     return apiDetails.appsSubbed.map((app: AppData, index: number) => {
       return (
-        <Link
-          className={classes.appBubbles}
-          key={`appBubble${index}`}
-          to={{
-            pathname: "/dashboard/subscriptions",
-            state: {
-              redirected: true,
-              appID: app.id,
-              apiID: apiDetails.id,
-              apiVersionID: apiDetails.version?.id,
-            },
-          }}
-        >
-          <Avatar>
-            {app.name[0].toUpperCase()}{app.name[1]}
-          </Avatar>
-        </Link>
+        <Avatar className={classes.appBubbles} key={`appBubble${index}`}>
+          {app.name[0].toUpperCase()}{app.name[1]}
+        </Avatar>
       );
     });
   };
@@ -54,6 +41,10 @@ export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
       </Box>
     );
   };
+
+  if (!userDetails.id) {
+    return null;
+  }
 
   return (
     <Box className={classes.contentContainer} mx='auto'>

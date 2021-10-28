@@ -23,7 +23,15 @@ export const APIProductDetails: React.FC = () => {
   const [t] = useTranslation();
 
   const dispatch = useDispatch();
-  const { allUserApps, apiDetails, error, orgDetails, requested, subscriptions } = useSelector(apiDetailsSelector);
+  const {
+    allUserApps,
+    apiDetails,
+    error,
+    orgDetails,
+    requested,
+    subscriptions,
+    userDetails,
+  } = useSelector(apiDetailsSelector);
 
   /* Retrieval of API Product details */
 
@@ -60,7 +68,10 @@ export const APIProductDetails: React.FC = () => {
   useEffect(() => {
     if (subscriptions.apis.length) {
       let currentAPI: Api | null = null;
+      let name = "";
       let otherAPIVersions: APIVersion[] = [];
+
+      console.log("SUBSCRIPTIONS", subscriptions);
 
       subscriptions.apis.forEach((api) => {
         if (api.id === apiDetails.version.apiId) {
@@ -69,6 +80,13 @@ export const APIProductDetails: React.FC = () => {
           otherAPIVersions = api.apiVersions.filter((apiVersion) => {
             return apiVersion.id !== apiDetails.version.id;
           });
+        }
+
+        /* If an API Product has no versions, 'currentAPI' might never be set.
+        This, in turn, might cause our 'API Product Details' view to NOT display
+        the API Product's title. The following ensures that this does not happen. */
+        if (apiId && parseInt(apiId) === api.id) {
+          name = api.name;
         }
       });
 
@@ -80,11 +98,13 @@ export const APIProductDetails: React.FC = () => {
         appsSubbed: appsSubbedToAPI,
         documentation: currentAPI && currentAPI["docs"] ? currentAPI["docs"][0] : null,
         id: currentAPI ? currentAPI["id"] : 0,
-        name: currentAPI ? currentAPI["name"] : "",
+        name: currentAPI ? currentAPI["name"] : name,
         otherVersions: otherAPIVersions,
         version: apiDetails.version,
       });
     }
+
+    console.log("subscriptions", subscriptions);
   }, [apiDetails, allUserApps, subscriptions]);
 
   // TODO: Temporary placeholders until API is reworked to support carousel highlight cards.
@@ -143,7 +163,7 @@ export const APIProductDetails: React.FC = () => {
     );
   }
 
-  if ((requested && error) || (requested && !currentAPIDetails.id)) {
+  if (requested && error) {
     return (
       <Box mt={-6.25} style={{ position: "absolute", textAlign: "center", top: "50%", width: "100%" }}>
         <Typography display="block" style={{ color: palette.text.primary, fontWeight: 300 }} variant="h3">
@@ -157,7 +177,7 @@ export const APIProductDetails: React.FC = () => {
     <Box style={{ backgroundColor: palette.background.default }}>
       <APIProductBanner currentAPIDetails={currentAPIDetails} />
 
-      <SubbedAppsBlock currentAPIDetails={currentAPIDetails} />
+      <SubbedAppsBlock currentAPIDetails={currentAPIDetails} userDetails={userDetails} />
 
       <APIPublications currentAPIDetails={currentAPIDetails} />
 
