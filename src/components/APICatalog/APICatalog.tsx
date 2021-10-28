@@ -21,6 +21,8 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
     history.push(`/api-products/details/${details.id}/spec/${details.apiRoutingId || 0}`);
   };
 
+  console.log("apisToDisplay", apisToDisplay);
+
   return (
     <Grid
       component={Box}
@@ -78,7 +80,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                   </Typography>
 
                   {
-                    apiDetails.apiContract !== t("fallbacks.noContract") && (
+                    apiDetails.apiContract && (
                       <Typography variant="h6">
                         {apiDetails.apiContract}
                       </Typography>
@@ -87,7 +89,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
 
                   <Box my={1.5} style={{ display: "flex" }}>
                     {
-                      apiDetails.apiContract !== t("fallbacks.noContract") &&
+                      apiDetails.apiContract &&
                         (
                           <Chip
                             data-test-id={testIds.apiCardVersion}
