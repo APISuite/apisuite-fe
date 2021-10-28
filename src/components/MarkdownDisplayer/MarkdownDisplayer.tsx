@@ -9,10 +9,6 @@ export const MarkdownDisplayer: React.FC<MarkdownDisplayerProps> = ({
 }) => {
   const { palette, typography } = useTheme();
 
-  /* For us to 'brand' our markdown, we need to completely override
-  the markdown displayer component's (i.e., 'Editor') in-built (light) theme.
-  
-  Please refer to 'https://github.com/outline/rich-markdown-editor' for more details. */
   const customTheme = {
     ...theme,
     divider: palette.grey[200],
