@@ -146,7 +146,7 @@ export const APIProducts: React.FC = () => {
           <Button
             color="primary"
             disableElevation
-            href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId}`}
+            href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId || 0}`}
             size="large"
             variant="contained"
           >
