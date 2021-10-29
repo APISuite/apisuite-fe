@@ -145,7 +145,6 @@ export const APIProducts: React.FC = () => {
         <div className={classes.apiProductButtons}>
           <Button
             color="primary"
-            disabled={!(mostRecentAPI.id && mostRecentAPI.apiRoutingId)}
             disableElevation
             href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId}`}
             size="large"
@@ -155,7 +154,7 @@ export const APIProducts: React.FC = () => {
           </Button>
   
           {
-            auth.user && mostRecentAPI.apiContract && (
+            auth.user && (
               <Box clone ml={1}>
                 <Button
                   onClick={toggleModal}
