@@ -13,7 +13,7 @@ export const mapAPIData = (apis: Api[]) => {
       that, presently, only have 'API Documentation' to show for it. */
       access: hasVersions && api.apiVersions[0].live,
       contract: hasVersions ? api.apiVersions[0].title : null,
-      description: api.apiDocs && api.apiDocs[0].productIntro || "",
+      description: api.apiDocs && api.apiDocs.productIntro || "",
       name: api.name,
       // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
       routingId: hasVersions ? `${api.apiVersions[0].id}` : "",
