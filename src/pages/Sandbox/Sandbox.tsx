@@ -5,7 +5,7 @@ import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRoun
 import ControlCameraRoundedIcon from "@material-ui/icons/ControlCameraRounded";
 import FlightLandRoundedIcon from "@material-ui/icons/FlightLandRounded";
 
-import { API_DOCS_CONTENT_TARGET, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
+import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
 import APICatalog from "components/APICatalog";
 import { Carousel } from "components/Carousel";
 import Notice from "components/Notice";
@@ -51,7 +51,7 @@ export const Sandbox: React.FC = () => {
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
           apiContract: api.apiVersions.length ? api.apiVersions[0].title : t("fallbacks.noContract"),
-          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
+          apiDescription: api.apiDocs && api.apiDocs[0].productIntro || t("fallbacks.noDescription"),
           apiName: api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",

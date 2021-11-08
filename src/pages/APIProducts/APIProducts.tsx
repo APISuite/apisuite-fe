@@ -4,7 +4,7 @@ import { useTranslation, Button, InputBase, Box, Typography, Chip, useTheme, For
 
 import apiProductCard from "assets/apiProductCard.svg";
 import noAPIProducts from "assets/noAPIProducts.svg";
-import { API_DOCS_CONTENT_TARGET, Filter } from "constants/global";
+import { Filter } from "constants/global";
 import { APIDetails } from "components/APICatalog/types";
 import { PageContainer } from "components/PageContainer";
 import { SubscriptionsModal } from "components/SubscriptionsModal";
@@ -69,7 +69,7 @@ export const APIProducts: React.FC = () => {
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
           apiContract: api.apiVersions.length ? api.apiVersions[0].title : null,
-          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
+          apiDescription: api.apiDocs && api.apiDocs[0].productIntro || t("fallbacks.noDescription"),
           apiName: api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",

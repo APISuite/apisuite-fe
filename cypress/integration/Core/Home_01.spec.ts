@@ -279,9 +279,8 @@ describe("Home Page - Unauthenticated User", () => {
           .should("be.visible")
           .and("contain", apis.rows[index].apiVersions[0].title)
           .and("contain", apis.rows[index].apiVersions[0].version)
-          .and("contain", apis.rows[index].apiVersions[0].live ? "Production access":"API Documentation")
-          .and("contain", apis.rows[index].docs[0].info); //This is failing
-        //TODO: this needs to be reviewed later
+          .and("contain", apis.rows[index].apiVersions[0].live ? "Production access" : "API Documentation")
+          .and("contain", apis.rows[index].apiDocs[0].productIntro);
       }
     });
 

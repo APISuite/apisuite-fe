@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Container, Divider, Grid, Icon, Paper, Trans, Typography, useConfig, useTheme, useTranslation } from "@apisuite/fe-base";
 
-import { API_DOCS_CONTENT_TARGET, DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
+import { DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import ActionsCatalog from "components/ActionsCatalog";
 import APICatalog from "components/APICatalog";
@@ -59,7 +59,7 @@ export const Dashboard: React.FC = () => {
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
           apiContract: api.apiVersions.length ? api.apiVersions[0].title : t("fallbacks.noContract"),
-          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
+          apiDescription: api.apiDocs && api.apiDocs[0].productIntro || t("fallbacks.noDescription"),
           apiName: api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
