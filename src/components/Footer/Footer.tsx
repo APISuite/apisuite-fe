@@ -157,6 +157,39 @@ const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string 
   );
 };
 
+const Policy = ({name}: {name: string}) => {
+  const [t] = useTranslation();
+  const classes = useStyles();
+  return (
+    <Typography
+      variant="subtitle2"
+      component="a"
+      href={t(`footer.policies.${name}.url`)}
+      className={classes.policy}
+    >
+      {t(`footer.policies.${name}.text`)}
+    </Typography>
+  );
+};
+
+const doesPolicyExist = (t: (key: string) => string, name: string): boolean => {
+  const urlTrans = `footer.policies.${name}.url`;
+  return t(urlTrans) !== urlTrans && t(urlTrans) !== "";
+};
+
+const Policies = () => {
+  const [t] = useTranslation();
+  const policies = ["termsOfUse", "privacy", "cookie"];
+  return (
+    <>
+      {
+        policies.map((p: string) =>  doesPolicyExist(t, p) && (<Policy name={p}/>) )
+      }
+    </>
+  );
+};
+
+
 // Footer
 
 const Footer: React.FC<FooterProps> = (
@@ -247,8 +280,8 @@ auth.user?.role.name === 'admin' &&
             >
               &copy; {new Date().getFullYear()} {t("footer.copyrights.website")}
             </Typography>
-
             <Typography variant="subtitle2">{t("footer.copyrights.allRightsReserved")}</Typography>
+            <Policies />
           </div>
 
           <LocaleSelect />

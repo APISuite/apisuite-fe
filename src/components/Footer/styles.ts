@@ -78,7 +78,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     flexFlow: "wrap",
     justifyContent: "left",
-    maxWidth: "700px",
+    maxWidth: "600px",
     width: "100%",
   },
 
@@ -103,7 +103,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     flexFlow: "wrap",
     justifyContent: "flex-end",
-    maxWidth: "180px",
+    maxWidth: "280px",
     width: "100%",
   },
 
@@ -127,6 +127,13 @@ export default makeStyles((theme) => ({
     textDecoration: "none",
     "&:link, &:visited, &:hover, &:active": {
       color: "inherit",
+    },
+  },
+
+  policy: {
+    marginRight: ".25rem",
+    "&:last-child": {
+      marginRight: 0,
     },
   },
 }));
