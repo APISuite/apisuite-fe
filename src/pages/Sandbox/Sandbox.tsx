@@ -21,6 +21,8 @@ import { sandboxSelector } from "./selector";
 import useStyles from "./styles";
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import Link from "components/Link";
+import { APIDetails } from "components/APICatalog/types";
+import { mapAPIData } from "util/mapAPIData";
 
 export const Sandbox: React.FC = () => {
   const classes = useStyles();
@@ -44,25 +46,7 @@ export const Sandbox: React.FC = () => {
     const allAvailableAPIs = subscriptions.apis;
 
     if (allAvailableAPIs.length) {
-      const newRecentlyAddedAPIs = allAvailableAPIs.map((api) => {
-        return {
-          /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has
-          its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
-          that, presently, only have 'API Documentation' to show for it. */
-          apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
-          apiContract: api.apiVersions.length ? api.apiVersions[0].title : t("fallbacks.noContract"),
-          apiDescription: api.apiDocs && api.apiDocs[0].productIntro || t("fallbacks.noDescription"),
-          apiName: api.name,
-          // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
-          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : t("fallbacks.noVersion"),
-          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
-          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
-          link to its corresponding 'API Details' view if it has versions. */
-          hasMoreDetails: api.apiVersions.length > 0,
-          id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
-        };
-      });
+      const newRecentlyAddedAPIs: APIDetails[] = mapAPIData(allAvailableAPIs);
 
       const twoMostRecentlyAddedAPIs = [newRecentlyAddedAPIs[0], newRecentlyAddedAPIs[1]];
 

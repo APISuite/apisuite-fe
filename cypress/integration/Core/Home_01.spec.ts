@@ -304,7 +304,7 @@ describe("Home Page - Unauthenticated User", () => {
       cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardName)
         .should("have.text", apis_noversion.rows[0].name);
       cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardVersion)
-        .should("have.text", enUS.fallbacks.noVersion);
+        .should("not.exist");
       cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardAccessType)
         .should("have.text", " API Documentation");
       cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardDescription)
