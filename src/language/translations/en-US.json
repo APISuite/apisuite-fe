@@ -563,6 +563,20 @@
       "website": "APISuite.io",
       "websiteUrl": "https://apisuite.io/",
       "allRightsReserved": "All rights reserved"
+    },
+    "policies": {
+      "termsOfUse": {
+        "text": "Terms of use",
+        "url": ""
+      },
+      "privacy": {
+        "text": "Privacy policy",
+        "url": ""
+      },
+      "cookie": {
+        "text": "Cookie policy",
+        "url": ""
+      }
     }
   },
   "listApps": {
