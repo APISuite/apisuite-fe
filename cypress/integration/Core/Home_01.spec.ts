@@ -280,7 +280,7 @@ describe("Home Page - Unauthenticated User", () => {
           .and("contain", apis.rows[index].apiVersions[0].title)
           .and("contain", apis.rows[index].apiVersions[0].version)
           .and("contain", apis.rows[index].apiVersions[0].live ? "Production access" : "API Documentation")
-          .and("contain", apis.rows[index].apiDocs[0].productIntro);
+          .and("contain", apis.rows[index].apiDocs.productIntro);
       }
     });
 

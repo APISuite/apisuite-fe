@@ -5,26 +5,25 @@
       "name": "openEO API",
       "baseUri": "https://openeo.org",
       "baseUriSandbox": null,
-      "apiDocs": [
-        {
-          "features": {
-            "image": "",
-            "info": "",
-            "title": ""
-          },
-          "highlights": {
-            "image": "",
-            "info": "",
-            "title": ""
-          },
-          "productIntro": "",
-          "useCases": {
-            "image": "",
-            "info": "",
-            "title": ""
-          }
+      "apiDocs": {
+        "features": {
+          "image": "",
+          "info": "",
+          "title": ""
+        },
+        "highlights": {
+          "image": "",
+          "info": "",
+          "title": ""
+        },
+        "productIntro": "",
+        "useCases": {
+          "image": "",
+          "info": "",
+          "title": ""
         }
-      ],      "publishedAt": "2021-02-24T07:46:38.697Z",
+      },
+      "publishedAt": "2021-02-24T07:46:38.697Z",
       "type": "cloud",
       "createdAt": "2021-02-24T07:46:38.698Z",
       "updatedAt": "2021-02-24T07:46:38.698Z",
