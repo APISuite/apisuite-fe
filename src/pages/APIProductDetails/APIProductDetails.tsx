@@ -94,7 +94,7 @@ export const APIProductDetails: React.FC = () => {
 
       setCurrentAPIDetails({
         appsSubbed: appsSubbedToAPI,
-        documentation: currentAPI && currentAPI["apiDocs"] ? currentAPI["apiDocs"][0] : null,
+        documentation: currentAPI && currentAPI["apiDocs"] ? currentAPI["apiDocs"] : null,
         id: currentAPI ? currentAPI["id"] : 0,
         name: currentAPI ? currentAPI["name"] : name,
         otherVersions: otherAPIVersions,

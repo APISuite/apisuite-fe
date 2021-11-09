@@ -87,7 +87,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                           <Chip
                             data-test-id={testIds.apiCardVersion}
                             color="secondary"
-                            label={apiDetails.version || t("fallbacks.noVersion")}
+                            label={apiDetails.version}
                             size="small"
                             style={{ marginRight: spacing(1.5) }}
                             variant="outlined"
@@ -116,7 +116,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                     style={{ color: palette.text.secondary }}
                     variant="body2"
                   >
-                    {apiDetails.description || t("fallbacks.noDescription")}
+                    {apiDetails.description}
                   </Typography>
                 </Grid>
               </Grid>

@@ -46,7 +46,7 @@ export const Sandbox: React.FC = () => {
     const allAvailableAPIs = subscriptions.apis;
 
     if (allAvailableAPIs.length) {
-      const newRecentlyAddedAPIs: APIDetails[] = mapAPIData(allAvailableAPIs);
+      const newRecentlyAddedAPIs: APIDetails[] = mapAPIData(allAvailableAPIs, t("fallbacks.noDescription"));
 
       const twoMostRecentlyAddedAPIs = [newRecentlyAddedAPIs[0], newRecentlyAddedAPIs[1]];
 

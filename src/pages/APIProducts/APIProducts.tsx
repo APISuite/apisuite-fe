@@ -63,7 +63,7 @@ export const APIProducts: React.FC = () => {
     const allAvailableAPIs = subscriptions.apis;
 
     if (allAvailableAPIs.length) {
-      const newRecentlyUpdatedAPIs: APIDetails[] = mapAPIData(allAvailableAPIs);
+      const newRecentlyUpdatedAPIs: APIDetails[] = mapAPIData(allAvailableAPIs, t("fallbacks.noDescription"));
 
       setRecentlyUpdatedAPIs(newRecentlyUpdatedAPIs);
       setLatestUpdatedAPI(newRecentlyUpdatedAPIs[0]);
