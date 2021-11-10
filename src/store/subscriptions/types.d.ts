@@ -3,7 +3,7 @@ export interface Api {
   baseUri?: string,
   baseUriSandbox?: string,
   createdAt?: string,
-  docs?: ApiDocs[],
+  apiDocs?: ApiDocs,
   id: number,
   name: string,
   publishedAt?: string,
@@ -25,7 +25,7 @@ export interface ApiResponse {
   baseUri?: string,
   baseUriSandbox?: string,
   createdAt: string,
-  docs?: ApiDocs[],
+  apiDocs?: ApiDocs,
   id: number,
   name: string,
   publishedAt?: string,
@@ -33,12 +33,16 @@ export interface ApiResponse {
 }
 
 export interface ApiDocs {
-  createdAt: string,
-  image?: string,
-  info?: string,
-  target: string,
-  title?: string,
-  updatedAt: string,
+  features: DocsContent[],
+  highlights: DocsContent[],
+  productIntro: string,
+  useCases: DocsContent[],
+}
+
+export interface DocsContent {
+  image: string,
+  info: string,
+  title: string,
 }
 
 /** Selector types */

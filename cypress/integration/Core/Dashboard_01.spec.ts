@@ -329,8 +329,7 @@ users.forEach(user => {
             .and("contain", apis.rows[index].apiVersions[0].title)
             .and("contain", apis.rows[index].apiVersions[0].version)
             .and("contain", apis.rows[index].apiVersions[0].live ? "Production access":"API Documentation")
-            .and("contain", apis.rows[index].docs[0].info); //This is failing
-          //TODO: this needs to be reviewed later
+            .and("contain", apis.rows[index].apiDocs[0].productIntro);
         }
       });
 
@@ -354,7 +353,7 @@ users.forEach(user => {
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardName)
           .should("have.text", apis_noversion.rows[0].name);
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardVersion)
-          .should("have.text", enUS.fallbacks.noVersion);
+          .should("not.exist");
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardAccessType)
           .should("have.text", " API Documentation");
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardDescription)

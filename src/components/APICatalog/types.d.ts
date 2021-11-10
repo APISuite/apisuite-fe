@@ -6,10 +6,10 @@ export type APICatalogProps = {
 export type APIDetails = {
   hasMoreDetails: boolean,
   id: number,
-  apiName: string,
-  apiContract: string | null,
-  apiDescription: string,
-  apiVersion: string,
-  apiRoutingId: number | string,
-  apiAccess: boolean,
+  name: string,
+  contract: string | null,
+  description: string,
+  version: string,
+  routingId: number | string,
+  access: boolean,
 }

@@ -5,13 +5,30 @@
       "name": "openEO API",
       "baseUri": "https://openeo.org",
       "baseUriSandbox": null,
-      "docs": [
-        {
-          "title": "Swagger Petstore - OpenAPI 3.0",
-          "info": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
-          "target": "product_intro"
-        }
-      ],
+      "apiDocs": {
+        "features": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ],
+        "highlights": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ],
+        "productIntro": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+        "useCases": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ]
+      },
       "publishedAt": "2021-02-24T07:46:38.697Z",
       "type": "cloud",
       "createdAt": "2021-02-24T07:46:38.698Z",
@@ -28,18 +45,36 @@
           "updatedAt": "2021-02-24T07:46:38.702Z"
         }
       ]
-    },{
+    },
+    {
       "id": 2,
       "name": "openEO API",
       "baseUri": "https://openeo.org",
       "baseUriSandbox": null,
-      "docs": [
-        {
-          "title": "Swagger Petstore - OpenAPI 3.0",
-          "info": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
-          "target": "product_intro"
-        }
-      ],
+      "apiDocs": {
+        "features": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ],
+        "highlights": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ],
+        "productIntro": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+        "useCases": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ]
+      },
       "publishedAt": "2021-02-24T07:46:38.697Z",
       "type": "cloud",
       "createdAt": "2021-02-24T07:46:38.698Z",
@@ -56,18 +91,36 @@
           "updatedAt": "2021-02-24T07:46:38.702Z"
         }
       ]
-    },{
+    },
+    {
       "id": 3,
       "name": "openEO API",
       "baseUri": "https://openeo.org",
       "baseUriSandbox": null,
-      "docs": [
-        {
-          "title": "Swagger Petstore - OpenAPI 3.0",
-          "info": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
-          "target": "product_intro"
-        }
-      ],
+      "apiDocs": {
+        "features": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ],
+        "highlights": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ],
+        "productIntro": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+        "useCases": [
+          {
+            "image": "",
+            "info": "",
+            "title": ""
+          }
+        ]
+      },
       "publishedAt": "2021-02-28T07:46:38.697Z",
       "type": "cloud",
       "createdAt": "2021-02-28T07:46:38.698Z",
