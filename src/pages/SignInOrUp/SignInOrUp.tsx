@@ -20,10 +20,11 @@ import { View } from "./types";
 import { useDispatch, useSelector } from "react-redux";
 import { signInOrUpSelector } from "./selector";
 import { clearSignUpDetailsAction } from "store/auth/actions/clearSignUpDetails";
+import rocketMan from "assets/rocketMan.svg";
 
 export const SignInOrUp: React.FC = () => {
   const classes = useStyles();
-  const { palette, zIndex, breakpoints, spacing } = useTheme();
+  const { custom, palette, zIndex, breakpoints, spacing } = useTheme();
   const dispatch = useDispatch();
   const history = useHistory();
   const [t] = useTranslation();
@@ -235,7 +236,7 @@ export const SignInOrUp: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Grid item xs className={classes.imageSideContentContainer} />
+      <Grid item xs className={classes.imageSideContentContainer} style={{ backgroundImage: `url("${custom?.images?.auth || rocketMan}")` }} />
     </Grid>
   );
 };

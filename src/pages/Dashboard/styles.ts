@@ -1,10 +1,7 @@
 import { makeStyles } from "@apisuite/fe-base";
 
-import dashboardSpaceBackground from "assets/dashboardSpaceBackground.svg";
-
 export default makeStyles((theme) => ({
   expandedHeaderImageSection: {
-    background: "url(" + dashboardSpaceBackground + ")",
     backgroundColor: theme.palette.background.default,
     backgroundPosition: "center -320px",
     backgroundRepeat: "no-repeat",
@@ -18,7 +15,6 @@ export default makeStyles((theme) => ({
   },
 
   regularHeaderImageSection: {
-    background: "url(" + dashboardSpaceBackground + ")",
     backgroundColor: theme.palette.background.default,
     backgroundPosition: "center -320px",
     backgroundRepeat: "no-repeat",

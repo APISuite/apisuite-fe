@@ -11,9 +11,11 @@ import Notice from "components/Notice";
 import { NotificationCard } from "components/NotificationCard";
 import { dashboardSelector } from "./selector";
 import { getSections } from "util/extensions";
+import clsx from "clsx";
 
 import { testIds } from "testIds";
 
+import dashboardSpaceBackground from "assets/dashboardSpaceBackground.svg";
 import apiSVG from "assets/icons/API.svg";
 import billingSVG from "assets/icons/Billing.svg";
 import dataCloudSVG from "assets/icons/DataCloud.svg";
@@ -29,7 +31,7 @@ import useStyles from "./styles";
 export const Dashboard: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { palette } = useTheme();
+  const { custom, palette } = useTheme();
   const { t } = useTranslation();
   const { socialURLs, supportURL, clientName, portalName } = useConfig();
   const { auth, subscriptions, notificationCards, profile } = useSelector(dashboardSelector);
@@ -81,7 +83,11 @@ export const Dashboard: React.FC = () => {
       <main className="page-container">
         {/* 'Dashboard' page's header image */}
         <section
-          className={notificationCards.show ? classes.expandedHeaderImageSection : classes.regularHeaderImageSection}
+          className={clsx({
+            [classes.expandedHeaderImageSection]: notificationCards.show,
+            [classes.regularHeaderImageSection]: !notificationCards.show,
+          })}
+          style={{ background: `url("${custom?.images?.headerBackground || dashboardSpaceBackground}")` }}
         />
 
         {/* 'Notification cards' section */}

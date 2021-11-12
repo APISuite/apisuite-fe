@@ -90,11 +90,11 @@ export default makeStyles((theme) => ({
     minHeight: "550px",
 
     "& > :nth-child(1)": {
-      padding: "165px 25px 0px 0px",
+      padding: theme.spacing(10, 3, 0, 3),
     },
 
     "& > :nth-child(2)": {
-      paddingTop: "165px",
+      padding: theme.spacing(10, 3, 0, 3),
     },
   },
 
@@ -103,7 +103,7 @@ export default makeStyles((theme) => ({
     minHeight: "550px",
 
     "& > :nth-child(1)": {
-      paddingTop: "165px",
+      padding: theme.spacing(10, 3, 0, 3),
     },
   },
 }));
