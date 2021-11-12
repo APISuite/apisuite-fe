@@ -4,7 +4,7 @@ import { useTranslation, Button, InputBase, Box, Typography, Chip, useTheme, For
 
 import apiProductCard from "assets/apiProductCard.svg";
 import noAPIProducts from "assets/noAPIProducts.svg";
-import { API_DOCS_CONTENT_TARGET, Filter } from "constants/global";
+import { Filter } from "constants/global";
 import { APIDetails } from "components/APICatalog/types";
 import { PageContainer } from "components/PageContainer";
 import { SubscriptionsModal } from "components/SubscriptionsModal";
@@ -17,6 +17,7 @@ import useStyles from "./styles";
 import { apiProductsSelector } from "./selector";
 import { profileSelector } from "pages/Profile/selectors";
 import clsx from "clsx";
+import { mapAPIData } from "util/mapAPIData";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -29,12 +30,12 @@ export const APIProducts: React.FC = () => {
   const { palette, spacing } = useTheme();
 
   const initialAPIState: APIDetails = {
-    apiAccess: false,
-    apiContract: "",
-    apiDescription: "",
-    apiName: "",
-    apiRoutingId: "",
-    apiVersion: "",
+    access: false,
+    contract: "",
+    description: "",
+    name: "",
+    routingId: "",
+    version: "",
     hasMoreDetails: false,
     id: 0,
   };
@@ -62,25 +63,7 @@ export const APIProducts: React.FC = () => {
     const allAvailableAPIs = subscriptions.apis;
 
     if (allAvailableAPIs.length) {
-      const newRecentlyUpdatedAPIs: APIDetails[] = allAvailableAPIs.map((api) => {
-        return {
-          /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has
-          its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
-          that, presently, only have 'API Documentation' to show for it. */
-          apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
-          apiContract: api.apiVersions.length ? api.apiVersions[0].title : null,
-          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
-          apiName: api.name,
-          // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
-          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : t("fallbacks.noVersion"),
-          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
-          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
-          link to its corresponding 'API Details' view if it has versions. */
-          hasMoreDetails: api.apiVersions.length > 0,
-          id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
-        };
-      });
+      const newRecentlyUpdatedAPIs: APIDetails[] = mapAPIData(allAvailableAPIs, t("fallbacks.noDescription"));
 
       setRecentlyUpdatedAPIs(newRecentlyUpdatedAPIs);
       setLatestUpdatedAPI(newRecentlyUpdatedAPIs[0]);
@@ -107,21 +90,21 @@ export const APIProducts: React.FC = () => {
       <>
         <Box mb={1}>
           <Typography variant="h3" style={{ color: palette.secondary.main, fontWeight: 500 }}>
-            {mostRecentAPI.apiName}
+            {mostRecentAPI.name}
           </Typography>
         </Box>
   
         <Box mb={3} style={{ alignItems: "center", display: "flex" }}>
           {
-            mostRecentAPI.apiContract && (
+            mostRecentAPI.contract && (
               <>
                 <Typography variant="h5" style={{ color: palette.secondary.main, fontWeight: 300, marginRight: spacing(2) }}>
-                  {mostRecentAPI.apiContract}
+                  {mostRecentAPI.contract}
                 </Typography>
   
                 <Chip
                   color="secondary"
-                  label={mostRecentAPI.apiVersion}
+                  label={mostRecentAPI.version}
                   size="small"
                   style={{ marginRight: spacing(1.5) }}
                   variant="outlined"
@@ -132,11 +115,11 @@ export const APIProducts: React.FC = () => {
   
           <Chip
             className={clsx({
-              [classes.prodAccessibleChip]: mostRecentAPI.apiAccess,
-              [classes.docsAccessibleChip]: !mostRecentAPI.apiAccess,
+              [classes.prodAccessibleChip]: mostRecentAPI.access,
+              [classes.docsAccessibleChip]: !mostRecentAPI.access,
             })}
             label={
-              mostRecentAPI.apiAccess ? t("apiProductsTab.productionAccess") : t("apiProductsTab.documentationAccess")
+              mostRecentAPI.access ? t("apiProductsTab.productionAccess") : t("apiProductsTab.documentationAccess")
             }
             size="small"
           />
@@ -146,7 +129,7 @@ export const APIProducts: React.FC = () => {
           <Button
             color="primary"
             disableElevation
-            href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId || 0}`}
+            href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.routingId || 0}`}
             size="large"
             variant="contained"
           >
@@ -382,7 +365,7 @@ export const APIProducts: React.FC = () => {
     
     if (newAPIFilters.prod) {
       productionAccessibleAPIs = apisToFilter.filter((api) => {
-        return api.apiAccess === true;
+        return api.access === true;
       });
     }
 
@@ -393,7 +376,7 @@ export const APIProducts: React.FC = () => {
 
     if (newAPIFilters.docs) {
       documentationAccessibleAPIs = apisToFilter.filter((api) => {
-        return api.apiAccess === false;
+        return api.access === false;
       });
     }
 
@@ -415,11 +398,11 @@ export const APIProducts: React.FC = () => {
 
     if (newFilteredAPIs.length) {
       newFilteredAPIs = newFilteredAPIs.filter((api) => {
-        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase());
+        return api.name.toLowerCase().includes(textFilterContents.toLowerCase());
       });
     } else {
       newFilteredAPIs = apisToFilter.filter((api) => {
-        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase());
+        return api.name.toLowerCase().includes(textFilterContents.toLowerCase());
       });
     }
 

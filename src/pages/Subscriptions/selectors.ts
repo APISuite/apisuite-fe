@@ -33,7 +33,7 @@ export const apisAndAppsSelector = createSelector(
           name: api.name,
           versions: api.apiVersions,
           apps,
-          description: api.docs,
+          description: api.apiDocs,
         };
       }),
       apps: allApps,

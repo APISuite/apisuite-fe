@@ -18,7 +18,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
   const { t } = useTranslation();
 
   const handleOnCardClick = (details: APIDetails) => () => {
-    history.push(`/api-products/details/${details.id}/spec/${details.apiRoutingId || 0}`);
+    history.push(`/api-products/details/${details.id}/spec/${details.routingId || 0}`);
   };
 
   return (
@@ -51,13 +51,13 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                 >
                   <Avatar
                     classes={{
-                      colorDefault: apiDetails.apiAccess
+                      colorDefault: apiDetails.access
                         ? classes.colorsOfProductionAPI
                         : classes.colorsOfAPIDocumentation,
                     }}
                   >
                     <Typography variant="body1" style={{ fontWeight: 300 }}>
-                      {apiDetails.apiName.slice(0, 2)}
+                      {apiDetails.name.slice(0, 2)}
                     </Typography>
                   </Avatar>
                 </Grid>
@@ -69,25 +69,25 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                   xs={11}
                 >
                   <Typography data-test-id={testIds.apiCardName} variant="h5" style={{ fontWeight: 300 }}>
-                    {apiDetails.apiName}
+                    {apiDetails.name}
                   </Typography>
 
                   {
-                    apiDetails.apiContract && (
+                    apiDetails.contract && (
                       <Typography variant="h6">
-                        {apiDetails.apiContract}
+                        {apiDetails.contract}
                       </Typography>
                     )
                   }
 
                   <Box my={1.5} style={{ display: "flex" }}>
                     {
-                      apiDetails.apiContract &&
+                      apiDetails.contract &&
                         (
                           <Chip
                             data-test-id={testIds.apiCardVersion}
                             color="secondary"
-                            label={apiDetails.apiVersion}
+                            label={apiDetails.version}
                             size="small"
                             style={{ marginRight: spacing(1.5) }}
                             variant="outlined"
@@ -98,11 +98,11 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                     <Chip
                       data-test-id={testIds.apiCardAccessType}
                       className={clsx({
-                        [classes.prodChip]: apiDetails.apiAccess,
-                        [classes.docsChip]: !apiDetails.apiAccess,
+                        [classes.prodChip]: apiDetails.access,
+                        [classes.docsChip]: !apiDetails.access,
                       })}
                       label={
-                        apiDetails.apiAccess
+                        apiDetails.access
                           ? t("sandboxPage.apiCatalog.productionAccess")
                           : t("sandboxPage.apiCatalog.documentationAccess")
                       }
@@ -116,7 +116,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                     style={{ color: palette.text.secondary }}
                     variant="body2"
                   >
-                    {apiDetails.apiDescription}
+                    {apiDetails.description}
                   </Typography>
                 </Grid>
               </Grid>
