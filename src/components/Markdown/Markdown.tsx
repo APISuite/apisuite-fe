@@ -2,6 +2,7 @@ import { useTheme, CircularProgress, Grid, i18n, Typography } from "@apisuite/fe
 import clsx from "clsx";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Editor, { theme } from "rich-markdown-editor";
 import { getMarkdownPage } from "store/markdownPages/actions/getMarkdownPage";
 import { debounce } from "util/debounce";
@@ -40,6 +41,8 @@ export const Markdown: React.FC<MarkdownProps> = ({
   const [elementsIds, setElements] = useState<(HTMLElement|null)[]>([]);
   const [active, setActive] = useState<string|null>(null);
   const [language, setLanguage] = useState<string>(i18n.language);
+
+  const location = useLocation();
 
   i18n.on("languageChanged", () => {
     setLanguage(i18n.language);
@@ -108,30 +111,31 @@ export const Markdown: React.FC<MarkdownProps> = ({
   };
 
   const generateSideNav = (tocHeaders: TOCHeader[] | undefined) => {
-    if (tocHeaders && tocHeaders.length) {
-      return <Grid item md={3}>
-        <div className={classes.sideMenuContainer}>
-          {tocHeaders.map((header, idx) => (
-            <div
-              className={classes.menuItem}
-              key={`${header.id}-${idx}`}
-              onClick={() => scrollToHash(header.id)}
-              ref={React.createRef()}
-            >
-              <Typography
-                className={clsx(
-                  classes.item,
-                  (header.id === active || (active === null && idx === 0)) && classes.selected,
-                )}
-                variant="body1">
-                {header.title}
-              </Typography>
-            </div>
-          ))}
-        </div>
-      </Grid>;
+    if (!tocHeaders || !tocHeaders.length) {
+      return <></>;
     }
-    return <></>;
+
+    return <Grid item md={3}>
+      <div className={classes.sideMenuContainer}>
+        {tocHeaders.map((header, idx) => (
+          <div
+            className={classes.menuItem}
+            key={`${header.id}-${idx}`}
+            onClick={() => scrollToHash(header.id)}
+            ref={React.createRef()}
+          >
+            <Typography
+              className={clsx(
+                classes.item,
+                (header.id === active || (active === null && idx === 0)) && classes.selected,
+              )}
+              variant="body1">
+              {header.title}
+            </Typography>
+          </div>
+        ))}
+      </div>
+    </Grid>;
   };
 
   const getContent = (requesting: boolean) => {
@@ -142,6 +146,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
     return <Editor
       readOnly
       ref={editorRef}
+      scrollTo={location.hash}
       theme={customTheme}
       value={error ? defaultValue : content}
     />;
