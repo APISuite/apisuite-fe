@@ -26,7 +26,7 @@ import { mapAPIData } from "util/mapAPIData";
 
 export const Sandbox: React.FC = () => {
   const classes = useStyles();
-  const { palette, spacing } = useTheme();
+  const { custom, palette, spacing } = useTheme();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { socialURLs, portalName, clientName, supportURL, documentationURL } = useConfig();
@@ -59,7 +59,7 @@ export const Sandbox: React.FC = () => {
       {/* Carousel section */}
       <section className={classes.slideShowSectionContainer}>
         <Carousel
-          carouselBackgroundImage={carouselBackground}
+          carouselBackgroundImage={custom?.images?.homeSlider?.background || carouselBackground}
           iconsOfSliderButtonsArray={!auth.user
             ? [
               <FlightLandRoundedIcon key={1} />,
@@ -77,8 +77,8 @@ export const Sandbox: React.FC = () => {
                 slideButton: true,
                 slideButtonLabel: t("sandboxPage.newSlides.slideOne.slideButtonLabel"),
                 slideButtonLink: "/auth/signup",
-                slideContentsPlacement: "top-to-bottom",
-                slideForegroundImage: carouselSlide1,
+                slideContentsPlacement: custom?.images?.homeSlider?.slide1 && "side-by-side" || "top-to-bottom",
+                slideForegroundImage: custom?.images?.homeSlider?.slide1 || carouselSlide1,
                 slideText: t("sandboxPage.newSlides.slideOne.slideText"),
               },
               {
@@ -86,7 +86,7 @@ export const Sandbox: React.FC = () => {
                 slideButtonLabel: t("sandboxPage.newSlides.slideTwo.slideButtonLabel"),
                 slideButtonLink: "/api-products",
                 slideContentsPlacement: "side-by-side",
-                slideForegroundImage: carouselSlide2,
+                slideForegroundImage: custom?.images?.homeSlider?.slide2 || carouselSlide2,
                 slideText: t("sandboxPage.newSlides.slideTwo.slideText"),
               },
               {
@@ -94,7 +94,7 @@ export const Sandbox: React.FC = () => {
                 slideButtonLabel: t("sandboxPage.newSlides.slideThree.slideButtonLabel"),
                 slideButtonLink: "/documentation",
                 slideContentsPlacement: "side-by-side",
-                slideForegroundImage: carouselSlide3,
+                slideForegroundImage: custom?.images?.homeSlider?.slide3 || carouselSlide3,
                 slideText: t("sandboxPage.newSlides.slideThree.slideText"),
               },
             ]
@@ -104,7 +104,7 @@ export const Sandbox: React.FC = () => {
                 slideButtonLabel: t("sandboxPage.newSlides.slideTwo.slideButtonLabel"),
                 slideButtonLink: "/api-products",
                 slideContentsPlacement: "side-by-side",
-                slideForegroundImage: carouselSlide2,
+                slideForegroundImage: custom?.images?.homeSlider?.slide2 || carouselSlide2,
                 slideText: t("sandboxPage.newSlides.slideTwo.slideText"),
               },
               {
@@ -112,7 +112,7 @@ export const Sandbox: React.FC = () => {
                 slideButtonLabel: t("sandboxPage.newSlides.slideThree.slideButtonLabel"),
                 slideButtonLink: "/documentation",
                 slideContentsPlacement: "side-by-side",
-                slideForegroundImage: carouselSlide3,
+                slideForegroundImage: custom?.images?.homeSlider?.slide3 || carouselSlide3,
                 slideText: t("sandboxPage.newSlides.slideThree.slideText"),
               },
             ]}
@@ -159,22 +159,26 @@ export const Sandbox: React.FC = () => {
               }
             </Typography>
 
-            <Button
-              className={classes.stepsDescriptionSupportButton}
-              variant="contained"
-              color="primary"
-              size="large"
-              disableElevation
-              href={!auth.user ? "/auth/signup" : supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
+            <Link
+              to={!auth.user ? "/auth/signup" : supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
               rel={auth.user ? "noopener noreferrer" : ""}
-              target={ auth.user ? "_blank" : ""}
+              style={{ textDecoration: "none" }}
+              target={auth.user ? "_blank" : ""}
             >
-              {
-                !auth.user
-                  ? t("sandboxPage.stepsSection.notLoggedIn.buttonLabel")
-                  : t("sandboxPage.stepsSection.loggedIn.buttonLabel")
-              }
-            </Button>
+              <Button
+                className={classes.stepsDescriptionSupportButton}
+                variant="contained"
+                color="primary"
+                size="large"
+                disableElevation
+              >
+                {
+                  !auth.user
+                    ? t("sandboxPage.stepsSection.notLoggedIn.buttonLabel")
+                    : t("sandboxPage.stepsSection.loggedIn.buttonLabel")
+                }
+              </Button>
+            </Link>
           </Box>
 
           <Grid
