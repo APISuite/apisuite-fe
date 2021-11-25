@@ -74,8 +74,8 @@ export const SignUpForm: React.FC = () => {
     3: t("signUpForm.steps.securityDetails"),
   };
 
-  const signUpFormStep = (step: number) => {
-    switch (step) {
+  const signUpFormStep = (fromStep: number) => {
+    switch (fromStep) {
       case 1:
         return (
           <ProfileDetailsForm
