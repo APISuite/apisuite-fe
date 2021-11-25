@@ -40,18 +40,18 @@ export const TeamPage: React.FC = () => {
 
   // Role selection
 
-  const getUserMemberRole = (user: User) => {
-    const member = members.find((member) => user.id === member.User?.id);
-    return member?.Role || user.role;
+  const getUserMemberRole = (u: User) => {
+    const member = members.find((member) => u.id === member.User?.id);
+    return member?.Role || u.role;
   };
 
-  const changeRoleDisabled = (member: FetchTeamMembersResponse) => {
+  const changeRoleDisabled = (m: FetchTeamMembersResponse) => {
     if (!user) return true;
 
     return (
       getUserMemberRole(user).name === ROLES.developer.value ||
-      user.id === member.User.id ||
-      ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level
+      user.id === m.User.id ||
+      ROLES[getUserMemberRole(user).name].level > ROLES[m.Role.name].level
     );
   };
 
@@ -223,7 +223,7 @@ export const TeamPage: React.FC = () => {
 
       if (getUserMemberRole(currentUser).name === ROLES.developer.value) return true;
     }
-    
+
     if (
       ROLES[getUserMemberRole(currentUser).name].level <= ROLES[providedMember.Role.name].level &&
       getUserMemberRole(currentUser).name !== ROLES.developer.value
