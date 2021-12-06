@@ -176,10 +176,10 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
           <Grid item md={3}>
             <Box mt={4} style={{ textAlign: "right" }}>
               <Button
-                disabled={!apiDetails.version!.specFile}
+                disabled={!apiDetails.version?.specFile}
                 style={{ borderColor: palette.secondary.main, color: palette.text.primary }}
                 variant="outlined"
-                href={apiDetails.version!.specFile || "#"}
+                href={apiDetails.version?.specFile || "#"}
               >
                 {t("apiProductDetails.downloadContractButtonLabel")}
               </Button>
