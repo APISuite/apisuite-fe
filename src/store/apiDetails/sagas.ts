@@ -20,6 +20,7 @@ const emptyVersion: APIVersion = {
   title: "",
   version: "",
   spec: null,
+  specFile: null,
   live: false,
   deprecated: false,
   createdAt: "",

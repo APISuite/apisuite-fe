@@ -4,7 +4,6 @@ import { Box, Button, Chip, Grid, MenuItem, Paper, Select, Tab, Tabs, Typography
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
-import { saveAs } from "file-saver";
 
 import noContracts from "assets/noAPIProducts.svg";
 import Link from "components/Link";
@@ -25,19 +24,6 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
 
   const history = useHistory();
 
-  const downloadContract = () => {
-    const fileName = "contract.json";
-
-    const fileToSave = new Blob(
-      [JSON.stringify(currentAPIDetails.version!.spec)],
-      {
-        type: "application/json",
-      }
-    );
-
-    saveAs(fileToSave, fileName);
-  };
-
   const generateSelectorOptions = (apiVersions: APIVersion[]) => {
     return apiVersions.map((version, index) => {
       return (
@@ -56,7 +42,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
 
   const generateAPIInfo = (apiDetails: CurrentAPIDetails, tab: string) => {
     if (tab !== APIPublicationTabs.apiInfo) return;
-    
+
     return (
       <>
         <MarkdownDisplayer
@@ -190,9 +176,10 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
           <Grid item md={3}>
             <Box mt={4} style={{ textAlign: "right" }}>
               <Button
+                disabled={!apiDetails.version!.specFile}
                 style={{ borderColor: palette.secondary.main, color: palette.text.primary }}
-                onClick={() => downloadContract()}
                 variant="outlined"
+                href={apiDetails.version!.specFile || "#"}
               >
                 {t("apiProductDetails.downloadContractButtonLabel")}
               </Button>
@@ -229,7 +216,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
             {generateAPIInfo(currentAPIDetails, selectedTab)}
 
             {
-              selectedTab === APIPublicationTabs.apiContract && <SwaggerUI spec={apiDetails.version!.spec || {}} />
+              selectedTab === APIPublicationTabs.apiContract && <SwaggerUI url={apiDetails.version!.specFile || ""} />
             }
           </Box>
         </Paper>
