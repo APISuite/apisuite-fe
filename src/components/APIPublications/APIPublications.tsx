@@ -216,7 +216,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
             {generateAPIInfo(currentAPIDetails, selectedTab)}
 
             {
-              selectedTab === APIPublicationTabs.apiContract && <SwaggerUI url={apiDetails.version!.specFile || ""} />
+              selectedTab === APIPublicationTabs.apiContract && <SwaggerUI url={apiDetails.version?.specFile || ""} />
             }
           </Box>
         </Paper>
