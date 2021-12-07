@@ -15,6 +15,7 @@ const initialState: APIVersionStore = {
     title: "",
     version: "",
     spec: null,
+    specFile: null,
     live: false,
     deprecated: false,
     createdAt: "",
