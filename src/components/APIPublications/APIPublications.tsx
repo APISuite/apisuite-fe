@@ -46,7 +46,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
     return (
       <>
         <MarkdownDisplayer
-          content={apiDetails.documentation?.info || t("fallbacks.noDescription")}
+          content={apiDetails.documentation?.productIntro || t("fallbacks.noDescription")}
         />
 
         {apiDetails.version?.spec && (

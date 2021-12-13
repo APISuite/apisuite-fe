@@ -17,7 +17,7 @@ export const APIHighlightCard: React.FC<APIHighlightCardProps> = ({
       <Box mb={4}>
         {
           image
-            ? <img src={image} />
+            ? <img className={classes.highlightImage} src={image} />
             : <Icon className={classes.highlightIcon}>view_carousel</Icon>
         }
       </Box>

@@ -18,8 +18,8 @@ export const APIUsesCard: React.FC<APIUsesCardProps> = ({
         <Box mb={3.75}>
           {
             image
-              ? <img src={image} />
-              : <Icon className={classes.highlightIcon}>view_carousel</Icon>
+              ? <img className={classes.useCaseImage} src={image} />
+              : <Icon className={classes.useCaseIcon}>view_carousel</Icon>
           }
         </Box>
 

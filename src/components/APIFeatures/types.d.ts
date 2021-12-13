@@ -3,7 +3,7 @@ export type APIFeaturesProps = {
 }
 
 export type FeaturesContent = {
+  image: string,
+  info: string,
   title: string,
-  description: string,
-  image?: string,
 }

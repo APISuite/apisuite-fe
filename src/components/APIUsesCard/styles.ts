@@ -7,8 +7,15 @@ export default makeStyles((theme) => ({
     boxShadow: "none",
   },
 
-  highlightIcon: {
+  useCaseIcon: {
     color: theme.palette.info.main,
     fontSize: 60,
+  },
+
+  useCaseImage: {
+    borderRadius: "50%",
+    height: "100%",
+    margin: "auto",
+    width: 60,
   },
 }));

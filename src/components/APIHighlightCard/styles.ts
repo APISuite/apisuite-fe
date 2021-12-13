@@ -14,4 +14,11 @@ export default makeStyles((theme) => ({
     color: theme.palette.info.main,
     fontSize: 60,
   },
+
+  highlightImage: {
+    borderRadius: "50%",
+    height: "100%",
+    margin: "auto",
+    width: 60,
+  },
 }));
