@@ -10,8 +10,14 @@ export interface CurrentAPIDetails {
   version: APIVersion | null,
 }
 
-export interface Documentation {
+export interface APIDocsInfo {
+  image: string,
   info: string,
-  target: string,
   title: string,
+}
+export interface Documentation {
+  features: APIDocsInfo[],
+  highlights: APIDocsInfo[],
+  productIntro: string,
+  useCases: APIDocsInfo[],
 }

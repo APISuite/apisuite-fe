@@ -16,7 +16,8 @@ export const APIFeatures: React.FC<APIFeaturesProps> = ({
   const apiFeatureCards = apiFeaturesContent.map((content, index) => {
     return (
       <APIFeatureCard
-        description={content.description}
+        description={content.info}
+        image={content.image}
         key={`card${index}`}
         title={content.title}
       />

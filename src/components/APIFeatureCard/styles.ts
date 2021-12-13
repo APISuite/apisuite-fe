@@ -14,5 +14,11 @@ export default makeStyles((theme) => ({
       fontSize: 36,
       transform: "translateY(12px)",
     },
+
+    "& > img": {
+      borderRadius: "50%",
+      height: "100%",
+      width: "100%",
+    },
   },
 }));

@@ -3,7 +3,7 @@ export type APIUsesProps = {
 }
 
 export type APIUsesContent = {
+  image: string,
+  info: string,
   title: string,
-  description: string,
-  image?: string,
 }

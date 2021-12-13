@@ -3,7 +3,7 @@ export type APIHighlightsCarouselProps = {
 }
 
 export type HighlightsContent = {
+  image: string,
+  info: string,
   title: string,
-  description: string,
-  image?: string,
 }
