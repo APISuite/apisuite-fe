@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
 
   highlightImage: {
     borderRadius: "50%",
-    height: "100%",
+    height: 60,
     margin: "auto",
     width: 60,
   },

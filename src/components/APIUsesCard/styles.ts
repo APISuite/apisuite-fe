@@ -14,7 +14,7 @@ export default makeStyles((theme) => ({
 
   useCaseImage: {
     borderRadius: "50%",
-    height: "100%",
+    height: 60,
     margin: "auto",
     width: 60,
   },
