@@ -71,7 +71,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const checkNextAction = (fn: string) => {
     if (hasChanged()) {
       fn !== "toggleModal" ? setButtonClicked("subs") : setButtonClicked("close");
-      
+
       return setOpenCloseWarning(true);
     }
 
@@ -181,10 +181,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       }),
     ),
     appName: yup.string()
-      .test("isAppNameValid", t("dashboardTab.applicationsSubTab.appModal.existingAppNameError"),
-        (value: string|undefined) => {
-          return !(modalMode === "new" && allUserAppNames.includes(value || ""));
-        })
       .required(t("dashboardTab.applicationsSubTab.appModal.noAppNameError")),
     appPrivacyURL: yup.string()
       .test("isAppPrivacyURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
