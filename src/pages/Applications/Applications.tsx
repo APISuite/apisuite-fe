@@ -72,8 +72,6 @@ export const Applications: React.FC = () => {
     setModalOpen(!isModalOpen);
   }, [isModalOpen]);
 
-  let allUserAppNames: string[] = [];
-
   const getCardContent = (app: AppData) => {
     return <>
       <Box clone py={1.5}>
@@ -135,8 +133,6 @@ export const Applications: React.FC = () => {
       const appNameInitials = appNameInitialsArray.length >= 2
         ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
         : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`;
-
-      allUserAppNames = [...allUserAppNames, userApp.name];
 
       return (
         <Grid item key={`appCard${index}`} xs={4}>
@@ -435,7 +431,6 @@ export const Applications: React.FC = () => {
       */}
       {isModalOpen && (
         <ApplicationsModal
-          allUserAppNames={allUserAppNames}
           isModalOpen={isModalOpen}
           modalDetails={modalDetails}
           modalMode={modalMode}

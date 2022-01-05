@@ -36,7 +36,6 @@ import useStyles from "./styles";
 import { ApplicationsModalProps } from "./types";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
-  allUserAppNames,
   isModalOpen,
   modalDetails,
   modalMode,
