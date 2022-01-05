@@ -16,6 +16,7 @@ export default makeStyles((theme) => ({
     borderRadius: "50%",
     height: 60,
     margin: "auto",
+    objectFit: "cover",
     width: 60,
   },
 }));

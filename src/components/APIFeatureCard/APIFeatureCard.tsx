@@ -30,13 +30,21 @@ export const APIFeatureCard: React.FC<APIFeatureCardProps> = ({
           </Box>
 
           <Box mb={1}>
-            <Typography display="block" style={{ color: palette.primary.main, fontWeight: 700 }} variant="body1">
+            <Typography
+              display="block"
+              style={{ color: palette.primary.main, fontWeight: 700, wordBreak: "break-word" }}
+              variant="body1"
+            >
               {title}
             </Typography>
           </Box>
 
           <Box>
-            <Typography display="block" style={{ color: palette.text.secondary }} variant="body2">
+            <Typography
+              display="block"
+              style={{ color: palette.text.secondary, wordBreak: "break-word" }}
+              variant="body2"
+            >
               {description}
             </Typography>
           </Box>
