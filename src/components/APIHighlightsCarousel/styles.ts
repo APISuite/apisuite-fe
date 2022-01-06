@@ -28,6 +28,7 @@ export default makeStyles((theme) => ({
   highlightsBackgroundBanner: {
     backgroundColor: theme.palette.secondary.main,
     height: 500,
+    marginBottom: theme.spacing(3),
     width: "100%",
 
     // Carousel highlight cards

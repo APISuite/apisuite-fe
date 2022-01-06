@@ -23,6 +23,7 @@ export default makeStyles((theme) => ({
     "& > img": {
       borderRadius: "50%",
       height: "100%",
+      objectFit: "cover",
       width: "100%",
     },
   },
