@@ -4,7 +4,7 @@ export const IS_CLOUD = hostname.indexOf(".cloud.apisuite.io") >= 0;
 
 export function buildCloudBackendUrl (service = "") {
   const client = hostname.substring(0, hostname.indexOf("."));
-  const apiHostname = 'https://' + hostname.replace(client, `${client}-api`);
+  const apiHostname = "https://" + hostname.replace(client, `${client}-api`);
   if (!service.length) return apiHostname;
   const url = new URL(service, apiHostname);
   return url.toString();
