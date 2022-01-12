@@ -51,8 +51,8 @@ export const Security: React.FC = () => {
 
   const blockPasswordChange = (currentPassword: string, newPassword: string) => {
     if (
-      currentPassword.length === 0 ||
-      newPassword.length === 0 ||
+      !!currentPassword.length ||
+      !!newPassword.length ||
       currentPassword === newPassword ||
       !isValidPass(newPassword)
     ) {
