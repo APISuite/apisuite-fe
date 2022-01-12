@@ -1,6 +1,6 @@
 import { Extension as ExtensionV1 } from "@apisuite/extension-ui-types/v1";
 import { injectReducer, injectSaga } from "store";
-import { getCloudUrlForSubdomainSuffix } from "constants/endpoints";
+import { buildCloudBackendUrl, IS_CLOUD } from "constants/endpoints";
 import request, {
   axios,
   apiRequest,
@@ -9,7 +9,8 @@ import request, {
 } from "util/request";
 
 export const paramsV1 = {
-  getCloudUrlForSubdomainSuffix,
+  buildCloudBackendUrl,
+  IS_CLOUD,
   store: {
     injectReducer,
     injectSaga,
