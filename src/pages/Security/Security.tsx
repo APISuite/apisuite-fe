@@ -49,6 +49,19 @@ export const Security: React.FC = () => {
     setShowPassword(newShowPasswordsArray);
   };
 
+  const blockPasswordChange = (currentPassword: string, newPassword: string) => {
+    if (
+      !!currentPassword.length ||
+      !!newPassword.length ||
+      currentPassword === newPassword ||
+      !isValidPass(newPassword)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const handlePasswordChanges = (
     changeEvent: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     indexOfChangedPasswordField: number,
@@ -184,11 +197,7 @@ export const Security: React.FC = () => {
                 color="primary"
                 size="large"
                 disableElevation
-                disabled={
-                  !!((providedPasswords[0] !== providedPasswords[1]) &&
-                            (providedPasswords[0].length && providedPasswords[1].length) &&
-                            isValidPass(providedPasswords[1]))
-                }
+                disabled={blockPasswordChange(providedPasswords[0], providedPasswords[1])}
                 onClick={handlePasswordChangeRequest}
               >
                 {t("profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel")}
