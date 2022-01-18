@@ -9,19 +9,14 @@
     "last_login": "2021-05-06T10:40:40.702Z",
     "oidcProvider": null
   },
-  "orgs_member": [
+  "organizations": [
     {
       "id": 1,
-      "name": "ACME"
+      "name": "ACME",
+      "role": {
+        "name": "admin",
+        "id": 2
+      }  
     }
-  ],
-  "current_org": {
-    "name": "ACME",
-    "id": 1,
-    "member_since": "2021-02-24T07:47:53.839Z",
-    "role": {
-      "name": "admin",
-      "id": 3
-    }
-  }
+  ]
 }
