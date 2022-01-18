@@ -29,6 +29,7 @@ import { SignInOrUp } from "pages/SignInOrUp";
 import { SignUpConfirmation } from "pages/SignUpConfirmation";
 import { Subscriptions } from "pages/Subscriptions";
 import { TeamPage } from "pages/TeamPage";
+import { AppView } from "pages/AppView";
 
 import { AppRouteProps } from "./types";
 
@@ -62,7 +63,8 @@ export const routesConfig: AppRouteProps[] = [
   { path: "/auth/:view?/:email?", exact: true, component: SignInOrUp, layout: EssentialLayout },
   { path: "/confirmation/:name?", exact: true, component: SignUpConfirmation, layout: EssentialLayout },
   { path: "/dashboard", exact: true, auth: true, component: Dashboard, layoutProps: { contractibleMenu: true } },
-  { path: "/dashboard/apps/:appID?", exact: true, auth: true, component: Applications },
+  { path: "/dashboard/apps/", exact: true, auth: true, component: Applications },
+  { path: "/dashboard/apps/:appId/type/:typeId/:tab", exact: true, component: AppView },
   { path: "/dashboard/subscriptions", exact: true, auth: true, component: Subscriptions },
   { path: "/documentation", exact: true, component: Documentation },
   { path: "/forgot", exact: true, component: PasswordRecovery, layout: EssentialLayout },
