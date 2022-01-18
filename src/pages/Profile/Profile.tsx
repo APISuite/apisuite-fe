@@ -19,6 +19,7 @@ import { switchOrg } from "store/profile/actions/switchOrg";
 import { updateProfile } from "store/profile/actions/updateProfile";
 import { useForm } from "util/useForm";
 import { debounce } from "util/debounce";
+import { getSections } from "util/extensions";
 import Select from "components/Select";
 import useStyles from "./styles";
 import Notice from "components/Notice";
@@ -400,6 +401,10 @@ export const Profile: React.FC = () => {
             )}
           </>}
 
+          {
+            getSections("PROFILE_BOTTOM_SECTION")
+          }
+
           <Box my={4}>
             <Divider />
           </Box>
@@ -630,14 +635,16 @@ export const Profile: React.FC = () => {
               </Button>
             </Box>
 
-            <Button
-              color="primary"
-              variant="outlined"
-              size="large"
-              onClick={() => dispatch(logout({}))}
-            >
-              {t("profileTab.overviewSubTab.otherActionsLabels.signOut")}
-            </Button>
+            <Box m={0}>
+              <Button
+                color="primary"
+                variant="outlined"
+                size="large"
+                onClick={() => dispatch(logout({}))}
+              >
+                {t("profileTab.overviewSubTab.otherActionsLabels.signOut")}
+              </Button>
+            </Box>
           </Box>
 
           {/* SSO-related notice */}

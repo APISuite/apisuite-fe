@@ -53,6 +53,7 @@ export type APIVersion = {
   id: number,
   live: boolean,
   spec: any | null,
+  specFile: string | null,
   title: string,
   updatedAt: string,
   version: string,

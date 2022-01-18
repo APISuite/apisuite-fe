@@ -17,19 +17,19 @@ export const APIHighlightCard: React.FC<APIHighlightCardProps> = ({
       <Box mb={4}>
         {
           image
-            ? <img src={image} />
+            ? <img className={classes.highlightImage} src={image} />
             : <Icon className={classes.highlightIcon}>view_carousel</Icon>
         }
       </Box>
 
       <Box mb={2}>
-        <Typography display="block" style={{ color: palette.primary.main }} variant="h6">
+        <Typography display="block" style={{ color: palette.primary.main, wordBreak: "break-word" }} variant="h6">
           {title}
         </Typography>
       </Box>
 
       <Box>
-        <Typography display="block" style={{ color: palette.text.primary }} variant="body1">
+        <Typography display="block" style={{ color: palette.text.primary, wordBreak: "break-word" }} variant="body1">
           {description}
         </Typography>
       </Box>

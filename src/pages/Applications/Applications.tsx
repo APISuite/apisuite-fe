@@ -57,8 +57,6 @@ export const Applications: React.FC = () => {
 
   const [open, setOpen] = React.useState<boolean>(false);
 
-  let allUserAppNames: string[] = [];
-
   const getCardContent = (app: AppData) => {
     return <>
       <Box clone py={1.5}>
@@ -120,8 +118,6 @@ export const Applications: React.FC = () => {
       const appNameInitials = appNameInitialsArray.length >= 2
         ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
         : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`;
-
-      allUserAppNames = [...allUserAppNames, userApp.name];
 
       return (
         <Grid item key={`appCard${index}`} xs={4}>

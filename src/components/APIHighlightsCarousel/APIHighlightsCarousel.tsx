@@ -16,7 +16,8 @@ export const APIHighlightsCarousel: React.FC<APIHighlightsCarouselProps> = ({
   const highlightCards = highlightsContent.map((content, index) => {
     return (
       <APIHighlightCard
-        description={content.description}
+        description={content.info}
+        image={content.image}
         key={`card${index}`}
         title={content.title}
       />

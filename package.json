@@ -1,6 +1,6 @@
 {
   "name": "apisuite-fe",
-  "version": "1.18.2",
+  "version": "1.25.3",
   "description": "APISuite Core portal",
   "license": "MPL-2.0",
   "author": "APISuite",
@@ -30,7 +30,6 @@
     "@material-ui/lab": "4.0.0-alpha.58",
     "axios": "0.21.1",
     "clsx": "1.1.1",
-    "file-saver": "2.0.5",
     "formik": "2.2.6",
     "history": "4.10.1",
     "i18n-iso-countries": "6.8.0",

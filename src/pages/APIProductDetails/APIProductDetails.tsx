@@ -102,54 +102,6 @@ export const APIProductDetails: React.FC = () => {
       });
     }
   }, [apiDetails, allUserApps, subscriptions]);
-
-  // TODO: Temporary placeholders until API is reworked to support carousel highlight cards.
-  const highlightsContent = [
-    {
-      title: "Highlight title A",
-      description: "API Product highlight card, composed by a title, description, and optional image.",
-    },
-    {
-      title: "Highlight title B",
-      description: "API Product highlight card, composed by a title, description, and optional image.",
-    },
-    {
-      title: "Highlight title C",
-      description: "API Product highlight card, composed by a title, description, and optional image.",
-    },
-  ];
-
-  // TODO: Temporary placeholders until API is reworked to support 'API Uses' cards.
-  const apiUsesContent = [
-    {
-      title: "Give insights",
-      description: "We want to help you to create value-added services and applications. Therefore we give our customers the possibility to give access to their account information if so desired. Combining this data with other valuable data sources puts you in a unique position to give meaningful financial insights to our customers.",
-    },
-    {
-      title: "Advise",
-      description: "Giving our customers the possibility to give access to their account information will allow you to go beyond mere insights and give added value advice around spending and earnings decisions in accordance with our customers’ lifestyles.",
-    },
-    {
-      title: "Do something else entirely",
-      description: "A human being is a part of the whole that we call 'Universe', a part limited in time and space. He experiences himself, his thoughts and feeling as something separated from the rest, a kind of optical delusion of his consciousness. This delusion is a kind of prison for us, restricting us to our personal desires and to affection for a few persons nearest to us. Our task must be to free ourselves from this prison by widening our circle of compassion to embrace all living creatures and the whole of nature in its beauty.",
-    },
-  ];  
-  
-  // TODO: Temporary placeholders until API is reworked to support 'API Feature' cards.
-  const apiFeaturesContent = [
-    {
-      title: "API Feature A",
-      description: "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing.",
-    },
-    {
-      title: "API Feature B",
-      description: "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing.",
-    },
-    {
-      title: "API Feature C",
-      description: "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing.",
-    },
-  ];
   
   if (!requested) {
     return (
@@ -170,18 +122,35 @@ export const APIProductDetails: React.FC = () => {
   }
 
   return (
-    <Box style={{ backgroundColor: palette.background.default }}>
+    <Box style={{ backgroundColor: palette.background.default, height: "100%" }}>
       <APIProductBanner currentAPIDetails={currentAPIDetails} />
 
       <SubbedAppsBlock currentAPIDetails={currentAPIDetails} userDetails={userDetails} />
 
       <APIPublications currentAPIDetails={currentAPIDetails} />
 
-      <APIHighlightsCarousel highlightsContent={highlightsContent} />
+      {
+        currentAPIDetails.documentation &&
+        <>
+          {
+            !!currentAPIDetails.documentation.highlights.length && (
+              <APIHighlightsCarousel highlightsContent={currentAPIDetails.documentation.highlights} />
+            )
+          }
 
-      <APIUses apiUsesContent={apiUsesContent} />
+          {
+            !!currentAPIDetails.documentation.useCases.length && (
+              <APIUses apiUsesContent={currentAPIDetails.documentation.useCases} />
+            )
+          }
 
-      <APIFeatures apiFeaturesContent={apiFeaturesContent} />
+          {
+            !!currentAPIDetails.documentation.features.length && (
+              <APIFeatures apiFeaturesContent={currentAPIDetails.documentation.features} />
+            )
+          }
+        </>
+      }
     </Box >
   );
 };

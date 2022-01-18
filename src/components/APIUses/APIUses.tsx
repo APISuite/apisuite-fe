@@ -16,7 +16,8 @@ export const APIUses: React.FC<APIUsesProps> = ({
   const usesCards = apiUsesContent.map((content, index) => {
     return (
       <APIUsesCard
-        description={content.description}
+        description={content.info}
+        image={content.image}
         key={`card${index}`}
         title={content.title}
       />
