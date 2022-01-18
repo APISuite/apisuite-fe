@@ -1,3 +1,5 @@
+import { Role } from "store/profile/types";
+
 export interface SelectProps {
   className?: string,
   customCloseIcon?: any,
@@ -12,5 +14,6 @@ export interface SelectProps {
 export interface SelectOption {
   group: string,
   label: string,
-  value: any,
+  role: Role,
+  value: string,
 }

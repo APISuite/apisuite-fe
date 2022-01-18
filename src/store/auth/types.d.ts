@@ -1,4 +1,4 @@
-import { Role } from "store/profile/types";
+import { OrganizationAndRole } from "store/profile/types";
 
 export interface AuthStore {
   authToken?: string,
@@ -32,4 +32,8 @@ export interface User {
   lName: string,
   photo?: string,
   role: Role,
+}
+
+export type OrgInStorage = {
+  orgInStorage: OrganizationAndRole,
 }

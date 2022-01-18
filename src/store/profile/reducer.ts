@@ -10,13 +10,14 @@ import { UPDATE_PROFILE, UPDATE_PROFILE_ERROR, UPDATE_PROFILE_SUCCESS } from "./
 import { FETCH_ORG, FETCH_ORG_ERROR, FETCH_ORG_SUCCESS } from "./actions/fetchOrg";
 import { CREATE_ORG, CREATE_ORG_ERROR, CREATE_ORG_SUCCESS } from "./actions/createOrg";
 import { UPDATE_ORG, UPDATE_ORG_ERROR, UPDATE_ORG_SUCCESS } from "./actions/updateOrg";
-import { SWITCH_ORG, SWITCH_ORG_ERROR, SWITCH_ORG_SUCCESS } from "./actions/switchOrg";
+import { SWITCH_ORG } from "./actions/switchOrg";
 import { FETCH_ROLE_OPTIONS_SUCCESS } from "./actions/fetchRoleOptions";
 import { CHANGE_ROLE, CHANGE_ROLE_ERROR, CHANGE_ROLE_SUCCESS } from "./actions/changeRole";
 import { DELETE_ACCOUNT, DELETE_ACCOUNT_ERROR, DELETE_ACCOUNT_SUCCESS } from "./actions/deleteAccount";
 import { LogoutAction } from "store/auth/actions/types";
 import { ProfileStore } from "./types";
 import { LOGOUT } from "store/auth/actions/logout";
+import { ROLES } from "constants/global";
 
 const initialState: ProfileStore = {
   members: [{
@@ -25,28 +26,31 @@ const initialState: ProfileStore = {
       name: "",
     },
     User: {
-      name: "",
       id: 0,
+      name: "",
     },
     Role: {
-      name: "baseUser",
       id: "",
+      name: ROLES.baseUser.value,
     },
   }],
   profile: {
-    current_org: {
-      name: "",
+    currentOrg: {
       id: "",
-      member_since: "",
+      name: "",
       role: {
-        name: "baseUser",
         id: "",
+        name: ROLES.baseUser.value,
       },
     },
     ssoAccountURL: "",
-    orgs_member: [{
+    organizations: [{
       id: "",
       name: "",
+      role: {
+        id: "",
+        name: ROLES.baseUser.value,
+      },
     }],
     user: {
       email: "",
@@ -57,8 +61,8 @@ const initialState: ProfileStore = {
     },
   },
   roleOptions: [{
-    name: "baseUser",
     id: "",
+    name: ROLES.baseUser.value,
   }],
   org: {
     address: {
@@ -106,10 +110,6 @@ const initialState: ProfileStore = {
       error: "",
     },
     updateOrgRequest: {
-      isRequesting: false,
-      error: "",
-    },
-    switchOrgRequest: {
       isRequesting: false,
       error: "",
     },
@@ -412,32 +412,8 @@ export default function profileReducer(
 
     case SWITCH_ORG: {
       return update(state, {
-        requestStatuses: {
-          switchOrgRequest: {
-            isRequesting: { $set: true },
-            error: { $set: "" },
-          },
-        },
-      });
-    }
-
-    case SWITCH_ORG_SUCCESS: {
-      return update(state, {
-        requestStatuses: {
-          switchOrgRequest: {
-            isRequesting: { $set: false },
-          },
-        },
-      });
-    }
-
-    case SWITCH_ORG_ERROR: {
-      return update(state, {
-        requestStatuses: {
-          switchOrgRequest: {
-            isRequesting: { $set: false },
-            error: { $set: action.error },
-          },
+        profile: {
+          currentOrg: { $set: action.newOrgDetails },
         },
       });
     }

@@ -102,7 +102,53 @@ function * loginUserWorker () {
     const user = profile.user;
     const userId = user.id;
     const userName = user.name.split(" ");
-    const currentOrg = profile.current_org;
+
+    let currentOrg = {
+      id: "",
+      name: "",
+      role: {
+        id: "",
+        name: ROLES.baseUser.value,
+      },
+    };
+
+    const currentUser: string | null = localStorage.getItem("currentUser");
+
+    if (currentUser && currentUser !== userId) {
+      localStorage.removeItem("orgInStorage");
+      
+      localStorage.setItem("currentUser", userId);
+    }
+
+    const orgInStorage: string | null = localStorage.getItem("orgInStorage");
+
+    if (orgInStorage) {
+      const parsedOrg = JSON.parse(orgInStorage);
+
+      currentOrg = {
+        id: parsedOrg.id,
+        name: parsedOrg.name,
+        role: {
+          id: parsedOrg.role.id,
+          name: parsedOrg.role.name,
+        },
+      };
+    }
+    
+    if (!orgInStorage && profile.organizations.length) {
+      const org = profile.organizations[0];
+
+      currentOrg = {
+        id: org.id,
+        name: org.name,
+        role: {
+          id: org.role.id,
+          name: org.role.name,
+        },
+      };
+    }
+
+    localStorage.setItem("orgInStorage", JSON.stringify(currentOrg));
 
     // TODO: better types for this response
     const settings: { navigation: DefaultConfig["navigation"] } = yield call(request, {
@@ -110,7 +156,7 @@ function * loginUserWorker () {
       method: "GET",
     });
 
-    const path = settings?.navigation[currentOrg?.role?.name || "baseUser"]?.events.afterLogin ?? "/";
+    const path = settings?.navigation[currentOrg?.role?.name || ROLES.baseUser.value]?.events.afterLogin ?? "/";
 
     yield put(loginUserSuccess({
       path,

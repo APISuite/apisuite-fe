@@ -53,7 +53,7 @@ export const APIProducts: React.FC = () => {
     /* Triggers the retrieval and storage of all app-related information we presently
     have on a given user. */
     if (auth?.user) {
-      dispatch(getAllUserApps({ orgID: profile.current_org.id }));
+      dispatch(getAllUserApps({ orgID: profile.currentOrg.id }));
     }
   }, [auth, dispatch, profile]);
 

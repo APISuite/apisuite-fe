@@ -3,14 +3,14 @@ import { i18n } from "@apisuite/fe-base";
 
 import { API_URL } from "constants/endpoints";
 import { CHANGE_ROLE, changeRoleError, changeRoleSuccess } from "./actions/changeRole";
-import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, RemoveTeamMemberAction, SwitchOrgAction, UpdateOrgAction, UpdateProfileAction } from "./actions/types";
+import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, RemoveTeamMemberAction, UpdateOrgAction, UpdateProfileAction } from "./actions/types";
 import { CONFIRM_INVITE_MEMBER, confirmInviteMemberError, confirmInviteMemberSuccess } from "./actions/confirmInviteMember";
 import { CREATE_ORG, createOrgError, createOrgSuccess } from "./actions/createOrg";
 import { DELETE_ACCOUNT, deleteAccountError, deleteAccountSuccess } from "./actions/deleteAccount";
 import { FETCH_ORG, fetchOrgError, fetchOrgSuccess } from "./actions/fetchOrg";
 import { FETCH_ROLE_OPTIONS, fetchRoleOptionsError, fetchRoleOptionsSuccess } from "./actions/fetchRoleOptions";
 import { FETCH_TEAM_MEMBERS, fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess } from "./actions/fetchTeamMembers";
-import { FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, OrgDetailsResponse, UpdateProfileResponse } from "./types";
+import { FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, OrgDetailsResponse, Profile, UpdateProfileResponse } from "./types";
 import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
@@ -19,7 +19,6 @@ import { logout } from "store/auth/actions/logout";
 import { openNotification } from "store/notificationStack/actions/notification";
 import { removeTeamMemberError, removeTeamMemberSuccess, REMOVE_TEAM_MEMBER } from "./actions/removeTeamMember";
 import { Store } from "store/types";
-import { SWITCH_ORG, switchOrgError, switchOrgSuccess } from "./actions/switchOrg";
 import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOrg";
 import { UPDATE_PROFILE, updateProfileError, updateProfileSuccess } from "./actions/updateProfile";
 import request from "util/request";
@@ -29,7 +28,7 @@ export function* fetchTeamMembersSaga(action: FetchTeamMembersAction) {
     let orgID = action.orgID;
 
     if (!action.orgID) {
-      orgID = yield select((state: Store) => state.profile.profile.current_org.id);
+      orgID = yield select((state: Store) => state.profile.profile.currentOrg.id);
     }
 
     const members: FetchTeamMembersResponse[] = yield call(request, {
@@ -151,7 +150,7 @@ export function* changeRoleSaga(action: ChangeRoleAction) {
 
 export function* getProfileSaga() {
   try {
-    const profile: GetProfileResponse = yield call(request, {
+    const profileDetails: GetProfileResponse = yield call(request, {
       url: `${API_URL}/users/profile`,
       method: "GET",
       headers: {
@@ -159,7 +158,10 @@ export function* getProfileSaga() {
       },
     });
 
-    yield put(getProfileSuccess({ profile }));
+    const orgInStorage = JSON.parse(localStorage.getItem("orgInStorage")!);
+    const newProfileDetails: Profile = { ...profileDetails, currentOrg: orgInStorage };
+
+    yield put(getProfileSuccess({ profile: newProfileDetails }));
   } catch (error) {
     yield put(getProfileError({ error: error.message }));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
@@ -196,7 +198,7 @@ export function* fetchOrgSaga(action: FetchOrgAction) {
 
     if (!orgId) {
       yield call(getProfileSaga);
-      orgId = yield select((state: Store) => state.profile.profile.current_org.id);
+      orgId = yield select((state: Store) => state.profile.profile.currentOrg.id);
     }
 
     const org: OrgDetailsResponse = yield call(request, {
@@ -258,27 +260,6 @@ export function* updateOrgSaga({ orgId, orgInfo }: UpdateOrgAction) {
   }
 }
 
-export function* switchOrgSaga({ type, ...props }: SwitchOrgAction) {
-  try {
-    yield call(request, {
-      url: `${API_URL}/users/${props.id}/organizations/${props.orgId}`,
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      data: JSON.stringify(props),
-    });
-
-    yield put(switchOrgSuccess({}));
-    yield put(getProfile({}));
-  } catch (error) {
-    yield put(switchOrgError({ error: error.message }));
-    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
-      yield put(handleSessionExpire({}));
-    }
-  }
-}
-
 export function* deleteAccountSaga() {
   try {
     yield call(request, {
@@ -313,7 +294,6 @@ function* rootSaga() {
   yield takeLatest(GET_PROFILE, getProfileSaga);
   yield takeLatest(INVITE_TEAM_MEMBER, inviteMemberSaga);
   yield takeLatest(REMOVE_TEAM_MEMBER, removeMemberSaga);
-  yield takeLatest(SWITCH_ORG, switchOrgSaga);
   yield takeLatest(UPDATE_ORG, updateOrgSaga);
   yield takeLatest(UPDATE_PROFILE, updateProfileSaga);
 }

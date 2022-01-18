@@ -40,7 +40,7 @@ export const Applications: React.FC = () => {
     return Object.keys(_org).length !== 0 && _org.id !== "";
   };
 
-  /* With every change of our store's 'profile > profile > current_org' section
+  /* With every change of our store's 'profile > profile > currentOrg' section
   (which goes from its initial state, to a filled or completely empty state),
   we do the following check, so as to know what view needs to be shown. */
   useEffect(() => {

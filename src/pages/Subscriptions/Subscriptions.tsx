@@ -33,7 +33,7 @@ export const Subscriptions: React.FC = () => {
     have all the information it needs. */
     if (auth.user) {
       dispatch(getAPIs({}));
-      dispatch(getAllUserApps({ orgID: profile.current_org.id }));
+      dispatch(getAllUserApps({ orgID: profile.currentOrg.id }));
     }
   }, [auth.user, dispatch, profile]);
 
