@@ -4,9 +4,10 @@ import { GET_ALL_USER_APPS, GET_ALL_USER_APPS_ERROR, GET_ALL_USER_APPS_SUCCESS }
 import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_SUCCESS } from "./getUserApp";
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./updatedApp";
-import { AppData } from "../types";
+import { AppData, AppType } from "../types";
 import { UPLOAD_APP_MEDIA, UPLOAD_APP_MEDIA_ERROR, UPLOAD_APP_MEDIA_SUCCESS } from "./appMediaUpload";
 import { DELETE_APP_MEDIA, DELETE_APP_MEDIA_ERROR, DELETE_APP_MEDIA_SUCCESS } from "./deleteAppMedia";
+import { GET_APP_TYPES, GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./getAppTypes";
 
 export type ApplicationsActions = CreateAppAction |
 CreateAppActionError |
@@ -32,16 +33,21 @@ UploadAppMediaActionSuccess |
 UploadAppMediaActionError |
 DeleteAppMediaAction |
 DeleteAppMediaActionSuccess |
-DeleteAppMediaActionError
+DeleteAppMediaActionError |
+GetAppTypesAction |
+GetAppTypesActionError |
+GetAppTypesActionSuccess
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
   orgID: string,
   appData: CreateAppActionData,
+  appType: number,
 }
 
 export type CreateAppActionSuccess = {
   type: typeof CREATE_APP_SUCCESS,
+  appData: AppData,
 }
 
 export type CreateAppActionError = {
@@ -167,4 +173,18 @@ export type MediaError = {
 export type UploadResponse = {
   savedImages: SaveImages[],
   errors: MediaError[],
+}
+
+export type GetAppTypesAction = {
+  type: typeof GET_APP_TYPES,
+}
+
+export type GetAppTypesActionSuccess = {
+  type: typeof GET_APP_TYPES_SUCCESS,
+  types: AppType[],
+}
+
+export type GetAppTypesActionError = {
+  type: typeof GET_APP_TYPES_ERROR,
+  types: AppType[],
 }

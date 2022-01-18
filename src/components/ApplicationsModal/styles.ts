@@ -706,4 +706,18 @@ export default makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.main,
     },
   },
+
+  centerContent: {
+    alignItems: "center",
+    color: theme.palette.grey[400],
+    display: "flex",
+    flexDirection: "column",
+    fontWeight: 300,
+    height: 200,
+    justifyContent: "space-evenly",
+  },
+
+  loading: {
+    color: theme.palette.secondary.main,
+  },
 }));

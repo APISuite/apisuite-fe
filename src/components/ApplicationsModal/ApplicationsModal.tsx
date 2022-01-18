@@ -48,7 +48,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
   const history: any = useHistory();
-  const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
+  const { app: mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
   const { profile } = useSelector(profileSelector);
   const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
   const [buttonClicked, setButtonClicked] = React.useState("");
@@ -447,7 +447,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = mapAppDetails();
 
-    dispatch(createApp({ orgID: profile.current_org.id, appData: newAppDetails }));
+    dispatch(createApp({ orgID: profile.current_org.id, appData: newAppDetails, appType: 1 }));
 
     toggleModal();
   };

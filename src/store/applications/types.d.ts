@@ -7,10 +7,12 @@ export interface Response {
 }
 
 export interface ApplicationsStore {
-  createAppStatus: Response,
+  createAppStatus: Response & { id: number },
   currentApp: AppData,
   deleteAppStatus: Response,
+  getApp: Response,
   requestingAPIAccessStatus: Response,
+  types: AppType[],
   updateAppStatus: Response,
   userApps: AppData[],
 }
@@ -38,6 +40,11 @@ export interface AppData {
   youtubeUrl: string,
   media: string[],
   metadata: Metadata[],
+  appType: AppType & {
+    createdAt: string,
+    updatedAt: string,
+  },
+  appTypeId?: number,
 }
 
 export interface Metadata {
@@ -100,4 +107,9 @@ export interface UpdateAppActionData {
   tosUrl: string,
   websiteUrl: string,
   youtubeUrl: string,
+}
+
+export interface AppType {
+  id: number,
+  type: string,
 }

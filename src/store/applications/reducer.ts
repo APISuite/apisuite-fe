@@ -5,11 +5,12 @@ import { ApplicationsStore } from "./types";
 import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from "./actions/createApp";
 import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS_SUCCESS } from "./actions/getAllUserApps";
-import { GET_USER_APP_SUCCESS } from "./actions/getUserApp";
+import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_SUCCESS } from "./actions/getUserApp";
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./actions/requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./actions/updatedApp";
 import { UPLOAD_APP_MEDIA_SUCCESS } from "./actions/appMediaUpload";
 import { DELETE_APP_MEDIA_SUCCESS } from "./actions/deleteAppMedia";
+import { GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./actions/getAppTypes";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -26,7 +27,7 @@ const initialState: ApplicationsStore = {
     name: "",
     orgId: "",
     privacyUrl: "",
-    redirectUrl: "",
+    redirectUrl: "https://",
     summary: "",
     subscriptions: [],
     supportUrl: "",
@@ -36,8 +37,16 @@ const initialState: ApplicationsStore = {
     websiteUrl: "",
     youtubeUrl: "",
     media: [],
+    appType: {
+      id: 0,
+      type: "client",
+      createdAt: "",
+      updatedAt: "",
+    },
+    appTypeId: 0,
   },
   createAppStatus: {
+    id: -1,
     isError: false,
     isRequesting: false,
   },
@@ -45,10 +54,15 @@ const initialState: ApplicationsStore = {
     isError: false,
     isRequesting: false,
   },
+  getApp: {
+    isError: false,
+    isRequesting: false,
+  },
   requestingAPIAccessStatus: {
     isError: false,
     isRequesting: false,
   },
+  types: [],
   updateAppStatus: {
     isError: false,
     isRequesting: false,
@@ -75,6 +89,7 @@ export default function reducer (
       return update(state, {
         createAppStatus: {
           isRequesting: { $set: false },
+          id: { $set: action.appData.id },
         },
       });
     }
@@ -120,31 +135,37 @@ export default function reducer (
       });
     }
 
-    case GET_USER_APP_SUCCESS: {
+    case GET_USER_APP: {
       return update(state, {
+        getApp: {
+          isError: { $set: false },
+          isRequesting: { $set: true },
+        },
+      });
+    }
+
+    case GET_USER_APP_SUCCESS: {
+      return {
+        ...state,
         currentApp: {
-          clientId: { $set: action.appData.clientId },
-          clientSecret: { $set: action.appData.clientSecret },
-          createdAt: { $set: action.appData.createdAt },
-          description: { $set: action.appData.description },
-          directUrl: { $set: action.appData.directUrl },
-          id: { $set: action.appData.id },
-          labels: { $set: action.appData.labels },
-          logo: { $set: action.appData.logo },
-          metadata: { $set: action.appData.metadata },
-          name: { $set: action.appData.name },
-          orgId: { $set: action.appData.orgId },
-          privacyUrl: { $set: action.appData.privacyUrl },
-          redirectUrl: { $set: action.appData.redirectUrl },
-          summary: { $set: action.appData.summary },
-          subscriptions: { $set: action.appData.subscriptions },
-          supportUrl: { $set: action.appData.supportUrl },
-          tosUrl: { $set: action.appData.tosUrl },
-          updatedAt: { $set: action.appData.updatedAt },
-          visibility: { $set: action.appData.visibility },
-          websiteUrl: { $set: action.appData.websiteUrl },
-          youtubeUrl: { $set: action.appData.youtubeUrl },
-          media: { $set: action.appData.media },
+          ...action.appData,
+          appType: {
+            ...action.appData.appType,
+            id: action.appData.appType?.id || 1,
+          },
+        },
+        getApp: {
+          isError: false,
+          isRequesting: false,
+        },
+      };
+    }
+
+    case GET_USER_APP_ERROR: {
+      return update(state, {
+        getApp: {
+          isError: { $set: true },
+          isRequesting: { $set: false },
         },
       });
     }
@@ -190,22 +211,7 @@ export default function reducer (
           isRequesting: { $set: false },
         },
 
-        currentApp: {
-          description: { $set: action.appData.description },
-          directUrl: { $set: action.appData.directUrl },
-          labels: { $set: action.appData.labels },
-          logo: { $set: action.appData.logo },
-          metadata: { $set: action.appData.metadata },
-          name: { $set: action.appData.name },
-          privacyUrl: { $set: action.appData.privacyUrl },
-          redirectUrl: { $set: action.appData.redirectUrl },
-          summary: { $set: action.appData.summary },
-          supportUrl: { $set: action.appData.supportUrl },
-          tosUrl: { $set: action.appData.tosUrl },
-          visibility: { $set: action.appData.visibility },
-          websiteUrl: { $set: action.appData.websiteUrl },
-          youtubeUrl: { $set: action.appData.youtubeUrl },
-        },
+        currentApp: { $set: action.appData },
       });
     }
 
@@ -235,6 +241,13 @@ export default function reducer (
             $set: [...state.currentApp.media.filter((m) => m !== action.deleted)],
           },
         },
+      });
+    }
+
+    case GET_APP_TYPES_ERROR:
+    case GET_APP_TYPES_SUCCESS: {
+      return update(state, {
+        types: { $set: action.types },
       });
     }
 

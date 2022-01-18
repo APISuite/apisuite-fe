@@ -346,6 +346,8 @@
         "appRedirectURIFieldLabel": "Redirect URI",
         "appSummaryFieldLabel": "Summary",
         "appSubsButtonLabel": "Subscriptions",
+        "appSubsDescription": "Subscribe this application to our listed API Products to get production access.",
+        "appSubsTitle": "Subscriptions",
         "appSupportFieldLabel": "Support URL",
         "appSupportURLFieldLabel": "Support URL",
         "appToSFieldLabel": "Terms of Service URL",
@@ -367,8 +369,10 @@
         "infoBoxSubTitleLabel": "Once you understand the documentation and have provided sufficient organisation and client application information, you might want to subscribe to a few APIs in order to obtain access for your app.",
         "infoBoxTitleLabel": "What’s next?",
         "newAppLabel": "New application",
+        "nextAppButtonLabel": "Next",
         "noAppNameError": "Please provide a name.",
-        "removeAppButtonLabel": "Remove",
+        "removeAppButtonLabel": "Remove app",
+        "removeAppTitle": "Remove app",
         "selectorTitle": "Useful links",
         "subbedAppStatus": "Subscribed",
         "subSectionLabelFive": "Additional information",
@@ -699,8 +703,32 @@
     }
   },
   "applications": {
+    "buttons": {
+      "backToApps": "Back to Applications",
+      "backToSubs": "Back to Subscriptions",
+      "back": "Back",
+      "next": "Next",
+      "removeApp": "Remove app",
+      "registerApp": "Register App",
+      "subToAPI": "Subscribe to API",
+      "update": "Update"
+    },
+    "prompt": {
+      "body": "All changes you made will be lost. Do you really want to leave without saving?",
+      "cancel": "Stay and save",
+      "ok": "Leave without saving",
+      "subtitle": "You are about to leave this page without saving!",
+      "title": "Unsaved changes"
+    },
     "requestAPIAcessSuccess": "Access requested successfully.",
-    "requestAPIAcessError": "Failed to request access."
+    "requestAPIAcessError": "Failed to request access.",
+    "tabs": {
+      "client": "Client Access Details",
+      "expert": "Custom Properties",
+      "external": "External Settings",
+      "general": "General Settings",
+      "media": "Media Files and Links"
+    }
   },
   "navigation": {
     "signin": "Sign in",
@@ -734,5 +762,37 @@
   },
   "pages": {
     "default": "# No content\n\nThis page has no content. You can create content for it by using the \"pages\" API.\n\nTo add the content you'll need to set the following parameters:\n\n- id: the page name that will appear in the url you are trying to access (i.e. `documentation`)\n- content: the markdown content to show\n- locale (optional): the language the document is in (default is `en-US`)\n\n:::info\n*Make sure your request is authenticated with correct authorised cookie.*\n\n:::\n\n```shell\ncurl -X POST \\\\\n-H \"Accept: application/json\" \\\\\n-H \"Content-Type: application/json\" \\\\\n-d '{ \"id\": \"documentation\", \"locale\": \"en-US\", \"content\": \"# Documentation\\n\\nThis is a documentation page\" }' \\\\\nhttps://apisuite/pages\n```\n\n#### Notes\n\nSide navigation is only shown for the level 2 header (i.e. `h2`, `##`)\n"
+  },
+  "appTypes": {
+    "modal": {
+      "cancel": "Cancel",
+      "clientApp": {
+        "description": "Create a default client app for API access with OAuth2.0 credentials.",
+        "label": "Client Application"
+      },
+      "expertApp": {
+        "description": "Configure an app with all the available settings. Technical knowledge advised.",
+        "label": "Expert"
+      },
+      "externalApp": {
+        "description": "List an app or plugin located on an external platform.",
+        "label": "External app"
+      },
+      "infoBox": "Choose the category that best suits your app. Read <0>here</0> about the different app types and its predefined settings.",
+      "next": "Next",
+      "subtitle": "Choose the category you wish for this app",
+      "title": "Select App Type",
+      "titleEdit": "Change App Type",
+      "update": "Update",
+      "warningBox": "Switching to another app type will change the content of your current app. Read <0>here</0> about the different app types."
+    }
+  },
+  "avatarDropzone": {
+    "deleteError": "Error deleting logo.",
+    "deleteSuccess": "Logo deleted successfully.",
+    "dragdrop": "Upload a logo or drag and drop",
+    "helperText": " Supported format: JPG/GIF/JPEG/PNG \n(2MB max file size).",
+    "uploadSuccess": "Logo uploaded successfully.",
+    "uploadError": "Error uploading logo."
   }
 }
