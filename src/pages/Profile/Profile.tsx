@@ -7,7 +7,7 @@ import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 
-import { LOCAL_STORAGE_ACTIONS, ROLES } from "constants/global";
+import { LOCAL_STORAGE_KEYS, ROLES } from "constants/global";
 import { deleteAccount } from "store/profile/actions/deleteAccount";
 import { getProfile } from "store/profile/actions/getProfile";
 import { getRoleName, getSSOAccountURLSelector, profileSelector } from "./selectors";
@@ -25,7 +25,7 @@ import Notice from "components/Notice";
 import Link from "components/Link";
 import { PageContainer } from "components/PageContainer";
 import { testIds } from "testIds";
-import { handleLocalStorage } from "util/localStorageActions";
+import { setInStorage } from "util/localStorageActions";
 
 export const Profile: React.FC = () => {
   const classes = useStyles();
@@ -205,7 +205,7 @@ export const Profile: React.FC = () => {
         role: currentlySelectedOrganisation.role,
       };
 
-      handleLocalStorage(LOCAL_STORAGE_ACTIONS.SET, JSON.stringify(newOrg));
+      setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, newOrg);
       
       dispatch(switchOrg({ newOrg }));
     }

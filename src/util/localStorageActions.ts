@@ -1,9 +1,15 @@
-export const getFromStorage = (key: string): string | null => {
-  return localStorage.getItem(key);
+export const getFromStorage = (key: string) => {
+  const storedData: string | null = localStorage.getItem(key);
+
+  if (storedData) return JSON.parse(storedData);
+
+  return null;
 };
 
 export const setInStorage = (key: string, data: string): null => {
-  localStorage.setItem(key, data);
+  const stringifiedData = JSON.stringify(data);
+  
+  localStorage.setItem(key, stringifiedData);
 
   return null;
 };

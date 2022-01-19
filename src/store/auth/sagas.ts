@@ -113,7 +113,7 @@ function * loginUserWorker () {
       },
     };
 
-    const currentUser: string | null = getFromStorage(LOCAL_STORAGE_KEYS.CURRENT_USER);
+    const currentUser = getFromStorage(LOCAL_STORAGE_KEYS.CURRENT_USER);
     
     if (!currentUser) {
       setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
@@ -123,17 +123,15 @@ function * loginUserWorker () {
       setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
     }
 
-    const storedOrg: string | null = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
+    const storedOrg = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
 
     if (storedOrg) {
-      const parsedOrg = JSON.parse(storedOrg);
-
       currentOrg = {
-        id: parsedOrg.id,
-        name: parsedOrg.name,
+        id: storedOrg.id,
+        name: storedOrg.name,
         role: {
-          id: parsedOrg.role.id,
-          name: parsedOrg.role.name,
+          id: storedOrg.role.id,
+          name: storedOrg.role.name,
         },
       };
     } else if (profile.organizations.length) {
