@@ -72,10 +72,13 @@ import { getReCAPTCHAToken, ReCaptchaActions } from "util/getReCAPTCHAToken";
 function * loginWorker (action: LoginAction) {
   try {
     const loginUrl = `${API_URL}/auth/login`;
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.password);
 
     const data = {
       email: action.email,
       password: action.password,
+      recaptchaToken,
     };
 
     yield call(request, {
@@ -471,6 +474,8 @@ export function * validateInvitationTokenSaga ({ token }: ValidateInvitationToke
 export function * invitationSignInSaga ({ token, email, password }: InvitationSignInAction) {
   try {
     const loginUrl = `${API_URL}/auth/login`;
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.password);
 
     yield call(request, {
       url: loginUrl,
@@ -478,7 +483,7 @@ export function * invitationSignInSaga ({ token, email, password }: InvitationSi
       headers: {
         "content-type": "application/x-www-form-urlencoded",
       },
-      data: qs.stringify({ email, password }),
+      data: qs.stringify({ email, password, recaptchaToken }),
     });
 
     yield call(request, {
