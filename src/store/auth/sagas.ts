@@ -104,15 +104,6 @@ function * loginUserWorker () {
     const userId = user.id;
     const userName = user.name.split(" ");
 
-    let currentOrg = {
-      id: "",
-      name: "",
-      role: {
-        id: "",
-        name: ROLES.baseUser.value,
-      },
-    };
-
     const currentUser = getFromStorage(LOCAL_STORAGE_KEYS.CURRENT_USER);
     
     if (!currentUser) {
@@ -125,29 +116,22 @@ function * loginUserWorker () {
 
     const storedOrg = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
 
-    if (storedOrg) {
-      currentOrg = {
-        id: storedOrg.id,
-        name: storedOrg.name,
-        role: {
-          id: storedOrg.role.id,
-          name: storedOrg.role.name,
-        },
-      };
-    } else if (profile.organizations.length) {
-      const org = profile.organizations[0];
+    let org = storedOrg;
 
-      currentOrg = {
-        id: org.id,
-        name: org.name,
-        role: {
-          id: org.role.id,
-          name: org.role.name,
-        },
-      };
+    if (!org && profile.organizations.length) {
+      org = profile.organizations[0];
     }
 
-    setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, JSON.stringify(currentOrg));
+    const currentOrg = {
+      id: org?.id || "",
+      name: org?.name || "",
+      role: {
+        id: org?.role?.id || "",
+        name: org?.role?.name || ROLES.baseUser.value,
+      },
+    };
+   
+    setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, currentOrg);
 
     // TODO: better types for this response
     const settings: { navigation: DefaultConfig["navigation"] } = yield call(request, {
