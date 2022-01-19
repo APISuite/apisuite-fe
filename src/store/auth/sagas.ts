@@ -73,7 +73,7 @@ function * loginWorker (action: LoginAction) {
   try {
     const loginUrl = `${API_URL}/auth/login`;
     // request ReCaptcha token - this might trigger a visual challenge to the user
-    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.password);
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.login);
 
     const data = {
       email: action.email,
@@ -475,7 +475,7 @@ export function * invitationSignInSaga ({ token, email, password }: InvitationSi
   try {
     const loginUrl = `${API_URL}/auth/login`;
     // request ReCaptcha token - this might trigger a visual challenge to the user
-    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.password);
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.login);
 
     yield call(request, {
       url: loginUrl,
