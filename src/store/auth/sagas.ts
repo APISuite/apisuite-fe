@@ -7,7 +7,7 @@ import stateGenerator from "util/stateGenerator";
 import { openNotification } from "store/notificationStack/actions/notification";
 import { Profile } from "store/profile/types";
 import { API_URL } from "constants/endpoints";
-import { ROLES, LOCAL_STORAGE_KEYS, LOCAL_STORAGE_ACTIONS } from "constants/global";
+import { ROLES, LOCAL_STORAGE_KEYS } from "constants/global";
 import { Store } from "store/types";
 import { LOGIN, loginError, loginSuccess, loginUserError, loginUserSuccess, LOGIN_SUCCESS, LOGIN_USER } from "./actions/login";
 import { EXPIRED_SESSION } from "./actions/expiredSession";
@@ -67,7 +67,7 @@ import {
 import { Invitation } from "./types";
 import { submitSignUpCredentialsError, submitSignUpCredentialsSuccess, SUBMIT_SIGN_UP_CREDENTIALS } from "./actions/submitSignUpCredentials";
 import { submitSignUpOrganisationError, submitSignUpOrganisationSuccess, SUBMIT_SIGN_UP_ORGANISATION } from "./actions/submitSignUpOrganisation";
-import { handleLocalStorage } from "util/localStorageActions";
+import { getFromStorage, removeFromStorage, setInStorage } from "util/localStorageActions";
 
 function * loginWorker (action: LoginAction) {
   try {
@@ -113,17 +113,17 @@ function * loginUserWorker () {
       },
     };
 
-    const currentUser: string | null = handleLocalStorage(LOCAL_STORAGE_ACTIONS.GET, LOCAL_STORAGE_KEYS.CURRENT_USER);
+    const currentUser: string | null = getFromStorage(LOCAL_STORAGE_KEYS.CURRENT_USER);
     
     if (!currentUser) {
-      handleLocalStorage(LOCAL_STORAGE_ACTIONS.SET, LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
+      setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
     } else if (currentUser !== userId) {
-      handleLocalStorage(LOCAL_STORAGE_ACTIONS.REMOVE, LOCAL_STORAGE_KEYS.STORED_ORG);
+      removeFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
 
-      handleLocalStorage(LOCAL_STORAGE_ACTIONS.SET, LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
+      setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
     }
 
-    const storedOrg: string | null = handleLocalStorage(LOCAL_STORAGE_ACTIONS.GET, LOCAL_STORAGE_KEYS.STORED_ORG);
+    const storedOrg: string | null = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
 
     if (storedOrg) {
       const parsedOrg = JSON.parse(storedOrg);
@@ -149,7 +149,7 @@ function * loginUserWorker () {
       };
     }
 
-    localStorage.setItem("storedOrg", JSON.stringify(currentOrg));
+    setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, JSON.stringify(currentOrg));
 
     // TODO: better types for this response
     const settings: { navigation: DefaultConfig["navigation"] } = yield call(request, {

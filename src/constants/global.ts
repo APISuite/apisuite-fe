@@ -35,12 +35,6 @@ export const ROLES: Roles = {
   },
 };
 
-export enum LOCAL_STORAGE_ACTIONS {
-  GET = "get",
-  SET = "set",
-  REMOVE = "remove",
-}
-
 export enum LOCAL_STORAGE_KEYS {
   SSO_STATE_STORAGE = "ssoStateStorage",
   SSO_INVITATION_STATE_STORAGE = "ssoInvitationStateStorage",
