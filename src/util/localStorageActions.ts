@@ -6,16 +6,16 @@ export const getFromStorage = (key: string) => {
   return null;
 };
 
-export const setInStorage = (key: string, data: any): null => {
+export const setInStorage = (key: string, data: any) => {
   const stringifiedData = JSON.stringify(data);
   
   localStorage.setItem(key, stringifiedData);
 
-  return null;
+  return;
 };
 
-export const removeFromStorage = (key: string): null => {
+export const removeFromStorage = (key: string) => {
   localStorage.removeItem(key);
 
-  return null;
+  return;
 };
