@@ -1,4 +1,3 @@
-export { ApplicationsModal } from "./ApplicationsModal";
 export { GeneralSettings } from "./GeneralSettings";
 export { MediaFilesLinks } from "./MediaFilesLinks";
 export { ClientAccess } from "./ClientAccess";

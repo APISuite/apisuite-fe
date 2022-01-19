@@ -11,7 +11,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { MediaUpload } from "components/MediaUpload";
-import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import { TypeChip } from "components/AppTypesModal";
 import { RouterPrompt } from "components/RouterPrompt";
 import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
@@ -22,7 +21,7 @@ import { AppData } from "store/applications/types";
 import { AppType } from "store/applications/types";
 import { getProfile } from "store/profile/actions/getProfile";
 import { isValidURL } from "util/forms";
-import { applicationsModalSelector } from "./selector";
+import { applicationsViewSelector } from "./selector";
 import { profileSelector } from "pages/Profile/selectors";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
@@ -37,10 +36,8 @@ export const MediaFilesLinks: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createdId, requesting, types } = useSelector(applicationsModalSelector);
+  const { app, createdId, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-  const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
-  const [buttonClicked, setButtonClicked] = React.useState("");
   const appType = useRef<AppType>(types[0]);
   const isNew = Number.isNaN(Number(appId));
 
@@ -64,45 +61,23 @@ export const MediaFilesLinks: React.FC = () => {
     }
   }, [dispatch, typeId, types]);
 
-  const handleCloseEditWarning = () => {
-    setOpenCloseWarning(false);
-  };
-
-  const dialogFunctions: { [index: string]: () => void } = {
-    toggleModal: () => history.push("/dashboard/apps"),
-    regularGoToSubsView: () => history.push("/dashboard/subscriptions"),
-    alternativeGoToSubsView: () => history.push("/dashboard/subscriptions", {
+  const dialogFunctions: { [index: string]: (hist: LocationHistory) => void } = {
+    toggleModal: (hist: LocationHistory) => hist.push("/dashboard/apps"),
+    regularGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions"),
+    alternativeGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions", {
       redirected: true,
-      appID: history.location.state?.appID || appId,
+      appID: hist.location.state?.appID || appId,
     }),
   };
 
-  const checkNextAction = (fn: string) => {
-    if (hasChanged()) {
-      fn !== "toggleModal" ? setButtonClicked("subs") : setButtonClicked("close");
-      
-      return setOpenCloseWarning(true);
-    }
-
-    dialogFunctions[fn]();
+  const checkNextAction = (fn: string, hist: LocationHistory) => {
+    dialogFunctions[fn](hist);
   };
 
-  const checkHistory = (history: LocationHistory) => {
-    history.location.state?.redirected
-      ? checkNextAction("alternativeGoToSubsView")
-      : checkNextAction("toggleModal");
-  };
-
-  const confirmButtonAction = () => {
-    if (appId || history.location.state?.redirected) {
-      dialogFunctions["alternativeGoToSubsView"]();
-    } else {
-      if (buttonClicked === "subs") {
-        dialogFunctions["regularGoToSubsView"]();
-      } else {
-        dialogFunctions["toggleModal"]();
-      }
-    }
+  const checkHistory = (hist: LocationHistory) => {
+    hist.location.state?.redirected
+      ? checkNextAction("alternativeGoToSubsView", hist)
+      : checkNextAction("toggleModal", hist);
   };
 
   useEffect(() => {
@@ -283,8 +258,8 @@ export const MediaFilesLinks: React.FC = () => {
 
   const uploadMedia = (files: File[]) => {
     const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append(files[i].name, files[i]);
+    for (const file of files) {
+      formData.append(file.name, file);
     }
 
     dispatch(uploadAppMedia({
@@ -659,29 +634,6 @@ export const MediaFilesLinks: React.FC = () => {
             </div>
           </Container>
         </Box>
-      }
-
-      {
-        openCloseWarning &&
-        <CustomizableDialog
-          cancelButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.cancelButtonLabel")}
-          cancelButtonProps={{
-            variant: "contained",
-            color: "primary",
-          }}
-          closeDialogCallback={handleCloseEditWarning}
-          confirmButtonCallback={confirmButtonAction}
-          confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.confirmButtonLabel")}
-          confirmButtonProps={{
-            variant: "outlined",
-            color: "primary",
-          }}
-          open={openCloseWarning}
-          optionalTitleIcon="warning"
-          providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.subText")}
-          providedText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.text")}
-          providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.title")}
-        />
       }
 
       <RouterPrompt

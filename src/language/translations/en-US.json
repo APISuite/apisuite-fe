@@ -367,7 +367,7 @@
         "editAppButtonLabel": "Update",
         "existingAppNameError": "An app with this name already exists in this organisation.",
         "infoBoxSubTitleLabel": "Once you understand the documentation and have provided sufficient organisation and client application information, you might want to subscribe to a few APIs in order to obtain access for your app.",
-        "infoBoxTitleLabel": "What’s next?",
+        "infoBoxTitleLabel": "What's next?",
         "newAppLabel": "New application",
         "nextAppButtonLabel": "Next",
         "noAppNameError": "Please provide a name.",

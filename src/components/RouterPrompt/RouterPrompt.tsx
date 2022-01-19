@@ -60,7 +60,8 @@ export const RouterPrompt: React.FC<RouterPromptProps> = ({
   }, []);
 
   const getIcon = (iconType: RouterPromptProps["type"]) => {
-    return <Icon className={classes[`${iconType}Icon`]}>{iconType}</Icon>;
+    const classn = `${iconType}Icon` as "infoIcon" | "errorIcon" | "warningIcon";
+    return <Icon className={classes[classn]}>{iconType}</Icon>;
   };
 
   return showPrompt ? (

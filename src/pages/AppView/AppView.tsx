@@ -9,7 +9,7 @@ import {
   ExternalSettings,
   GeneralSettings,
   MediaFilesLinks,
-} from "components/ApplicationsModal";
+} from "components/ApplicationsView";
 import { isExtensionActive } from "util/extensions";
 import { typesSelector } from "./selector";
 

@@ -54,9 +54,7 @@ export const MediaUpload: React.FC<MediaProps> = ({
 
   const rejectedFilesErrors = fileRejections.map(({ file, errors }) => (
     <div className={classes.mediaError} key={file.name}>
-      <Typography variant="caption" display="block" gutterBottom>
-        {file.name}
-      </Typography>
+      <Typography variant="body2" display="block" gutterBottom>{file.name}</Typography>
       <div>
         {errors.map(e => (
           <Typography key={e.code} variant="caption" display="block" gutterBottom>

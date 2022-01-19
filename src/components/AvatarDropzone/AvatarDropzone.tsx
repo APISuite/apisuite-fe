@@ -25,8 +25,8 @@ export const AvatarDropzone: React.FC<AvatarDropzoneProps> = ({
   const onDrop = useCallback(acceptedFiles => {
     if (acceptedFiles.length) {
       const formData = new FormData();
-      for (let i = 0; i < acceptedFiles.length; i++) {
-        formData.append(acceptedFiles[i].name, acceptedFiles[i]);
+      for (const file of acceptedFiles) {
+        formData.append(file.name, file);
       }
       dispatch(uploadMedia({
         file: formData,

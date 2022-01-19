@@ -13,7 +13,7 @@ const initialState: MediaStore = {
   isRequesting: false,
 };
 
-export default function mediaReducer (
+export default function reducer (
   state = initialState,
   action: MediaActions,
 ): MediaStore {

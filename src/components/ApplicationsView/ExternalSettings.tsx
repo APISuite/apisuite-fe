@@ -10,7 +10,6 @@ import {  useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import { TypeChip } from "components/AppTypesModal";
 import { RouterPrompt } from "components/RouterPrompt";
 import { getUserApp } from "store/applications/actions/getUserApp";
@@ -18,7 +17,7 @@ import { updateApp } from "store/applications/actions/updatedApp";
 import { AppData, AppType } from "store/applications/types";
 import { getProfile } from "store/profile/actions/getProfile";
 import { getSections } from "util/extensions";
-import { applicationsModalSelector } from "./selector";
+import { applicationsViewSelector } from "./selector";
 import { profileSelector } from "pages/Profile/selectors";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
@@ -33,10 +32,8 @@ export const ExternalSettings: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createdId, requesting, types } = useSelector(applicationsModalSelector);
+  const { app, createdId, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-  const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
-  const [buttonClicked, setButtonClicked] = React.useState("");
   const appType = useRef<AppType>(types[0]);
   const isNew = Number.isNaN(Number(appId));
 
@@ -60,45 +57,23 @@ export const ExternalSettings: React.FC = () => {
     }
   }, [dispatch, typeId, types]);
 
-  const handleCloseEditWarning = () => {
-    setOpenCloseWarning(false);
-  };
-
-  const dialogFunctions: { [index: string]: () => void } = {
-    toggleModal: () => history.push("/dashboard/apps"),
-    regularGoToSubsView: () => history.push("/dashboard/subscriptions"),
-    alternativeGoToSubsView: () => history.push("/dashboard/subscriptions", {
+  const dialogFunctions: { [index: string]: (hist: LocationHistory) => void } = {
+    toggleModal: (hist: LocationHistory) => hist.push("/dashboard/apps"),
+    regularGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions"),
+    alternativeGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions", {
       redirected: true,
-      appID: history.location.state?.appID || appId,
+      appID: hist.location.state?.appID || appId,
     }),
   };
 
-  const checkNextAction = (fn: string) => {
-    if (hasChanged()) {
-      fn !== "toggleModal" ? setButtonClicked("subs") : setButtonClicked("close");
-      
-      return setOpenCloseWarning(true);
-    }
-
-    dialogFunctions[fn]();
+  const checkNextAction = (fn: string, hist: LocationHistory) => {
+    dialogFunctions[fn](hist);
   };
 
-  const checkHistory = (history: LocationHistory) => {
+  const checkHistory = (hist: LocationHistory) => {
     history.location.state?.redirected
-      ? checkNextAction("alternativeGoToSubsView")
-      : checkNextAction("toggleModal");
-  };
-
-  const confirmButtonAction = () => {
-    if (appId || history.location.state?.redirected) {
-      dialogFunctions["alternativeGoToSubsView"]();
-    } else {
-      if (buttonClicked === "subs") {
-        dialogFunctions["regularGoToSubsView"]();
-      } else {
-        dialogFunctions["toggleModal"]();
-      }
-    }
+      ? checkNextAction("alternativeGoToSubsView", hist)
+      : checkNextAction("toggleModal", hist);
   };
 
   useEffect(() => {
@@ -113,24 +88,9 @@ export const ExternalSettings: React.FC = () => {
     }
   }, [app.id, appId, dispatch, isNew, profile]);
 
-  // Performs some basic checks on user-provided URIs
-  // const uriBasicChecks = (uri: string | number) => {
-  //   const stringURI = uri ? uri.toString() : null;
 
-  //   if (stringURI === null || stringURI.length === 0) return true;
-  //   if (stringURI.length > 0) return isValidURL(stringURI);
 
-  //   return false;
-  // };
-
-  const appSchema = yup.object().shape({
-    // directUrl: yup.string()
-    //   .test("isAppDirectURLValid", 
-    // t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
-    //     const URI = value || "";
-    //     return uriBasicChecks(URI);
-    //   }),
-  });
+  const appSchema = yup.object().shape({});
 
   const {
     control,
@@ -140,9 +100,6 @@ export const ExternalSettings: React.FC = () => {
     reset,
     setValue,
   } = useForm({
-    // defaultValues: {
-    //   directUrl: app.directUrl || "",
-    // },
     mode: "onChange",
     resolver: yupResolver(appSchema),
     reValidateMode: "onChange",
@@ -310,29 +267,6 @@ export const ExternalSettings: React.FC = () => {
             </div>
           </Container>
         </Box>
-      }
-
-      {
-        openCloseWarning &&
-        <CustomizableDialog
-          cancelButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.cancelButtonLabel")}
-          cancelButtonProps={{
-            variant: "contained",
-            color: "primary",
-          }}
-          closeDialogCallback={handleCloseEditWarning}
-          confirmButtonCallback={confirmButtonAction}
-          confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.confirmButtonLabel")}
-          confirmButtonProps={{
-            variant: "outlined",
-            color: "primary",
-          }}
-          open={openCloseWarning}
-          optionalTitleIcon="warning"
-          providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.subText")}
-          providedText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.text")}
-          providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.title")}
-        />
       }
 
       <RouterPrompt
