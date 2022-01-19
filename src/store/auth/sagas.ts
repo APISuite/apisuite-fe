@@ -67,6 +67,7 @@ import {
 import { Invitation } from "./types";
 import { submitSignUpCredentialsError, submitSignUpCredentialsSuccess, SUBMIT_SIGN_UP_CREDENTIALS } from "./actions/submitSignUpCredentials";
 import { submitSignUpOrganisationError, submitSignUpOrganisationSuccess, SUBMIT_SIGN_UP_ORGANISATION } from "./actions/submitSignUpOrganisation";
+import { getReCAPTCHAToken, ReCaptchaActions } from "util/getReCAPTCHAToken";
 
 function * loginWorker (action: LoginAction) {
   try {
@@ -131,13 +132,15 @@ function * loginUserWorker () {
 
 function * forgotPasswordSaga ({ email }: ForgotPasswordAction) {
   try {
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.forgot);
     yield call(request, {
       url: `${API_URL}/users/forgot`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      data: JSON.stringify({ email }),
+      data: JSON.stringify({ email, recaptchaToken }),
     });
 
     yield put(forgotPasswordSuccess({}));

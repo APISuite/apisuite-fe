@@ -4,6 +4,7 @@ export enum ReCaptchaActions {
   login = "login",
   password = "password",
   register = "register",
+  forgot = "forgot",
 }
 
 export async function getReCAPTCHAToken(action: ReCaptchaActions) {
