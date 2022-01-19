@@ -413,7 +413,7 @@ export default function profileReducer(
     case SWITCH_ORG: {
       return update(state, {
         profile: {
-          currentOrg: { $set: action.newOrgDetails },
+          currentOrg: { $set: action.newOrg },
         },
       });
     }

@@ -210,7 +210,7 @@ export type ResetProfileErrorsAction = {
 
 export type SwitchOrgAction = {
   type: typeof SWITCH_ORG,
-  newOrgDetails: OrganizationAndRole,
+  newOrg: OrganizationAndRole,
 }
 
 export type SwitchOrgActionSuccess = {

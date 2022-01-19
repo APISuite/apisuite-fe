@@ -1,3 +1,4 @@
+import { SelectOption } from "components/Select/types";
 import { User } from "containers/Auth/types";
 import { RequestStatus } from "util/request";
 
@@ -101,6 +102,11 @@ export type OrganizationAndRole = {
   id: string,
   name: string,
   role: Role,
+}
+
+interface SelectOrgOption extends SelectOption {
+  role: Role,
+  value: string,
 }
 
 export type FetchTeamMembersResponse = {

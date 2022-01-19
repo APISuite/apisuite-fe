@@ -14,7 +14,7 @@ import { FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse,
 import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
-import { LOCAL_STORAGE_KEYS } from "constants/global";
+import { LOCAL_STORAGE_ACTIONS, LOCAL_STORAGE_KEYS } from "constants/global";
 import { logout } from "store/auth/actions/logout";
 import { openNotification } from "store/notificationStack/actions/notification";
 import { removeTeamMemberError, removeTeamMemberSuccess, REMOVE_TEAM_MEMBER } from "./actions/removeTeamMember";
@@ -22,6 +22,7 @@ import { Store } from "store/types";
 import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOrg";
 import { UPDATE_PROFILE, updateProfileError, updateProfileSuccess } from "./actions/updateProfile";
 import request from "util/request";
+import { handleLocalStorage } from "util/localStorageActions";
 
 export function* fetchTeamMembersSaga(action: FetchTeamMembersAction) {
   try {
@@ -150,7 +151,7 @@ export function* changeRoleSaga(action: ChangeRoleAction) {
 
 export function* getProfileSaga() {
   try {
-    const profileDetails: GetProfileResponse = yield call(request, {
+    const profile: GetProfileResponse = yield call(request, {
       url: `${API_URL}/users/profile`,
       method: "GET",
       headers: {
@@ -158,10 +159,10 @@ export function* getProfileSaga() {
       },
     });
 
-    const orgInStorage = JSON.parse(localStorage.getItem("orgInStorage")!);
-    const newProfileDetails: Profile = { ...profileDetails, currentOrg: orgInStorage };
+    const storedOrg = JSON.parse(handleLocalStorage(LOCAL_STORAGE_ACTIONS.GET, LOCAL_STORAGE_KEYS.STORED_ORG)!);
+    const newProfile: Profile = { ...profile, currentOrg: storedOrg };
 
-    yield put(getProfileSuccess({ profile: newProfileDetails }));
+    yield put(getProfileSuccess({ profile: newProfile }));
   } catch (error) {
     yield put(getProfileError({ error: error.message }));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {

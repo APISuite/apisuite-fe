@@ -34,6 +34,6 @@ export interface User {
   role: Role,
 }
 
-export type OrgInStorage = {
-  orgInStorage: OrganizationAndRole,
+export type StoredOrg = {
+  storedOrg: OrganizationAndRole,
 }

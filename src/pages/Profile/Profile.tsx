@@ -7,14 +7,13 @@ import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 
-import { ROLES } from "constants/global";
+import { LOCAL_STORAGE_ACTIONS, ROLES } from "constants/global";
 import { deleteAccount } from "store/profile/actions/deleteAccount";
 import { getProfile } from "store/profile/actions/getProfile";
 import { getRoleName, getSSOAccountURLSelector, profileSelector } from "./selectors";
 import { isValidImage, isValidPhoneNumber, isValidURL } from "util/forms";
 import { logout } from "store/auth/actions/logout";
-import { OrganizationAndRole } from "store/profile/types";
-import { SelectOption } from "components/Select/types";
+import { OrganizationAndRole, SelectOrgOption } from "store/profile/types";
 import { switchOrg } from "store/profile/actions/switchOrg";
 import { updateProfile } from "store/profile/actions/updateProfile";
 import { useForm } from "util/useForm";
@@ -26,6 +25,7 @@ import Notice from "components/Notice";
 import Link from "components/Link";
 import { PageContainer } from "components/PageContainer";
 import { testIds } from "testIds";
+import { handleLocalStorage } from "util/localStorageActions";
 
 export const Profile: React.FC = () => {
   const classes = useStyles();
@@ -159,7 +159,7 @@ export const Profile: React.FC = () => {
 
   const [profileHasOrgDetails, setProfileHasOrgDetails] = useState(false);
 
-  const [currentlySelectedOrganisation, setCurrentlySelectedOrganisation] = useState<SelectOption>({
+  const [currentlySelectedOrganisation, setCurrentlySelectedOrganisation] = useState<SelectOrgOption>({
     group: "",
     label: "",
     value: "",
@@ -178,7 +178,7 @@ export const Profile: React.FC = () => {
     }));
   };
 
-  const handleOrganisationSelection = (event: React.ChangeEvent<any>, selectedOrganisation: SelectOption) => {
+  const handleOrganisationSelection = (event: React.ChangeEvent<any>, selectedOrganisation: SelectOrgOption) => {
     event.preventDefault();
 
     const newlySelectedOrganisation = {
@@ -199,15 +199,15 @@ export const Profile: React.FC = () => {
       currentlySelectedOrganisation.value &&
       currentlySelectedOrganisation.value !== profile.currentOrg.id
     ) {
-      const newOrgDetails = {
+      const newOrg = {
         id: currentlySelectedOrganisation.value,
         name: currentlySelectedOrganisation.label,
         role: currentlySelectedOrganisation.role,
       };
-      
-      localStorage.setItem("orgInStorage", JSON.stringify(newOrgDetails));
 
-      dispatch(switchOrg({newOrgDetails}));
+      handleLocalStorage(LOCAL_STORAGE_ACTIONS.SET, JSON.stringify(newOrg));
+      
+      dispatch(switchOrg({ newOrg }));
     }
   };
 
@@ -230,7 +230,7 @@ export const Profile: React.FC = () => {
 
   /* All details (i.e., user & organisation details) */
 
-  const updateProfileDetails = (event: React.ChangeEvent<any>, selectedOrganisation?: SelectOption) => {
+  const updateProfileDetails = (event: React.ChangeEvent<any>, selectedOrganisation?: SelectOrgOption) => {
     event.preventDefault();
 
     if (selectedOrganisation && selectedOrganisation.value) {
