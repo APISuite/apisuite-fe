@@ -6,7 +6,7 @@ export const getFromStorage = (key: string) => {
   return null;
 };
 
-export const setInStorage = (key: string, data: string): null => {
+export const setInStorage = (key: string, data: any): null => {
   const stringifiedData = JSON.stringify(data);
   
   localStorage.setItem(key, stringifiedData);
