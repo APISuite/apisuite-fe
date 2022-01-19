@@ -5,7 +5,7 @@ import { DefaultConfig } from "@apisuite/fe-base";
 import request from "util/request";
 import stateGenerator from "util/stateGenerator";
 import { openNotification } from "store/notificationStack/actions/notification";
-import { Profile } from "store/profile/types";
+import { OrganizationAndRole, Profile } from "store/profile/types";
 import { API_URL } from "constants/endpoints";
 import { ROLES, LOCAL_STORAGE_KEYS } from "constants/global";
 import { Store } from "store/types";
@@ -122,7 +122,7 @@ function * loginUserWorker () {
       org = profile.organizations[0];
     }
 
-    const currentOrg = {
+    const currentOrg: OrganizationAndRole = {
       id: org?.id || "",
       name: org?.name || "",
       role: {
