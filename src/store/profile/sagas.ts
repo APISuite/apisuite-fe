@@ -159,7 +159,7 @@ export function* getProfileSaga() {
       },
     });
 
-    const storedOrg = JSON.parse(getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG)!);
+    const storedOrg = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG)!;
     const newProfile: Profile = { ...profile, currentOrg: storedOrg };
 
     yield put(getProfileSuccess({ profile: newProfile }));
