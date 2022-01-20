@@ -1,7 +1,7 @@
 export const getFromStorage = (key: string) => {
   const storedData: string | null = localStorage.getItem(key);
 
-  if (storedData) return JSON.parse(storedData);
+  return storedData === null ? null : JSON.parse(storedData);
 };
 
 export const setInStorage = (key: string, data: any) => {
