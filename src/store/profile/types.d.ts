@@ -1,3 +1,4 @@
+import { SelectOption } from "components/Select/types";
 import { User } from "containers/Auth/types";
 import { RequestStatus } from "util/request";
 
@@ -65,7 +66,6 @@ export type ProfileStore = {
     getRolesRequest: RequestStatus,
     inviteMemberRequest: RequestStatus & { invited: boolean },
     removeMemberRequest: RequestStatus & { removed: boolean },
-    switchOrgRequest: RequestStatus,
     updateOrgRequest: RequestStatus,
     updateProfileRequest: RequestStatus,
   },
@@ -73,11 +73,8 @@ export type ProfileStore = {
 }
 
 export type Profile = {
-  "current_org": Organization & {
-    "member_since": string,
-    role: Role,
-  },
-  "orgs_member": Organization[],
+  currentOrg: OrganizationAndRole,
+  organizations: OrganizationAndRole[],
   ssoAccountURL: string,
   user: {
     avatar?: string,
@@ -99,6 +96,17 @@ export type Role = {
 export type Organization = {
   id: string,
   name: string,
+}
+
+export type OrganizationAndRole = {
+  id: string,
+  name: string,
+  role: Role,
+}
+
+interface SelectOrgOption extends SelectOption {
+  role: Role,
+  value: string,
 }
 
 export type FetchTeamMembersResponse = {

@@ -82,14 +82,14 @@ export const GeneralSettings: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!profile.current_org.id) {
+    if (!profile.currentOrg.id) {
       dispatch(getProfile({}));
     }
   });
 
   useEffect(() => {
-    if (!isNew && profile.current_org.id && (app.id === 0 || app.id !== Number(appId))) {
-      dispatch(getUserApp({ orgID: profile.current_org.id, appId: Number(appId) }));
+    if (!isNew && profile.currentOrg.id && (app.id === 0 || app.id !== Number(appId))) {
+      dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
     }
   }, [app.id, appId, dispatch, isNew, profile]);
 
@@ -144,7 +144,7 @@ export const GeneralSettings: React.FC = () => {
       ...getValues(),
     };
 
-    dispatch(createApp({ orgID: profile.current_org.id, appData: newAppDetails, appType: Number(appType) }));
+    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails, appType: Number(appType) }));
   };
 
   // Updating an app
@@ -157,7 +157,7 @@ export const GeneralSettings: React.FC = () => {
       ...getValues(),
     };
 
-    dispatch(updateApp({ orgID: profile.current_org.id, appData: updatedAppDetails }));
+    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
   };
 
   const updateAppType = (type: AppType) => {
@@ -167,7 +167,7 @@ export const GeneralSettings: React.FC = () => {
       appTypeId: type.id,
     };
 
-    dispatch(updateApp({ orgID: profile.current_org.id, appData: updatedAppDetails }));
+    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
   };
 
   // Deleting an app
@@ -179,7 +179,7 @@ export const GeneralSettings: React.FC = () => {
   };
 
   const _deleteApp = () => {
-    dispatch(deleteApp({ orgID: profile.current_org.id, appId: Number(appId) }));
+    dispatch(deleteApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
 
     openDeleteDialog(false);
     history.push("/dashboard/apps");

@@ -81,7 +81,7 @@ export const MediaFilesLinks: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!profile.current_org.id) {
+    if (!profile.currentOrg.id) {
       dispatch(getProfile({}));
     }
   });
@@ -89,8 +89,8 @@ export const MediaFilesLinks: React.FC = () => {
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
-    if (!isNew && profile.current_org.id && (app.id === 0 || app.id !== Number(appId))) {
-      dispatch(getUserApp({ orgID: profile.current_org.id, appId: Number(appId) }));
+    if (!isNew && profile.currentOrg.id && (app.id === 0 || app.id !== Number(appId))) {
+      dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
     }
   }, [app, appId, dispatch, isNew, profile]);
 
@@ -243,7 +243,7 @@ export const MediaFilesLinks: React.FC = () => {
       ...getValues(),
     };
 
-    dispatch(updateApp({ orgID: profile.current_org.id, appData: updatedAppDetails }));
+    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
   };
 
   const updateAppType = (type: AppType) => {
@@ -253,7 +253,7 @@ export const MediaFilesLinks: React.FC = () => {
       appTypeId: type.id,
     };
 
-    dispatch(updateApp({ orgID: profile.current_org.id, appData: updatedAppDetails }));
+    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
   };
 
   const uploadMedia = (files: File[]) => {
@@ -263,7 +263,7 @@ export const MediaFilesLinks: React.FC = () => {
     }
 
     dispatch(uploadAppMedia({
-      orgID: profile.current_org.id,
+      orgID: profile.currentOrg.id,
       appId: app.id,
       media: formData,
     }));
@@ -271,7 +271,7 @@ export const MediaFilesLinks: React.FC = () => {
 
   const deleteMedia = (file: string) => {
     dispatch(deleteAppMedia({
-      orgID: profile.current_org.id,
+      orgID: profile.currentOrg.id,
       appId: app.id,
       media: file,
     }));
