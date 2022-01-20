@@ -9,7 +9,7 @@ export const applicationsSelector = createSelector(
     return {
       allUserApps: applications.userApps,
       createUserAppStatus: applications.createAppStatus,
-      currentOrganisation: profile.profile.current_org,
+      currentOrganisation: profile.profile.currentOrg,
       deleteUserAppStatus: applications.deleteAppStatus,
       org: profile.org,
       updateUserAppStatus: applications.updateAppStatus,
