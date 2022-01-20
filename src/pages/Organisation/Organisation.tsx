@@ -27,9 +27,9 @@ export const Organisation: React.FC = () => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
     if (auth.user?.role.name !== ROLES.baseUser.value) {
-      dispatch(fetchOrg({ org_id: profile.current_org.id }));
+      dispatch(fetchOrg({ org_id: profile.currentOrg.id }));
     }
-  }, [auth, dispatch, profile.current_org.id]);
+  }, [auth, dispatch, profile.currentOrg.id]);
 
   /*
   Organisation details

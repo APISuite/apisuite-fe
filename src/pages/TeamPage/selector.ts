@@ -6,7 +6,7 @@ export const teamPageSelector = createSelector(
   ({ auth }: Store) => auth,
   (profile, auth) => {
     return {
-      currentOrganisation: profile.profile.current_org,
+      currentOrganisation: profile.profile.currentOrg,
       members: profile.members,
       requestStatuses: profile.requestStatuses,
       roleOptions: profile.roleOptions,

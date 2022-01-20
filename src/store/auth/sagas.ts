@@ -5,7 +5,7 @@ import { DefaultConfig } from "@apisuite/fe-base";
 import request from "util/request";
 import stateGenerator from "util/stateGenerator";
 import { openNotification } from "store/notificationStack/actions/notification";
-import { Profile } from "store/profile/types";
+import { OrganizationAndRole, Profile } from "store/profile/types";
 import { API_URL } from "constants/endpoints";
 import { ROLES, LOCAL_STORAGE_KEYS } from "constants/global";
 import { Store } from "store/types";
@@ -67,6 +67,7 @@ import {
 import { Invitation } from "./types";
 import { submitSignUpCredentialsError, submitSignUpCredentialsSuccess, SUBMIT_SIGN_UP_CREDENTIALS } from "./actions/submitSignUpCredentials";
 import { submitSignUpOrganisationError, submitSignUpOrganisationSuccess, SUBMIT_SIGN_UP_ORGANISATION } from "./actions/submitSignUpOrganisation";
+import { getFromStorage, removeFromStorage, setInStorage } from "util/localStorageActions";
 import { getReCAPTCHAToken, ReCaptchaActions } from "util/getReCAPTCHAToken";
 
 function * loginWorker (action: LoginAction) {
@@ -106,7 +107,35 @@ function * loginUserWorker () {
     const user = profile.user;
     const userId = user.id;
     const userName = user.name.split(" ");
-    const currentOrg = profile.current_org;
+
+    const currentUser = getFromStorage(LOCAL_STORAGE_KEYS.CURRENT_USER);
+
+    if (!currentUser) {
+      setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
+    } else if (currentUser !== userId) {
+      removeFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
+
+      setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
+    }
+
+    const storedOrg = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
+
+    let org = storedOrg;
+
+    if (!org && profile.organizations.length) {
+      org = profile.organizations[0];
+    }
+
+    const currentOrg: OrganizationAndRole = {
+      id: org?.id || "",
+      name: org?.name || "",
+      role: {
+        id: org?.role?.id || "",
+        name: org?.role?.name || ROLES.baseUser.value,
+      },
+    };
+
+    setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, currentOrg);
 
     // TODO: better types for this response
     const settings: { navigation: DefaultConfig["navigation"] } = yield call(request, {
@@ -114,7 +143,7 @@ function * loginUserWorker () {
       method: "GET",
     });
 
-    const path = settings?.navigation[currentOrg?.role?.name || "baseUser"]?.events.afterLogin ?? "/";
+    const path = settings?.navigation[currentOrg?.role?.name || ROLES.baseUser.value]?.events.afterLogin ?? "/";
 
     yield put(loginUserSuccess({
       path,

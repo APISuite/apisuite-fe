@@ -106,8 +106,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
-    if (modalDetails.userAppID && modalDetails.userID && profile.current_org.id) {
-      dispatch(getUserApp({ orgID: profile.current_org.id, appId: modalDetails.userAppID }));
+    if (modalDetails.userAppID && modalDetails.userID && profile.currentOrg.id) {
+      dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: modalDetails.userAppID }));
     }
   }, [dispatch, modalDetails, modalMode, profile]);
 
@@ -442,7 +442,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = mapAppDetails();
 
-    dispatch(createApp({ orgID: profile.current_org.id, appData: newAppDetails }));
+    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
 
     toggleModal();
   };
@@ -457,7 +457,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       ...mapAppDetails(),
     };
 
-    dispatch(updateApp({ orgID: profile.current_org.id, appData: updatedAppDetails }));
+    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
 
     toggleModal();
   };
@@ -475,7 +475,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   const _deleteApp = () => {
-    dispatch(deleteApp({ orgID: profile.current_org.id, appId: modalDetails.userAppID }));
+    dispatch(deleteApp({ orgID: profile.currentOrg.id, appId: modalDetails.userAppID }));
 
     handleCloseDialog();
 
@@ -493,7 +493,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     }
 
     dispatch(uploadAppMedia({
-      orgID: profile.current_org.id,
+      orgID: profile.currentOrg.id,
       appId: mostRecentlySelectedAppDetails.id,
       media: formData,
     }));
@@ -501,7 +501,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const deleteMedia = (file: string) => {
     dispatch(deleteAppMedia({
-      orgID: profile.current_org.id,
+      orgID: profile.currentOrg.id,
       appId: mostRecentlySelectedAppDetails.id,
       media: file,
     }));

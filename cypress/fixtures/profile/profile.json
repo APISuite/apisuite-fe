@@ -9,7 +9,7 @@
     "last_login": "2021-05-06T10:40:40.702Z",
     "oidcProvider": null
   },
-  "orgs_member": [
+  "organizations": [
     {
       "id": 1,
       "name": "ACME"
