@@ -32,8 +32,6 @@ import {
   AcceptInvitationAction,
   RejectInvitationAction,
   ValidateInvitationTokenAction,
-  SubmitSignUpOrganisation,
-  SubmitSignUpCredentials,
   InvitationSignInAction,
   InvitationSignUpAction,
 } from "./actions/types";
@@ -66,8 +64,6 @@ import {
 } from "./actions/invitation";
 
 import { Invitation } from "./types";
-import { submitSignUpCredentialsError, submitSignUpCredentialsSuccess, SUBMIT_SIGN_UP_CREDENTIALS } from "./actions/submitSignUpCredentials";
-import { submitSignUpOrganisationError, submitSignUpOrganisationSuccess, SUBMIT_SIGN_UP_ORGANISATION } from "./actions/submitSignUpOrganisation";
 import { getFromStorage, removeFromStorage, setInStorage } from "util/localStorageActions";
 import { getReCAPTCHAToken, ReCaptchaActions } from "util/getReCAPTCHAToken";
 
@@ -299,51 +295,6 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
   }
 }
 
-// FIXME: dead code
-export function * submitSignUpCredentialsSaga ({ details }: SubmitSignUpCredentials) {
-  try {
-    const { token }: { token: string } = yield call(request, {
-      url: `${API_URL}/registration/user`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({
-        name: details.name,
-        email: details.email,
-      }),
-    });
-
-    yield put(submitSignUpCredentialsSuccess({ token, signUpName: details.name, signUpEmail: details.email }));
-  } catch (error) {
-    yield put(submitSignUpCredentialsError({ error: error.message }));
-  }
-}
-
-// FIXME: dead code
-export function * submitSignUpOrganisationSaga ({ details }: SubmitSignUpOrganisation) {
-  try {
-    const registrationToken: string = yield select((state: Store) => state.auth.registrationToken);
-
-    yield call(request, {
-      url: `${API_URL}/registration/organization`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({
-        name: details.orgName,
-        website: details.website,
-        registrationToken,
-      }),
-    });
-
-    yield put(submitSignUpOrganisationSuccess({ signUpOrgName: details.orgName, signUpOrgWebsite: details.website }));
-  } catch (error) {
-    yield put(submitSignUpOrganisationError({ error: error.message }));
-  }
-}
-
 export function * submitSignUpDetailsSaga ({ user, organization }: SubmitSignUpDetails) {
   try {
     // request ReCaptcha token - this might trigger a visual challenge to the user
@@ -570,8 +521,6 @@ export function * rootSaga () {
   yield takeLatest(SSO_LOGIN, ssoLoginWorker);
   yield takeLatest(SSO_PROVIDERS, getProviders);
   yield takeLatest(SSO_TOKEN_EXCHANGE, ssoTokenExchangeWorker);
-  yield takeLatest(SUBMIT_SIGN_UP_CREDENTIALS, submitSignUpCredentialsSaga);
-  yield takeLatest(SUBMIT_SIGN_UP_ORGANISATION, submitSignUpOrganisationSaga);
   yield takeLatest(SUBMIT_SIGN_UP_DETAILS, submitSignUpDetailsSaga);
   yield takeLatest(VALIDATE_REGISTRATION_TOKEN, validateRegisterTokenSaga);
   yield takeLatest(ACCEPT_INVITATION, acceptInvitationSaga);

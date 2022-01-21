@@ -99,23 +99,16 @@
     "ssoSignInPleaseHoldMessage": "Please hold..."
   },
   "signUpForm": {
-    "nextStepButtonLabel": "Next",
-    "previousStepButtonLabel": "Back",
-    "lastStepButtonLabel": "Finish",
     "fieldLabels": {
       "profileName": "Profile name",
       "profileEmail": "E-mail",
       "orgName": "Organisation name (optional)",
-      "orgWebsite": "Organisation website (optional)",
       "password": "Password"
     },
     "warnings": {
       "email": "Please provide a valid e-mail address.",
-      "emailInUse": "The provided e-mail address is already in use.",
       "invalidInvitation": "The invitation is not valid, or has expired.",
-      "invalidWebsite": "Please provide a valid website for your organisation.",
       "organisationName": "Please enter the name of your organisation.",
-      "organisationNeeded": "The provided website needs an organisation to be associated to.",
       "password": "Your password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol.",
       "profileName": "Please enter your name."
     },

@@ -244,45 +244,6 @@ export type SubmitSignUpDetailsError = {
   type: typeof SUBMIT_SIGN_UP_DETAILS_ERROR,
 }
 
-export type SubmitSignUpCredentials = {
-  type: typeof SUBMIT_SIGN_UP_CREDENTIALS,
-  details: {
-    email: string,
-    name: string,
-  },
-}
-
-export type SubmitSignUpCredentialsSuccess = {
-  type: typeof SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS,
-  token: string,
-  signUpName: string,
-  signUpEmail: string,
-}
-
-export type SubmitSignUpCredentialsError = {
-  type: typeof SUBMIT_SIGN_UP_CREDENTIALS_ERROR,
-  error: string,
-}
-
-export type SubmitSignUpOrganisation = {
-  type: typeof SUBMIT_SIGN_UP_ORGANISATION,
-  details: {
-    orgName?: string,
-    website?: string,
-  },
-}
-
-export type SubmitSignUpOrganisationSuccess = {
-  type: typeof SUBMIT_SIGN_UP_ORGANISATION_SUCCESS,
-  signUpOrgName?: string,
-  signUpOrgWebsite?: string,
-}
-
-export type SubmitSignUpOrganisationError = {
-  type: typeof SUBMIT_SIGN_UP_ORGANISATION_ERROR,
-  error: string,
-}
-
 export type ValidateRegistrationTokenAction = {
   type: typeof VALIDATE_REGISTRATION_TOKEN,
   token: string,

@@ -1,19 +1,11 @@
 import React, { useCallback, useState } from "react";
-// import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import update from "immutability-helper";
 import { Box, Button, CircularProgress, IconButton, InputAdornment, TextField, TextFieldProps, Trans, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { notEmpty, isValidEmail, isValidPass } from "util/forms";
-
-// FIXME: dead code
-// import StepsProgress from "components/StepsProgress";
-// import { signUpFormSelector } from "./selector";
-// import { submitSignUpCredentials } from "store/auth/actions/submitSignUpCredentials";
-// import { submitSignUpOrganisation } from "store/auth/actions/submitSignUpOrganisation";
 import { submitSignUpDetails } from "store/auth/actions/submitSignUpDetails";
-
 import Link from "components/Link";
 import { signUpFormSelector } from "./selector";
 
@@ -61,8 +53,6 @@ export const SignUpForm: React.FC = () => {
             errors: {
               email: {
                 $set: isValidEmail(target.value) ? "" : t("signUpForm.warnings.email"),
-                // TODO: remove translation
-                // ? t('signUpForm.warnings.emailInUse')
               },
             },
           });
@@ -96,56 +86,6 @@ export const SignUpForm: React.FC = () => {
       }));
     }
   }, [dispatch, state.data, state.errors]);
-
-  // FIXME: dead code
-  // const steps = {
-  //   1: t("signUpForm.steps.profileDetails"),
-  //   2: t("signUpForm.steps.organisationDetails"),
-  //   3: t("signUpForm.steps.securityDetails"),
-  // };
-
-  // const signUpFormStep = (fromStep: number) => {
-  //   switch (fromStep) {
-  //     case 1:
-  //       return (
-  //         <ProfileDetailsForm
-  //           key='profileDetailsForm'
-  //           next={nextStep}
-  //           back={prevStep}
-  //           error={submittedStep.current === 1 && signUpError ? signUpError : ""}
-  //         />
-  //       );
-
-  //     case 2:
-  //       return (
-  //         <OrganisationDetailsForm
-  //           key='organisationDetailsForm'
-  //           next={nextStep}
-  //           back={prevStep}
-  //           error={submittedStep.current === 2 && signUpError ? signUpError : ""}
-  //         />
-  //       );
-
-  //     case 3:
-  //       return (
-  //         <SecurityDetailsForm
-  //           key='securityDetailsForm'
-  //           next={nextStep}
-  //           back={prevStep}
-  //           error={submittedStep.current === 3 && signUpError ? signUpError : ""}
-  //         />
-  //       );
-
-  //     default: {
-  //       return (
-  //         <Redirect
-  //           key='redirectToAccountConfirmation'
-  //           to={`/confirmation/${confirmationName.current}`}
-  //         />
-  //       );
-  //     }
-  //   }
-  // };
 
   return (
     <Box>
@@ -213,7 +153,6 @@ export const SignUpForm: React.FC = () => {
             endAdornment:
               <InputAdornment position='end'>
                 <IconButton
-                  aria-label={t("signUpForm.togglePasswordVisibilityARIALabel")}
                   edge='end'
                   onClick={() => setShowPassword(!showPassword)}
                 >
