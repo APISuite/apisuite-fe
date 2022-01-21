@@ -8,6 +8,7 @@ import { openNotification } from "store/notificationStack/actions/notification";
 import { OrganizationAndRole, Profile } from "store/profile/types";
 import { API_URL } from "constants/endpoints";
 import { ROLES, LOCAL_STORAGE_KEYS } from "constants/global";
+import { history } from "store";
 import { Store } from "store/types";
 import { LOGIN, loginError, loginSuccess, loginUserError, loginUserSuccess, LOGIN_SUCCESS, LOGIN_USER } from "./actions/login";
 import { EXPIRED_SESSION } from "./actions/expiredSession";
@@ -298,6 +299,7 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
   }
 }
 
+// FIXME: dead code
 export function * submitSignUpCredentialsSaga ({ details }: SubmitSignUpCredentials) {
   try {
     const { token }: { token: string } = yield call(request, {
@@ -318,6 +320,7 @@ export function * submitSignUpCredentialsSaga ({ details }: SubmitSignUpCredenti
   }
 }
 
+// FIXME: dead code
 export function * submitSignUpOrganisationSaga ({ details }: SubmitSignUpOrganisation) {
   try {
     const registrationToken: string = yield select((state: Store) => state.auth.registrationToken);
@@ -341,25 +344,33 @@ export function * submitSignUpOrganisationSaga ({ details }: SubmitSignUpOrganis
   }
 }
 
-export function * submitSignUpDetailsSaga ({ details }: SubmitSignUpDetails) {
+export function * submitSignUpDetailsSaga ({ user, organization }: SubmitSignUpDetails) {
   try {
-    const registrationToken: string = yield select((state: Store) => state.auth.registrationToken);
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.register);
 
     yield call(request, {
-      url: `${API_URL}/registration/security`,
+      url: `${API_URL}/registration`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       data: JSON.stringify({
-        password: details.password,
-        registrationToken,
+        user,
+        organization: organization.length ? organization : undefined,
+        recaptchaToken,
       }),
     });
 
+    // move the user to confirmation
+    history.push(`/confirmation/${user.name}`);
     yield put(submitSignUpDetailsSuccess({}));
-  } catch (error) {
-    yield put(submitSignUpDetailsError({ error: error.message }));
+  } catch (error: any) {
+    if (error.message) {
+      yield put(openNotification("error", error.message, 4000));
+    }
+
+    yield put(submitSignUpDetailsError({}));
   }
 }
 

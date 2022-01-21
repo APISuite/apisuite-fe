@@ -228,9 +228,12 @@ export type ConfirmRegistrationActionError = {
 
 export type SubmitSignUpDetails = {
   type: typeof SUBMIT_SIGN_UP_DETAILS,
-  details: {
+  user: {
+    name: string,
+    email: string,
     password: string,
   },
+  organization: string,
 }
 
 export type SubmitSignUpDetailsSuccess = {
@@ -239,7 +242,6 @@ export type SubmitSignUpDetailsSuccess = {
 
 export type SubmitSignUpDetailsError = {
   type: typeof SUBMIT_SIGN_UP_DETAILS_ERROR,
-  error: string,
 }
 
 export type SubmitSignUpCredentials = {
