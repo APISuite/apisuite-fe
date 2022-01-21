@@ -8,6 +8,7 @@ import { notEmpty, isValidEmail, isValidPass } from "util/forms";
 import { submitSignUpDetails } from "store/auth/actions/submitSignUpDetails";
 import Link from "components/Link";
 import { signUpFormSelector } from "./selector";
+import { ReCaptchaPrivacyCopy } from "components/ReCaptchaPrivacyCopy";
 
 export const SignUpForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ export const SignUpForm: React.FC = () => {
 
   const handleSubmit = useCallback(() => {
     // only dispatch the action if the errors are not empty
-    if (!Object.entries(state.errors).some((v) => v[1].length)) {
+    if (!Object.values(state.errors).some(Boolean)) {
       dispatch(submitSignUpDetails({
         user: {
           name: state.data.name,
@@ -165,30 +166,7 @@ export const SignUpForm: React.FC = () => {
       </Box>
 
       <Box pt={5}>
-        <Typography
-          variant="caption"
-          align="center"
-          color="textSecondary"
-        >
-          <Trans i18nKey="reCaptcha.terms">
-            {[
-              <Link
-                key="reCaptcha.privacy"
-                to="https://policies.google.com/privacy"
-                rel='noopener noreferrer'
-                target='_blank'
-                style={{ color: palette.info.main }}
-              />,
-              <Link
-                key="reCaptcha.terms"
-                to="https://policies.google.com/terms"
-                rel='noopener noreferrer'
-                target='_blank'
-                style={{ color: palette.info.main }}
-              />,
-            ]}
-          </Trans>
-        </Typography>
+        <ReCaptchaPrivacyCopy />
       </Box>
 
       <Box mt={1.5}>
@@ -199,7 +177,7 @@ export const SignUpForm: React.FC = () => {
           disableElevation
           fullWidth
           onClick={handleSubmit}
-          disabled={isSignUpWorking || Object.entries(state.errors).some((v) => v[1].length)}
+          disabled={isSignUpWorking || Object.values(state.errors).some(Boolean)}
           endIcon={isSignUpWorking && <CircularProgress color="inherit" size={25} />}
         >
           {t("signInOrUpView.options.signUp")}
