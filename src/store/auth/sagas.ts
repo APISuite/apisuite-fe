@@ -89,7 +89,8 @@ function * loginWorker (action: LoginAction) {
     });
 
     yield put(loginSuccess({}));
-  } catch (error) {
+  } catch (error: any) {
+    yield put(openNotification("error", error.message, 5000));
     yield put(loginError({ error: error.message }));
   }
 }
@@ -268,6 +269,7 @@ function * ssoLoginWorker ({ provider }: SSOLoginAction) {
 
     window.location.href = response.url;
   } catch (error) {
+    yield put(openNotification("error", error.message, 5000));
     yield put(loginError({ error: error.message }));
   }
 }
@@ -291,6 +293,7 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
     // FIXME: move to middleware
     // window.location.href = "/auth";
   } catch (error) {
+    yield put(openNotification("error", error.message, 5000));
     yield put(loginError({ error: error.message }));
   }
 }
