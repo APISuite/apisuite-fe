@@ -11,6 +11,7 @@ import { securitySelector } from "./selector";
 import { getProfile } from "store/profile/actions/getProfile";
 import { PageContainer } from "components/PageContainer";
 import Notice from "components/Notice";
+import { ReCaptchaPrivacyCopy } from "components/ReCaptchaPrivacyCopy";
 
 export const Security: React.FC = () => {
   const [t] = useTranslation();
@@ -202,6 +203,10 @@ export const Security: React.FC = () => {
               >
                 {t("profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel")}
               </Button>
+
+              <Box mt={1.5}>
+                <ReCaptchaPrivacyCopy />
+              </Box>
             </>
           )}
         </Grid>
