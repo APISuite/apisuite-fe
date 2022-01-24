@@ -720,4 +720,21 @@ export default makeStyles((theme) => ({
   loading: {
     color: theme.palette.secondary.main,
   },
+
+  // 'Blueprint' app type styles
+
+  selectedAuthType: {
+    alignItems: "center",
+    color: theme.palette.info.main,
+    display: "flex",
+    marginRight: theme.spacing(3),
+  },
+
+  authType: {
+    alignItems: "center",
+    color: theme.palette.text.primary,
+    cursor: "pointer",
+    display: "flex",
+    marginRight: theme.spacing(3),
+  },
 }));

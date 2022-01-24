@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { SideNavForm } from "components/SideNavForm";
 import {
+  BlueprintConnectorSettings,
+  BlueprintGeneralSettings,
   ClientAccess,
   CustomProperties,
   ExternalSettings,
@@ -34,7 +36,8 @@ export const AppView: React.FC = () => {
 
   const isNew = Number.isNaN(Number(appId));
   const type = types.find((tp) => tp.id === Number(typeId));
-  const ROUTES = [
+
+  let ROUTES = [
     {
       component: GeneralSettings,
       label: t("applications.tabs.general"),
@@ -74,6 +77,22 @@ export const AppView: React.FC = () => {
     route: `/dashboard/apps/${appId}/type/${typeId}/expert`,
   };
 
+  const BLUEPRINT = [
+    {
+      component: BlueprintGeneralSettings,
+      label: t("applications.tabs.blueprintGeneral"),
+      path: "/dashboard/apps/:appId/type/:typeId/general",
+      route: `/dashboard/apps/${appId}/type/${typeId}/general`,
+    },
+    {
+      component: BlueprintConnectorSettings,
+      disabled: isNew,
+      label: t("applications.tabs.blueprintConnector"),
+      path: "/dashboard/apps/:appId/type/:typeId/connector",
+      route: `/dashboard/apps/${appId}/type/${typeId}/connector`,
+    },
+  ];
+
   if (type && type.type) {
     const appType = type.type;
     if (appType === AppTypes.CLIENT || appType === AppTypes.EXTERNAL || appType === AppTypes.EXPERT) {
@@ -84,6 +103,9 @@ export const AppView: React.FC = () => {
     }
     if (active && appType === AppTypes.EXPERT) {
       ROUTES.push(EXPERT);
+    }
+    if (appType === AppTypes.BLUEPRINT) {
+      ROUTES = BLUEPRINT;
     }
   }
 

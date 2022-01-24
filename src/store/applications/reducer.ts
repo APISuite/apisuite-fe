@@ -11,6 +11,8 @@ import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./actions/upda
 import { UPLOAD_APP_MEDIA_SUCCESS } from "./actions/appMediaUpload";
 import { DELETE_APP_MEDIA_SUCCESS } from "./actions/deleteAppMedia";
 import { GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./actions/getAppTypes";
+import { CHECK_BLUEPRINT_AUTH_ACTION, CHECK_BLUEPRINT_AUTH_ACTION_SUCCESS, CHECK_BLUEPRINT_AUTH_ACTION_ERROR } from "./actions/checkBlueprintAuth";
+import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS } from "./actions/toggleBlueprintAppStatus";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -68,6 +70,38 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
   },
   userApps: [],
+
+  // Blueprint apps
+  allBlueprintApps: [],
+  currentBlueprintAppData: {
+    auth_type: "",
+    api_method: "",
+    api_url: "",
+    app_conf: {
+      auth_url: "",
+      clt_id: "",
+      clt_secret: "",
+      conn_auth_type: "",
+      redirect_url: "",
+      scope: "",
+      token_url: "",
+      token: "",
+    },
+    app_method: "",
+    app_name: "",
+    app_url: "",
+    polling_interval: "",
+  },
+  isActive: false,
+  checkBlueprintAuthStatus: {
+    isChecked: false,
+    isError: false,
+    isRequesting: false,
+  },
+  toggleBlueprintAppStatus: {
+    isError: false,
+    isRequesting: false,
+  },
 };
 
 /** Reducer */
@@ -76,6 +110,67 @@ export default function reducer (
   action: ApplicationsActions,
 ): ApplicationsStore {
   switch (action.type) {
+    case CHECK_BLUEPRINT_AUTH_ACTION: {
+      return update(state, {
+        checkBlueprintAuthStatus: {
+          isChecked: { $set: false },
+          isError: { $set: false },
+          isRequesting: { $set: true },
+        },
+
+        // TODO: Store the data, so it doesn't get lost after requesting success/error.
+        currentBlueprintAppData: { $set: action.currentBlueprintAppData },
+      });
+    }
+
+    case CHECK_BLUEPRINT_AUTH_ACTION_SUCCESS: {
+      return update(state, {
+        checkBlueprintAuthStatus: {
+          isChecked: { $set: true },
+          isRequesting: { $set: false },
+        },
+      });
+    }
+
+    case CHECK_BLUEPRINT_AUTH_ACTION_ERROR: {
+      return update(state, {
+        checkBlueprintAuthStatus: {
+          isChecked: { $set: true },
+          isError: { $set: true },
+          isRequesting: { $set: false },
+        },
+      });
+    }
+
+    case TOGGLE_BLUEPRINT_APP_STATUS_ACTION: {
+      return update(state, {
+        toggleBlueprintAppStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: true },
+        },
+      });
+    }
+
+    case TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS: {
+      return update(state, {
+        isActive: { $set: true },
+
+        toggleBlueprintAppStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: false },
+        },
+      });
+    }
+
+    case TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR: {
+      return update(state, {
+        toggleBlueprintAppStatus: {
+          isError: { $set: true },
+          isRequesting: { $set: false },
+        },
+      });
+    }
+
     case CREATE_APP: {
       return update(state, {
         createAppStatus: {

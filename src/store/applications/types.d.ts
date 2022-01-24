@@ -15,6 +15,11 @@ export interface ApplicationsStore {
   types: AppType[],
   updateAppStatus: Response,
   userApps: AppData[],
+  allBlueprintApps: AllBlueprintAppData[],
+  currentBlueprintAppData: CurrentBlueprintAppData,
+  checkBlueprintAuthStatus: Response & { isChecked: boolean },
+  isActive: boolean,
+  toggleBlueprintAppStatus: Response,
 }
 
 export interface AppData {
@@ -54,6 +59,56 @@ export interface Metadata {
   description: string,
 }
 
+export interface AllBlueprintAppData {
+  id: 0,
+  userId: 0,
+  orgId: 0,
+  app_name: string,
+  appUrl: string,
+  appMethod: string,
+  authType: string,
+  appConfig: {
+    cltId: string,
+    scope: string,
+    auhtUrl: string,
+    tokenUrl: string,
+    cltSecret: string,
+    redirectUrl: string,
+    connAuthType: string,
+  },
+  apiUrl: string,
+  apiMethod: string,
+  apiconfig: Record<string, unknown>,
+  pollingInterval: 0,
+  fieldsRaw: [
+    string
+  ],
+  fieldMapping: Record<string, unknown>,
+  token: string,
+  workerId: string,
+  workerStatus: string,
+}
+
+export interface CurrentBlueprintAppData {
+  // TODO: Included this field by request of D. To be removed later.
+  auth_type: string,
+  api_method: string,
+  api_url: string,
+  app_conf: {
+    auth_url: string,
+    clt_id: string,
+    clt_secret: string,
+    conn_auth_type: string,
+    redirect_url: string,
+    scope: string,
+    token_url: string,
+    token: string,
+  },
+  app_method: string,
+  app_name: string,
+  app_url: string,
+  polling_interval: string,
+}
 export interface ModalDetails {
   userAppID: number,
   userID: number,
@@ -112,4 +167,9 @@ export interface UpdateAppActionData {
 export interface AppType {
   id: number,
   type: string,
+}
+
+export interface ToggleBlueprintAppStatusData {
+  name: string,
+  command: "start" | "stop",
 }

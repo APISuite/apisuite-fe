@@ -5,7 +5,7 @@ import qs from "qs";
 
 import { AppData, AppType } from "./types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
-import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
+import { CheckBlueprintAuthAction, CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetUserAppAction, MapFieldsAction, RequestAPIAccessAction, ToggleBlueprintAppStatusAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS, getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess } from "./actions/getAllUserApps";
 import { GET_USER_APP, getUserAppError, getUserAppSuccess } from "./actions/getUserApp";
@@ -20,6 +20,9 @@ import { uploadAppMediaError, uploadAppMediaSuccess, UPLOAD_APP_MEDIA } from "./
 import { deleteAppMediaError, deleteAppMediaSuccess, DELETE_APP_MEDIA } from "./actions/deleteAppMedia";
 import { UploadResponse } from "./actions/types";
 import { getAppTypesError, getAppTypesSuccess, GET_APP_TYPES } from "./actions/getAppTypes";
+import { checkBlueprintAuthActionError, checkBlueprintAuthActionSuccess, CHECK_BLUEPRINT_AUTH_ACTION } from "./actions/checkBlueprintAuth";
+import { toggleBlueprintAppStatusActionError, toggleBlueprintAppStatusActionSuccess, TOGGLE_BLUEPRINT_APP_STATUS_ACTION } from "./actions/toggleBlueprintAppStatus";
+import { mapFieldsActionSuccess, mapFieldsActionError, MAP_FIELDS_ACTION } from "./actions/mapFields";
 
 export function* createAppActionSaga(action: CreateAppAction) {
   try {
@@ -355,6 +358,78 @@ export function* getAppTypesActionSaga() {
   }
 }
 
+export function* checkBlueprintAuthActionSaga(action: CheckBlueprintAuthAction) {
+  try {
+    // TODO: URL should not be hardcoded, I believe
+    const checkBlueprintAuthUrl = "https://appconnector.proxy.apisuite.io/apps/";
+
+    // TODO: Improve response type
+    const response: unknown = yield call(request, {
+      url: checkBlueprintAuthUrl,
+      method: "POST",
+      data: action.currentBlueprintAppData,
+    });
+
+    console.log("response:", response);
+
+    yield put(checkBlueprintAuthActionSuccess({ currentBlueprintAppData: action.currentBlueprintAppData }));
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(checkBlueprintAuthActionError({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
+
+export function* mapFieldsActionSaga(action: MapFieldsAction) {
+  try {
+    // TODO: URL should not be hardcoded, I believe
+    const mapFieldsUrl = "https://appconnector.proxy.apisuite.io/apps/fieldmapping";
+
+    const response: unknown = yield call(request, {
+      url: mapFieldsUrl,
+      method: "POST",
+      data: action.mappedFields,
+    });
+
+    console.log("response", response);
+
+    // TODO: Do this once it is clear what is included in the response
+    yield put(mapFieldsActionSuccess({}));
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(mapFieldsActionError({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
+
+export function* toggleBlueprintAppStatusActionSaga(action: ToggleBlueprintAppStatusAction) {
+  try {
+    // TODO: URL should not be hardcoded, I believe
+    const toggleBlueprintAppStatusUrl = "https://appconnector.proxy.apisuite.io/apps/worker";
+
+    yield call(request, {
+      url: toggleBlueprintAppStatusUrl,
+      method: "POST",
+      data: action.toggleBlueprintAppStatusData,
+    });
+
+    // TODO: Do not use "start" for the sake of comparison - use a constant
+    yield put(toggleBlueprintAppStatusActionSuccess({ isActive: action.toggleBlueprintAppStatusData.command === "start" }));
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(toggleBlueprintAppStatusActionError({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
 
 function* rootSaga() {
   yield takeLatest(CREATE_APP, createAppActionSaga);
@@ -366,6 +441,9 @@ function* rootSaga() {
   yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
   yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
   yield takeLatest(GET_APP_TYPES, getAppTypesActionSaga);
+  yield takeLatest(CHECK_BLUEPRINT_AUTH_ACTION, checkBlueprintAuthActionSaga);
+  yield takeLatest(MAP_FIELDS_ACTION, mapFieldsActionSaga);
+  yield takeLatest(TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionSaga);
 }
 
 export default rootSaga;

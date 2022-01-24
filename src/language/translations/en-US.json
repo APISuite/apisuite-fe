@@ -371,9 +371,36 @@
         "subSectionLabelFive": "Additional information",
         "subSectionLabelFour": "The client credentials for <0>OAuth2 secured API access</0>.",
         "subSectionLabelOne": "General information",
+        "altSubSectionLabelOne": "App information",
+        "connectorSettingsSectionTitle": "Connector settings",
+        "connectorSettingsSectionSubtitle": "Edit the field mappings for the connection between this app and the selected API Product.",
+        "connectorSettingsSubSectionTitle": "Field mappings",
+        "appFieldsTitle": "App fields",
+        "apiProdFieldsTitle": "API Product fields",
+        "appStatusTitle": "App Active Status",
+        "appStatusSubtitle": "Either set your app to be up and running, or inactivate it. ",
+        "activeApp": "App is active!",
+        "inactiveApp": "App is inactive.",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
         "subSectionLabelThree": "Access details",
         "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us.",
+        "blueprintApp": {
+          "apiProdURLFieldLabel": "API Product URL",
+          "apiProdMethodFieldLabel": "API Product Method",
+          "authTypeTitle": "Authentication type",
+          "methodFieldLabel": "App Method",
+          "urlFieldLabel": "App URL",
+          "authURLFieldLabel": "Authentication URL",
+          "clientIDFieldLabel": "Client ID",
+          "clientSecretFieldLabel": "Client secret",
+          "oauthLabel": "OAuth",
+          "redirectURLFieldLabel": "Redirect URL",
+          "scopeFieldLabel": "Scope",
+          "tokenLabel": "Token",
+          "tokenIDFieldLabel": "Token ID",
+          "tokenURLFieldLabel": "Token URL",
+          "pollingIntervalFieldLabel": "Polling interval"
+        },
         "customProps": {
           "addCustomPropsButtonLabel": "Add new property",
           "cancel": "Cancel",
@@ -703,6 +730,9 @@
       "next": "Next",
       "removeApp": "Remove app",
       "registerApp": "Register App",
+      "saveChanges": "Save changes",
+      "submitApp": "Submit application",
+      "editConnectorSettings": "Edit Connector settings",
       "subToAPI": "Subscribe to API",
       "update": "Update"
     },
@@ -716,6 +746,8 @@
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access.",
     "tabs": {
+      "blueprintGeneral": "General Settings",
+      "blueprintConnector": "Connector Settings",
       "client": "Client Access Details",
       "expert": "Custom Properties",
       "external": "External Settings",
@@ -759,6 +791,10 @@
   "appTypes": {
     "modal": {
       "cancel": "Cancel",
+      "blueprintApp": {
+        "description": "Create an app that allows you to leverage our App Connector.",
+        "label": "Blueprint Application"
+      },
       "clientApp": {
         "description": "Create a default client app for API access with OAuth2.0 credentials.",
         "label": "Client Application"

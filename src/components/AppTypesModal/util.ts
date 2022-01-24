@@ -1,7 +1,13 @@
 import { AppTypes, AppTypesTab } from "pages/AppView/types";
 import { AppType } from "store/applications/types";
 
-const TABS = [AppTypesTab.GENERAL, AppTypesTab.MEDIA, AppTypesTab.CLIENT, AppTypesTab.EXTERNAL, AppTypesTab.EXPERT];
+const TABS = [
+  AppTypesTab.GENERAL,
+  AppTypesTab.MEDIA,
+  AppTypesTab.CLIENT,
+  AppTypesTab.EXTERNAL,
+  AppTypesTab.EXPERT,
+];
 
 export const getNextType = (type: AppType, current: AppTypesTab) => {
   const appType = type.type;
