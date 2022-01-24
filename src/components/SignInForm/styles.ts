@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   inputFieldContainer: {
-    marginBottom: "25px",
     marginTop: "25px",
   },
 

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   useConfig, useTheme, useTranslation, Box, Grid, Icon, IconButton,
-  InputAdornment, TextField, TextFieldProps, Trans, Typography,
+  InputAdornment, TextField, TextFieldProps, Trans, Typography, CircularProgress, Button,
 } from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
-import FormCard from "components/FormCard";
 import Link from "components/Link";
 import { Logo } from "components/Logo";
 import Notice from "components/Notice";
@@ -19,6 +18,7 @@ import keyIllustration from "assets/keyIllustration.svg";
 
 import { passwordRecoverySelector } from "./selector";
 import useStyles from "./styles";
+import { ReCaptchaPrivacyCopy } from "components/ReCaptchaPrivacyCopy";
 
 export const PasswordRecovery: React.FC = () => {
   const SIGN_IN = "/auth/signin";
@@ -157,69 +157,74 @@ export const PasswordRecovery: React.FC = () => {
                   <Grid item md />
 
                   <Grid item md={10}>
-                    <FormCard
-                      buttonDisabled={!!state.error.length}
-                      buttonLabel={
-                        stage === "forgot"
-                          ? t("passwordRecovery.formButtonLabel.forgot")
-                          : t("passwordRecovery.formButtonLabel.recover")
-                      }
-                      handleSubmit={handleSubmission}
-                      loading={auth.isRecoveringPassword}
-                    >
-                      <Box mb={4}>
-                        {
-                          stage === "forgot"
-                            ? (
-                              <TextField
-                                id='emailField'
-                                variant='outlined'
-                                margin='dense'
-                                label={t("passwordRecovery.emailLabel")}
-                                type='email'
-                                name='email'
-                                value={state.userInput}
-                                placeholder=''
-                                error={!!state.error.length}
-                                helperText={state.error}
-                                autoFocus
-                                fullWidth
-                                InputProps={{ classes: { input: classes.inputField } }}
-                                onChange={handleUserInput}
-                              />
-                            )
-                            : (
-                              <TextField
-                                id='passwordField'
-                                label={t("passwordRecovery.newPasswordLabel")}
-                                variant='outlined'
-                                margin='dense'
-                                name='password'
-                                type={showPassword ? "text" : "password"}
-                                value={state.userInput}
-                                error={!!state.error.length}
-                                helperText={state.error}
-                                autoFocus
-                                fullWidth
-                                InputProps={{
-                                  classes: { input: classes.inputField },
-                                  endAdornment:
-                                    <InputAdornment position='end'>
-                                      <IconButton
-                                        aria-label={t("passwordRecovery.togglePasswordVisibilityARIALabel")}
-                                        edge='end'
-                                        onClick={(event) => handleShowPassword(event)}
-                                      >
-                                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                                      </IconButton>
-                                    </InputAdornment>,
-                                }}
-                                onChange={handleUserInput}
-                              />
-                            )
-                        }
-                      </Box>
-                    </FormCard>
+                    <Box mb={4}>
+                      {stage === "forgot" ? (
+                        <TextField
+                          id='emailField'
+                          variant='outlined'
+                          margin='dense'
+                          label={t("passwordRecovery.emailLabel")}
+                          type='email'
+                          name='email'
+                          value={state.userInput}
+                          placeholder=''
+                          error={!!state.error.length}
+                          helperText={state.error}
+                          autoFocus
+                          fullWidth
+                          InputProps={{ classes: { input: classes.inputField } }}
+                          onChange={handleUserInput}
+                        />
+                      ) : (
+                        <TextField
+                          id='passwordField'
+                          label={t("passwordRecovery.newPasswordLabel")}
+                          variant='outlined'
+                          margin='dense'
+                          name='password'
+                          type={showPassword ? "text" : "password"}
+                          value={state.userInput}
+                          error={!!state.error.length}
+                          helperText={state.error}
+                          autoFocus
+                          fullWidth
+                          InputProps={{
+                            classes: { input: classes.inputField },
+                            endAdornment:
+                              <InputAdornment position='end'>
+                                <IconButton
+                                  aria-label={t("passwordRecovery.togglePasswordVisibilityARIALabel")}
+                                  edge='end'
+                                  onClick={(event) => handleShowPassword(event)}
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>,
+                          }}
+                          onChange={handleUserInput}
+                        />
+                      )}
+                    </Box>
+
+                    <Box pt={5}>
+                      <ReCaptchaPrivacyCopy />
+                    </Box>
+
+                    <Box mt={1.5}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        disableElevation
+                        fullWidth
+                        onClick={handleSubmission}
+                        disabled={auth.isRecoveringPassword || !!state.error.length || !state.userInput.length}
+                        endIcon={auth.isRecoveringPassword && <CircularProgress color="inherit" size={25} />}
+                      >
+                        {stage === "forgot" ? t("passwordRecovery.formButtonLabel.forgot")
+                          : t("passwordRecovery.formButtonLabel.recover")}
+                      </Button>
+                    </Box>
                   </Grid>
                 </Grid>
               )

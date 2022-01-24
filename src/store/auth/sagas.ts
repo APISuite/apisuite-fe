@@ -8,6 +8,7 @@ import { openNotification } from "store/notificationStack/actions/notification";
 import { OrganizationAndRole, Profile } from "store/profile/types";
 import { API_URL } from "constants/endpoints";
 import { ROLES, LOCAL_STORAGE_KEYS } from "constants/global";
+import { history } from "store";
 import { Store } from "store/types";
 import { LOGIN, loginError, loginSuccess, loginUserError, loginUserSuccess, LOGIN_SUCCESS, LOGIN_USER } from "./actions/login";
 import { EXPIRED_SESSION } from "./actions/expiredSession";
@@ -31,8 +32,6 @@ import {
   AcceptInvitationAction,
   RejectInvitationAction,
   ValidateInvitationTokenAction,
-  SubmitSignUpOrganisation,
-  SubmitSignUpCredentials,
   InvitationSignInAction,
   InvitationSignUpAction,
 } from "./actions/types";
@@ -65,17 +64,19 @@ import {
 } from "./actions/invitation";
 
 import { Invitation } from "./types";
-import { submitSignUpCredentialsError, submitSignUpCredentialsSuccess, SUBMIT_SIGN_UP_CREDENTIALS } from "./actions/submitSignUpCredentials";
-import { submitSignUpOrganisationError, submitSignUpOrganisationSuccess, SUBMIT_SIGN_UP_ORGANISATION } from "./actions/submitSignUpOrganisation";
 import { getFromStorage, removeFromStorage, setInStorage } from "util/localStorageActions";
+import { getReCAPTCHAToken, ReCaptchaActions } from "util/getReCAPTCHAToken";
 
 function * loginWorker (action: LoginAction) {
   try {
     const loginUrl = `${API_URL}/auth/login`;
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.login);
 
     const data = {
       email: action.email,
       password: action.password,
+      recaptchaToken,
     };
 
     yield call(request, {
@@ -88,7 +89,8 @@ function * loginWorker (action: LoginAction) {
     });
 
     yield put(loginSuccess({}));
-  } catch (error) {
+  } catch (error: any) {
+    yield put(openNotification("error", error.message, 5000));
     yield put(loginError({ error: error.message }));
   }
 }
@@ -105,7 +107,7 @@ function * loginUserWorker () {
     const userName = user.name.split(" ");
 
     const currentUser = getFromStorage(LOCAL_STORAGE_KEYS.CURRENT_USER);
-    
+
     if (!currentUser) {
       setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
     } else if (currentUser !== userId) {
@@ -130,7 +132,7 @@ function * loginUserWorker () {
         name: org?.role?.name || ROLES.baseUser.value,
       },
     };
-   
+
     setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, currentOrg);
 
     // TODO: better types for this response
@@ -160,13 +162,15 @@ function * loginUserWorker () {
 
 function * forgotPasswordSaga ({ email }: ForgotPasswordAction) {
   try {
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.forgot);
     yield call(request, {
       url: `${API_URL}/users/forgot`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      data: JSON.stringify({ email }),
+      data: JSON.stringify({ email, recaptchaToken }),
     });
 
     yield put(forgotPasswordSuccess({}));
@@ -265,6 +269,7 @@ function * ssoLoginWorker ({ provider }: SSOLoginAction) {
 
     window.location.href = response.url;
   } catch (error) {
+    yield put(openNotification("error", error.message, 5000));
     yield put(loginError({ error: error.message }));
   }
 }
@@ -288,72 +293,38 @@ function * ssoTokenExchangeWorker ({ code, provider }: SSOTokenExchangeAction) {
     // FIXME: move to middleware
     // window.location.href = "/auth";
   } catch (error) {
+    yield put(openNotification("error", error.message, 5000));
     yield put(loginError({ error: error.message }));
   }
 }
 
-export function * submitSignUpCredentialsSaga ({ details }: SubmitSignUpCredentials) {
+export function * submitSignUpDetailsSaga ({ user, organization }: SubmitSignUpDetails) {
   try {
-    const { token }: { token: string } = yield call(request, {
-      url: `${API_URL}/registration/user`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({
-        name: details.name,
-        email: details.email,
-      }),
-    });
-
-    yield put(submitSignUpCredentialsSuccess({ token, signUpName: details.name, signUpEmail: details.email }));
-  } catch (error) {
-    yield put(submitSignUpCredentialsError({ error: error.message }));
-  }
-}
-
-export function * submitSignUpOrganisationSaga ({ details }: SubmitSignUpOrganisation) {
-  try {
-    const registrationToken: string = yield select((state: Store) => state.auth.registrationToken);
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.register);
 
     yield call(request, {
-      url: `${API_URL}/registration/organization`,
+      url: `${API_URL}/registration`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       data: JSON.stringify({
-        name: details.orgName,
-        website: details.website,
-        registrationToken,
+        user,
+        organization: organization.length ? organization : undefined,
+        recaptchaToken,
       }),
     });
 
-    yield put(submitSignUpOrganisationSuccess({ signUpOrgName: details.orgName, signUpOrgWebsite: details.website }));
-  } catch (error) {
-    yield put(submitSignUpOrganisationError({ error: error.message }));
-  }
-}
-
-export function * submitSignUpDetailsSaga ({ details }: SubmitSignUpDetails) {
-  try {
-    const registrationToken: string = yield select((state: Store) => state.auth.registrationToken);
-
-    yield call(request, {
-      url: `${API_URL}/registration/security`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({
-        password: details.password,
-        registrationToken,
-      }),
-    });
-
+    // move the user to confirmation
+    history.push(`/confirmation/${user.name}`);
     yield put(submitSignUpDetailsSuccess({}));
-  } catch (error) {
-    yield put(submitSignUpDetailsError({ error: error.message }));
+  } catch (error: any) {
+    if (error.message) {
+      yield put(openNotification("error", error.message, 4000));
+    }
+
+    yield put(submitSignUpDetailsError({}));
   }
 }
 
@@ -497,6 +468,8 @@ export function * validateInvitationTokenSaga ({ token }: ValidateInvitationToke
 export function * invitationSignInSaga ({ token, email, password }: InvitationSignInAction) {
   try {
     const loginUrl = `${API_URL}/auth/login`;
+    // request ReCaptcha token - this might trigger a visual challenge to the user
+    const recaptchaToken: string = yield call(getReCAPTCHAToken, ReCaptchaActions.login);
 
     yield call(request, {
       url: loginUrl,
@@ -504,7 +477,7 @@ export function * invitationSignInSaga ({ token, email, password }: InvitationSi
       headers: {
         "content-type": "application/x-www-form-urlencoded",
       },
-      data: qs.stringify({ email, password }),
+      data: qs.stringify({ email, password, recaptchaToken }),
     });
 
     yield call(request, {
@@ -551,8 +524,6 @@ export function * rootSaga () {
   yield takeLatest(SSO_LOGIN, ssoLoginWorker);
   yield takeLatest(SSO_PROVIDERS, getProviders);
   yield takeLatest(SSO_TOKEN_EXCHANGE, ssoTokenExchangeWorker);
-  yield takeLatest(SUBMIT_SIGN_UP_CREDENTIALS, submitSignUpCredentialsSaga);
-  yield takeLatest(SUBMIT_SIGN_UP_ORGANISATION, submitSignUpOrganisationSaga);
   yield takeLatest(SUBMIT_SIGN_UP_DETAILS, submitSignUpDetailsSaga);
   yield takeLatest(VALIDATE_REGISTRATION_TOKEN, validateRegisterTokenSaga);
   yield takeLatest(ACCEPT_INVITATION, acceptInvitationSaga);

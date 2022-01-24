@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import update from "immutability-helper";
-import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps, Typography, Box, useTheme } from "@apisuite/fe-base";
+import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps, Typography, Box, useTheme, Button, CircularProgress } from "@apisuite/fe-base";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-import FormCard from "components/FormCard";
 import { isValidEmail } from "util/forms";
 import SSOForm from "components/SSOForm";
 
@@ -15,6 +14,7 @@ import { ssoProviders } from "store/auth/actions/ssoProviders";
 import { login } from "store/auth/actions/login";
 import { testIds } from "testIds";
 import Link from "components/Link";
+import { ReCaptchaPrivacyCopy } from "components/ReCaptchaPrivacyCopy";
 
 export const SignInForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,6 @@ export const SignInForm: React.FC = () => {
       password: "",
     },
   });
-  const [formInputsHaveChanged, setFormInputsHaveChanged] = useState(false);
 
   const handleInputChanges: TextFieldProps["onChange"] = ({ target }) => {
     setFormInputs((s) => {
@@ -70,8 +69,6 @@ export const SignInForm: React.FC = () => {
     event.preventDefault();
 
     dispatch(login({ email: formInputs.email, password: formInputs.password }));
-
-    setFormInputsHaveChanged(false);
   }, [formInputs.email, formInputs.password, dispatch]);
 
   // 'Show password' logic
@@ -119,60 +116,42 @@ export const SignInForm: React.FC = () => {
         </>
       }
 
-      <FormCard
-        buttonDisabled={Object.values(formInputs.errors).some(Boolean)}
-        buttonLabel={t("signInForm.regularSignInButtonLabel")}
-        customDisabledConfirmButtonStyles={classes.disabledConfirmButton}
-        customEnabledConfirmButtonStyles={classes.enabledConfirmButton}
-        /* We pass an error message to the 'FormCard' component if an authentication error is detected,
-        and as long as a) the previously submitted inputs are not changed, and b) the 'E-mail' or
-        'Password' input fields are not empty. */
-        error={
-          auth.error &&
-            !formInputsHaveChanged &&
-            (formInputs.email !== "" || formInputs.password !== "")
-            ? auth.error
-            : undefined
-        }
-        handleSubmit={handleFormSubmission}
-        loading={auth.isAuthorizing}
-      >
-        <div className={classes.inputFieldContainer}>
-          <TextField
-            data-test-id={testIds.signInEmail}
-            id='emailField'
-            variant='outlined'
-            margin='dense'
-            type='email'
-            name='email'
-            label={t("signInForm.fieldLabels.email")}
-            placeholder=''
-            value={formInputs.email}
-            error={!!formInputs.errors.email.length}
-            helperText={formInputs.errors.email}
-            autoFocus
-            fullWidth
-            InputProps={{ classes: { input: classes.inputField } }}
-            onChange={handleInputChanges}
-          />
-        </div>
+      <div className={classes.inputFieldContainer}>
+        <TextField
+          data-test-id={testIds.signInEmail}
+          id='emailField'
+          variant='outlined'
+          margin='dense'
+          type='email'
+          name='email'
+          label={t("signInForm.fieldLabels.email")}
+          placeholder=''
+          value={formInputs.email}
+          error={!!formInputs.errors.email.length}
+          helperText={formInputs.errors.email}
+          autoFocus
+          fullWidth
+          InputProps={{ classes: { input: classes.inputField } }}
+          onChange={handleInputChanges}
+        />
+      </div>
 
-        <div className={classes.inputFieldContainer}>
-          <TextField
-            data-test-id={testIds.signInPwd}
-            id='passwordField'
-            variant='outlined'
-            margin='dense'
-            type={showPassword ? "text" : "password"}
-            name='password'
-            label={t("signInForm.fieldLabels.password")}
-            value={formInputs.password}
-            error={!!formInputs.errors.password.length}
-            helperText={formInputs.errors.password}
-            fullWidth
-            InputProps={{
-              classes: { input: classes.inputField },
-              endAdornment:
+      <div className={classes.inputFieldContainer}>
+        <TextField
+          data-test-id={testIds.signInPwd}
+          id='passwordField'
+          variant='outlined'
+          margin='dense'
+          type={showPassword ? "text" : "password"}
+          name='password'
+          label={t("signInForm.fieldLabels.password")}
+          value={formInputs.password}
+          error={!!formInputs.errors.password.length}
+          helperText={formInputs.errors.password}
+          fullWidth
+          InputProps={{
+            classes: { input: classes.inputField },
+            endAdornment:
                 <InputAdornment position='end'>
                   <IconButton
                     aria-label={t("signInForm.togglePasswordVisibilityARIALabel")}
@@ -182,11 +161,29 @@ export const SignInForm: React.FC = () => {
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>,
-            }}
-            onChange={handleInputChanges}
-          />
-        </div>
-      </FormCard>
+          }}
+          onChange={handleInputChanges}
+        />
+      </div>
+
+      <Box pt={5}>
+        <ReCaptchaPrivacyCopy />
+      </Box>
+
+      <Box mt={1.5}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          disableElevation
+          fullWidth
+          onClick={handleFormSubmission}
+          disabled={auth.isAuthorizing || Object.values(formInputs.errors).some(Boolean)}
+          endIcon={auth.isAuthorizing && <CircularProgress color="inherit" size={25} />}
+        >
+          {t("signInForm.regularSignInButtonLabel")}
+        </Button>
+      </Box>
 
       <Box
         py={3}

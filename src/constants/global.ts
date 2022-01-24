@@ -57,3 +57,6 @@ export enum Filter {
   sandbox = "sandbox",
   docs = "docs"
 }
+
+export const RE_CAPTCHA_API_KEY = process.env.RE_CAPTCHA_API_KEY || "";
+export const RE_CAPTCHA_SRC = `https://www.google.com/recaptcha/api.js?render=${RE_CAPTCHA_API_KEY}`;
