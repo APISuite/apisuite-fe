@@ -113,7 +113,7 @@ export const SignUpForm: React.FC = () => {
           variant='outlined'
           margin='dense'
           type='text'
-          name='name'
+          name='organization'
           label={t("signUpForm.fieldLabels.orgName")}
           value={state.data.organization}
           fullWidth
