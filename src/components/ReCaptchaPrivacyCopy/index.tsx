@@ -1,0 +1,1 @@
+export { ReCaptchaPrivacyCopy } from "./ReCaptchaPrivacyCopy";

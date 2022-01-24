@@ -99,23 +99,16 @@
     "ssoSignInPleaseHoldMessage": "Please hold..."
   },
   "signUpForm": {
-    "nextStepButtonLabel": "Next",
-    "previousStepButtonLabel": "Back",
-    "lastStepButtonLabel": "Finish",
     "fieldLabels": {
       "profileName": "Profile name",
       "profileEmail": "E-mail",
       "orgName": "Organisation name (optional)",
-      "orgWebsite": "Organisation website (optional)",
       "password": "Password"
     },
     "warnings": {
       "email": "Please provide a valid e-mail address.",
-      "emailInUse": "The provided e-mail address is already in use.",
       "invalidInvitation": "The invitation is not valid, or has expired.",
-      "invalidWebsite": "Please provide a valid website for your organisation.",
       "organisationName": "Please enter the name of your organisation.",
-      "organisationNeeded": "The provided website needs an organisation to be associated to.",
       "password": "Your password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol.",
       "profileName": "Please enter your name."
     },
@@ -125,7 +118,7 @@
       "securityDetails": "Security details"
     },
     "togglePasswordVisibilityARIALabel": "Toggle password visibility",
-    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy<0/>."
+    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy</0>."
   },
   "signUpConfirmation": {
     "titleText": "Thank you for joining us, ",
@@ -734,5 +727,8 @@
   },
   "pages": {
     "default": "# No content\n\nThis page has no content. You can create content for it by using the \"pages\" API.\n\nTo add the content you'll need to set the following parameters:\n\n- id: the page name that will appear in the url you are trying to access (i.e. `documentation`)\n- content: the markdown content to show\n- locale (optional): the language the document is in (default is `en-US`)\n\n:::info\n*Make sure your request is authenticated with correct authorised cookie.*\n\n:::\n\n```shell\ncurl -X POST \\\\\n-H \"Accept: application/json\" \\\\\n-H \"Content-Type: application/json\" \\\\\n-d '{ \"id\": \"documentation\", \"locale\": \"en-US\", \"content\": \"# Documentation\\n\\nThis is a documentation page\" }' \\\\\nhttps://apisuite/pages\n```\n\n#### Notes\n\nSide navigation is only shown for the level 2 header (i.e. `h2`, `##`)\n"
+  },
+  "reCaptcha": {
+    "terms": "This site is protected by reCAPTCHA and the Google <0>Privacy Policy</0> and <1>Terms of Service</1> apply."
   }
 }
