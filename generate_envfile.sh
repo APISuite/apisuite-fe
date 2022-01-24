@@ -10,9 +10,10 @@ set -e
 # Email       : delio@cloudoki.com
 ###################################################################
 
-  echo "ENV=dev
+echo "
 CLOUD=false
 API_URL=${API_URL}
+RE_CAPTCHA_API_KEY=${RE_CAPTCHA_API_KEY}
 MARKETPLACE_API_URL=${MARKETPLACE_API_URL}
 BILLING_API_URL=${BILLING_API_URL}
 SUPPORT_URL=${SUPPORT_URL_DEV}" > .env

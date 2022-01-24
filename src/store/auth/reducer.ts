@@ -16,8 +16,6 @@ import {
   INVITATION_SIGN_IN_ERROR,
   VALIDATE_INVITATION_TOKEN_ERROR,
 } from "./actions/invitation";
-import { SUBMIT_SIGN_UP_CREDENTIALS, SUBMIT_SIGN_UP_CREDENTIALS_ERROR, SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS } from "./actions/submitSignUpCredentials";
-import { SUBMIT_SIGN_UP_ORGANISATION, SUBMIT_SIGN_UP_ORGANISATION_ERROR, SUBMIT_SIGN_UP_ORGANISATION_SUCCESS } from "./actions/submitSignUpOrganisation";
 import { SUBMIT_SIGN_UP_DETAILS, SUBMIT_SIGN_UP_DETAILS_ERROR, SUBMIT_SIGN_UP_DETAILS_SUCCESS } from "./actions/submitSignUpDetails";
 import { CLEAR_SIGN_UP_DETAILS_ACTION } from "./actions/clearSignUpDetails";
 
@@ -116,45 +114,15 @@ const reducer: Reducer<AuthStore, AuthActions> = (state = initialState, action) 
       });
     }
 
-    case SUBMIT_SIGN_UP_CREDENTIALS_ERROR:
-    case SUBMIT_SIGN_UP_ORGANISATION_ERROR:
-    case SUBMIT_SIGN_UP_DETAILS_ERROR: {
-      return update(state, {
-        signUpError: { $set: action.error },
-        isSignUpWorking: { $set: false },
-      });
-    }
-
-    case SUBMIT_SIGN_UP_CREDENTIALS:
-    case SUBMIT_SIGN_UP_ORGANISATION:
     case SUBMIT_SIGN_UP_DETAILS: {
       return update(state, {
         isSignUpWorking: { $set: true },
       });
     }
 
-    case SUBMIT_SIGN_UP_CREDENTIALS_SUCCESS: {
+    case SUBMIT_SIGN_UP_DETAILS_SUCCESS:
+    case SUBMIT_SIGN_UP_DETAILS_ERROR: {
       return update(state, {
-        registrationToken: { $set: action.token },
-        signUpName: { $set: action.signUpName },
-        signUpEmail: { $set: action.signUpEmail },
-        signUpError: { $set: undefined },
-        isSignUpWorking: { $set: false },
-      });
-    }
-
-    case SUBMIT_SIGN_UP_ORGANISATION_SUCCESS: {
-      return update(state, {
-        signUpOrgName: { $set: action.signUpOrgName },
-        signUpOrgWebsite: { $set: action.signUpOrgWebsite },
-        signUpError: { $set: undefined },
-        isSignUpWorking: { $set: false },
-      });
-    }
-
-    case SUBMIT_SIGN_UP_DETAILS_SUCCESS: {
-      return update(state, {
-        signUpError: { $set: undefined },
         isSignUpWorking: { $set: false },
       });
     }

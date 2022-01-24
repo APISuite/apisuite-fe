@@ -8,13 +8,20 @@ import useStyles from "./styles";
 import CookiesBanner from "components/CookiesBanner";
 import { authSelector } from "./selector";
 import { loginUser } from "store/auth/actions/login";
-import { DESTINATION_PATH } from "constants/global";
+import { DESTINATION_PATH, RE_CAPTCHA_SRC } from "constants/global";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { pathname, search } = useLocation();
   const auth = useSelector(authSelector);
+
+  useEffect(() => {
+    // Load reCaptcha script
+    const script = document.createElement("script");
+    script.src = RE_CAPTCHA_SRC;
+    document.body.appendChild(script);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
