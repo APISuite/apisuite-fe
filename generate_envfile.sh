@@ -11,6 +11,7 @@ set -e
 ###################################################################
 
 echo "
+ENV=dev
 CLOUD=false
 API_URL=${API_URL}
 RE_CAPTCHA_API_KEY=${RE_CAPTCHA_API_KEY}
