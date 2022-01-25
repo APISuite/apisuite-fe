@@ -1,53 +1,49 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import {
-  Box, Button, CircularProgress, Container, Grid, Icon,
-  Typography, useTheme, useTranslation,
-} from "@apisuite/fe-base";
-import clsx from "clsx";
+import { Box, Button, CircularProgress, Container, Grid, useTheme, useTranslation } from "@apisuite/fe-base";
 import {  useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { TypeChip } from "components/AppTypesModal";
 import { RouterPrompt } from "components/RouterPrompt";
+import { getNextType, getPreviousType } from "components/AppTypesModal/util";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
-import { AppData, AppType } from "store/applications/types";
+import { AppType } from "store/applications/types";
 import { getProfile } from "store/profile/actions/getProfile";
+import { getAppTypes } from "store/applications/actions/getAppTypes";
+import { AppTypesTab } from "pages/AppView/types";
+import { profileSelector } from "pages/Profile/selectors";
 import { getSections } from "util/extensions";
 import { applicationsViewSelector } from "./selector";
-import { profileSelector } from "pages/Profile/selectors";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
-import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { AppTypesTab } from "pages/AppView/types";
+import { AppHeader, handleNext, handlePrevious, checkHistory } from "./util";
 
 export const ExternalSettings: React.FC = () => {
   const classes = useStyles();
   const { appId, typeId } = useParams<{ appId: string; typeId: string  }>();
-  const { palette, spacing } = useTheme();
+  const { spacing } = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createdId, requesting, types } = useSelector(applicationsViewSelector);
+  const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const appType = useRef<AppType>(types[0]);
   const isNew = Number.isNaN(Number(appId));
 
   useEffect(() => {
-    if (isNew && createdId !== -1) {
-      history.push(`/dashboard/apps/${createdId}/type/${typeId}/${AppTypesTab.GENERAL}`);
+    if (isNew && createAppStatus.id !== -1) {
+      history.push(`/dashboard/apps/${createAppStatus.id}/type/${typeId}/${AppTypesTab.GENERAL}`);
     }
     if (isNew) {
       history.push(`/dashboard/apps/new/type/${typeId}/${AppTypesTab.GENERAL}`);
     }
-    if (!isNew && app.appType.id !== Number(typeId) && app.id !== -1 && app.appType.id !== 0) {
-      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.EXPERT}`);
+    if (!isNew && app.id === Number(appId) && app.appType.id !== 0 && app.appType.id !== Number(typeId)) {
+      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
     }
-  }, [app.id, app.appType.id, appId, createdId, history, isNew, typeId]);
+  }, [app.id, app.appType.id, appId, createAppStatus, history, isNew, typeId]);
 
   useEffect(() => {
     if (!types.length) {
@@ -56,25 +52,6 @@ export const ExternalSettings: React.FC = () => {
       appType.current = types.find((tp) => tp.id.toString() === typeId) as AppType;
     }
   }, [dispatch, typeId, types]);
-
-  const dialogFunctions: { [index: string]: (hist: LocationHistory) => void } = {
-    toggleModal: (hist: LocationHistory) => hist.push("/dashboard/apps"),
-    regularGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions"),
-    alternativeGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions", {
-      redirected: true,
-      appID: hist.location.state?.appID || appId,
-    }),
-  };
-
-  const checkNextAction = (fn: string, hist: LocationHistory) => {
-    dialogFunctions[fn](hist);
-  };
-
-  const checkHistory = (hist: LocationHistory) => {
-    history.location.state?.redirected
-      ? checkNextAction("alternativeGoToSubsView", hist)
-      : checkNextAction("toggleModal", hist);
-  };
 
   useEffect(() => {
     if (!profile.currentOrg.id) {
@@ -87,8 +64,6 @@ export const ExternalSettings: React.FC = () => {
       dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
     }
   }, [app.id, appId, dispatch, isNew, profile]);
-
-
 
   const appSchema = yup.object().shape({});
 
@@ -138,16 +113,6 @@ export const ExternalSettings: React.FC = () => {
     return (isValid || Object.keys(errors).length === 0) && isDirty;
   };
 
-  const handleNext = (application: AppData) => {
-    const next = getNextType(application.appType, AppTypesTab.EXTERNAL);
-    history.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${next}`);
-  };
-
-  const handlePrevious = (application: AppData) => {
-    const prev = getPreviousType(application.appType, AppTypesTab.EXTERNAL);
-    history.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${prev}`);
-  };
-
   return (
     <>
       {
@@ -158,43 +123,7 @@ export const ExternalSettings: React.FC = () => {
       {
         !requesting && <Box clone>
           <Container maxWidth="lg">
-            <div className={classes.editApplicationHeaderContainer}>
-              <Box py={3}>
-                <Typography display="block" gutterBottom variant="h2">
-                  {app.name}
-                </Typography>
-                <TypeChip color="primary" editable={!isNew} onTypeSelected={updateAppType} type={appType.current} />
-              </Box>
-
-              <div className={classes.editApplicationHeaderStatusContainer}>
-                <Box display="flex">
-                  {/* A mere dot */}
-                  <Box
-                    className={
-                      clsx(
-                        classes.subscribedClientApplicationCardStatusIcon,
-                        !app.subscriptions.length &&
-                        classes.draftClientApplicationCardStatusIcon,
-                      )
-                    }
-                    pb={1.5}
-                    pr={1}
-                  >
-                    <Icon fontSize="small">circle</Icon>
-                  </Box>
-
-                  <Box clone pb={1.5}>
-                    <Typography style={{ color: palette.text.secondary }} variant="body2">
-                      {
-                        app.subscriptions.length === 0
-                          ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
-                          : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
-                      }
-                    </Typography>
-                  </Box>
-                </Box>
-              </div>
-            </div>
+            <AppHeader app={app} appType={appType} isNew={isNew} updateAppType={updateAppType} />
 
             <Grid container spacing={3}>
               <Grid item md={12}>
@@ -217,6 +146,8 @@ export const ExternalSettings: React.FC = () => {
               </Grid>
             </Grid>
 
+            <hr className={classes.regularSectionSeparator} />
+
             {/* 'App action' buttons section */}
             <div className={classes.buttonsContainer}>
               <div>
@@ -234,7 +165,7 @@ export const ExternalSettings: React.FC = () => {
                   !!getNextType(app.appType, AppTypesTab.EXTERNAL) && <Button
                     color="primary"
                     disableElevation
-                    onClick={() => handleNext(app)}
+                    onClick={() => handleNext(app, AppTypesTab.EXTERNAL, history)}
                     size="large"
                     style={{ margin: spacing(0, 0, 0, 3) }}
                     variant="contained"
@@ -246,7 +177,7 @@ export const ExternalSettings: React.FC = () => {
                   !!getPreviousType(app.appType, AppTypesTab.EXTERNAL) && <Button
                     color="secondary"
                     disableElevation
-                    onClick={() => handlePrevious(app)}
+                    onClick={() => handlePrevious(app, AppTypesTab.EXTERNAL, history)}
                     size="large"
                     style={{ margin: spacing(0, 0, 0, 3) }}
                     variant="outlined"
@@ -258,7 +189,7 @@ export const ExternalSettings: React.FC = () => {
 
               <Button
                 className={classes.otherButtons}
-                onClick={() => checkHistory(history)}
+                onClick={() => checkHistory(history, appId)}
                 color="primary"
                 variant="outlined"
               >

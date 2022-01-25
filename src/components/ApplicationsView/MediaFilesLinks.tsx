@@ -5,29 +5,27 @@ import {
   Box, Button, CircularProgress, Container, Fade, Grid, Icon,
   Menu, MenuItem, TextField, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
-import clsx from "clsx";
 import {  useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { MediaUpload } from "components/MediaUpload";
-import { TypeChip } from "components/AppTypesModal";
 import { RouterPrompt } from "components/RouterPrompt";
+import { getNextType, getPreviousType } from "components/AppTypesModal/util";
+import { profileSelector } from "pages/Profile/selectors";
+import { AppTypesTab } from "pages/AppView/types";
 import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
-import { AppData } from "store/applications/types";
 import { AppType } from "store/applications/types";
+import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getProfile } from "store/profile/actions/getProfile";
 import { isValidURL } from "util/forms";
 import { applicationsViewSelector } from "./selector";
-import { profileSelector } from "pages/Profile/selectors";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
-import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { AppTypesTab } from "pages/AppView/types";
+import { AppHeader, handleNext, handlePrevious, checkHistory } from "./util";
 
 export const MediaFilesLinks: React.FC = () => {
   const classes = useStyles();
@@ -36,22 +34,22 @@ export const MediaFilesLinks: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createdId, requesting, types } = useSelector(applicationsViewSelector);
+  const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const appType = useRef<AppType>(types[0]);
   const isNew = Number.isNaN(Number(appId));
 
   useEffect(() => {
-    if (isNew && createdId !== -1) {
-      history.push(`/dashboard/apps/${createdId}/type/${typeId}/${AppTypesTab.GENERAL}`);
+    if (isNew && createAppStatus.id !== -1) {
+      history.push(`/dashboard/apps/${createAppStatus.id}/type/${typeId}/${AppTypesTab.GENERAL}`);
     }
     if (isNew) {
       history.push(`/dashboard/apps/new/type/${typeId}/${AppTypesTab.GENERAL}`);
     }
-    if (!isNew && app.appType.id !== Number(typeId) && app.id !== -1 && app.appType.id !== 0) {
-      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.MEDIA}`);
+    if (!isNew && app.id === Number(appId) && app.appType.id !== 0 && app.appType.id !== Number(typeId)) {
+      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
     }
-  }, [app.id, app.appType.id, appId, createdId, history, isNew, typeId]);
+  }, [app.id, app.appType.id, appId, createAppStatus, history, isNew, typeId]);
 
   useEffect(() => {
     if (!types.length) {
@@ -60,25 +58,6 @@ export const MediaFilesLinks: React.FC = () => {
       appType.current = types.find((tp) => tp.id.toString() === typeId) as AppType;
     }
   }, [dispatch, typeId, types]);
-
-  const dialogFunctions: { [index: string]: (hist: LocationHistory) => void } = {
-    toggleModal: (hist: LocationHistory) => hist.push("/dashboard/apps"),
-    regularGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions"),
-    alternativeGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions", {
-      redirected: true,
-      appID: hist.location.state?.appID || appId,
-    }),
-  };
-
-  const checkNextAction = (fn: string, hist: LocationHistory) => {
-    dialogFunctions[fn](hist);
-  };
-
-  const checkHistory = (hist: LocationHistory) => {
-    hist.location.state?.redirected
-      ? checkNextAction("alternativeGoToSubsView", hist)
-      : checkNextAction("toggleModal", hist);
-  };
 
   useEffect(() => {
     if (!profile.currentOrg.id) {
@@ -151,11 +130,6 @@ export const MediaFilesLinks: React.FC = () => {
     reValidateMode: "onChange",
   });
 
-  /*
-  Whenever 'modalMode' or 'mostRecentlySelectedAppDetails' changes, our form's values are 'reset' to:
-  - Whatever is stored in 'mostRecentlySelectedAppDetails' (if 'modalMode' amounts to 'edit').
-  - An empty string (if 'modalMode' amounts to 'new').
-  */
   useEffect(() => {
     if (!isNew) {
       setValue("privacyUrl", app.privacyUrl, { shouldDirty: false });
@@ -281,16 +255,6 @@ export const MediaFilesLinks: React.FC = () => {
     return (isValid || Object.keys(errors).length === 0) && isDirty;
   };
 
-  const handleNext = (application: AppData) => {
-    const next = getNextType(application.appType, AppTypesTab.MEDIA);
-    history.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${next}`);
-  };
-
-  const handlePrevious = (application: AppData) => {
-    const prev = getPreviousType(application.appType, AppTypesTab.MEDIA);
-    history.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${prev}`);
-  };
-
   return (
     <>
       {
@@ -301,43 +265,7 @@ export const MediaFilesLinks: React.FC = () => {
       {
         !requesting && <Box clone>
           <Container maxWidth="lg">
-            <div className={classes.editApplicationHeaderContainer}>
-              <Box py={3}>
-                <Typography display="block" gutterBottom variant="h2">
-                  {app.name}
-                </Typography>
-                <TypeChip color="primary" editable={!isNew} onTypeSelected={updateAppType} type={appType.current} />
-              </Box>
-
-              <div className={classes.editApplicationHeaderStatusContainer}>
-                <Box display="flex">
-                  {/* A mere dot */}
-                  <Box
-                    className={
-                      clsx(
-                        classes.subscribedClientApplicationCardStatusIcon,
-                        !app.subscriptions.length &&
-                        classes.draftClientApplicationCardStatusIcon,
-                      )
-                    }
-                    pb={1.5}
-                    pr={1}
-                  >
-                    <Icon fontSize="small">circle</Icon>
-                  </Box>
-
-                  <Box clone pb={1.5}>
-                    <Typography style={{ color: palette.text.secondary }} variant="body2">
-                      {
-                        app.subscriptions.length === 0
-                          ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
-                          : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
-                      }
-                    </Typography>
-                  </Box>
-                </Box>
-              </div>
-            </div>
+            <AppHeader app={app} appType={appType} isNew={isNew} updateAppType={updateAppType} />
 
             <Grid alignItems="center" container direction="row" justify="space-between" spacing={3}>
               <Grid item md={12}>
@@ -364,7 +292,7 @@ export const MediaFilesLinks: React.FC = () => {
               <Grid item md={12}>
                 <MediaUpload
                   accept="image/jpg, image/jpeg, image/png, image/gif, image/svg, image/svg+xml"
-                  images={app.media || []}
+                  images={app.images || []}
                   onDeletePressed={deleteMedia}
                   onFileLoaded={uploadMedia}
                 />
@@ -601,7 +529,7 @@ export const MediaFilesLinks: React.FC = () => {
                   !!getNextType(app.appType, AppTypesTab.MEDIA) && <Button
                     color="primary"
                     disableElevation
-                    onClick={() => handleNext(app)}
+                    onClick={() => handleNext(app, AppTypesTab.MEDIA, history)}
                     size="large"
                     style={{ margin: spacing(0, 0, 0, 3) }}
                     variant="contained"
@@ -613,7 +541,7 @@ export const MediaFilesLinks: React.FC = () => {
                   !!getPreviousType(app.appType, AppTypesTab.MEDIA) && <Button
                     color="secondary"
                     disableElevation
-                    onClick={() => handlePrevious(app)}
+                    onClick={() => handlePrevious(app, AppTypesTab.MEDIA, history)}
                     size="large"
                     style={{ margin: spacing(0, 0, 0, 3) }}
                     variant="outlined"
@@ -625,7 +553,7 @@ export const MediaFilesLinks: React.FC = () => {
 
               <Button
                 className={classes.otherButtons}
-                onClick={() => checkHistory(history)}
+                onClick={() => checkHistory(history, appId)}
                 color="primary"
                 variant="outlined"
               >

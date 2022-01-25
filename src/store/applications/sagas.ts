@@ -32,13 +32,13 @@ export function* createAppActionSaga(action: CreateAppAction) {
       name: action.appData.name,
       privacyUrl: action.appData.privacyUrl,
       redirectUrl: action.appData.redirectUrl,
-      shortDescription: action.appData.summary,
+      shortDescription: action.appData.shortDescription,
       supportUrl: action.appData.supportUrl,
       tosUrl: action.appData.tosUrl,
       visibility: action.appData.visibility,
       websiteUrl: action.appData.websiteUrl,
       youtubeUrl: action.appData.youtubeUrl,
-      appTypeId: action.appType,
+      appTypeId: action.appTypeId,
     };
 
     const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
@@ -74,7 +74,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
       name: action.appData.name,
       privacyUrl: action.appData.privacyUrl,
       redirectUrl: action.appData.redirectUrl,
-      shortDescription: action.appData.summary,
+      shortDescription: action.appData.shortDescription,
       supportUrl: action.appData.supportUrl,
       tosUrl: action.appData.tosUrl,
       visibility: action.appData.visibility,
@@ -112,7 +112,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
         orgId: response.orgId,
         privacyUrl: response.privacyUrl,
         redirectUrl: response.redirectUrl,
-        summary: response.shortDescription,
+        shortDescription: response.shortDescription,
         subscriptions: response.subscriptions,
         supportUrl: response.supportUrl,
         tosUrl: response.tosUrl,
@@ -120,7 +120,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
         visibility: response.visibility,
         websiteUrl: response.websiteUrl,
         youtubeUrl: response.youtubeUrl,
-        media: response.images,
+        images: response.images,
         appType: response.appType,
       },
     }));
@@ -214,7 +214,7 @@ export function* getAllUserAppsActionSaga(action: GetAllUserAppsAction) {
         orgId: userApp.orgId,
         privacyUrl: userApp.privacyUrl,
         redirectUrl: userApp.redirectUrl,
-        summary: userApp.shortDescription,
+        shortDescription: userApp.shortDescription,
         subscriptions: userApp.subscriptions,
         supportUrl: userApp.supportUrl,
         tosUrl: userApp.tosUrl,
@@ -222,7 +222,7 @@ export function* getAllUserAppsActionSaga(action: GetAllUserAppsAction) {
         visibility: userApp.visibility,
         websiteUrl: userApp.websiteUrl,
         youtubeUrl: userApp.youtubeUrl,
-        media: userApp.images,
+        images: userApp.images,
         appType: userApp.appType,
       }
     ));
@@ -265,7 +265,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
       orgId: response.orgId,
       privacyUrl: response.privacyUrl,
       redirectUrl: response.redirectUrl,
-      summary: response.shortDescription,
+      shortDescription: response.shortDescription,
       subscriptions: response.subscriptions,
       supportUrl: response.supportUrl,
       tosUrl: response.tosUrl,
@@ -273,7 +273,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
       visibility: response.visibility,
       websiteUrl: response.websiteUrl,
       youtubeUrl: response.youtubeUrl,
-      media: response.images,
+      images: response.images,
       appType: response.appType,
     };
 

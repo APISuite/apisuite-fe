@@ -1,7 +1,7 @@
 import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from "./createApp";
 import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from "./deleteApp";
 import { GET_ALL_USER_APPS, GET_ALL_USER_APPS_ERROR, GET_ALL_USER_APPS_SUCCESS } from "./getAllUserApps";
-import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_SUCCESS } from "./getUserApp";
+import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_RESET, GET_USER_APP_SUCCESS } from "./getUserApp";
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./updatedApp";
 import { AppData, AppType } from "../types";
@@ -36,13 +36,14 @@ DeleteAppMediaActionSuccess |
 DeleteAppMediaActionError |
 GetAppTypesAction |
 GetAppTypesActionError |
-GetAppTypesActionSuccess
+GetAppTypesActionSuccess |
+ResetUserAppAction
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
   orgID: string,
   appData: CreateAppActionData,
-  appType: number,
+  appTypeId: number,
 }
 
 export type CreateAppActionSuccess = {
@@ -187,4 +188,8 @@ export type GetAppTypesActionSuccess = {
 export type GetAppTypesActionError = {
   type: typeof GET_APP_TYPES_ERROR,
   types: AppType[],
+}
+
+export type ResetUserAppAction = {
+  type: typeof GET_USER_APP_RESET,
 }

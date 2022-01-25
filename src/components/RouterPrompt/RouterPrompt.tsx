@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Icon, Typography } from "@apisuite/fe-base";
+import {
+  Box, Button, Dialog, DialogActions, DialogContent, DialogContentText,
+  DialogTitle, Icon, Typography, useTheme,
+} from "@apisuite/fe-base";
 import { RouterPromptProps } from "./types";
 import useStyles from "./styles";
 
@@ -15,6 +18,7 @@ export const RouterPrompt: React.FC<RouterPromptProps> = ({
 }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { palette } = useTheme();
 
   const [showPrompt, setShowPrompt] = useState(false);
   const [currentPath, setCurrentPath] = useState("");
@@ -70,7 +74,7 @@ export const RouterPrompt: React.FC<RouterPromptProps> = ({
       onClose={handleCancel}
       aria-labelledby="prompt-dialog-title"
     >
-      <DialogTitle id="prompt-dialog-title">
+      <DialogTitle id="prompt-dialog-title" style={{ backgroundColor: palette.grey[100] }}>
         <Box alignItems={"start"} display={"flex"} flexDirection={"row"} justifyContent={"start"}>
           <Box clone mr={2}>
             {getIcon(type)}
@@ -80,7 +84,7 @@ export const RouterPrompt: React.FC<RouterPromptProps> = ({
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Box clone pb={2}>
+          <Box clone py={2}>
             <Typography variant="body1">{subtitle}</Typography>
           </Box>
           <Box clone pb={2}>
@@ -89,12 +93,16 @@ export const RouterPrompt: React.FC<RouterPromptProps> = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus color="primary" onClick={handleCancel} variant="contained">
-          {cancelText}
-        </Button>
-        <Button autoFocus onClick={handleOK} variant="outlined">
-          {okText}
-        </Button>
+        <Box clone m={1}>
+          <Button autoFocus color="primary" onClick={handleCancel} variant="contained">
+            {cancelText}
+          </Button>
+        </Box>
+        <Box clone m={1}>
+          <Button autoFocus onClick={handleOK} variant="outlined">
+            {okText}
+          </Button>
+        </Box>
       </DialogActions>
     </Dialog>
   ) : null;

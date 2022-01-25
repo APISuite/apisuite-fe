@@ -15,6 +15,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     position: "fixed",
+    paddingTop: theme.spacing(2.5),
     width: "inherit",
     flexDirection: "row",
 
@@ -58,6 +59,6 @@ export default makeStyles((theme) => ({
     height: "100vh",
     marginTop: theme.spacing(10),
     overflowY: "auto",
-    padding: theme.spacing(2, 11),
+    padding: theme.spacing(3, 11),
   },
 }));

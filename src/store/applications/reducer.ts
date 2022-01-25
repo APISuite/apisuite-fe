@@ -5,7 +5,7 @@ import { ApplicationsStore } from "./types";
 import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from "./actions/createApp";
 import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS_SUCCESS } from "./actions/getAllUserApps";
-import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_SUCCESS } from "./actions/getUserApp";
+import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_RESET, GET_USER_APP_SUCCESS } from "./actions/getUserApp";
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./actions/requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./actions/updatedApp";
 import { UPLOAD_APP_MEDIA_SUCCESS } from "./actions/appMediaUpload";
@@ -27,8 +27,8 @@ const initialState: ApplicationsStore = {
     name: "",
     orgId: "",
     privacyUrl: "",
-    redirectUrl: "https://",
-    summary: "",
+    redirectUrl: "",
+    shortDescription: "",
     subscriptions: [],
     supportUrl: "",
     tosUrl: "",
@@ -36,7 +36,7 @@ const initialState: ApplicationsStore = {
     visibility: "",
     websiteUrl: "",
     youtubeUrl: "",
-    media: [],
+    images: [],
     appType: {
       id: 0,
       type: "client",
@@ -170,6 +170,16 @@ export default function reducer (
       });
     }
 
+    case GET_USER_APP_RESET: {
+      return update(state, {
+        currentApp: { $set: initialState.currentApp },
+        getApp: {
+          isError: { $set: false },
+          isRequesting: { $set: false },
+        },
+      });
+    }
+
     case REQUEST_API_ACCESS: {
       return update(state, {
         requestingAPIAccessStatus: {
@@ -227,8 +237,8 @@ export default function reducer (
     case UPLOAD_APP_MEDIA_SUCCESS: {
       return update(state, {
         currentApp: {
-          media: {
-            $set: [...state.currentApp.media, ...action.savedImages.map(i => i.url)],
+          images: {
+            $set: [...state.currentApp.images, ...action.savedImages.map(i => i.url)],
           },
         },
       });
@@ -237,8 +247,8 @@ export default function reducer (
     case DELETE_APP_MEDIA_SUCCESS: {
       return update(state, {
         currentApp: {
-          media: {
-            $set: [...state.currentApp.media.filter((m) => m !== action.deleted)],
+          images: {
+            $set: [...state.currentApp.images.filter((m) => m !== action.deleted)],
           },
         },
       });
