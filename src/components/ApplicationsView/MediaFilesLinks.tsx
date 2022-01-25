@@ -15,17 +15,15 @@ import { getNextType, getPreviousType } from "components/AppTypesModal/util";
 import { profileSelector } from "pages/Profile/selectors";
 import { AppTypesTab } from "pages/AppView/types";
 import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
-import { getUserApp } from "store/applications/actions/getUserApp";
+import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
 import { AppType } from "store/applications/types";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
-import { getProfile } from "store/profile/actions/getProfile";
 import { isValidURL } from "util/forms";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { AppHeader, handleNext, handlePrevious, checkHistory } from "./util";
+import { AppHeader, handleNext, handlePrevious, checkHistory, useGetApp } from "./util";
 
 export const MediaFilesLinks: React.FC = () => {
   const classes = useStyles();
@@ -40,18 +38,6 @@ export const MediaFilesLinks: React.FC = () => {
   const isNew = Number.isNaN(Number(appId));
 
   useEffect(() => {
-    if (isNew && createAppStatus.id !== -1) {
-      history.push(`/dashboard/apps/${createAppStatus.id}/type/${typeId}/${AppTypesTab.GENERAL}`);
-    }
-    if (isNew) {
-      history.push(`/dashboard/apps/new/type/${typeId}/${AppTypesTab.GENERAL}`);
-    }
-    if (!isNew && app.id === Number(appId) && app.appType.id !== 0 && app.appType.id !== Number(typeId)) {
-      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
-    }
-  }, [app.id, app.appType.id, appId, createAppStatus, history, isNew, typeId]);
-
-  useEffect(() => {
     if (!types.length) {
       dispatch(getAppTypes({}));
     } else {
@@ -59,19 +45,15 @@ export const MediaFilesLinks: React.FC = () => {
     }
   }, [dispatch, typeId, types]);
 
-  useEffect(() => {
-    if (!profile.currentOrg.id) {
-      dispatch(getProfile({}));
-    }
+  useGetApp({
+    app,
+    appId,
+    createAppStatus,
+    history,
+    isNew,
+    profile,
+    typeId,
   });
-
-  useEffect(() => {
-    /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
-    of all information we presently have on a particular app. */
-    if (!isNew && profile.currentOrg.id && (app.id === 0 || app.id !== Number(appId))) {
-      dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
-    }
-  }, [app, appId, dispatch, isNew, profile]);
 
   // Performs some basic checks on user-provided URIs
   const uriBasicChecks = (uri: string | number) => {

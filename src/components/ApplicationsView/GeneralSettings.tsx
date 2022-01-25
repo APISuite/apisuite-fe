@@ -21,16 +21,15 @@ import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { createApp } from "store/applications/actions/createApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
-import { getUserApp, resetUserApp } from "store/applications/actions/getUserApp";
+import { resetUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { AppType } from "store/applications/types";
-import { getProfile } from "store/profile/actions/getProfile";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getSections } from "util/extensions";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { checkHistory, checkNextAction, AppHeader, handleNext } from "./util";
+import { checkHistory, checkNextAction, AppHeader, handleNext, useGetApp } from "./util";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
@@ -39,7 +38,7 @@ export const GeneralSettings: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createAppStatus, names: allUserAppNames, types, requesting } = useSelector(applicationsViewSelector);
+  const { app, createAppStatus, types, requesting } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const [avatar, setAvatar] = React.useState("");
   const appType = useRef<AppType>(types[0]);
@@ -49,13 +48,7 @@ export const GeneralSettings: React.FC = () => {
     if (isNew && app.id !== 0) {
       dispatch(resetUserApp());
     }
-    if (isNew && createAppStatus.id !== -1 && !createAppStatus.isError) {
-      history.push(`/dashboard/apps/${createAppStatus.id}/type/${typeId}/${AppTypesTab.GENERAL}`);
-    }
-    if (!isNew && app.id === Number(appId) && app.appType.id !== 0 && app.appType.id !== Number(typeId)) {
-      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
-    }
-  }, [app.id, app.appType.id, appId, createAppStatus, history, isNew, typeId, dispatch]);
+  }, [app.id, isNew, dispatch]);
 
   useEffect(() => {
     if (!types.length) {
@@ -65,24 +58,18 @@ export const GeneralSettings: React.FC = () => {
     }
   }, [dispatch, typeId, types]);
 
-  useEffect(() => {
-    if (!profile.currentOrg.id) {
-      dispatch(getProfile({}));
-    }
+  useGetApp({
+    app,
+    appId,
+    createAppStatus,
+    history,
+    isNew,
+    profile,
+    typeId,
   });
-
-  useEffect(() => {
-    if (!isNew && profile.currentOrg.id && (app.id === 0 || app.id !== Number(appId))) {
-      dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
-    }
-  }, [app.id, appId, dispatch, isNew, profile]);
 
   const appSchema = yup.object().shape({
     name: yup.string()
-      .test("isAppNameValid", t("dashboardTab.applicationsSubTab.appModal.existingAppNameError"),
-        (value: string|undefined) => {
-          return !(isNew && allUserAppNames.includes(value || ""));
-        })
       .required(t("dashboardTab.applicationsSubTab.appModal.noAppNameError")),
     shortDescription: yup.string()
       .max(60, t("dashboardTab.applicationsSubTab.appModal.errors.summaryLimit")),

@@ -15,10 +15,8 @@ import Link from "components/Link";
 import Notice from "components/Notice";
 import { RouterPrompt } from "components/RouterPrompt";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { AppType, Metadata } from "store/applications/types";
-import { getProfile } from "store/profile/actions/getProfile";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { AppTypesTab } from "pages/AppView/types";
 import { isValidAppMetaKey } from "util/forms";
@@ -26,7 +24,7 @@ import { profileSelector } from "pages/Profile/selectors";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { AppHeader, checkHistory, handleNext, handlePrevious } from "./util";
+import { AppHeader, checkHistory, handleNext, handlePrevious, useGetApp } from "./util";
 
 export const CustomProperties: React.FC = () => {
   const classes = useStyles();
@@ -43,18 +41,6 @@ export const CustomProperties: React.FC = () => {
   const metadataKeyDefaultPrefix = "meta_";
 
   useEffect(() => {
-    if (isNew && createAppStatus.id !== -1) {
-      history.push(`/dashboard/apps/${createAppStatus.id}/type/${typeId}/${AppTypesTab.GENERAL}`);
-    }
-    if (isNew) {
-      history.push(`/dashboard/apps/new/type/${typeId}/${AppTypesTab.GENERAL}`);
-    }
-    if (!isNew && app.id === Number(appId) && app.appType.id !== 0 && app.appType.id !== Number(typeId)) {
-      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
-    }
-  }, [app.id, app.appType.id, appId, createAppStatus, history, isNew, typeId]);
-
-  useEffect(() => {
     if (!types.length) {
       dispatch(getAppTypes({}));
     } else {
@@ -62,17 +48,15 @@ export const CustomProperties: React.FC = () => {
     }
   }, [dispatch, typeId, types]);
 
-  useEffect(() => {
-    if (!profile.currentOrg.id) {
-      dispatch(getProfile({}));
-    }
+  useGetApp({
+    app,
+    appId,
+    createAppStatus,
+    history,
+    isNew,
+    profile,
+    typeId,
   });
-
-  useEffect(() => {
-    if (!isNew && profile.currentOrg.id && (app.id === 0 || app.id !== Number(appId))) {
-      dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
-    }
-  }, [app.id, appId, dispatch, isNew, profile]);
 
   const appSchema = yup.object().shape({
     metadata: yup.array().of(

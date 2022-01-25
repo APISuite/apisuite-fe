@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Box, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import clsx from "clsx";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
 import { AppData } from "store/applications/types";
+import { getUserApp } from "store/applications/actions/getUserApp";
+import { getProfile } from "store/profile/actions/getProfile";
 import { AppTypesTab } from "pages/AppView/types";
-import { AppHeaderProps, LocationHistory } from "./types";
+import { AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
 import useStyles from "./styles";
 
 export const dialogFunctions: { [index: string]: (hist: LocationHistory, appId?: string) => void } = {
@@ -92,3 +96,37 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     </div>
   );
 };
+
+export function useGetApp(data: UseGetAppParams) {
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (data.isNew && data.createAppStatus.id !== -1 && !data.createAppStatus.isError) {
+      data.history.push(`/dashboard/apps/${data.createAppStatus.id}/type/${data.typeId}/${AppTypesTab.GENERAL}`);
+    }
+    if (data.isNew && location.pathname.indexOf(AppTypesTab.GENERAL) === -1) {
+      data.history.push(`/dashboard/apps/new/type/${data.typeId}/${AppTypesTab.GENERAL}`);
+    }
+    if (
+      !data.isNew &&
+      data.app.id === Number(data.appId) &&
+      data.app.appType.id !== 0 &&
+      data.app.appType.id !== Number(data.typeId)
+    ) {
+      data.history.push(`/dashboard/apps/${data.appId}/type/${data.app.appType.id}/${AppTypesTab.GENERAL}`);
+    }
+  }, [data, location.pathname]);
+
+  useEffect(() => {
+    if (!data.profile.currentOrg.id) {
+      dispatch(getProfile({}));
+    }
+  });
+
+  useEffect(() => {
+    if (!data.isNew && data.profile.currentOrg.id && (data.app.id === 0 || data.app.id !== Number(data.appId))) {
+      dispatch(getUserApp({ orgID: data.profile.currentOrg.id, appId: Number(data.appId) }));
+    }
+  }, [data, dispatch]);
+}
