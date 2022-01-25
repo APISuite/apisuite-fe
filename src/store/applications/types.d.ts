@@ -18,6 +18,7 @@ export interface ApplicationsStore {
   allBlueprintApps: AllBlueprintAppData[],
   currentBlueprintAppData: CurrentBlueprintAppData,
   checkBlueprintAuthStatus: Response & { isChecked: boolean },
+  currentBlueprintAppFields: string[],
   isActive: boolean,
   toggleBlueprintAppStatus: Response,
 }
@@ -109,6 +110,7 @@ export interface CurrentBlueprintAppData {
   app_url: string,
   polling_interval: string,
 }
+
 export interface ModalDetails {
   userAppID: number,
   userID: number,
@@ -170,6 +172,6 @@ export interface AppType {
 }
 
 export interface ToggleBlueprintAppStatusData {
-  name: string,
+  app_name: string,
   command: "start" | "stop",
 }

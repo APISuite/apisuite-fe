@@ -102,6 +102,7 @@ const initialState: ApplicationsStore = {
     isError: false,
     isRequesting: false,
   },
+  currentBlueprintAppFields: [],
 };
 
 /** Reducer */
@@ -129,6 +130,8 @@ export default function reducer (
           isChecked: { $set: true },
           isRequesting: { $set: false },
         },
+
+        currentBlueprintAppFields:  { $set: action.fields },
       });
     }
 

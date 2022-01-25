@@ -10,6 +10,8 @@ export const applicationsViewSelector = createSelector(
       createdId: applications.createAppStatus.id,
       currentBlueprintAppData: applications.currentBlueprintAppData,
       checkBlueprintAuthStatus: applications.checkBlueprintAuthStatus,
+      currentBlueprintAppFields: applications.currentBlueprintAppFields,
+      isActive: applications.isActive,
       names: applications.userApps.map(app => app.name),
       requesting: applications.updateAppStatus.isRequesting || applications.getApp.isRequesting,
       types: applications.types,

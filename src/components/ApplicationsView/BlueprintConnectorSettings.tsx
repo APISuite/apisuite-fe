@@ -36,14 +36,15 @@ export const BlueprintConnectorSettings: React.FC = () => {
   const dispatch = useDispatch();
 
   const {
-    app, createdId, currentBlueprintAppData, names: allUserAppNames, types, requesting,
+    app, createdId, currentBlueprintAppData, currentBlueprintAppFields,
+    isActive, names: allUserAppNames, types, requesting,
   } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
 
   const appType = useRef<AppType>(types[0]);
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const isNew = Number.isNaN(Number(appId));
-
+  
   useEffect(() => {
     if (!profile.currentOrg.id) {
       dispatch(getProfile({}));
@@ -111,9 +112,9 @@ export const BlueprintConnectorSettings: React.FC = () => {
     // TODO: Don't do it like this - make it respond to the inclusion of more fields.
     // TODO: Retrieve these fields from response given by the POST to (...appconnectorURL...)/apps
     defaultValues: {
-      app_field_1: "",
-      app_field_2: "",
-      app_field_3: "",
+      app_field_1: currentBlueprintAppFields[0],
+      app_field_2: currentBlueprintAppFields[1],
+      app_field_3: currentBlueprintAppFields[2],
       api_field_1: "",
       api_field_2: "",
       api_field_3: "",
@@ -135,14 +136,11 @@ export const BlueprintConnectorSettings: React.FC = () => {
     };
 
     const newMappedFields = {
-      appName: currentBlueprintAppData.app_name,
+      app_name: currentBlueprintAppData.app_name,
       map: {
-        field1: allFields.app_field_1,
-        field2: allFields.api_field_1,
-        field3: allFields.app_field_2,
-        field4: allFields.api_field_2,
-        field5: allFields.app_field_3,
-        field6: allFields.api_field_1,
+        [allFields.app_field_1]: allFields.api_field_1,
+        [allFields.app_field_2]: allFields.api_field_2,
+        [allFields.app_field_3]: allFields.api_field_3,
       },
     };
     
@@ -195,15 +193,19 @@ export const BlueprintConnectorSettings: React.FC = () => {
 
   const [activeApp, setActiveApp] = React.useState(false);
 
-  const toggleActiveAppStatus = (isActive: boolean) => {
+  const toggleActiveAppStatus = (isAppActive: boolean) => {
     dispatch(toggleBlueprintAppStatusAction({
-      toggleBlueprintAppStatusData: { name: currentBlueprintAppData.app_name, command: isActive ? "start" : "stop" },
+      toggleBlueprintAppStatusData: { app_name: currentBlueprintAppData.app_name, command: isAppActive ? "start" : "stop" },
     }));
 
     /* TODO: Will only be set if the above action/request is completed, which is fortunate in the case of errors,
     but still, look into this once time allows. */
-    setActiveApp(isActive);
+    setActiveApp(isAppActive);
   };
+
+  React.useEffect(() => {
+    setActiveApp(isActive);
+  }, [isActive]);
 
   return (
     <>

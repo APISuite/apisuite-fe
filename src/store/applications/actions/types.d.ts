@@ -207,6 +207,7 @@ export type CheckBlueprintAuthAction = {
 
 export type CheckBlueprintAuthActionSuccess = {
   type: typeof CHECK_BLUEPRINT_AUTH_ACTION_SUCCESS,
+  fields: string[],
 }
 
 export type CheckBlueprintAuthActionError = {

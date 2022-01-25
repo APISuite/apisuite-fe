@@ -370,9 +370,10 @@ export function* checkBlueprintAuthActionSaga(action: CheckBlueprintAuthAction) 
       data: action.currentBlueprintAppData,
     });
 
-    console.log("response:", response);
-
-    yield put(checkBlueprintAuthActionSuccess({ currentBlueprintAppData: action.currentBlueprintAppData }));
+    yield put(checkBlueprintAuthActionSuccess({
+      currentBlueprintAppData: action.currentBlueprintAppData,
+      fields: response.data.fields,
+    }));
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
@@ -393,8 +394,6 @@ export function* mapFieldsActionSaga(action: MapFieldsAction) {
       method: "POST",
       data: action.mappedFields,
     });
-
-    console.log("response", response);
 
     // TODO: Do this once it is clear what is included in the response
     yield put(mapFieldsActionSuccess({}));
