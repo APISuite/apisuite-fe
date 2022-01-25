@@ -370,14 +370,25 @@ export function* checkBlueprintAuthActionSaga(action: CheckBlueprintAuthAction) 
       data: action.currentBlueprintAppData,
     });
 
+    if (action.currentBlueprintAppData.auth_type === "oauth") {
+      window.open(
+        response.data,
+        "_blank"
+      );
+    }
+
     yield put(checkBlueprintAuthActionSuccess({
       currentBlueprintAppData: action.currentBlueprintAppData,
-      fields: response.data.fields,
+      fields: action.currentBlueprintAppData.auth_type === "oauth" ? ["health_status"] : response.data.fields,
     }));
 
+    // TODO: Add translations
+    yield put(openNotification("success", "App submitted successfully!", 4000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(checkBlueprintAuthActionError({}));
+    // TODO: Add translations
+    yield put(openNotification("error", "An error occurred when trying to submit your app.", 4000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -398,9 +409,11 @@ export function* mapFieldsActionSaga(action: MapFieldsAction) {
     // TODO: Do this once it is clear what is included in the response
     yield put(mapFieldsActionSuccess({}));
 
+    yield put(openNotification("success", "App details saved successfully!", 4000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(mapFieldsActionError({}));
+    yield put(openNotification("error", "An error occurred when trying to save your app's details.", 4000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -421,9 +434,11 @@ export function* toggleBlueprintAppStatusActionSaga(action: ToggleBlueprintAppSt
     // TODO: Do not use "start" for the sake of comparison - use a constant
     yield put(toggleBlueprintAppStatusActionSuccess({ isActive: action.toggleBlueprintAppStatusData.command === "start" }));
 
+    yield put(openNotification("success", "App's status successfully updated!", 4000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(toggleBlueprintAppStatusActionError({}));
+    yield put(openNotification("error", "An error occurred when trying to update your app's status.", 4000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -440,6 +455,7 @@ function* rootSaga() {
   yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
   yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
   yield takeLatest(GET_APP_TYPES, getAppTypesActionSaga);
+
   yield takeLatest(CHECK_BLUEPRINT_AUTH_ACTION, checkBlueprintAuthActionSaga);
   yield takeLatest(MAP_FIELDS_ACTION, mapFieldsActionSaga);
   yield takeLatest(TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionSaga);

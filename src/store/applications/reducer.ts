@@ -151,12 +151,18 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: true },
         },
+
+        checkBlueprintAuthStatus: {
+          isChecked: { $set: false },
+          isError: { $set: false },
+          isRequesting: { $set: false },
+        },
       });
     }
 
     case TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS: {
       return update(state, {
-        isActive: { $set: true },
+        isActive: { $set: action.isActive },
 
         toggleBlueprintAppStatus: {
           isError: { $set: false },

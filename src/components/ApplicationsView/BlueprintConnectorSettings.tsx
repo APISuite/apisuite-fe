@@ -113,8 +113,8 @@ export const BlueprintConnectorSettings: React.FC = () => {
     // TODO: Retrieve these fields from response given by the POST to (...appconnectorURL...)/apps
     defaultValues: {
       app_field_1: currentBlueprintAppFields[0],
-      app_field_2: currentBlueprintAppFields[1],
-      app_field_3: currentBlueprintAppFields[2],
+      app_field_2: "",
+      app_field_3: "",
       api_field_1: "",
       api_field_2: "",
       api_field_3: "",
@@ -137,10 +137,9 @@ export const BlueprintConnectorSettings: React.FC = () => {
 
     const newMappedFields = {
       app_name: currentBlueprintAppData.app_name,
+      // TODO: Truly map this
       map: {
         [allFields.app_field_1]: allFields.api_field_1,
-        [allFields.app_field_2]: allFields.api_field_2,
-        [allFields.app_field_3]: allFields.api_field_3,
       },
     };
     
@@ -191,21 +190,11 @@ export const BlueprintConnectorSettings: React.FC = () => {
 
   // 'Active app status' logic
 
-  const [activeApp, setActiveApp] = React.useState(false);
-
   const toggleActiveAppStatus = (isAppActive: boolean) => {
     dispatch(toggleBlueprintAppStatusAction({
       toggleBlueprintAppStatusData: { app_name: currentBlueprintAppData.app_name, command: isAppActive ? "start" : "stop" },
     }));
-
-    /* TODO: Will only be set if the above action/request is completed, which is fortunate in the case of errors,
-    but still, look into this once time allows. */
-    setActiveApp(isAppActive);
   };
-
-  React.useEffect(() => {
-    setActiveApp(isActive);
-  }, [isActive]);
 
   return (
     <>
@@ -340,8 +329,6 @@ export const BlueprintConnectorSettings: React.FC = () => {
                         />
                       )}
                     />
-
-                    <Icon style={{ color: palette.grey[300], fontSize: 40, marginLeft: spacing(7.5) }}>sync_alt</Icon>
                   </Box>
 
                   <Box>
@@ -451,14 +438,14 @@ export const BlueprintConnectorSettings: React.FC = () => {
 
                   <Box pb={4} style={{ alignItems: "center", display: "flex" }}>
                     <Switch
-                      checked={activeApp}
-                      onChange={() => toggleActiveAppStatus(!activeApp)}
+                      checked={isActive}
+                      onChange={() => toggleActiveAppStatus(!isActive)}
                       color="primary"
                     />
 
                     <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
                       {
-                        activeApp
+                        isActive
                           ? t("dashboardTab.applicationsSubTab.appModal.activeApp")
                           : t("dashboardTab.applicationsSubTab.appModal.inactiveApp")
                       }
@@ -490,7 +477,7 @@ export const BlueprintConnectorSettings: React.FC = () => {
                         variant="contained"
                         onClick={mapFields}
                       >
-                        {t("applications.buttons.submitApp")}
+                        {t("applications.buttons.saveChanges")}
                       </Button>
                     </Box>
 
