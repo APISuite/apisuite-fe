@@ -18,7 +18,7 @@ import { AppType } from "store/applications/types";
 import { deleteApp } from "store/applications/actions/deleteApp";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getProfile } from "store/profile/actions/getProfile";
-import { getUserApp, resetUserApp } from "store/applications/actions/getUserApp";
+import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
