@@ -78,36 +78,9 @@ export interface ApplicationsProps {
   user: User,
 }
 
-export interface CreateAppActionData {
-  description: string,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  shortDescription: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
-}
+export type CreateAppActionData = AppData
 
-export interface UpdateAppActionData {
-  description: string,
-  id: number,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  shortDescription: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
-}
+export type UpdateAppActionData = AppData
 
 export interface AppType {
   id: number,

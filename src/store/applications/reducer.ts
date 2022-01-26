@@ -87,6 +87,7 @@ export default function reducer (
 
     case CREATE_APP_SUCCESS: {
       return update(state, {
+        currentApp: { $set: action.appData },
         createAppStatus: {
           isRequesting: { $set: false },
           id: { $set: action.appData.id },
@@ -96,6 +97,7 @@ export default function reducer (
 
     case CREATE_APP_ERROR: {
       return update(state, {
+        currentApp: { $set: action.payload },
         createAppStatus: {
           isError: { $set: true },
           isRequesting: { $set: false },
@@ -140,6 +142,9 @@ export default function reducer (
         getApp: {
           isError: { $set: false },
           isRequesting: { $set: true },
+        },
+        createAppStatus: {
+          id: { $set: -1 },
         },
       });
     }

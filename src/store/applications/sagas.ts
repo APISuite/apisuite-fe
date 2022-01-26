@@ -2,20 +2,23 @@ import { call, put, select, takeLatest } from "redux-saga/effects";
 
 import { API_URL } from "constants/endpoints";
 import qs from "qs";
+import { i18n } from "@apisuite/fe-base";
 
+import { AppTypesTab } from "pages/AppView/types";
+import { history } from "store";
+import { handleSessionExpire } from "store/auth/actions/expiredSession";
+import { openNotification } from "store/notificationStack/actions/notification";
+import { Store } from "store/types";
+import { clearProps } from "util/clear";
+import request from "util/request";
 import { AppData, AppType } from "./types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS, getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess } from "./actions/getAllUserApps";
 import { GET_USER_APP, getUserAppError, getUserAppSuccess } from "./actions/getUserApp";
-import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { REQUEST_API_ACCESS, requestAPIAccessError, requestAPIAccessSuccess } from "./actions/requestApiAccess";
-import { Store } from "store/types";
 import { UPDATE_APP, updateAppError, updateAppSuccess } from "./actions/updatedApp";
-import request from "util/request";
-import { i18n } from "@apisuite/fe-base";
-import { openNotification } from "store/notificationStack/actions/notification";
 import { uploadAppMediaError, uploadAppMediaSuccess, UPLOAD_APP_MEDIA } from "./actions/appMediaUpload";
 import { deleteAppMediaError, deleteAppMediaSuccess, DELETE_APP_MEDIA } from "./actions/deleteAppMedia";
 import { UploadResponse } from "./actions/types";
@@ -23,23 +26,9 @@ import { getAppTypesError, getAppTypesSuccess, GET_APP_TYPES } from "./actions/g
 
 export function* createAppActionSaga(action: CreateAppAction) {
   try {
-    const data = {
-      description: action.appData.description,
-      directUrl: action.appData.directUrl,
-      labels: action.appData.labels,
-      logo: action.appData.logo,
-      metadata: action.appData.metadata,
-      name: action.appData.name,
-      privacyUrl: action.appData.privacyUrl,
-      redirectUrl: action.appData.redirectUrl,
-      shortDescription: action.appData.shortDescription,
-      supportUrl: action.appData.supportUrl,
-      tosUrl: action.appData.tosUrl,
-      visibility: action.appData.visibility,
-      websiteUrl: action.appData.websiteUrl,
-      youtubeUrl: action.appData.youtubeUrl,
-      appTypeId: action.appTypeId,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => !!v));
+    data = clearProps(data, [ "appType", "images"]);
 
     const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
@@ -53,9 +42,11 @@ export function* createAppActionSaga(action: CreateAppAction) {
     });
 
     yield put(createAppSuccess({ appData: app }));
+    history.push(`/dashboard/apps/${app.id}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    yield put(createAppError(error));
+    yield put(createAppError({ payload: action.appData }));
+    yield put(openNotification("error", i18n.t("applications.create.error"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -64,31 +55,15 @@ export function* createAppActionSaga(action: CreateAppAction) {
 
 export function* updateAppActionSaga(action: UpdateAppAction) {
   try {
-    // TODO remove this mapping everywhere
-    const data = {
-      description: action.appData.description,
-      directUrl: action.appData.directUrl,
-      labels: action.appData.labels,
-      logo: action.appData.logo,
-      metadata: action.appData.metadata,
-      name: action.appData.name,
-      privacyUrl: action.appData.privacyUrl,
-      redirectUrl: action.appData.redirectUrl,
-      shortDescription: action.appData.shortDescription,
-      supportUrl: action.appData.supportUrl,
-      tosUrl: action.appData.tosUrl,
-      visibility: action.appData.visibility,
-      websiteUrl: action.appData.websiteUrl,
-      youtubeUrl: action.appData.youtubeUrl,
-      appTypeId: action.appData.appTypeId,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => v !== null));
+    data = clearProps(data, ["appType", "createdAt", "id", "idpProvider","images", "org_id", "orgId", "state", "updatedAt"]);
     if (!action.appData.appTypeId) {
       delete data.appTypeId;
     }
-
     const updateAppUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appData.id}`;
 
-    const response: Record<string, never> = yield call(request, {
+    const response: AppData = yield call(request, {
       url: updateAppUrl,
       method: "PUT",
       headers: {
@@ -98,31 +73,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
     });
 
     yield put(updateAppSuccess({
-      appData: {
-        clientId: response.clientId,
-        clientSecret: response.clientSecret,
-        createdAt: response.createdAt,
-        description: response.description,
-        directUrl: response.directUrl,
-        id: response.id,
-        labels: response.labels,
-        logo: response.logo,
-        metadata: response.metadata,
-        name: response.name,
-        orgId: response.orgId,
-        privacyUrl: response.privacyUrl,
-        redirectUrl: response.redirectUrl,
-        shortDescription: response.shortDescription,
-        subscriptions: response.subscriptions,
-        supportUrl: response.supportUrl,
-        tosUrl: response.tosUrl,
-        updatedAt: response.updatedAt,
-        visibility: response.visibility,
-        websiteUrl: response.websiteUrl,
-        youtubeUrl: response.youtubeUrl,
-        images: response.images,
-        appType: response.appType,
-      },
+      appData: { ...response },
     }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
@@ -191,7 +142,7 @@ export function* getAllUserAppsActionSaga(action: GetAllUserAppsAction) {
   try {
     const getAllUserAppsActionUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
-    const response: any[] = yield call(request, {
+    const response: AppData[] = yield call(request, {
       url: getAllUserAppsActionUrl,
       method: "GET",
       headers: {
@@ -200,31 +151,7 @@ export function* getAllUserAppsActionSaga(action: GetAllUserAppsAction) {
     });
 
     const allUserApps = response.map((userApp) => (
-      {
-        clientId: userApp.clientId,
-        clientSecret: userApp.clientSecret,
-        createdAt: userApp.createdAt,
-        description: userApp.description,
-        directUrl: userApp.directUrl,
-        id: userApp.id,
-        labels: userApp.labels,
-        logo: userApp.logo,
-        metadata: userApp.metadata,
-        name: userApp.name,
-        orgId: userApp.orgId,
-        privacyUrl: userApp.privacyUrl,
-        redirectUrl: userApp.redirectUrl,
-        shortDescription: userApp.shortDescription,
-        subscriptions: userApp.subscriptions,
-        supportUrl: userApp.supportUrl,
-        tosUrl: userApp.tosUrl,
-        updatedAt: userApp.updatedAt,
-        visibility: userApp.visibility,
-        websiteUrl: userApp.websiteUrl,
-        youtubeUrl: userApp.youtubeUrl,
-        images: userApp.images,
-        appType: userApp.appType,
-      }
+      { ...userApp }
     ));
 
     yield put(getAllUserAppsSuccess({

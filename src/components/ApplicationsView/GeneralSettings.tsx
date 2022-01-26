@@ -48,7 +48,7 @@ export const GeneralSettings: React.FC = () => {
     if (isNew && app.id !== 0) {
       dispatch(resetUserApp());
     }
-  }, [app.id, isNew, dispatch]);
+  }, [app.id, dispatch, isNew]);
 
   useEffect(() => {
     if (!types.length) {
@@ -113,9 +113,10 @@ export const GeneralSettings: React.FC = () => {
     const newAppDetails = {
       ...app,
       ...getValues(),
+      appTypeId: Number(typeId),
     };
 
-    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails, appTypeId: Number(typeId) }));
+    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
   };
 
   // Updating an app
@@ -157,7 +158,7 @@ export const GeneralSettings: React.FC = () => {
   };
 
   const hasChanged = () => {
-    return (isValid || Object.keys(errors).length === 0) && isDirty;
+    return (isValid || Object.keys(errors).length === 0) && (isDirty || avatar !== app.logo);
   };
 
   return (
@@ -251,12 +252,12 @@ export const GeneralSettings: React.FC = () => {
                 <AvatarDropzone
                   image={avatar || getValues("logo")}
                   onDeletePressed={() => {
-                    setValue("logo", "", { shouldDirty: true });
+                    setValue("logo", "");
                     setAvatar("");
                   }}
                   onFileLoaded={(image: string) => {
                     setAvatar(image);
-                    setValue("logo", image, { shouldDirty: true });
+                    setValue("logo", image);
                   }}
                 />
               </Grid>
