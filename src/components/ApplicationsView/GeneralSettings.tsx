@@ -13,24 +13,23 @@ import * as yup from "yup";
 import markdownIcon from "assets/markdownIcon.svg";
 import { AvatarDropzone } from "components/AvatarDropzone";
 import { CustomizableTooltip } from "components/CustomizableTooltip";
-import { TypeChip } from "components/AppTypesModal";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import Notice from "components/Notice";
 import { RouterPrompt } from "components/RouterPrompt";
+import { getNextType } from "components/AppTypesModal/util";
+import { AppTypesTab } from "pages/AppView/types";
+import { profileSelector } from "pages/Profile/selectors";
 import { createApp } from "store/applications/actions/createApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
-import { getUserApp } from "store/applications/actions/getUserApp";
+import { resetUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
-import { AppData, AppType } from "store/applications/types";
-import { getProfile } from "store/profile/actions/getProfile";
+import { AppType } from "store/applications/types";
+import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getSections } from "util/extensions";
 import { applicationsViewSelector } from "./selector";
-import { profileSelector } from "pages/Profile/selectors";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
-import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { AppTypesTab } from "pages/AppView/types";
+import { checkHistory, checkNextAction, AppHeader, handleNext, useGetApp } from "./util";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
@@ -39,20 +38,17 @@ export const GeneralSettings: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createdId, names: allUserAppNames, types, requesting } = useSelector(applicationsViewSelector);
+  const { app, createAppStatus, types, requesting } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const [avatar, setAvatar] = React.useState("");
   const appType = useRef<AppType>(types[0]);
   const isNew = Number.isNaN(Number(appId));
 
   useEffect(() => {
-    if (isNew && createdId !== -1) {
-      history.push(`/dashboard/apps/${createdId}/type/${typeId}/${AppTypesTab.GENERAL}`);
+    if (isNew && app.id !== 0) {
+      dispatch(resetUserApp());
     }
-    if (!isNew && app.appType.id !== Number(typeId) && app.id !== -1 && app.appType.id !== 0) {
-      history.push(`/dashboard/apps/${appId}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
-    }
-  }, [app.id, app.appType.id, appId, createdId, history, isNew, typeId]);
+  }, [app.id, dispatch, isNew]);
 
   useEffect(() => {
     if (!types.length) {
@@ -62,45 +58,20 @@ export const GeneralSettings: React.FC = () => {
     }
   }, [dispatch, typeId, types]);
 
-  const dialogFunctions: { [index: string]: (hist: LocationHistory) => void } = {
-    toggleModal: (hist: LocationHistory) => hist.push("/dashboard/apps"),
-    regularGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions"),
-    alternativeGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions", {
-      redirected: true,
-      appID: hist.location.state?.appID || appId,
-    }),
-  };
-
-  const checkNextAction = (fn: string, hist: LocationHistory) => {
-    dialogFunctions[fn](hist);
-  };
-
-  const checkHistory = (hist: LocationHistory) => {
-    hist.location.state?.redirected
-      ? checkNextAction("alternativeGoToSubsView", hist)
-      : checkNextAction("toggleModal", hist);
-  };
-
-  useEffect(() => {
-    if (!profile.currentOrg.id) {
-      dispatch(getProfile({}));
-    }
+  useGetApp({
+    app,
+    appId,
+    createAppStatus,
+    history,
+    isNew,
+    profile,
+    typeId,
   });
-
-  useEffect(() => {
-    if (!isNew && profile.currentOrg.id && (app.id === 0 || app.id !== Number(appId))) {
-      dispatch(getUserApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
-    }
-  }, [app.id, appId, dispatch, isNew, profile]);
 
   const appSchema = yup.object().shape({
     name: yup.string()
-      .test("isAppNameValid", t("dashboardTab.applicationsSubTab.appModal.existingAppNameError"),
-        (value: string|undefined) => {
-          return !(isNew && allUserAppNames.includes(value || ""));
-        })
       .required(t("dashboardTab.applicationsSubTab.appModal.noAppNameError")),
-    summary: yup.string()
+    shortDescription: yup.string()
       .max(60, t("dashboardTab.applicationsSubTab.appModal.errors.summaryLimit")),
   });
 
@@ -116,7 +87,7 @@ export const GeneralSettings: React.FC = () => {
       logo: app.logo || "",
       description: app.description || "",
       name: app.name || "",
-      summary: app.summary || "",
+      shortDescription: app.shortDescription || "",
     },
     mode: "onChange",
     resolver: yupResolver(appSchema),
@@ -128,7 +99,7 @@ export const GeneralSettings: React.FC = () => {
       setValue("logo", app.logo, { shouldDirty: false });
       setValue("description", app.description, { shouldDirty: false });
       setValue("name", app.name, { shouldDirty: false });
-      setValue("summary", app.summary, { shouldDirty: false });
+      setValue("shortDescription", app.shortDescription, { shouldDirty: false });
     }
   }, [app, isNew, setValue]);
 
@@ -142,9 +113,10 @@ export const GeneralSettings: React.FC = () => {
     const newAppDetails = {
       ...app,
       ...getValues(),
+      appTypeId: Number(typeId),
     };
 
-    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails, appType: Number(appType) }));
+    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
   };
 
   // Updating an app
@@ -186,17 +158,7 @@ export const GeneralSettings: React.FC = () => {
   };
 
   const hasChanged = () => {
-    return (isValid || Object.keys(errors).length === 0) && isDirty;
-  };
-
-  const handleNext = (application: AppData) => {
-    const next = getNextType(application.appType, AppTypesTab.GENERAL);
-    history.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${next}`);
-  };
-
-  const handlePrevious = (application: AppData) => {
-    const prev = getPreviousType(application.appType, AppTypesTab.GENERAL);
-    history.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${prev}`);
+    return (isValid || Object.keys(errors).length === 0) && (isDirty || avatar !== app.logo);
   };
 
   return (
@@ -209,7 +171,7 @@ export const GeneralSettings: React.FC = () => {
       {
         !requesting && <Box clone>
           <Container maxWidth="lg">
-            {/* Modal's title */}
+            {/* App title */}
             {
               isNew
                 ? (
@@ -219,45 +181,7 @@ export const GeneralSettings: React.FC = () => {
                     </Typography>
                   </Box>
                 )
-                : (
-                  <div className={classes.editApplicationHeaderContainer}>
-                    <Box pb={3}>
-                      <Typography display="block" gutterBottom variant="h2">
-                        {app.name}
-                      </Typography>
-                      <TypeChip color="primary" editable={!isNew} onTypeSelected={updateAppType} type={appType.current} />
-                    </Box>
-
-                    <div className={classes.editApplicationHeaderStatusContainer}>
-                      <Box display="flex">
-                        {/* A mere dot */}
-                        <Box
-                          className={
-                            clsx(
-                              classes.subscribedClientApplicationCardStatusIcon,
-                              !app.subscriptions.length &&
-                              classes.draftClientApplicationCardStatusIcon,
-                            )
-                          }
-                          pb={1.5}
-                          pr={1}
-                        >
-                          <Icon fontSize="small">circle</Icon>
-                        </Box>
-
-                        <Box clone pb={1.5}>
-                          <Typography style={{ color: palette.text.secondary }} variant="body2">
-                            {
-                              app.subscriptions.length === 0
-                                ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
-                                : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
-                            }
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </div>
-                  </div>
-                )
+                : <AppHeader app={app} appType={appType} isNew={isNew} updateAppType={updateAppType} />
             }
 
             {/* 'General information' section */}
@@ -302,14 +226,14 @@ export const GeneralSettings: React.FC = () => {
 
                 <Controller
                   control={control}
-                  name="summary"
+                  name="shortDescription"
                   render={({ field }) => (
                     <TextField
                       className={classes.inputFields}
-                      error={!!errors.summary}
+                      error={!!errors.shortDescription}
                       {...field}
                       fullWidth
-                      helperText={errors.summary?.message}
+                      helperText={errors.shortDescription?.message}
                       label={t("dashboardTab.applicationsSubTab.appModal.appSummaryFieldLabel")}
                       margin="dense"
                       multiline
@@ -328,12 +252,12 @@ export const GeneralSettings: React.FC = () => {
                 <AvatarDropzone
                   image={avatar || getValues("logo")}
                   onDeletePressed={() => {
-                    setValue("logo", "", { shouldDirty: true });
+                    setValue("logo", "");
                     setAvatar("");
                   }}
                   onFileLoaded={(image: string) => {
                     setAvatar(image);
-                    setValue("logo", image, { shouldDirty: true });
+                    setValue("logo", image);
                   }}
                 />
               </Grid>
@@ -467,7 +391,7 @@ export const GeneralSettings: React.FC = () => {
 
                         <Button
                           className={classes.otherButtons}
-                          onClick={() => checkHistory(history)}
+                          onClick={() => checkHistory(history, appId)}
                           color="secondary"
                           variant="outlined"
                         >
@@ -511,7 +435,7 @@ export const GeneralSettings: React.FC = () => {
                           !!getNextType(app.appType, AppTypesTab.GENERAL) && <Button
                             color="primary"
                             disableElevation
-                            onClick={() => handleNext(app)}
+                            onClick={() => handleNext(app, AppTypesTab.GENERAL, history)}
                             size="large"
                             style={{ margin: spacing(0, 0, 0, 3) }}
                             variant="contained"
@@ -519,23 +443,11 @@ export const GeneralSettings: React.FC = () => {
                             {t("applications.buttons.next")}
                           </Button>
                         }
-                        {
-                          !!getPreviousType(app.appType, AppTypesTab.GENERAL) && <Button
-                            color="secondary"
-                            disableElevation
-                            onClick={() => handlePrevious(app)}
-                            size="large"
-                            style={{ margin: spacing(0, 0, 0, 3) }}
-                            variant="outlined"
-                          >
-                            {t("applications.buttons.back")}
-                          </Button>
-                        }
                       </div>
 
                       <Button
                         className={classes.otherButtons}
-                        onClick={() => checkHistory(history)}
+                        onClick={() => checkHistory(history, appId)}
                         color="primary"
                         variant="outlined"
                       >

@@ -36,7 +36,7 @@ export interface AppData {
   orgId: string,
   privacyUrl: string,
   redirectUrl: string,
-  summary: string,
+  shortDescription: string,
   subscriptions: any[],
   supportUrl: string,
   tosUrl: string,
@@ -44,7 +44,7 @@ export interface AppData {
   visibility: string,
   websiteUrl: string,
   youtubeUrl: string,
-  media: string[],
+  images: string[],
   metadata: Metadata[],
   appType: AppType & {
     createdAt: string,
@@ -135,36 +135,9 @@ export interface ApplicationsProps {
   user: User,
 }
 
-export interface CreateAppActionData {
-  description: string,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  summary: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
-}
+export type CreateAppActionData = AppData
 
-export interface UpdateAppActionData {
-  description: string,
-  id: number,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  summary: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
-}
+export type UpdateAppActionData = AppData
 
 export interface AppType {
   id: number,

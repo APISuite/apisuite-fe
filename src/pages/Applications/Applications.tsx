@@ -71,7 +71,7 @@ export const Applications: React.FC = () => {
           style={{ color: palette.text.secondary }}
           variant="body1"
         >
-          {app.summary || t("dashboardTab.applicationsSubTab.listOfAppsSection.noAppSummary")}
+          {app.shortDescription || t("dashboardTab.applicationsSubTab.listOfAppsSection.noAppSummary")}
         </Typography>
       </Box>
 

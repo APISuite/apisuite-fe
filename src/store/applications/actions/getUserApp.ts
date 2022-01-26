@@ -3,6 +3,7 @@ import { GetUserAppAction, GetUserAppActionError, GetUserAppActionSuccess } from
 export const GET_USER_APP = "applications/GET_USER_APP";
 export const GET_USER_APP_SUCCESS = "applications/GET_USER_APP_SUCCESS";
 export const GET_USER_APP_ERROR = "applications/GET_USER_APP_ERROR";
+export const GET_USER_APP_RESET = "applications/GET_USER_APP_RESET";
 
 export function getUserApp (payload: Omit<GetUserAppAction, "type">) {
   return { type: GET_USER_APP, ...payload };
@@ -14,4 +15,8 @@ export function getUserAppSuccess (payload: Omit<GetUserAppActionSuccess, "type"
 
 export function getUserAppError (payload: Omit<GetUserAppActionError, "type">) {
   return { type: GET_USER_APP_ERROR, ...payload };
+}
+
+export function resetUserApp () {
+  return { type: GET_USER_APP_RESET };
 }
