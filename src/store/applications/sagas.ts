@@ -46,7 +46,7 @@ export function* createAppActionSaga(action: CreateAppAction) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(createAppError({ payload: action.appData }));
-    yield put(openNotification("error", i18n.t("applications.create.error"), 3000));
+    yield put(openNotification("error", i18n.t("applications.error.create"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -78,6 +78,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(updateAppError(error));
+    yield put(openNotification("error", i18n.t("applications.error.update"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }

@@ -706,6 +706,10 @@
       "subToAPI": "Subscribe to API",
       "update": "Update"
     },
+    "error": {
+      "create": "Failed to create app. Please make sure all required fields are filled correctly or contact support.",
+      "update": "Failed to update app. Please make sure all required fields are filled correctly or contact support."
+    },
     "prompt": {
       "body": "All changes you made will be lost. Do you really want to leave without saving?",
       "cancel": "Stay and save",
