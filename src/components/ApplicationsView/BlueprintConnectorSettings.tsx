@@ -18,7 +18,7 @@ import { AppType } from "store/applications/types";
 import { deleteApp } from "store/applications/actions/deleteApp";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getProfile } from "store/profile/actions/getProfile";
-import { getUserApp } from "store/applications/actions/getUserApp";
+import { getUserApp, resetUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
@@ -115,7 +115,7 @@ export const BlueprintConnectorSettings: React.FC = () => {
       app_field_1: currentBlueprintAppFields[0],
       app_field_2: "",
       app_field_3: "",
-      api_field_1: "",
+      api_field_1: currentBlueprintAppFields[1] || "",
       api_field_2: "",
       api_field_3: "",
     },
@@ -191,10 +191,18 @@ export const BlueprintConnectorSettings: React.FC = () => {
   // 'Active app status' logic
 
   const toggleActiveAppStatus = (isAppActive: boolean) => {
+    // TODO: Delete this, this is hacky code
+    const allFields = {
+      ...getValues(),
+    };
+
     dispatch(toggleBlueprintAppStatusAction({
       toggleBlueprintAppStatusData: { app_name: currentBlueprintAppData.app_name, command: isAppActive ? "start" : "stop" },
+      fields: [allFields.app_field_1, allFields.api_field_1],
     }));
   };
+
+  console.log("getValues():", getValues());
 
   return (
     <>

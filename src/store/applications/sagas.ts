@@ -326,7 +326,7 @@ export function* checkBlueprintAuthActionSaga(action: CheckBlueprintAuthAction) 
 export function* mapFieldsActionSaga(action: MapFieldsAction) {
   try {
     // TODO: URL should not be hardcoded, I believe
-    const mapFieldsUrl = "https://appconnector.proxy.apisuite.io/apps/fieldmapping";
+    const mapFieldsUrl = "https://appconnector.proxy.apisuite.io/apps/fieldmapping/";
 
     const response: unknown = yield call(request, {
       url: mapFieldsUrl,
@@ -351,7 +351,7 @@ export function* mapFieldsActionSaga(action: MapFieldsAction) {
 export function* toggleBlueprintAppStatusActionSaga(action: ToggleBlueprintAppStatusAction) {
   try {
     // TODO: URL should not be hardcoded, I believe
-    const toggleBlueprintAppStatusUrl = "https://appconnector.proxy.apisuite.io/apps/worker";
+    const toggleBlueprintAppStatusUrl = "https://appconnector.proxy.apisuite.io/apps/worker/";
 
     yield call(request, {
       url: toggleBlueprintAppStatusUrl,

@@ -225,6 +225,7 @@ export type CheckBlueprintAuthActionError = {
 export type ToggleBlueprintAppStatusAction = {
   type: typeof TOGGLE_BLUEPRINT_APP_STATUS_ACTION,
   toggleBlueprintAppStatusData: ToggleBlueprintAppStatusData,
+  fields: string[],
 }
 
 export type ToggleBlueprintAppStatusActionSuccess = {

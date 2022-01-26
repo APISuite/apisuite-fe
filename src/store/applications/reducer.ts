@@ -157,6 +157,8 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: false },
         },
+
+        currentBlueprintAppFields:  { $set: action.fields },
       });
     }
 
