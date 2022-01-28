@@ -114,7 +114,7 @@ function * loginUserWorker () {
     let org = profile.organizations[0];
 
     if (orgId) {
-      const orgFound = profile.organizations.find((org) => org.id === Number(orgId));
+      const orgFound = profile.organizations.find((organization) => organization.id === Number(orgId));
       if (orgFound) {
         org = orgFound;
       }
