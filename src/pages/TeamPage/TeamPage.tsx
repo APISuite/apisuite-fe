@@ -405,7 +405,9 @@ export const TeamPage: React.FC = () => {
           setRemoveUserDialogOpen(false);
           setIdOfMemberToRemove("");
         }}
-        confirmButtonCallback={() => removeFromTeam(currentOrganisation.id, user.id, Number(idOfMemberToRemove))}
+        confirmButtonCallback={
+          () => user && removeFromTeam(currentOrganisation.id, user.id, Number(idOfMemberToRemove))
+        }
         confirmButtonLabel={t("rbac.team.dialogs.removeUser.confirmButtonLabel")}
         confirmButtonStyle={classes.deleteAppButtonStyles}
         open={removeUserDialogOpen}
