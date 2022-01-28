@@ -22,7 +22,7 @@ import { ROLES } from "constants/global";
 const initialState: ProfileStore = {
   members: [{
     Organization: {
-      id: "",
+      id: -1,
       name: "",
     },
     User: {
@@ -30,39 +30,43 @@ const initialState: ProfileStore = {
       name: "",
     },
     Role: {
-      id: "",
+      id: -1,
       name: ROLES.baseUser.value,
+      level: 1000,
     },
   }],
   profile: {
     currentOrg: {
-      id: "",
+      id: -1,
       name: "",
       role: {
-        id: "",
+        id: -1,
         name: ROLES.baseUser.value,
+        level: 1000,
       },
     },
     ssoAccountURL: "",
     organizations: [{
-      id: "",
+      id: -1,
       name: "",
       role: {
-        id: "",
+        id: -1,
         name: ROLES.baseUser.value,
+        level: 1000,
       },
     }],
     user: {
       email: "",
-      id: "",
+      id: -1,
       last_login: "",
       name: "",
       oidcProvider: null,
     },
   },
   roleOptions: [{
-    id: "",
+    id: -1,
     name: ROLES.baseUser.value,
+    level: 1000,
   }],
   org: {
     address: {
@@ -72,7 +76,7 @@ const initialState: ProfileStore = {
       country: "",
     },
     description: "",
-    id: "",
+    id: -1,
     logo: "",
     name: "",
     privacyUrl: "",

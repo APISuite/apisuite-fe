@@ -275,7 +275,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     if (modalMode === "edit") {
       reset({
         appAvatarURL: mostRecentlySelectedAppDetails.logo ?? "",
-        appClientID: mostRecentlySelectedAppDetails.clientId ?? "",
+        appClientID: mostRecentlySelectedAppDetails.clientId?.toString() ?? "",
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ?? "",
         appDirectURL: mostRecentlySelectedAppDetails.directUrl ?? "",
         appDescription: mostRecentlySelectedAppDetails.description ?? "",

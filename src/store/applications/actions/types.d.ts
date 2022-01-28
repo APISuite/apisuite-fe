@@ -36,7 +36,7 @@ DeleteAppMediaActionError
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
-  orgID: string,
+  orgID: number,
   appData: CreateAppActionData,
 }
 
@@ -50,7 +50,7 @@ export type CreateAppActionError = {
 
 export type UpdateAppAction = {
   type: typeof UPDATE_APP,
-  orgID: string,
+  orgID: number,
   appData: UpdateAppActionData,
 }
 
@@ -66,7 +66,7 @@ export type UpdateAppActionError = {
 export type DeleteAppAction = {
   type: typeof DELETE_APP,
   appId: number,
-  orgID: string,
+  orgID: number,
 }
 
 export type DeleteAppActionSuccess = {
@@ -79,7 +79,7 @@ export type DeleteAppActionError = {
 
 export type RequestAPIAccessAction = {
   type: typeof REQUEST_API_ACCESS,
-  orgID: string,
+  orgID: number,
   appId: number,
 }
 
@@ -93,7 +93,7 @@ export type RequestAPIAccessActionError = {
 
 export type GetUserAppAction = {
   type: typeof GET_USER_APP,
-  orgID: string,
+  orgID: number,
   appId: number,
 }
 
@@ -108,7 +108,7 @@ export type GetUserAppActionError = {
 
 export type GetAllUserAppsAction = {
   type: typeof GET_ALL_USER_APPS,
-  orgID: string,
+  orgID: number,
 }
 
 export type GetAllUserAppsActionSuccess = {
@@ -123,7 +123,7 @@ export type GetAllUserAppsActionError = {
 
 export type UploadAppMediaAction = {
   type: typeof UPLOAD_APP_MEDIA,
-  orgID: string,
+  orgID: number,
   appId: number,
   media: FormData,
 }
@@ -140,7 +140,7 @@ export type UploadAppMediaActionError = {
 
 export type DeleteAppMediaAction = {
   type: typeof DELETE_APP_MEDIA,
-  orgID: string,
+  orgID: number,
   appId: number,
   media: string,
 }

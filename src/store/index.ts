@@ -9,6 +9,7 @@ import loggerMiddleware from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createAuthMiddleware } from "store/auth/middleware";
 import { createApplicationsMiddleware } from "store/applications/middleware";
+import { createProfileMiddleware } from "./profile/middleware";
 
 import combinedReducers from "./combinedReducers";
 import combinedSagas from "./combinedSagas";
@@ -22,8 +23,9 @@ let injectedSagas: any = [];
 const sagaMiddleware = createSagaMiddleware();
 const authMiddleware = createAuthMiddleware(history);
 const applicationsMiddleware = createApplicationsMiddleware(history);
+const profileMiddleware = createProfileMiddleware();
 
-const middleware = [sagaMiddleware, authMiddleware, applicationsMiddleware];
+const middleware = [sagaMiddleware, authMiddleware, applicationsMiddleware, profileMiddleware];
 
 let composedMiddleware;
 
