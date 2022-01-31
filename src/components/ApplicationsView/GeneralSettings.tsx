@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
@@ -16,20 +16,16 @@ import { CustomizableTooltip } from "components/CustomizableTooltip";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import Notice from "components/Notice";
 import { RouterPrompt } from "components/RouterPrompt";
-import { getNextType } from "components/AppTypesModal/util";
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { createApp } from "store/applications/actions/createApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
 import { resetUserApp } from "store/applications/actions/getUserApp";
-import { updateApp } from "store/applications/actions/updatedApp";
-import { AppType } from "store/applications/types";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getSections } from "util/extensions";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { checkHistory, checkNextAction, AppHeader, handleNext, useGetApp } from "./util";
+import { ActionsFooter, AppHeader, checkHistory, checkNextAction, useGetApp } from "./util";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
@@ -40,8 +36,7 @@ export const GeneralSettings: React.FC = () => {
   const history = useHistory() as LocationHistory;
   const { app, createAppStatus, types, requesting } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-  const [avatar, setAvatar] = React.useState("");
-  const appType = useRef<AppType>(types[0]);
+  const [avatar, setAvatar] = React.useState(app.logo || "");
   const isNew = Number.isNaN(Number(appId));
 
   useEffect(() => {
@@ -49,14 +44,6 @@ export const GeneralSettings: React.FC = () => {
       dispatch(resetUserApp());
     }
   }, [app.id, dispatch, isNew]);
-
-  useEffect(() => {
-    if (!types.length) {
-      dispatch(getAppTypes({}));
-    } else {
-      appType.current = types.find((tp) => tp.id.toString() === typeId) as AppType;
-    }
-  }, [dispatch, typeId, types]);
 
   useGetApp({
     app,
@@ -119,29 +106,6 @@ export const GeneralSettings: React.FC = () => {
     dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
   };
 
-  // Updating an app
-
-  const _updateApp = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
-    const updatedAppDetails = {
-      ...app,
-      ...getValues(),
-    };
-
-    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
-  };
-
-  const updateAppType = (type: AppType) => {
-    const updatedAppDetails = {
-      ...app,
-      ...getValues(),
-      appTypeId: type.id,
-    };
-
-    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
-  };
-
   // Deleting an app
 
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -157,7 +121,7 @@ export const GeneralSettings: React.FC = () => {
     history.push("/dashboard/apps");
   };
 
-  const hasChanged = () => {
+  const hasChanges = () => {
     return (isValid || Object.keys(errors).length === 0) && (isDirty || avatar !== app.logo);
   };
 
@@ -181,7 +145,16 @@ export const GeneralSettings: React.FC = () => {
                     </Typography>
                   </Box>
                 )
-                : <AppHeader app={app} appType={appType} isNew={isNew} updateAppType={updateAppType} />
+                : (
+                  <AppHeader
+                    app={app}
+                    isNew={isNew}
+                    getFormValues={getValues}
+                    orgId={profile.currentOrg.id}
+                    types={types}
+                    typeId={typeId}
+                  />
+                )
             }
 
             {/* 'General information' section */}
@@ -419,41 +392,15 @@ export const GeneralSettings: React.FC = () => {
                     </Grid>
                   )
                   : (
-                    <>
-                      <div>
-                        <Button
-                          color="primary"
-                          disabled={!hasChanged()}
-                          disableElevation
-                          onClick={_updateApp}
-                          size="large"
-                          variant="contained"
-                        >
-                          {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
-                        </Button>
-                        {
-                          !!getNextType(app.appType, AppTypesTab.GENERAL) && <Button
-                            color="primary"
-                            disableElevation
-                            onClick={() => handleNext(app, AppTypesTab.GENERAL, history)}
-                            size="large"
-                            style={{ margin: spacing(0, 0, 0, 3) }}
-                            variant="contained"
-                          >
-                            {t("applications.buttons.next")}
-                          </Button>
-                        }
-                      </div>
-
-                      <Button
-                        className={classes.otherButtons}
-                        onClick={() => checkHistory(history, appId)}
-                        color="primary"
-                        variant="outlined"
-                      >
-                        {t("applications.buttons.backToApps")}
-                      </Button>
-                    </>
+                    <ActionsFooter
+                      app={app}
+                      appId={appId}
+                      getFormValues={getValues}
+                      hasChanges={hasChanges}
+                      history={history}
+                      orgId={profile.currentOrg.id}
+                      tabType={AppTypesTab.GENERAL}
+                    />
                   )
               }
             </div>
@@ -486,7 +433,7 @@ export const GeneralSettings: React.FC = () => {
         subtitle={t("applications.prompt.subtitle")}
         title={t("applications.prompt.title")}
         type="warning"
-        when={hasChanged()}
+        when={hasChanges()}
       />
     </>
   );

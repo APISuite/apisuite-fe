@@ -1,18 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { Box, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
+import { Box, Button, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import clsx from "clsx";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { AppData } from "store/applications/types";
+import { AppData, AppType } from "store/applications/types";
+import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getUserApp } from "store/applications/actions/getUserApp";
+import { updateApp } from "store/applications/actions/updatedApp";
 import { getProfile } from "store/profile/actions/getProfile";
 import { AppTypesTab } from "pages/AppView/types";
-import { AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
+import { ActionsFooterProps, AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
 import useStyles from "./styles";
 
-export const dialogFunctions: { [index: string]: (hist: LocationHistory, appId?: string) => void } = {
+const isDraft = (app: AppData) => {
+  return app.subscriptions.length === 0 ? "draftApp" : "subbedApp";
+};
+
+const dialogFunctions: { [index: string]: (hist: LocationHistory, appId?: string) => void } = {
   goToApps: (hist: LocationHistory) => hist.push("/dashboard/apps"),
   regularGoToSubsView: (hist: LocationHistory) => hist.push("/dashboard/subscriptions"),
   alternativeGoToSubsView: (hist: LocationHistory, appId?: string) => hist.push("/dashboard/subscriptions", {
@@ -31,29 +37,71 @@ export const checkHistory = (hist: LocationHistory, appId?: string) => {
     : checkNextAction("goToApps", hist);
 };
 
-export const handleNext = (application: AppData, tab: AppTypesTab, hist: LocationHistory) => {
-  const next = getNextType(application.appType, tab);
-  hist.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${next}`);
-};
+export function useGetApp(data: UseGetAppParams) {
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-export const handlePrevious = (application: AppData, tab: AppTypesTab, hist: LocationHistory) => {
-  const prev = getPreviousType(application.appType, tab);
-  hist.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${prev}`);
-};
+  useEffect(() => {
+    if (data.isNew && data.createAppStatus.id !== -1 && !data.createAppStatus.isError) {
+      data.history.push(`/dashboard/apps/${data.createAppStatus.id}/type/${data.typeId}/${AppTypesTab.GENERAL}`);
+    }
+    if (data.isNew && location.pathname.indexOf(AppTypesTab.GENERAL) === -1) {
+      data.history.push(`/dashboard/apps/new/type/${data.typeId}/${AppTypesTab.GENERAL}`);
+    }
+    if (
+      !data.isNew &&
+      data.app.id === Number(data.appId) &&
+      data.app.appType.id !== 0 &&
+      data.app.appType.id !== Number(data.typeId)
+    ) {
+      data.history.push(`/dashboard/apps/${data.appId}/type/${data.app.appType.id}/${AppTypesTab.GENERAL}`);
+    }
+  }, [data, location.pathname]);
 
-const isDraft = (app: AppData) => {
-  return app.subscriptions.length === 0 ? "draftApp" : "subbedApp";
-};
+  useEffect(() => {
+    if (!data.profile.currentOrg.id) {
+      dispatch(getProfile({}));
+    }
+  });
+
+  useEffect(() => {
+    if (!data.isNew && data.profile.currentOrg.id && (data.app.id === 0 || data.app.id !== Number(data.appId))) {
+      dispatch(getUserApp({ orgID: data.profile.currentOrg.id, appId: Number(data.appId) }));
+    }
+  }, [data, dispatch]);
+}
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
   app,
-  appType,
   isNew,
-  updateAppType,
+  getFormValues,
+  orgId,
+  types,
+  typeId,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { palette } = useTheme();
+  const dispatch = useDispatch();
+  const appType = useRef<AppType>(types[0]);
+
+  useEffect(() => {
+    if (!types.length) {
+      dispatch(getAppTypes({}));
+    } else {
+      appType.current = types.find((tp) => tp.id.toString() === typeId) as AppType;
+    }
+  }, [dispatch, typeId, types]);
+
+  const updateAppType = (type: AppType) => {
+    const updatedAppDetails = {
+      ...app,
+      ...getFormValues(),
+      appTypeId: type.id,
+    };
+
+    dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
+  };
 
   return (
     <div className={classes.editApplicationHeaderContainer}>
@@ -97,36 +145,90 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   );
 };
 
-export function useGetApp(data: UseGetAppParams) {
+export const ActionsFooter: React.FC<ActionsFooterProps> = ({
+  app,
+  appId,
+  getFormValues,
+  hasChanges,
+  history,
+  orgId,
+  tabType,
+}) => {
+  const classes = useStyles();
+  const { spacing } = useTheme();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const location = useLocation();
 
-  useEffect(() => {
-    if (data.isNew && data.createAppStatus.id !== -1 && !data.createAppStatus.isError) {
-      data.history.push(`/dashboard/apps/${data.createAppStatus.id}/type/${data.typeId}/${AppTypesTab.GENERAL}`);
-    }
-    if (data.isNew && location.pathname.indexOf(AppTypesTab.GENERAL) === -1) {
-      data.history.push(`/dashboard/apps/new/type/${data.typeId}/${AppTypesTab.GENERAL}`);
-    }
-    if (
-      !data.isNew &&
-      data.app.id === Number(data.appId) &&
-      data.app.appType.id !== 0 &&
-      data.app.appType.id !== Number(data.typeId)
-    ) {
-      data.history.push(`/dashboard/apps/${data.appId}/type/${data.app.appType.id}/${AppTypesTab.GENERAL}`);
-    }
-  }, [data, location.pathname]);
+  const handleNext = (application: AppData, tab: AppTypesTab, hist: LocationHistory) => {
+    const next = getNextType(application.appType, tab);
+    hist.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${next}`);
+  };
 
-  useEffect(() => {
-    if (!data.profile.currentOrg.id) {
-      dispatch(getProfile({}));
-    }
-  });
+  const handlePrevious = (application: AppData, tab: AppTypesTab, hist: LocationHistory) => {
+    const prev = getPreviousType(application.appType, tab);
+    hist.push(`/dashboard/apps/${application.id}/type/${application.appType.id}/${prev}`);
+  };
 
-  useEffect(() => {
-    if (!data.isNew && data.profile.currentOrg.id && (data.app.id === 0 || data.app.id !== Number(data.appId))) {
-      dispatch(getUserApp({ orgID: data.profile.currentOrg.id, appId: Number(data.appId) }));
-    }
-  }, [data, dispatch]);
-}
+  // Update an app
+
+  const _updateApp = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    const updatedAppDetails = {
+      ...app,
+      ...getFormValues(),
+    };
+
+    dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
+  };
+
+  return (
+    <Box display="flex" justifyContent="space-between" width="100%">
+      <div>
+        <Button
+          color="primary"
+          disabled={!hasChanges()}
+          disableElevation
+          onClick={_updateApp}
+          size="large"
+          variant="contained"
+        >
+          {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
+        </Button>
+        {
+          !!getNextType(app.appType, tabType) && <Button
+            color="primary"
+            disableElevation
+            onClick={() => handleNext(app, tabType, history)}
+            size="large"
+            style={{ margin: spacing(0, 0, 0, 3) }}
+            variant="contained"
+          >
+            {t("applications.buttons.next")}
+          </Button>
+        }
+        {
+          !!getPreviousType(app.appType, tabType) && <Button
+            color="secondary"
+            disableElevation
+            onClick={() => handlePrevious(app, tabType, history)}
+            size="large"
+            style={{ margin: spacing(0, 0, 0, 3) }}
+            variant="outlined"
+          >
+            {t("applications.buttons.back")}
+          </Button>
+        }
+      </div>
+
+      <Button
+        className={classes.otherButtons}
+        onClick={() => checkHistory(history, appId)}
+        color="primary"
+        variant="outlined"
+      >
+        {t("applications.buttons.backToApps")}
+      </Button>
+    </Box>
+  );
+};

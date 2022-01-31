@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
-  Box, Button, CircularProgress, Container, Grid, Icon, IconButton,
+  Box, CircularProgress, Container, Grid, Icon, IconButton,
   TextField, Trans, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import {  useForm, Controller } from "react-hook-form";
@@ -11,39 +11,25 @@ import * as yup from "yup";
 
 import Link from "components/Link";
 import { RouterPrompt } from "components/RouterPrompt";
-import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { updateApp } from "store/applications/actions/updatedApp";
-import { AppType } from "store/applications/types";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { isValidURL } from "util/forms";
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { AppHeader, checkHistory, handleNext, handlePrevious, useGetApp } from "./util";
+import { ActionsFooter, AppHeader, useGetApp } from "./util";
 
 export const ClientAccess: React.FC = () => {
   const classes = useStyles();
   const { appId, typeId } = useParams<{ appId: string; typeId: string  }>();
-  const { palette, spacing } = useTheme();
+  const { palette } = useTheme();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
   const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-  const appType = useRef<AppType>(types[0]);
   const isNew = Number.isNaN(Number(appId));
 
   const HTTPS_PREFIX = "https://";
-
-  useEffect(() => {
-    if (!types.length) {
-      dispatch(getAppTypes({}));
-    } else {
-      appType.current = types.find((tp) => tp.id.toString() === typeId) as AppType;
-    }
-  }, [dispatch, typeId, types]);
 
   useGetApp({
     app,
@@ -95,35 +81,11 @@ export const ClientAccess: React.FC = () => {
     }
   }, [app, isNew, setValue]);
 
-
-  // 3. Updating an app
-
-  const _updateApp = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
-    const updatedAppDetails = {
-      ...app,
-      ...getValues(),
-    };
-
-    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
-  };
-
-  const updateAppType = (type: AppType) => {
-    const updatedAppDetails = {
-      ...app,
-      ...getValues(),
-      appTypeId: type.id,
-    };
-
-    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
-  };
-
   const copyToClipboard = (value: string) => {
     navigator.clipboard.writeText(value);
   };
 
-  const hasChanged = () => {
+  const hasChanges = () => {
     return (isValid || Object.keys(errors).length === 0) && isDirty;
   };
 
@@ -137,7 +99,14 @@ export const ClientAccess: React.FC = () => {
       {
         !requesting && <Box clone>
           <Container maxWidth="lg">
-            <AppHeader app={app} appType={appType} isNew={isNew} updateAppType={updateAppType} />
+            <AppHeader
+              app={app}
+              isNew={isNew}
+              getFormValues={getValues}
+              orgId={profile.currentOrg.id}
+              types={types}
+              typeId={typeId}
+            />
 
             {/* 'Access details' section */}
             <Grid container spacing={3}>
@@ -260,52 +229,15 @@ export const ClientAccess: React.FC = () => {
 
             {/* 'App action' buttons section */}
             <div className={classes.buttonsContainer}>
-              <div>
-                <Button
-                  color="primary"
-                  disabled={!hasChanged()}
-                  disableElevation
-                  onClick={_updateApp}
-                  size="large"
-                  variant="contained"
-                >
-                  {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
-                </Button>
-
-                {
-                  !!getNextType(app.appType, AppTypesTab.CLIENT) && <Button
-                    color="primary"
-                    disableElevation
-                    onClick={() => handleNext(app, AppTypesTab.CLIENT, history)}
-                    size="large"
-                    style={{ margin: spacing(0, 0, 0, 3) }}
-                    variant="contained"
-                  >
-                    {t("applications.buttons.next")}
-                  </Button>
-                }
-                {
-                  !!getPreviousType(app.appType, AppTypesTab.CLIENT) && <Button
-                    color="secondary"
-                    disableElevation
-                    onClick={() => handlePrevious(app, AppTypesTab.CLIENT, history)}
-                    size="large"
-                    style={{ margin: spacing(0, 0, 0, 3) }}
-                    variant="outlined"
-                  >
-                    {t("applications.buttons.back")}
-                  </Button>
-                }
-              </div>
-
-              <Button
-                className={classes.otherButtons}
-                onClick={() => checkHistory(history, appId)}
-                color="primary"
-                variant="outlined"
-              >
-                {t("applications.buttons.backToApps")}
-              </Button>
+              <ActionsFooter
+                app={app}
+                appId={appId}
+                getFormValues={getValues}
+                hasChanges={hasChanges}
+                history={history}
+                orgId={profile.currentOrg.id}
+                tabType={AppTypesTab.CLIENT}
+              />
             </div>
           </Container>
         </Box>
@@ -318,7 +250,7 @@ export const ClientAccess: React.FC = () => {
         subtitle={t("applications.prompt.subtitle")}
         title={t("applications.prompt.title")}
         type="warning"
-        when={hasChanged()}
+        when={hasChanges()}
       />
     </>
   );

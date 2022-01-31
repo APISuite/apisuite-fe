@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
   Box, Button, CircularProgress, Container, Grid, Icon, IconButton, InputAdornment,
@@ -14,39 +14,26 @@ import * as yup from "yup";
 import Link from "components/Link";
 import Notice from "components/Notice";
 import { RouterPrompt } from "components/RouterPrompt";
-import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { updateApp } from "store/applications/actions/updatedApp";
-import { AppType, Metadata } from "store/applications/types";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
+import { Metadata } from "store/applications/types";
 import { AppTypesTab } from "pages/AppView/types";
 import { isValidAppMetaKey } from "util/forms";
 import { profileSelector } from "pages/Profile/selectors";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { AppHeader, checkHistory, handleNext, handlePrevious, useGetApp } from "./util";
+import { ActionsFooter, AppHeader, useGetApp } from "./util";
 
 export const CustomProperties: React.FC = () => {
   const classes = useStyles();
   const { appId, typeId } = useParams<{ appId: string; typeId: string  }>();
   const { palette, spacing } = useTheme();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
   const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-  const appType = useRef<AppType>(types[0]);
   const isNew = Number.isNaN(Number(appId));
 
   const metadataKeyDefaultPrefix = "meta_";
-
-  useEffect(() => {
-    if (!types.length) {
-      dispatch(getAppTypes({}));
-    } else {
-      appType.current = types.find((tp) => tp.id.toString() === typeId) as AppType;
-    }
-  }, [dispatch, typeId, types]);
 
   useGetApp({
     app,
@@ -121,30 +108,7 @@ export const CustomProperties: React.FC = () => {
     }
   }, [app, isNew, setValue]);
 
-  // Updating an app
-
-  const _updateApp = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
-    const updatedAppDetails = {
-      ...app,
-      ...getValues(),
-    };
-
-    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
-  };
-
-  const updateAppType = (type: AppType) => {
-    const updatedAppDetails = {
-      ...app,
-      ...getValues(),
-      appTypeId: type.id,
-    };
-
-    dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
-  };
-
-  const hasChanged = () => {
+  const hasChanges = () => {
     return (isValid || Object.keys(errors).length === 0) && isDirty;
   };
 
@@ -569,7 +533,14 @@ export const CustomProperties: React.FC = () => {
       {
         !requesting && <Box clone>
           <Container maxWidth="lg">
-            <AppHeader app={app} appType={appType} isNew={isNew} updateAppType={updateAppType} />
+            <AppHeader
+              app={app}
+              isNew={isNew}
+              getFormValues={getValues}
+              orgId={profile.currentOrg.id}
+              types={types}
+              typeId={typeId}
+            />
 
             <Grid container spacing={3}>
               <Grid item md={12}>
@@ -581,51 +552,15 @@ export const CustomProperties: React.FC = () => {
 
             {/* 'App action' buttons section */}
             <div className={classes.buttonsContainer}>
-              <div>
-                <Button
-                  color="primary"
-                  disabled={!hasChanged()}
-                  disableElevation
-                  onClick={_updateApp}
-                  size="large"
-                  variant="contained"
-                >
-                  {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
-                </Button>
-                {
-                  !!getNextType(app.appType, AppTypesTab.EXPERT) && <Button
-                    color="primary"
-                    disableElevation
-                    onClick={() => handleNext(app, AppTypesTab.EXPERT, history)}
-                    size="large"
-                    style={{ margin: spacing(0, 0, 0, 3) }}
-                    variant="contained"
-                  >
-                    {t("applications.buttons.next")}
-                  </Button>
-                }
-                {
-                  !!getPreviousType(app.appType, AppTypesTab.EXPERT) && <Button
-                    color="secondary"
-                    disableElevation
-                    onClick={() => handlePrevious(app, AppTypesTab.EXPERT, history)}
-                    size="large"
-                    style={{ margin: spacing(0, 0, 0, 3) }}
-                    variant="outlined"
-                  >
-                    {t("applications.buttons.back")}
-                  </Button>
-                }
-              </div>
-
-              <Button
-                className={classes.otherButtons}
-                onClick={() => checkHistory(history, appId)}
-                color="primary"
-                variant="outlined"
-              >
-                {t("applications.buttons.backToApps")}
-              </Button>
+              <ActionsFooter
+                app={app}
+                appId={appId}
+                getFormValues={getValues}
+                hasChanges={hasChanges}
+                history={history}
+                orgId={profile.currentOrg.id}
+                tabType={AppTypesTab.EXPERT}
+              />
             </div>
           </Container>
         </Box>
@@ -638,7 +573,7 @@ export const CustomProperties: React.FC = () => {
         subtitle={t("applications.prompt.subtitle")}
         title={t("applications.prompt.title")}
         type="warning"
-        when={hasChanged()}
+        when={hasChanges()}
       />
     </>
   );

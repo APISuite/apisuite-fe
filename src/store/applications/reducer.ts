@@ -154,6 +154,8 @@ export default function reducer (
         ...state,
         currentApp: {
           ...action.appData,
+          logo: action.appData.logo || "",
+          images: action.appData.images || [],
           appType: {
             ...action.appData.appType,
             id: action.appData.appType?.id || 1,
