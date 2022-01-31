@@ -37,10 +37,10 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     clientSecret: "",
     createdAt: "",
     description: "",
-    id: "",
+    id: -1,
     logo: "",
     name: "",
-    orgId: "",
+    orgId: -1,
     privacyUrl: "",
     redirectUrl: "",
     summary: "",
@@ -165,7 +165,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                   displayEmpty
                   IconComponent={ExpandMoreRoundedIcon}
                   value={
-                    selectedClientApp.id === ""
+                    selectedClientApp.id < 0
                       ? ""
                       : selectedClientApp.name
                   }

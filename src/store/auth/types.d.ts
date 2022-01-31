@@ -1,4 +1,4 @@
-import { OrganizationAndRole } from "store/profile/types";
+import { OrganizationAndRole, Role } from "store/profile/types";
 
 export interface AuthStore {
   authToken?: string,

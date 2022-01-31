@@ -32,7 +32,7 @@ export const TeamPage: React.FC = () => {
   const { currentOrganisation, members, requestStatuses, roleOptions, user } = useSelector(teamPageSelector);
 
   useEffect(() => {
-    if (currentOrganisation.id !== "") {
+    if (currentOrganisation.id > 0) {
       dispatch(fetchTeamMembers({}));
       dispatch(fetchRoleOptions({}));
     }
@@ -48,10 +48,12 @@ export const TeamPage: React.FC = () => {
   const changeRoleDisabled = (m: FetchTeamMembersResponse) => {
     if (!user) return true;
 
+    const role = getUserMemberRole(user);
+
     return (
-      getUserMemberRole(user).name === ROLES.developer.value ||
+      role.level < ROLES.developer.level,
       user.id === m.User.id ||
-      ROLES[getUserMemberRole(user).name].level > ROLES[m.Role.name].level
+      role.level > m.Role.level
     );
   };
 
@@ -59,6 +61,7 @@ export const TeamPage: React.FC = () => {
     return roles.map(role => ({
       label: ROLES[role.name]?.label,
       value: role.id,
+      level: role.level,
       group: "Role",
     })).filter((role) => role.label !== ROLES.baseUser.label);
   };
@@ -70,7 +73,7 @@ export const TeamPage: React.FC = () => {
     });
   }
 
-  const handleChangeRole = (userId: string, orgId: string) => ({ target }: React.ChangeEvent<any>) => {
+  const handleChangeRole = (userId: number, orgId: number) => ({ target }: React.ChangeEvent<any>) => {
     // TODO: review; there's is something wrongly typed somewhere
     if (target.value) {
       dispatch(changeRole({
@@ -118,7 +121,7 @@ export const TeamPage: React.FC = () => {
         dispatch(inviteTeamMember({
           email: input.email,
           orgID: currentOrganisation.id,
-          role_id: input.roleId.toString(),
+          role_id: Number(input.roleId),
         }));
       }}
     >
@@ -149,7 +152,15 @@ export const TeamPage: React.FC = () => {
           value={input.roleId}
           variant="outlined"
         >
-          {selectOptions(roleOptions).map((opt) => <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>)}
+          {selectOptions(roleOptions).map((opt) => (
+            <MenuItem
+              key={opt.value}
+              value={opt.value}
+              disabled={opt.level < (user?.role.level ?? -1)}
+            >
+              {opt.label}
+            </MenuItem>
+          ))}
         </Select>
       </Box>
 
@@ -212,35 +223,36 @@ export const TeamPage: React.FC = () => {
   ) => {
     if (!currentUser) return false;
 
-    const membersWithSameRole: FetchTeamMembersResponse[] = teamMembers.filter(
-      (teamMember: FetchTeamMembersResponse) => {
-        return currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
-      }
-    );
+    const role = getUserMemberRole(currentUser);
 
-    if (currentUser.id === providedMember.User.id) {
-      if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && membersWithSameRole.length) return true;
-
-      if (getUserMemberRole(currentUser).name === ROLES.developer.value) return true;
+    // only organization owner and up can remove users if sibling or under levels
+    if (role.level > ROLES.organizationOwner.level || role.level > providedMember.Role.level) {
+      return false;
     }
 
-    if (
-      ROLES[getUserMemberRole(currentUser).name].level <= ROLES[providedMember.Role.name].level &&
-      getUserMemberRole(currentUser).name !== ROLES.developer.value
-    ) {
-      return true;
+    // admins can't remove itself
+    if (role.level <= ROLES.admin.level && currentUser.id === providedMember.User.id) {
+      return false;
     }
 
-    return false;
+    // if the member to remove is organization owner and up, at least one more sibling or parent level should exist
+    // in team members array
+    if (providedMember.Role.level <= ROLES.organizationOwner.level) {
+      // our user is also present in the team members array
+      return teamMembers.filter((member) => member.Role.level <= ROLES.organizationOwner.level).length > 1;
+    }
+
+    // we can remove every other case
+    return true;
   };
 
   const [removeUserDialogOpen, setRemoveUserDialogOpen] = useState(false);
   const [idOfMemberToRemove, setIdOfMemberToRemove] = useState("");
 
   const removeFromTeam = (
-    orgID: string,
-    idOfCurrentUser: string,
-    idOfUserToRemove: string,
+    orgID: number,
+    idOfCurrentUser: number,
+    idOfUserToRemove: number,
   ) => {
     setRemoveUserDialogOpen(false);
 
@@ -297,7 +309,7 @@ export const TeamPage: React.FC = () => {
                     {members.map((member) => (
                       <TableRow className={classes.tableRow} key={member.User.id}>
                         <TableCell scope="row" style={{ paddingLeft: spacing(5) }}>
-                          {member.User.name}
+                          {member.User.name} {member.User.id === user?.id ? "(me)" : ""}
 
                           <br />
 
@@ -315,9 +327,17 @@ export const TeamPage: React.FC = () => {
                             value={member.Role.id}
                             variant="outlined"
                           >
-                            {selectOptions(roleOptions).map((opt) => (
-                              <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
-                            ))}
+                            {selectOptions(roleOptions).map((opt) => {
+                              return (
+                                <MenuItem
+                                  key={opt.value}
+                                  value={opt.value}
+                                  disabled={opt.level < (user?.role.level ?? -1)}
+                                >
+                                  {opt.label}
+                                </MenuItem>
+                              );
+                            })}
                           </Select>
                         </TableCell>
 
@@ -385,7 +405,9 @@ export const TeamPage: React.FC = () => {
           setRemoveUserDialogOpen(false);
           setIdOfMemberToRemove("");
         }}
-        confirmButtonCallback={() => removeFromTeam(currentOrganisation.id, user!.id.toString(), idOfMemberToRemove)}
+        confirmButtonCallback={
+          () => user && removeFromTeam(currentOrganisation.id, user.id, Number(idOfMemberToRemove))
+        }
         confirmButtonLabel={t("rbac.team.dialogs.removeUser.confirmButtonLabel")}
         confirmButtonStyle={classes.deleteAppButtonStyles}
         open={removeUserDialogOpen}

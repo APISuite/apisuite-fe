@@ -37,7 +37,7 @@ export const Applications: React.FC = () => {
   const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false);
 
   const isOrg = (_org: Organization | Organization & { member_since: string; role: Role }) => {
-    return Object.keys(_org).length !== 0 && _org.id !== "";
+    return Object.keys(_org).length !== 0 && _org.id > 0;
   };
 
   /* With every change of our store's 'profile > profile > currentOrg' section
@@ -181,7 +181,7 @@ export const Applications: React.FC = () => {
     const parsedAppID = parseInt(appIDInURL) || undefined;
 
     if (parsedAppID !== undefined && user) toggleModal("edit", user.id, parsedAppID);
-  }, []);
+  }, [appIDInURL, user, toggleModal]);
 
   /* Triggers the retrieval and storage (on the app's Store, under 'applications > userApps')
   of all app-related information we presently have on a particular user the first time, and
