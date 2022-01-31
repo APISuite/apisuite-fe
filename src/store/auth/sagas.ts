@@ -143,7 +143,7 @@ function * loginUserWorker () {
         role: {
           id: org.role?.id ?? -1,
           name: org.role?.name ?? ROLES.baseUser.value,
-          level: org.role?.level ?? 1000,
+          level: org.role?.level ?? ROLES.baseUser.level,
         },
       },
     }));

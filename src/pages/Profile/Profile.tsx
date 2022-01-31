@@ -165,7 +165,7 @@ export const Profile: React.FC = () => {
     role: {
       id: -1,
       name: ROLES.baseUser.value,
-      level: 1000,
+      level: ROLES.baseUser.level,
     },
   });
 

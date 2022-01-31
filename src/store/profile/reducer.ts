@@ -32,7 +32,7 @@ const initialState: ProfileStore = {
     Role: {
       id: -1,
       name: ROLES.baseUser.value,
-      level: 1000,
+      level: ROLES.baseUser.level,
     },
   }],
   profile: {
@@ -42,7 +42,7 @@ const initialState: ProfileStore = {
       role: {
         id: -1,
         name: ROLES.baseUser.value,
-        level: 1000,
+        level: ROLES.baseUser.level,
       },
     },
     ssoAccountURL: "",
@@ -52,7 +52,7 @@ const initialState: ProfileStore = {
       role: {
         id: -1,
         name: ROLES.baseUser.value,
-        level: 1000,
+        level: ROLES.baseUser.level,
       },
     }],
     user: {
@@ -66,7 +66,7 @@ const initialState: ProfileStore = {
   roleOptions: [{
     id: -1,
     name: ROLES.baseUser.value,
-    level: 1000,
+    level: ROLES.baseUser.level,
   }],
   org: {
     address: {

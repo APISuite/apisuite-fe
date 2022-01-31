@@ -226,20 +226,20 @@ export const TeamPage: React.FC = () => {
     const role = getUserMemberRole(currentUser);
 
     // only organization owner and up can remove users if sibling or under levels
-    if (role.level > 3 || role.level > providedMember.Role.level) {
+    if (role.level > ROLES.organizationOwner.level || role.level > providedMember.Role.level) {
       return false;
     }
 
     // admins can't remove itself
-    if (role.level < 3 && currentUser.id === providedMember.User.id) {
+    if (role.level <= ROLES.admin.level && currentUser.id === providedMember.User.id) {
       return false;
     }
 
     // if the member to remove is organization owner and up, at least one more sibling or parent level should exist
     // in team members array
-    if (providedMember.Role.level < 4) {
+    if (providedMember.Role.level <= ROLES.organizationOwner.level) {
       // our user is also present in the team members array
-      return teamMembers.filter((member) => member.Role.level < 4).length > 1;
+      return teamMembers.filter((member) => member.Role.level <= ROLES.organizationOwner.level).length > 1;
     }
 
     // we can remove every other case
