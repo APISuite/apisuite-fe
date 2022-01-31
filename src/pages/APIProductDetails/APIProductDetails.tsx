@@ -53,7 +53,7 @@ export const APIProductDetails: React.FC = () => {
   }, [apiId, dispatch, versionId]);
 
   useEffect(() => {
-    dispatch(getAllUserApps({ orgID: orgDetails.id }));
+    if (orgDetails.id && orgDetails.id !== -1) dispatch(getAllUserApps({ orgID: orgDetails.id }));
   }, [dispatch, orgDetails]);
 
   const [currentAPIDetails, setCurrentAPIDetails] = useState<CurrentAPIDetails>({
