@@ -17,7 +17,7 @@ export const apisAndAppsSelector = createSelector(
     const allApps = applications.userApps;
 
     return {
-      apis: allApis.map((api) => {
+      apis: allApis.filter((api) => api.publishedAt != null).map((api) => {
         const filteredApps = allApps.filter((app) => {
           return app.subscriptions.includes(api.id);
         });
