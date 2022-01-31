@@ -14,7 +14,7 @@ import { FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse,
 import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
-import { LOCAL_STORAGE_KEYS } from "constants/global";
+import { LOCAL_STORAGE_KEYS, ROLES } from "constants/global";
 import { logout } from "store/auth/actions/logout";
 import { openNotification } from "store/notificationStack/actions/notification";
 import { removeTeamMemberError, removeTeamMemberSuccess, REMOVE_TEAM_MEMBER } from "./actions/removeTeamMember";
@@ -169,7 +169,16 @@ export function* getProfileSaga() {
     }
 
     if (!org) {
-      throw new Error("profile has no organizations");
+      // TODO: review this - should we really keep an empty organization?
+      org = {
+        id: -1,
+        name: "",
+        role: {
+          id: -1,
+          name: ROLES.baseUser.value,
+          level: ROLES.baseUser.level,
+        },
+      };
     }
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.STORED_ORG, org.id.toString());

@@ -121,7 +121,16 @@ function * loginUserWorker () {
     }
 
     if (!org) {
-      throw new Error("profile has no organizations");
+      // TODO: review this - should we really keep an empty organization?
+      org = {
+        id: -1,
+        name: "",
+        role: {
+          id: -1,
+          name: ROLES.baseUser.value,
+          level: ROLES.baseUser.level,
+        },
+      };
     }
 
     localStorage.setItem(LOCAL_STORAGE_KEYS.STORED_ORG, org.id.toString());
