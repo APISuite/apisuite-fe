@@ -14,7 +14,7 @@ import { FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse,
 import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
-import { LOCAL_STORAGE_KEYS, ROLES } from "constants/global";
+import { LOCAL_STORAGE_KEYS } from "constants/global";
 import { logout } from "store/auth/actions/logout";
 import { openNotification } from "store/notificationStack/actions/notification";
 import { removeTeamMemberError, removeTeamMemberSuccess, REMOVE_TEAM_MEMBER } from "./actions/removeTeamMember";
@@ -22,6 +22,7 @@ import { Store } from "store/types";
 import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOrg";
 import { UPDATE_PROFILE, updateProfileError, updateProfileSuccess } from "./actions/updateProfile";
 import request from "util/request";
+import { getSelectedOrganization } from "util/getSelectedOrganization";
 
 export function* fetchTeamMembersSaga(action: FetchTeamMembersAction) {
   try {
@@ -158,30 +159,7 @@ export function* getProfileSaga() {
       },
     });
 
-    const orgId = localStorage.getItem(LOCAL_STORAGE_KEYS.STORED_ORG);
-    let org = profile.organizations[0];
-
-    if (orgId) {
-      const orgFound = profile.organizations.find((organization) => organization.id === Number(orgId));
-      if (orgFound) {
-        org = orgFound;
-      }
-    }
-
-    if (!org) {
-      // FIXME: review this - should we really keep an empty organization?
-      org = {
-        id: -1,
-        name: "",
-        role: {
-          id: -1,
-          name: ROLES.baseUser.value,
-          level: ROLES.baseUser.level,
-        },
-      };
-    }
-
-    localStorage.setItem(LOCAL_STORAGE_KEYS.STORED_ORG, org.id.toString());
+    const org = getSelectedOrganization(profile.organizations);
 
     const newProfile: Profile = { ...profile, currentOrg: org };
 

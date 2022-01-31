@@ -65,6 +65,7 @@ import {
 
 import { Invitation } from "./types";
 import { getReCAPTCHAToken, ReCaptchaActions } from "util/getReCAPTCHAToken";
+import { getSelectedOrganization } from "util/getSelectedOrganization";
 
 function * loginWorker (action: LoginAction) {
   try {
@@ -110,30 +111,7 @@ function * loginUserWorker () {
       localStorage.setItem(LOCAL_STORAGE_KEYS.CURRENT_USER, user.id.toString());
     }
 
-    const orgId = localStorage.getItem(LOCAL_STORAGE_KEYS.STORED_ORG);
-    let org = profile.organizations[0];
-
-    if (orgId) {
-      const orgFound = profile.organizations.find((organization) => organization.id === Number(orgId));
-      if (orgFound) {
-        org = orgFound;
-      }
-    }
-
-    if (!org) {
-      // review this - should we really keep an empty organization?
-      org = {
-        id: -1,
-        name: "",
-        role: {
-          id: -1,
-          name: ROLES.baseUser.value,
-          level: ROLES.baseUser.level,
-        },
-      };
-    }
-
-    localStorage.setItem(LOCAL_STORAGE_KEYS.STORED_ORG, org.id.toString());
+    const org = getSelectedOrganization(profile.organizations);
 
     // TODO: better types for this response
     const settings: { navigation: DefaultConfig["navigation"] } = yield call(request, {
