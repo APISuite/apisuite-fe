@@ -121,7 +121,7 @@ function * loginUserWorker () {
     }
 
     if (!org) {
-      // FIXME: review this - should we really keep an empty organization?
+      // review this - should we really keep an empty organization?
       org = {
         id: -1,
         name: "",
