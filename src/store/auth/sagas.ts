@@ -149,11 +149,7 @@ function * loginUserWorker () {
         fName: userName[0],
         lName: userName[userName.length - 1],
         id: user.id,
-        role: {
-          id: org.role?.id ?? -1,
-          name: org.role?.name ?? ROLES.baseUser.value,
-          level: org.role?.level ?? ROLES.baseUser.level,
-        },
+        role: {...org.role},
       },
     }));
   } catch (error) {
