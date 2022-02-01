@@ -15,7 +15,7 @@ import { GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./actions/getAppType
 /** Initial state */
 const initialState: ApplicationsStore = {
   currentApp: {
-    clientId: -1,
+    clientId: "",
     clientSecret: "",
     createdAt: "",
     description: "",

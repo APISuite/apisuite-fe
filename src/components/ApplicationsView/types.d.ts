@@ -28,7 +28,7 @@ export type AppHeaderProps = {
   typeId: string,
   isNew: boolean,
   getFormValues: UseFormGetValues,
-  orgId: string,
+  orgId: number,
   types: AppType[],
   typeId: string,
 }
@@ -39,6 +39,6 @@ export type ActionsFooterProps = {
   getFormValues: UseFormGetValues,
   hasChanges: () => boolean,
   history: LocationHistory,
-  orgId: string,
+  orgId: number,
   tabType: AppTypesTab,
 }

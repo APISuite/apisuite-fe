@@ -41,7 +41,7 @@ export const AvatarDropzone: React.FC<AvatarDropzoneProps> = ({
     }
   }, [media, onFileLoaded]);
 
-  const onDelete = (org: string, url: string) => {
+  const onDelete = (org: number, url: string) => {
     dispatch(deleteMedia({ orgId: org, url }));
     onDeletePressed();
   };

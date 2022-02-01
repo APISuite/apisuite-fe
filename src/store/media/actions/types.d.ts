@@ -13,7 +13,7 @@ export type MediaActions =
 export type UploadMediaAction = {
   type: typeof UPLOAD_MEDIA,
   file: FormData,
-  orgId: string,
+  orgId: number,
 }
 
 export type UploadMediaActionSuccess = {
@@ -28,7 +28,7 @@ export type UploadMediaActionError = {
 
 export type DeleteMediaAction = {
   type: typeof DELETE_MEDIA,
-  orgId: string,
+  orgId: number,
   url: string,
 }
 

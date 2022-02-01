@@ -18,7 +18,7 @@ export interface ApplicationsStore {
 }
 
 export interface AppData {
-  clientId: number,
+  clientId: string,
   clientSecret: string,
   createdAt: string,
   description: string,
