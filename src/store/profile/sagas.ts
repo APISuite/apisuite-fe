@@ -22,7 +22,7 @@ import { Store } from "store/types";
 import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOrg";
 import { UPDATE_PROFILE, updateProfileError, updateProfileSuccess } from "./actions/updateProfile";
 import request from "util/request";
-import { getFromStorage } from "util/localStorageActions";
+import { getSelectedOrganization } from "util/getSelectedOrganization";
 
 export function* fetchTeamMembersSaga(action: FetchTeamMembersAction) {
   try {
@@ -99,7 +99,7 @@ export function* removeMemberSaga(action: RemoveTeamMemberAction) {
 
     yield put(removeTeamMemberSuccess({}));
     yield put(openNotification("success", i18n.t("messages.removeMember.success"), 3000));
-    if (action.idOfCurrentUser === action.idOfUserToRemove.toString()) yield put(logout({}));
+    if (action.idOfCurrentUser === action.idOfUserToRemove) yield put(logout({}));
   } catch (error) {
     yield put(removeTeamMemberError({ error: error.message || "Invitation failed." }));
     yield put(openNotification("error", i18n.t("messages.removeMember.error"), 3000));
@@ -159,8 +159,9 @@ export function* getProfileSaga() {
       },
     });
 
-    const storedOrg = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG)!;
-    const newProfile: Profile = { ...profile, currentOrg: storedOrg };
+    const org = getSelectedOrganization(profile.organizations);
+
+    const newProfile: Profile = { ...profile, currentOrg: org };
 
     yield put(getProfileSuccess({ profile: newProfile }));
   } catch (error) {

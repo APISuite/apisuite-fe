@@ -19,7 +19,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   const { t } = useTranslation();
   const { user, currentOrg } = useSelector(navigationSelector);
   // FIXME: checking the id because profile is never undefined
-  const role = currentOrg?.role?.id ? currentOrg.role.name : user.id ? ROLES.baseUser.value : "anonymous";
+  const role = currentOrg?.role?.id > -1 ? currentOrg.role.name : user.id > -1 ? ROLES.baseUser.value : "anonymous";
 
   const [isMaxWidth, setIsMaxWidth] = useState(window.innerWidth <= 1024);
 

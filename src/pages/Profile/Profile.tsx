@@ -7,7 +7,7 @@ import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 
-import { LOCAL_STORAGE_KEYS, ROLES } from "constants/global";
+import { ROLES } from "constants/global";
 import { deleteAccount } from "store/profile/actions/deleteAccount";
 import { getProfile } from "store/profile/actions/getProfile";
 import { getRoleName, getSSOAccountURLSelector, profileSelector } from "./selectors";
@@ -25,7 +25,6 @@ import Notice from "components/Notice";
 import Link from "components/Link";
 import { PageContainer } from "components/PageContainer";
 import { testIds } from "testIds";
-import { setInStorage } from "util/localStorageActions";
 
 export const Profile: React.FC = () => {
   const classes = useStyles();
@@ -164,8 +163,9 @@ export const Profile: React.FC = () => {
     label: "",
     value: "",
     role: {
-      id: "",
+      id: -1,
       name: ROLES.baseUser.value,
+      level: ROLES.baseUser.level,
     },
   });
 
@@ -197,23 +197,21 @@ export const Profile: React.FC = () => {
     if (
       currentlySelectedOrganisation &&
       currentlySelectedOrganisation.value &&
-      currentlySelectedOrganisation.value !== profile.currentOrg.id
+      Number(currentlySelectedOrganisation.value) !== profile.currentOrg.id
     ) {
       const newOrg = {
-        id: currentlySelectedOrganisation.value,
+        id: Number(currentlySelectedOrganisation.value),
         name: currentlySelectedOrganisation.label,
         role: currentlySelectedOrganisation.role,
       };
 
-      setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, newOrg);
-      
       dispatch(switchOrg({ newOrg }));
     }
   };
 
   useEffect(() => {
     // Once our store's 'profile' details load, we check if there's organisation data associated to it
-    const hasOrgDetails = Object.keys(profile.currentOrg).length !== 0 && profile.currentOrg.id !== "";
+    const hasOrgDetails = Object.keys(profile.currentOrg).length !== 0 && profile.currentOrg.id > 0;
 
     setProfileHasOrgDetails(hasOrgDetails);
   }, [profile]);
@@ -223,7 +221,7 @@ export const Profile: React.FC = () => {
     setCurrentlySelectedOrganisation({
       group: "",
       label: profile.currentOrg.name,
-      value: profile.currentOrg.id,
+      value: profile.currentOrg.id.toString(),
       role: profile.currentOrg.role,
     });
   }, [profile]);
@@ -381,7 +379,7 @@ export const Profile: React.FC = () => {
                     organisationSelector(profile.organizations).find((selectedOrganisation) => {
                       return currentlySelectedOrganisation.value === ""
                         ? (selectedOrganisation.value === profile.currentOrg.id)
-                        : (selectedOrganisation.value === currentlySelectedOrganisation.value);
+                        : (selectedOrganisation.value === Number(currentlySelectedOrganisation.value));
                     })
                   }
                 />
@@ -389,7 +387,7 @@ export const Profile: React.FC = () => {
                 <Box clone mt={3}>
                   <Button
                     data-test-id={testIds.profileOverviewSelectorButton}
-                    disabled={currentlySelectedOrganisation.value === profile.currentOrg.id}
+                    disabled={Number(currentlySelectedOrganisation.value) === profile.currentOrg.id}
                     size="large"
                     color="primary"
                     variant="contained"

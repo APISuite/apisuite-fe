@@ -33,7 +33,7 @@ export const Organisation: React.FC = () => {
 
   /*
   Organisation details
-  
+
   Note:
   - 'formState' refers to our own, local copy of a organisation's details.
   - 'org' refers to our stored, back-end approved copy of a user's organisation details (under 'profile > org').
@@ -207,7 +207,7 @@ export const Organisation: React.FC = () => {
   const updateOrgDetails = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
 
-    const orgId = org.id.toString();
+    const orgId = org.id;
 
     const orgInfo = {
       name: formState.values.orgName,

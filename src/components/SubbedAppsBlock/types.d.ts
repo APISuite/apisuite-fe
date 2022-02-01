@@ -9,7 +9,7 @@ export type UserDetails = {
   avatar?: string,
   bio?: string,
   email: string,
-  id: string,
+  id: number,
   "last_login": string,
   mobile?: string,
   name: string,

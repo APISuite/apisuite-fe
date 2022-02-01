@@ -18,7 +18,7 @@ export interface ApplicationsStore {
 }
 
 export interface AppData {
-  clientId: string,
+  clientId: number,
   clientSecret: string,
   createdAt: string,
   description: string,
@@ -27,7 +27,7 @@ export interface AppData {
   labels: string[],
   logo: string,
   name: string,
-  orgId: string,
+  orgId: number,
   privacyUrl: string,
   redirectUrl: string,
   shortDescription: string,
@@ -72,7 +72,7 @@ export interface ApplicationsProps {
   },
   createAppStatus: boolean,
   deleteAppStatus: boolean,
-  getAllUserAppsAction: (orgID: string) => void,
+  getAllUserAppsAction: (orgID: number) => void,
   requestAPIAccessStatus: boolean,
   updateAppStatus: boolean,
   user: User,
