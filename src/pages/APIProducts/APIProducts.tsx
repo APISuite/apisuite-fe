@@ -17,8 +17,8 @@ import useStyles from "./styles";
 import { apiProductsSelector } from "./selector";
 import { profileSelector } from "pages/Profile/selectors";
 import clsx from "clsx";
+import { getLatestAPIProdIndex } from "util/getLatestAPIProdIndex";
 import { mapAPIData } from "util/mapAPIData";
-import { getLatestAPIProduct } from "util/getLatestAPIProduct";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -65,10 +65,10 @@ export const APIProducts: React.FC = () => {
 
     if (allAvailableAPIs.length) {
       const newRecentlyUpdatedAPIs: APIDetails[] = mapAPIData(allAvailableAPIs, t("fallbacks.noDescription"));
-      const indexOfLatestAPIProd: number = getLatestAPIProduct(allAvailableAPIs);
+      const latestAPIProdIndex: number = getLatestAPIProdIndex(allAvailableAPIs);
 
       setRecentlyUpdatedAPIs(newRecentlyUpdatedAPIs);
-      setLatestUpdatedAPI(newRecentlyUpdatedAPIs[indexOfLatestAPIProd]);
+      setLatestUpdatedAPI(newRecentlyUpdatedAPIs[latestAPIProdIndex]);
     }
   }, [subscriptions]);
 

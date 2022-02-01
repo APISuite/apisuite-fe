@@ -1,6 +1,6 @@
 import { Api } from "store/subscriptions/types";
 
-export const getLatestAPIProduct = (apis: Api[]): number => {
+export const getLatestAPIProdIndex = (apis: Api[]): number => {
   const datesInMilliseconds: number[] = apis.map((api) => {
     return api.updatedAt ? new Date(api.updatedAt).getTime() : -1;
   });
