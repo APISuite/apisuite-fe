@@ -72,7 +72,7 @@ export function* inviteMemberSaga(action: InviteTeamMemberAction) {
       },
       data: JSON.stringify({
         email: action.email,
-        role_id: action.role_id,
+        role_id: action.role_id.toString(),
       }),
     });
 

@@ -35,11 +35,12 @@ React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>> = (props) => 
 
 const InvitationConfirmationForm: React.FC<{
   invitation: Invitation,
-  token: string,
-  provider: string,
   isLogged: boolean,
+  provider: string,
+  noReject: string | undefined,
   sso: boolean,
-}> = ({ invitation, token, provider, isLogged, sso }) => {
+  token: string,
+}> = ({ invitation, isLogged, provider, noReject, sso, token }) => {
   const classes = useStyles();
   const [t] = useTranslation();
   const dispatch = useDispatch();
@@ -167,7 +168,7 @@ const InvitationConfirmationForm: React.FC<{
       <FormCard
         buttonLabel={getButtonLabel()}
         handleSubmit={() => dispatch(handleInviteFormSubmit())}
-        showReject
+        showReject={noReject !== "true"}
         rejectLabel={t("invitationForm.reject")}
         customRejectButtonStyles={classes.rejectButton}
         handleReject={() => dispatch(rejectInvitation({ token: token || "" }))}
@@ -309,6 +310,7 @@ export const InvitationForm = () => {
   // get token from url
   const invitationToken = qs.parse(window.location.search.slice(1)).token as string || undefined;
   const code = qs.parse(window.location.search.slice(1)).code as string || undefined;
+  const noReject = qs.parse(window.location.search.slice(1)).noReject as string || undefined;
 
   const stateToken = localStorage.getItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE);
 
@@ -394,6 +396,7 @@ export const InvitationForm = () => {
               invitation={invitation}
               token={invitationToken}
               provider={(sso?.length && sso[0]) || ""}
+              noReject={noReject}
               sso={!!sso?.length || false}
             />
           }
