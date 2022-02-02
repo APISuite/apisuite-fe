@@ -171,7 +171,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
   try {
     const getUserAppActionUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}`;
 
-    const response: Record<string, never> = yield call(request, {
+    const response: AppData = yield call(request, {
       url: getUserAppActionUrl,
       method: "GET",
       headers: {
@@ -179,33 +179,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
       },
     });
 
-    const requestedUserApp = {
-      clientId: response.clientId,
-      clientSecret: response.clientSecret,
-      createdAt: response.createdAt,
-      description: response.description,
-      directUrl: response.directUrl,
-      id: response.id,
-      labels: response.labels,
-      logo: response.logo,
-      metadata: response.metadata,
-      name: response.name,
-      orgId: response.orgId,
-      privacyUrl: response.privacyUrl,
-      redirectUrl: response.redirectUrl,
-      shortDescription: response.shortDescription,
-      subscriptions: response.subscriptions,
-      supportUrl: response.supportUrl,
-      tosUrl: response.tosUrl,
-      updatedAt: response.updatedAt,
-      visibility: response.visibility,
-      websiteUrl: response.websiteUrl,
-      youtubeUrl: response.youtubeUrl,
-      images: response.images,
-      appType: response.appType,
-    };
-
-    yield put(getUserAppSuccess({ appData: requestedUserApp }));
+    yield put(getUserAppSuccess({ appData: response }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(getUserAppError(error));
