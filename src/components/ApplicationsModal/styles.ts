@@ -25,6 +25,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "flex",
+    float: "right",
 
     "& > p": {
       color: theme.palette.label,
@@ -68,7 +69,7 @@ export default makeStyles((theme) => ({
 
   modalHeaderContainer: {
     alignItems: "center",
-    display: "flex",
+    display: "block",
     justifyContent: "space-between",
     margin: "0 auto",
     width: "calc(100% - 24px)",

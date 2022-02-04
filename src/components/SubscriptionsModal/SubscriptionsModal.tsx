@@ -104,14 +104,6 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
         <div className={classes.modalContentsContainer}>
           {/* Modal header */}
           <div className={classes.modalHeaderContainer}>
-            <div className={classes.logoAndNameContainer}>
-              <Logo src={ownerInfo.logo} icon={navigation.title.iconFallbackName} />
-
-              <Typography variant="h3">
-                {portalName}
-              </Typography>
-            </div>
-
             <div
               className={classes.closeModalButtonContainer}
               onClick={resetModalSelections}

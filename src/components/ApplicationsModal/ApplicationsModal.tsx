@@ -966,19 +966,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           <div className={classes.modalContentsContainer}>
             {/* Modal header */}
             <div className={classes.modalHeaderContainer}>
-              <div className={classes.logoAndNameContainer}>
-                <Box>
-                  <Logo
-                    icon={navigation.title.iconFallbackName}
-                    src={ownerInfo.logo}
-                  />
-                </Box>
-
-                <Typography display="block" gutterBottom variant="h3">
-                  {portalName}
-                </Typography>
-              </div>
-
               <div
                 className={classes.closeModalButtonContainer}
                 onClick={() => checkHistory(history)}
@@ -1026,11 +1013,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             }
                             pb={1.5}
                             pr={1}
+                            pt={1}
                           >
                             <Icon fontSize="small">circle</Icon>
                           </Box>
 
-                          <Box clone pb={1.5}>
+                          <Box clone pb={1.5} pt={1}>
                             <Typography style={{ color: palette.text.secondary }} variant="body2">
                               {
                                 mostRecentlySelectedAppDetails.subscriptions.length === 0
