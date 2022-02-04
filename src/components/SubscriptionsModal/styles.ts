@@ -58,7 +58,8 @@ export default makeStyles((theme) => ({
   },
 
   modalHeaderContainer: {
-    display: "block",
+    display: "flex",
+    justifyContent: "end",
     margin: "0 auto",
     maxWidth: "900px",
     width: "100%",

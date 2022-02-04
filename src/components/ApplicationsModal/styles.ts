@@ -68,9 +68,11 @@ export default makeStyles((theme) => ({
   },
 
   modalHeaderContainer: {
-    display: "block",
+    display: "flex",
+    justifyContent: "end",
     margin: "0 auto",
     width: "calc(100% - 24px)",
+
     [theme.breakpoints.up("md")]: {
       maxWidth: theme.breakpoints.values.md - 24,
     },
