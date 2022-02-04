@@ -25,6 +25,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "flex",
+    justifyContent: "end",
 
     "& > p": {
       marginRight: theme.spacing(1),
@@ -57,9 +58,8 @@ export default makeStyles((theme) => ({
   },
 
   modalHeaderContainer: {
-    alignItems: "center",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "end",
     margin: "0 auto",
     maxWidth: "900px",
     width: "100%",
@@ -164,6 +164,7 @@ export default makeStyles((theme) => ({
 
   clientAppsContainer: {
     display: "flex",
+    justifyContent: "space-between",
   },
 
   /* 1.2.3 'API product subscriptions' section */
