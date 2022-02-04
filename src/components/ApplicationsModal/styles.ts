@@ -68,9 +68,7 @@ export default makeStyles((theme) => ({
   },
 
   modalHeaderContainer: {
-    alignItems: "center",
     display: "block",
-    justifyContent: "space-between",
     margin: "0 auto",
     width: "calc(100% - 24px)",
     [theme.breakpoints.up("md")]: {

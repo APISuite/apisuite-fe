@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "flex",
-    justifyContent: "end*",
+    justifyContent: "end",
 
     "& > p": {
       marginRight: theme.spacing(1),
