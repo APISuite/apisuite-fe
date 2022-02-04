@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "flex",
-    float: "right",
+    justifyContent: "end",
 
     "& > p": {
       color: theme.palette.label,
