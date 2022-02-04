@@ -5,7 +5,7 @@ import {
   Avatar, Box, Button, Fade, Grid, Icon,
   IconButton, InputAdornment, Menu, MenuItem, Modal, Paper,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  TextField, Trans, Typography, useConfig, useTheme, useTranslation,
+  TextField, Trans, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
 import { useFieldArray, useForm, Controller } from "react-hook-form";
@@ -14,7 +14,6 @@ import * as yup from "yup";
 
 import markdownIcon from "assets/markdownIcon.svg";
 import { CustomizableTooltip } from "components/CustomizableTooltip";
-import { Logo } from "components/Logo";
 import { MediaUpload } from "components/MediaUpload";
 import { PageContainer } from "components/PageContainer";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
@@ -44,7 +43,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const classes = useStyles();
   const { palette, spacing } = useTheme();
   const { t } = useTranslation();
-  const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
   const history: any = useHistory();
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);

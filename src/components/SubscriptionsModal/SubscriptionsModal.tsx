@@ -10,7 +10,6 @@ import { apisAndAppsSelector } from "pages/Subscriptions/selectors";
 
 import { SubscriptionsModalProps } from "./types";
 import useStyles from "./styles";
-import { Logo } from "components/Logo";
 import Notice from "components/Notice";
 import { Link } from "react-router-dom";
 
@@ -19,7 +18,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const { t } = useTranslation();
-  const { portalName, ownerInfo, clientName, navigation } = useConfig();
+  const { clientName } = useConfig();
   const { apps, apis } = useSelector(apisAndAppsSelector);
 
   /* Redirection from the 'Applications modal' */
