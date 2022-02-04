@@ -5,7 +5,7 @@ import {
   Avatar, Box, Button, Fade, Grid, Icon,
   IconButton, InputAdornment, Menu, MenuItem, Modal, Paper,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  TextField, Trans, Typography, useConfig, useTheme, useTranslation,
+  TextField, Trans, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
 import { useFieldArray, useForm, Controller } from "react-hook-form";
@@ -14,7 +14,6 @@ import * as yup from "yup";
 
 import markdownIcon from "assets/markdownIcon.svg";
 import { CustomizableTooltip } from "components/CustomizableTooltip";
-import { Logo } from "components/Logo";
 import { MediaUpload } from "components/MediaUpload";
 import { PageContainer } from "components/PageContainer";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
@@ -44,7 +43,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const classes = useStyles();
   const { palette, spacing } = useTheme();
   const { t } = useTranslation();
-  const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
   const history: any = useHistory();
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
@@ -966,19 +964,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           <div className={classes.modalContentsContainer}>
             {/* Modal header */}
             <div className={classes.modalHeaderContainer}>
-              <div className={classes.logoAndNameContainer}>
-                <Box>
-                  <Logo
-                    icon={navigation.title.iconFallbackName}
-                    src={ownerInfo.logo}
-                  />
-                </Box>
-
-                <Typography display="block" gutterBottom variant="h3">
-                  {portalName}
-                </Typography>
-              </div>
-
               <div
                 className={classes.closeModalButtonContainer}
                 onClick={() => checkHistory(history)}
@@ -1026,11 +1011,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             }
                             pb={1.5}
                             pr={1}
+                            pt={1}
                           >
                             <Icon fontSize="small">circle</Icon>
                           </Box>
 
-                          <Box clone pb={1.5}>
+                          <Box clone pb={1.5} pt={1}>
                             <Typography style={{ color: palette.text.secondary }} variant="body2">
                               {
                                 mostRecentlySelectedAppDetails.subscriptions.length === 0

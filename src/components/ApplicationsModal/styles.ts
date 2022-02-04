@@ -25,6 +25,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "flex",
+    justifyContent: "end",
 
     "& > p": {
       color: theme.palette.label,
@@ -67,11 +68,11 @@ export default makeStyles((theme) => ({
   },
 
   modalHeaderContainer: {
-    alignItems: "center",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "end",
     margin: "0 auto",
     width: "calc(100% - 24px)",
+
     [theme.breakpoints.up("md")]: {
       maxWidth: theme.breakpoints.values.md - 24,
     },
