@@ -125,6 +125,14 @@ export const GeneralSettings: React.FC = () => {
     return (isValid || Object.keys(errors).length === 0) && (isDirty || avatar !== app.logo);
   };
 
+  const getBackToTranslation = () => {
+    const fromSubs = history.location.state?.redirected;
+    if (fromSubs) {
+      return t("applications.buttons.backToSubs");
+    }
+    return t("applications.buttons.backToApps");
+  };
+
   return (
     <>
       {
@@ -368,7 +376,7 @@ export const GeneralSettings: React.FC = () => {
                           color="secondary"
                           variant="outlined"
                         >
-                          {t(`applications.buttons.${history.location.state?.redirected ? "backToSubs" : "backToApps"}`)}
+                          {getBackToTranslation()}
                         </Button>
                       </Grid>
 
