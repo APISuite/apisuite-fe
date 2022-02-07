@@ -39,6 +39,7 @@ export default makeStyles((theme) => ({
   prodChip: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
+    marginRight: theme.spacing(1.5),
   },
 
   selectedTab: {
