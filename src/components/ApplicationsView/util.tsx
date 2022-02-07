@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { Box, Button, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
+import {
+  Box, Button, CircularProgress, Container,
+  Icon, Typography, useTheme, useTranslation,
+} from "@apisuite/fe-base";
 import clsx from "clsx";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
@@ -70,6 +73,44 @@ export function useGetApp(data: UseGetAppParams) {
     }
   }, [data, dispatch]);
 }
+
+export const AppContainer: React.FC<AppHeaderProps & { requesting: boolean }> = ({
+  app,
+  children,
+  isNew,
+  getFormValues,
+  orgId,
+  requesting,
+  types,
+  typeId,
+}) => {
+  const classes = useStyles();
+
+  return (
+    <>
+      {
+        requesting && <div className={classes.centerContent}>
+          <CircularProgress size={50} className={classes.loading} />
+        </div>
+      }
+      {
+        !requesting && <Box clone>
+          <Container maxWidth="lg">
+            <AppHeader
+              app={app}
+              isNew={isNew}
+              getFormValues={getFormValues}
+              orgId={orgId}
+              types={types}
+              typeId={typeId}
+            />
+            {children}
+          </Container>
+        </Box>
+      }
+    </>
+  );
+};
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
   app,

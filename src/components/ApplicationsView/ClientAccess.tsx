@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
-  Box, CircularProgress, Container, Grid, Icon, IconButton,
-  TextField, Trans, Typography, useTheme, useTranslation,
+  Box, Grid, Icon, IconButton, TextField,
+  Trans, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import {  useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,7 +17,7 @@ import { profileSelector } from "pages/Profile/selectors";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { ActionsFooter, AppHeader, useGetApp } from "./util";
+import { ActionsFooter, AppContainer, useGetApp } from "./util";
 
 export const ClientAccess: React.FC = () => {
   const classes = useStyles();
@@ -91,157 +91,147 @@ export const ClientAccess: React.FC = () => {
 
   return (
     <>
-      {
-        requesting && <div className={classes.centerContent}>
-          <CircularProgress size={50} className={classes.loading} />
-        </div>
-      }
-      {
-        !requesting && <Box clone>
-          <Container maxWidth="lg">
-            <AppHeader
-              app={app}
-              isNew={isNew}
-              getFormValues={getValues}
-              orgId={profile.currentOrg.id}
-              types={types}
-              typeId={typeId}
-            />
+      <AppContainer
+        app={app}
+        isNew={isNew}
+        getFormValues={getValues}
+        orgId={profile.currentOrg.id}
+        requesting={requesting}
+        types={types}
+        typeId={typeId}
+      >
+        {/* 'Access details' section */}
+        <Grid container spacing={3}>
+          {/* 'Redirect URI' subsection */}
+          <Grid item md={12}>
+            <Grid item md={6}>
+              <Box pb={1.5}>
+                <Typography display="block" gutterBottom variant="h6">
+                  {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
+                </Typography>
+              </Box>
 
-            {/* 'Access details' section */}
-            <Grid container spacing={3}>
-              {/* 'Redirect URI' subsection */}
-              <Grid item md={12}>
-                <Grid item md={6}>
-                  <Box pb={1.5}>
-                    <Typography display="block" gutterBottom variant="h6">
-                      {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
-                    </Typography>
-                  </Box>
-
-                  <Box pb={5}>
-                    <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
-                      <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour">
-                        {[
-                          <Link
-                            key="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour"
-                            rel='noopener noreferrer'
-                            target='_blank'
-                            to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2"
-                          />,
-                        ]}
-                      </Trans>
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-
-              <Grid item md={6}>
-                <Controller
-                  control={control}
-                  name="redirectUrl"
-                  render={({ field }) => (
-                    <TextField
-                      className={classes.inputFields}
-                      error={!!errors.redirectUrl}
-                      {...field}
-                      fullWidth
-                      helperText={errors.redirectUrl?.message}
-                      label={t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
-                      margin="dense"
-                      required
-                      type="url"
-                      variant="outlined"
-                    />
-                  )}
-                />
-              </Grid>
-
-              {/* 'Client credentials' subsection */}
-              <Grid item md={6}>
-                <div className={classes.row}>
-                  <Controller
-                    control={control}
-                    name="clientId"
-                    render={({ field }) => (
-                      <TextField
-                        disabled
-                        {...field}
-                        fullWidth
-                        label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
-                        margin="dense"
-                        name="clientId"
-                        type="text"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-
-                  <div className={classes.rowCta}>
-                    <IconButton
-                      disabled={!getValues("clientId")}
-                      onClick={() => copyToClipboard(getValues("clientId"))}
-                      size="medium"
-                    >
-                      <Icon>content_copy</Icon>
-                    </IconButton>
-                  </div>
-                </div>
-
-                <div className={classes.clientSecretInputFieldContainer}>
-                  <Controller
-                    control={control}
-                    name="clientSecret"
-                    render={({ field }) => (
-                      <TextField
-                        disabled
-                        {...field}
-                        fullWidth
-                        label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
-                        margin="dense"
-                        name="clientSecret"
-                        type="text"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-
-                  <div className={classes.copyCta}>
-                    <IconButton
-                      disabled={!getValues("clientSecret")}
-                      onClick={() => copyToClipboard(getValues("clientSecret"))}
-                      size="medium"
-                    >
-                      <Icon>content_copy</Icon>
-                    </IconButton>
-                  </div>
-
-                  <div
-                    className={classes.disabledClientSecretInputFieldRefreshButton}
-                  >
-                    <Icon>refresh</Icon>
-                  </div>
-                </div>
-              </Grid>
+              <Box pb={5}>
+                <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                  <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour">
+                    {[
+                      <Link
+                        key="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour"
+                        rel='noopener noreferrer'
+                        target='_blank'
+                        to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2"
+                      />,
+                    ]}
+                  </Trans>
+                </Typography>
+              </Box>
             </Grid>
+          </Grid>
 
-            <hr className={classes.regularSectionSeparator} />
+          <Grid item md={6}>
+            <Controller
+              control={control}
+              name="redirectUrl"
+              render={({ field }) => (
+                <TextField
+                  className={classes.inputFields}
+                  error={!!errors.redirectUrl}
+                  {...field}
+                  fullWidth
+                  helperText={errors.redirectUrl?.message}
+                  label={t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
+                  margin="dense"
+                  required
+                  type="url"
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
 
-            {/* 'App action' buttons section */}
-            <div className={classes.buttonsContainer}>
-              <ActionsFooter
-                app={app}
-                appId={appId}
-                getFormValues={getValues}
-                hasChanges={hasChanges}
-                history={history}
-                orgId={profile.currentOrg.id}
-                tabType={AppTypesTab.CLIENT}
+          {/* 'Client credentials' subsection */}
+          <Grid item md={6}>
+            <div className={classes.row}>
+              <Controller
+                control={control}
+                name="clientId"
+                render={({ field }) => (
+                  <TextField
+                    disabled
+                    {...field}
+                    fullWidth
+                    label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
+                    margin="dense"
+                    name="clientId"
+                    type="text"
+                    variant="outlined"
+                  />
+                )}
               />
+
+              <div className={classes.rowCta}>
+                <IconButton
+                  disabled={!getValues("clientId")}
+                  onClick={() => copyToClipboard(getValues("clientId"))}
+                  size="medium"
+                >
+                  <Icon>content_copy</Icon>
+                </IconButton>
+              </div>
             </div>
-          </Container>
-        </Box>
-      }
+
+            <div className={classes.clientSecretInputFieldContainer}>
+              <Controller
+                control={control}
+                name="clientSecret"
+                render={({ field }) => (
+                  <TextField
+                    disabled
+                    {...field}
+                    fullWidth
+                    label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
+                    margin="dense"
+                    name="clientSecret"
+                    type="text"
+                    variant="outlined"
+                  />
+                )}
+              />
+
+              <div className={classes.copyCta}>
+                <IconButton
+                  disabled={!getValues("clientSecret")}
+                  onClick={() => copyToClipboard(getValues("clientSecret"))}
+                  size="medium"
+                >
+                  <Icon>content_copy</Icon>
+                </IconButton>
+              </div>
+
+              <div
+                className={classes.disabledClientSecretInputFieldRefreshButton}
+              >
+                <Icon>refresh</Icon>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
+
+        <hr className={classes.regularSectionSeparator} />
+
+        {/* 'App action' buttons section */}
+        <div className={classes.buttonsContainer}>
+          <ActionsFooter
+            app={app}
+            appId={appId}
+            getFormValues={getValues}
+            hasChanges={hasChanges}
+            history={history}
+            orgId={profile.currentOrg.id}
+            tabType={AppTypesTab.CLIENT}
+          />
+        </div>
+      </AppContainer>
 
       <RouterPrompt
         bodyText={t("applications.prompt.body")}

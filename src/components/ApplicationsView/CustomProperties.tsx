@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
-  Box, Button, CircularProgress, Container, Grid, Icon, IconButton, InputAdornment,
-  Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, TextField, Trans, Typography, useTheme, useTranslation,
+  Box, Button, Grid, Icon, IconButton, InputAdornment, Menu,
+  MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead,
+  TableRow, TextField, Trans, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
 import { useFieldArray, useForm, Controller } from "react-hook-form";
@@ -21,7 +21,7 @@ import { profileSelector } from "pages/Profile/selectors";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { ActionsFooter, AppHeader, useGetApp } from "./util";
+import { ActionsFooter, AppContainer, useGetApp } from "./util";
 
 export const CustomProperties: React.FC = () => {
   const classes = useStyles();
@@ -525,46 +525,36 @@ export const CustomProperties: React.FC = () => {
 
   return (
     <>
-      {
-        requesting && <div className={classes.centerContent}>
-          <CircularProgress size={50} className={classes.loading} />
+      <AppContainer
+        app={app}
+        isNew={isNew}
+        getFormValues={getValues}
+        orgId={profile.currentOrg.id}
+        requesting={requesting}
+        types={types}
+        typeId={typeId}
+      >
+        <Grid container spacing={3}>
+          <Grid item md={12}>
+            {getMetadataSection()}
+          </Grid>
+        </Grid>
+
+        <hr className={classes.regularSectionSeparator} />
+
+        {/* 'App action' buttons section */}
+        <div className={classes.buttonsContainer}>
+          <ActionsFooter
+            app={app}
+            appId={appId}
+            getFormValues={getValues}
+            hasChanges={hasChanges}
+            history={history}
+            orgId={profile.currentOrg.id}
+            tabType={AppTypesTab.EXPERT}
+          />
         </div>
-      }
-      {
-        !requesting && <Box clone>
-          <Container maxWidth="lg">
-            <AppHeader
-              app={app}
-              isNew={isNew}
-              getFormValues={getValues}
-              orgId={profile.currentOrg.id}
-              types={types}
-              typeId={typeId}
-            />
-
-            <Grid container spacing={3}>
-              <Grid item md={12}>
-                {getMetadataSection()}
-              </Grid>
-            </Grid>
-
-            <hr className={classes.regularSectionSeparator} />
-
-            {/* 'App action' buttons section */}
-            <div className={classes.buttonsContainer}>
-              <ActionsFooter
-                app={app}
-                appId={appId}
-                getFormValues={getValues}
-                hasChanges={hasChanges}
-                history={history}
-                orgId={profile.currentOrg.id}
-                tabType={AppTypesTab.EXPERT}
-              />
-            </div>
-          </Container>
-        </Box>
-      }
+      </AppContainer>
 
       <RouterPrompt
         bodyText={t("applications.prompt.body")}

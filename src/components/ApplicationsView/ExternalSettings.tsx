@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, CircularProgress, Container, Grid, useTranslation } from "@apisuite/fe-base";
+import { Grid, useTranslation } from "@apisuite/fe-base";
 import {  useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -13,7 +13,7 @@ import { getSections } from "util/extensions";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { ActionsFooter, AppHeader, useGetApp } from "./util";
+import { ActionsFooter, AppContainer, useGetApp } from "./util";
 
 export const ExternalSettings: React.FC = () => {
   const classes = useStyles();
@@ -61,61 +61,51 @@ export const ExternalSettings: React.FC = () => {
 
   return (
     <>
-      {
-        requesting && <div className={classes.centerContent}>
-          <CircularProgress size={50} className={classes.loading} />
-        </div>
-      }
-      {
-        !requesting && <Box clone>
-          <Container maxWidth="lg">
-            <AppHeader
-              app={app}
-              isNew={isNew}
-              getFormValues={getValues}
-              orgId={profile.currentOrg.id}
-              types={types}
-              typeId={typeId}
-            />
-
-            <Grid container spacing={3}>
-              <Grid item md={12}>
+      <AppContainer
+        app={app}
+        isNew={isNew}
+        getFormValues={getValues}
+        orgId={profile.currentOrg.id}
+        requesting={requesting}
+        types={types}
+        typeId={typeId}
+      >
+        <Grid container spacing={3}>
+          <Grid item md={12}>
+            {
+              getSections(
+                "APPLICATION_NAV_FORM_SECTION",
                 {
-                  getSections(
-                    "APPLICATION_NAV_FORM_SECTION",
-                    {
-                      formUtil: {
-                        control,
-                        errors,
-                        getValues,
-                        register,
-                        reset,
-                        setValue,
-                      },
-                      data: app,
-                    }
-                  )
+                  formUtil: {
+                    control,
+                    errors,
+                    getValues,
+                    register,
+                    reset,
+                    setValue,
+                  },
+                  data: app,
                 }
-              </Grid>
-            </Grid>
+              )
+            }
+          </Grid>
+        </Grid>
 
-            <hr className={classes.regularSectionSeparator} />
+        <hr className={classes.regularSectionSeparator} />
 
-            {/* 'App action' buttons section */}
-            <div className={classes.buttonsContainer}>
-              <ActionsFooter
-                app={app}
-                appId={appId}
-                getFormValues={getValues}
-                hasChanges={hasChanges}
-                history={history}
-                orgId={profile.currentOrg.id}
-                tabType={AppTypesTab.EXTERNAL}
-              />
-            </div>
-          </Container>
-        </Box>
-      }
+        {/* 'App action' buttons section */}
+        <div className={classes.buttonsContainer}>
+          <ActionsFooter
+            app={app}
+            appId={appId}
+            getFormValues={getValues}
+            hasChanges={hasChanges}
+            history={history}
+            orgId={profile.currentOrg.id}
+            tabType={AppTypesTab.EXTERNAL}
+          />
+        </div>
+      </AppContainer>
 
       <RouterPrompt
         bodyText={t("applications.prompt.body")}
