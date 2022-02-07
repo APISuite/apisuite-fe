@@ -368,7 +368,7 @@ export const GeneralSettings: React.FC = () => {
                           color="secondary"
                           variant="outlined"
                         >
-                          {t("applications.buttons.backToApps")}
+                          {t(`applications.buttons.${history.location.state?.redirected ? "backToSubs" : "backToApps"}`)}
                         </Button>
                       </Grid>
 

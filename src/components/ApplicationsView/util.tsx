@@ -268,7 +268,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
         color="primary"
         variant="outlined"
       >
-        {t("applications.buttons.backToApps")}
+        {t(`applications.buttons.${history.location.state?.redirected ? "backToSubs" : "backToApps"}`)}
       </Button>
     </Box>
   );
