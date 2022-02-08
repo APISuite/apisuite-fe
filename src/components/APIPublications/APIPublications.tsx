@@ -170,6 +170,14 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
                   size="small"
                 />
               }
+
+              {apiDetails.version!.deprecated &&
+                <Chip
+                  className={classes.deprecatedChip}
+                  label={t("apiProductDetails.deprecatedAPIProductChip")}
+                  size="small"
+                />
+              }
             </Box>
           </Grid>
 
