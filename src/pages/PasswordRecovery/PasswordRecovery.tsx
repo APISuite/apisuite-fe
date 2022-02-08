@@ -185,7 +185,7 @@ export const PasswordRecovery: React.FC = () => {
                           type={showPassword ? "text" : "password"}
                           value={state.userInput}
                           error={!!state.error.length}
-                          helperText={state.error}
+                          helperText={t("signUpForm.warnings.password")}
                           autoFocus
                           fullWidth
                           InputProps={{

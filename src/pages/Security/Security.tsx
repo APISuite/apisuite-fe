@@ -157,7 +157,7 @@ export const Security: React.FC = () => {
                   }
                   helperText={
                     providedPasswords[1].length === 0
-                      ? ""
+                      ? t("signUpForm.warnings.password")
                       : (
                         providedPasswords[0] === providedPasswords[1]
                           ? t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage")

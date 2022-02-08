@@ -149,7 +149,7 @@ export const SignUpForm: React.FC = () => {
           value={state.data.password}
           fullWidth
           error={!!state.errors.password.length}
-          helperText={state.errors.password}
+          helperText={t("signUpForm.warnings.password")}
           InputProps={{
             endAdornment:
               <InputAdornment position='end'>
