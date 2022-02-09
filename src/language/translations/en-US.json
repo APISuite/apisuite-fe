@@ -109,7 +109,7 @@
       "email": "Please provide a valid e-mail address.",
       "invalidInvitation": "The invitation is not valid, or has expired.",
       "organisationName": "Please enter the name of your organisation.",
-      "password": "Your password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol.",
+      "password": "Your password must have at least 12 characters, and contain 1 uppercase character, 1 lowercase character, and 1 special character.",
       "profileName": "Please enter your name."
     },
     "steps": {
