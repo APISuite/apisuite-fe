@@ -194,6 +194,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         display="flex"
         flexDirection="row"
         flexWrap="nowrap"
+        pb={expand ? 1.625 : undefined}
         pt={expand ? 2 : undefined}
         style={{
           marginLeft: !isMaxWidth ? spacing(6) : spacing(4),
