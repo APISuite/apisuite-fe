@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { Avatar, Box, Chip, Grid, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
+import { MarkdownDisplayer } from "components/MarkdownDisplayer";
 import useStyles from "./styles";
 import { APICatalogProps, APIDetails } from "./types";
 
@@ -11,7 +12,7 @@ import clsx from "clsx";
 
 const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
   const classes = useStyles();
-  const { palette, spacing } = useTheme();
+  const { spacing } = useTheme();
 
   const history = useHistory();
 
@@ -110,14 +111,11 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay, limit }) => {
                     />
                   </Box>
 
-                  <Typography
-                    data-test-id={testIds.apiCardDescription}
-                    noWrap
-                    style={{ color: palette.text.secondary }}
-                    variant="body2"
-                  >
-                    {apiDetails.description}
-                  </Typography>
+                  <Box className={classes.markdownContainer}>
+                    <MarkdownDisplayer
+                      content={apiDetails.description}
+                    />
+                  </Box>
                 </Grid>
               </Grid>
             </ApplicationCard>

@@ -328,8 +328,7 @@ users.forEach(user => {
             .should("be.visible")
             .and("contain", apis.rows[index].apiVersions[0].title)
             .and("contain", apis.rows[index].apiVersions[0].version)
-            .and("contain", apis.rows[index].apiVersions[0].live ? "Production access":"API Documentation")
-            .and("contain", apis.rows[index].apiDocs[0].productIntro);
+            .and("contain", apis.rows[index].apiVersions[0].live ? "Production access":"API Documentation");
         }
       });
 
@@ -356,8 +355,6 @@ users.forEach(user => {
           .should("not.exist");
         cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardAccessType)
           .should("have.text", " API Documentation");
-        cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardDescription)
-          .should("have.text", enUS.fallbacks.noDescription);
       });
     });
 
