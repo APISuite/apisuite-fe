@@ -75,7 +75,7 @@ export const Security: React.FC = () => {
     setProvidedPasswords(newPasswords);
   };
 
-  const passwordComparison = (currentPassword: string, newPassword: string): boolean => {
+  const hasError = (currentPassword: string, newPassword: string): boolean => {
     if (!newPassword) return false;
 
     if (currentPassword === newPassword) return true;
@@ -164,7 +164,7 @@ export const Security: React.FC = () => {
               <Box mb={3} mt={1.5}>
                 <TextField
                   fullWidth
-                  error={passwordComparison(providedPasswords[0], providedPasswords[1])}
+                  error={hasError(providedPasswords[0], providedPasswords[1])}
                   helperText={passwordHelperText(providedPasswords[0], providedPasswords[1])}
                   InputProps={{
                     endAdornment: (
