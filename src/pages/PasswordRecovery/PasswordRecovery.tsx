@@ -34,7 +34,7 @@ export const PasswordRecovery: React.FC = () => {
 
   const [state, setState] = useState({
     userInput: "",
-    error: "",
+    error: false,
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -48,14 +48,14 @@ export const PasswordRecovery: React.FC = () => {
         case "email": {
           return {
             userInput: target.value,
-            error: isValidEmail(target.value) ? "" : t("passwordRecovery.warnings.email"),
+            error: !isValidEmail(target.value),
           };
         }
 
         case "password": {
           return {
             userInput: target.value,
-            error: isValidPass(target.value) ? "" : t("passwordRecovery.warnings.password"),
+            error: !isValidPass(target.value),
           };
         }
 
@@ -168,8 +168,8 @@ export const PasswordRecovery: React.FC = () => {
                           name='email'
                           value={state.userInput}
                           placeholder=''
-                          error={!!state.error.length}
-                          helperText={state.error}
+                          error={state.error}
+                          helperText={state.error && t("passwordRecovery.warnings.email")}
                           autoFocus
                           fullWidth
                           InputProps={{ classes: { input: classes.inputField } }}
@@ -184,7 +184,7 @@ export const PasswordRecovery: React.FC = () => {
                           name='password'
                           type={showPassword ? "text" : "password"}
                           value={state.userInput}
-                          error={!!state.error.length}
+                          error={!!state.userInput.length && state.error}
                           helperText={t("signUpForm.warnings.password")}
                           autoFocus
                           fullWidth
@@ -218,7 +218,7 @@ export const PasswordRecovery: React.FC = () => {
                         disableElevation
                         fullWidth
                         onClick={handleSubmission}
-                        disabled={auth.isRecoveringPassword || !!state.error.length || !state.userInput.length}
+                        disabled={auth.isRecoveringPassword || state.error || !state.userInput.length}
                         endIcon={auth.isRecoveringPassword && <CircularProgress color="inherit" size={25} />}
                       >
                         {stage === "forgot" ? t("passwordRecovery.formButtonLabel.forgot")
