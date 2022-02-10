@@ -195,8 +195,8 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         flexDirection="row"
         flexWrap="nowrap"
         style={{
-          margin: !isMaxWidth ? `0px ${spacing(6)}px` : `0px ${spacing(4)}px`,
-          padding: expand ? `${spacing(2)}px 0px ${spacing(1.625)}px 0px` : undefined,
+          margin: spacing("auto", !isMaxWidth ? 6 : 4),
+          padding: expand ? spacing(2, 0, 1.625, 0) : undefined,
         }}
       >
         {/* Logo & Title */}
