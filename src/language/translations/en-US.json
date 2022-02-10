@@ -31,7 +31,7 @@
       "individualSteps": {
         "stepOne": {
           "header": "Add your app",
-          "paragraph": "You’ll need an app to send and receive API calls.\n\nAdding your app details will help us to enable this flow.",
+          "paragraph": "You'll need an app to send and receive API calls.\n\nAdding your app details will help us to enable this flow.",
           "buttonLabel": "Add app"
         },
         "stepTwo": {
@@ -775,7 +775,7 @@
         "description": "List an app or plugin located on an external platform.",
         "label": "External app"
       },
-      "infoBox": "Choose the category that best suits your app. Read <0>here</0> about the different app types and its predefined settings.",
+      "infoBox": "Choose the category that best suits your app. Read <0>here</0> about the different app types and their predefined settings.",
       "next": "Next",
       "subtitle": "Choose the category you wish for this app",
       "title": "Select App Type",

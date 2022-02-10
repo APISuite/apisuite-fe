@@ -28,7 +28,7 @@ export function* createAppActionSaga(action: CreateAppAction) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => !!v));
-    data = clearProps(data, [ "appType", "images"]);
+    data = clearProps(data, [ "appType", "createdAt", "id", "images", "orgId", "redirect_url", "state", "updatedAt"]);
 
     const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
@@ -57,7 +57,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => v !== null));
-    data = clearProps(data, ["appType", "createdAt", "id", "idpProvider","images", "org_id", "orgId", "state", "updatedAt"]);
+    data = clearProps(data, ["appType", "createdAt", "id", "idpProvider","images", "org_id", "orgId", "redirect_url", "state", "updatedAt"]);
     if (!action.appData.appTypeId) {
       delete data.appTypeId;
     }
@@ -77,7 +77,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
     }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    yield put(updateAppError(error));
+    yield put(updateAppError({ payload: action.appData }));
     yield put(openNotification("error", i18n.t("applications.error.update"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));

@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Grid, useTranslation } from "@apisuite/fe-base";
 import {  useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 import { RouterPrompt } from "components/RouterPrompt";
 import { AppTypesTab } from "pages/AppView/types";
@@ -34,8 +32,6 @@ export const ExternalSettings: React.FC = () => {
     typeId,
   });
 
-  const appSchema = yup.object().shape({});
-
   const {
     control,
     formState: { errors, isDirty, isValid },
@@ -45,15 +41,8 @@ export const ExternalSettings: React.FC = () => {
     setValue,
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(appSchema),
     reValidateMode: "onChange",
   });
-
-  useEffect(() => {
-    if (!isNew) {
-      setValue("directUrl", app.directUrl, { shouldDirty: false });
-    }
-  }, [app, isNew, setValue]);
 
   const hasChanges = () => {
     return (isValid || Object.keys(errors).length === 0) && isDirty;

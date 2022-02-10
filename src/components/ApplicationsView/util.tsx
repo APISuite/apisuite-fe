@@ -112,6 +112,15 @@ export const AppContainer: React.FC<AppHeaderProps & { requesting: boolean }> = 
   );
 };
 
+const getAppType = (types: AppType[], typeId: string) => {
+  let type = types[0];
+  if (types.length > 1) {
+    const fType = types.find((tp) => tp.id.toString() === typeId);
+    type = fType || type;
+  }
+  return type;
+};
+
 export const AppHeader: React.FC<AppHeaderProps> = ({
   app,
   isNew,
@@ -124,13 +133,13 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const { t } = useTranslation();
   const { palette } = useTheme();
   const dispatch = useDispatch();
-  const appType = useRef<AppType>(types[0]);
+  const appType = useRef<AppType>(getAppType(types, typeId));
 
   useEffect(() => {
     if (!types.length) {
       dispatch(getAppTypes({}));
     } else {
-      appType.current = types.find((tp) => tp.id.toString() === typeId) as AppType;
+      appType.current = getAppType(types, typeId);
     }
   }, [dispatch, typeId, types]);
 

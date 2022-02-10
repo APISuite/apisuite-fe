@@ -234,6 +234,7 @@ export default function reducer (
 
     case UPDATE_APP_ERROR: {
       return update(state, {
+        currentApp: { $set: action.payload },
         updateAppStatus: {
           isError: { $set: true },
           isRequesting: { $set: false },

@@ -40,10 +40,10 @@ export const GeneralSettings: React.FC = () => {
   const isNew = Number.isNaN(Number(appId));
 
   useEffect(() => {
-    if (isNew && app.id !== 0) {
+    if (isNew && app.id !== 0 || isNew && app.name !== "") {
       dispatch(resetUserApp());
     }
-  }, [app.id, dispatch, isNew]);
+  }, [app.id, app.name, dispatch, isNew]);
 
   useGetApp({
     app,

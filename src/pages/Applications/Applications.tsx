@@ -412,11 +412,11 @@ export const Applications: React.FC = () => {
 
       <AppTypesModal
         open={open}
-        showLogo={true}
+        showLogo={false}
         title={portalName}
         onClose={() => setOpen(false)}
         onClick={(selection) => {
-          if (selection) {
+          if (selection && selection.id) {
             setOpen(false);
             toggleApp("new", selection.id);
           }

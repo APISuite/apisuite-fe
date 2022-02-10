@@ -68,6 +68,7 @@ export type UpdateAppActionSuccess = {
 
 export type UpdateAppActionError = {
   type: typeof UPDATE_APP_ERROR,
+  payload: AppData,
 }
 
 export type DeleteAppAction = {
