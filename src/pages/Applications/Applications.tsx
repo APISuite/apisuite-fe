@@ -18,10 +18,12 @@ import { AppTypesModal } from "components/AppTypesModal";
 import { ROLES } from "constants/global";
 import { AppData } from "store/applications/types";
 import { getAllUserApps } from "store/applications/actions/getAllUserApps";
+import { resetUserApp } from "store/applications/actions/getUserApp";
+import { resetAppMedia } from "store/media/actions/uploadMedia";
+import { Organization, Role } from "store/profile/types";
 import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
-import { Organization, Role } from "store/profile/types";
 
 export const Applications: React.FC = () => {
   const classes = useStyles();
@@ -50,6 +52,12 @@ export const Applications: React.FC = () => {
       setHasCurrentOrgDetails(true);
     }
   }, [currentOrganisation, org]);
+
+  /* reset app */
+  useEffect(() => {
+    dispatch(resetUserApp());
+    dispatch(resetAppMedia());
+  }, [dispatch]);
 
   const toggleApp = useCallback((appId: string, typeId: number) => {
     history.push(`/dashboard/apps/${appId}/type/${typeId}/general`);

@@ -29,7 +29,7 @@ export const CustomProperties: React.FC = () => {
   const { palette, spacing } = useTheme();
   const { t } = useTranslation();
   const history = useHistory() as LocationHistory;
-  const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
+  const { app, status, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const isNew = Number.isNaN(Number(appId));
 
@@ -38,10 +38,11 @@ export const CustomProperties: React.FC = () => {
   useGetApp({
     app,
     appId,
-    createAppStatus,
     history,
     isNew,
     profile,
+    requesting,
+    status,
     typeId,
   });
 
@@ -527,8 +528,10 @@ export const CustomProperties: React.FC = () => {
     <>
       <AppContainer
         app={app}
+        appId={appId}
         isNew={isNew}
         getFormValues={getValues}
+        notFound={status.get.isError}
         orgId={profile.currentOrg.id}
         requesting={requesting}
         types={types}

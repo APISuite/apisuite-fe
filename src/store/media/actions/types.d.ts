@@ -1,5 +1,5 @@
 import { UploadMediaResponse } from "../types";
-import { UPLOAD_MEDIA, UPLOAD_MEDIA_ERROR, UPLOAD_MEDIA_SUCCESS } from "./uploadMedia";
+import { UPLOAD_MEDIA, UPLOAD_MEDIA_ERROR, UPLOAD_MEDIA_SUCCESS, UPLOAD_MEDIA_RESET } from "./uploadMedia";
 import { DELETE_MEDIA, DELETE_MEDIA_ERROR, DELETE_MEDIA_SUCCESS } from "./deleteMedia";
 
 export type MediaActions =
@@ -8,7 +8,8 @@ export type MediaActions =
   UploadMediaActionError |
   DeleteMediaAction |
   DeleteMediaActionSuccess |
-  DeleteMediaActionError;
+  DeleteMediaActionError |
+  ResetUploadMediaAction;
 
 export type UploadMediaAction = {
   type: typeof UPLOAD_MEDIA,
@@ -40,4 +41,8 @@ export type DeleteMediaActionSuccess = {
 export type DeleteMediaActionError = {
   type: typeof DELETE_MEDIA_ERROR,
   error: string,
+}
+
+export type ResetUploadMediaAction = {
+  type: typeof UPLOAD_MEDIA_RESET,
 }

@@ -2,7 +2,7 @@ import update from "immutability-helper";
 
 import { MediaActions } from "./actions/types";
 import { DELETE_MEDIA, DELETE_MEDIA_ERROR, DELETE_MEDIA_SUCCESS } from "./actions/deleteMedia";
-import { UPLOAD_MEDIA, UPLOAD_MEDIA_ERROR, UPLOAD_MEDIA_SUCCESS } from "./actions/uploadMedia";
+import { UPLOAD_MEDIA, UPLOAD_MEDIA_ERROR, UPLOAD_MEDIA_RESET, UPLOAD_MEDIA_SUCCESS } from "./actions/uploadMedia";
 import { FileData, MediaStore } from "./types";
 
 const initialState: MediaStore = {
@@ -44,6 +44,15 @@ export default function reducer (
     case UPLOAD_MEDIA_ERROR:
     case DELETE_MEDIA_ERROR: {
       return update(state, {
+        isRequesting: { $set: false },
+      });
+    }
+
+    case UPLOAD_MEDIA_RESET: {
+      return update(state, {
+        media: {
+          savedObjects: { $set: [] },
+        },
         isRequesting: { $set: false },
       });
     }

@@ -10,6 +10,7 @@ import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { openNotification } from "store/notificationStack/actions/notification";
 import { Store } from "store/types";
 import { clearProps } from "util/clear";
+import { linker } from "util/linker";
 import request from "util/request";
 import { AppData, AppType } from "./types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
@@ -24,11 +25,13 @@ import { deleteAppMediaError, deleteAppMediaSuccess, DELETE_APP_MEDIA } from "./
 import { UploadResponse } from "./actions/types";
 import { getAppTypesError, getAppTypesSuccess, GET_APP_TYPES } from "./actions/getAppTypes";
 
+const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
+
 export function* createAppActionSaga(action: CreateAppAction) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => !!v));
-    data = clearProps(data, [ "appType", "createdAt", "id", "images", "orgId", "redirect_url", "state", "updatedAt"]);
+    data = clearProps(data, appDataFilter);
 
     const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
@@ -57,10 +60,19 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => v !== null));
-    data = clearProps(data, ["appType", "createdAt", "id", "idpProvider","images", "org_id", "orgId", "redirect_url", "state", "updatedAt"]);
+    data = clearProps(data, appDataFilter);
     if (!action.appData.appTypeId) {
       delete data.appTypeId;
     }
+    const links = ["logo", "privacyUrl", "supportUrl", "tosUrl", "websiteUrl", "youtubeUrl"];
+    for (const link of links) {
+      if (data.hasOwnProperty(link) && data[link]) {
+        data[link] = linker(data[link]);
+      } else if (action.appData.hasOwnProperty(link)) {
+        data[link] = "";
+      }
+    }
+
     const updateAppUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appData.id}`;
 
     const response: AppData = yield call(request, {

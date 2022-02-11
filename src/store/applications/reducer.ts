@@ -55,6 +55,7 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
   },
   getApp: {
+    id: 0,
     isError: false,
     isRequesting: false,
   },
@@ -140,6 +141,7 @@ export default function reducer (
     case GET_USER_APP: {
       return update(state, {
         getApp: {
+          id: { $set: action.appId },
           isError: { $set: false },
           isRequesting: { $set: true },
         },
@@ -162,6 +164,7 @@ export default function reducer (
           },
         },
         getApp: {
+          ...state.getApp,
           isError: false,
           isRequesting: false,
         },
@@ -181,6 +184,7 @@ export default function reducer (
       return update(state, {
         currentApp: { $set: initialState.currentApp },
         getApp: {
+          id: { $set: 0 },
           isError: { $set: false },
           isRequesting: { $set: false },
         },

@@ -28,17 +28,18 @@ export const MediaFilesLinks: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
+  const { app, status, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const isNew = Number.isNaN(Number(appId));
 
   useGetApp({
     app,
     appId,
-    createAppStatus,
     history,
     isNew,
     profile,
+    requesting,
+    status,
     typeId,
   });
 
@@ -84,7 +85,6 @@ export const MediaFilesLinks: React.FC = () => {
     control,
     formState: { errors, isDirty, isValid },
     getValues,
-    reset,
     setValue,
   } = useForm({
     defaultValues: {
@@ -163,13 +163,13 @@ export const MediaFilesLinks: React.FC = () => {
     newIsShowingArray[indexOfFormFieldToRemove] = false;
 
     if (indexOfFormFieldToRemove === 0 && getValues("tosUrl")) {
-      reset({ ...getValues(), tosUrl: "" }, { keepDirty: true });
+      setValue("tosUrl", app.privacyUrl, { shouldDirty: true });
     } else if (indexOfFormFieldToRemove === 1 && getValues("privacyUrl")) {
-      reset({ ...getValues(), privacyUrl: "" }, { keepDirty: true });
+      setValue("privacyUrl", app.privacyUrl, { shouldDirty: true });
     } else if (indexOfFormFieldToRemove === 2 && getValues("youtubeUrl")) {
-      reset({ ...getValues(), youtubeUrl: "" }, { keepDirty: true });
+      setValue("youtubeUrl", app.privacyUrl, { shouldDirty: true });
     } else if (indexOfFormFieldToRemove === 3 && getValues("supportUrl")) {
-      reset({ ...getValues(), supportUrl: "" }, { keepDirty: true });
+      setValue("supportUrl", app.privacyUrl, { shouldDirty: true });
     }
 
     setIsShowing(newIsShowingArray);
@@ -207,8 +207,10 @@ export const MediaFilesLinks: React.FC = () => {
     <>
       <AppContainer
         app={app}
+        appId={appId}
         isNew={isNew}
         getFormValues={getValues}
+        notFound={status.get.isError}
         orgId={profile.currentOrg.id}
         requesting={requesting}
         types={types}

@@ -5,6 +5,7 @@ import {
   Box, Button, CircularProgress, Container,
   Icon, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
+import adrift from "assets/adrift.svg";
 import clsx from "clsx";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
@@ -12,7 +13,6 @@ import { AppData, AppType } from "store/applications/types";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
-import { getProfile } from "store/profile/actions/getProfile";
 import { AppTypesTab } from "pages/AppView/types";
 import { ActionsFooterProps, AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
 import useStyles from "./styles";
@@ -45,8 +45,8 @@ export function useGetApp(data: UseGetAppParams) {
   const location = useLocation();
 
   useEffect(() => {
-    if (data.isNew && data.createAppStatus.id !== -1 && !data.createAppStatus.isError) {
-      data.history.push(`/dashboard/apps/${data.createAppStatus.id}/type/${data.typeId}/${AppTypesTab.GENERAL}`);
+    if (data.isNew && data.status.create.id !== -1 && !data.status.create.isError) {
+      data.history.push(`/dashboard/apps/${data.status.create.id}/type/${data.typeId}/${AppTypesTab.GENERAL}`);
     }
     if (data.isNew && location.pathname.indexOf(AppTypesTab.GENERAL) === -1) {
       data.history.push(`/dashboard/apps/new/type/${data.typeId}/${AppTypesTab.GENERAL}`);
@@ -62,23 +62,38 @@ export function useGetApp(data: UseGetAppParams) {
   }, [data, location.pathname]);
 
   useEffect(() => {
-    if (!data.profile.currentOrg.id) {
-      dispatch(getProfile({}));
-    }
-  });
-
-  useEffect(() => {
-    if (!data.isNew && data.profile.currentOrg.id && (data.app.id === 0 || data.app.id !== Number(data.appId))) {
+    if (
+      !data.isNew && !data.requesting &&
+      data.profile.currentOrg.id > 0 &&
+      (data.app.id === 0 || data.app.id !== Number(data.appId)) &&
+      data.status.get.id !== Number(data.appId)
+    ) {
       dispatch(getUserApp({ orgID: data.profile.currentOrg.id, appId: Number(data.appId) }));
     }
   }, [data, dispatch]);
 }
 
-export const AppContainer: React.FC<AppHeaderProps & { requesting: boolean }> = ({
+export const NotFound: React.FC = () => {
+  const { t } = useTranslation();
+  const { spacing } = useTheme();
+
+  return (
+    <Box alignItems="center" display="flex" flexDirection="column" justifyContent="center" p={3} width="100%">
+      <Typography display="block" variant="h2">
+        {t("applications.notfound")}
+      </Typography>
+      <img src={adrift} style={{ filter: "grayscale(1)", maxHeight: "200px", opacity: 0.7, padding: spacing(5) }} />
+    </Box>
+  );
+};
+
+export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: boolean; requesting: boolean }> = ({
   app,
+  appId,
   children,
   isNew,
   getFormValues,
+  notFound,
   orgId,
   requesting,
   types,
@@ -94,7 +109,7 @@ export const AppContainer: React.FC<AppHeaderProps & { requesting: boolean }> = 
         </div>
       }
       {
-        !requesting && <Box clone>
+        (!requesting && !notFound && app.id === Number(appId)) && <Box clone>
           <Container maxWidth="lg">
             <AppHeader
               app={app}
@@ -107,6 +122,9 @@ export const AppContainer: React.FC<AppHeaderProps & { requesting: boolean }> = 
             {children}
           </Container>
         </Box>
+      }
+      {
+        (!requesting && notFound && app.id !== Number(appId)) && <NotFound />
       }
     </>
   );

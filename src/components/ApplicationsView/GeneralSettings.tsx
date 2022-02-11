@@ -25,7 +25,7 @@ import { getSections } from "util/extensions";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { ActionsFooter, AppHeader, checkHistory, checkNextAction, useGetApp } from "./util";
+import { ActionsFooter, AppHeader, checkHistory, checkNextAction, NotFound, useGetApp } from "./util";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
@@ -34,9 +34,9 @@ export const GeneralSettings: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, createAppStatus, types, requesting } = useSelector(applicationsViewSelector);
+  const { app, status, types, requesting } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-  const [avatar, setAvatar] = React.useState(app.logo || "");
+  const [avatar, setAvatar] = React.useState("");
   const isNew = Number.isNaN(Number(appId));
 
   useEffect(() => {
@@ -48,10 +48,11 @@ export const GeneralSettings: React.FC = () => {
   useGetApp({
     app,
     appId,
-    createAppStatus,
     history,
     isNew,
     profile,
+    requesting,
+    status,
     typeId,
   });
 
@@ -83,6 +84,7 @@ export const GeneralSettings: React.FC = () => {
 
   useEffect(() => {
     if (!isNew) {
+      setAvatar(app.logo);
       setValue("logo", app.logo, { shouldDirty: false });
       setValue("description", app.description, { shouldDirty: false });
       setValue("name", app.name, { shouldDirty: false });
@@ -133,6 +135,10 @@ export const GeneralSettings: React.FC = () => {
     return t("applications.buttons.backToApps");
   };
 
+  const appNotFound = () => {
+    return status.get.isError && app.id !== Number(appId);
+  };
+
   return (
     <>
       {
@@ -141,7 +147,7 @@ export const GeneralSettings: React.FC = () => {
         </div>
       }
       {
-        !requesting && <Box clone>
+        (!requesting && !appNotFound()) && <Box clone>
           <Container maxWidth="lg">
             {/* App title */}
             {
@@ -231,7 +237,7 @@ export const GeneralSettings: React.FC = () => {
               <Grid item md={6}>
 
                 <AvatarDropzone
-                  image={avatar || getValues("logo")}
+                  image={avatar}
                   onDeletePressed={() => {
                     setValue("logo", "");
                     setAvatar("");
@@ -414,6 +420,10 @@ export const GeneralSettings: React.FC = () => {
             </div>
           </Container>
         </Box>
+      }
+
+      {
+        (!requesting && appNotFound() && !isNew) && <NotFound />
       }
 
       {

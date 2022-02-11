@@ -323,7 +323,7 @@
       },
       "appModal": {
         "addAppButtonLabel": "Add application",
-        "allOtherURLsError": "The provided URL is not valid.",
+        "allOtherURLsError": "The provided URL is not valid. The URL must start with http(s)",
         "appAvatarFieldLabel": "Avatar",
         "appAvatarFieldSubLabel": "Click to edit",
         "appAvatarURLError": "The provided URL is not valid, or the image does not exist.",
@@ -710,6 +710,7 @@
       "create": "Failed to create app. Please make sure all required fields are filled correctly or contact support.",
       "update": "Failed to update app. Please make sure all required fields are filled correctly or contact support."
     },
+    "notfound": "No Application found.",
     "prompt": {
       "body": "All changes you made will be lost. Do you really want to leave without saving?",
       "cancel": "Stay and save",

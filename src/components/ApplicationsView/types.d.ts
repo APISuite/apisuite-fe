@@ -16,10 +16,15 @@ export type LocationHistory = History & {
 export type UseGetAppParams = {
   app: AppData,
   appId: string,
-  createAppStatus: ApplicationsStore["createAppStatus"],
   history: LocationHistory,
   isNew: boolean,
   profile: Profile["profile"],
+  requesting: boolean,
+  status: {
+    create: ApplicationsStore["createAppStatus"],
+    get: ApplicationsStore["getApp"],
+    update: ApplicationsStore["updateAppStatus"],
+  },
   typeId: string,
 }
 

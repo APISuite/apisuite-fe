@@ -18,17 +18,18 @@ export const ExternalSettings: React.FC = () => {
   const { appId, typeId } = useParams<{ appId: string; typeId: string  }>();
   const { t } = useTranslation();
   const history = useHistory() as LocationHistory;
-  const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
+  const { app, status, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const isNew = Number.isNaN(Number(appId));
 
   useGetApp({
     app,
     appId,
-    createAppStatus,
     history,
     isNew,
     profile,
+    requesting,
+    status,
     typeId,
   });
 
@@ -52,8 +53,10 @@ export const ExternalSettings: React.FC = () => {
     <>
       <AppContainer
         app={app}
+        appId={appId}
         isNew={isNew}
         getFormValues={getValues}
+        notFound={status.get.isError}
         orgId={profile.currentOrg.id}
         requesting={requesting}
         types={types}

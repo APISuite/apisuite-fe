@@ -3,6 +3,7 @@ import { UploadMediaAction, UploadMediaActionSuccess, UploadMediaActionError } f
 export const UPLOAD_MEDIA = "media/UPLOAD_MEDIA";
 export const UPLOAD_MEDIA_SUCCESS = "media/UPLOAD_MEDIA_SUCCESS";
 export const UPLOAD_MEDIA_ERROR = "media/UPLOAD_MEDIA_ERROR";
+export const UPLOAD_MEDIA_RESET = "media/UPLOAD_MEDIA_RESET";
 
 export function uploadMedia (payload: Omit<UploadMediaAction, "type">) {
   return { type: UPLOAD_MEDIA, ...payload };
@@ -14,4 +15,8 @@ export function uploadMediaSuccess (payload: Omit<UploadMediaActionSuccess, "typ
 
 export function uploadMediaError (payload: Omit<UploadMediaActionError, "type">) {
   return { type: UPLOAD_MEDIA_ERROR, ...payload };
+}
+
+export function resetAppMedia () {
+  return { type: UPLOAD_MEDIA_RESET };
 }

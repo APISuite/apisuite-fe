@@ -20,7 +20,7 @@ export const TypeChip: React.FC<TypeChipProps> = ({
       <Chip
         className={classes.chip}
         color={color}
-        label={t(`appTypes.modal.${type.type}App.label`)}
+        label={t(`appTypes.modal.${type?.type || "client"}App.label`)}
         size="small"
       />
       {

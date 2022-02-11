@@ -25,7 +25,7 @@ export const ClientAccess: React.FC = () => {
   const { palette } = useTheme();
   const { t } = useTranslation();
   const history = useHistory() as LocationHistory;
-  const { app, createAppStatus, requesting, types } = useSelector(applicationsViewSelector);
+  const { app, status, requesting, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const isNew = Number.isNaN(Number(appId));
 
@@ -34,10 +34,11 @@ export const ClientAccess: React.FC = () => {
   useGetApp({
     app,
     appId,
-    createAppStatus,
     history,
     isNew,
     profile,
+    requesting,
+    status,
     typeId,
   });
 
@@ -93,8 +94,10 @@ export const ClientAccess: React.FC = () => {
     <>
       <AppContainer
         app={app}
+        appId={appId}
         isNew={isNew}
         getFormValues={getValues}
+        notFound={status.get.isError}
         orgId={profile.currentOrg.id}
         requesting={requesting}
         types={types}

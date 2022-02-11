@@ -10,7 +10,7 @@ export interface ApplicationsStore {
   createAppStatus: Response & { id: number },
   currentApp: AppData,
   deleteAppStatus: Response,
-  getApp: Response,
+  getApp: Response & { id: number },
   requestingAPIAccessStatus: Response,
   types: AppType[],
   updateAppStatus: Response,
