@@ -64,7 +64,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
     if (!action.appData.appTypeId) {
       delete data.appTypeId;
     }
-    const links = ["logo", "privacyUrl", "supportUrl", "tosUrl", "websiteUrl", "youtubeUrl"];
+    const links = ["logo", "privacyUrl", "supportUrl", "redirectUrl", "tosUrl", "websiteUrl", "youtubeUrl"];
     for (const link of links) {
       if (data.hasOwnProperty(link) && data[link]) {
         data[link] = linker(data[link]);

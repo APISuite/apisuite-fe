@@ -721,7 +721,7 @@
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access.",
     "success": {
-      "update": "Application {{name}} updated with success."
+      "update": "Application '{{name}}' was updated with success."
     },
     "tabs": {
       "client": "Client Access Details",
