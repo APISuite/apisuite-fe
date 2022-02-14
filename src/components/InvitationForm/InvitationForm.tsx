@@ -51,7 +51,7 @@ const InvitationConfirmationForm: React.FC<{
     password: "",
     errors: {
       name: "",
-      password: "",
+      password: false,
     },
   });
 
@@ -68,7 +68,7 @@ const InvitationConfirmationForm: React.FC<{
         case "password": {
           return update(s, {
             password: { $set: target.value },
-            errors: { password: { $set: isValidPass(target.value) ? "" : t("invitationForm.warnings.password") } },
+            errors: { password: { $set: !isValidPass(target.value) } },
           });
         }
 
@@ -239,7 +239,8 @@ const InvitationConfirmationForm: React.FC<{
               placeholder=""
               name="password"
               value={formInputs.password}
-              error={!!formInputs.errors.password.length}
+              error={!!formInputs.password.length && formInputs.errors.password}
+              helperText={t("signUpForm.warnings.password")}
               fullWidth
               margin={"dense"}
               InputProps={{
