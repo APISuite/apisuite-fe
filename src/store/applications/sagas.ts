@@ -2,46 +2,40 @@ import { call, put, select, takeLatest } from "redux-saga/effects";
 
 import { API_URL } from "constants/endpoints";
 import qs from "qs";
+import { i18n } from "@apisuite/fe-base";
 
-import { AppData } from "./types";
+import { AppTypesTab } from "pages/AppView/types";
+import { history } from "store";
+import { handleSessionExpire } from "store/auth/actions/expiredSession";
+import { openNotification } from "store/notificationStack/actions/notification";
+import { Store } from "store/types";
+import { clearProps } from "util/clear";
+import { linker } from "util/linker";
+import request from "util/request";
+import { AppData, AppType } from "./types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS, getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess } from "./actions/getAllUserApps";
 import { GET_USER_APP, getUserAppError, getUserAppSuccess } from "./actions/getUserApp";
-import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { REQUEST_API_ACCESS, requestAPIAccessError, requestAPIAccessSuccess } from "./actions/requestApiAccess";
-import { Store } from "store/types";
 import { UPDATE_APP, updateAppError, updateAppSuccess } from "./actions/updatedApp";
-import request from "util/request";
-import { i18n } from "@apisuite/fe-base";
-import { openNotification } from "store/notificationStack/actions/notification";
 import { uploadAppMediaError, uploadAppMediaSuccess, UPLOAD_APP_MEDIA } from "./actions/appMediaUpload";
 import { deleteAppMediaError, deleteAppMediaSuccess, DELETE_APP_MEDIA } from "./actions/deleteAppMedia";
 import { UploadResponse } from "./actions/types";
+import { getAppTypesError, getAppTypesSuccess, GET_APP_TYPES } from "./actions/getAppTypes";
+
+const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
 
 export function* createAppActionSaga(action: CreateAppAction) {
   try {
-    const data = {
-      description: action.appData.description,
-      directUrl: action.appData.directUrl,
-      labels: action.appData.labels,
-      logo: action.appData.logo,
-      metadata: action.appData.metadata,
-      name: action.appData.name,
-      privacyUrl: action.appData.privacyUrl,
-      redirectUrl: action.appData.redirectUrl,
-      shortDescription: action.appData.summary,
-      supportUrl: action.appData.supportUrl,
-      tosUrl: action.appData.tosUrl,
-      visibility: action.appData.visibility,
-      websiteUrl: action.appData.websiteUrl,
-      youtubeUrl: action.appData.youtubeUrl,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => !!v));
+    data = clearProps(data, appDataFilter);
 
     const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
-    yield call(request, {
+    const app: AppData = yield call(request, {
       url: createAppUrl,
       method: "POST",
       headers: {
@@ -50,9 +44,12 @@ export function* createAppActionSaga(action: CreateAppAction) {
       data: data,
     });
 
-    yield put(createAppSuccess({}));
-  } catch (error) {
-    yield put(createAppError(error));
+    yield put(createAppSuccess({ appData: app }));
+    history.push(`/dashboard/apps/${app.id}/type/${app.appType.id}/${AppTypesTab.GENERAL}`);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(createAppError({ payload: action.appData }));
+    yield put(openNotification("error", i18n.t("applications.error.create"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -61,26 +58,24 @@ export function* createAppActionSaga(action: CreateAppAction) {
 
 export function* updateAppActionSaga(action: UpdateAppAction) {
   try {
-    const data = {
-      description: action.appData.description,
-      directUrl: action.appData.directUrl,
-      labels: action.appData.labels,
-      logo: action.appData.logo,
-      metadata: action.appData.metadata,
-      name: action.appData.name,
-      privacyUrl: action.appData.privacyUrl,
-      redirectUrl: action.appData.redirectUrl,
-      shortDescription: action.appData.summary,
-      supportUrl: action.appData.supportUrl,
-      tosUrl: action.appData.tosUrl,
-      visibility: action.appData.visibility,
-      websiteUrl: action.appData.websiteUrl,
-      youtubeUrl: action.appData.youtubeUrl,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => v !== null));
+    data = clearProps(data, appDataFilter);
+    if (!action.appData.appTypeId) {
+      delete data.appTypeId;
+    }
+    const links = ["logo", "privacyUrl", "supportUrl", "redirectUrl", "tosUrl", "websiteUrl", "youtubeUrl"];
+    for (const link of links) {
+      if (data.hasOwnProperty(link) && data[link]) {
+        data[link] = linker(data[link]);
+      } else if (action.appData.hasOwnProperty(link)) {
+        data[link] = "";
+      }
+    }
 
     const updateAppUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appData.id}`;
 
-    const response: Record<string, never> = yield call(request, {
+    const response: AppData = yield call(request, {
       url: updateAppUrl,
       method: "PUT",
       headers: {
@@ -90,33 +85,13 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
     });
 
     yield put(updateAppSuccess({
-      appData: {
-        clientId: response.clientId,
-        clientSecret: response.clientSecret,
-        createdAt: response.createdAt,
-        description: response.description,
-        directUrl: response.directUrl,
-        id: response.id,
-        labels: response.labels,
-        logo: response.logo,
-        metadata: response.metadata,
-        name: response.name,
-        orgId: response.orgId,
-        privacyUrl: response.privacyUrl,
-        redirectUrl: response.redirectUrl,
-        summary: response.shortDescription,
-        subscriptions: response.subscriptions,
-        supportUrl: response.supportUrl,
-        tosUrl: response.tosUrl,
-        updatedAt: response.updatedAt,
-        visibility: response.visibility,
-        websiteUrl: response.websiteUrl,
-        youtubeUrl: response.youtubeUrl,
-        media: response.images,
-      },
+      appData: { ...response },
     }));
-  } catch (error) {
-    yield put(updateAppError(error));
+    yield put(openNotification("success", i18n.t("applications.success.update", { name: response.name }), 3000));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(updateAppError({ payload: action.appData }));
+    yield put(openNotification("error", i18n.t("applications.error.update"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -136,7 +111,8 @@ export function* deleteAppActionSaga(action: DeleteAppAction) {
     });
 
     yield put(deleteAppSuccess({}));
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     yield put(deleteAppError({}));
 
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
@@ -166,7 +142,8 @@ export function* requestAPIAccessActionSaga(action: RequestAPIAccessAction) {
     /* We need to retrieve the user's apps after the above request, as we want up-to-date
     info on every app's 'Request access' status. */
     yield put(getAllUserApps({ orgID: action.orgID }));
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     yield put(requestAPIAccessError({}));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
@@ -179,7 +156,7 @@ export function* getAllUserAppsActionSaga(action: GetAllUserAppsAction) {
   try {
     const getAllUserAppsActionUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
-    const response: any[] = yield call(request, {
+    const response: AppData[] = yield call(request, {
       url: getAllUserAppsActionUrl,
       method: "GET",
       headers: {
@@ -188,36 +165,14 @@ export function* getAllUserAppsActionSaga(action: GetAllUserAppsAction) {
     });
 
     const allUserApps = response.map((userApp) => (
-      {
-        clientId: userApp.clientId,
-        clientSecret: userApp.clientSecret,
-        createdAt: userApp.createdAt,
-        description: userApp.description,
-        directUrl: userApp.directUrl,
-        id: userApp.id,
-        labels: userApp.labels,
-        logo: userApp.logo,
-        metadata: userApp.metadata,
-        name: userApp.name,
-        orgId: userApp.orgId,
-        privacyUrl: userApp.privacyUrl,
-        redirectUrl: userApp.redirectUrl,
-        summary: userApp.shortDescription,
-        subscriptions: userApp.subscriptions,
-        supportUrl: userApp.supportUrl,
-        tosUrl: userApp.tosUrl,
-        updatedAt: userApp.updatedAt,
-        visibility: userApp.visibility,
-        websiteUrl: userApp.websiteUrl,
-        youtubeUrl: userApp.youtubeUrl,
-        media: userApp.images,
-      }
+      { ...userApp }
     ));
 
     yield put(getAllUserAppsSuccess({
       userApps: allUserApps.sort((userAppA: AppData, userAppB: AppData) => userAppA.id - userAppB.id),
     }));
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     yield put(getAllUserAppsError(error));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
@@ -229,7 +184,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
   try {
     const getUserAppActionUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}`;
 
-    const response: Record<string, never> = yield call(request, {
+    const response: AppData = yield call(request, {
       url: getUserAppActionUrl,
       method: "GET",
       headers: {
@@ -237,33 +192,9 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
       },
     });
 
-    const requestedUserApp = {
-      clientId: response.clientId,
-      clientSecret: response.clientSecret,
-      createdAt: response.createdAt,
-      description: response.description,
-      directUrl: response.directUrl,
-      id: response.id,
-      labels: response.labels,
-      logo: response.logo,
-      metadata: response.metadata,
-      name: response.name,
-      orgId: response.orgId,
-      privacyUrl: response.privacyUrl,
-      redirectUrl: response.redirectUrl,
-      summary: response.shortDescription,
-      subscriptions: response.subscriptions,
-      supportUrl: response.supportUrl,
-      tosUrl: response.tosUrl,
-      updatedAt: response.updatedAt,
-      visibility: response.visibility,
-      websiteUrl: response.websiteUrl,
-      youtubeUrl: response.youtubeUrl,
-      media: response.images,
-    };
-
-    yield put(getUserAppSuccess({ appData: requestedUserApp }));
-  } catch (error) {
+    yield put(getUserAppSuccess({ appData: response }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     yield put(getUserAppError(error));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
@@ -286,7 +217,8 @@ export function* uploadAppMediaActionSaga(action: UploadAppMediaAction) {
 
     yield put(uploadAppMediaSuccess(res));
     yield put(openNotification("success", i18n.t("mediaUpload.uploadSuccess"), 3000));
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     yield put(uploadAppMediaError({}));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
@@ -309,7 +241,8 @@ export function* deleteAppMediaActionSaga(action: DeleteAppMediaAction) {
 
     yield put(deleteAppMediaSuccess({ deleted: action.media }));
     yield put(openNotification("success", i18n.t("mediaUpload.deleteSuccess"), 3000));
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     yield put(deleteAppMediaError({}));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
@@ -317,6 +250,26 @@ export function* deleteAppMediaActionSaga(action: DeleteAppMediaAction) {
     yield put(openNotification("error", i18n.t("mediaUpload.deleteError"), 3000));
   }
 }
+
+export function* getAppTypesActionSaga() {
+  try {
+    const getTypeUrl = `${API_URL}/app/types`;
+
+    const response: AppType[] = yield call(request, {
+      url: getTypeUrl,
+      method: "GET",
+    });
+
+    yield put(getAppTypesSuccess({ types: response }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(getAppTypesError({ types: [] }));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
+
 
 function* rootSaga() {
   yield takeLatest(CREATE_APP, createAppActionSaga);
@@ -327,6 +280,7 @@ function* rootSaga() {
   yield takeLatest(UPDATE_APP, updateAppActionSaga);
   yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
   yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
+  yield takeLatest(GET_APP_TYPES, getAppTypesActionSaga);
 }
 
 export default rootSaga;

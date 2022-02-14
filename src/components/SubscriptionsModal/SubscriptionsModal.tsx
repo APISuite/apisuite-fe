@@ -6,6 +6,7 @@ import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 import { requestAPIAccess } from "store/applications/actions/requestApiAccess";
+import { AppData } from "store/applications/types";
 import { apisAndAppsSelector } from "pages/Subscriptions/selectors";
 
 import { SubscriptionsModalProps } from "./types";
@@ -49,6 +50,12 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     updatedAt: "",
     websiteUrl: "",
     youtubeUrl: "",
+    appType: {
+      id: 0,
+      type: "client",
+      createdAt: "",
+      updatedAt: "",
+    },
   };
 
   const [selectedClientApp, setSelectedClientApp] = React.useState(
@@ -65,7 +72,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     !!appFromRedirect || apps.length === 1
   );
 
-  const handleClientAppSelection = (dataOfSelectedApp: any) => {
+  const handleClientAppSelection = (dataOfSelectedApp: AppData) => {
     setSelectedClientApp(dataOfSelectedApp);
     setIsClientAppSelected(true);
   };
@@ -326,7 +333,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                       textDecoration: "none",
                     }}
                     to={{
-                      pathname: `/dashboard/apps/${selectedClientApp.id}`,
+                      pathname: `/dashboard/apps/${selectedClientApp.id}/type/${selectedClientApp.appType.id || 1}/general`,
                       state: {
                         redirected: true,
                         appID: selectedClientApp.id,

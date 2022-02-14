@@ -15,6 +15,7 @@ import reduceReducers from "./reduceReducers";
 import security from "./security/reducer";
 import subscriptions from "./subscriptions/reducer";
 import markdownPages from "./markdownPages/reducer";
+import media from "./media/reducer";
 
 export default (additionalReducers: Record<string, any[]> = {}) => {
   const reducers: Record<string, any[]> = {
@@ -28,6 +29,7 @@ export default (additionalReducers: Record<string, any[]> = {}) => {
     security: [security],
     subscriptions: [subscriptions],
     markdownPages: [markdownPages],
+    media: [media],
   };
 
   Object.keys(additionalReducers).map((key) => {

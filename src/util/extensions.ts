@@ -51,3 +51,12 @@ export const getSections = (section: string, args?: Record<string, unknown>) => 
     }, [] as any)
     .filter(Boolean);
 };
+
+/**
+ * Check if extension is active.
+ * @param search Extension to search. ex: @apisuite/apisuite-marketplace-extension-ui
+ * @returns true if extension active, false if not.
+ */
+export const isExtensionActive = (search: string) => {
+  return !!extensions.find((ext) => ext.name === search);
+};

@@ -1,32 +1,29 @@
 import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
+  delete: {
+    color: "#FFFFFF",
+    display: "none",
+    marginLeft: "85%",
+    marginTop: "50%",
+    "&:hover": {
+      color: theme.palette.grey[300],
+    },
+  },
   helperText: {
     color: theme.palette.text.secondary,
     margin: "5px 0",
     maxWidth: "100%",
   },
-  mediaContainer: {
-    padding: "20px",
-    border: 1,
-    borderRadius: theme.shape.borderRadius,
-    borderColor: theme.palette.grey[100],
-    borderStyle: "solid",
-    color: theme.palette.grey[300],
-    maxWidth: "100%",
-    outline: "none",
-    transition: "border .24s ease-in-out",
-  },
   media: {
     borderColor: theme.palette.grey[100],
     borderRadius: theme.shape.borderRadius,
     border: "1px solid",
-    flexDirection: "column",
-    height: 200,
+    display: "flex",
     margin: 10,
-    maxWidth: 150,
-    padding: "20px",
-    textAlign: "center",
+    height: 110,
+    width: 165,
+    position: "relative",
   },
   mediaError: {
     color: theme.palette.error.main,
@@ -38,14 +35,40 @@ export default makeStyles((theme) => ({
     margin: 5,
   },
   mediaImg: {
-    maxHeight: 130,
-    objectFit: "contain",
+    maxHeight: 110,
+    maxWidth: 165,
   },
   mediaText: {
     color: theme.palette.grey[300],
   },
   mediaUpload: {
     cursor: "pointer",
+  },
+  overlay: {
+    height: "100%",
+    width: "100%",
+    position: "absolute",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    "&:hover *": {
+      display: "block",
+    },
+  },
+  upload: {
+    alignItems: "center",
+    border: 2,
+    borderRadius: theme.shape.borderRadius,
+    borderColor: theme.palette.grey[100],
+    borderStyle: "dashed",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    margin: 10,
+    height: 110,
+    width: 165,
+    textAlign: "center",
+    transition: "border .24s ease-in-out",
   },
   activeStyle: {
     borderColor: theme.palette.secondary.main,

@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import {
-  Avatar, Box, Button, Card, CardContent,
-  Grid, Icon, Trans, Typography, useTheme, useTranslation,
+  Avatar, Box, Button, Card, CardContent, Grid, Icon,
+  Trans, Typography, useConfig, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
 
@@ -10,22 +11,25 @@ import adrift from "assets/adrift.svg";
 import authFundamentals from "assets/authFundamentals.svg";
 import launchApp from "assets/launchApp.svg";
 import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
-import { ApplicationsModal } from "components/ApplicationsModal";
 import { PageContainer } from "components/PageContainer";
 import Link from "components/Link";
 import Notice from "components/Notice";
+import { AppTypesModal } from "components/AppTypesModal";
 import { ROLES } from "constants/global";
-import { AppData, ModalDetails } from "store/applications/types";
+import { AppData } from "store/applications/types";
 import { getAllUserApps } from "store/applications/actions/getAllUserApps";
+import { resetUserApp } from "store/applications/actions/getUserApp";
+import { resetAppMedia } from "store/media/actions/uploadMedia";
+import { Organization, Role } from "store/profile/types";
 import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
-import { useParams } from "react-router-dom";
-import { Organization, Role } from "store/profile/types";
 
 export const Applications: React.FC = () => {
   const classes = useStyles();
+  const { portalName } = useConfig();
   const { palette } = useTheme();
+  const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
@@ -49,28 +53,17 @@ export const Applications: React.FC = () => {
     }
   }, [currentOrganisation, org]);
 
-  /* Modal stuff */
-  const [modalDetails, setModalDetails] = useState<ModalDetails>({
-    userID: 0,
-    userAppID: 0,
-  });
-  const [modalMode, setModalMode] = useState("");
-  const [isModalOpen, setModalOpen] = useState(false);
+  /* reset app */
+  useEffect(() => {
+    dispatch(resetUserApp());
+    dispatch(resetAppMedia());
+  }, [dispatch]);
 
-  const toggleModal = useCallback((
-    modalMode: string,
-    userID: number,
-    userAppID: number,
-  ) => {
-    const newModalDetails = {
-      userID: userID,
-      userAppID: userAppID,
-    };
+  const toggleApp = useCallback((appId: string, typeId: number) => {
+    history.push(`/dashboard/apps/${appId}/type/${typeId}/general`);
+  }, [history]);
 
-    setModalDetails(newModalDetails);
-    setModalMode(modalMode);
-    setModalOpen(!isModalOpen);
-  }, [isModalOpen]);
+  const [open, setOpen] = React.useState<boolean>(false);
 
   const getCardContent = (app: AppData) => {
     return <>
@@ -86,7 +79,7 @@ export const Applications: React.FC = () => {
           style={{ color: palette.text.secondary }}
           variant="body1"
         >
-          {app.summary || t("dashboardTab.applicationsSubTab.listOfAppsSection.noAppSummary")}
+          {app.shortDescription || t("dashboardTab.applicationsSubTab.listOfAppsSection.noAppSummary")}
         </Typography>
       </Box>
 
@@ -162,7 +155,7 @@ export const Applications: React.FC = () => {
             }
             onClick={() => {
               if (user) {
-                toggleModal("edit", user.id, userApp.id);
+                toggleApp(userApp.id.toString(), userApp.appType.id);
               }
             }}
           />
@@ -178,10 +171,10 @@ export const Applications: React.FC = () => {
   /* The following useEffect comes in handy when users want to quickly review & edit an app
   from some other place in our project (say, from the 'API Product' subscription's modal). */
   useEffect(() => {
-    const parsedAppID = parseInt(appIDInURL) || undefined;
+    const parsedAppID = appIDInURL || undefined;
 
-    if (parsedAppID !== undefined && user) toggleModal("edit", user.id, parsedAppID);
-  }, [appIDInURL, user, toggleModal]);
+    if (parsedAppID !== undefined) toggleApp(parsedAppID, 1);
+  }, [appIDInURL, toggleApp]);
 
   /* Triggers the retrieval and storage (on the app's Store, under 'applications > userApps')
   of all app-related information we presently have on a particular user the first time, and
@@ -247,7 +240,7 @@ export const Applications: React.FC = () => {
 
       <Button
         className={classes.firstUseButton}
-        onClick={() => toggleModal("new", 0, 0)}
+        onClick={() => setOpen(true)}
       >
         {t("dashboardTab.applicationsSubTab.noApplicationsButtonLabel")}
       </Button>
@@ -309,7 +302,7 @@ export const Applications: React.FC = () => {
                 >
                   <Button
                     className={classes.registerNewClientApplicationCardButton}
-                    onClick={() => toggleModal("new", 0, 0)}
+                    onClick={() => setOpen(true)}
                   >
                     {t("dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel")}
                   </Button>
@@ -425,18 +418,18 @@ export const Applications: React.FC = () => {
             )
       }
 
-      {/* FIXME
-      * Reverted back this change because it appears to solve the problem, but we actually loose the animation.
-      * We should take a closer look at how we want to handle this Modal's in the future.
-      */}
-      {isModalOpen && (
-        <ApplicationsModal
-          isModalOpen={isModalOpen}
-          modalDetails={modalDetails}
-          modalMode={modalMode}
-          toggleModal={() => toggleModal("", 0, 0)}
-        />
-      )}
+      <AppTypesModal
+        open={open}
+        showLogo={false}
+        title={portalName}
+        onClose={() => setOpen(false)}
+        onClick={(selection) => {
+          if (selection && selection.id) {
+            setOpen(false);
+            toggleApp("new", selection.id);
+          }
+        }}
+      />
     </PageContainer>
   );
 };

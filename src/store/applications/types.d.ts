@@ -7,16 +7,18 @@ export interface Response {
 }
 
 export interface ApplicationsStore {
-  createAppStatus: Response,
+  createAppStatus: Response & { id: number },
   currentApp: AppData,
   deleteAppStatus: Response,
+  getApp: Response & { id: number },
   requestingAPIAccessStatus: Response,
+  types: AppType[],
   updateAppStatus: Response,
   userApps: AppData[],
 }
 
 export interface AppData {
-  clientId: number,
+  clientId: string,
   clientSecret: string,
   createdAt: string,
   description: string,
@@ -28,7 +30,7 @@ export interface AppData {
   orgId: number,
   privacyUrl: string,
   redirectUrl: string,
-  summary: string,
+  shortDescription: string,
   subscriptions: any[],
   supportUrl: string,
   tosUrl: string,
@@ -36,8 +38,13 @@ export interface AppData {
   visibility: string,
   websiteUrl: string,
   youtubeUrl: string,
-  media: string[],
+  images: string[],
   metadata: Metadata[],
+  appType: AppType & {
+    createdAt: string,
+    updatedAt: string,
+  },
+  appTypeId?: number,
 }
 
 export interface Metadata {
@@ -71,33 +78,11 @@ export interface ApplicationsProps {
   user: User,
 }
 
-export interface CreateAppActionData {
-  description: string,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  summary: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
-}
+export type CreateAppActionData = AppData
 
-export interface UpdateAppActionData {
-  description: string,
+export type UpdateAppActionData = AppData
+
+export interface AppType {
   id: number,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  summary: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
+  type: string,
 }
