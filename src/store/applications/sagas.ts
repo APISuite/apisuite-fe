@@ -87,6 +87,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
     yield put(updateAppSuccess({
       appData: { ...response },
     }));
+    yield put(openNotification("success", i18n.t("applications.success.update", { name: response.name }), 3000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(updateAppError({ payload: action.appData }));

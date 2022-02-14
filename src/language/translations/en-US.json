@@ -720,6 +720,9 @@
     },
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access.",
+    "success": {
+      "update": "Application {{name}} updated with success."
+    },
     "tabs": {
       "client": "Client Access Details",
       "expert": "Custom Properties",
