@@ -3,6 +3,6 @@ export interface RadioBoxProps {
   disabled?: boolean,
   isChecked: () => boolean,
   label: string,
-  value: unknown,
   onClick?: React.MouseEventHandler<HTMLElement>,
+  value: unknown,
 }
