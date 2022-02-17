@@ -1,21 +1,18 @@
 import { AppTypes, AppTypesTab } from "pages/AppView/types";
 import { AppType } from "store/applications/types";
+import { isExtensionActive } from "util/extensions";
 
-const TABS = [
-  AppTypesTab.GENERAL,
-  AppTypesTab.MEDIA,
-  AppTypesTab.CLIENT,
-  AppTypesTab.EXTERNAL,
-  AppTypesTab.EXPERT,
-];
+const active = isExtensionActive("@apisuite/apisuite-marketplace-extension-ui");
+
+const TABS = [AppTypesTab.GENERAL, AppTypesTab.MEDIA, AppTypesTab.CLIENT, AppTypesTab.EXTERNAL, AppTypesTab.EXPERT];
 
 export const getNextType = (type: AppType, current: AppTypesTab) => {
   const appType = type.type;
   let idx = 3; // AppTypes.CLIENT index
-  if (appType === AppTypes.EXTERNAL) {
+  if (active && appType === AppTypes.EXTERNAL) {
     idx = 4;
   }
-  if (appType === AppTypes.EXPERT) {
+  if (active && appType === AppTypes.EXPERT) {
     idx = 5;
   }
   const tabs = TABS.slice(0, idx);
@@ -27,10 +24,10 @@ export const getNextType = (type: AppType, current: AppTypesTab) => {
 export const getPreviousType = (type: AppType, current: AppTypesTab) => {
   const appType = type.type;
   let idx = 3; // AppTypes.CLIENT index
-  if (appType === AppTypes.EXTERNAL) {
+  if (active && appType === AppTypes.EXTERNAL) {
     idx = 4;
   }
-  if (appType === AppTypes.EXPERT) {
+  if (active && appType === AppTypes.EXPERT) {
     idx = 5;
   }
   const tabs = TABS.slice(0, idx);

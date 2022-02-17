@@ -20,7 +20,7 @@ export const TypeChip: React.FC<TypeChipProps> = ({
       <Chip
         className={classes.chip}
         color={color}
-        label={t(`appTypes.modal.${type?.type}App.label`)}
+        label={t(`appTypes.modal.${type?.type || "client"}App.label`)}
         size="small"
       />
       {
@@ -35,7 +35,7 @@ export const TypeChip: React.FC<TypeChipProps> = ({
       }
       <AppTypesModal
         open={open}
-        showLogo={true}
+        showLogo={false}
         title={portalName}
         type={type}
         onClose={() => setOpen(false)}

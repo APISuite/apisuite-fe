@@ -16,6 +16,11 @@ export const applicationsViewSelector = createSelector(
       names: applications.userApps.map(app => app.name),
       requesting: applications.updateAppStatus.isRequesting || applications.getApp.isRequesting,
       types: applications.types,
+      status: {
+        create: applications.createAppStatus,
+        get: applications.getApp,
+        update: applications.updateAppStatus,
+      },
     };
   },
 );

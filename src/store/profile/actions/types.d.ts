@@ -58,9 +58,9 @@ export type ProfileActions =
 
 export type ChangeRoleAction = {
   type: typeof CHANGE_ROLE,
-  "user_id": string,
-  "org_id": string,
-  "role_id": string,
+  "user_id": number,
+  "org_id": number,
+  "role_id": number,
 }
 
 export type ChangeRoleActionSuccess = {
@@ -116,7 +116,7 @@ export type DeleteAccountActionError = {
 
 export type FetchOrgAction = {
   type: typeof FETCH_ORG,
-  "org_id": string,
+  org_id: number,
 }
 
 export type FetchOrgActionSuccess = {
@@ -174,9 +174,9 @@ export type GetProfileActionError = {
 
 export type InviteTeamMemberAction = {
   type: typeof INVITE_TEAM_MEMBER,
-  orgID: string,
+  orgID: number,
   email: string,
-  "role_id": string,
+  role_id: number,
 }
 
 export type InviteTeamMemberActionSuccess = {
@@ -190,9 +190,9 @@ export type InviteTeamMemberActionError = {
 
 export type RemoveTeamMemberAction = {
   type: typeof REMOVE_TEAM_MEMBER,
-  orgID: string,
-  idOfCurrentUser: string,
-  idOfUserToRemove: string,
+  orgID: number,
+  idOfCurrentUser: number,
+  idOfUserToRemove: number,
 }
 
 export type RemoveTeamMemberActionSuccess = {
@@ -224,7 +224,7 @@ export type SwitchOrgActionError = {
 
 export type UpdateOrgAction = {
   type: typeof UPDATE_ORG,
-  orgId: string,
+  orgId: number,
   orgInfo: ExistingOrgInfo,
 }
 
@@ -240,7 +240,7 @@ export type UpdateOrgActionError = {
 
 export type UpdateProfileAction = {
   type: typeof UPDATE_PROFILE,
-  userId: string,
+  userId: number,
   name: string,
   bio: string,
   avatar: string,

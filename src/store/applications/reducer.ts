@@ -27,7 +27,7 @@ const initialState: ApplicationsStore = {
     logo: "",
     metadata: [],
     name: "",
-    orgId: "",
+    orgId: -1,
     privacyUrl: "",
     redirectUrl: "",
     shortDescription: "",
@@ -57,6 +57,7 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
   },
   getApp: {
+    id: 0,
     isError: false,
     isRequesting: false,
   },
@@ -246,6 +247,7 @@ export default function reducer (
     case GET_USER_APP: {
       return update(state, {
         getApp: {
+          id: { $set: action.appId },
           isError: { $set: false },
           isRequesting: { $set: true },
         },
@@ -260,12 +262,15 @@ export default function reducer (
         ...state,
         currentApp: {
           ...action.appData,
+          logo: action.appData.logo || "",
+          images: action.appData.images || [],
           appType: {
             ...action.appData.appType,
             id: action.appData.appType?.id || 1,
           },
         },
         getApp: {
+          ...state.getApp,
           isError: false,
           isRequesting: false,
         },
@@ -285,6 +290,7 @@ export default function reducer (
       return update(state, {
         currentApp: { $set: initialState.currentApp },
         getApp: {
+          id: { $set: 0 },
           isError: { $set: false },
           isRequesting: { $set: false },
         },
@@ -338,6 +344,7 @@ export default function reducer (
 
     case UPDATE_APP_ERROR: {
       return update(state, {
+        currentApp: { $set: action.payload },
         updateAppStatus: {
           isError: { $set: true },
           isRequesting: { $set: false },

@@ -5,11 +5,7 @@ import { GET_ALL_USER_APPS, GET_ALL_USER_APPS_ERROR, GET_ALL_USER_APPS_SUCCESS }
 import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_RESET, GET_USER_APP_SUCCESS } from "./getUserApp";
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./updatedApp";
-<<<<<<< HEAD
-import { AppData, AppType, CurrentBlueprintAppData, ToggleBlueprintAppStatusData } from "../types";
-=======
-import { AppData, AppType, CreateAppActionData, UpdateAppActionData } from "../types";
->>>>>>> a437f35ab2f81bec18e9aa1b238fa079d834f2a2
+import { AppData, AppType, CreateAppActionData, UpdateAppActionData, CurrentBlueprintAppData, ToggleBlueprintAppStatusData } from "../types";
 import { UPLOAD_APP_MEDIA, UPLOAD_APP_MEDIA_ERROR, UPLOAD_APP_MEDIA_SUCCESS } from "./appMediaUpload";
 import { DELETE_APP_MEDIA, DELETE_APP_MEDIA_ERROR, DELETE_APP_MEDIA_SUCCESS } from "./deleteAppMedia";
 import { GET_APP_TYPES, GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./getAppTypes";
@@ -42,7 +38,6 @@ DeleteAppMediaActionError |
 GetAppTypesAction |
 GetAppTypesActionError |
 GetAppTypesActionSuccess |
-<<<<<<< HEAD
 CheckBlueprintAuthAction |
 CheckBlueprintAuthActionSuccess |
 CheckBlueprintAuthActionError |
@@ -51,14 +46,12 @@ ToggleBlueprintAppStatusActionSuccess |
 ToggleBlueprintAppStatusActionError |
 MapFieldsAction |
 MapFieldsActionSuccess |
-MapFieldsActionError
-=======
+MapFieldsActionError |
 ResetUserAppAction
->>>>>>> a437f35ab2f81bec18e9aa1b238fa079d834f2a2
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
-  orgID: string,
+  orgID: number,
   appData: CreateAppActionData,
 }
 
@@ -74,7 +67,7 @@ export type CreateAppActionError = {
 
 export type UpdateAppAction = {
   type: typeof UPDATE_APP,
-  orgID: string,
+  orgID: number,
   appData: UpdateAppActionData,
 }
 
@@ -85,12 +78,13 @@ export type UpdateAppActionSuccess = {
 
 export type UpdateAppActionError = {
   type: typeof UPDATE_APP_ERROR,
+  payload: AppData,
 }
 
 export type DeleteAppAction = {
   type: typeof DELETE_APP,
   appId: number,
-  orgID: string,
+  orgID: number,
 }
 
 export type DeleteAppActionSuccess = {
@@ -103,7 +97,7 @@ export type DeleteAppActionError = {
 
 export type RequestAPIAccessAction = {
   type: typeof REQUEST_API_ACCESS,
-  orgID: string,
+  orgID: number,
   appId: number,
 }
 
@@ -117,7 +111,7 @@ export type RequestAPIAccessActionError = {
 
 export type GetUserAppAction = {
   type: typeof GET_USER_APP,
-  orgID: string,
+  orgID: number,
   appId: number,
 }
 
@@ -132,7 +126,7 @@ export type GetUserAppActionError = {
 
 export type GetAllUserAppsAction = {
   type: typeof GET_ALL_USER_APPS,
-  orgID: string,
+  orgID: number,
 }
 
 export type GetAllUserAppsActionSuccess = {
@@ -147,7 +141,7 @@ export type GetAllUserAppsActionError = {
 
 export type UploadAppMediaAction = {
   type: typeof UPLOAD_APP_MEDIA,
-  orgID: string,
+  orgID: number,
   appId: number,
   media: FormData,
 }
@@ -164,7 +158,7 @@ export type UploadAppMediaActionError = {
 
 export type DeleteAppMediaAction = {
   type: typeof DELETE_APP_MEDIA,
-  orgID: string,
+  orgID: number,
   appId: number,
   media: string,
 }
@@ -248,6 +242,8 @@ export type MapFieldsActionSuccess = {
 
 export type MapFieldsActionError = {
   type: typeof MAP_FIELDS_ACTION_ERROR,
+}
+
 export type ResetUserAppAction = {
   type: typeof GET_USER_APP_RESET,
 }

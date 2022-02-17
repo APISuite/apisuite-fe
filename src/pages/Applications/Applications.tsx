@@ -18,6 +18,9 @@ import { AppTypesModal } from "components/AppTypesModal";
 import { ROLES } from "constants/global";
 import { AppData } from "store/applications/types";
 import { getAllUserApps } from "store/applications/actions/getAllUserApps";
+import { resetUserApp } from "store/applications/actions/getUserApp";
+import { resetAppMedia } from "store/media/actions/uploadMedia";
+import { Organization, Role } from "store/profile/types";
 import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
@@ -39,7 +42,7 @@ export const Applications: React.FC = () => {
   const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false);
 
   const isOrg = (_org: Organization | Organization & { member_since: string; role: Role }) => {
-    return Object.keys(_org).length !== 0 && _org.id !== "";
+    return Object.keys(_org).length !== 0 && _org.id > 0;
   };
 
   /* With every change of our store's 'profile > profile > currentOrg' section
@@ -50,6 +53,12 @@ export const Applications: React.FC = () => {
       setHasCurrentOrgDetails(true);
     }
   }, [currentOrganisation, org]);
+
+  /* reset app */
+  useEffect(() => {
+    dispatch(resetUserApp());
+    dispatch(resetAppMedia());
+  }, [dispatch]);
 
   const toggleApp = useCallback((appId: string, typeId: number) => {
     history.push(`/dashboard/apps/${appId}/type/${typeId}/general`);
@@ -166,7 +175,7 @@ export const Applications: React.FC = () => {
     const parsedAppID = appIDInURL || undefined;
 
     if (parsedAppID !== undefined) toggleApp(parsedAppID, 1);
-  }, []);
+  }, [appIDInURL, toggleApp]);
 
   /* Triggers the retrieval and storage (on the app's Store, under 'applications > userApps')
   of all app-related information we presently have on a particular user the first time, and
@@ -412,11 +421,11 @@ export const Applications: React.FC = () => {
 
       <AppTypesModal
         open={open}
-        showLogo={true}
+        showLogo={false}
         title={portalName}
         onClose={() => setOpen(false)}
         onClick={(selection) => {
-          if (selection) {
+          if (selection && selection.id) {
             setOpen(false);
             toggleApp("new", selection.id);
           }

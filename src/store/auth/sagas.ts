@@ -5,7 +5,7 @@ import { DefaultConfig } from "@apisuite/fe-base";
 import request from "util/request";
 import stateGenerator from "util/stateGenerator";
 import { openNotification } from "store/notificationStack/actions/notification";
-import { OrganizationAndRole, Profile } from "store/profile/types";
+import { Profile } from "store/profile/types";
 import { API_URL } from "constants/endpoints";
 import { ROLES, LOCAL_STORAGE_KEYS } from "constants/global";
 import { history } from "store";
@@ -64,8 +64,8 @@ import {
 } from "./actions/invitation";
 
 import { Invitation } from "./types";
-import { getFromStorage, removeFromStorage, setInStorage } from "util/localStorageActions";
 import { getReCAPTCHAToken, ReCaptchaActions } from "util/getReCAPTCHAToken";
+import { getSelectedOrganization } from "util/getSelectedOrganization";
 
 function * loginWorker (action: LoginAction) {
   try {
@@ -103,37 +103,15 @@ function * loginUserWorker () {
     });
 
     const user = profile.user;
-    const userId = user.id;
     const userName = user.name.split(" ");
 
-    const currentUser = getFromStorage(LOCAL_STORAGE_KEYS.CURRENT_USER);
+    const persistedUserId = localStorage.getItem(LOCAL_STORAGE_KEYS.CURRENT_USER);
 
-    if (!currentUser) {
-      setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
-    } else if (currentUser !== userId) {
-      removeFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
-
-      setInStorage(LOCAL_STORAGE_KEYS.CURRENT_USER, userId);
+    if (!persistedUserId || Number(persistedUserId) !== user.id) {
+      localStorage.setItem(LOCAL_STORAGE_KEYS.CURRENT_USER, user.id.toString());
     }
 
-    const storedOrg = getFromStorage(LOCAL_STORAGE_KEYS.STORED_ORG);
-
-    let org = storedOrg;
-
-    if (!org && profile.organizations.length) {
-      org = profile.organizations[0];
-    }
-
-    const currentOrg: OrganizationAndRole = {
-      id: org?.id || "",
-      name: org?.name || "",
-      role: {
-        id: org?.role?.id || "",
-        name: org?.role?.name || ROLES.baseUser.value,
-      },
-    };
-
-    setInStorage(LOCAL_STORAGE_KEYS.STORED_ORG, currentOrg);
+    const org = getSelectedOrganization(profile.organizations);
 
     // TODO: better types for this response
     const settings: { navigation: DefaultConfig["navigation"] } = yield call(request, {
@@ -141,18 +119,15 @@ function * loginUserWorker () {
       method: "GET",
     });
 
-    const path = settings?.navigation[currentOrg?.role?.name || ROLES.baseUser.value]?.events.afterLogin ?? "/";
+    const path = settings?.navigation[org.role?.name || ROLES.baseUser.value]?.events.afterLogin ?? "/";
 
     yield put(loginUserSuccess({
       path,
       user: {
         fName: userName[0],
         lName: userName[userName.length - 1],
-        id: Number(userId),
-        role: {
-          id: currentOrg?.role?.id,
-          name: currentOrg?.role?.name ?? ROLES.baseUser.value,
-        },
+        id: user.id,
+        role: {...org.role},
       },
     }));
   } catch (error) {

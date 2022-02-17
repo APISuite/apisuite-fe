@@ -36,8 +36,7 @@ export const AppView: React.FC = () => {
 
   const isNew = Number.isNaN(Number(appId));
   const type = types.find((tp) => tp.id === Number(typeId));
-
-  let ROUTES = [
+  const ROUTES = [
     {
       component: GeneralSettings,
       label: t("applications.tabs.general"),

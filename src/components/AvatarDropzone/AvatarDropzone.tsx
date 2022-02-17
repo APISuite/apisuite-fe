@@ -12,7 +12,7 @@ import { AvatarDropzoneProps } from "./types";
 export const AvatarDropzone: React.FC<AvatarDropzoneProps> = ({
   accept = "image/*",
   helperText,
-  image,
+  image = "",
   maxSize = 2000000,
   onFileLoaded,
   onDeletePressed,
@@ -41,7 +41,7 @@ export const AvatarDropzone: React.FC<AvatarDropzoneProps> = ({
     }
   }, [media, onFileLoaded]);
 
-  const onDelete = (org: string, url: string) => {
+  const onDelete = (org: number, url: string) => {
     dispatch(deleteMedia({ orgId: org, url }));
     onDeletePressed();
   };
@@ -72,7 +72,7 @@ export const AvatarDropzone: React.FC<AvatarDropzoneProps> = ({
 
   return (
     <Box>
-      <Grid  alignItems="center" container direction="column" justify="center" spacing={2}>
+      <Grid alignItems="center" container direction="column" justify="center" spacing={2}>
         <Grid item xs={12}>
           {!image &&
             <Paper

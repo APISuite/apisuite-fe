@@ -28,7 +28,7 @@ export const SignUpForm: React.FC = () => {
     errors: {
       email: "",
       name: "",
-      password: "",
+      password: false,
     },
   });
 
@@ -63,7 +63,7 @@ export const SignUpForm: React.FC = () => {
           return update(s, {
             data: { password: { $set: target.value } },
             errors: {
-              password: { $set: isValidPass(target.value) ? "" : t("signUpForm.warnings.password") },
+              password: { $set: !isValidPass(target.value) },
             },
           });
         }
@@ -148,8 +148,8 @@ export const SignUpForm: React.FC = () => {
           name='password'
           value={state.data.password}
           fullWidth
-          error={!!state.errors.password.length}
-          helperText={state.errors.password}
+          error={!!state.data.password.length && state.errors.password}
+          helperText={t("signUpForm.warnings.password")}
           InputProps={{
             endAdornment:
               <InputAdornment position='end'>

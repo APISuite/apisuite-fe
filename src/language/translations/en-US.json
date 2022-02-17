@@ -31,7 +31,7 @@
       "individualSteps": {
         "stepOne": {
           "header": "Add your app",
-          "paragraph": "You’ll need an app to send and receive API calls.\n\nAdding your app details will help us to enable this flow.",
+          "paragraph": "You'll need an app to send and receive API calls.\n\nAdding your app details will help us to enable this flow.",
           "buttonLabel": "Add app"
         },
         "stepTwo": {
@@ -109,7 +109,7 @@
       "email": "Please provide a valid e-mail address.",
       "invalidInvitation": "The invitation is not valid, or has expired.",
       "organisationName": "Please enter the name of your organisation.",
-      "password": "Your password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol.",
+      "password": "Your password must have at least 12 characters, and contain 1 uppercase character, 1 lowercase character, and 1 special character.",
       "profileName": "Please enter your name."
     },
     "steps": {
@@ -323,7 +323,7 @@
       },
       "appModal": {
         "addAppButtonLabel": "Add application",
-        "allOtherURLsError": "The provided URL is not valid.",
+        "allOtherURLsError": "The provided URL is not valid. The URL must start with http(s)",
         "appAvatarFieldLabel": "Avatar",
         "appAvatarFieldSubLabel": "Click to edit",
         "appAvatarURLError": "The provided URL is not valid, or the image does not exist.",
@@ -740,6 +740,7 @@
       "create": "Failed to create app. Please make sure all required fields are filled correctly or contact support.",
       "update": "Failed to update app. Please make sure all required fields are filled correctly or contact support."
     },
+    "notfound": "No Application found.",
     "prompt": {
       "body": "All changes you made will be lost. Do you really want to leave without saving?",
       "cancel": "Stay and save",
@@ -749,6 +750,9 @@
     },
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access.",
+    "success": {
+      "update": "Application '{{name}}' was updated with success."
+    },
     "tabs": {
       "blueprintGeneral": "General Settings",
       "blueprintConnector": "Connector Settings",
@@ -811,7 +815,7 @@
         "description": "List an app or plugin located on an external platform.",
         "label": "External app"
       },
-      "infoBox": "Choose the category that best suits your app. Read <0>here</0> about the different app types and its predefined settings.",
+      "infoBox": "Choose the category that best suits your app. Read <0>here</0> about the different app types and their predefined settings.",
       "next": "Next",
       "subtitle": "Choose the category you wish for this app",
       "title": "Select App Type",

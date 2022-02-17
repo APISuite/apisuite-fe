@@ -75,6 +75,26 @@ export const Security: React.FC = () => {
     setProvidedPasswords(newPasswords);
   };
 
+  const hasError = (currentPassword: string, newPassword: string): boolean => {
+    if (!newPassword) return false;
+
+    if (currentPassword === newPassword) return true;
+
+    return !isValidPass(newPassword);
+  };
+
+  const passwordHelperText = (currentPassword: string, newPassword: string): string => {
+    if (!newPassword) return t("signUpForm.warnings.password");
+    
+    if (currentPassword === newPassword) {
+      return t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage");
+    }
+
+    if (!isValidPass(newPassword)) return t("profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage");
+    
+    return "";
+  };
+
   const handlePasswordChangeRequest = () => {
     dispatch(updatePasswordRequest({ oldPassword: providedPasswords[0], newPassword: providedPasswords[1] }));
 
@@ -144,30 +164,8 @@ export const Security: React.FC = () => {
               <Box mb={3} mt={1.5}>
                 <TextField
                   fullWidth
-                  error={
-                    providedPasswords[1].length === 0
-                      ? false
-                      : (
-                        providedPasswords[0] === providedPasswords[1]
-                          ? true
-                          : (
-                            !isValidPass(providedPasswords[1])
-                          )
-                      )
-                  }
-                  helperText={
-                    providedPasswords[1].length === 0
-                      ? ""
-                      : (
-                        providedPasswords[0] === providedPasswords[1]
-                          ? t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage")
-                          : (
-                            isValidPass(providedPasswords[1])
-                              ? ""
-                              : t("profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage")
-                          )
-                      )
-                  }
+                  error={hasError(providedPasswords[0], providedPasswords[1])}
+                  helperText={passwordHelperText(providedPasswords[0], providedPasswords[1])}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position='end'>

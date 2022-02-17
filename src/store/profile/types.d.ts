@@ -80,7 +80,7 @@ export type Profile = {
     avatar?: string,
     bio?: string,
     email: string,
-    id: string,
+    id: number,
     "last_login": string,
     mobile?: string,
     name: string,
@@ -89,17 +89,18 @@ export type Profile = {
 }
 
 export type Role = {
-  id: string,
+  id: number,
   name: "admin" | "organizationOwner" | "developer" | "baseUser",
+  level: number,
 }
 
 export type Organization = {
-  id: string,
+  id: number,
   name: string,
 }
 
 export type OrganizationAndRole = {
-  id: string,
+  id: number,
   name: string,
   role: Role,
 }

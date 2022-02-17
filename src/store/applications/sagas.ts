@@ -10,6 +10,7 @@ import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { openNotification } from "store/notificationStack/actions/notification";
 import { Store } from "store/types";
 import { clearProps } from "util/clear";
+import { linker } from "util/linker";
 import request from "util/request";
 import { AppData, AppType } from "./types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
@@ -27,11 +28,13 @@ import { checkBlueprintAuthActionError, checkBlueprintAuthActionSuccess, CHECK_B
 import { toggleBlueprintAppStatusActionError, toggleBlueprintAppStatusActionSuccess, TOGGLE_BLUEPRINT_APP_STATUS_ACTION } from "./actions/toggleBlueprintAppStatus";
 import { mapFieldsActionSuccess, mapFieldsActionError, MAP_FIELDS_ACTION } from "./actions/mapFields";
 
+const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
+
 export function* createAppActionSaga(action: CreateAppAction) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => !!v));
-    data = clearProps(data, [ "appType", "images"]);
+    data = clearProps(data, appDataFilter);
 
     const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
@@ -60,10 +63,19 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => v !== null));
-    data = clearProps(data, ["appType", "createdAt", "id", "idpProvider","images", "org_id", "orgId", "state", "updatedAt"]);
+    data = clearProps(data, appDataFilter);
     if (!action.appData.appTypeId) {
       delete data.appTypeId;
     }
+    const links = ["logo", "privacyUrl", "supportUrl", "redirectUrl", "tosUrl", "websiteUrl", "youtubeUrl"];
+    for (const link of links) {
+      if (data.hasOwnProperty(link) && data[link]) {
+        data[link] = linker(data[link]);
+      } else if (action.appData.hasOwnProperty(link)) {
+        data[link] = "";
+      }
+    }
+
     const updateAppUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appData.id}`;
 
     const response: AppData = yield call(request, {
@@ -78,9 +90,10 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
     yield put(updateAppSuccess({
       appData: { ...response },
     }));
+    yield put(openNotification("success", i18n.t("applications.success.update", { name: response.name }), 3000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    yield put(updateAppError(error));
+    yield put(updateAppError({ payload: action.appData }));
     yield put(openNotification("error", i18n.t("applications.error.update"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
@@ -174,7 +187,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
   try {
     const getUserAppActionUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}`;
 
-    const response: Record<string, never> = yield call(request, {
+    const response: AppData = yield call(request, {
       url: getUserAppActionUrl,
       method: "GET",
       headers: {
@@ -182,33 +195,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
       },
     });
 
-    const requestedUserApp = {
-      clientId: response.clientId,
-      clientSecret: response.clientSecret,
-      createdAt: response.createdAt,
-      description: response.description,
-      directUrl: response.directUrl,
-      id: response.id,
-      labels: response.labels,
-      logo: response.logo,
-      metadata: response.metadata,
-      name: response.name,
-      orgId: response.orgId,
-      privacyUrl: response.privacyUrl,
-      redirectUrl: response.redirectUrl,
-      shortDescription: response.shortDescription,
-      subscriptions: response.subscriptions,
-      supportUrl: response.supportUrl,
-      tosUrl: response.tosUrl,
-      updatedAt: response.updatedAt,
-      visibility: response.visibility,
-      websiteUrl: response.websiteUrl,
-      youtubeUrl: response.youtubeUrl,
-      images: response.images,
-      appType: response.appType,
-    };
-
-    yield put(getUserAppSuccess({ appData: requestedUserApp }));
+    yield put(getUserAppSuccess({ appData: response }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(getUserAppError(error));
@@ -383,7 +370,6 @@ function* rootSaga() {
   yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
   yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
   yield takeLatest(GET_APP_TYPES, getAppTypesActionSaga);
-
   yield takeLatest(CHECK_BLUEPRINT_AUTH_ACTION, checkBlueprintAuthActionSaga);
   yield takeLatest(MAP_FIELDS_ACTION, mapFieldsActionSaga);
   yield takeLatest(TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionSaga);

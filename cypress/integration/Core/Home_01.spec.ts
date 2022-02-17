@@ -279,8 +279,7 @@ describe("Home Page - Unauthenticated User", () => {
           .should("be.visible")
           .and("contain", apis.rows[index].apiVersions[0].title)
           .and("contain", apis.rows[index].apiVersions[0].version)
-          .and("contain", apis.rows[index].apiVersions[0].live ? "Production access" : "API Documentation")
-          .and("contain", apis.rows[index].apiDocs.productIntro);
+          .and("contain", apis.rows[index].apiVersions[0].live ? "Production access" : "API Documentation");
       }
     });
 
@@ -307,8 +306,6 @@ describe("Home Page - Unauthenticated User", () => {
         .should("not.exist");
       cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardAccessType)
         .should("have.text", " API Documentation");
-      cy.findChildrenByID(testIds.apiCatalogCard, testIds.apiCardDescription)
-        .should("have.text", enUS.fallbacks.noDescription);
     });
   });
 

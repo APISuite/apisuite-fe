@@ -97,7 +97,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
                   {[
                     <Link
                       key="appTypes.modal.url"
-                      to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties"
+                      to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1929314305/App+Types"
                       rel='noopener noreferrer'
                       target='_blank'
                     />,
