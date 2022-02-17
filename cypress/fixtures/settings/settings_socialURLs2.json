@@ -40,7 +40,7 @@
                  "fallback":"Support",
                  "key":""
               },
-              "action":"https://google.com"
+              "action":"https://intercom.help/api-suite/en"
            },
            {
               "fixed":true,
@@ -81,7 +81,7 @@
                  "type":"text",
                  "fallback":"Support"
               },
-              "action":"https://google.com"
+              "action":"https://intercom.help/api-suite/en"
            },
            {
               "fixed":false,
@@ -176,7 +176,7 @@
                  "type":"text",
                  "fallback":"Support"
               },
-              "action":"https://google.com"
+              "action":"https://intercom.help/api-suite/en"
            },
            {
               "fixed":false,
@@ -285,7 +285,7 @@
                  "type":"text",
                  "fallback":"Support"
               },
-              "action":"https://google.com"
+              "action":"https://intercom.help/api-suite/en"
            },
            {
               "fixed":false,
@@ -391,7 +391,7 @@
                  "type":"text",
                  "fallback":"Support"
               },
-              "action":"https://google.com"
+              "action":"https://intercom.help/api-suite/en"
            },
            {
               "fixed":false,
