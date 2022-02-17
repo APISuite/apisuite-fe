@@ -18,11 +18,6 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   const { palette, zIndex, spacing } = useTheme();
   const { navigation, portalName, ownerInfo, documentationURL, supportURL } = useConfig();
 
-  console.log("navigation:", navigation);
-  console.log("ownerInfo:", ownerInfo);
-  console.log("documentationURL:", documentationURL);
-  console.log("supportURL:", supportURL);
-
   const { t } = useTranslation();
   const { user, currentOrg } = useSelector(navigationSelector);
   // FIXME: checking the id because profile is never undefined
@@ -258,7 +253,6 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           justify="flex-end"
         >
           {navigation[role].tabs.map((tab) => {
-            console.log("tab:", tab);
             if (expand && !tab.fixed) return null;
 
             return renderTab(tab);
