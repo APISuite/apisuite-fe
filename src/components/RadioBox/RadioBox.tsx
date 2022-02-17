@@ -9,8 +9,9 @@ export const RadioBox: React.FC<RadioBoxProps> = ({
   disabled = false,
   isChecked,
   label,
-  value,
   onClick,
+  value,
+  ...rest
 }) => {
   const classes = useStyles();
   const { palette } = useTheme();
@@ -27,6 +28,7 @@ export const RadioBox: React.FC<RadioBoxProps> = ({
         disabled={disabled}
         label={label}
         labelPlacement="end"
+        {...rest}
         value={value}
       />
       {description && <Box mb={1} ml={4} mr={2}>

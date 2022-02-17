@@ -25,7 +25,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
   const [value, setValue] = useState<AppType | null>(type || null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value as unknown as AppType);
+    setValue(JSON.parse(event.target.value) as AppType);
   };
 
   const resetValue = () => {
@@ -65,12 +65,12 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
             <RadioGroup
               aria-label="type"
               name="type"
-              value={value}
               onChange={handleChange}
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
               }}
+              value={value}
             >
               {
                 types.map((tp, idx) => (
@@ -81,7 +81,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
                     isChecked={() => JSON.stringify(tp) === JSON.stringify(value)}
                     label={t(`appTypes.modal.${tp.type}App.label`)}
                     onClick={() => setValue(tp)}
-                    value={tp}
+                    value={JSON.stringify(tp)}
                   />
                 ))
               }
