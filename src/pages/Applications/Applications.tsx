@@ -24,6 +24,7 @@ import { Organization, Role } from "store/profile/types";
 import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
+import { getAllBlueprintApps } from "store/applications/actions/getAllBlueprintApps";
 
 export const Applications: React.FC = () => {
   const classes = useStyles();
@@ -33,7 +34,9 @@ export const Applications: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
-    allUserApps, createUserAppStatus, currentOrganisation, deleteUserAppStatus, org, updateUserAppStatus, user,
+    allBlueprintApps, allUserApps, createUserAppStatus,
+    currentOrganisation, deleteUserAppStatus, org,
+    updateUserAppStatus, user,
   } = useSelector(applicationsSelector);
 
   const MARKETPLACE_SECTION = "SUBBED_MARKETPLACE_APPS";
@@ -188,6 +191,7 @@ export const Applications: React.FC = () => {
       !updateUserAppStatus.isRequesting
     ) {
       dispatch(getAllUserApps({orgID: currentOrganisation.id}));
+      dispatch(getAllBlueprintApps({orgID: currentOrganisation.id}));
     }
   }, [createUserAppStatus, currentOrganisation, deleteUserAppStatus, dispatch, updateUserAppStatus, user]);
 
@@ -286,9 +290,10 @@ export const Applications: React.FC = () => {
         </Box>
 
         {/* Client applications container */}
-        <div>
+        <Box>
           <Grid container spacing={3}>
-            {appCardGenerator(allUserApps)}
+            {appCardGenerator([...allUserApps, ...allBlueprintApps])}
+            
             <Grid item key="appCard-addNew" xs={4}>
               <Card elevation={1}>
                 <CardContent
@@ -310,7 +315,7 @@ export const Applications: React.FC = () => {
               </Card>
             </Grid>
           </Grid>
-        </div>
+        </Box>
 
         {/* Subscribed Marketplace applications container */}
         <Box width={1}>

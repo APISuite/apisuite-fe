@@ -7,6 +7,7 @@ export const applicationsSelector = createSelector(
   ({ auth }: Store) => auth,
   (applications, profile, auth) => {
     return {
+      allBlueprintApps: applications.allBlueprintApps,
       allUserApps: applications.userApps,
       createUserAppStatus: applications.createAppStatus,
       currentOrganisation: profile.profile.currentOrg,

@@ -11,6 +11,7 @@ import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./actions/upda
 import { UPLOAD_APP_MEDIA_SUCCESS } from "./actions/appMediaUpload";
 import { DELETE_APP_MEDIA_SUCCESS } from "./actions/deleteAppMedia";
 import { GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./actions/getAppTypes";
+import { GET_ALL_BLUEPRINT_APPS_SUCCESS } from "./actions/getAllBlueprintApps";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -69,6 +70,7 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
   },
   userApps: [],
+  allBlueprintApps: [],
 };
 
 /** Reducer */
@@ -271,6 +273,12 @@ export default function reducer (
     case GET_APP_TYPES_SUCCESS: {
       return update(state, {
         types: { $set: action.types },
+      });
+    }
+
+    case GET_ALL_BLUEPRINT_APPS_SUCCESS: {
+      return update(state, {
+        allBlueprintApps: { $set: action.blueprintApps },
       });
     }
 

@@ -15,6 +15,7 @@ export interface ApplicationsStore {
   types: AppType[],
   updateAppStatus: Response,
   userApps: AppData[],
+  allBlueprintApps: AppData[],
 }
 
 export interface AppData {
@@ -47,6 +48,16 @@ export interface AppData {
   appTypeId?: number,
 }
 
+export interface BlueprintAppData {
+  app_link: string,
+  app_name: string,
+  configuration: Record<string, unknown>,
+  description: string,
+  id: number,
+  labels: string[],
+  logo: string,
+  overview: string,
+}
 export interface Metadata {
   key: string,
   value: string,

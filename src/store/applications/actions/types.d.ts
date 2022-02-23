@@ -37,7 +37,10 @@ DeleteAppMediaActionError |
 GetAppTypesAction |
 GetAppTypesActionError |
 GetAppTypesActionSuccess |
-ResetUserAppAction
+ResetUserAppAction |
+GetAllBlueprintAppsAction |
+GetAllBlueprintAppsActionSuccess |
+GetAllBlueprintAppsActionError
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
@@ -194,4 +197,23 @@ export type GetAppTypesActionError = {
 
 export type ResetUserAppAction = {
   type: typeof GET_USER_APP_RESET,
+}
+
+export type GetAllBlueprintAppsAction = {
+  type: typeof GET_ALL_BLUEPRINT_APPS,
+  orgID: number,
+}
+
+export type GetAllBlueprintAppsActionSuccess = {
+  type: typeof GET_ALL_BLUEPRINT_APPS_SUCCESS,
+  allBlueprintApps: BlueprintAppData[],
+}
+
+export type GetAllBlueprintAppsActionError = {
+  type: typeof GET_ALL_BLUEPRINT_APPS_ERROR,
+  allBlueprintApps: AppData[],
+}
+
+export type GetAllBlueprintAppsActionResponse = {
+  data: BlueprintAppData[],
 }

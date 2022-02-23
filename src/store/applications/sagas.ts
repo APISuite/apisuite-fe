@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 
-import { API_URL } from "constants/endpoints";
+import { API_URL, BLUEPRINT_APPS_URL } from "constants/endpoints";
 import qs from "qs";
 import { i18n } from "@apisuite/fe-base";
 
@@ -14,7 +14,7 @@ import { linker } from "util/linker";
 import request from "util/request";
 import { AppData, AppType } from "./types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
-import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
+import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllBlueprintAppsAction, GetAllBlueprintAppsActionResponse, GetAllUserAppsAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS, getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess } from "./actions/getAllUserApps";
 import { GET_USER_APP, getUserAppError, getUserAppSuccess } from "./actions/getUserApp";
@@ -24,6 +24,7 @@ import { uploadAppMediaError, uploadAppMediaSuccess, UPLOAD_APP_MEDIA } from "./
 import { deleteAppMediaError, deleteAppMediaSuccess, DELETE_APP_MEDIA } from "./actions/deleteAppMedia";
 import { UploadResponse } from "./actions/types";
 import { getAppTypesError, getAppTypesSuccess, GET_APP_TYPES } from "./actions/getAppTypes";
+import { getAllBlueprintAppsError, getAllBlueprintAppsSuccess, GET_ALL_BLUEPRINT_APPS } from "./actions/getAllBlueprintApps";
 
 const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
 
@@ -273,6 +274,60 @@ export function* getAppTypesActionSaga() {
   }
 }
 
+export function* getAllBlueprintAppsActionSaga(action: GetAllBlueprintAppsAction) {
+  try {
+    const getAllBlueprintAppsActionUrl = BLUEPRINT_APPS_URL;
+
+    const response: GetAllBlueprintAppsActionResponse = yield call(request, {
+      url: getAllBlueprintAppsActionUrl,
+      method: "GET",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+    });
+
+    const allBlueprintApps = response.data.filter((blueprintApp) => {
+      return blueprintApp.orgId === action.orgID && {
+        clientSecret: "",
+        id: blueprintApp.id,
+        name: blueprintApp.appName,
+        description: blueprintApp.description,
+        redirect_url: "",
+        shortDescription: blueprintApp.overview,
+        visibility: "",
+        logo: blueprintApp.logo,
+        clientId: "",
+        org_id: blueprintApp.orgId,
+        idpProvider: "",
+        state: "",
+        tosUrl: "",
+        privacyUrl: "",
+        youtubeUrl: "",
+        websiteUrl: "",
+        supportUrl: "",
+        directUrl: "",
+        labels: blueprintApp.labels,
+        images: [],
+        redirectUrl: "",
+        orgId: blueprintApp.orgId,
+        subscriptions: [],
+        metadata: [],
+        appType: {
+          id: 4,
+          type: "blueprint",
+        },
+      };
+    });
+
+    yield put(getAllBlueprintAppsSuccess({ allBlueprintApps }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(getAllBlueprintAppsError(error));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
 
 function* rootSaga() {
   yield takeLatest(CREATE_APP, createAppActionSaga);
@@ -284,6 +339,7 @@ function* rootSaga() {
   yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
   yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
   yield takeLatest(GET_APP_TYPES, getAppTypesActionSaga);
+  yield takeLatest(GET_ALL_BLUEPRINT_APPS, getAllBlueprintAppsActionSaga);
 }
 
 export default rootSaga;
