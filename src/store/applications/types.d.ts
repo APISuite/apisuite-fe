@@ -15,12 +15,14 @@ export interface ApplicationsStore {
   types: AppType[],
   updateAppStatus: Response,
   userApps: AppData[],
-  allBlueprintApps: AllBlueprintAppData[],
-  currentBlueprintAppData: CurrentBlueprintAppData,
-  checkBlueprintAuthStatus: Response & { isChecked: boolean },
-  currentBlueprintAppFields: string[],
+  // Blueprint-related data
+  blueprintAppConfig: CurrentBlueprintAppData,
+  createBlueprintAppStatus: Response & { id: number },
+  getBlueprintAppStatus: Response & { id: number },
   isActive: boolean,
   toggleBlueprintAppStatus: Response,
+  updateBlueprintAppStatus: Response,
+  validateAccessDetailsStatus: Response & { isChecked: boolean },
 }
 
 export interface AppData {
@@ -53,6 +55,19 @@ export interface AppData {
   appTypeId?: number,
 }
 
+export interface BlueprintAppData {
+  data: {
+    app_link: string,
+    app_name: string,
+    configuration: Record<string, unknown>,
+    description: string,
+    id: number,
+    labels: string[],
+    logo: string,
+    overview: string,
+  },
+}
+
 export interface Metadata {
   key: string,
   value: string,
@@ -60,41 +75,8 @@ export interface Metadata {
   description: string,
 }
 
-export interface AllBlueprintAppData {
-  id: 0,
-  userId: 0,
-  orgId: 0,
-  app_name: string,
-  appUrl: string,
-  appMethod: string,
-  authType: string,
-  appConfig: {
-    cltId: string,
-    scope: string,
-    auhtUrl: string,
-    tokenUrl: string,
-    cltSecret: string,
-    redirectUrl: string,
-    connAuthType: string,
-  },
-  apiUrl: string,
-  apiMethod: string,
-  apiconfig: Record<string, unknown>,
-  pollingInterval: 0,
-  fieldsRaw: [
-    string
-  ],
-  fieldMapping: Record<string, unknown>,
-  token: string,
-  workerId: string,
-  workerStatus: string,
-}
-
 export interface CurrentBlueprintAppData {
-  // TODO: Included this field by request of D. To be removed later.
   auth_type: string,
-  api_method: string,
-  api_url: string,
   app_conf: {
     auth_url: string,
     clt_id: string,
@@ -136,6 +118,8 @@ export interface ApplicationsProps {
 }
 
 export type CreateAppActionData = AppData
+
+export type CreateBlueprintAppActionData = BlueprintAppData
 
 export type UpdateAppActionData = AppData
 

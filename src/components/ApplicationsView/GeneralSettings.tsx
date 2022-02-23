@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
@@ -16,20 +16,22 @@ import { CustomizableTooltip } from "components/CustomizableTooltip";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import Notice from "components/Notice";
 import { RouterPrompt } from "components/RouterPrompt";
-import { AppTypesTab } from "pages/AppView/types";
+import { AppTypes, AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { createApp } from "store/applications/actions/createApp";
+import { createBlueprintApp } from "store/applications/actions/createBlueprintApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
 import { resetUserApp } from "store/applications/actions/getUserApp";
+import { AppType } from "store/applications/types";
 import { getSections } from "util/extensions";
+import { ActionsFooter, AppHeader, checkHistory, checkNextAction, getAppType, NotFound, useGetApp } from "./util";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { ActionsFooter, AppHeader, checkHistory, checkNextAction, NotFound, useGetApp } from "./util";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
-  const { appId, typeId } = useParams<{ appId: string; typeId: string  }>();
+  const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const { palette, spacing } = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -38,12 +40,13 @@ export const GeneralSettings: React.FC = () => {
   const { profile } = useSelector(profileSelector);
   const [avatar, setAvatar] = React.useState("");
   const isNew = Number.isNaN(Number(appId));
+  const appType = useRef<AppType>(getAppType(types, typeId));
 
-  useEffect(() => {
-    if (isNew && app.id !== 0 || isNew && app.name !== "") {
-      dispatch(resetUserApp());
-    }
-  }, [app.id, app.name, dispatch, isNew]);
+  // useEffect(() => {
+  //   if (isNew && app.id !== 0 || isNew && app.name !== "") {
+  //     dispatch(resetUserApp());
+  //   }
+  // }, [app.id, app.name, dispatch, isNew]);
 
   useGetApp({
     app,
@@ -102,10 +105,13 @@ export const GeneralSettings: React.FC = () => {
     const newAppDetails = {
       ...app,
       ...getValues(),
+      appType: appType.current,
       appTypeId: Number(typeId),
     };
 
-    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
+    appType.current.type === AppTypes.BLUEPRINT
+      ? dispatch(createBlueprintApp({ orgID: profile.currentOrg.id, appData: newAppDetails }))
+      : dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
   };
 
   // Deleting an app

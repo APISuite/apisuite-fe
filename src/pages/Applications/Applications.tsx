@@ -24,7 +24,6 @@ import { Organization, Role } from "store/profile/types";
 import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
-import { Organization, Role } from "store/profile/types";
 
 export const Applications: React.FC = () => {
   const classes = useStyles();

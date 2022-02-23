@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { SideNavForm } from "components/SideNavForm";
 import {
-  BlueprintConnectorSettings,
-  BlueprintGeneralSettings,
+  AccessDetails,
   ClientAccess,
+  ConnectorSettings,
   CustomProperties,
   ExternalSettings,
   GeneralSettings,
@@ -43,14 +43,15 @@ export const AppView: React.FC = () => {
       path: "/dashboard/apps/:appId/type/:typeId/general",
       route: `/dashboard/apps/${appId}/type/${typeId}/general`,
     },
-    {
-      component: MediaFilesLinks,
-      disabled: isNew,
-      label: t("applications.tabs.media"),
-      path: "/dashboard/apps/:appId/type/:typeId/media",
-      route: `/dashboard/apps/${appId}/type/${typeId}/media`,
-    },
   ];
+
+  const MEDIA = {
+    component: MediaFilesLinks,
+    disabled: isNew,
+    label: t("applications.tabs.media"),
+    path: "/dashboard/apps/:appId/type/:typeId/media",
+    route: `/dashboard/apps/${appId}/type/${typeId}/media`,
+  };
 
   const CLIENT = {
     component: ClientAccess,
@@ -78,15 +79,16 @@ export const AppView: React.FC = () => {
 
   const BLUEPRINT = [
     {
-      component: BlueprintGeneralSettings,
-      label: t("applications.tabs.blueprintGeneral"),
-      path: "/dashboard/apps/:appId/type/:typeId/general",
-      route: `/dashboard/apps/${appId}/type/${typeId}/general`,
+      component: AccessDetails,
+      disabled: isNew,
+      label: t("applications.tabs.accessDetails"),
+      path: "/dashboard/apps/:appId/type/:typeId/access",
+      route: `/dashboard/apps/${appId}/type/${typeId}/access`,
     },
     {
-      component: BlueprintConnectorSettings,
+      component: ConnectorSettings,
       disabled: isNew,
-      label: t("applications.tabs.blueprintConnector"),
+      label: t("applications.tabs.connectorSettings"),
       path: "/dashboard/apps/:appId/type/:typeId/connector",
       route: `/dashboard/apps/${appId}/type/${typeId}/connector`,
     },
@@ -94,8 +96,9 @@ export const AppView: React.FC = () => {
 
   if (type && type.type) {
     const appType = type.type;
+
     if (appType === AppTypes.CLIENT || appType === AppTypes.EXTERNAL || appType === AppTypes.EXPERT) {
-      ROUTES.push(CLIENT);
+      ROUTES.push(MEDIA, CLIENT);
     }
     if (active && (appType === AppTypes.EXTERNAL || appType === AppTypes.EXPERT)) {
       ROUTES.push(EXTERNAL);
@@ -104,7 +107,7 @@ export const AppView: React.FC = () => {
       ROUTES.push(EXPERT);
     }
     if (appType === AppTypes.BLUEPRINT) {
-      ROUTES = BLUEPRINT;
+      ROUTES.push(...BLUEPRINT);
     }
   }
 

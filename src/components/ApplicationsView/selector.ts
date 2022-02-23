@@ -5,13 +5,8 @@ export const applicationsViewSelector = createSelector(
   ({ applications }: Store) => applications,
   (applications) => {
     return {
-      allBlueprintApps: applications.allBlueprintApps,
       app: applications.currentApp,
       createdId: applications.createAppStatus.id,
-      currentBlueprintAppData: applications.currentBlueprintAppData,
-      checkBlueprintAuthStatus: applications.checkBlueprintAuthStatus,
-      currentBlueprintAppFields: applications.currentBlueprintAppFields,
-      isActive: applications.isActive,
       createAppStatus: applications.createAppStatus,
       names: applications.userApps.map(app => app.name),
       requesting: applications.updateAppStatus.isRequesting || applications.getApp.isRequesting,
@@ -21,6 +16,10 @@ export const applicationsViewSelector = createSelector(
         get: applications.getApp,
         update: applications.updateAppStatus,
       },
+
+      blueprintAppConfig: applications.blueprintAppConfig,
+      validateAccessDetailsStatus: applications.validateAccessDetailsStatus,
+      isActive: applications.isActive,
     };
   },
 );

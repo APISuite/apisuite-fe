@@ -727,7 +727,10 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     color: theme.palette.info.main,
     display: "flex",
-    marginRight: theme.spacing(3),
+
+    "& > span": {
+      marginRight: theme.spacing(1),
+    },
   },
 
   authType: {
@@ -735,6 +738,10 @@ export default makeStyles((theme) => ({
     color: theme.palette.text.primary,
     cursor: "pointer",
     display: "flex",
-    marginRight: theme.spacing(3),
+
+    "& > span": {
+      color: theme.palette.grey[300],
+      marginRight: theme.spacing(1),
+    },
   },
 }));

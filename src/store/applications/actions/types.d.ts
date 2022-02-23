@@ -1,4 +1,4 @@
-import { CHECK_BLUEPRINT_AUTH_ACTION, CHECK_BLUEPRINT_AUTH_ACTION_ERROR, CHECK_BLUEPRINT_AUTH_ACTION_SUCCESS } from "./checkBlueprintAuth";
+import { VALIDATE_ACCESS_DETAILS_ACTION, VALIDATE_ACCESS_DETAILS_ACTION_ERROR, VALIDATE_ACCESS_DETAILS_ACTION_SUCCESS } from "./validateAccessDetails";
 import { CREATE_APP, CREATE_APP_ERROR, CREATE_APP_SUCCESS } from "./createApp";
 import { DELETE_APP, DELETE_APP_ERROR, DELETE_APP_SUCCESS } from "./deleteApp";
 import { GET_ALL_USER_APPS, GET_ALL_USER_APPS_ERROR, GET_ALL_USER_APPS_SUCCESS } from "./getAllUserApps";
@@ -11,7 +11,6 @@ import { DELETE_APP_MEDIA, DELETE_APP_MEDIA_ERROR, DELETE_APP_MEDIA_SUCCESS } fr
 import { GET_APP_TYPES, GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./getAppTypes";
 
 export type ApplicationsActions = CreateAppAction |
-CreateAppActionError |
 CreateAppActionSuccess |
 CreateAppActionError |
 DeleteAppAction |
@@ -38,16 +37,23 @@ DeleteAppMediaActionError |
 GetAppTypesAction |
 GetAppTypesActionError |
 GetAppTypesActionSuccess |
-CheckBlueprintAuthAction |
-CheckBlueprintAuthActionSuccess |
-CheckBlueprintAuthActionError |
+ResetUserAppAction |
+// Blueprint-related actions
+CreateBlueprintAppAction |
+CreateBlueprintAppActionSuccess |
+CreateBlueprintAppActionError |
+UpdateBlueprintAppAction |
+UpdateBlueprintAppActionSuccess |
+UpdateBlueprintAppActionError |
+GetBlueprintAppAction |
+GetBlueprintAppActionSuccess |
+GetBlueprintAppActionError |
+ValidateAccessDetailsAction |
+ValidateAccessDetailsActionSuccess |
+ValidateAccessDetailsActionError |
 ToggleBlueprintAppStatusAction |
 ToggleBlueprintAppStatusActionSuccess |
-ToggleBlueprintAppStatusActionError |
-MapFieldsAction |
-MapFieldsActionSuccess |
-MapFieldsActionError |
-ResetUserAppAction
+ToggleBlueprintAppStatusActionError
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
@@ -201,19 +207,70 @@ export type GetAppTypesActionError = {
   types: AppType[],
 }
 
-// TODO: Improve all names - could be way shorter
-export type CheckBlueprintAuthAction = {
-  type: typeof CHECK_BLUEPRINT_AUTH_ACTION,
-  currentBlueprintAppData: CurrentBlueprintAppData,
+export type ResetUserAppAction = {
+  type: typeof GET_USER_APP_RESET,
 }
 
-export type CheckBlueprintAuthActionSuccess = {
-  type: typeof CHECK_BLUEPRINT_AUTH_ACTION_SUCCESS,
-  fields: string[],
+// Blueprint-related action types
+
+export type CreateBlueprintAppAction = {
+  type: typeof CREATE_BLUEPRINT_APP,
+  appData: AppData,
+  orgID: number,
 }
 
-export type CheckBlueprintAuthActionError = {
-  type: typeof CHECK_BLUEPRINT_AUTH_ACTION_ERROR,
+export type CreateBlueprintAppActionSuccess = {
+  type: typeof CREATE_BLUEPRINT_APP_SUCCESS,
+  appData: AppData,
+}
+
+export type CreateBlueprintAppActionError = {
+  type: typeof CREATE_BLUEPRINT_APP_ERROR,
+  payload: AppData,
+}
+
+export type UpdateBlueprintAppAction = {
+  type: typeof UPDATE_BLUEPRINT_APP,
+  appData: AppData,
+}
+
+export type UpdateBlueprintAppActionSuccess = {
+  type: typeof UPDATE_BLUEPRINT_APP_SUCCESS,
+  appData: AppData,
+}
+
+export type UpdateBlueprintAppActionError = {
+  type: typeof UPDATE_BLUEPRINT_APP_ERROR,
+  payload: AppData,
+}
+
+export type GetBlueprintAppAction = {
+  type: typeof GET_BLUEPRINT_APP,
+  appId: number,
+  appName: string,
+}
+
+export type GetBlueprintAppActionSuccess = {
+  type: typeof GET_BLUEPRINT_APP_SUCCESS,
+  appData: BlueprintAppData,
+}
+
+export type GetBlueprintAppActionError = {
+  type: typeof GET_BLUEPRINT_APP_ERROR,
+}
+
+export type ValidateAccessDetailsAction = {
+  type: typeof VALIDATE_ACCESS_DETAILS_ACTION,
+  blueprintAppConfig: CurrentBlueprintAppData,
+}
+
+export type ValidateAccessDetailsActionSuccess = {
+  type: typeof VALIDATE_ACCESS_DETAILS_ACTION_SUCCESS,
+  blueprintAppConfig: CurrentBlueprintAppData,
+}
+
+export type ValidateAccessDetailsActionError = {
+  type: typeof VALIDATE_ACCESS_DETAILS_ACTION_ERROR,
 }
 
 export type ToggleBlueprintAppStatusAction = {
@@ -229,21 +286,4 @@ export type ToggleBlueprintAppStatusActionSuccess = {
 
 export type ToggleBlueprintAppStatusActionError = {
   type: typeof TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR,
-}
-
-export type MapFieldsAction = {
-  type: typeof MAP_FIELDS_ACTION,
-  mappedFields: MapFieldsData,
-}
-
-export type MapFieldsActionSuccess = {
-  type: typeof MAP_FIELDS_ACTION_SUCCESS,
-}
-
-export type MapFieldsActionError = {
-  type: typeof MAP_FIELDS_ACTION_ERROR,
-}
-
-export type ResetUserAppAction = {
-  type: typeof GET_USER_APP_RESET,
 }

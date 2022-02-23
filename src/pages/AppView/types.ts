@@ -1,8 +1,8 @@
 export enum AppTypes {
-  BLUEPRINT = "blueprint",
   CLIENT = "client",
   EXTERNAL = "external",
   EXPERT = "expert",
+  BLUEPRINT = "blueprint",
 }
 
 export enum AppTypesTab {
@@ -11,5 +11,6 @@ export enum AppTypesTab {
   CLIENT = "client",
   EXTERNAL = "external",
   EXPERT = "expert",
-  CONNECTOR = "connector"
+  ACCESS_DETAILS = "access",
+  CONNECTOR = "connector",
 }

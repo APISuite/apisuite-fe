@@ -5,15 +5,18 @@ import {
   Box, Button, CircularProgress, Container,
   Icon, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
-import adrift from "assets/adrift.svg";
 import clsx from "clsx";
+
+import adrift from "assets/adrift.svg";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
 import { AppData, AppType } from "store/applications/types";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
-import { AppTypesTab } from "pages/AppView/types";
+import { getBlueprintApp } from "store/applications/actions/getBlueprintApp";
+import { updateBlueprintApp } from "store/applications/actions/updateBlueprintApp";
+import { AppTypes, AppTypesTab } from "pages/AppView/types";
 import { ActionsFooterProps, AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
 import useStyles from "./styles";
 
@@ -68,6 +71,12 @@ export function useGetApp(data: UseGetAppParams) {
       (data.app.id === 0 || data.app.id !== Number(data.appId)) &&
       data.status.get.id !== Number(data.appId)
     ) {
+      if (data.app.appType.type === AppTypes.BLUEPRINT) {
+        dispatch(getBlueprintApp({ appId: data.app.id, appName: data.app.name }));
+
+        return;
+      }
+
       dispatch(getUserApp({ orgID: data.profile.currentOrg.id, appId: Number(data.appId) }));
     }
   }, [data, dispatch]);
@@ -130,7 +139,7 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
   );
 };
 
-const getAppType = (types: AppType[], typeId: string) => {
+export const getAppType = (types: AppType[], typeId: string) => {
   let type = types[0];
   if (types.length > 1) {
     const fType = types.find((tp) => tp.id.toString() === typeId);
@@ -221,6 +230,8 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
   history,
   orgId,
   tabType,
+  altSaveButtonAction,
+  altSaveButtonLabel,
 }) => {
   const classes = useStyles();
   const { spacing } = useTheme();
@@ -247,7 +258,9 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
       ...getFormValues(),
     };
 
-    dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
+    app.appType.type === AppTypes.BLUEPRINT
+      ? dispatch(updateBlueprintApp({ appData: updatedAppDetails }))
+      : dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
   };
 
   return (
@@ -257,12 +270,13 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
           color="primary"
           disabled={!hasChanges()}
           disableElevation
-          onClick={_updateApp}
+          onClick={altSaveButtonAction || _updateApp}
           size="large"
           variant="contained"
         >
-          {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
+          {altSaveButtonLabel || t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
         </Button>
+
         {
           !!getNextType(app.appType, tabType) && <Button
             color="primary"
@@ -275,6 +289,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
             {t("applications.buttons.next")}
           </Button>
         }
+
         {
           !!getPreviousType(app.appType, tabType) && <Button
             color="secondary"

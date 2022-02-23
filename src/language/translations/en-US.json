@@ -372,6 +372,8 @@
         "subSectionLabelFour": "The client credentials for <0>OAuth2 secured API access</0>.",
         "subSectionLabelOne": "General information",
         "altSubSectionLabelOne": "App information",
+        "accessDetailsSectionTitle": "Client access details",
+        "accessDetailsSectionSubtitle": "Please provide the following client access details.",
         "connectorSettingsSectionTitle": "Connector settings",
         "connectorSettingsSectionSubtitle": "Edit the field mappings for the connection between this app and the selected API Product.",
         "connectorSettingsSubSectionTitle": "Field mappings",
@@ -385,8 +387,9 @@
         "subSectionLabelThree": "Access details",
         "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us.",
         "blueprintApp": {
-          "apiProdURLFieldLabel": "API Product URL",
-          "apiProdMethodFieldLabel": "API Product Method",
+          "appNameFieldLabel": "Application name",
+          "appURLFieldLabel": "Application URL",
+          "appMethodFieldLabel": "Application method",
           "authTypeTitle": "Authentication type",
           "methodFieldLabel": "App Method",
           "urlFieldLabel": "App URL",
@@ -731,7 +734,7 @@
       "removeApp": "Remove app",
       "registerApp": "Register App",
       "saveChanges": "Save changes",
-      "submitApp": "Submit application",
+      "validateAccessDetails": "Validate access details",
       "editConnectorSettings": "Edit connector settings",
       "subToAPI": "Subscribe to API",
       "update": "Update"
@@ -750,12 +753,14 @@
     },
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access.",
+    "validateAcessDetailsSuccess": "The provided details have been successfully validated!",
+    "validateAcessDetailsError": "Failed to validate the provided details.",
     "success": {
       "update": "Application '{{name}}' was updated with success."
     },
     "tabs": {
-      "blueprintGeneral": "General Settings",
-      "blueprintConnector": "Connector Settings",
+      "accessDetails": "Client access details",
+      "connectorSettings": "Connector settings",
       "client": "Client Access Details",
       "expert": "Custom Properties",
       "external": "External Settings",
