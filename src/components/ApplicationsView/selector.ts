@@ -18,6 +18,7 @@ export const applicationsViewSelector = createSelector(
       },
 
       blueprintAppConfig: applications.blueprintAppConfig,
+      getBlueprintAppConfigStatus: applications.getBlueprintAppConfigStatus,
       validateAccessDetailsStatus: applications.validateAccessDetailsStatus,
       isActive: applications.isActive,
     };

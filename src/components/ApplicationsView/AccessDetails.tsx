@@ -1,24 +1,24 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { Box, Button, Grid, Icon, TextField, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
+import { Box, Grid, Icon, TextField, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import clsx from "clsx";
 
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { RouterPrompt } from "components/RouterPrompt";
-import { updateApp } from "store/applications/actions/updatedApp";
 import { validateAccessDetailsAction } from "store/applications/actions/validateAccessDetails";
-import { AppType } from "store/applications/types";
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
 import { useGetApp, AppContainer, ActionsFooter } from "./util";
+import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
+import { updateBlueprintAppConfig } from "store/applications/actions/updateBlueprintAppConfig";
 
 export const AccessDetails: React.FC = () => {
   const classes = useStyles();
-  const { palette, spacing } = useTheme();
+  const { palette } = useTheme();
 
   const { t } = useTranslation();
 
@@ -26,12 +26,10 @@ export const AccessDetails: React.FC = () => {
   const dispatch = useDispatch();
 
   const {
-    app, validateAccessDetailsStatus, createdId,
-    blueprintAppConfig, requesting, status, types,
+    app, blueprintAppConfig, getBlueprintAppConfigStatus, requesting, status, types, validateAccessDetailsStatus
   } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
 
-  const appType = useRef<AppType>(types[0]);
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const isNew = Number.isNaN(Number(appId));
 
@@ -39,6 +37,8 @@ export const AccessDetails: React.FC = () => {
     TOKEN: "token",
     OAUTH: "oauth",
   };
+
+  const [hasConfigured, setHasConfigured] = useState(false)
 
   useGetApp({
     app,
@@ -94,6 +94,14 @@ export const AccessDetails: React.FC = () => {
     }
   }, [app, isNew, setValue]);
 
+  useEffect(() => {
+    if (!getBlueprintAppConfigStatus.retrieved && !blueprintAppConfig.app_name) {
+      setHasConfigured(true)
+
+      dispatch(getBlueprintAppConfig({ appName: app.name }))
+    }
+  }, [blueprintAppConfig])
+
   // Authentication type logic
 
   const [selectedAuth, setSelectedAuth] = React.useState(blueprintAppConfig.app_conf.conn_auth_type);
@@ -107,24 +115,28 @@ export const AccessDetails: React.FC = () => {
 
   /* App-related actions */
 
+  const hasChanges = () => {
+    return (isValid || Object.keys(errors).length === 0) && isDirty;
+  };
+
   const accessDetailsMissing = (selectedAuthType: string) => {
     // If 'Token' auth type fields are missing
     if (selectedAuthType === AUTH_TYPES.TOKEN && (!getValues("token") || !getValues("polling_interval"))) {
       return true;
     }
-  
+
     // If 'OAuth' auth type fields are missing
     if (selectedAuthType === AUTH_TYPES.OAUTH && (
       !getValues("redirect_url") || !getValues("clt_id") ||
-        !getValues("clt_secret") || !getValues("auth_url") ||
-        !getValues("token_url") || !getValues("scope")
+      !getValues("clt_secret") || !getValues("auth_url") ||
+      !getValues("token_url") || !getValues("scope")
     )) {
       return true;
     }
-  
+
     return false;
   };
-  
+
   const validateAccessDetails = (selectedAuthType: string) => {
     const currentConfigDetails = {
       ...getValues(),
@@ -147,37 +159,36 @@ export const AccessDetails: React.FC = () => {
       app_url: currentConfigDetails.app_url,
       polling_interval: currentConfigDetails.polling_interval,
     };
-  
+
     dispatch(validateAccessDetailsAction({ blueprintAppConfig: newAppDetails }));
   };
-  
-  // Updating an app
-  
-  const _updateApp = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-  
-    const updatedAppDetails = {
-      ...app,
+
+  const updateAccessDetails = () => {
+    const currentConfigDetails = {
       ...getValues(),
     };
-  
-    dispatch(updateApp({ appData: updatedAppDetails, orgID: profile.currentOrg.id }));
-  };
-  
-  const updateAppType = (type: AppType) => {
-    const updatedAppDetails = {
-      ...app,
-      ...getValues(),
-      appTypeId: type.id,
+
+    const newConfigDetails = {
+      auth_type: currentConfigDetails.auth_type,
+      app_conf: {
+        auth_url: currentConfigDetails.auth_url,
+        clt_id: currentConfigDetails.clt_id,
+        clt_secret: currentConfigDetails.clt_secret,
+        conn_auth_type: currentConfigDetails.conn_auth_type,
+        redirect_url: currentConfigDetails.redirect_url,
+        scope: currentConfigDetails.scope,
+        token_url: currentConfigDetails.token_url,
+        token: currentConfigDetails.token,
+      },
+      app_method: currentConfigDetails.app_method,
+      app_name: currentConfigDetails.app_name,
+      app_url: currentConfigDetails.app_url,
+      polling_interval: currentConfigDetails.polling_interval,
     };
-  
-    dispatch(updateApp({ appData: updatedAppDetails, orgID: profile.currentOrg.id }));
+
+    dispatch(updateBlueprintAppConfig({ newConfig: newConfigDetails }));
   };
-  
-  const hasChanges = () => {
-    return (isValid || Object.keys(errors).length === 0) && isDirty;
-  };
-  
+
   return (
     <>
       <AppContainer
@@ -373,15 +384,15 @@ export const AccessDetails: React.FC = () => {
                 <Box>
                   <Controller
                     control={control}
-                    name="clt_secret"
+                    name="clt_id"
                     render={({ field }) => (
                       <TextField
                         className={classes.inputFields}
-                        error={!!errors.clt_secret}
+                        error={!!errors.clt_id}
                         {...field}
                         fullWidth
-                        helperText={errors.clt_secret?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientSecretFieldLabel")}
+                        helperText={errors.clt_id?.message}
+                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientIDFieldLabel")}
                         margin="dense"
                         type="text"
                         variant="outlined"
@@ -393,15 +404,15 @@ export const AccessDetails: React.FC = () => {
                 <Box>
                   <Controller
                     control={control}
-                    name="clt_id"
+                    name="clt_secret"
                     render={({ field }) => (
                       <TextField
                         className={classes.inputFields}
-                        error={!!errors.clt_id}
+                        error={!!errors.clt_secret}
                         {...field}
                         fullWidth
-                        helperText={errors.clt_id?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientIDFieldLabel")}
+                        helperText={errors.clt_secret?.message}
+                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientSecretFieldLabel")}
                         margin="dense"
                         type="text"
                         variant="outlined"
@@ -479,8 +490,11 @@ export const AccessDetails: React.FC = () => {
         {/* 'App action' buttons section */}
         <div className={classes.buttonsContainer}>
           <ActionsFooter
+            altSaveButtonAction={() => validateAccessDetails(selectedAuth)}
+            altSaveButtonLabel={t("applications.buttons.validateAccessDetails")}
             app={app}
             appId={appId}
+            disableNextButton={!validateAccessDetailsStatus.validated}
             getFormValues={getValues}
             hasChanges={() => {
               return !accessDetailsMissing(selectedAuth) && hasChanges();
@@ -488,8 +502,6 @@ export const AccessDetails: React.FC = () => {
             history={history}
             orgId={profile.currentOrg.id}
             tabType={AppTypesTab.ACCESS_DETAILS}
-            altSaveButtonAction={() => validateAccessDetails(selectedAuth)}
-            altSaveButtonLabel={t("applications.buttons.validateAccessDetails")}
           />
         </div>
       </AppContainer>

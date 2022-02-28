@@ -5,55 +5,55 @@ import { GET_ALL_USER_APPS, GET_ALL_USER_APPS_ERROR, GET_ALL_USER_APPS_SUCCESS }
 import { GET_USER_APP, GET_USER_APP_ERROR, GET_USER_APP_RESET, GET_USER_APP_SUCCESS } from "./getUserApp";
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./updatedApp";
-import { AppData, AppType, CreateAppActionData, UpdateAppActionData, CurrentBlueprintAppData, ToggleBlueprintAppStatusData } from "../types";
+import { AppData, AppType, CreateAppActionData, UpdateAppActionData, CurrentBlueprintAppData, AppStatusData } from "../types";
 import { UPLOAD_APP_MEDIA, UPLOAD_APP_MEDIA_ERROR, UPLOAD_APP_MEDIA_SUCCESS } from "./appMediaUpload";
 import { DELETE_APP_MEDIA, DELETE_APP_MEDIA_ERROR, DELETE_APP_MEDIA_SUCCESS } from "./deleteAppMedia";
 import { GET_APP_TYPES, GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./getAppTypes";
 
 export type ApplicationsActions = CreateAppAction |
-CreateAppActionSuccess |
-CreateAppActionError |
-DeleteAppAction |
-DeleteAppActionSuccess |
-DeleteAppActionError |
-GetAllUserAppsAction |
-GetAllUserAppsActionSuccess |
-GetAllUserAppsActionError |
-GetUserAppAction |
-GetUserAppActionSuccess |
-GetUserAppActionError |
-RequestAPIAccessAction |
-RequestAPIAccessActionSuccess |
-RequestAPIAccessActionError |
-UpdateAppAction |
-UpdateAppActionSuccess |
-UpdateAppActionError |
-UploadAppMediaAction |
-UploadAppMediaActionSuccess |
-UploadAppMediaActionError |
-DeleteAppMediaAction |
-DeleteAppMediaActionSuccess |
-DeleteAppMediaActionError |
-GetAppTypesAction |
-GetAppTypesActionError |
-GetAppTypesActionSuccess |
-ResetUserAppAction |
-// Blueprint-related actions
-CreateBlueprintAppAction |
-CreateBlueprintAppActionSuccess |
-CreateBlueprintAppActionError |
-UpdateBlueprintAppAction |
-UpdateBlueprintAppActionSuccess |
-UpdateBlueprintAppActionError |
-GetBlueprintAppAction |
-GetBlueprintAppActionSuccess |
-GetBlueprintAppActionError |
-ValidateAccessDetailsAction |
-ValidateAccessDetailsActionSuccess |
-ValidateAccessDetailsActionError |
-ToggleBlueprintAppStatusAction |
-ToggleBlueprintAppStatusActionSuccess |
-ToggleBlueprintAppStatusActionError
+  CreateAppActionSuccess |
+  CreateAppActionError |
+  DeleteAppAction |
+  DeleteAppActionSuccess |
+  DeleteAppActionError |
+  GetAllUserAppsAction |
+  GetAllUserAppsActionSuccess |
+  GetAllUserAppsActionError |
+  GetUserAppAction |
+  GetUserAppActionSuccess |
+  GetUserAppActionError |
+  RequestAPIAccessAction |
+  RequestAPIAccessActionSuccess |
+  RequestAPIAccessActionError |
+  UpdateAppAction |
+  UpdateAppActionSuccess |
+  UpdateAppActionError |
+  UploadAppMediaAction |
+  UploadAppMediaActionSuccess |
+  UploadAppMediaActionError |
+  DeleteAppMediaAction |
+  DeleteAppMediaActionSuccess |
+  DeleteAppMediaActionError |
+  GetAppTypesAction |
+  GetAppTypesActionError |
+  GetAppTypesActionSuccess |
+  ResetUserAppAction |
+  // Blueprint-related actions
+  CreateBlueprintAppAction |
+  CreateBlueprintAppActionSuccess |
+  CreateBlueprintAppActionError |
+  GetBlueprintAppConfigAction |
+  GetBlueprintAppConfigActionSuccess |
+  GetBlueprintAppConfigActionError |
+  ValidateAccessDetailsAction |
+  ValidateAccessDetailsActionSuccess |
+  ValidateAccessDetailsActionError |
+  ToggleBlueprintAppStatusAction |
+  ToggleBlueprintAppStatusActionSuccess |
+  ToggleBlueprintAppStatusActionError |
+  UpdateBlueprintAppConfigAction |
+  UpdateBlueprintAppConfigActionSuccess |
+  UpdateBlueprintAppConfigActionError
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
@@ -216,47 +216,85 @@ export type ResetUserAppAction = {
 export type CreateBlueprintAppAction = {
   type: typeof CREATE_BLUEPRINT_APP,
   appData: AppData,
-  orgID: number,
 }
 
 export type CreateBlueprintAppActionSuccess = {
   type: typeof CREATE_BLUEPRINT_APP_SUCCESS,
-  appData: AppData,
 }
 
 export type CreateBlueprintAppActionError = {
   type: typeof CREATE_BLUEPRINT_APP_ERROR,
-  payload: AppData,
+  error: string,
 }
 
-export type UpdateBlueprintAppAction = {
-  type: typeof UPDATE_BLUEPRINT_APP,
-  appData: AppData,
-}
-
-export type UpdateBlueprintAppActionSuccess = {
-  type: typeof UPDATE_BLUEPRINT_APP_SUCCESS,
-  appData: AppData,
-}
-
-export type UpdateBlueprintAppActionError = {
-  type: typeof UPDATE_BLUEPRINT_APP_ERROR,
-  payload: AppData,
-}
-
-export type GetBlueprintAppAction = {
-  type: typeof GET_BLUEPRINT_APP,
-  appId: number,
+export type GetBlueprintAppConfigAction = {
+  type: typeof GET_BLUEPRINT_CONFIG,
   appName: string,
 }
 
-export type GetBlueprintAppActionSuccess = {
-  type: typeof GET_BLUEPRINT_APP_SUCCESS,
-  appData: BlueprintAppData,
+export type GetBlueprintAppConfigActionSuccess = {
+  type: typeof GET_BLUEPRINT_CONFIG_SUCCESS,
+  config: BlueprintAppConfig,
+  isActive: boolean
 }
 
-export type GetBlueprintAppActionError = {
-  type: typeof GET_BLUEPRINT_APP_ERROR,
+export type GetBlueprintAppConfigActionError = {
+  type: typeof GET_BLUEPRINT_CONFIG_ERROR,
+}
+
+export type UpdateBlueprintAppConfigAction = {
+  type: typeof UPDATE_BLUEPRINT_CONFIG,
+  newConfig: BlueprintAppConfig,
+}
+
+export type UpdateBlueprintAppConfigActionSuccess = {
+  type: typeof UPDATE_BLUEPRINT_CONFIG_SUCCESS,
+}
+
+export type UpdateBlueprintAppConfigActionError = {
+  type: typeof UPDATE_BLUEPRINT_CONFIG_ERROR,
+}
+
+export interface BlueprintAppConfigResponse {
+  data: {
+    appConfig: {
+      cltId: string,
+      scope: string,
+      authUrl: string,
+      tokenUrl: string,
+      cltSecret: string,
+      accessType: string,
+      redirectUrl: string,
+      connAuthType: string
+  },
+    appMethod: string
+    appUrl: string
+    authType: string
+    fieldsRaw: string[]
+    id: number
+    name: string
+    orgId: number
+    pollingInterval: number
+    subscriptions: []
+    token: string
+    userId: string
+    workerId: string
+    workerStatus: string
+  },
+}
+
+export type UpdateBlueprintAppConfigAction = {
+  type: typeof UPDATE_BLUEPRINT_CONFIG,
+  appName: string,
+}
+
+export type UpdateBlueprintAppConfigActionSuccess = {
+  type: typeof UPDATE_BLUEPRINT_CONFIG_SUCCESS,
+  config: BlueprintAppConfig,
+}
+
+export type UpdateBlueprintAppConfigActionError = {
+  type: typeof UPDATE_BLUEPRINT_CONFIG_ERROR,
 }
 
 export type ValidateAccessDetailsAction = {
@@ -273,10 +311,20 @@ export type ValidateAccessDetailsActionError = {
   type: typeof VALIDATE_ACCESS_DETAILS_ACTION_ERROR,
 }
 
+export type TokenValidationResponse = {
+  data: {
+    Status: string,
+    fields: string[],
+  },
+}
+
+export type OAuthValidationResponse = {
+  data: string
+}
+
 export type ToggleBlueprintAppStatusAction = {
   type: typeof TOGGLE_BLUEPRINT_APP_STATUS_ACTION,
-  toggleBlueprintAppStatusData: ToggleBlueprintAppStatusData,
-  fields: string[],
+  appStatusData: AppStatusData,
 }
 
 export type ToggleBlueprintAppStatusActionSuccess = {

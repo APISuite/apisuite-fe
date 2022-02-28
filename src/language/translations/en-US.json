@@ -741,6 +741,7 @@
     },
     "error": {
       "create": "Failed to create app. Please make sure all required fields are filled correctly or contact support.",
+      "createBlueprint": "Failed to create a blueprint. Please make sure all required fields are filled correctly or contact support.",
       "update": "Failed to update app. Please make sure all required fields are filled correctly or contact support."
     },
     "notfound": "No Application found.",
@@ -756,7 +757,7 @@
     "validateAcessDetailsSuccess": "The provided details have been successfully validated!",
     "validateAcessDetailsError": "Failed to validate the provided details.",
     "success": {
-      "update": "Application '{{name}}' was updated with success."
+      "update": "Application \"{{name}}\" was updated with success."
     },
     "tabs": {
       "accessDetails": "Client access details",

@@ -13,9 +13,8 @@ import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./actions/upda
 import { UPLOAD_APP_MEDIA_SUCCESS } from "./actions/appMediaUpload";
 import { VALIDATE_ACCESS_DETAILS_ACTION, VALIDATE_ACCESS_DETAILS_ACTION_SUCCESS, VALIDATE_ACCESS_DETAILS_ACTION_ERROR } from "./actions/validateAccessDetails";
 import { CREATE_BLUEPRINT_APP, CREATE_BLUEPRINT_APP_ERROR, CREATE_BLUEPRINT_APP_SUCCESS } from "./actions/createBlueprintApp";
-import { GET_BLUEPRINT_APP, GET_BLUEPRINT_APP_SUCCESS, GET_BLUEPRINT_APP_ERROR } from "./actions/getBlueprintApp";
+import { GET_BLUEPRINT_CONFIG, GET_BLUEPRINT_CONFIG_SUCCESS, GET_BLUEPRINT_CONFIG_ERROR } from "./actions/getBlueprintAppConfig";
 import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS } from "./actions/toggleBlueprintAppStatus";
-import { UPDATE_BLUEPRINT_APP, UPDATE_BLUEPRINT_APP_SUCCESS, UPDATE_BLUEPRINT_APP_ERROR } from "./actions/updateBlueprintApp";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -85,33 +84,28 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
   },
 
-  updateBlueprintAppStatus: {
+  getBlueprintAppConfigStatus: {
     isError: false,
     isRequesting: false,
-  },
-
-  getBlueprintAppStatus: {
-    id: 0,
-    isError: false,
-    isRequesting: false,
+    retrieved: false,
   },
 
   validateAccessDetailsStatus: {
-    isChecked: false,
     isError: false,
     isRequesting: false,
+    validated: false,
   },
 
   toggleBlueprintAppStatus: {
     isError: false,
     isRequesting: false,
   },
+
   isActive: false,
 
-  // Configuration data
+  // App connector configuration data
 
   blueprintAppConfig: {
-    auth_type: "token",
     app_conf: {
       auth_url: "",
       clt_id: "",
@@ -125,6 +119,7 @@ const initialState: ApplicationsStore = {
     app_method: "GET",
     app_name: "",
     app_url: "",
+    auth_type: "token",
     polling_interval: "",
   },
 };
@@ -240,12 +235,26 @@ export default function reducer (
 
     case GET_USER_APP_RESET: {
       return update(state, {
+        // Regular apps
         currentApp: { $set: initialState.currentApp },
+
         getApp: {
           id: { $set: 0 },
           isError: { $set: false },
           isRequesting: { $set: false },
         },
+
+        // Blueprint apps
+            
+        blueprintAppConfig: { $set: initialState.blueprintAppConfig },
+
+        getBlueprintAppConfigStatus: { $set: initialState.getBlueprintAppConfigStatus },
+
+        isActive: { $set: false },
+
+        toggleBlueprintAppStatus: { $set: initialState.toggleBlueprintAppStatus },
+
+        validateAccessDetailsStatus: { $set: initialState.validateAccessDetailsStatus },
       });
     }
 
@@ -345,11 +354,9 @@ export default function reducer (
     case CREATE_BLUEPRINT_APP_SUCCESS: {
       return update(state, {
         createBlueprintAppStatus: {
-          id: { $set: action.appData.id },
+          isError: { $set: false },
           isRequesting: { $set: false },
         },
-
-        currentApp: { $set: action.appData },
       });
     }
 
@@ -359,81 +366,45 @@ export default function reducer (
           isError: { $set: true },
           isRequesting: { $set: false },
         },
-
-        currentApp: { $set: action.payload },
       });
     }
 
-    case UPDATE_BLUEPRINT_APP: {
+    case GET_BLUEPRINT_CONFIG: {
       return update(state, {
-        updateBlueprintAppStatus: {
+        getBlueprintAppConfigStatus: {
           isError: { $set: false },
           isRequesting: { $set: true },
+          retrieved: { $set: false },
         },
       });
     }
 
-    case UPDATE_BLUEPRINT_APP_SUCCESS: {
+    case GET_BLUEPRINT_CONFIG_SUCCESS: {
       return update(state, {
-        currentApp: { $set: action.appData },
-
-        updateBlueprintAppStatus: {
-          isRequesting: { $set: false },
-        },
-      });
-    }
-
-    case UPDATE_BLUEPRINT_APP_ERROR: {
-      return update(state, {
-        currentApp: { $set: action.payload },
-
-        updateBlueprintAppStatus: {
-          isError: { $set: true },
-          isRequesting: { $set: false },
-        },
-      });
-    }
-
-    case GET_BLUEPRINT_APP: {
-      return update(state, {
-        createAppStatus: {
-          id: { $set: -1 },
-        },
-        
-        getBlueprintAppStatus: {
-          id: { $set: action.appId },
+        blueprintAppConfig: { $set: action.config },
+      
+        getBlueprintAppConfigStatus: {
           isError: { $set: false },
-          isRequesting: { $set: true },
+          isRequesting: { $set: false },
+          retrieved: { $set: true },
+        },
+
+        isActive: { $set: action.isActive },
+
+        validateAccessDetailsStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: false },
+          validated: { $set: true },
         },
       });
     }
 
-    case GET_BLUEPRINT_APP_SUCCESS: {
-      return {
-        ...state,
-        currentApp: {
-          ...action.appData,
-          logo: action.appData.logo || "",
-          images: action.appData.images || [],
-          appType: {
-            ...action.appData.appType,
-            id: action.appData.appType?.id || 1,
-          },
-        },
-
-        getApp: {
-          ...state.getApp,
-          isError: false,
-          isRequesting: false,
-        },
-      };
-    }
-
-    case GET_BLUEPRINT_APP_ERROR: {
+    case GET_BLUEPRINT_CONFIG_ERROR: {
       return update(state, {
-        getApp: {
+        getBlueprintAppConfigStatus: {
           isError: { $set: true },
           isRequesting: { $set: false },
+          retrieved: { $set: false },
         },
       });
     }
@@ -441,12 +412,11 @@ export default function reducer (
     case VALIDATE_ACCESS_DETAILS_ACTION: {
       return update(state, {
         validateAccessDetailsStatus: {
-          isChecked: { $set: false },
           isError: { $set: false },
           isRequesting: { $set: true },
+          validated: { $set: false },
         },
 
-        // TODO: Store the data, so it doesn't get lost after requesting success/error.
         blueprintAppConfig: { $set: action.blueprintAppConfig },
       });
     }
@@ -454,8 +424,9 @@ export default function reducer (
     case VALIDATE_ACCESS_DETAILS_ACTION_SUCCESS: {
       return update(state, {
         validateAccessDetailsStatus: {
-          isChecked: { $set: true },
+          isError: { $set: false },
           isRequesting: { $set: false },
+          validated: { $set: true },
         },
       });
     }
@@ -463,21 +434,15 @@ export default function reducer (
     case VALIDATE_ACCESS_DETAILS_ACTION_ERROR: {
       return update(state, {
         validateAccessDetailsStatus: {
-          isChecked: { $set: true },
           isError: { $set: true },
           isRequesting: { $set: false },
+          validated: { $set: false },
         },
       });
     }
 
     case TOGGLE_BLUEPRINT_APP_STATUS_ACTION: {
       return update(state, {
-        validateAccessDetailsStatus: {
-          isChecked: { $set: false },
-          isError: { $set: false },
-          isRequesting: { $set: false },
-        },
-
         toggleBlueprintAppStatus: {
           isError: { $set: false },
           isRequesting: { $set: true },

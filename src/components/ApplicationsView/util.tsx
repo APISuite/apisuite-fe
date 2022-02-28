@@ -14,9 +14,7 @@ import { AppData, AppType } from "store/applications/types";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
-import { getBlueprintApp } from "store/applications/actions/getBlueprintApp";
-import { updateBlueprintApp } from "store/applications/actions/updateBlueprintApp";
-import { AppTypes, AppTypesTab } from "pages/AppView/types";
+import { AppTypesTab } from "pages/AppView/types";
 import { ActionsFooterProps, AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
 import useStyles from "./styles";
 
@@ -71,12 +69,6 @@ export function useGetApp(data: UseGetAppParams) {
       (data.app.id === 0 || data.app.id !== Number(data.appId)) &&
       data.status.get.id !== Number(data.appId)
     ) {
-      if (data.app.appType.type === AppTypes.BLUEPRINT) {
-        dispatch(getBlueprintApp({ appId: data.app.id, appName: data.app.name }));
-
-        return;
-      }
-
       dispatch(getUserApp({ orgID: data.profile.currentOrg.id, appId: Number(data.appId) }));
     }
   }, [data, dispatch]);
@@ -232,6 +224,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
   tabType,
   altSaveButtonAction,
   altSaveButtonLabel,
+  disableNextButton = false,
 }) => {
   const classes = useStyles();
   const { spacing } = useTheme();
@@ -257,10 +250,8 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
       ...app,
       ...getFormValues(),
     };
-
-    app.appType.type === AppTypes.BLUEPRINT
-      ? dispatch(updateBlueprintApp({ appData: updatedAppDetails }))
-      : dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
+    
+    dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
   };
 
   return (
@@ -280,6 +271,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
         {
           !!getNextType(app.appType, tabType) && <Button
             color="primary"
+            disabled={disableNextButton}
             disableElevation
             onClick={() => handleNext(app, tabType, history)}
             size="large"

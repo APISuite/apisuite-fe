@@ -1,4 +1,4 @@
-import React, {  } from "react";
+import React, { } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, Grid, Switch, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
@@ -18,11 +18,9 @@ export const ConnectorSettings: React.FC = () => {
   const { t } = useTranslation();
 
   const history = useHistory() as LocationHistory;
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const {
-    app, isActive, requesting, status, types,
-  } = useSelector(applicationsViewSelector);
+  const { app, isActive, requesting, status, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
 
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
@@ -42,18 +40,12 @@ export const ConnectorSettings: React.FC = () => {
   // 'Active app status' logic
 
   const toggleActiveAppStatus = (isAppActive: boolean) => {
-    // TODO: Delete this, this is hacky code
-    // const allFields = {
-    //   ...getValues(),
-    // };
-
-    // dispatch(toggleBlueprintAppStatusAction({
-    //   toggleBlueprintAppStatusData: {
-    // app_name: blueprintAppConfig.app_name, command: isAppActive ? "start" : "stop" },
-    //   fields: [allFields.app_field_1, allFields.api_field_1],
-    // }));
-
-    return;
+    dispatch(toggleBlueprintAppStatusAction({
+      appStatusData: {
+        app_name: app.name,
+        command: isAppActive ? "start" : "stop"
+      }
+    }));
   };
 
   return (

@@ -19,12 +19,15 @@ import useStyles from "./styles";
 import { AppTypes } from "./types";
 import { LoadingView } from "components/InvitationForm/LoadingView";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
+import { applicationsViewSelector } from "components/ApplicationsView/selector";
 
 export const AppView: React.FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const active = isExtensionActive("@apisuite/apisuite-marketplace-extension-ui");
+
+  const { validateAccessDetailsStatus } = useSelector(applicationsViewSelector);
   const { types } = useSelector(typesSelector);
   const dispatch = useDispatch();
 
@@ -87,7 +90,7 @@ export const AppView: React.FC = () => {
     },
     {
       component: ConnectorSettings,
-      disabled: isNew,
+      disabled: isNew || !validateAccessDetailsStatus.validated,
       label: t("applications.tabs.connectorSettings"),
       path: "/dashboard/apps/:appId/type/:typeId/connector",
       route: `/dashboard/apps/${appId}/type/${typeId}/connector`,

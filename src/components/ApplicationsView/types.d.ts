@@ -48,4 +48,5 @@ export type ActionsFooterProps = {
   tabType: AppTypesTab,
   altSaveButtonAction?: () => void,
   altSaveButtonLabel?: string,
+  disableNextButton?: boolean,
 }

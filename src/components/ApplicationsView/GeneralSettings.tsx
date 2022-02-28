@@ -28,6 +28,7 @@ import { ActionsFooter, AppHeader, checkHistory, checkNextAction, getAppType, No
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
+import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
@@ -42,11 +43,11 @@ export const GeneralSettings: React.FC = () => {
   const isNew = Number.isNaN(Number(appId));
   const appType = useRef<AppType>(getAppType(types, typeId));
 
-  // useEffect(() => {
-  //   if (isNew && app.id !== 0 || isNew && app.name !== "") {
-  //     dispatch(resetUserApp());
-  //   }
-  // }, [app.id, app.name, dispatch, isNew]);
+  useEffect(() => {
+    if (isNew && app.id !== 0 || isNew && app.name !== "") {
+      dispatch(resetUserApp());
+    }
+  }, [app.id, app.name, dispatch, isNew]);
 
   useGetApp({
     app,
@@ -109,9 +110,11 @@ export const GeneralSettings: React.FC = () => {
       appTypeId: Number(typeId),
     };
 
-    appType.current.type === AppTypes.BLUEPRINT
-      ? dispatch(createBlueprintApp({ orgID: profile.currentOrg.id, appData: newAppDetails }))
-      : dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
+    if (appType.current.type === AppTypes.BLUEPRINT) {
+      dispatch(createBlueprintApp({ appData: newAppDetails }))
+    }
+
+    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
   };
 
   // Deleting an app
