@@ -15,6 +15,7 @@ import { VALIDATE_ACCESS_DETAILS_ACTION, VALIDATE_ACCESS_DETAILS_ACTION_SUCCESS,
 import { CREATE_BLUEPRINT_APP, CREATE_BLUEPRINT_APP_ERROR, CREATE_BLUEPRINT_APP_SUCCESS } from "./actions/createBlueprintApp";
 import { GET_BLUEPRINT_CONFIG, GET_BLUEPRINT_CONFIG_SUCCESS, GET_BLUEPRINT_CONFIG_ERROR } from "./actions/getBlueprintAppConfig";
 import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS } from "./actions/toggleBlueprintAppStatus";
+import { UPDATE_BLUEPRINT_APP_CONFIG, UPDATE_BLUEPRINT_APP_CONFIG_ERROR, UPDATE_BLUEPRINT_APP_CONFIG_SUCCESS } from "./actions/updateBlueprintAppConfig";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -116,6 +117,7 @@ const initialState: ApplicationsStore = {
       token_url: "",
       token: "",
     },
+    app_id: 0,
     app_method: "GET",
     app_name: "",
     app_url: "",
@@ -221,6 +223,10 @@ export default function reducer (
           isError: false,
           isRequesting: false,
         },
+        blueprintAppConfig: {
+          ...state.blueprintAppConfig,
+          app_id: action.appData.id,
+        },
       };
     }
 
@@ -235,9 +241,9 @@ export default function reducer (
 
     case GET_USER_APP_RESET: {
       return update(state, {
-        // Regular apps
-        currentApp: { $set: initialState.currentApp },
+        // Client, External, and Expert apps
 
+        currentApp: { $set: initialState.currentApp },
         getApp: {
           id: { $set: 0 },
           isError: { $set: false },
@@ -247,13 +253,9 @@ export default function reducer (
         // Blueprint apps
             
         blueprintAppConfig: { $set: initialState.blueprintAppConfig },
-
         getBlueprintAppConfigStatus: { $set: initialState.getBlueprintAppConfigStatus },
-
         isActive: { $set: false },
-
         toggleBlueprintAppStatus: { $set: initialState.toggleBlueprintAppStatus },
-
         validateAccessDetailsStatus: { $set: initialState.validateAccessDetailsStatus },
       });
     }
@@ -357,6 +359,10 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: false },
         },
+
+        blueprintAppConfig: {
+          $set: { ...state.blueprintAppConfig, app_id: action.appId },
+        },
       });
     }
 
@@ -407,6 +413,17 @@ export default function reducer (
           retrieved: { $set: false },
         },
       });
+    }
+
+    case UPDATE_BLUEPRINT_APP_CONFIG: {
+      return update(state, {
+        blueprintAppConfig: { $set: action.newConfig },
+      });
+    }
+
+    case UPDATE_BLUEPRINT_APP_CONFIG_SUCCESS:
+    case UPDATE_BLUEPRINT_APP_CONFIG_ERROR: {
+      return state;
     }
 
     case VALIDATE_ACCESS_DETAILS_ACTION: {

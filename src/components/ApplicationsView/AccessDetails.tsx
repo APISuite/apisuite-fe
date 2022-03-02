@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
@@ -26,7 +26,8 @@ export const AccessDetails: React.FC = () => {
   const dispatch = useDispatch();
 
   const {
-    app, blueprintAppConfig, getBlueprintAppConfigStatus, requesting, status, types, validateAccessDetailsStatus
+    app, blueprintAppConfig, getBlueprintAppConfigStatus,
+    requesting, status, types, validateAccessDetailsStatus,
   } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
 
@@ -37,8 +38,6 @@ export const AccessDetails: React.FC = () => {
     TOKEN: "token",
     OAUTH: "oauth",
   };
-
-  const [hasConfigured, setHasConfigured] = useState(false)
 
   useGetApp({
     app,
@@ -58,6 +57,7 @@ export const AccessDetails: React.FC = () => {
     setValue,
   } = useForm({
     defaultValues: {
+      app_id: blueprintAppConfig.app_id,
       app_method: blueprintAppConfig.app_method || "",
       app_name: blueprintAppConfig.app_name || "",
       app_url: blueprintAppConfig.app_url || "",
@@ -78,10 +78,11 @@ export const AccessDetails: React.FC = () => {
 
   useEffect(() => {
     if (!isNew) {
-      setValue("auth_type", blueprintAppConfig.app_conf.conn_auth_type, { shouldDirty: false });
+      setValue("app_id", blueprintAppConfig.app_id, { shouldDirty: false });
       setValue("app_method", blueprintAppConfig.app_method, { shouldDirty: false });
       setValue("app_name", blueprintAppConfig.app_name, { shouldDirty: false });
       setValue("app_url", blueprintAppConfig.app_url, { shouldDirty: false });
+      setValue("auth_type", blueprintAppConfig.app_conf.conn_auth_type, { shouldDirty: false });
       setValue("auth_url", blueprintAppConfig.app_conf.auth_url, { shouldDirty: false });
       setValue("clt_id", blueprintAppConfig.app_conf.clt_id, { shouldDirty: false });
       setValue("clt_secret", blueprintAppConfig.app_conf.clt_secret, { shouldDirty: false });
@@ -95,12 +96,14 @@ export const AccessDetails: React.FC = () => {
   }, [app, isNew, setValue]);
 
   useEffect(() => {
-    if (!getBlueprintAppConfigStatus.retrieved && !blueprintAppConfig.app_name) {
-      setHasConfigured(true)
+    /* If "getBlueprintAppConfigStatus.isError" amounts to "true",
+    it means the blueprint app has yet to be configured. */
+    if (getBlueprintAppConfigStatus.isError) return;
 
-      dispatch(getBlueprintAppConfig({ appName: app.name }))
+    if (blueprintAppConfig.app_id && !getBlueprintAppConfigStatus.retrieved) {
+      dispatch(getBlueprintAppConfig({ appId: blueprintAppConfig.app_id }));
     }
-  }, [blueprintAppConfig])
+  }, [blueprintAppConfig]);
 
   // Authentication type logic
 
@@ -120,12 +123,12 @@ export const AccessDetails: React.FC = () => {
   };
 
   const accessDetailsMissing = (selectedAuthType: string) => {
-    // If 'Token' auth type fields are missing
+    // If "Token" auth type fields are missing
     if (selectedAuthType === AUTH_TYPES.TOKEN && (!getValues("token") || !getValues("polling_interval"))) {
       return true;
     }
 
-    // If 'OAuth' auth type fields are missing
+    // If "OAuth" auth type fields are missing
     if (selectedAuthType === AUTH_TYPES.OAUTH && (
       !getValues("redirect_url") || !getValues("clt_id") ||
       !getValues("clt_secret") || !getValues("auth_url") ||
@@ -143,7 +146,6 @@ export const AccessDetails: React.FC = () => {
     };
 
     const newAppDetails = {
-      auth_type: selectedAuthType === AUTH_TYPES.TOKEN ? AUTH_TYPES.TOKEN : AUTH_TYPES.OAUTH,
       app_conf: {
         auth_url: selectedAuthType === AUTH_TYPES.TOKEN ? "" : currentConfigDetails.auth_url,
         clt_id: selectedAuthType === AUTH_TYPES.TOKEN ? "" : currentConfigDetails.clt_id,
@@ -154,9 +156,11 @@ export const AccessDetails: React.FC = () => {
         token_url: selectedAuthType === AUTH_TYPES.TOKEN ? "" : currentConfigDetails.token_url,
         token: currentConfigDetails.token,
       },
+      app_id: currentConfigDetails.app_id,
       app_method: currentConfigDetails.app_method,
       app_name: currentConfigDetails.app_name,
       app_url: currentConfigDetails.app_url,
+      auth_type: selectedAuthType === AUTH_TYPES.TOKEN ? AUTH_TYPES.TOKEN : AUTH_TYPES.OAUTH,
       polling_interval: currentConfigDetails.polling_interval,
     };
 
@@ -169,7 +173,6 @@ export const AccessDetails: React.FC = () => {
     };
 
     const newConfigDetails = {
-      auth_type: currentConfigDetails.auth_type,
       app_conf: {
         auth_url: currentConfigDetails.auth_url,
         clt_id: currentConfigDetails.clt_id,
@@ -180,13 +183,18 @@ export const AccessDetails: React.FC = () => {
         token_url: currentConfigDetails.token_url,
         token: currentConfigDetails.token,
       },
+      app_id: currentConfigDetails.app_id,
       app_method: currentConfigDetails.app_method,
       app_name: currentConfigDetails.app_name,
       app_url: currentConfigDetails.app_url,
+      auth_type: currentConfigDetails.auth_type,
       polling_interval: currentConfigDetails.polling_interval,
     };
 
-    dispatch(updateBlueprintAppConfig({ newConfig: newConfigDetails }));
+    dispatch(updateBlueprintAppConfig({
+      originalAppName: blueprintAppConfig.app_name,
+      newConfig: newConfigDetails,
+    }));
   };
 
   return (
@@ -310,7 +318,7 @@ export const AccessDetails: React.FC = () => {
             </Box>
           </Grid>
 
-          {/* 'Token' subsection */}
+          {/* "Token" subsection */}
           {
             selectedAuth === AUTH_TYPES.TOKEN && (
               <Grid item md={12}>
@@ -357,7 +365,7 @@ export const AccessDetails: React.FC = () => {
             )
           }
 
-          {/* 'OAuth' subsection */}
+          {/* "OAuth" subsection */}
           {
             selectedAuth === AUTH_TYPES.OAUTH && (
               <Grid item md={12}>
@@ -487,11 +495,19 @@ export const AccessDetails: React.FC = () => {
 
         <hr className={classes.regularSectionSeparator} />
 
-        {/* 'App action' buttons section */}
+        {/* "App action" buttons section */}
         <div className={classes.buttonsContainer}>
           <ActionsFooter
-            altSaveButtonAction={() => validateAccessDetails(selectedAuth)}
-            altSaveButtonLabel={t("applications.buttons.validateAccessDetails")}
+            altSaveButtonAction={
+              () => validateAccessDetailsStatus.validated || getBlueprintAppConfigStatus.retrieved
+                ? updateAccessDetails()
+                : validateAccessDetails(selectedAuth)
+            }
+            altSaveButtonLabel={
+              validateAccessDetailsStatus.validated || getBlueprintAppConfigStatus.retrieved
+                ? t("applications.buttons.updateAccessDetails")
+                : t("applications.buttons.validateAccessDetails")
+            }
             app={app}
             appId={appId}
             disableNextButton={!validateAccessDetailsStatus.validated}

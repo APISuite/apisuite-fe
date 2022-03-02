@@ -28,7 +28,6 @@ import { ActionsFooter, AppHeader, checkHistory, checkNextAction, getAppType, No
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
-import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
@@ -106,12 +105,16 @@ export const GeneralSettings: React.FC = () => {
     const newAppDetails = {
       ...app,
       ...getValues(),
-      appType: appType.current,
+      appType: {
+        createdAt: app.appType.createdAt,
+        updatedAt: app.appType.updatedAt,
+        ...appType.current,
+      },
       appTypeId: Number(typeId),
     };
 
     if (appType.current.type === AppTypes.BLUEPRINT) {
-      dispatch(createBlueprintApp({ appData: newAppDetails }))
+      dispatch(createBlueprintApp({ appData: newAppDetails }));
     }
 
     dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));

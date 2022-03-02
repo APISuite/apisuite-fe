@@ -735,6 +735,7 @@
       "registerApp": "Register App",
       "saveChanges": "Save changes",
       "validateAccessDetails": "Validate access details",
+      "updateAccessDetails": "Update access details",
       "editConnectorSettings": "Edit connector settings",
       "subToAPI": "Subscribe to API",
       "update": "Update"
@@ -756,6 +757,10 @@
     "requestAPIAcessError": "Failed to request access.",
     "validateAcessDetailsSuccess": "The provided details have been successfully validated!",
     "validateAcessDetailsError": "Failed to validate the provided details.",
+    "updateAcessDetailsSuccess": "The provided details have been successfully updated!",
+    "updateAcessDetailsError": "Failed to update the access details.",
+    "toggleBlueprintAppStatusSuccess": "App's status successfully updated!",
+    "toggleBlueprintAppStatusError": "An error occurred when trying to update your app's status.",
     "success": {
       "update": "Application \"{{name}}\" was updated with success."
     },

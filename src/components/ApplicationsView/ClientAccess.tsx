@@ -120,8 +120,8 @@ export const ClientAccess: React.FC = () => {
                     {[
                       <Link
                         key="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour"
-                        rel='noopener noreferrer'
-                        target='_blank'
+                        rel="noopener noreferrer"
+                        target="_blank"
                         to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2"
                       />,
                     ]}

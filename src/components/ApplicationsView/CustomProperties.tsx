@@ -508,8 +508,8 @@ export const CustomProperties: React.FC = () => {
                         <Link
                           key="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText"
                           to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties"
-                          rel='noopener noreferrer'
-                          target='_blank'
+                          rel="noopener noreferrer"
+                          target="_blank"
                         />,
                       ]}
                     </Trans>

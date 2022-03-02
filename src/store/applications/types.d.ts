@@ -16,7 +16,7 @@ export interface ApplicationsStore {
   updateAppStatus: Response,
   userApps: AppData[],
   // Blueprint-related data
-  blueprintAppConfig: BlueprintAppConfig,
+  blueprintAppConfig: CurrentBlueprintAppConfig,
   createBlueprintAppStatus: Response & { id: number },
   getBlueprintAppConfigStatus: Response & { retrieved: boolean },
   isActive: boolean,
@@ -67,8 +67,14 @@ export interface BlueprintAppData {
   },
 }
 
-export interface BlueprintAppConfig {
-  auth_type: string,
+export interface Metadata {
+  key: string,
+  value: string,
+  title: string,
+  description: string,
+}
+
+export interface CurrentBlueprintAppConfig {
   app_conf: {
     auth_url: string,
     clt_id: string,
@@ -79,17 +85,12 @@ export interface BlueprintAppConfig {
     token_url: string,
     token: string,
   },
+  app_id: number,
   app_method: string,
   app_name: string,
   app_url: string,
+  auth_type: string,
   polling_interval: string,
-}
-
-export interface Metadata {
-  key: string,
-  value: string,
-  title: string,
-  description: string,
 }
 
 export interface ModalDetails {

@@ -20,7 +20,7 @@ export const ConnectorSettings: React.FC = () => {
   const history = useHistory() as LocationHistory;
   const dispatch = useDispatch();
 
-  const { app, isActive, requesting, status, types } = useSelector(applicationsViewSelector);
+  const { app, blueprintAppConfig, isActive, requesting, status, types } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
 
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
@@ -37,14 +37,14 @@ export const ConnectorSettings: React.FC = () => {
     typeId,
   });
 
-  // 'Active app status' logic
+  // "Active app status" logic
 
   const toggleActiveAppStatus = (isAppActive: boolean) => {
     dispatch(toggleBlueprintAppStatusAction({
       appStatusData: {
-        app_name: app.name,
-        command: isAppActive ? "start" : "stop"
-      }
+        app_name: blueprintAppConfig.app_name,
+        command: isAppActive ? "start" : "stop",
+      },
     }));
   };
 
@@ -61,7 +61,7 @@ export const ConnectorSettings: React.FC = () => {
         types={types}
         typeId={typeId}
       >
-        {/* 'App status' section */}
+        {/* "App status" section */}
         <Grid container spacing={3}>
           <Grid item md={12}>
             <Box mb={1}>
@@ -96,7 +96,7 @@ export const ConnectorSettings: React.FC = () => {
 
         <hr className={classes.regularSectionSeparator} />
 
-        {/* 'App action' buttons section */}
+        {/* "App action" buttons section */}
         <div className={classes.buttonsContainer}>
           <ActionsFooter
             app={app}
