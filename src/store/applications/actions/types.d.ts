@@ -95,6 +95,7 @@ export type DeleteAppAction = {
 
 export type DeleteAppActionSuccess = {
   type: typeof DELETE_APP_SUCCESS,
+  id: number,
 }
 
 export type DeleteAppActionError = {

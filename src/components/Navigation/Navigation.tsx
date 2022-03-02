@@ -11,11 +11,13 @@ import { Logo } from "components/Logo";
 
 import { navigationSelector } from "./selector";
 import { NavigationProps } from "./types";
+import { DefaultDocsAndSupport } from "./constants";
 
 export const Navigation: React.FC<NavigationProps> = ({ contractible = false, className, ...rest }) => {
   const dispatch = useDispatch();
   const { palette, zIndex, spacing } = useTheme();
-  const { navigation, portalName, ownerInfo } = useConfig();
+  const { navigation, portalName, ownerInfo, documentationURL, supportURL } = useConfig();
+
   const { t } = useTranslation();
   const { user, currentOrg } = useSelector(navigationSelector);
   // FIXME: checking the id because profile is never undefined
@@ -136,12 +138,31 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         style={adjustTop ? { transform: "translateY(-2px)" } : undefined}
         color={!expand && subTab ? palette.text.primary : palette.secondary.contrastText}
       >
+        {/* Handling of 'Documentation' and 'Support' tabs, which might point to external links */}
+        {
+          action === DefaultDocsAndSupport.documentation &&
+            <Link to={documentationURL || DefaultDocsAndSupport.documentation} style={{ textDecoration: "none" }}>
+              {LabelComponent}
+            </Link>
+        }
+
+        {
+          action === DefaultDocsAndSupport.support &&
+            <Link to={supportURL || DefaultDocsAndSupport.support} style={{ textDecoration: "none" }}>
+              {LabelComponent}
+            </Link>
+        }
+
         {/* routing actions - starts with `/` or `http` */}
-        {/^(\/|http)/.test(action) && (
-          <Link to={action} style={{ textDecoration: "none" }}>
-            {LabelComponent}
-          </Link>
-        )}
+        {
+          /^(\/|http)/.test(action) &&
+          action !== DefaultDocsAndSupport.documentation &&
+          action !== DefaultDocsAndSupport.support && (
+            <Link to={action} style={{ textDecoration: "none" }}>
+              {LabelComponent}
+            </Link>
+          )
+        }
 
         {/* hook actions - first condition is to be taken as explicit */}
         {action.startsWith("$") && actions.hasOwnProperty(action) && (

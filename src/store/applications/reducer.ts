@@ -175,6 +175,7 @@ export default function reducer (
         deleteAppStatus: {
           isRequesting: { $set: false },
         },
+        userApps: { $set: state.userApps.filter((v) => v.id !== action.id) },
       });
     }
 

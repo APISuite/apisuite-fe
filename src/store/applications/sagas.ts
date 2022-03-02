@@ -76,6 +76,9 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
         data[link] = "";
       }
     }
+    if (!data.redirectUrl) {
+      delete data.redirectUrl;
+    }
 
     const updateAppUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appData.id}`;
 
@@ -114,7 +117,7 @@ export function* deleteAppActionSaga(action: DeleteAppAction) {
       },
     });
 
-    yield put(deleteAppSuccess({}));
+    yield put(deleteAppSuccess({ id: action.appId }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(deleteAppError({}));
