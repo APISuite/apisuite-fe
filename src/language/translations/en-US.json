@@ -378,6 +378,7 @@
           "appNameFieldLabel": "Application name",
           "appURLFieldLabel": "Application URL",
           "appMethodFieldLabel": "Application method",
+          "appMethodFieldPlaceholder": "An HTTP method such as GET",
           "authTypeTitle": "Authentication type",
           "methodFieldLabel": "App Method",
           "urlFieldLabel": "App URL",

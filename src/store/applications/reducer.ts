@@ -15,7 +15,7 @@ import { VALIDATE_ACCESS_DETAILS_ACTION, VALIDATE_ACCESS_DETAILS_ACTION_SUCCESS,
 import { CREATE_BLUEPRINT_APP, CREATE_BLUEPRINT_APP_ERROR, CREATE_BLUEPRINT_APP_SUCCESS } from "./actions/createBlueprintApp";
 import { GET_BLUEPRINT_CONFIG, GET_BLUEPRINT_CONFIG_SUCCESS, GET_BLUEPRINT_CONFIG_ERROR } from "./actions/getBlueprintAppConfig";
 import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS } from "./actions/toggleBlueprintAppStatus";
-import { UPDATE_BLUEPRINT_APP_CONFIG, UPDATE_BLUEPRINT_APP_CONFIG_ERROR, UPDATE_BLUEPRINT_APP_CONFIG_SUCCESS } from "./actions/updateBlueprintAppConfig";
+import { UPDATE_ACCESS_DETAILS_ACTION, UPDATE_ACCESS_DETAILS_ACTION_ERROR, UPDATE_ACCESS_DETAILS_ACTION_SUCCESS } from "./actions/updateAccessDetails";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -416,14 +416,14 @@ export default function reducer (
       });
     }
 
-    case UPDATE_BLUEPRINT_APP_CONFIG: {
+    case UPDATE_ACCESS_DETAILS_ACTION: {
       return update(state, {
         blueprintAppConfig: { $set: action.newConfig },
       });
     }
 
-    case UPDATE_BLUEPRINT_APP_CONFIG_SUCCESS:
-    case UPDATE_BLUEPRINT_APP_CONFIG_ERROR: {
+    case UPDATE_ACCESS_DETAILS_ACTION_SUCCESS:
+    case UPDATE_ACCESS_DETAILS_ACTION_ERROR: {
       return state;
     }
 

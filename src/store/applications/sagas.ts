@@ -12,7 +12,7 @@ import { clearProps } from "util/clear";
 import { linker } from "util/linker";
 import request from "util/request";
 import { AppData, AppType } from "./types";
-import { BlueprintAppConfigResponse, CreateAppAction, CreateBlueprintAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetBlueprintAppConfigAction, GetUserAppAction, OAuthValidationResponse, RequestAPIAccessAction, ToggleBlueprintAppStatusAction, TokenValidationResponse, UpdateAppAction, UpdateBlueprintAppConfigAction, UploadAppMediaAction, ValidateAccessDetailsAction } from "./actions/types";
+import { BlueprintAppConfigResponse, CreateAppAction, CreateBlueprintAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetBlueprintAppConfigAction, GetUserAppAction, OAuthValidationResponse, RequestAPIAccessAction, ToggleBlueprintAppStatusAction, TokenValidationResponse, UpdateAppAction, UpdateAccessDetailsAction, UploadAppMediaAction, ValidateAccessDetailsAction } from "./actions/types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { DELETE_APP_MEDIA, deleteAppMediaError, deleteAppMediaSuccess } from "./actions/deleteAppMedia";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
@@ -27,7 +27,7 @@ import { CREATE_BLUEPRINT_APP, createBlueprintAppError, createBlueprintAppSucces
 import { getBlueprintAppConfigError, getBlueprintAppConfigSuccess, GET_BLUEPRINT_CONFIG } from "./actions/getBlueprintAppConfig";
 import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionError, toggleBlueprintAppStatusActionSuccess } from "./actions/toggleBlueprintAppStatus";
 import { validateAccessDetailsActionError, validateAccessDetailsActionSuccess, VALIDATE_ACCESS_DETAILS_ACTION } from "./actions/validateAccessDetails";
-import { updateBlueprintAppConfigError, updateBlueprintAppConfigSuccess, UPDATE_BLUEPRINT_APP_CONFIG } from "./actions/updateBlueprintAppConfig";
+import { updateAccessDetailsActionError, updateAccessDetailsActionSuccess, UPDATE_ACCESS_DETAILS_ACTION } from "./actions/updateAccessDetails";
 
 const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
 
@@ -389,23 +389,23 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
   }
 }
 
-export function* updateBlueprintAppConfigActionSaga(action: UpdateBlueprintAppConfigAction) {
+export function* updateAccessDetailsActionSaga(action: UpdateAccessDetailsAction) {
   try {
-    const updateBlueprintAppConfigUrl = `${APP_CONNECTOR_URL}/apps/${action.originalAppName}`;
+    const updateAccessDetailsUrl = `${APP_CONNECTOR_URL}/apps/${action.originalAppName}`;
 
     yield call(request, {
-      url: updateBlueprintAppConfigUrl,
+      url: updateAccessDetailsUrl,
       method: "PATCH",
       data: action.newConfig,
     });
 
-    yield put(updateBlueprintAppConfigSuccess({}));
+    yield put(updateAccessDetailsActionSuccess({}));
 
     // TODO: Add translations
     yield put(openNotification("success", i18n.t("applications.updateAcessDetailsSuccess"), 3000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    yield put(updateBlueprintAppConfigError({}));
+    yield put(updateAccessDetailsActionError({}));
     // TODO: Add translations
     yield put(openNotification("error", i18n.t("applications.updateAcessDetailsError"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
@@ -452,7 +452,7 @@ function* rootSaga() {
   yield takeLatest(VALIDATE_ACCESS_DETAILS_ACTION, validateAccessDetailsActionSaga);
   yield takeLatest(CREATE_BLUEPRINT_APP, createBlueprintAppActionSaga);
   yield takeLatest(GET_BLUEPRINT_CONFIG, getBlueprintAppConfigActionSaga);
-  yield takeLatest(UPDATE_BLUEPRINT_APP_CONFIG, updateBlueprintAppConfigActionSaga);
+  yield takeLatest(UPDATE_ACCESS_DETAILS_ACTION, updateAccessDetailsActionSaga);
   yield takeLatest(TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionSaga);
 }
 

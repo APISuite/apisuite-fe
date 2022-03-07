@@ -14,7 +14,7 @@ import useStyles from "./styles";
 import { LocationHistory } from "./types";
 import { useGetApp, AppContainer, ActionsFooter } from "./util";
 import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
-import { updateBlueprintAppConfig } from "store/applications/actions/updateBlueprintAppConfig";
+import { updateAccessDetailsAction } from "store/applications/actions/updateAccessDetails";
 
 export const AccessDetails: React.FC = () => {
   const classes = useStyles();
@@ -123,6 +123,9 @@ export const AccessDetails: React.FC = () => {
   };
 
   const accessDetailsMissing = (selectedAuthType: string) => {
+    // If the app's name, URL, and method are missing
+    if (!getValues("app_name") || !getValues("app_url") || !getValues("app_method")) return true
+
     // If "Token" auth type fields are missing
     if (selectedAuthType === AUTH_TYPES.TOKEN && (!getValues("token") || !getValues("polling_interval"))) {
       return true;
@@ -132,7 +135,7 @@ export const AccessDetails: React.FC = () => {
     if (selectedAuthType === AUTH_TYPES.OAUTH && (
       !getValues("redirect_url") || !getValues("clt_id") ||
       !getValues("clt_secret") || !getValues("auth_url") ||
-      !getValues("token_url") || !getValues("scope")
+      !getValues("token_url")
     )) {
       return true;
     }
@@ -191,7 +194,7 @@ export const AccessDetails: React.FC = () => {
       polling_interval: currentConfigDetails.polling_interval,
     };
 
-    dispatch(updateBlueprintAppConfig({
+    dispatch(updateAccessDetailsAction({
       originalAppName: blueprintAppConfig.app_name,
       newConfig: newConfigDetails,
     }));
@@ -279,6 +282,7 @@ export const AccessDetails: React.FC = () => {
                     helperText={errors.app_method?.message}
                     label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.appMethodFieldLabel")}
                     margin="dense"
+                    placeholder={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.appMethodFieldPlaceholder")}
                     type="text"
                     variant="outlined"
                   />

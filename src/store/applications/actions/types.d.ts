@@ -51,9 +51,9 @@ ValidateAccessDetailsActionError |
 ToggleBlueprintAppStatusAction |
 ToggleBlueprintAppStatusActionSuccess |
 ToggleBlueprintAppStatusActionError |
-UpdateBlueprintAppConfigAction |
-UpdateBlueprintAppConfigActionSuccess |
-UpdateBlueprintAppConfigActionError
+UpdateAccessDetailsAction |
+UpdateAccessDetailsActionSuccess |
+UpdateAccessDetailsActionError
 
 export type CreateAppAction = {
   type: typeof CREATE_APP,
@@ -272,17 +272,17 @@ export interface BlueprintAppConfigResponse {
   },
 }
 
-export type UpdateBlueprintAppConfigAction = {
+export type UpdateAccessDetailsAction = {
   type: typeof UPDATE_BLUEPRINT_APP_CONFIG,
   originalAppName: string,
   newConfig: CurrentBlueprintAppConfig,
 }
 
-export type UpdateBlueprintAppConfigActionSuccess = {
+export type UpdateAccessDetailsActionSuccess = {
   type: typeof UPDATE_BLUEPRINT_APP_CONFIG_SUCCESS,
 }
 
-export type UpdateBlueprintAppConfigActionError = {
+export type UpdateAccessDetailsActionError = {
   type: typeof UPDATE_BLUEPRINT_APP_CONFIG_ERROR,
 }
 
