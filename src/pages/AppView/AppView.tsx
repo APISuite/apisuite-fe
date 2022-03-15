@@ -1,25 +1,23 @@
 import React, { useEffect } from "react";
-import { Box, useTranslation } from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { SideNavForm } from "components/SideNavForm";
+import { Box, useTranslation } from "@apisuite/fe-base";
+
 import {
   AccessDetails,
   ClientAccess,
-  ConnectorSettings,
   CustomProperties,
   ExternalSettings,
   GeneralSettings,
   MediaFilesLinks,
 } from "components/ApplicationsView";
+import { LoadingView } from "components/InvitationForm/LoadingView";
+import { SideNavForm } from "components/SideNavForm";
+import { AppTypes } from "./types";
+import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { isExtensionActive } from "util/extensions";
 import { typesSelector } from "./selector";
-
 import useStyles from "./styles";
-import { AppTypes } from "./types";
-import { LoadingView } from "components/InvitationForm/LoadingView";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
-import { applicationsViewSelector } from "components/ApplicationsView/selector";
 
 export const AppView: React.FC = () => {
   const classes = useStyles();
@@ -27,12 +25,11 @@ export const AppView: React.FC = () => {
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const active = isExtensionActive("@apisuite/apisuite-marketplace-extension-ui");
 
-  const { validateAccessDetailsStatus } = useSelector(applicationsViewSelector);
   const { types } = useSelector(typesSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!types || types.length === 0) {
+    if (!types || types.length === 0) {
       dispatch(getAppTypes({}));
     }
   }, [dispatch, types]);
@@ -46,15 +43,14 @@ export const AppView: React.FC = () => {
       path: "/dashboard/apps/:appId/type/:typeId/general",
       route: `/dashboard/apps/${appId}/type/${typeId}/general`,
     },
+    {
+      component: MediaFilesLinks,
+      disabled: isNew,
+      label: t("applications.tabs.media"),
+      path: "/dashboard/apps/:appId/type/:typeId/media",
+      route: `/dashboard/apps/${appId}/type/${typeId}/media`,
+    },
   ];
-
-  const MEDIA = {
-    component: MediaFilesLinks,
-    disabled: isNew,
-    label: t("applications.tabs.media"),
-    path: "/dashboard/apps/:appId/type/:typeId/media",
-    route: `/dashboard/apps/${appId}/type/${typeId}/media`,
-  };
 
   const CLIENT = {
     component: ClientAccess,
@@ -80,28 +76,19 @@ export const AppView: React.FC = () => {
     route: `/dashboard/apps/${appId}/type/${typeId}/expert`,
   };
 
-  const BLUEPRINT = [
-    {
-      component: AccessDetails,
-      disabled: isNew,
-      label: t("applications.tabs.accessDetails"),
-      path: "/dashboard/apps/:appId/type/:typeId/access",
-      route: `/dashboard/apps/${appId}/type/${typeId}/access`,
-    },
-    {
-      component: ConnectorSettings,
-      disabled: isNew || !validateAccessDetailsStatus.validated,
-      label: t("applications.tabs.connectorSettings"),
-      path: "/dashboard/apps/:appId/type/:typeId/connector",
-      route: `/dashboard/apps/${appId}/type/${typeId}/connector`,
-    },
-  ];
+  const BLUEPRINT = {
+    component: AccessDetails,
+    disabled: isNew,
+    label: t("applications.tabs.accessDetails"),
+    path: "/dashboard/apps/:appId/type/:typeId/access",
+    route: `/dashboard/apps/${appId}/type/${typeId}/access`,
+  };
 
   if (type && type.type) {
     const appType = type.type;
 
     if (appType === AppTypes.CLIENT || appType === AppTypes.EXTERNAL || appType === AppTypes.EXPERT) {
-      ROUTES.push(MEDIA, CLIENT);
+      ROUTES.push(CLIENT);
     }
     if (active && (appType === AppTypes.EXTERNAL || appType === AppTypes.EXPERT)) {
       ROUTES.push(EXTERNAL);
@@ -110,7 +97,7 @@ export const AppView: React.FC = () => {
       ROUTES.push(EXPERT);
     }
     if (appType === AppTypes.BLUEPRINT) {
-      ROUTES.push(...BLUEPRINT);
+      ROUTES.push(BLUEPRINT);
     }
   }
 

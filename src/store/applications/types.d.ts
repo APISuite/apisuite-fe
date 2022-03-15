@@ -16,11 +16,9 @@ export interface ApplicationsStore {
   updateAppStatus: Response,
   userApps: AppData[],
   // Blueprint-related data
-  blueprintAppConfig: CurrentBlueprintAppConfig,
-  createBlueprintAppStatus: Response & { id: number },
+  blueprintConfig: CurrentBlueprintConfig,
   getBlueprintAppConfigStatus: Response & { retrieved: boolean },
-  isActive: boolean,
-  toggleBlueprintAppStatus: Response,
+  getBlueprintDetailsStatus: Response & { name: string },
   validateAccessDetailsStatus: Response & { validated: boolean },
 }
 
@@ -54,10 +52,10 @@ export interface AppData {
   appTypeId?: number,
 }
 
-export interface BlueprintAppData {
+export interface BlueprintData {
   data: {
-    app_link: string,
-    app_name: string,
+    appLink: string,
+    appName: string,
     configuration: Record<string, unknown>,
     description: string,
     id: number,
@@ -74,7 +72,7 @@ export interface Metadata {
   description: string,
 }
 
-export interface CurrentBlueprintAppConfig {
+export interface CurrentBlueprintConfig {
   app_conf: {
     auth_url: string,
     clt_id: string,
@@ -119,7 +117,7 @@ export interface ApplicationsProps {
 
 export type CreateAppActionData = AppData
 
-export type CreateBlueprintAppActionData = BlueprintAppData
+export type CreateBlueprintAppActionData = BlueprintData
 
 export type UpdateAppActionData = AppData
 

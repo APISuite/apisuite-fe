@@ -16,10 +16,9 @@ import { CustomizableTooltip } from "components/CustomizableTooltip";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import Notice from "components/Notice";
 import { RouterPrompt } from "components/RouterPrompt";
-import { AppTypes, AppTypesTab } from "pages/AppView/types";
+import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { createApp } from "store/applications/actions/createApp";
-import { createBlueprintApp } from "store/applications/actions/createBlueprintApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
 import { resetUserApp } from "store/applications/actions/getUserApp";
 import { AppType } from "store/applications/types";
@@ -28,6 +27,7 @@ import { ActionsFooter, AppHeader, checkHistory, checkNextAction, getAppType, No
 import { applicationsViewSelector } from "./selector";
 import useStyles from "./styles";
 import { LocationHistory } from "./types";
+import { getBlueprintDetailsAction } from "store/applications/actions/getBlueprintDetails";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
@@ -36,17 +36,24 @@ export const GeneralSettings: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory() as LocationHistory;
-  const { app, status, types, requesting } = useSelector(applicationsViewSelector);
+  const { app, status, types, requesting, getBlueprintDetailsStatus } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
   const [avatar, setAvatar] = React.useState("");
   const isNew = Number.isNaN(Number(appId));
   const appType = useRef<AppType>(getAppType(types, typeId));
 
+  const encodedBlueprintName = new URLSearchParams(window.location.search).get("blueprintID");
+  const decodedBlueprintName = encodedBlueprintName ? decodeURIComponent(encodedBlueprintName) : null;
+
+  if (isNew && decodedBlueprintName && decodedBlueprintName !== getBlueprintDetailsStatus.name) {
+    dispatch(getBlueprintDetailsAction({ blueprintName: decodedBlueprintName }));
+  }
+
   useEffect(() => {
     if (isNew && app.id !== 0 || isNew && app.name !== "") {
       dispatch(resetUserApp());
     }
-  }, [app.id, app.name, dispatch, isNew]);
+  }, [app.id, app.name, decodedBlueprintName, dispatch, getBlueprintDetailsStatus.name, isNew]);
 
   useGetApp({
     app,
@@ -88,8 +95,8 @@ export const GeneralSettings: React.FC = () => {
   useEffect(() => {
     if (!isNew) {
       setAvatar(app.logo);
-      setValue("logo", app.logo, { shouldDirty: false });
       setValue("description", app.description, { shouldDirty: false });
+      setValue("logo", app.logo, { shouldDirty: false });
       setValue("name", app.name, { shouldDirty: false });
       setValue("shortDescription", app.shortDescription, { shouldDirty: false });
     }
@@ -113,11 +120,11 @@ export const GeneralSettings: React.FC = () => {
       appTypeId: Number(typeId),
     };
 
-    if (appType.current.type === AppTypes.BLUEPRINT) {
-      dispatch(createBlueprintApp({ appData: newAppDetails }));
-    }
-
-    dispatch(createApp({ orgID: profile.currentOrg.id, appData: newAppDetails }));
+    dispatch(createApp({
+      appData: newAppDetails,
+      blueprintName: encodedBlueprintName || undefined,
+      orgID: profile.currentOrg.id,
+    }));
   };
 
   // Deleting an app

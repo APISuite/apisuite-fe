@@ -17,10 +17,10 @@ export const applicationsViewSelector = createSelector(
         update: applications.updateAppStatus,
       },
 
-      blueprintAppConfig: applications.blueprintAppConfig,
+      blueprintConfig: applications.blueprintConfig,
+      getBlueprintDetailsStatus: applications.getBlueprintDetailsStatus,
       getBlueprintAppConfigStatus: applications.getBlueprintAppConfigStatus,
       validateAccessDetailsStatus: applications.validateAccessDetailsStatus,
-      isActive: applications.isActive,
     };
   },
 );

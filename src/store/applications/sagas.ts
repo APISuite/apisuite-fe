@@ -11,8 +11,8 @@ import { Store } from "store/types";
 import { clearProps } from "util/clear";
 import { linker } from "util/linker";
 import request from "util/request";
-import { AppData, AppType } from "./types";
-import { BlueprintAppConfigResponse, CreateAppAction, CreateBlueprintAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetBlueprintAppConfigAction, GetUserAppAction, OAuthValidationResponse, RequestAPIAccessAction, ToggleBlueprintAppStatusAction, TokenValidationResponse, UpdateAppAction, UpdateAccessDetailsAction, UploadAppMediaAction, ValidateAccessDetailsAction } from "./actions/types";
+import { AppData, AppType, BlueprintData } from "./types";
+import { BlueprintAppConfigResponse, CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetBlueprintAppConfigAction, GetUserAppAction, OAuthValidationResponse, RequestAPIAccessAction, TokenValidationResponse, UpdateAppAction, UpdateAccessDetailsAction, UploadAppMediaAction, ValidateAccessDetailsAction, GetBlueprintDetailsAction } from "./actions/types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { DELETE_APP_MEDIA, deleteAppMediaError, deleteAppMediaSuccess } from "./actions/deleteAppMedia";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
@@ -23,11 +23,10 @@ import { REQUEST_API_ACCESS, requestAPIAccessError, requestAPIAccessSuccess } fr
 import { UPDATE_APP, updateAppError, updateAppSuccess } from "./actions/updatedApp";
 import { UPLOAD_APP_MEDIA, uploadAppMediaError, uploadAppMediaSuccess } from "./actions/appMediaUpload";
 import { UploadResponse } from "./actions/types";
-import { CREATE_BLUEPRINT_APP, createBlueprintAppError, createBlueprintAppSuccess } from "./actions/createBlueprintApp";
 import { getBlueprintAppConfigError, getBlueprintAppConfigSuccess, GET_BLUEPRINT_CONFIG } from "./actions/getBlueprintAppConfig";
-import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionError, toggleBlueprintAppStatusActionSuccess } from "./actions/toggleBlueprintAppStatus";
 import { validateAccessDetailsActionError, validateAccessDetailsActionSuccess, VALIDATE_ACCESS_DETAILS_ACTION } from "./actions/validateAccessDetails";
 import { updateAccessDetailsActionError, updateAccessDetailsActionSuccess, UPDATE_ACCESS_DETAILS_ACTION } from "./actions/updateAccessDetails";
+import { getBlueprintDetailsActionError, getBlueprintDetailsActionSuccess, GET_BLUEPRINT_DETAILS_ACTION } from "./actions/getBlueprintDetails";
 
 const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
 
@@ -277,42 +276,6 @@ export function* getAppTypesActionSaga() {
   }
 }
 
-export function* createBlueprintAppActionSaga(action: CreateBlueprintAppAction) {
-  try {
-    const createBlueprintAppUrl = BLUEPRINT_APPS_URL;
-
-    const blueprintAppData = {
-      app_link: "",
-      app_name: action.appData.name,
-      configuration: {},
-      description: action.appData.description,
-      labels: [],
-      logo: action.appData.logo,
-      overview: action.appData.shortDescription,
-    };
-
-    yield call(request, {
-      url: createBlueprintAppUrl,
-      method: "POST",
-      headers: {
-        Authorization: "Basic Y2xvdWRva2k6ZmtsZGZnaGRma2pnaHNramdoc2dzZGZramdo",
-        "content-type": "application/json",
-      },
-      data: blueprintAppData,
-    });
-
-    yield put(createBlueprintAppSuccess({ appId: action.appData.id }));
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    yield put(createBlueprintAppError({ error }));
-    yield put(openNotification("error", i18n.t("applications.error.createBlueprint"), 3000));
-
-    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
-      yield put(handleSessionExpire({}));
-    }
-  }
-}
-
 export function* validateAccessDetailsActionSaga(action: ValidateAccessDetailsAction) {
   try {
     const validateAccessDetailsUrl = `${APP_CONNECTOR_URL}/apps/`;
@@ -320,17 +283,17 @@ export function* validateAccessDetailsActionSaga(action: ValidateAccessDetailsAc
     const response: TokenValidationResponse | OAuthValidationResponse = yield call(request, {
       url: validateAccessDetailsUrl,
       method: "POST",
-      data: action.blueprintAppConfig,
+      data: action.blueprintConfig,
     });
 
-    if (action.blueprintAppConfig.auth_type === "oauth") {
+    if (action.blueprintConfig.auth_type === "oauth") {
       window.open(
         response.data.toString(),
         "_blank"
       );
     }
 
-    yield put(validateAccessDetailsActionSuccess({ blueprintAppConfig: action.blueprintAppConfig }));
+    yield put(validateAccessDetailsActionSuccess({ blueprintConfig: action.blueprintConfig }));
 
     // TODO: Add translations
     yield put(openNotification("success", i18n.t("applications.validateAcessDetailsSuccess"), 3000));
@@ -339,6 +302,28 @@ export function* validateAccessDetailsActionSaga(action: ValidateAccessDetailsAc
     yield put(validateAccessDetailsActionError({}));
     // TODO: Add translations
     yield put(openNotification("error", i18n.t("applications.validateAcessDetailsError"), 3000));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
+
+export function* getBlueprintDetailsActionSaga(action: GetBlueprintDetailsAction) {
+  try {
+    const getBlueprintDetailsActionUrl = `${BLUEPRINT_APPS_URL}/${action.blueprintName}`;
+
+    const response: BlueprintData = yield call(request, {
+      url: getBlueprintDetailsActionUrl,
+      method: "GET",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+    });
+
+    yield put(getBlueprintDetailsActionSuccess({ blueprintData: response }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(getBlueprintDetailsActionError(error));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
@@ -357,7 +342,7 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
       },
     });
 
-    const blueprintAppConfig = {
+    const blueprintConfig = {
       app_id: Number(action.appId),
       app_conf: {
         auth_url: response.data.appConfig.authUrl,
@@ -377,8 +362,7 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
     };
 
     yield put(getBlueprintAppConfigSuccess({
-      config: blueprintAppConfig,
-      isActive: response.data.workerStatus === "started",
+      config: blueprintConfig,
     }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
@@ -414,31 +398,6 @@ export function* updateAccessDetailsActionSaga(action: UpdateAccessDetailsAction
   }
 }
 
-export function* toggleBlueprintAppStatusActionSaga(action: ToggleBlueprintAppStatusAction) {
-  try {
-    // TODO: URL should not be hardcoded, I believe
-    const toggleBlueprintAppStatusUrl = `${APP_CONNECTOR_URL}/apps/worker/`;
-
-    yield call(request, {
-      url: toggleBlueprintAppStatusUrl,
-      method: "POST",
-      data: action.appStatusData,
-    });
-
-    // TODO: Do not use "start" for the sake of comparison - use a constant
-    yield put(toggleBlueprintAppStatusActionSuccess({ isActive: action.appStatusData.command === "start" }));
-
-    yield put(openNotification("success", i18n.t("applications.toggleBlueprintAppStatusSuccess"), 3000));
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    yield put(toggleBlueprintAppStatusActionError({}));
-    yield put(openNotification("success", i18n.t("applications.toggleBlueprintAppStatusError"), 3000));
-    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
-      yield put(handleSessionExpire({}));
-    }
-  }
-}
-
 function* rootSaga() {
   yield takeLatest(CREATE_APP, createAppActionSaga);
   yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
@@ -450,10 +409,9 @@ function* rootSaga() {
   yield takeLatest(UPDATE_APP, updateAppActionSaga);
   yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
   yield takeLatest(VALIDATE_ACCESS_DETAILS_ACTION, validateAccessDetailsActionSaga);
-  yield takeLatest(CREATE_BLUEPRINT_APP, createBlueprintAppActionSaga);
+  yield takeLatest(GET_BLUEPRINT_DETAILS_ACTION, getBlueprintDetailsActionSaga);
   yield takeLatest(GET_BLUEPRINT_CONFIG, getBlueprintAppConfigActionSaga);
   yield takeLatest(UPDATE_ACCESS_DETAILS_ACTION, updateAccessDetailsActionSaga);
-  yield takeLatest(TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionSaga);
 }
 
 export default rootSaga;
