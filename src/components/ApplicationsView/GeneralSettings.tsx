@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {
@@ -6,50 +7,60 @@ import {
   InputAdornment, TextField, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
-import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import markdownIcon from "assets/markdownIcon.svg";
-import { AvatarDropzone } from "components/AvatarDropzone";
-import { CustomizableTooltip } from "components/CustomizableTooltip";
-import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
-import Notice from "components/Notice";
-import { RouterPrompt } from "components/RouterPrompt";
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
+import { AvatarDropzone } from "components/AvatarDropzone";
+import { CustomizableTooltip } from "components/CustomizableTooltip";
+import { RouterPrompt } from "components/RouterPrompt";
+import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import Notice from "components/Notice";
+import { AppType } from "store/applications/types";
 import { createApp } from "store/applications/actions/createApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
+import { getBlueprintDetailsAction } from "store/applications/actions/getBlueprintDetails";
 import { resetUserApp } from "store/applications/actions/getUserApp";
-import { AppType } from "store/applications/types";
+import { applicationsViewSelector } from "./selector";
+import { LocationHistory } from "./types";
+import useStyles from "./styles";
 import { getSections } from "util/extensions";
 import { ActionsFooter, AppHeader, checkHistory, checkNextAction, getAppType, NotFound, useGetApp } from "./util";
-import { applicationsViewSelector } from "./selector";
-import useStyles from "./styles";
-import { LocationHistory } from "./types";
-import { getBlueprintDetailsAction } from "store/applications/actions/getBlueprintDetails";
 
 export const GeneralSettings: React.FC = () => {
   const classes = useStyles();
-  const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const { palette, spacing } = useTheme();
+
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+
+  const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const history = useHistory() as LocationHistory;
+
   const { app, status, types, requesting, getBlueprintDetailsStatus } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-  const [avatar, setAvatar] = React.useState("");
-  const isNew = Number.isNaN(Number(appId));
-  const appType = useRef<AppType>(getAppType(types, typeId));
+  const dispatch = useDispatch();
 
+  // Set-up logic
+
+  const appType = useRef<AppType>(getAppType(types, typeId));
+  const isNew = Number.isNaN(Number(appId));
+
+  /* To create a blueprint-derived app, we need the blueprint's name so as to retrieve its details.
+  This blueprint's name will be made available to us as a URL parameter. */
   const encodedBlueprintName = new URLSearchParams(window.location.search).get("blueprintID");
   const decodedBlueprintName = encodedBlueprintName ? decodeURIComponent(encodedBlueprintName) : null;
 
   if (isNew && decodedBlueprintName && decodedBlueprintName !== getBlueprintDetailsStatus.name) {
+    /* Triggers the retrieval and storage (on the app's Store, under 'applications')
+    of all details related to a particular blueprint. */
     dispatch(getBlueprintDetailsAction({ blueprintName: decodedBlueprintName }));
   }
 
   useEffect(() => {
+    /* If we're creating a new app, but we have some app's details in our Store,
+    we reset the Store's details so they don't unintentionally show up on the new one. */
     if (isNew && app.id !== 0 || isNew && app.name !== "") {
       dispatch(resetUserApp());
     }
@@ -82,8 +93,8 @@ export const GeneralSettings: React.FC = () => {
     setValue,
   } = useForm({
     defaultValues: {
-      logo: app.logo || "",
       description: app.description || "",
+      logo: app.logo || "",
       name: app.name || "",
       shortDescription: app.shortDescription || "",
     },
@@ -91,6 +102,8 @@ export const GeneralSettings: React.FC = () => {
     resolver: yupResolver(appSchema),
     reValidateMode: "onChange",
   });
+
+  const [avatar, setAvatar] = React.useState("");
 
   useEffect(() => {
     if (!isNew) {
@@ -216,9 +229,9 @@ export const GeneralSettings: React.FC = () => {
                   name="name"
                   render={({ field }) => (
                     <TextField
+                      {...field}
                       className={classes.inputFields}
                       error={!!errors.name}
-                      {...field}
                       fullWidth
                       helperText={errors.name?.message}
                       label={t("dashboardTab.applicationsSubTab.appModal.appNameFieldLabel")}
@@ -235,9 +248,9 @@ export const GeneralSettings: React.FC = () => {
                   name="shortDescription"
                   render={({ field }) => (
                     <TextField
+                      {...field}
                       className={classes.inputFields}
                       error={!!errors.shortDescription}
-                      {...field}
                       fullWidth
                       helperText={errors.shortDescription?.message}
                       label={t("dashboardTab.applicationsSubTab.appModal.appSummaryFieldLabel")}
@@ -258,8 +271,8 @@ export const GeneralSettings: React.FC = () => {
                 <AvatarDropzone
                   image={avatar}
                   onDeletePressed={() => {
-                    setValue("logo", "");
                     setAvatar("");
+                    setValue("logo", "");
                   }}
                   onFileLoaded={(image: string) => {
                     setAvatar(image);
@@ -274,8 +287,8 @@ export const GeneralSettings: React.FC = () => {
                   name="description"
                   render={({ field }) => (
                     <TextField
-                      className={clsx(classes.inputFields, classes.descriptionField)}
                       {...field}
+                      className={clsx(classes.inputFields, classes.descriptionField)}
                       fullWidth
                       label={t("dashboardTab.applicationsSubTab.appModal.appDescriptionFieldLabel")}
                       margin="dense"
@@ -397,8 +410,8 @@ export const GeneralSettings: React.FC = () => {
 
                         <Button
                           className={classes.otherButtons}
-                          onClick={() => checkHistory(history, appId)}
                           color="secondary"
+                          onClick={() => checkHistory(history, appId)}
                           variant="outlined"
                         >
                           {getBackToTranslation()}

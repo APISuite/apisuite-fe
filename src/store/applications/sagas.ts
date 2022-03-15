@@ -295,12 +295,10 @@ export function* validateAccessDetailsActionSaga(action: ValidateAccessDetailsAc
 
     yield put(validateAccessDetailsActionSuccess({ blueprintConfig: action.blueprintConfig }));
 
-    // TODO: Add translations
     yield put(openNotification("success", i18n.t("applications.validateAcessDetailsSuccess"), 3000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(validateAccessDetailsActionError({}));
-    // TODO: Add translations
     yield put(openNotification("error", i18n.t("applications.validateAcessDetailsError"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
@@ -385,12 +383,10 @@ export function* updateAccessDetailsActionSaga(action: UpdateAccessDetailsAction
 
     yield put(updateAccessDetailsActionSuccess({}));
 
-    // TODO: Add translations
     yield put(openNotification("success", i18n.t("applications.updateAcessDetailsSuccess"), 3000));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     yield put(updateAccessDetailsActionError({}));
-    // TODO: Add translations
     yield put(openNotification("error", i18n.t("applications.updateAcessDetailsError"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));

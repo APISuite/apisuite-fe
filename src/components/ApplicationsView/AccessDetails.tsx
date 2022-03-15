@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
 import { Box, Grid, Icon, TextField, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import clsx from "clsx";
 
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { RouterPrompt } from "components/RouterPrompt";
-import { validateAccessDetailsAction } from "store/applications/actions/validateAccessDetails";
-import { applicationsViewSelector } from "./selector";
-import useStyles from "./styles";
-import { LocationHistory } from "./types";
-import { useGetApp, AppContainer, ActionsFooter } from "./util";
 import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 import { updateAccessDetailsAction } from "store/applications/actions/updateAccessDetails";
+import { validateAccessDetailsAction } from "store/applications/actions/validateAccessDetails";
+import { applicationsViewSelector } from "./selector";
+import { LocationHistory } from "./types";
+import { ActionsFooter, AppContainer, useGetApp } from "./util";
+import useStyles from "./styles";
 
 export const AccessDetails: React.FC = () => {
   const classes = useStyles();
@@ -35,8 +35,8 @@ export const AccessDetails: React.FC = () => {
   const isNew = Number.isNaN(Number(appId));
 
   const AUTH_TYPES = {
-    TOKEN: "token",
     OAUTH: "oauth",
+    TOKEN: "token",
   };
 
   useGetApp({
@@ -139,9 +139,9 @@ export const AccessDetails: React.FC = () => {
 
     // If "OAuth" auth type fields are missing
     if (selectedAuthType === AUTH_TYPES.OAUTH && (
-      !getValues("redirect_url") || !getValues("clt_id") ||
-      !getValues("clt_secret") || !getValues("auth_url") ||
-      !getValues("token_url") || !getValues("polling_interval")
+      !getValues("clt_id") || !getValues("clt_secret") ||
+      !getValues("auth_url") || !getValues("token_url") ||
+      !getValues("polling_interval")
     )) {
       return true;
     }
@@ -201,8 +201,8 @@ export const AccessDetails: React.FC = () => {
     };
 
     dispatch(updateAccessDetailsAction({
-      originalAppName: blueprintConfig.app_name,
       newConfig: newConfigDetails,
+      originalAppName: blueprintConfig.app_name,
     }));
   };
 
@@ -211,13 +211,13 @@ export const AccessDetails: React.FC = () => {
       <AppContainer
         app={app}
         appId={appId}
-        isNew={isNew}
         getFormValues={getValues}
+        isNew={isNew}
         notFound={status.get.isError}
         orgId={profile.currentOrg.id}
         requesting={requesting}
-        types={types}
         typeId={typeId}
+        types={types}
       >
         <Grid container spacing={3}>
           <Grid item md={12}>
@@ -241,9 +241,9 @@ export const AccessDetails: React.FC = () => {
                 name="app_name"
                 render={({ field }) => (
                   <TextField
+                    {...field}
                     className={classes.inputFields}
                     error={!!errors.app_name}
-                    {...field}
                     fullWidth
                     helperText={errors.app_name?.message}
                     label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.appNameFieldLabel")}
@@ -261,9 +261,9 @@ export const AccessDetails: React.FC = () => {
                 name="app_url"
                 render={({ field }) => (
                   <TextField
+                    {...field}
                     className={classes.inputFields}
                     error={!!errors.app_url}
-                    {...field}
                     fullWidth
                     helperText={errors.app_url?.message}
                     label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.appURLFieldLabel")}
@@ -281,9 +281,9 @@ export const AccessDetails: React.FC = () => {
                 name="app_method"
                 render={({ field }) => (
                   <TextField
+                    {...field}
                     className={classes.inputFields}
                     error={!!errors.app_method}
-                    {...field}
                     fullWidth
                     helperText={errors.app_method?.message}
                     label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.appMethodFieldLabel")}
@@ -338,9 +338,9 @@ export const AccessDetails: React.FC = () => {
                     name="token"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.token}
-                        {...field}
                         fullWidth
                         helperText={errors.token?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.tokenIDFieldLabel")}
@@ -358,9 +358,9 @@ export const AccessDetails: React.FC = () => {
                     name="polling_interval"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.polling_interval}
-                        {...field}
                         fullWidth
                         helperText={errors.polling_interval?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.pollingIntervalFieldLabel")}
@@ -385,9 +385,9 @@ export const AccessDetails: React.FC = () => {
                     name="redirect_url"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.redirect_url}
-                        {...field}
                         fullWidth
                         helperText={errors.redirect_url?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.redirectURLFieldLabel")}
@@ -405,9 +405,9 @@ export const AccessDetails: React.FC = () => {
                     name="clt_id"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.clt_id}
-                        {...field}
                         fullWidth
                         helperText={errors.clt_id?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientIDFieldLabel")}
@@ -425,9 +425,9 @@ export const AccessDetails: React.FC = () => {
                     name="clt_secret"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.clt_secret}
-                        {...field}
                         fullWidth
                         helperText={errors.clt_secret?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientSecretFieldLabel")}
@@ -445,9 +445,9 @@ export const AccessDetails: React.FC = () => {
                     name="auth_url"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.auth_url}
-                        {...field}
                         fullWidth
                         helperText={errors.auth_url?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.authURLFieldLabel")}
@@ -465,9 +465,9 @@ export const AccessDetails: React.FC = () => {
                     name="token_url"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.token_url}
-                        {...field}
                         fullWidth
                         helperText={errors.token_url?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.tokenURLFieldLabel")}
@@ -485,9 +485,9 @@ export const AccessDetails: React.FC = () => {
                     name="scope"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.scope}
-                        {...field}
                         fullWidth
                         helperText={errors.scope?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.scopeFieldLabel")}
@@ -505,9 +505,9 @@ export const AccessDetails: React.FC = () => {
                     name="polling_interval"
                     render={({ field }) => (
                       <TextField
+                        {...field}
                         className={classes.inputFields}
                         error={!!errors.polling_interval}
-                        {...field}
                         fullWidth
                         helperText={errors.polling_interval?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.pollingIntervalFieldLabel")}
