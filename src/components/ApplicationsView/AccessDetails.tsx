@@ -141,7 +141,7 @@ export const AccessDetails: React.FC = () => {
     if (selectedAuthType === AUTH_TYPES.OAUTH && (
       !getValues("redirect_url") || !getValues("clt_id") ||
       !getValues("clt_secret") || !getValues("auth_url") ||
-      !getValues("token_url")
+      !getValues("token_url") || !getValues("polling_interval")
     )) {
       return true;
     }
@@ -491,6 +491,26 @@ export const AccessDetails: React.FC = () => {
                         fullWidth
                         helperText={errors.scope?.message}
                         label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.scopeFieldLabel")}
+                        margin="dense"
+                        type="text"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </Box>
+
+                <Box>
+                  <Controller
+                    control={control}
+                    name="polling_interval"
+                    render={({ field }) => (
+                      <TextField
+                        className={classes.inputFields}
+                        error={!!errors.polling_interval}
+                        {...field}
+                        fullWidth
+                        helperText={errors.polling_interval?.message}
+                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.pollingIntervalFieldLabel")}
                         margin="dense"
                         type="text"
                         variant="outlined"
