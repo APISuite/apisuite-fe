@@ -15,6 +15,7 @@ import { VALIDATE_ACCESS_DETAILS_ACTION, VALIDATE_ACCESS_DETAILS_ACTION_SUCCESS,
 import { GET_BLUEPRINT_CONFIG, GET_BLUEPRINT_CONFIG_SUCCESS, GET_BLUEPRINT_CONFIG_ERROR } from "./actions/getBlueprintAppConfig";
 import { UPDATE_ACCESS_DETAILS_ACTION, UPDATE_ACCESS_DETAILS_ACTION_ERROR, UPDATE_ACCESS_DETAILS_ACTION_SUCCESS } from "./actions/updateAccessDetails";
 import { GET_BLUEPRINT_DETAILS_ACTION, GET_BLUEPRINT_DETAILS_ACTION_SUCCESS, GET_BLUEPRINT_DETAILS_ACTION_ERROR } from "./actions/getBlueprintDetails";
+import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS } from "./actions/toggleBlueprintAppStatus";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -102,6 +103,13 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
     validated: false,
   },
+
+  toggleBlueprintAppStatus: {
+    isError: false,
+    isRequesting: false,
+  },
+
+  isActive: false,
 
   // App connector configuration data
 
@@ -255,6 +263,8 @@ export default function reducer (
         blueprintConfig: { $set: initialState.blueprintConfig },
         getBlueprintAppConfigStatus: { $set: initialState.getBlueprintAppConfigStatus },
         getBlueprintDetailsStatus: { $set: initialState.getBlueprintDetailsStatus },
+        isActive: { $set: false },
+        toggleBlueprintAppStatus: { $set: initialState.toggleBlueprintAppStatus },
         validateAccessDetailsStatus: { $set: initialState.validateAccessDetailsStatus },
       });
     }
@@ -461,6 +471,35 @@ export default function reducer (
           isError: { $set: true },
           isRequesting: { $set: false },
           validated: { $set: false },
+        },
+      });
+    }
+
+    case TOGGLE_BLUEPRINT_APP_STATUS_ACTION: {
+      return update(state, {
+        toggleBlueprintAppStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: true },
+        },
+      });
+    }
+
+    case TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS: {
+      return update(state, {
+        isActive: { $set: action.isActive },
+
+        toggleBlueprintAppStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: false },
+        },
+      });
+    }
+
+    case TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR: {
+      return update(state, {
+        toggleBlueprintAppStatus: {
+          isError: { $set: true },
+          isRequesting: { $set: false },
         },
       });
     }

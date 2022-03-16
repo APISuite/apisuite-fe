@@ -299,6 +299,20 @@ export type OAuthValidationResponse = {
   data: string,
 }
 
+export type ToggleBlueprintAppStatusAction = {
+  type: typeof TOGGLE_BLUEPRINT_APP_STATUS_ACTION,
+  appStatusData: AppStatusData,
+}
+
+export type ToggleBlueprintAppStatusActionSuccess = {
+  type: typeof TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS,
+  isActive: boolean,
+}
+
+export type ToggleBlueprintAppStatusActionError = {
+  type: typeof TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR,
+}
+
 export type GetBlueprintDetailsAction = {
   type: typeof GET_BLUEPRINT_DETAILS_ACTION,
   blueprintName: string,

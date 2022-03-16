@@ -20,6 +20,8 @@ export interface ApplicationsStore {
   getBlueprintAppConfigStatus: Response & { retrieved: boolean },
   getBlueprintDetailsStatus: Response & { name: string },
   validateAccessDetailsStatus: Response & { validated: boolean },
+  isActive: boolean,
+  toggleBlueprintAppStatus: Response,
 }
 
 export interface AppData {

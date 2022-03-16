@@ -12,7 +12,7 @@ import { clearProps } from "util/clear";
 import { linker } from "util/linker";
 import request from "util/request";
 import { AppData, AppType, BlueprintData } from "./types";
-import { BlueprintAppConfigResponse, CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetBlueprintAppConfigAction, GetUserAppAction, OAuthValidationResponse, RequestAPIAccessAction, TokenValidationResponse, UpdateAppAction, UpdateAccessDetailsAction, UploadAppMediaAction, ValidateAccessDetailsAction, GetBlueprintDetailsAction } from "./actions/types";
+import { BlueprintAppConfigResponse, CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetBlueprintAppConfigAction, GetUserAppAction, OAuthValidationResponse, RequestAPIAccessAction, ToggleBlueprintAppStatusAction, TokenValidationResponse, UpdateAppAction, UpdateAccessDetailsAction, UploadAppMediaAction, ValidateAccessDetailsAction, GetBlueprintDetailsAction } from "./actions/types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { DELETE_APP_MEDIA, deleteAppMediaError, deleteAppMediaSuccess } from "./actions/deleteAppMedia";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
@@ -27,6 +27,7 @@ import { getBlueprintAppConfigError, getBlueprintAppConfigSuccess, GET_BLUEPRINT
 import { validateAccessDetailsActionError, validateAccessDetailsActionSuccess, VALIDATE_ACCESS_DETAILS_ACTION } from "./actions/validateAccessDetails";
 import { updateAccessDetailsActionError, updateAccessDetailsActionSuccess, UPDATE_ACCESS_DETAILS_ACTION } from "./actions/updateAccessDetails";
 import { getBlueprintDetailsActionError, getBlueprintDetailsActionSuccess, GET_BLUEPRINT_DETAILS_ACTION } from "./actions/getBlueprintDetails";
+import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionError, toggleBlueprintAppStatusActionSuccess } from "./actions/toggleBlueprintAppStatus";
 
 const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
 
@@ -394,6 +395,29 @@ export function* updateAccessDetailsActionSaga(action: UpdateAccessDetailsAction
   }
 }
 
+export function* toggleBlueprintAppStatusActionSaga(action: ToggleBlueprintAppStatusAction) {
+  try {
+    const toggleBlueprintAppStatusUrl = `${APP_CONNECTOR_URL}/apps/worker/`;
+
+    yield call(request, {
+      url: toggleBlueprintAppStatusUrl,
+      method: "POST",
+      data: action.appStatusData,
+    });
+
+    yield put(toggleBlueprintAppStatusActionSuccess({ isActive: action.appStatusData.command === "start" }));
+
+    yield put(openNotification("success", i18n.t("applications.toggleBlueprintAppStatusSuccess"), 3000));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(toggleBlueprintAppStatusActionError({}));
+    yield put(openNotification("error", i18n.t("applications.toggleBlueprintAppStatusError"), 3000));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
+
 function* rootSaga() {
   yield takeLatest(CREATE_APP, createAppActionSaga);
   yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
@@ -408,6 +432,7 @@ function* rootSaga() {
   yield takeLatest(GET_BLUEPRINT_DETAILS_ACTION, getBlueprintDetailsActionSaga);
   yield takeLatest(GET_BLUEPRINT_CONFIG, getBlueprintAppConfigActionSaga);
   yield takeLatest(UPDATE_ACCESS_DETAILS_ACTION, updateAccessDetailsActionSaga);
+  yield takeLatest(TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionSaga);
 }
 
 export default rootSaga;

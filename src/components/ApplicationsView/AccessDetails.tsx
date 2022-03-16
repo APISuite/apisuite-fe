@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, Grid, Icon, TextField, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
+import { Box, Grid, Icon, Switch, TextField, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import clsx from "clsx";
 
 import { AppTypesTab } from "pages/AppView/types";
@@ -15,6 +15,7 @@ import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
 import { ActionsFooter, AppContainer, useGetApp } from "./util";
 import useStyles from "./styles";
+import { toggleBlueprintAppStatusAction } from "store/applications/actions/toggleBlueprintAppStatus";
 
 export const AccessDetails: React.FC = () => {
   const classes = useStyles();
@@ -26,7 +27,7 @@ export const AccessDetails: React.FC = () => {
   const dispatch = useDispatch();
 
   const {
-    app, blueprintConfig, getBlueprintAppConfigStatus,
+    app, blueprintConfig, getBlueprintAppConfigStatus, isActive,
     requesting, status, types, validateAccessDetailsStatus,
   } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
@@ -203,6 +204,17 @@ export const AccessDetails: React.FC = () => {
     dispatch(updateAccessDetailsAction({
       newConfig: newConfigDetails,
       originalAppName: blueprintConfig.app_name,
+    }));
+  };
+
+  // "Active app status" logic
+
+  const toggleActiveAppStatus = (isAppActive: boolean) => {
+    dispatch(toggleBlueprintAppStatusAction({
+      appStatusData: {
+        app_name: blueprintConfig.app_name,
+        command: isAppActive ? "start" : "stop",
+      },
     }));
   };
 
@@ -521,6 +533,35 @@ export const AccessDetails: React.FC = () => {
               </Grid>
             )
           }
+
+          <Grid item md={12}>
+            <Box mb={1}>
+              <Typography display="block" gutterBottom variant="h6">
+                {t("dashboardTab.applicationsSubTab.appModal.appStatusTitle")}
+              </Typography>
+            </Box>
+
+            <Box pb={4}>
+              <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                {t("dashboardTab.applicationsSubTab.appModal.appStatusSubtitle")}
+              </Typography>
+            </Box>
+          
+            <Box style={{ alignItems: "center", display: "flex" }}>
+              <Switch
+                checked={isActive}
+                onChange={() => toggleActiveAppStatus(!isActive)}
+                color="primary"
+              />
+              <Typography display="block" style={{ color: palette.text.secondary }} variant="body2">
+                {
+                  isActive
+                    ? t("dashboardTab.applicationsSubTab.appModal.activeApp")
+                    : t("dashboardTab.applicationsSubTab.appModal.inactiveApp")
+                }
+              </Typography>
+            </Box>
+          </Grid>
         </Grid>
 
         <hr className={classes.regularSectionSeparator} />
