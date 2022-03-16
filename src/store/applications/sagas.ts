@@ -362,6 +362,7 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
 
     yield put(getBlueprintAppConfigSuccess({
       config: blueprintConfig,
+      isActive: response.data.workerStatus === "started",
     }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

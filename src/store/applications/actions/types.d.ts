@@ -226,6 +226,7 @@ export type GetBlueprintAppConfigAction = {
 export type GetBlueprintAppConfigActionSuccess = {
   type: typeof GET_BLUEPRINT_CONFIG_SUCCESS,
   config: CurrentBlueprintConfig,
+  isActive: boolean,
 }
 
 export type GetBlueprintAppConfigActionError = {

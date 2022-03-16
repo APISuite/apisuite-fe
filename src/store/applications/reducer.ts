@@ -419,6 +419,8 @@ export default function reducer (
           isRequesting: { $set: false },
           validated: { $set: true },
         },
+
+        isActive: { $set: action.isActive },
       });
     }
 
