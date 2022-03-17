@@ -46,4 +46,7 @@ export type ActionsFooterProps = {
   history: LocationHistory,
   orgId: number,
   tabType: AppTypesTab,
+  altSaveButtonAction?: () => void,
+  altSaveButtonLabel?: string,
+  disableNextButton?: boolean,
 }

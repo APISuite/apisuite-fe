@@ -1,33 +1,35 @@
 import React, { useEffect } from "react";
-import { Box, useTranslation } from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { SideNavForm } from "components/SideNavForm";
+import { Box, useTranslation } from "@apisuite/fe-base";
+
 import {
+  AccessDetails,
   ClientAccess,
   CustomProperties,
   ExternalSettings,
   GeneralSettings,
   MediaFilesLinks,
 } from "components/ApplicationsView";
+import { LoadingView } from "components/InvitationForm/LoadingView";
+import { SideNavForm } from "components/SideNavForm";
+import { AppTypes } from "./types";
+import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { isExtensionActive } from "util/extensions";
 import { typesSelector } from "./selector";
-
 import useStyles from "./styles";
-import { AppTypes } from "./types";
-import { LoadingView } from "components/InvitationForm/LoadingView";
-import { getAppTypes } from "store/applications/actions/getAppTypes";
 
 export const AppView: React.FC = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const active = isExtensionActive("@apisuite/apisuite-marketplace-extension-ui");
+
   const { types } = useSelector(typesSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!types || types.length === 0) {
+    if (!types || types.length === 0) {
       dispatch(getAppTypes({}));
     }
   }, [dispatch, types]);
@@ -74,8 +76,17 @@ export const AppView: React.FC = () => {
     route: `/dashboard/apps/${appId}/type/${typeId}/expert`,
   };
 
+  const BLUEPRINT = {
+    component: AccessDetails,
+    disabled: isNew,
+    label: t("applications.tabs.accessDetails"),
+    path: "/dashboard/apps/:appId/type/:typeId/access",
+    route: `/dashboard/apps/${appId}/type/${typeId}/access`,
+  };
+
   if (type && type.type) {
     const appType = type.type;
+
     if (appType === AppTypes.CLIENT || appType === AppTypes.EXTERNAL || appType === AppTypes.EXPERT) {
       ROUTES.push(CLIENT);
     }
@@ -84,6 +95,9 @@ export const AppView: React.FC = () => {
     }
     if (active && appType === AppTypes.EXPERT) {
       ROUTES.push(EXPERT);
+    }
+    if (appType === AppTypes.BLUEPRINT) {
+      ROUTES.push(BLUEPRINT);
     }
   }
 

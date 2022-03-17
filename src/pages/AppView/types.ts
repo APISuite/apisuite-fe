@@ -2,6 +2,7 @@ export enum AppTypes {
   CLIENT = "client",
   EXTERNAL = "external",
   EXPERT = "expert",
+  BLUEPRINT = "blueprint",
 }
 
 export enum AppTypesTab {
@@ -10,4 +11,5 @@ export enum AppTypesTab {
   CLIENT = "client",
   EXTERNAL = "external",
   EXPERT = "expert",
+  ACCESS_DETAILS = "access",
 }

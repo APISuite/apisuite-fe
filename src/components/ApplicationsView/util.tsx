@@ -5,8 +5,9 @@ import {
   Box, Button, CircularProgress, Container,
   Icon, Typography, useTheme, useTranslation,
 } from "@apisuite/fe-base";
-import adrift from "assets/adrift.svg";
 import clsx from "clsx";
+
+import adrift from "assets/adrift.svg";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
 import { AppData, AppType } from "store/applications/types";
@@ -130,7 +131,7 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
   );
 };
 
-const getAppType = (types: AppType[], typeId: string) => {
+export const getAppType = (types: AppType[], typeId: string) => {
   let type = types[0];
   if (types.length > 1) {
     const fType = types.find((tp) => tp.id.toString() === typeId);
@@ -221,6 +222,9 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
   history,
   orgId,
   tabType,
+  altSaveButtonAction,
+  altSaveButtonLabel,
+  disableNextButton = false,
 }) => {
   const classes = useStyles();
   const { spacing } = useTheme();
@@ -246,7 +250,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
       ...app,
       ...getFormValues(),
     };
-
+    
     dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
   };
 
@@ -257,15 +261,17 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
           color="primary"
           disabled={!hasChanges()}
           disableElevation
-          onClick={_updateApp}
+          onClick={altSaveButtonAction || _updateApp}
           size="large"
           variant="contained"
         >
-          {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
+          {altSaveButtonLabel || t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
         </Button>
+
         {
           !!getNextType(app.appType, tabType) && <Button
             color="primary"
+            disabled={disableNextButton}
             disableElevation
             onClick={() => handleNext(app, tabType, history)}
             size="large"
@@ -275,6 +281,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
             {t("applications.buttons.next")}
           </Button>
         }
+
         {
           !!getPreviousType(app.appType, tabType) && <Button
             color="secondary"

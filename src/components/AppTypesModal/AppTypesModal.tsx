@@ -73,17 +73,21 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
               value={value}
             >
               {
-                types.map((tp, idx) => (
-                  <RadioBox
-                    description={t(`appTypes.modal.${tp.type}App.description`)}
-                    disabled={tp.id === type?.id || false}
-                    key={`apptype-${tp.type}-${idx}`}
-                    isChecked={() => JSON.stringify(tp) === JSON.stringify(value)}
-                    label={t(`appTypes.modal.${tp.type}App.label`)}
-                    onClick={() => setValue(tp)}
-                    value={JSON.stringify(tp)}
-                  />
-                ))
+                types.map((tp, idx) => {
+                  if (tp.type === "blueprint") return;
+                  
+                  return (
+                    <RadioBox
+                      description={t(`appTypes.modal.${tp.type}App.description`)}
+                      disabled={tp.id === type?.id || false}
+                      key={`apptype-${tp.type}-${idx}`}
+                      isChecked={() => JSON.stringify(tp) === JSON.stringify(value)}
+                      label={t(`appTypes.modal.${tp.type}App.label`)}
+                      onClick={() => setValue(tp)}
+                      value={JSON.stringify(tp)}
+                    />
+                  );
+                })
               }
             </RadioGroup>
           </FormControl>
