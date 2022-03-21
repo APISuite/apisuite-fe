@@ -39,10 +39,21 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
   }, [dispatch, types]);
 
   useEffect(() => {
+    const filteredTypes = types.filter((element) => element.type !== "blueprint");
+    if (filteredTypes.length && filteredTypes.length == 1) {
+      setValue(filteredTypes[0]);
+      if (open) {
+        onClick(filteredTypes[0]);
+      }
+    }
+  }, [types, open]);
+
+  useEffect(() => {
     if (type) {
       setValue(type);
     }
   }, [type]);
+
 
   return (
     <Overlay
@@ -75,7 +86,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
               {
                 types.map((tp, idx) => {
                   if (tp.type === "blueprint") return;
-                  
+
                   return (
                     <RadioBox
                       description={t(`appTypes.modal.${tp.type}App.description`)}
