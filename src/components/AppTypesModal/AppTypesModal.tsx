@@ -40,7 +40,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
 
   useEffect(() => {
     const filteredTypes = types.filter((element) => element.type !== "blueprint");
-    if (filteredTypes.length && filteredTypes.length == 1) {
+    if (filteredTypes.length === 1) {
       setValue(filteredTypes[0]);
       if (open) {
         onClick(filteredTypes[0]);
