@@ -401,7 +401,7 @@
           "menuOptions": "Custom property options",
           "menuOptionsEdit": "Edit custom property",
           "menuOptionsDelete": "Delete custom property",
-          "save": "Save",
+          "add": "Add",
           "saveChanges": "Save changes",
           "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
           "subSectionLabelThree": "Redirect URI",
