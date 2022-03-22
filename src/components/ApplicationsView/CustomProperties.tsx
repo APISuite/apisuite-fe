@@ -279,7 +279,7 @@ export const CustomProperties: React.FC = () => {
                   onClick={() => saveMetadata()}
                   variant="contained"
                 >
-                  {t("dashboardTab.applicationsSubTab.appModal.customProps.save")}
+                  {t("dashboardTab.applicationsSubTab.appModal.customProps.add")}
                 </Button>
               </TableCell>
             </TableRow>
