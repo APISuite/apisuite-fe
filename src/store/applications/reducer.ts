@@ -47,6 +47,7 @@ const initialState: ApplicationsStore = {
       type: "client",
       createdAt: "",
       updatedAt: "",
+      enabled: true,
     },
     appTypeId: 0,
   },
@@ -259,7 +260,7 @@ export default function reducer (
         },
 
         // Blueprint apps
-            
+
         blueprintConfig: { $set: initialState.blueprintConfig },
         getBlueprintAppConfigStatus: { $set: initialState.getBlueprintAppConfigStatus },
         getBlueprintDetailsStatus: { $set: initialState.getBlueprintDetailsStatus },
@@ -366,7 +367,7 @@ export default function reducer (
     case GET_BLUEPRINT_DETAILS_ACTION_SUCCESS: {
       return {
         ...state,
-        
+
         currentApp: {
           ...initialState.currentApp,
           description: action.blueprintData.data.description,
@@ -407,7 +408,7 @@ export default function reducer (
     case GET_BLUEPRINT_CONFIG_SUCCESS: {
       return update(state, {
         blueprintConfig: { $set: action.config },
-      
+
         getBlueprintAppConfigStatus: {
           isError: { $set: false },
           isRequesting: { $set: false },

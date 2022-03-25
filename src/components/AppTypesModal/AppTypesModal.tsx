@@ -33,13 +33,11 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
   };
 
   useEffect(() => {
-    if (!types.length) {
-      dispatch(getAppTypes({}));
-    }
-  }, [dispatch, types]);
+    dispatch(getAppTypes({}));
+  });
 
   useEffect(() => {
-    const filteredTypes = types.filter((element) => element.type !== "blueprint");
+    const filteredTypes = types.filter((element) => element.type !== "blueprint" && (element.type === "client" || element.enabled));
     if (filteredTypes.length === 1) {
       setValue(filteredTypes[0]);
       if (open) {
@@ -86,7 +84,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
               {
                 types.map((tp, idx) => {
                   if (tp.type === "blueprint") return;
-
+                  if (tp.type !== "client" && !tp.enabled) return;
                   return (
                     <RadioBox
                       description={t(`appTypes.modal.${tp.type}App.description`)}

@@ -126,6 +126,7 @@ export type UpdateAppActionData = AppData
 export interface AppType {
   id: number,
   type: string,
+  enabled: boolean,
 }
 
 export interface AppStatusData {
