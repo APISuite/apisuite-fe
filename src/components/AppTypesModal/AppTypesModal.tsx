@@ -84,7 +84,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
               {
                 types.map((tp, idx) => {
                   if (tp.type === "blueprint") return;
-                  if (tp.type !== "client" && !tp.enabled ) return;
+                  if (tp.type !== "client" && !tp.enabled) return;
                   return (
                     <RadioBox
                       description={t(`appTypes.modal.${tp.type}App.description`)}
