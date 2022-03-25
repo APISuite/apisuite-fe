@@ -158,7 +158,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           /^(\/|http)/.test(action) &&
           action !== DefaultDocsAndSupport.documentation &&
           action !== DefaultDocsAndSupport.support && (
-            <Link to={action} style={{ textDecoration: "none" }}>
+            <Link to={action} style={{ textDecoration: "none", color: (!expand && subTab ? palette.text.primary : palette.secondary.contrastText)}}>
               {LabelComponent}
             </Link>
           )
