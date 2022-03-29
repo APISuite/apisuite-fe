@@ -33,8 +33,8 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
   };
 
   useEffect(() => {
-    dispatch(getAppTypes({}));
-  });
+    if (open) dispatch(getAppTypes({}));
+  }, [open]);
 
   useEffect(() => {
     const filteredTypes = types.filter((element) => element.type !== "blueprint" && (element.type === "client" || element.enabled));
