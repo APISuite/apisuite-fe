@@ -23,7 +23,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
   const dispatch = useDispatch();
   const { types } = useSelector(typesSelector);
   const [value, setValue] = useState<AppType | null>(type || null);
-  const [localOpen, setOpen] = useState<boolean>(false);
+  const [localOpen, setLocalOpen] = useState<boolean>(false);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(JSON.parse(event.target.value) as AppType);
   };
@@ -35,7 +35,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
     if (open) {
       dispatch(getAppTypes({}));
     } else {
-      setOpen(false);
+      setLocalOpen(false);
     }
   }, [open]);
 
@@ -47,7 +47,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
         onClick(filteredTypes[0]);
       }
     } else {
-      setOpen(open);
+      setLocalOpen(open);
     }
   }, [types]);
 
