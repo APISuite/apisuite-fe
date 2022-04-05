@@ -23,7 +23,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
   const dispatch = useDispatch();
   const { types } = useSelector(typesSelector);
   const [value, setValue] = useState<AppType | null>(type || null);
-
+  const [localOpen, setLocalOpen] = useState<boolean>(false);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(JSON.parse(event.target.value) as AppType);
   };
@@ -31,9 +31,12 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
   const resetValue = () => {
     setValue(type || null);
   };
-
   useEffect(() => {
-    if (open) dispatch(getAppTypes({}));
+    if (open) {
+      dispatch(getAppTypes({}));
+    } else {
+      setLocalOpen(false);
+    }
   }, [open]);
 
   useEffect(() => {
@@ -43,8 +46,10 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
       if (open) {
         onClick(filteredTypes[0]);
       }
+    } else {
+      setLocalOpen(open);
     }
-  }, [types, open]);
+  }, [types]);
 
   useEffect(() => {
     if (type) {
@@ -55,7 +60,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
 
   return (
     <Overlay
-      open={open}
+      open={localOpen}
       showLogo={showLogo}
       title={title}
       onClose={() => {
