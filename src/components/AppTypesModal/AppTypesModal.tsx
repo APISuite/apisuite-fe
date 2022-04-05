@@ -82,7 +82,7 @@ export const AppTypesModal: React.FC<AppTypesModalProps> = ({
               onChange={handleChange}
               style={{
                 flexDirection: "row",
-                justifyContent: "space-between",
+                justifyContent: "flex-start",
               }}
               value={value}
             >
