@@ -6,6 +6,7 @@ import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 import { requestAPIAccess } from "store/applications/actions/requestApiAccess";
+import { revokeAPIAccess } from "store/applications/actions/revokeApiAccess";
 import { AppData } from "store/applications/types";
 import { apisAndAppsSelector } from "pages/Subscriptions/selectors";
 
@@ -98,6 +99,11 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
 
   const handleAPIProductAccessRequest = () => {
     dispatch(requestAPIAccess({ orgID: selectedClientApp.orgId, appId: Number(selectedClientApp.id) }));
+    resetModalSelections();
+  };
+
+  const handleAPIProductAccessRevokeRequest = () => {
+    dispatch(revokeAPIAccess({ orgID: selectedClientApp.orgId, appId: Number(selectedClientApp.id) }));
     resetModalSelections();
   };
 
@@ -304,11 +310,17 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                   color="primary"
                   size="large"
                   disableElevation
-                  disabled={!!selectedClientApp.subscriptions.length || !selectedClientApp.id}
-                  onClick={handleAPIProductAccessRequest}
+                  disabled={!selectedClientApp.id}
+                  onClick={selectedClientApp.subscriptions.length ?
+                    handleAPIProductAccessRevokeRequest
+                    :
+                    handleAPIProductAccessRequest}
                 >
                   {
-                    t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess")
+                    selectedClientApp.subscriptions.length ?
+                      t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess")
+                      :
+                      t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess")
                   }
                 </Button>
 
