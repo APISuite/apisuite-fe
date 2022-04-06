@@ -9,6 +9,7 @@ import profile from "./profile/sagas";
 import security from "./security/sagas";
 import subscriptions from "./subscriptions/sagas";
 import markdownPages from "./markdownPages/sagas";
+import media from "./media/sagas";
 
 const sagas = [
   apiDetails,
@@ -18,6 +19,7 @@ const sagas = [
   security,
   subscriptions,
   markdownPages,
+  media,
 ];
 
 export default sagas;

@@ -7,12 +7,21 @@ export interface Response {
 }
 
 export interface ApplicationsStore {
-  createAppStatus: Response,
+  createAppStatus: Response & { id: number },
   currentApp: AppData,
   deleteAppStatus: Response,
+  getApp: Response & { id: number },
   requestingAPIAccessStatus: Response,
+  types: AppType[],
   updateAppStatus: Response,
   userApps: AppData[],
+  // Blueprint-related data
+  blueprintConfig: CurrentBlueprintConfig,
+  getBlueprintAppConfigStatus: Response & { retrieved: boolean },
+  getBlueprintDetailsStatus: Response & { name: string },
+  validateAccessDetailsStatus: Response & { validated: boolean },
+  isActive: boolean,
+  toggleBlueprintAppStatus: Response,
 }
 
 export interface AppData {
@@ -25,10 +34,10 @@ export interface AppData {
   labels: string[],
   logo: string,
   name: string,
-  orgId: string,
+  orgId: number,
   privacyUrl: string,
   redirectUrl: string,
-  summary: string,
+  shortDescription: string,
   subscriptions: any[],
   supportUrl: string,
   tosUrl: string,
@@ -36,8 +45,26 @@ export interface AppData {
   visibility: string,
   websiteUrl: string,
   youtubeUrl: string,
-  media: string[],
+  images: string[],
   metadata: Metadata[],
+  appType: AppType & {
+    createdAt: string,
+    updatedAt: string,
+  },
+  appTypeId?: number,
+}
+
+export interface BlueprintData {
+  data: {
+    appLink: string,
+    appName: string,
+    configuration: Record<string, unknown>,
+    description: string,
+    id: number,
+    labels: string[],
+    logo: string,
+    overview: string,
+  },
 }
 
 export interface Metadata {
@@ -45,6 +72,25 @@ export interface Metadata {
   value: string,
   title: string,
   description: string,
+}
+
+export interface CurrentBlueprintConfig {
+  app_conf: {
+    auth_url: string,
+    clt_id: string,
+    clt_secret: string,
+    conn_auth_type: string,
+    redirect_url: string,
+    scope: string,
+    token_url: string,
+    token: string,
+  },
+  app_id: number,
+  app_method: string,
+  app_name: string,
+  app_url: string,
+  auth_type: string,
+  polling_interval: string,
 }
 
 export interface ModalDetails {
@@ -65,39 +111,25 @@ export interface ApplicationsProps {
   },
   createAppStatus: boolean,
   deleteAppStatus: boolean,
-  getAllUserAppsAction: (orgID: string) => void,
+  getAllUserAppsAction: (orgID: number) => void,
   requestAPIAccessStatus: boolean,
   updateAppStatus: boolean,
   user: User,
 }
 
-export interface CreateAppActionData {
-  description: string,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  summary: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
+export type CreateAppActionData = AppData
+
+export type CreateBlueprintAppActionData = BlueprintData
+
+export type UpdateAppActionData = AppData
+
+export interface AppType {
+  id: number,
+  type: string,
+  enabled: boolean,
 }
 
-export interface UpdateAppActionData {
-  description: string,
-  id: number,
-  labels: string[],
-  logo: string,
-  metadata: Metadata[],
-  name: string,
-  privacyUrl: string,
-  redirectUrl: string,
-  summary: string,
-  supportUrl: string,
-  tosUrl: string,
-  websiteUrl: string,
-  youtubeUrl: string,
+export interface AppStatusData {
+  app_name: string,
+  command: "start" | "stop",
 }

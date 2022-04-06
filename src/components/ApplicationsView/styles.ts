@@ -706,4 +706,42 @@ export default makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.main,
     },
   },
+
+  centerContent: {
+    alignItems: "center",
+    color: theme.palette.grey[400],
+    display: "flex",
+    flexDirection: "column",
+    fontWeight: 300,
+    height: 200,
+    justifyContent: "space-evenly",
+  },
+
+  loading: {
+    color: theme.palette.secondary.main,
+  },
+
+  // 'Blueprint' app type styles
+
+  selectedAuthType: {
+    alignItems: "center",
+    color: theme.palette.info.main,
+    display: "flex",
+
+    "& > span": {
+      marginRight: theme.spacing(1),
+    },
+  },
+
+  authType: {
+    alignItems: "center",
+    color: theme.palette.text.primary,
+    cursor: "pointer",
+    display: "flex",
+
+    "& > span": {
+      color: theme.palette.grey[300],
+      marginRight: theme.spacing(1),
+    },
+  },
 }));

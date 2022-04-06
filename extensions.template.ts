@@ -1,10 +1,10 @@
-import { Extension as ExtensionV1 } from '@apisuite/extension-ui-types/v1'
+import { Extension as ExtensionV1 } from "@apisuite/extension-ui-types/v1";
 // EXTENSIONS-IMPORT-PLACEHOLDER
 
 type RegistryEntry = ExtensionV1[]
 
 const registry: RegistryEntry = [
   // EXTENSIONS-REGISTRATION-PLACEHOLDER
-].filter(Boolean)
+].filter(Boolean);
 
-export default registry
+export default registry;

@@ -6,11 +6,11 @@ import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 import { requestAPIAccess } from "store/applications/actions/requestApiAccess";
+import { AppData } from "store/applications/types";
 import { apisAndAppsSelector } from "pages/Subscriptions/selectors";
 
 import { SubscriptionsModalProps } from "./types";
 import useStyles from "./styles";
-import { Logo } from "components/Logo";
 import Notice from "components/Notice";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const { t } = useTranslation();
-  const { portalName, ownerInfo, clientName, navigation } = useConfig();
+  const { clientName } = useConfig();
   const { apps, apis } = useSelector(apisAndAppsSelector);
 
   /* Redirection from the 'Applications modal' */
@@ -37,10 +37,10 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     clientSecret: "",
     createdAt: "",
     description: "",
-    id: "",
+    id: -1,
     logo: "",
     name: "",
-    orgId: "",
+    orgId: -1,
     privacyUrl: "",
     redirectUrl: "",
     summary: "",
@@ -50,6 +50,12 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     updatedAt: "",
     websiteUrl: "",
     youtubeUrl: "",
+    appType: {
+      id: 0,
+      type: "client",
+      createdAt: "",
+      updatedAt: "",
+    },
   };
 
   const [selectedClientApp, setSelectedClientApp] = React.useState(
@@ -66,7 +72,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     !!appFromRedirect || apps.length === 1
   );
 
-  const handleClientAppSelection = (dataOfSelectedApp: any) => {
+  const handleClientAppSelection = (dataOfSelectedApp: AppData) => {
     setSelectedClientApp(dataOfSelectedApp);
     setIsClientAppSelected(true);
   };
@@ -104,14 +110,6 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
         <div className={classes.modalContentsContainer}>
           {/* Modal header */}
           <div className={classes.modalHeaderContainer}>
-            <div className={classes.logoAndNameContainer}>
-              <Logo src={ownerInfo.logo} icon={navigation.title.iconFallbackName} />
-
-              <Typography variant="h3">
-                {portalName}
-              </Typography>
-            </div>
-
             <div
               className={classes.closeModalButtonContainer}
               onClick={resetModalSelections}
@@ -165,7 +163,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                   displayEmpty
                   IconComponent={ExpandMoreRoundedIcon}
                   value={
-                    selectedClientApp.id === ""
+                    selectedClientApp.id < 0
                       ? ""
                       : selectedClientApp.name
                   }
@@ -335,7 +333,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                       textDecoration: "none",
                     }}
                     to={{
-                      pathname: `/dashboard/apps/${selectedClientApp.id}`,
+                      pathname: `/dashboard/apps/${selectedClientApp.id}/type/${selectedClientApp.appType.id || 1}/general`,
                       state: {
                         redirected: true,
                         appID: selectedClientApp.id,

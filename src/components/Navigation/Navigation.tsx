@@ -11,15 +11,17 @@ import { Logo } from "components/Logo";
 
 import { navigationSelector } from "./selector";
 import { NavigationProps } from "./types";
+import { DefaultDocsAndSupport } from "./constants";
 
 export const Navigation: React.FC<NavigationProps> = ({ contractible = false, className, ...rest }) => {
   const dispatch = useDispatch();
   const { palette, zIndex, spacing } = useTheme();
-  const { navigation, portalName, ownerInfo } = useConfig();
+  const { navigation, portalName, ownerInfo, documentationURL, supportURL } = useConfig();
+
   const { t } = useTranslation();
   const { user, currentOrg } = useSelector(navigationSelector);
   // FIXME: checking the id because profile is never undefined
-  const role = currentOrg?.role?.id ? currentOrg.role.name : user.id ? ROLES.baseUser.value : "anonymous";
+  const role = currentOrg?.role?.id > -1 ? currentOrg.role.name : user.id > -1 ? ROLES.baseUser.value : "anonymous";
 
   const [isMaxWidth, setIsMaxWidth] = useState(window.innerWidth <= 1024);
 
@@ -136,12 +138,31 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         style={adjustTop ? { transform: "translateY(-2px)" } : undefined}
         color={!expand && subTab ? palette.text.primary : palette.secondary.contrastText}
       >
+        {/* Handling of 'Documentation' and 'Support' tabs, which might point to external links */}
+        {
+          action === DefaultDocsAndSupport.documentation &&
+            <Link to={documentationURL || DefaultDocsAndSupport.documentation} style={{ textDecoration: "none" }}>
+              {LabelComponent}
+            </Link>
+        }
+
+        {
+          action === DefaultDocsAndSupport.support &&
+            <Link to={supportURL || DefaultDocsAndSupport.support} style={{ textDecoration: "none" }}>
+              {LabelComponent}
+            </Link>
+        }
+
         {/* routing actions - starts with `/` or `http` */}
-        {/^(\/|http)/.test(action) && (
-          <Link to={action} style={{ textDecoration: "none" }}>
-            {LabelComponent}
-          </Link>
-        )}
+        {
+          /^(\/|http)/.test(action) &&
+          action !== DefaultDocsAndSupport.documentation &&
+          action !== DefaultDocsAndSupport.support && (
+            <Link to={action} style={{ textDecoration: "none", color: (!expand && subTab ? palette.text.primary : palette.secondary.contrastText)}}>
+              {LabelComponent}
+            </Link>
+          )
+        }
 
         {/* hook actions - first condition is to be taken as explicit */}
         {action.startsWith("$") && actions.hasOwnProperty(action) && (
@@ -194,10 +215,9 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         display="flex"
         flexDirection="row"
         flexWrap="nowrap"
-        pt={expand ? 2 : undefined}
         style={{
-          marginLeft: !isMaxWidth ? spacing(6) : spacing(4),
-          marginRight: !isMaxWidth ? spacing(6) : spacing(4),
+          margin: spacing("auto", !isMaxWidth ? 6 : 4),
+          padding: expand ? spacing(2, 0, 1.625, 0) : undefined,
         }}
       >
         {/* Logo & Title */}

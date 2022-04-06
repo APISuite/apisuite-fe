@@ -7,6 +7,7 @@ import { NotificationStackStore } from "./notificationStack/types";
 import { ProfileStore } from "store/profile/types";
 import { SubscriptionsStore } from "./subscriptions/types";
 import { MarkdownPageStore } from "./markdownPages/types";
+import { MediaStore } from "./media/types";
 
 export interface Store {
   apiDetails: APIVersionStore,
@@ -19,4 +20,5 @@ export interface Store {
   profile: ProfileStore,
   register: any,
   subscriptions: SubscriptionsStore,
+  media: MediaStore,
 }

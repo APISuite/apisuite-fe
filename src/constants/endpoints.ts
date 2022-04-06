@@ -17,3 +17,6 @@ function getApiUrl () {
 
 export const API_URL = getApiUrl();
 export const INFORM_URL = process.env.INFORM_URL || "";
+
+export const APP_CONNECTOR_URL = "https://appconnector.proxy.apisuite.io";
+export const BLUEPRINT_APPS_URL = "https://blueprints.apisuite.io/blueprints";

@@ -1,1 +1,0 @@
-export { ApplicationsModal } from "./ApplicationsModal";

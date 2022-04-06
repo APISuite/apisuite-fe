@@ -1,9 +1,9 @@
 import { createSelector } from "reselect";
 import { Store } from "store/types";
 
-export const applicationsModalSelector = createSelector(
+export const typesSelector = createSelector(
   ({ applications }: Store) => applications,
   (applications) => {
-    return { mostRecentlySelectedAppDetails: applications.currentApp };
+    return { types: applications.types };
   },
 );

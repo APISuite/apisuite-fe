@@ -1,5 +1,5 @@
 export type GetMarkdownPageResponse = {
-  id: string,
+  id: number,
   locale: string,
   content: string,
   updatedAt: string,
