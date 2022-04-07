@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select, Typography, Icon, Box, Grid, useTheme } from "@apisuite/fe-base";
-import CheckBoxOutlineBlankRoundedIcon from "@material-ui/icons/CheckBoxOutlineBlankRounded";
+
 import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
@@ -78,20 +78,12 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     setIsClientAppSelected(true);
   };
 
-  /* 'API product' selection */
-
-  const [isAPIProductSelected, setIsAPIProductSelected] = React.useState(
-    new Array(apis.length).fill(true),
-  );
 
   /* Selections reset */
 
   const resetModalSelections = () => {
     setSelectedClientApp(initialClientApp);
     setIsClientAppSelected(false);
-
-    setIsAPIProductSelected(new Array(apis.length).fill(true));
-
     toggleModal();
   };
 
@@ -287,11 +279,6 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                                 </Typography>
 
                                 <Box ml={1.5}>
-                                  {/*
-                                    isAPIProductSelected[index]
-                                      ? <CheckBoxRoundedIcon className={classes.selectedAPIProduct} />
-                                      : <CheckBoxOutlineBlankRoundedIcon className={classes.notSelectedAPIProduct} />
-                                  */}
                                   <CheckBoxRoundedIcon className={classes.selectedAPIProduct} />
                                 </Box>
                               </div>
