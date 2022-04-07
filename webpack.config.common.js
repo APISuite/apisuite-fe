@@ -8,10 +8,28 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const autoprefixer = require("autoprefixer");
 const dotenv = require("dotenv");
 const webpack = require("webpack");
-
+const envConf = dotenv.config().parsed;
+const portalConf = (envConf.PORTAL_CONFIGURATION && JSON.parse(envConf.PORTAL_CONFIGURATION)) || {};
+delete envConf.PORTAL_CONFIGURATION;
+const defaultPortalConf = {
+  title:"API Suite - Portal",
+  ...portalConf,
+  meta: {
+    title: "API Suite",
+    description: "Your very own self-service API integrations ecosystem",
+    "og:type" : "website",
+    "og:url" : "https://cloudoki.com/",
+    "og:title" : "API Suite",
+    "og:description" : "Your very own self-service API integrations ecosystem",
+    "twitter:card": "summary_large_image",
+    "twitter:url":"https://apisuite.io/",
+    "twitter:title":"API Suite",
+    ...portalConf.meta,
+  },
+  template: path.resolve(__dirname, "src", "index.html"),
+};
 module.exports = {
   entry: path.resolve(__dirname, "src", "index"),
-
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
@@ -59,12 +77,12 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(dotenv.config().parsed),
+      "process.env": JSON.stringify(envConf),
     }),
     new webpack.ProvidePlugin({
       Buffer: ["buffer", "Buffer"],
     }),
-    new HtmlWebpackPlugin({ template: path.resolve(__dirname, "src", "index.html") }),
+    new HtmlWebpackPlugin(defaultPortalConf),
     new MiniCssExtractPlugin({ filename: "[name]-[contenthash].css" }),
   ],
 
