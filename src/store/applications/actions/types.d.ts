@@ -9,6 +9,11 @@ import { AppData, AppType, BlueprintData, CreateAppActionData, CurrentBlueprintC
 import { UPLOAD_APP_MEDIA, UPLOAD_APP_MEDIA_ERROR, UPLOAD_APP_MEDIA_SUCCESS } from "./appMediaUpload";
 import { DELETE_APP_MEDIA, DELETE_APP_MEDIA_ERROR, DELETE_APP_MEDIA_SUCCESS } from "./deleteAppMedia";
 import { GET_APP_TYPES, GET_APP_TYPES_ERROR, GET_APP_TYPES_SUCCESS } from "./getAppTypes";
+import {
+  REVOKE_API_ACCESS,
+  REVOKE_API_ACCESS_ERROR,
+  REVOKE_API_ACCESS_SUCCESS,
+} from "store/applications/actions/revokeApiAccess";
 
 export type ApplicationsActions = CreateAppAction |
 CreateAppActionSuccess |
@@ -22,6 +27,9 @@ GetAllUserAppsActionError |
 GetUserAppAction |
 GetUserAppActionSuccess |
 GetUserAppActionError |
+RevokeAPIAccessAction |
+RevokeAPIAccessActionSuccess |
+RevokeAPIAccessActionError |
 RequestAPIAccessAction |
 RequestAPIAccessActionSuccess |
 RequestAPIAccessActionError |
@@ -118,6 +126,20 @@ export type RequestAPIAccessActionSuccess = {
 
 export type RequestAPIAccessActionError = {
   type: typeof REQUEST_API_ACCESS_ERROR,
+}
+
+export type RevokeAPIAccessAction = {
+  type: typeof REVOKE_API_ACCESS,
+  orgID: number,
+  appId: number,
+}
+
+export type RevokeAPIAccessActionSuccess = {
+  type: typeof REVOKE_API_ACCESS_SUCCESS,
+}
+
+export type RevokeAPIAccessActionError = {
+  type: typeof REVOKE_API_ACCESS_ERROR,
 }
 
 export type GetUserAppAction = {

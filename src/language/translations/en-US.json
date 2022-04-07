@@ -292,6 +292,7 @@
           },
           "buttons": {
             "requestAccess": "Request access",
+            "revokeAccess": "Revoke access",
             "reviewOrganisation": "Review organisation",
             "reviewApp": "Review app",
             "cancel": "Cancel"
@@ -739,6 +740,8 @@
     },
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access.",
+    "revokeAPIAcessSuccess": "Access revoked successfully.",
+    "revokeAPIAcessError": "Failed to revoke access.",
     "validateAcessDetailsSuccess": "The provided details have been successfully validated!",
     "validateAcessDetailsError": "Failed to validate the provided details.",
     "updateAcessDetailsSuccess": "The provided details have been successfully updated!",

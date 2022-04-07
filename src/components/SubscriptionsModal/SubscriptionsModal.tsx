@@ -1,11 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select, Typography, Icon, Box, Grid, useTheme } from "@apisuite/fe-base";
-import CheckBoxOutlineBlankRoundedIcon from "@material-ui/icons/CheckBoxOutlineBlankRounded";
+
 import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 import { requestAPIAccess } from "store/applications/actions/requestApiAccess";
+import { revokeAPIAccess } from "store/applications/actions/revokeApiAccess";
 import { AppData } from "store/applications/types";
 import { apisAndAppsSelector } from "pages/Subscriptions/selectors";
 
@@ -77,20 +78,12 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     setIsClientAppSelected(true);
   };
 
-  /* 'API product' selection */
-
-  const [isAPIProductSelected, setIsAPIProductSelected] = React.useState(
-    new Array(apis.length).fill(true),
-  );
 
   /* Selections reset */
 
   const resetModalSelections = () => {
     setSelectedClientApp(initialClientApp);
     setIsClientAppSelected(false);
-
-    setIsAPIProductSelected(new Array(apis.length).fill(true));
-
     toggleModal();
   };
 
@@ -98,6 +91,11 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
 
   const handleAPIProductAccessRequest = () => {
     dispatch(requestAPIAccess({ orgID: selectedClientApp.orgId, appId: Number(selectedClientApp.id) }));
+    resetModalSelections();
+  };
+
+  const handleAPIProductAccessRevokeRequest = () => {
+    dispatch(revokeAPIAccess({ orgID: selectedClientApp.orgId, appId: Number(selectedClientApp.id) }));
     resetModalSelections();
   };
 
@@ -192,18 +190,26 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                 </Select>
               </div>
 
-              <div className={classes.clientAppNotificationContainer}>
+              <div className={classes.clientAppNotificationContainer} >
                 {/* TODO: bring back warning colors and icon */}
                 <Notice
-                  noticeIcon={<Icon>info</Icon>}
+                  noticeIcon={!selectedClientApp.subscriptions.length ?
+                    (<Icon>info</Icon>) :
+                    (<Icon>report_problem</Icon>)
+                  }
                   noticeText={
-                    <Typography variant="body2" style={{ color: palette.info.contrastText }}>
+                    <Typography variant="body2" style={{ color: (
+                      !selectedClientApp.subscriptions.length
+                        ? palette.info.contrastText
+                        : palette.warning.contrastText
+                    )}}>
                       {t(
                         !selectedClientApp.subscriptions.length ? "dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationText" : "dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText",
                         { clientName },
-                      )}
+                      )}  q
                     </Typography>
                   }
+                  type={!selectedClientApp.subscriptions.length  ? "info" : "warning"}
                 />
               </div>
             </div>
@@ -273,11 +279,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                                 </Typography>
 
                                 <Box ml={1.5}>
-                                  {
-                                    isAPIProductSelected[index]
-                                      ? <CheckBoxRoundedIcon className={classes.selectedAPIProduct} />
-                                      : <CheckBoxOutlineBlankRoundedIcon className={classes.notSelectedAPIProduct} />
-                                  }
+                                  <CheckBoxRoundedIcon className={classes.selectedAPIProduct} />
                                 </Box>
                               </div>
                             </div>
@@ -301,14 +303,25 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
               <Grid item md={10}>
                 <Button
                   variant="contained"
-                  color="primary"
+                  style={{ color: palette.common.white,
+                    backgroundColor: (
+                      selectedClientApp.subscriptions.length
+                        ? palette.warning.main
+                        : palette.primary.main
+                    )}}
                   size="large"
                   disableElevation
-                  disabled={!!selectedClientApp.subscriptions.length || !selectedClientApp.id}
-                  onClick={handleAPIProductAccessRequest}
+                  disabled={!selectedClientApp.id}
+                  onClick={selectedClientApp.subscriptions.length ?
+                    handleAPIProductAccessRevokeRequest
+                    :
+                    handleAPIProductAccessRequest}
                 >
                   {
-                    t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess")
+                    selectedClientApp.subscriptions.length ?
+                      t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess")
+                      :
+                      t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess")
                   }
                 </Button>
 

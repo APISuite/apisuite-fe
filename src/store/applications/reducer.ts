@@ -16,6 +16,11 @@ import { GET_BLUEPRINT_CONFIG, GET_BLUEPRINT_CONFIG_SUCCESS, GET_BLUEPRINT_CONFI
 import { UPDATE_ACCESS_DETAILS_ACTION, UPDATE_ACCESS_DETAILS_ACTION_ERROR, UPDATE_ACCESS_DETAILS_ACTION_SUCCESS } from "./actions/updateAccessDetails";
 import { GET_BLUEPRINT_DETAILS_ACTION, GET_BLUEPRINT_DETAILS_ACTION_SUCCESS, GET_BLUEPRINT_DETAILS_ACTION_ERROR } from "./actions/getBlueprintDetails";
 import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_ERROR, TOGGLE_BLUEPRINT_APP_STATUS_ACTION_SUCCESS } from "./actions/toggleBlueprintAppStatus";
+import {
+  REVOKE_API_ACCESS,
+  REVOKE_API_ACCESS_ERROR,
+  REVOKE_API_ACCESS_SUCCESS,
+} from "store/applications/actions/revokeApiAccess";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -270,6 +275,7 @@ export default function reducer (
       });
     }
 
+    case REVOKE_API_ACCESS:
     case REQUEST_API_ACCESS: {
       return update(state, {
         requestingAPIAccessStatus: {
@@ -279,6 +285,7 @@ export default function reducer (
       });
     }
 
+    case REVOKE_API_ACCESS_SUCCESS:
     case REQUEST_API_ACCESS_SUCCESS: {
       return update(state, {
         requestingAPIAccessStatus: {
@@ -287,6 +294,7 @@ export default function reducer (
       });
     }
 
+    case REVOKE_API_ACCESS_ERROR:
     case REQUEST_API_ACCESS_ERROR: {
       return update(state, {
         requestingAPIAccessStatus: {

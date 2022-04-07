@@ -12,7 +12,25 @@ import { clearProps } from "util/clear";
 import { linker } from "util/linker";
 import request from "util/request";
 import { AppData, AppType, BlueprintData } from "./types";
-import { BlueprintAppConfigResponse, CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetBlueprintAppConfigAction, GetUserAppAction, OAuthValidationResponse, RequestAPIAccessAction, ToggleBlueprintAppStatusAction, TokenValidationResponse, UpdateAppAction, UpdateAccessDetailsAction, UploadAppMediaAction, ValidateAccessDetailsAction, GetBlueprintDetailsAction } from "./actions/types";
+import {
+  BlueprintAppConfigResponse,
+  CreateAppAction,
+  DeleteAppAction,
+  DeleteAppMediaAction,
+  GetAllUserAppsAction,
+  GetBlueprintAppConfigAction,
+  GetUserAppAction,
+  OAuthValidationResponse,
+  RequestAPIAccessAction,
+  ToggleBlueprintAppStatusAction,
+  TokenValidationResponse,
+  UpdateAppAction,
+  UpdateAccessDetailsAction,
+  UploadAppMediaAction,
+  ValidateAccessDetailsAction,
+  GetBlueprintDetailsAction,
+  RevokeAPIAccessAction,
+} from "./actions/types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { DELETE_APP_MEDIA, deleteAppMediaError, deleteAppMediaSuccess } from "./actions/deleteAppMedia";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
@@ -20,6 +38,7 @@ import { GET_ALL_USER_APPS, getAllUserApps, getAllUserAppsError, getAllUserAppsS
 import { GET_USER_APP, getUserAppError, getUserAppSuccess } from "./actions/getUserApp";
 import { getAppTypesError, getAppTypesSuccess, GET_APP_TYPES } from "./actions/getAppTypes";
 import { REQUEST_API_ACCESS, requestAPIAccessError, requestAPIAccessSuccess } from "./actions/requestApiAccess";
+import { REVOKE_API_ACCESS, revokeAPIAccessError, revokeAPIAccessSuccess } from "./actions/revokeApiAccess";
 import { UPDATE_APP, updateAppError, updateAppSuccess } from "./actions/updatedApp";
 import { UPLOAD_APP_MEDIA, uploadAppMediaError, uploadAppMediaSuccess } from "./actions/appMediaUpload";
 import { UploadResponse } from "./actions/types";
@@ -125,6 +144,37 @@ export function* deleteAppActionSaga(action: DeleteAppAction) {
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }
+  }
+}
+
+export function* revokeAPIAccessActionSaga(action: RevokeAPIAccessAction) {
+  try {
+    const revokeAPIAccessUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}/revoke`;
+
+    const accessToken: string = yield select((state: Store) => state.auth.authToken);
+
+    yield call(request, {
+      url: revokeAPIAccessUrl,
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "x-access-token": accessToken,
+      },
+    });
+
+    yield put(revokeAPIAccessSuccess({}));
+    yield put(openNotification("success", i18n.t("applications.revokeAPIAcessSuccess"), 3000));
+
+    /* We need to retrieve the user"s apps after the above request, as we want up-to-date
+    info on every app"s "Request access" status. */
+    yield put(getAllUserApps({ orgID: action.orgID }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    yield put(revokeAPIAccessError({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+    yield put(openNotification("error", i18n.t("applications.revokeAPIAcessError"), 3000));
   }
 }
 
@@ -427,6 +477,7 @@ function* rootSaga() {
   yield takeLatest(GET_APP_TYPES, getAppTypesActionSaga);
   yield takeLatest(GET_USER_APP, getUserAppActionSaga);
   yield takeLatest(REQUEST_API_ACCESS, requestAPIAccessActionSaga);
+  yield takeLatest(REVOKE_API_ACCESS, revokeAPIAccessActionSaga);
   yield takeLatest(UPDATE_APP, updateAppActionSaga);
   yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
   yield takeLatest(VALIDATE_ACCESS_DETAILS_ACTION, validateAccessDetailsActionSaga);
