@@ -5,7 +5,7 @@ ARG SSH_PRIVATE_KEY
 
 WORKDIR /build
 COPY . /build
-RUN apk update && apk add git openssh &&\
+RUN apk update && apk add git openssh python make g++ &&\
     mkdir /root/.ssh/ &&\
     echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa &&\
     chmod 600 /root/.ssh/id_rsa &&\
