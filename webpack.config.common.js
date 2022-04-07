@@ -28,8 +28,6 @@ const defaultPortalConf = {
   },
   template: path.resolve(__dirname, "src", "index.html"),
 };
-
-console.log(defaultPortalConf);
 module.exports = {
   entry: path.resolve(__dirname, "src", "index"),
   output: {
