@@ -821,7 +821,7 @@
       },
       "connectorApp": {
         "description": "Configure a connection between an external integration and your own products.",
-        "label": "Connector Application"
+        "label": "Connector app"
       },
       "clientApp": {
         "description": "Create a default client app for API access with OAuth2.0 credentials.",
