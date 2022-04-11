@@ -820,7 +820,7 @@
         "label": "Blueprint Application"
       },
       "connectorApp": {
-        "description": "Create an app with App Connector features.",
+        "description": "Configure a connection between an external integration and your own products.",
         "label": "Connector Application"
       },
       "clientApp": {
