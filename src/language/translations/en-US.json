@@ -391,6 +391,25 @@
           "tokenURLFieldLabel": "Token URL",
           "pollingIntervalFieldLabel": "Polling interval"
         },
+        "connectorApp": {
+          "appNameFieldLabel": "Application name",
+          "appURLFieldLabel": "Application URL",
+          "appMethodFieldLabel": "Application method",
+          "appMethodFieldPlaceholder": "An HTTP method such as GET",
+          "authTypeTitle": "Authentication type",
+          "methodFieldLabel": "App Method",
+          "urlFieldLabel": "App URL",
+          "authURLFieldLabel": "Authentication URL",
+          "clientIDFieldLabel": "Client ID",
+          "clientSecretFieldLabel": "Client secret",
+          "oauthLabel": "OAuth",
+          "redirectURLFieldLabel": "Redirect URL",
+          "scopeFieldLabel": "Scope",
+          "tokenLabel": "Token",
+          "tokenIDFieldLabel": "Token ID",
+          "tokenURLFieldLabel": "Token URL",
+          "pollingIntervalFieldLabel": "Polling interval"
+        },
         "customProps": {
           "addCustomPropsButtonLabel": "Add new property",
           "cancel": "Cancel",
@@ -797,8 +816,12 @@
     "modal": {
       "cancel": "Cancel",
       "blueprintApp": {
-        "description": "Create an app with App Connector features.",
+        "description": "Create an app with App Connector features from a Blueprint.",
         "label": "Blueprint Application"
+      },
+      "connectorApp": {
+        "description": "Create an app with App Connector features.",
+        "label": "Connector Application"
       },
       "clientApp": {
         "description": "Create a default client app for API access with OAuth2.0 credentials.",
