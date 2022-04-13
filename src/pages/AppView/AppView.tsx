@@ -96,7 +96,7 @@ export const AppView: React.FC = () => {
     if (active && appType === AppTypes.EXPERT) {
       ROUTES.push(EXPERT);
     }
-    if (appType === AppTypes.BLUEPRINT) {
+    if (appType === AppTypes.BLUEPRINT || appType === AppTypes.CONNECTOR) {
       ROUTES.push(BLUEPRINT);
     }
   }

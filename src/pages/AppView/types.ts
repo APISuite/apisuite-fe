@@ -2,11 +2,12 @@ export enum AppTypes {
   CLIENT = "client",
   EXTERNAL = "external",
   EXPERT = "expert",
+  CONNECTOR = "connector",
   BLUEPRINT = "blueprint",
 }
 
 export enum AppTypesTab {
-  GENERAL = "general",
+  GENERAL = "general" ,
   MEDIA = "media",
   CLIENT = "client",
   EXTERNAL = "external",
