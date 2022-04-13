@@ -19,7 +19,8 @@ export const getNextType = (type: AppType, current: AppTypesTab) => {
     idx = 5;
   }
 
-  const tabs = appType === AppTypes.BLUEPRINT ? [TABS[0], TABS[1], TABS[5]] : TABS.slice(0, idx);
+  const tabs = (appType === AppTypes.BLUEPRINT || appType === AppTypes.CONNECTOR) ?
+    [TABS[0], TABS[1], TABS[5]] : TABS.slice(0, idx);
 
   const currentPos = tabs.indexOf(current);
   return tabs.length - 1 > currentPos ? tabs[currentPos + 1] : null;
@@ -35,7 +36,8 @@ export const getPreviousType = (type: AppType, current: AppTypesTab) => {
     idx = 5;
   }
 
-  const tabs = appType === AppTypes.BLUEPRINT ? [TABS[0], TABS[1], TABS[5]] : TABS.slice(0, idx);
+  const tabs = (appType === AppTypes.BLUEPRINT || appType === AppTypes.CONNECTOR) ?
+    [TABS[0], TABS[1], TABS[5]] : TABS.slice(0, idx);
 
   const currentPos = tabs.indexOf(current);
   return currentPos > 0 ? tabs[currentPos - 1] : null;
