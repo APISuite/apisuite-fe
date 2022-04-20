@@ -194,7 +194,7 @@ export const SignUpForm: React.FC = () => {
             {[
               <Link
                 key="signUpForm.privacyPolicyDisclaimer"
-                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760938500/Privacy+Policy"
+                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/761004061/Legal"
                 rel='noopener noreferrer'
                 target='_blank'
                 style={{ color: palette.info.main }}

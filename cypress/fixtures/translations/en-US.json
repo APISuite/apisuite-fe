@@ -125,7 +125,7 @@
       "securityDetails": "Security details"
     },
     "togglePasswordVisibilityARIALabel": "Toggle password visibility",
-    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy<0/>."
+    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>policies</0>."
   },
   "signUpConfirmation": {
     "titleText": "Thank you for joining us, ",
@@ -611,7 +611,7 @@
     "inviteSignIn": "Sign in",
     "inviteSignUp": "Sign up",
     "name": "Your profile name",
-    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy</0>.",
+    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>policies</0>.",
     "reject": "Reject invitation",
     "signin": "Sign in with {{provider}}",
     "warnings": {
