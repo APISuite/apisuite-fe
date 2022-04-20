@@ -279,7 +279,7 @@ const InvitationConfirmationForm: React.FC<{
                 <AnchorBoldWrapper
                   key="contact-key-1"
                   className={classes.privacyPolicyDisclaimerLink}
-                  href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760938500/Privacy+Policy'
+                  href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/761004061/Legal'
                   rel='noopener noreferrer'
                   target='_blank'
                 />,
