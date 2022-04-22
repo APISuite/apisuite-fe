@@ -113,6 +113,10 @@ export const GeneralSettings: React.FC = () => {
       setValue("name", app.name, { shouldDirty: false });
       setValue("shortDescription", app.shortDescription, { shouldDirty: false });
     }
+    console.log(app);
+    if (app.logo && decodedBlueprintName) {
+      setAvatar(app.logo);
+    }
   }, [app, isNew, setValue]);
 
   /* App-related actions */

@@ -365,7 +365,7 @@ export function* getBlueprintDetailsActionSaga(action: GetBlueprintDetailsAction
       url: getBlueprintDetailsActionUrl,
       method: "GET",
       headers: {
-        "content-type": "application/x-www-form-urlencoded",
+        "content-type": "application/json",
       },
     });
 
