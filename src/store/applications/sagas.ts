@@ -403,7 +403,7 @@ export function* fillBlueprintAppConfigActionSaga(action: FillBlueprintAppConfig
       },
     });
     const blueprintConfig = {
-      app_id : undefined,
+      app_id : action.appId,
       app_conf: {
         auth_url: convertToString(response.data.configuration.auth_url),
         clt_id: convertToString(response.data.configuration.clt_id),

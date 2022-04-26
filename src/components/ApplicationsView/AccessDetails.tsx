@@ -83,7 +83,7 @@ export const AccessDetails: React.FC = () => {
     if (!isNew) {
       setValue("app_id", blueprintConfig.app_id, { shouldDirty: false });
       setValue("app_method", blueprintConfig.app_method, { shouldDirty: false });
-      setValue("app_name", blueprintConfig.app_name, { shouldDirty: false });
+      setValue("app_name", blueprintConfig.app_name, { shouldDirty: getBlueprintAppConfigStatus.filled });
       setValue("app_url", blueprintConfig.app_url, { shouldDirty: false });
       setValue("auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
       setValue("auth_url", blueprintConfig.app_conf.auth_url, { shouldDirty: false });
@@ -100,12 +100,13 @@ export const AccessDetails: React.FC = () => {
   }, [app, isNew, setValue]);
 
   useEffect(() => {
+    if (getBlueprintAppConfigStatus.isRequesting) return;
     /* If "getBlueprintAppConfigStatus.isError" amounts to "true",
     it means the blueprint app has yet to be configured. */
     if (getBlueprintAppConfigStatus.isError) {
       const metadata = app.metadata.filter((value) => value.key === "meta_origin_blueprint");
-      if (metadata.length) {
-        dispatch(fillBlueprintAppConfig({ blueprintName: metadata[0].value }));
+      if (metadata.length && !getBlueprintAppConfigStatus.retrieved) {
+        dispatch(fillBlueprintAppConfig({ blueprintName: metadata[0].value, appId: app.id }));
       }
       return;
     }
@@ -135,7 +136,7 @@ export const AccessDetails: React.FC = () => {
   /* App-related actions */
 
   const hasChanges = () => {
-    return (isValid || Object.keys(errors).length === 0) && isDirty;
+    return (isValid || Object.keys(errors).length === 0) && (isDirty || getBlueprintAppConfigStatus.filled);
   };
 
   const accessDetailsMissing = (selectedAuthType: string) => {

@@ -17,7 +17,7 @@ export interface ApplicationsStore {
   userApps: AppData[],
   // Blueprint-related data
   blueprintConfig: CurrentBlueprintConfig,
-  getBlueprintAppConfigStatus: Response & { retrieved: boolean },
+  getBlueprintAppConfigStatus: Response & { retrieved: boolean ; filled: boolean },
   getBlueprintDetailsStatus: Response & { name: string },
   validateAccessDetailsStatus: Response & { validated: boolean },
   isActive: boolean,

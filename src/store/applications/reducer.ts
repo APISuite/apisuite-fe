@@ -103,6 +103,7 @@ const initialState: ApplicationsStore = {
     isError: false,
     isRequesting: false,
     retrieved: false,
+    filled: false,
   },
 
   validateAccessDetailsStatus: {
@@ -419,6 +420,7 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: true },
           retrieved: { $set: false },
+          filled: {$set: action.type === FILL_BLUEPRINT_CONFIG},
         },
       });
     }
@@ -432,6 +434,7 @@ export default function reducer (
           isError: { $set: false },
           isRequesting: { $set: false },
           retrieved: { $set: true },
+          filled: {$set: action.type === FILL_BLUEPRINT_CONFIG_SUCCESS},
         },
 
         validateAccessDetailsStatus: {
@@ -472,7 +475,12 @@ export default function reducer (
           isRequesting: { $set: true },
           validated: { $set: false },
         },
-
+        getBlueprintAppConfigStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: false },
+          retrieved: { $set: true },
+          filled: {$set: false},
+        },
         blueprintConfig: { $set: action.blueprintConfig },
       });
     }

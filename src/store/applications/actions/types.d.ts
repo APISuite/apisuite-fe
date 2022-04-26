@@ -261,6 +261,7 @@ export type GetBlueprintAppConfigActionError = {
 export type FillBlueprintAppConfigAction = {
   type: typeof FILL_BLUEPRINT_CONFIG,
   blueprintName: string,
+  appId: number,
 }
 
 export type FillBlueprintAppConfigActionSuccess = {
