@@ -415,11 +415,12 @@ export function* fillBlueprintAppConfigActionSaga(action: FillBlueprintAppConfig
         token: convertToString(response.data.configuration.token),
       },
       app_method: convertToString(response.data.configuration.app_method),
-      app_name: convertToString(response.data.appName),
+      app_name: convertToString(response.data.appName).toLowerCase().replace(" ","_") + Date.now(),
       app_url: convertToString(response.data.configuration.app_url),
       auth_type: convertToString(response.data.configuration.auth_type),
       polling_interval: `${response.data.configuration.polling_interval}`,
       obo:  convertToBool(response.data.configuration.obo),
+      api_url: "",
     };
 
     yield put(fillBlueprintAppConfigSuccess({
@@ -462,6 +463,7 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
       auth_type: response.data.authType,
       polling_interval: `${response.data.pollingInterval}`,
       obo: response.data.obo,
+      api_url: response.data.apiUrl,
     };
 
     yield put(getBlueprintAppConfigSuccess({

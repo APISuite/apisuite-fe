@@ -299,6 +299,7 @@ export interface BlueprintAppConfigResponse {
     workerId: string,
     workerStatus: string,
     obo: boolean,
+    apiUrl: string,
   },
 }
 

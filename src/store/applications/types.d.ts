@@ -86,6 +86,7 @@ export interface CurrentBlueprintConfig {
     token_url: string,
     token: string,
   },
+  api_url: string,
   obo: boolean,
   polling_interval: string,
   app_id?: number,
