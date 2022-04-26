@@ -86,12 +86,13 @@ export interface CurrentBlueprintConfig {
     token_url: string,
     token: string,
   },
-  app_id: number,
+  obo: boolean,
+  polling_interval: string,
+  app_id?: number,
   app_method: string,
   app_name: string,
   app_url: string,
   auth_type: string,
-  polling_interval: string,
 }
 
 export interface ModalDetails {

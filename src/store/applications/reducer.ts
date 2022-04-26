@@ -21,6 +21,7 @@ import {
   REVOKE_API_ACCESS_ERROR,
   REVOKE_API_ACCESS_SUCCESS,
 } from "store/applications/actions/revokeApiAccess";
+import {FILL_BLUEPRINT_CONFIG, FILL_BLUEPRINT_CONFIG_SUCCESS} from "store/applications/actions/fillBlueprintAppConfig";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -136,6 +137,7 @@ const initialState: ApplicationsStore = {
     app_url: "",
     auth_type: "token",
     polling_interval: "",
+    obo: false,
   },
 };
 
@@ -382,7 +384,14 @@ export default function reducer (
           logo: action.blueprintData.data.logo,
           labels: action.blueprintData.data.labels,
           shortDescription: action.blueprintData.data.overview,
-          redirectUrl: action.blueprintData.data.appLink,
+          websiteUrl: action.blueprintData.data.appLink,
+          images: action.blueprintData.data.media,
+          metadata: [{
+            key: "meta_origin_blueprint",
+            value: action.blueprintData.data.appName,
+            title: "origin_blueprint",
+            description: "",
+          }],
         },
 
         getBlueprintDetailsStatus: {
@@ -403,6 +412,7 @@ export default function reducer (
       });
     }
 
+    case FILL_BLUEPRINT_CONFIG:
     case GET_BLUEPRINT_CONFIG: {
       return update(state, {
         getBlueprintAppConfigStatus: {
@@ -413,6 +423,7 @@ export default function reducer (
       });
     }
 
+    case FILL_BLUEPRINT_CONFIG_SUCCESS:
     case GET_BLUEPRINT_CONFIG_SUCCESS: {
       return update(state, {
         blueprintConfig: { $set: action.config },
@@ -426,10 +437,10 @@ export default function reducer (
         validateAccessDetailsStatus: {
           isError: { $set: false },
           isRequesting: { $set: false },
-          validated: { $set: true },
+          validated: { $set: action.type === GET_BLUEPRINT_CONFIG_SUCCESS },
         },
 
-        isActive: { $set: action.isActive },
+        isActive: { $set: action.type === GET_BLUEPRINT_CONFIG_SUCCESS ? action.isActive : true },
       });
     }
 

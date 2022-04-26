@@ -29,7 +29,7 @@ import {
   UploadAppMediaAction,
   ValidateAccessDetailsAction,
   GetBlueprintDetailsAction,
-  RevokeAPIAccessAction,
+  RevokeAPIAccessAction, FillBlueprintAppConfigAction,
 } from "./actions/types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
 import { DELETE_APP_MEDIA, deleteAppMediaError, deleteAppMediaSuccess } from "./actions/deleteAppMedia";
@@ -47,15 +47,19 @@ import { validateAccessDetailsActionError, validateAccessDetailsActionSuccess, V
 import { updateAccessDetailsActionError, updateAccessDetailsActionSuccess, UPDATE_ACCESS_DETAILS_ACTION } from "./actions/updateAccessDetails";
 import { getBlueprintDetailsActionError, getBlueprintDetailsActionSuccess, GET_BLUEPRINT_DETAILS_ACTION } from "./actions/getBlueprintDetails";
 import { TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionError, toggleBlueprintAppStatusActionSuccess } from "./actions/toggleBlueprintAppStatus";
+import {
+  FILL_BLUEPRINT_CONFIG,
+  fillBlueprintAppConfigError,
+  fillBlueprintAppConfigSuccess,
+} from "store/applications/actions/fillBlueprintAppConfig";
 
-const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "images", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
+const appDataFilter = ["appType", "clientId", "clientSecret", "createdAt", "id", "idpProvider", "org_id", "orgId", "redirect_url", "state", "updatedAt"];
 
 export function* createAppActionSaga(action: CreateAppAction) {
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let data = Object.fromEntries(Object.entries(action.appData).filter(([_, v]) => !!v));
     data = clearProps(data, appDataFilter);
-
     const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
     const app: AppData = yield call(request, {
@@ -379,6 +383,56 @@ export function* getBlueprintDetailsActionSaga(action: GetBlueprintDetailsAction
   }
 }
 
+const convertToString = (object: unknown) : string => {
+  return typeof object === "string" ? object : "";
+};
+
+const convertToBool = (object: unknown) : boolean => {
+  return typeof object === "boolean" ? object : false;
+};
+
+export function* fillBlueprintAppConfigActionSaga(action: FillBlueprintAppConfigAction) {
+  try {
+    const getBlueprintDetailsActionUrl = `${BLUEPRINT_APPS_URL}/${action.blueprintName}`;
+
+    const response: BlueprintData = yield call(request, {
+      url: getBlueprintDetailsActionUrl,
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const blueprintConfig = {
+      app_id : undefined,
+      app_conf: {
+        auth_url: convertToString(response.data.configuration.auth_url),
+        clt_id: convertToString(response.data.configuration.clt_id),
+        clt_secret: convertToString(response.data.configuration.clt_secret),
+        conn_auth_type:  convertToString(response.data.configuration.conn_auth_type),
+        redirect_url: convertToString(response.data.configuration.redirect_url),
+        scope: convertToString(response.data.configuration.scope),
+        token_url: convertToString(response.data.configuration.token_url),
+        token: convertToString(response.data.configuration.token),
+      },
+      app_method: convertToString(response.data.configuration.app_method),
+      app_name: convertToString(response.data.appName),
+      app_url: convertToString(response.data.configuration.app_url),
+      auth_type: convertToString(response.data.configuration.auth_type),
+      polling_interval: `${response.data.configuration.polling_interval}`,
+      obo:  convertToBool(response.data.configuration.obo),
+    };
+
+    yield put(fillBlueprintAppConfigSuccess({
+      config: blueprintConfig,
+    }));
+  } catch (error: any) {
+    yield put(fillBlueprintAppConfigError(error));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
+  }
+}
+
 export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAction) {
   try {
     const getBlueprintAppConfigActionUrl = `${APP_CONNECTOR_URL}/apps/getid/${action.appId}`;
@@ -390,7 +444,6 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
         "content-type": "application/x-www-form-urlencoded",
       },
     });
-
     const blueprintConfig = {
       app_id: Number(action.appId),
       app_conf: {
@@ -408,6 +461,7 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
       app_url: response.data.appUrl,
       auth_type: response.data.authType,
       polling_interval: `${response.data.pollingInterval}`,
+      obo: response.data.obo,
     };
 
     yield put(getBlueprintAppConfigSuccess({
@@ -483,6 +537,7 @@ function* rootSaga() {
   yield takeLatest(VALIDATE_ACCESS_DETAILS_ACTION, validateAccessDetailsActionSaga);
   yield takeLatest(GET_BLUEPRINT_DETAILS_ACTION, getBlueprintDetailsActionSaga);
   yield takeLatest(GET_BLUEPRINT_CONFIG, getBlueprintAppConfigActionSaga);
+  yield takeLatest(FILL_BLUEPRINT_CONFIG, fillBlueprintAppConfigActionSaga);
   yield takeLatest(UPDATE_ACCESS_DETAILS_ACTION, updateAccessDetailsActionSaga);
   yield takeLatest(TOGGLE_BLUEPRINT_APP_STATUS_ACTION, toggleBlueprintAppStatusActionSaga);
 }

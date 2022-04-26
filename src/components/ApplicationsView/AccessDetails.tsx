@@ -16,6 +16,7 @@ import { LocationHistory } from "./types";
 import { ActionsFooter, AppContainer, useGetApp } from "./util";
 import useStyles from "./styles";
 import { toggleBlueprintAppStatusAction } from "store/applications/actions/toggleBlueprintAppStatus";
+import { fillBlueprintAppConfig } from "store/applications/actions/fillBlueprintAppConfig";
 
 export const AccessDetails: React.FC = () => {
   const classes = useStyles();
@@ -63,7 +64,7 @@ export const AccessDetails: React.FC = () => {
       app_name: blueprintConfig.app_name || "",
       app_url: blueprintConfig.app_url || "",
       auth_type: blueprintConfig.app_conf.conn_auth_type,
-      auth_url: blueprintConfig.app_conf.auth_url || "",
+      auth_url: blueprintConfig.app_conf.auth_url || "oauth",
       clt_id: blueprintConfig.app_conf.clt_id || "",
       clt_secret: blueprintConfig.app_conf.clt_secret || "",
       conn_auth_type: blueprintConfig.app_conf.conn_auth_type,
@@ -72,6 +73,7 @@ export const AccessDetails: React.FC = () => {
       scope: blueprintConfig.app_conf.scope || "",
       token_url: blueprintConfig.app_conf.token_url || "",
       token: blueprintConfig.app_conf.token || "",
+      obo: blueprintConfig.obo || false,
     },
     mode: "onChange",
     reValidateMode: "onChange",
@@ -93,13 +95,20 @@ export const AccessDetails: React.FC = () => {
       setValue("scope", blueprintConfig.app_conf.scope, { shouldDirty: false });
       setValue("token_url", blueprintConfig.app_conf.token_url, { shouldDirty: false });
       setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
+      setValue("obo", blueprintConfig.obo, { shouldDirty: false });
     }
   }, [app, isNew, setValue]);
 
   useEffect(() => {
     /* If "getBlueprintAppConfigStatus.isError" amounts to "true",
     it means the blueprint app has yet to be configured. */
-    if (getBlueprintAppConfigStatus.isError) return;
+    if (getBlueprintAppConfigStatus.isError) {
+      const metadata = app.metadata.filter((value) => value.key === "meta_origin_blueprint");
+      if (metadata.length) {
+        dispatch(fillBlueprintAppConfig({ blueprintName: metadata[0].value }));
+      }
+      return;
+    }
 
     if (blueprintConfig.app_id && !getBlueprintAppConfigStatus.retrieved) {
       dispatch(getBlueprintAppConfig({ appId: blueprintConfig.app_id }));
@@ -111,7 +120,7 @@ export const AccessDetails: React.FC = () => {
     getBlueprintAppConfigStatus.isError,
     getBlueprintAppConfigStatus.retrieved,
   ]);
-  
+
   // Authentication type logic
 
   const [selectedAuth, setSelectedAuth] = React.useState(blueprintConfig.app_conf.conn_auth_type);
@@ -139,15 +148,13 @@ export const AccessDetails: React.FC = () => {
     }
 
     // If "OAuth" auth type fields are missing
-    if (selectedAuthType === AUTH_TYPES.OAUTH && (
+    return selectedAuthType === AUTH_TYPES.OAUTH && (
       !getValues("clt_id") || !getValues("clt_secret") ||
       !getValues("auth_url") || !getValues("token_url") ||
       !getValues("polling_interval")
-    )) {
-      return true;
-    }
+    );
 
-    return false;
+
   };
 
   const validateAccessDetails = (selectedAuthType: string) => {
@@ -172,6 +179,7 @@ export const AccessDetails: React.FC = () => {
       app_url: currentConfigDetails.app_url,
       auth_type: selectedAuthType === AUTH_TYPES.TOKEN ? AUTH_TYPES.TOKEN : AUTH_TYPES.OAUTH,
       polling_interval: currentConfigDetails.polling_interval,
+      obo: currentConfigDetails.obo,
     };
 
     dispatch(validateAccessDetailsAction({ blueprintConfig: newAppDetails }));
@@ -193,12 +201,14 @@ export const AccessDetails: React.FC = () => {
         token_url: currentConfigDetails.token_url,
         token: currentConfigDetails.token,
       },
+      polling_interval: currentConfigDetails.polling_interval,
+      obo: currentConfigDetails.obo,
       app_id: currentConfigDetails.app_id,
       app_method: currentConfigDetails.app_method,
       app_name: currentConfigDetails.app_name,
       app_url: currentConfigDetails.app_url,
       auth_type: currentConfigDetails.auth_type,
-      polling_interval: currentConfigDetails.polling_interval,
+
     };
 
     dispatch(updateAccessDetailsAction({
@@ -546,7 +556,7 @@ export const AccessDetails: React.FC = () => {
                 {t("dashboardTab.applicationsSubTab.appModal.appStatusSubtitle")}
               </Typography>
             </Box>
-          
+
             <Box style={{ alignItems: "center", display: "flex" }}>
               <Switch
                 checked={isActive}

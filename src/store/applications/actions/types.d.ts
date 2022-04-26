@@ -53,6 +53,9 @@ CreateBlueprintAppActionError |
 GetBlueprintAppConfigAction |
 GetBlueprintAppConfigActionSuccess |
 GetBlueprintAppConfigActionError |
+FillBlueprintAppConfigAction |
+FillBlueprintAppConfigActionSuccess |
+FillBlueprintAppConfigActionError |
 ValidateAccessDetailsAction |
 ValidateAccessDetailsActionSuccess |
 ValidateAccessDetailsActionError |
@@ -255,6 +258,20 @@ export type GetBlueprintAppConfigActionError = {
   type: typeof GET_BLUEPRINT_CONFIG_ERROR,
 }
 
+export type FillBlueprintAppConfigAction = {
+  type: typeof FILL_BLUEPRINT_CONFIG,
+  blueprintName: string,
+}
+
+export type FillBlueprintAppConfigActionSuccess = {
+  type: typeof FILL_BLUEPRINT_CONFIG_SUCCESS,
+  config: CurrentBlueprintConfig,
+}
+
+export type FillBlueprintAppConfigActionError = {
+  type: typeof FILL_BLUEPRINT_CONFIG_ERROR,
+}
+
 export interface BlueprintAppConfigResponse {
   data: {
     appConfig: {
@@ -280,6 +297,7 @@ export interface BlueprintAppConfigResponse {
     userId: string,
     workerId: string,
     workerStatus: string,
+    obo: boolean,
   },
 }
 
