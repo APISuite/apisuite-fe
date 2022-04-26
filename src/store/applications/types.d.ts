@@ -64,6 +64,7 @@ export interface BlueprintData {
     labels: string[],
     logo: string,
     overview: string,
+    media: string[],
   },
 }
 
