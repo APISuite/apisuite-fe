@@ -48,8 +48,7 @@ export const ConnectorSettings: React.FC = () => {
   });
 
   const {
-    control,
-    formState: { errors, isDirty, isValid },
+    formState: { isDirty },
     getValues,
     setValue,
   } = useForm({

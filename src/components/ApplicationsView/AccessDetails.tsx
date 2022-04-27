@@ -103,7 +103,10 @@ export const AccessDetails: React.FC = () => {
       setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
       setValue("fieldsRaw", blueprintConfig.fieldsRaw, { shouldDirty: false });
       setValue("fieldsMapping", blueprintConfig.fieldsMapping, { shouldDirty: false });
-      if (blueprintConfig.variableValues && blueprintConfig.variableValues.length === getURLVars(blueprintConfig.api_url).length) {
+      if (
+        blueprintConfig.variableValues &&
+        blueprintConfig.variableValues.length === getURLVars(blueprintConfig.api_url).length
+      ) {
         setAvailableVariables(blueprintConfig.variableValues);
       } else {
         validateVars(blueprintConfig.api_url);
