@@ -4,6 +4,6 @@ import { Store } from "store/types";
 export const typesSelector = createSelector(
   ({ applications }: Store) => applications,
   (applications) => {
-    return { types: applications.types };
+    return { types: applications.types, isValid: applications.validateAccessDetailsStatus.validated };
   },
 );

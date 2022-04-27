@@ -98,6 +98,7 @@ export const AccessDetails: React.FC = () => {
       setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
       setValue("obo", blueprintConfig.obo, { shouldDirty: false });
       setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
+      validateVars(blueprintConfig.api_url);
     }
   }, [app, isNew, setValue]);
 
@@ -128,7 +129,7 @@ export const AccessDetails: React.FC = () => {
 
   const [selectedAuth, setSelectedAuth] = React.useState(blueprintConfig.app_conf.conn_auth_type);
 
-  const [availableVariables, setAvailableVariables] = React.useState<any>({});
+  const [availableVariables, setAvailableVariables] = React.useState<any>([]);
 
   const handleAuthSelection = (selectedAuthType: string) => {
     setSelectedAuth(selectedAuthType);
@@ -146,7 +147,18 @@ export const AccessDetails: React.FC = () => {
   };
 
   const validateVars = (url: string) => {
-    console.log(getURLVars(url));
+    const urlVars = getURLVars(url);
+    const newVariables = availableVariables.filter((element) => urlVars.includes(element.key));
+    const currentVarNames = newVariables.map((element) => element.key);
+    const urlsToAdd = urlVars.filter((element) => !currentVarNames.includes(element));
+    for (const urlToAdd of urlsToAdd) {
+      newVariables.push({
+        key : urlToAdd,
+        friendlyName: "",
+        description: "",
+      });
+    }
+    setAvailableVariables(newVariables);
   };
   /* App-related actions */
 
@@ -611,6 +623,82 @@ export const AccessDetails: React.FC = () => {
           </Grid>
         </Grid>
 
+        <Grid container spacing={3}>
+          <Grid item md={12}>
+            <Box mb={1}>
+              <Typography display="block" variant="subtitle1">
+                {t("dashboardTab.applicationsSubTab.appModal.variablesSubtitle")}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item md={12}>
+            <Box className={classes.customTableHeader}>
+              <Box ml={2} mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.variableName")}
+                </Typography>
+              </Box>
+              <Box ml={2} mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.variableFriendlyName")}
+                </Typography>
+              </Box>
+              <Box mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.variableDescription")}
+                </Typography>
+              </Box>
+            </Box>
+            {availableVariables.length ? (
+              availableVariables.map((element, index) => (
+                <Box className={clsx(classes.tableEntry, {
+                  [classes.evenTableEntry]: index % 2 === 0,
+                  [classes.oddTableEntry]: !(index % 2 === 0),
+                })}
+                key={`variables${index}`}>
+                  <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
+                    <Typography variant="body1">{element.key}</Typography>
+                  </Box>
+                  <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
+                    <TextField
+                      className={classes.variables}
+                      name="friendlyName"
+                      value={element.friendlyName}
+                      onChange={(event) => {
+                        const newVariables = [...availableVariables];
+                        newVariables[index].friendlyName = event.target.value;
+                        setAvailableVariables(newVariables);
+                      }}
+                    />
+                  </Box>
+                  <Box  mr={5} style={{ width: "615px", alignItems: "center"}}>
+                    <TextField
+                      name="description"
+                      value={element.description}
+                      className={classes.variables}
+                      onChange={(event) => {
+                        const newVariables = [...availableVariables];
+                        newVariables[index].description = event.target.value;
+                        setAvailableVariables(newVariables);
+                      }}
+                      fullWidth
+                    />
+                  </Box >
+                </Box>))
+            ) : (
+              <div className={classes.nothingToShow}>
+                <Typography variant="body1">{ t(blueprintConfig.api_url ?
+                  "dashboardTab.applicationsSubTab.appModal.nothingToShow" :
+                  "dashboardTab.applicationsSubTab.appModal.noUrlDefined"
+                )}</Typography>
+              </div>
+            )}
+          </Grid>
+
+
+        </Grid>
+
+
         <hr className={classes.regularSectionSeparator} />
 
         {/* "App action" buttons section */}
@@ -618,7 +706,6 @@ export const AccessDetails: React.FC = () => {
           <ActionsFooter
             altSaveButtonAction={
               () => {
-                selectedAuth === AUTH_TYPES.TOKEN &&
                 (validateAccessDetailsStatus.validated || getBlueprintAppConfigStatus.retrieved)
                   ? updateAccessDetails()
                   : validateAccessDetails(selectedAuth);

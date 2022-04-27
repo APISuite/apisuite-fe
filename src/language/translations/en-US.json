@@ -323,7 +323,13 @@
         "authFundamentalsSubtitle": "We use the Open Authentication 2 standards, and you might want to know how. In the OAuth2 fundamentals we also dive into the why."
       },
       "appModal": {
+        "variableName": "Variable name",
+        "variableFriendlyName": "Friendly name",
+        "variableDescription": "Description for user",
+        "nothingToShow": "No variables on API product URL",
+        "noUrlDefined": "No API Product URL has been inserted",
         "authSubtitle": "Select the authentication method and fill the necessary information",
+        "variablesSubtitle": "State and describe the variables that need to be inserted by the future user of this app",
         "oboSubtitle": "Does this app need to get access on behalf of the user?",
         "oboAlert": "Enabling OBO will request a subscription from this API",
         "draftAppStatus": "Draft",
@@ -782,7 +788,8 @@
       "expert": "Custom Properties",
       "external": "External Settings",
       "general": "General Settings",
-      "media": "Media Files and Links"
+      "media": "Media Files and Links",
+      "connectorSettings": "Connector Settings"
     }
   },
   "navigation": {
