@@ -153,8 +153,11 @@ export const AccessDetails: React.FC = () => {
   const getURLVars = (url: string) => {
     const matcher = (url || "").matchAll(/{([^{}]*?)}/g);
     const results = [];
-    let value;
-    while (!(value = matcher.next()).done) results.push(value.value[1]);
+    let value = matcher.next();
+    while (!value.done) {
+      results.push(value.value[1]);
+      value = matcher.next();
+    }
     return results;
   };
 
@@ -350,7 +353,7 @@ export const AccessDetails: React.FC = () => {
                   <Switch
                     checked={field.value}
                     value={field.value}
-                    onChange={(event, value) => {
+                    onChange={(_event, value) => {
                       field.onChange(value);
                     }}
                   />
@@ -708,10 +711,10 @@ export const AccessDetails: React.FC = () => {
                 </Box>))
             ) : (
               <div className={classes.nothingToShow}>
-                <Typography variant="body1">{ t(blueprintConfig.api_url ?
-                  "dashboardTab.applicationsSubTab.appModal.nothingToShow" :
-                  "dashboardTab.applicationsSubTab.appModal.noUrlDefined"
-                )}</Typography>
+                <Typography variant="body1">{ blueprintConfig.api_url ?
+                  t("dashboardTab.applicationsSubTab.appModal.nothingToShow") :
+                  t("dashboardTab.applicationsSubTab.appModal.noUrlDefined")
+                }</Typography>
               </div>
             )}
           </Grid>
