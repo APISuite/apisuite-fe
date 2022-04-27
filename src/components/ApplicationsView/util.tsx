@@ -17,6 +17,7 @@ import { updateApp } from "store/applications/actions/updatedApp";
 import { AppTypesTab } from "pages/AppView/types";
 import { ActionsFooterProps, AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
 import useStyles from "./styles";
+import {UseFormSetValue} from "react-hook-form/dist/types/form";
 
 const isDraft = (app: AppData) => {
   return app.subscriptions.length === 0 ? "draftApp" : "subbedApp";
@@ -130,6 +131,30 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
     </>
   );
 };
+
+export const setCommonValues = (
+  blueprintConfig: CurrentBlueprintConfig,
+  setValue: UseFormSetValue<AppRegisterValues>
+) : void => {
+  setValue("app_id", blueprintConfig.app_id, { shouldDirty: false });
+  setValue("app_method", blueprintConfig.app_method, { shouldDirty: false });
+  setValue("app_name", blueprintConfig.app_name, { shouldDirty: false });
+  setValue("app_url", blueprintConfig.app_url, { shouldDirty: false });
+  setValue("auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
+  setValue("auth_url", blueprintConfig.app_conf.auth_url, { shouldDirty: false });
+  setValue("clt_id", blueprintConfig.app_conf.clt_id, { shouldDirty: false });
+  setValue("clt_secret", blueprintConfig.app_conf.clt_secret, { shouldDirty: false });
+  setValue("conn_auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
+  setValue("polling_interval", blueprintConfig.polling_interval, { shouldDirty: false });
+  setValue("redirect_url", blueprintConfig.app_conf.redirect_url, { shouldDirty: false });
+  setValue("scope", blueprintConfig.app_conf.scope, { shouldDirty: false });
+  setValue("token_url", blueprintConfig.app_conf.token_url, { shouldDirty: false });
+  setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
+  setValue("obo", blueprintConfig.obo, { shouldDirty: false });
+  setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
+  setValue("fieldsRaw", blueprintConfig.fieldsRaw, { shouldDirty: false });
+};
+
 export const createAppRegisterValues = (blueprintConfig: CurrentBlueprintConfig) : AppRegisterValues => {
   return {
     app_id: blueprintConfig.app_id,

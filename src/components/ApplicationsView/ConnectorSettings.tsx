@@ -10,7 +10,14 @@ import { RouterPrompt } from "components/RouterPrompt";
 import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
-import {ActionsFooter, AppContainer, createAppRegisterValues, createBlueprintConfig, useGetApp} from "./util";
+import {
+  ActionsFooter,
+  AppContainer,
+  createAppRegisterValues,
+  createBlueprintConfig,
+  setCommonValues,
+  useGetApp,
+} from "./util";
 import useStyles from "./styles";
 import {updateAccessDetailsAction} from "store/applications/actions/updateAccessDetails";
 import clsx from "clsx";
@@ -56,24 +63,8 @@ export const ConnectorSettings: React.FC = () => {
 
   useEffect(() => {
     if (!isNew) {
-      setValue("app_id", blueprintConfig.app_id, { shouldDirty: false });
-      setValue("app_method", blueprintConfig.app_method, { shouldDirty: false });
-      setValue("app_name", blueprintConfig.app_name, { shouldDirty: false });
-      setValue("app_url", blueprintConfig.app_url, { shouldDirty: false });
-      setValue("auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
-      setValue("auth_url", blueprintConfig.app_conf.auth_url, { shouldDirty: false });
-      setValue("clt_id", blueprintConfig.app_conf.clt_id, { shouldDirty: false });
-      setValue("clt_secret", blueprintConfig.app_conf.clt_secret, { shouldDirty: false });
-      setValue("conn_auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
-      setValue("polling_interval", blueprintConfig.polling_interval, { shouldDirty: false });
-      setValue("redirect_url", blueprintConfig.app_conf.redirect_url, { shouldDirty: false });
-      setValue("scope", blueprintConfig.app_conf.scope, { shouldDirty: false });
-      setValue("token_url", blueprintConfig.app_conf.token_url, { shouldDirty: false });
-      setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
-      setValue("obo", blueprintConfig.obo, { shouldDirty: false });
-      setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
+      setCommonValues(blueprintConfig, setValue);
       setValue("variableValues", blueprintConfig.variableValues, { shouldDirty: false });
-      setValue("fieldsRaw", blueprintConfig.fieldsRaw, { shouldDirty: false });
       if (blueprintConfig.fieldsMapping && blueprintConfig.fieldsMapping.length)
         setFieldsMapping(blueprintConfig.fieldsMapping);
       else
