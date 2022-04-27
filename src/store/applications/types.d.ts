@@ -86,6 +86,27 @@ export interface FieldMappingType {
   fieldOut: string,
   editable: boolean,
 }
+export interface AppRegisterValues {
+  auth_url: string,
+  clt_id: string,
+  clt_secret: string,
+  conn_auth_type: string,
+  redirect_url: string,
+  scope: string,
+  token_url: string,
+  token: string,
+  api_url: string,
+  obo: boolean,
+  polling_interval: string,
+  app_id?: number,
+  app_method: string,
+  app_name: string,
+  app_url: string,
+  auth_type: string,
+  fieldsRaw: string[],
+  variableValues: VariablesType[],
+  fieldsMapping: FieldMappingType[],
+}
 
 export interface CurrentBlueprintConfig {
   app_conf: {
@@ -107,8 +128,8 @@ export interface CurrentBlueprintConfig {
   app_url: string,
   auth_type: string,
   fieldsRaw: string[],
-  variableValues: any[],
-  fieldsMapping: any[],
+  variableValues: VariablesType[],
+  fieldsMapping: FieldMappingType[],
 }
 
 export interface ModalDetails {

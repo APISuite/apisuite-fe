@@ -10,7 +10,7 @@ import clsx from "clsx";
 import adrift from "assets/adrift.svg";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { AppData, AppType } from "store/applications/types";
+import {AppData, AppRegisterValues, AppType, CurrentBlueprintConfig} from "store/applications/types";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
@@ -129,6 +129,32 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
       }
     </>
   );
+};
+
+export const createBlueprintConfig = (currentConfigDetails: AppRegisterValues ) : CurrentBlueprintConfig => {
+  return {
+    app_conf: {
+      auth_url: currentConfigDetails.auth_url,
+      clt_id: currentConfigDetails.clt_id,
+      clt_secret: currentConfigDetails.clt_secret,
+      conn_auth_type: currentConfigDetails.conn_auth_type,
+      redirect_url: currentConfigDetails.redirect_url,
+      scope: currentConfigDetails.scope,
+      token_url: currentConfigDetails.token_url,
+      token: currentConfigDetails.token,
+    },
+    api_url: currentConfigDetails.api_url,
+    polling_interval: currentConfigDetails.polling_interval,
+    obo: currentConfigDetails.obo,
+    app_id: currentConfigDetails.app_id,
+    app_method: currentConfigDetails.app_method,
+    app_name: currentConfigDetails.app_name,
+    app_url: currentConfigDetails.app_url,
+    auth_type: currentConfigDetails.auth_type,
+    fieldsRaw: currentConfigDetails.fieldsRaw,
+    variableValues: currentConfigDetails.variableValues,
+    fieldsMapping: currentConfigDetails.fieldsMapping,
+  };
 };
 
 export const getAppType = (types: AppType[], typeId: string) => {
@@ -250,7 +276,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
       ...app,
       ...getFormValues(),
     };
-    
+
     dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
   };
 

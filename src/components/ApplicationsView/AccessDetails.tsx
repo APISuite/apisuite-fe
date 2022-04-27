@@ -14,7 +14,7 @@ import { validateAccessDetailsAction } from "store/applications/actions/validate
 import { VariablesType } from "store/applications/types";
 import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
-import { ActionsFooter, AppContainer, useGetApp } from "./util";
+import {ActionsFooter, AppContainer, createBlueprintConfig, useGetApp} from "./util";
 import useStyles from "./styles";
 import { fillBlueprintAppConfig } from "store/applications/actions/fillBlueprintAppConfig";
 import Notice from "components/Notice";
@@ -149,7 +149,7 @@ export const AccessDetails: React.FC = () => {
 
   const [selectedAuth, setSelectedAuth] = React.useState(blueprintConfig.app_conf.conn_auth_type);
 
-  const [availableVariables, setAvailableVariables] = React.useState<any>([]);
+  const [availableVariables, setAvailableVariables] = React.useState<VariablesType[]>([]);
 
   const handleAuthSelection = (selectedAuthType: string) => {
     setSelectedAuth(selectedAuthType);
@@ -187,7 +187,7 @@ export const AccessDetails: React.FC = () => {
 
   React.useEffect(()=> {
     setValue("variableValues", availableVariables, { shouldDirty: true });
-  }, [availableVariables]);
+  }, [availableVariables, setValue]);
   /* App-related actions */
 
   const hasChanges = () => {
@@ -246,36 +246,10 @@ export const AccessDetails: React.FC = () => {
   };
 
   const updateAccessDetails = () => {
-    const currentConfigDetails = {
-      ...getValues(),
-    };
-
-    const newConfigDetails = {
-      app_conf: {
-        auth_url: currentConfigDetails.auth_url,
-        clt_id: currentConfigDetails.clt_id,
-        clt_secret: currentConfigDetails.clt_secret,
-        conn_auth_type: currentConfigDetails.conn_auth_type,
-        redirect_url: currentConfigDetails.redirect_url,
-        scope: currentConfigDetails.scope,
-        token_url: currentConfigDetails.token_url,
-        token: currentConfigDetails.token,
-      },
-      api_url: currentConfigDetails.api_url,
-      polling_interval: currentConfigDetails.polling_interval,
-      obo: currentConfigDetails.obo,
-      app_id: currentConfigDetails.app_id,
-      app_method: currentConfigDetails.app_method,
-      app_name: currentConfigDetails.app_name,
-      app_url: currentConfigDetails.app_url,
-      auth_type: currentConfigDetails.auth_type,
-      fieldsRaw: currentConfigDetails.fieldsRaw,
-      variableValues: currentConfigDetails.variableValues,
-      fieldsMapping: currentConfigDetails.fieldsMapping,
-    };
-
     dispatch(updateAccessDetailsAction({
-      newConfig: newConfigDetails,
+      newConfig: createBlueprintConfig({
+        ...getValues(),
+      }),
       originalAppName: blueprintConfig.app_name,
     }));
   };
