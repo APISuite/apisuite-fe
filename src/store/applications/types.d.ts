@@ -94,6 +94,9 @@ export interface CurrentBlueprintConfig {
   app_name: string,
   app_url: string,
   auth_type: string,
+  fieldsRaw: string[],
+  variableValues: any[],
+  fieldsMapping: any[],
 }
 
 export interface ModalDetails {

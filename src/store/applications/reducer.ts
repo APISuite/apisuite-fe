@@ -136,9 +136,13 @@ const initialState: ApplicationsStore = {
     app_method: "GET",
     app_name: "",
     app_url: "",
+    api_url: "",
     auth_type: "token",
     polling_interval: "",
     obo: false,
+    fieldsRaw: [],
+    variableValues: [],
+    fieldsMapping: [],
   },
 };
 

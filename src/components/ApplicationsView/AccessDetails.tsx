@@ -75,6 +75,9 @@ export const AccessDetails: React.FC = () => {
       token: blueprintConfig.app_conf.token || "",
       obo: blueprintConfig.obo || false,
       api_url: blueprintConfig.api_url || "",
+      variableValues: blueprintConfig.variableValues,
+      fieldsRaw: blueprintConfig.fieldsRaw,
+      fieldsMapping: blueprintConfig.fieldsMapping,
     },
     mode: "onChange",
     reValidateMode: "onChange",
@@ -98,7 +101,13 @@ export const AccessDetails: React.FC = () => {
       setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
       setValue("obo", blueprintConfig.obo, { shouldDirty: false });
       setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
-      validateVars(blueprintConfig.api_url);
+      setValue("fieldsRaw", blueprintConfig.fieldsRaw, { shouldDirty: false });
+      setValue("fieldsMapping", blueprintConfig.fieldsMapping, { shouldDirty: false });
+      if (blueprintConfig.variableValues && blueprintConfig.variableValues.length === getURLVars(blueprintConfig.api_url).length) {
+        setAvailableVariables(blueprintConfig.variableValues);
+      } else {
+        validateVars(blueprintConfig.api_url);
+      }
     }
   }, [app, isNew, setValue]);
 
@@ -148,8 +157,8 @@ export const AccessDetails: React.FC = () => {
 
   const validateVars = (url: string) => {
     const urlVars = getURLVars(url);
-    const newVariables = availableVariables.filter((element) => urlVars.includes(element.key));
-    const currentVarNames = newVariables.map((element) => element.key);
+    const newVariables = availableVariables.filter(element => urlVars.includes(element.key));
+    const currentVarNames = newVariables.map(element => element.key);
     const urlsToAdd = urlVars.filter((element) => !currentVarNames.includes(element));
     for (const urlToAdd of urlsToAdd) {
       newVariables.push({
@@ -160,6 +169,10 @@ export const AccessDetails: React.FC = () => {
     }
     setAvailableVariables(newVariables);
   };
+
+  React.useEffect(()=> {
+    setValue("variableValues", availableVariables, { shouldDirty: true });
+  }, [availableVariables]);
   /* App-related actions */
 
   const hasChanges = () => {
@@ -209,6 +222,9 @@ export const AccessDetails: React.FC = () => {
       auth_type: selectedAuthType === AUTH_TYPES.TOKEN ? AUTH_TYPES.TOKEN : AUTH_TYPES.OAUTH,
       polling_interval: currentConfigDetails.polling_interval,
       obo: currentConfigDetails.obo,
+      fieldsRaw: currentConfigDetails.fieldsRaw,
+      variableValues: currentConfigDetails.variableValues,
+      fieldsMapping: currentConfigDetails.fieldsMapping,
     };
 
     dispatch(validateAccessDetailsAction({ blueprintConfig: newAppDetails }));
@@ -238,7 +254,9 @@ export const AccessDetails: React.FC = () => {
       app_name: currentConfigDetails.app_name,
       app_url: currentConfigDetails.app_url,
       auth_type: currentConfigDetails.auth_type,
-
+      fieldsRaw: currentConfigDetails.fieldsRaw,
+      variableValues: currentConfigDetails.variableValues,
+      fieldsMapping: currentConfigDetails.fieldsMapping,
     };
 
     dispatch(updateAccessDetailsAction({
@@ -694,13 +712,8 @@ export const AccessDetails: React.FC = () => {
               </div>
             )}
           </Grid>
-
-
         </Grid>
-
-
         <hr className={classes.regularSectionSeparator} />
-
         {/* "App action" buttons section */}
         <div className={classes.buttonsContainer}>
           <ActionsFooter

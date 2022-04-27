@@ -300,6 +300,9 @@ export interface BlueprintAppConfigResponse {
     workerStatus: string,
     obo: boolean,
     apiUrl: string,
+    variableValues: any[],
+    fieldsRaw: string[],
+    fieldsMapping: any[],
   },
 }
 

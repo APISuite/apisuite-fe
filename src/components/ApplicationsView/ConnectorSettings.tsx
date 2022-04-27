@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, Grid, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
+import {Box, Grid, TextField, Typography, useTheme, useTranslation, Checkbox} from "@apisuite/fe-base";
 
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
@@ -12,6 +12,9 @@ import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
 import { ActionsFooter, AppContainer, useGetApp } from "./util";
 import useStyles from "./styles";
+import {updateAccessDetailsAction} from "store/applications/actions/updateAccessDetails";
+import clsx from "clsx";
+
 
 
 export const ConnectorSettings: React.FC = () => {
@@ -31,8 +34,8 @@ export const ConnectorSettings: React.FC = () => {
 
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const isNew = Number.isNaN(Number(appId));
-
-
+  const [fieldsMapping, setFieldsMapping] = React.useState<any>([]);
+  const [hasChangesValue, setHasChanges] = React.useState<boolean>(false);
   useGetApp({
     app,
     appId,
@@ -67,6 +70,9 @@ export const ConnectorSettings: React.FC = () => {
       token: blueprintConfig.app_conf.token || "",
       obo: blueprintConfig.obo || false,
       api_url: blueprintConfig.api_url || "",
+      variableValues: blueprintConfig.variableValues,
+      fieldsRaw: blueprintConfig.fieldsRaw,
+      fieldsMapping: blueprintConfig.fieldsMapping,
     },
     mode: "onChange",
     reValidateMode: "onChange",
@@ -76,7 +82,7 @@ export const ConnectorSettings: React.FC = () => {
     if (!isNew) {
       setValue("app_id", blueprintConfig.app_id, { shouldDirty: false });
       setValue("app_method", blueprintConfig.app_method, { shouldDirty: false });
-      setValue("app_name", blueprintConfig.app_name, { shouldDirty: getBlueprintAppConfigStatus.filled });
+      setValue("app_name", blueprintConfig.app_name, { shouldDirty: false });
       setValue("app_url", blueprintConfig.app_url, { shouldDirty: false });
       setValue("auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
       setValue("auth_url", blueprintConfig.app_conf.auth_url, { shouldDirty: false });
@@ -90,8 +96,35 @@ export const ConnectorSettings: React.FC = () => {
       setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
       setValue("obo", blueprintConfig.obo, { shouldDirty: false });
       setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
+      setValue("variableValues", blueprintConfig.variableValues, { shouldDirty: false });
+      setValue("fieldsRaw", blueprintConfig.fieldsRaw, { shouldDirty: false });
+      if (blueprintConfig.fieldsMapping && blueprintConfig.fieldsMapping.length)
+        setFieldsMapping(blueprintConfig.fieldsMapping);
+      else
+        buildFieldsMapping(blueprintConfig.fieldsRaw);
+
     }
   }, [app, isNew, setValue]);
+
+  const buildFieldsMapping = (fieldsRaw) => {
+    const newMapping = [];
+    for (const field of fieldsRaw) {
+      newMapping.push({
+        fieldIn: field,
+        fieldOut: "",
+        editable: false,
+      });
+    }
+    setFieldsMapping(newMapping);
+  };
+
+  React.useEffect(() => {
+    const currentValues = { ...getValues()};
+    const changed = JSON.stringify(currentValues.fieldMapping) === JSON.stringify(fieldsMapping);
+    setValue("fieldsMapping", fieldsMapping, { shouldDirty: false });
+    setHasChanges(changed);
+  }, [fieldsMapping]);
+
 
   useEffect(() => {
     if (getBlueprintAppConfigStatus.isRequesting) return;
@@ -112,10 +145,45 @@ export const ConnectorSettings: React.FC = () => {
     getBlueprintAppConfigStatus.retrieved,
   ]);
 
+  const updateAccessDetails = () => {
+    const currentConfigDetails = {
+      ...getValues(),
+    };
+
+    const newConfigDetails = {
+      app_conf: {
+        auth_url: currentConfigDetails.auth_url,
+        clt_id: currentConfigDetails.clt_id,
+        clt_secret: currentConfigDetails.clt_secret,
+        conn_auth_type: currentConfigDetails.conn_auth_type,
+        redirect_url: currentConfigDetails.redirect_url,
+        scope: currentConfigDetails.scope,
+        token_url: currentConfigDetails.token_url,
+        token: currentConfigDetails.token,
+      },
+      api_url: currentConfigDetails.api_url,
+      polling_interval: currentConfigDetails.polling_interval,
+      obo: currentConfigDetails.obo,
+      app_id: currentConfigDetails.app_id,
+      app_method: currentConfigDetails.app_method,
+      app_name: currentConfigDetails.app_name,
+      app_url: currentConfigDetails.app_url,
+      auth_type: currentConfigDetails.auth_type,
+      fieldsRaw: currentConfigDetails.fieldsRaw,
+      variableValues: currentConfigDetails.variableValues,
+      fieldsMapping: currentConfigDetails.fieldsMapping,
+    };
+    setHasChanges(false);
+    dispatch(updateAccessDetailsAction({
+      newConfig: newConfigDetails,
+      originalAppName: blueprintConfig.app_name,
+    }));
+  };
+
   /* App-related actions */
 
   const hasChanges = () => {
-    return true;
+    return isDirty || hasChangesValue;
   };
 
 
@@ -136,28 +204,88 @@ export const ConnectorSettings: React.FC = () => {
           <Grid item md={12}>
             <Box mb={1}>
               <Typography display="block" variant="h6">
-                {t("dashboardTab.applicationsSubTab.appModal.accessDetailsSectionTitle")}
+                {t("dashboardTab.applicationsSubTab.appModal.fieldMappingTitle")}
               </Typography>
             </Box>
 
             <Box mb={4}>
               <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
-                {t("dashboardTab.applicationsSubTab.appModal.accessDetailsSectionSubtitle")}
+                {t("dashboardTab.applicationsSubTab.appModal.fieldMappingSubtitle")}
               </Typography>
             </Box>
           </Grid>
         </Grid>
 
+        <Grid container spacing={3}>
+          <Grid item md={12}>
+            <Box mb={1}>
+              <Typography display="block" variant="subtitle1">
+                {t("dashboardTab.applicationsSubTab.appModal.variablesSubtitle")}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item md={12}>
+            <Box className={classes.customTableHeader}>
+              <Box ml={2} mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.integrationField")}
+                </Typography>
+              </Box>
+              <Box ml={2} mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.apiProductField")}
+                </Typography>
+              </Box>
+              <Box mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.endUserEditable")}
+                </Typography>
+              </Box>
+            </Box>
+            {fieldsMapping.length && (
+              fieldsMapping.map((element, index) => (
+                <Box className={clsx(classes.tableEntry, {
+                  [classes.evenTableEntry]: index % 2 === 0,
+                  [classes.oddTableEntry]: !(index % 2 === 0),
+                })}
+                key={`fieldsMapping${index}`}>
+                  <Box  mr={5} style={{ width: "123px", marginLeft: "16px", alignItems: "center"}}>
+                    <Typography variant="body1">{element.fieldIn}</Typography>
+                  </Box>
+                  <Box  mr={5} style={{ width: "123px", marginLeft: "16px", alignItems: "center"}}>
+                    <TextField
+                      className={classes.variables}
+                      name="fieldOut"
+                      value={element.fieldOut}
+                      onChange={(event) => {
+                        const newMapping = [...fieldsMapping];
+                        newMapping[index].fieldOut = event.target.value;
+                        setFieldsMapping(newMapping);
+                      }}
+                    />
+                  </Box>
+                  <Box  mr={5} style={{ width: "615px", alignItems: "center"}}>
+                    <Checkbox
+                      name="description"
+                      checked={element.enabled}
+                      onChange={(event) => {
+                        const newFieldsMapping = [...fieldsMapping];
+                        newFieldsMapping[index].enabled = event.target.checked;
+                        setFieldsMapping(newFieldsMapping);
+                      }}
+                    />
+                  </Box >
+                </Box>))
+            )}
+          </Grid>
+        </Grid>
         <hr className={classes.regularSectionSeparator} />
 
         {/* "App action" buttons section */}
         <div className={classes.buttonsContainer}>
           <ActionsFooter
-            altSaveButtonAction={
-              () => {
-              }
-            }
-            altSaveButtonLabel={t("applications.buttons.validateAccessDetails")}
+            altSaveButtonAction={updateAccessDetails}
+            altSaveButtonLabel={t("applications.buttons.update")}
             app={app}
             appId={appId}
             disableNextButton={!validateAccessDetailsStatus.validated}

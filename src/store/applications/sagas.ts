@@ -421,6 +421,9 @@ export function* fillBlueprintAppConfigActionSaga(action: FillBlueprintAppConfig
       polling_interval: `${response.data.configuration.polling_interval}`,
       obo:  convertToBool(response.data.configuration.obo),
       api_url: "",
+      fieldsRaw: [],
+      variableValues: [],
+      fieldsMapping: [],
     };
 
     yield put(fillBlueprintAppConfigSuccess({
@@ -464,6 +467,9 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
       polling_interval: `${response.data.pollingInterval}`,
       obo: response.data.obo,
       api_url: response.data.apiUrl,
+      fieldsRaw: response.data.fieldsRaw,
+      variableValues: response.data.variableValues || [],
+      fieldsMapping: response.data.fieldsMapping || [],
     };
 
     yield put(getBlueprintAppConfigSuccess({
