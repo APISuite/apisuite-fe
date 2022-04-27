@@ -10,7 +10,7 @@ import { RouterPrompt } from "components/RouterPrompt";
 import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
-import {ActionsFooter, AppContainer, createBlueprintConfig, useGetApp} from "./util";
+import {ActionsFooter, AppContainer, createAppRegisterValues, createBlueprintConfig, useGetApp} from "./util";
 import useStyles from "./styles";
 import {updateAccessDetailsAction} from "store/applications/actions/updateAccessDetails";
 import clsx from "clsx";
@@ -20,12 +20,9 @@ import clsx from "clsx";
 export const ConnectorSettings: React.FC = () => {
   const classes = useStyles();
   const { palette } = useTheme();
-
   const { t } = useTranslation();
-
   const history = useHistory() as LocationHistory;
   const dispatch = useDispatch();
-
   const {
     app, blueprintConfig, getBlueprintAppConfigStatus,
     requesting, status, types, validateAccessDetailsStatus,
@@ -52,27 +49,7 @@ export const ConnectorSettings: React.FC = () => {
     getValues,
     setValue,
   } = useForm({
-    defaultValues: {
-      app_id: blueprintConfig.app_id,
-      app_method: blueprintConfig.app_method || "",
-      app_name: blueprintConfig.app_name || "",
-      app_url: blueprintConfig.app_url || "",
-      auth_type: blueprintConfig.app_conf.conn_auth_type,
-      auth_url: blueprintConfig.app_conf.auth_url || "oauth",
-      clt_id: blueprintConfig.app_conf.clt_id || "",
-      clt_secret: blueprintConfig.app_conf.clt_secret || "",
-      conn_auth_type: blueprintConfig.app_conf.conn_auth_type,
-      polling_interval: blueprintConfig.polling_interval || "",
-      redirect_url: blueprintConfig.app_conf.redirect_url || "",
-      scope: blueprintConfig.app_conf.scope || "",
-      token_url: blueprintConfig.app_conf.token_url || "",
-      token: blueprintConfig.app_conf.token || "",
-      obo: blueprintConfig.obo || false,
-      api_url: blueprintConfig.api_url || "",
-      variableValues: blueprintConfig.variableValues,
-      fieldsRaw: blueprintConfig.fieldsRaw,
-      fieldsMapping: blueprintConfig.fieldsMapping,
-    },
+    defaultValues: createAppRegisterValues(blueprintConfig),
     mode: "onChange",
     reValidateMode: "onChange",
   });

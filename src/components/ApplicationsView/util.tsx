@@ -130,6 +130,29 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
     </>
   );
 };
+export const createAppRegisterValues = (blueprintConfig: CurrentBlueprintConfig) : AppRegisterValues => {
+  return {
+    app_id: blueprintConfig.app_id,
+    app_method: blueprintConfig.app_method || "",
+    app_name: blueprintConfig.app_name || "",
+    app_url: blueprintConfig.app_url || "",
+    auth_type: blueprintConfig.app_conf.conn_auth_type,
+    auth_url: blueprintConfig.app_conf.auth_url || "oauth",
+    clt_id: blueprintConfig.app_conf.clt_id || "",
+    clt_secret: blueprintConfig.app_conf.clt_secret || "",
+    conn_auth_type: blueprintConfig.app_conf.conn_auth_type,
+    polling_interval: blueprintConfig.polling_interval || "",
+    redirect_url: blueprintConfig.app_conf.redirect_url || "",
+    scope: blueprintConfig.app_conf.scope || "",
+    token_url: blueprintConfig.app_conf.token_url || "",
+    token: blueprintConfig.app_conf.token || "",
+    obo: blueprintConfig.obo || false,
+    api_url: blueprintConfig.api_url || "",
+    variableValues: blueprintConfig.variableValues,
+    fieldsRaw: blueprintConfig.fieldsRaw,
+    fieldsMapping: blueprintConfig.fieldsMapping,
+  };
+};
 
 export const createBlueprintConfig = (currentConfigDetails: AppRegisterValues ) : CurrentBlueprintConfig => {
   return {
