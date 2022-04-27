@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import {Box, Grid, TextField, Typography, useTheme, useTranslation, Checkbox} from "@apisuite/fe-base";
-
+import { FieldMappingType } from "store/applications/types";
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
 import { RouterPrompt } from "components/RouterPrompt";
@@ -105,7 +105,7 @@ export const ConnectorSettings: React.FC = () => {
     }
   }, [app, isNew, setValue]);
 
-  const buildFieldsMapping = (fieldsRaw) => {
+  const buildFieldsMapping = (fieldsRaw : string[]) => {
     const newMapping = [];
     for (const field of fieldsRaw) {
       newMapping.push({
@@ -238,7 +238,7 @@ export const ConnectorSettings: React.FC = () => {
               </Box>
             </Box>
             {fieldsMapping.length && (
-              fieldsMapping.map((element, index) => (
+              fieldsMapping.map((element : FieldMappingType, index : number) => (
                 <Box className={clsx(classes.tableEntry, {
                   [classes.evenTableEntry]: index % 2 === 0,
                   [classes.oddTableEntry]: !(index % 2 === 0),

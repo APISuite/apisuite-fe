@@ -75,6 +75,18 @@ export interface Metadata {
   description: string,
 }
 
+export interface VariablesType {
+  key: string,
+  friendlyName: string,
+  description: string,
+}
+
+export interface FieldMappingType {
+  fieldIn: string,
+  fieldOut: string,
+  editable: boolean,
+}
+
 export interface CurrentBlueprintConfig {
   app_conf: {
     auth_url: string,

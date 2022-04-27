@@ -11,6 +11,7 @@ import { RouterPrompt } from "components/RouterPrompt";
 import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 import { updateAccessDetailsAction } from "store/applications/actions/updateAccessDetails";
 import { validateAccessDetailsAction } from "store/applications/actions/validateAccessDetails";
+import { VariablesType } from "store/applications/types";
 import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
 import { ActionsFooter, AppContainer, useGetApp } from "./util";
@@ -51,6 +52,13 @@ export const AccessDetails: React.FC = () => {
     status,
     typeId,
   });
+
+  const getTableLabel = () => {
+    return blueprintConfig.api_url ?
+      t("dashboardTab.applicationsSubTab.appModal.nothingToShow")
+      :
+      t("dashboardTab.applicationsSubTab.appModal.noUrlDefined");
+  };
 
   const {
     control,
@@ -162,10 +170,11 @@ export const AccessDetails: React.FC = () => {
   };
 
   const validateVars = (url: string) => {
+
     const urlVars = getURLVars(url);
-    const newVariables = availableVariables.filter(element => urlVars.includes(element.key));
-    const currentVarNames = newVariables.map(element => element.key);
-    const urlsToAdd = urlVars.filter((element) => !currentVarNames.includes(element));
+    const newVariables = availableVariables.filter((element: VariablesType) => urlVars.includes(element.key));
+    const currentVarNames = newVariables.map((element: VariablesType) => element.key);
+    const urlsToAdd = urlVars.filter((element: string) => !currentVarNames.includes(element));
     for (const urlToAdd of urlsToAdd) {
       newVariables.push({
         key : urlToAdd,
@@ -674,10 +683,10 @@ export const AccessDetails: React.FC = () => {
               </Box>
             </Box>
             {availableVariables.length ? (
-              availableVariables.map((element, index) => (
+              availableVariables.map((element : VariablesType, index : number) => (
                 <Box className={clsx(classes.tableEntry, {
                   [classes.evenTableEntry]: index % 2 === 0,
-                  [classes.oddTableEntry]: !(index % 2 === 0),
+                  [classes.oddTableEntry]: index % 2 !== 0,
                 })}
                 key={`variables${index}`}>
                   <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
@@ -711,10 +720,7 @@ export const AccessDetails: React.FC = () => {
                 </Box>))
             ) : (
               <div className={classes.nothingToShow}>
-                <Typography variant="body1">{ blueprintConfig.api_url ?
-                  t("dashboardTab.applicationsSubTab.appModal.nothingToShow") :
-                  t("dashboardTab.applicationsSubTab.appModal.noUrlDefined")
-                }</Typography>
+                <Typography variant="body1">{getTableLabel()}</Typography>
               </div>
             )}
           </Grid>
