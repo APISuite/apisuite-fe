@@ -118,9 +118,12 @@ export const ConnectorSettings: React.FC = () => {
   };
 
   React.useEffect(() => {
+
     const currentValues = { ...getValues()};
-    const changed = JSON.stringify(currentValues.fieldMapping) === JSON.stringify(fieldsMapping);
-    setValue("fieldsMapping", fieldsMapping, { shouldDirty: false });
+    console.log(currentValues.fieldsMapping);
+    console.log(fieldsMapping);
+    const changed = JSON.stringify(currentValues.fieldsMapping) !== JSON.stringify(fieldsMapping);
+    setValue("fieldsMapping", {...fieldsMapping}, { shouldDirty: false });
     setHasChanges(changed);
   }, [fieldsMapping]);
 
@@ -217,15 +220,8 @@ export const ConnectorSettings: React.FC = () => {
 
         <Grid container spacing={3}>
           <Grid item md={12}>
-            <Box mb={1}>
-              <Typography display="block" variant="subtitle1">
-                {t("dashboardTab.applicationsSubTab.appModal.variablesSubtitle")}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item md={12}>
             <Box className={classes.customTableHeader}>
-              <Box ml={2} mr={5}>
+              <Box ml={2} mr={5} style={{ width: "153px"}}>
                 <Typography style={{ color: palette.text.secondary }} variant="body1">
                   {t("dashboardTab.applicationsSubTab.appModal.integrationField")}
                 </Typography>
@@ -248,7 +244,7 @@ export const ConnectorSettings: React.FC = () => {
                   [classes.oddTableEntry]: !(index % 2 === 0),
                 })}
                 key={`fieldsMapping${index}`}>
-                  <Box  mr={5} style={{ width: "123px", marginLeft: "16px", alignItems: "center"}}>
+                  <Box  mr={5} style={{ width: "153px", marginLeft: "16px", alignItems: "center"}}>
                     <Typography variant="body1">{element.fieldIn}</Typography>
                   </Box>
                   <Box  mr={5} style={{ width: "123px", marginLeft: "16px", alignItems: "center"}}>
@@ -266,10 +262,10 @@ export const ConnectorSettings: React.FC = () => {
                   <Box  mr={5} style={{ width: "615px", alignItems: "center"}}>
                     <Checkbox
                       name="description"
-                      checked={element.enabled}
+                      checked={element.editable}
                       onChange={(event) => {
                         const newFieldsMapping = [...fieldsMapping];
-                        newFieldsMapping[index].enabled = event.target.checked;
+                        newFieldsMapping[index].editable = event.target.checked;
                         setFieldsMapping(newFieldsMapping);
                       }}
                     />
