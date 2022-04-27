@@ -182,7 +182,7 @@ export const ConnectorSettings: React.FC = () => {
               fieldsMapping.map((element : FieldMappingType, index : number) => (
                 <Box className={clsx(classes.tableEntry, {
                   [classes.evenTableEntry]: index % 2 === 0,
-                  [classes.oddTableEntry]: !(index % 2 === 0),
+                  [classes.oddTableEntry]: index % 2 !== 0,
                 })}
                 key={`fieldsMapping${index}`}>
                   <Box  mr={5} style={{ width: "153px", marginLeft: "16px", alignItems: "center"}}>
