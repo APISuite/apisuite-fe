@@ -178,7 +178,7 @@ export const ConnectorSettings: React.FC = () => {
                 </Typography>
               </Box>
             </Box>
-            {fieldsMapping.length && (
+            {fieldsMapping.length > 0 && (
               fieldsMapping.map((element : FieldMappingType, index : number) => (
                 <Box className={clsx(classes.tableEntry, {
                   [classes.evenTableEntry]: index % 2 === 0,
