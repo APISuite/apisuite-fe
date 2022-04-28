@@ -143,6 +143,7 @@ const initialState: ApplicationsStore = {
     fieldsRaw: [],
     variableValues: [],
     fieldsMapping: [],
+    doneUrl: '',
   },
 };
 

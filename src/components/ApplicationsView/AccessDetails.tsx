@@ -211,6 +211,7 @@ export const AccessDetails: React.FC = () => {
       fieldsRaw: currentConfigDetails.fieldsRaw,
       variableValues: currentConfigDetails.variableValues,
       fieldsMapping: currentConfigDetails.fieldsMapping,
+      doneUrl: window.location.href,
     };
 
     dispatch(validateAccessDetailsAction({ blueprintConfig: newAppDetails }));
@@ -676,7 +677,7 @@ export const AccessDetails: React.FC = () => {
           <ActionsFooter
             altSaveButtonAction={
               () => {
-                (validateAccessDetailsStatus.validated || getBlueprintAppConfigStatus.retrieved)
+                validateAccessDetailsStatus.validated
                   ? updateAccessDetails()
                   : validateAccessDetails(selectedAuth);
               }

@@ -342,9 +342,10 @@ export function* validateAccessDetailsActionSaga(action: ValidateAccessDetailsAc
     });
 
     if (action.blueprintConfig.auth_type === "oauth") {
+      console.log(response.data.toString());
       window.open(
         response.data.toString(),
-        "_blank"
+        "_self"
       );
     }
 
@@ -424,6 +425,7 @@ export function* fillBlueprintAppConfigActionSaga(action: FillBlueprintAppConfig
       fieldsRaw: [],
       variableValues: [],
       fieldsMapping: [],
+      doneUrl: "",
     };
 
     yield put(fillBlueprintAppConfigSuccess({
@@ -470,6 +472,7 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
       fieldsRaw: response.data.fieldsRaw,
       variableValues: response.data.variableValues || [],
       fieldsMapping: response.data.fieldsMapping || [],
+      doneUrl: "",
     };
 
     yield put(getBlueprintAppConfigSuccess({

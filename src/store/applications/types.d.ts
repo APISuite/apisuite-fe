@@ -130,6 +130,7 @@ export interface CurrentBlueprintConfig {
   fieldsRaw: string[],
   variableValues: VariablesType[],
   fieldsMapping: FieldMappingType[],
+  doneUrl: string,
 }
 
 export interface ModalDetails {
