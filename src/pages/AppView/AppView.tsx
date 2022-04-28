@@ -85,11 +85,12 @@ export const AppView: React.FC = () => {
   };
   const CONNECTOR_SETTINGS = {
     component: ConnectorSettings,
-    disabled: isNew && isValid,
+    disabled: isNew || !isValid,
     label: t("applications.tabs.connectorSettings"),
     path: "/dashboard/apps/:appId/type/:typeId/connector_settings",
     route: `/dashboard/apps/${appId}/type/${typeId}/connector_settings`,
   };
+
   if (type && type.type) {
     const appType = type.type;
 
