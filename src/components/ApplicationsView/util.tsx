@@ -202,7 +202,7 @@ export const createBlueprintConfig = (currentConfigDetails: AppRegisterValues ) 
     fieldsRaw: currentConfigDetails.fieldsRaw,
     variableValues: currentConfigDetails.variableValues,
     fieldsMapping: currentConfigDetails.fieldsMapping,
-    doneUrl: '',
+    doneUrl: "",
   };
 };
 
