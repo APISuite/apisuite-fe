@@ -21,6 +21,7 @@ import {
 import useStyles from "./styles";
 import {updateAccessDetailsAction} from "store/applications/actions/updateAccessDetails";
 import clsx from "clsx";
+import {toggleBlueprintAppStatusAction} from "store/applications/actions/toggleBlueprintAppStatus";
 
 
 
@@ -32,7 +33,7 @@ export const ConnectorSettings: React.FC = () => {
   const dispatch = useDispatch();
   const {
     app, blueprintConfig, getBlueprintAppConfigStatus,
-    requesting, status, types, validateAccessDetailsStatus,
+    requesting, status, types, validateAccessDetailsStatus, isActive,
   } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
 
@@ -65,13 +66,13 @@ export const ConnectorSettings: React.FC = () => {
     if (!isNew) {
       setCommonValues(blueprintConfig, setValue);
       setValue("variableValues", blueprintConfig.variableValues, { shouldDirty: false });
-      if (blueprintConfig.fieldsMapping && blueprintConfig.fieldsMapping.length)
-        setFieldsMapping(blueprintConfig.fieldsMapping);
-      else
+      if (blueprintConfig.fieldsMapping && blueprintConfig.fieldsMapping.length) {
+        setFieldsMapping([ ...blueprintConfig.fieldsMapping ]);
+      } else {
         buildFieldsMapping(blueprintConfig.fieldsRaw);
-
+      }
     }
-  }, [app, isNew, setValue]);
+  }, [app, isNew, setValue, blueprintConfig]);
 
   const buildFieldsMapping = (fieldsRaw : string[]) => {
     const newMapping = [];
@@ -87,10 +88,8 @@ export const ConnectorSettings: React.FC = () => {
 
   React.useEffect(() => {
 
-    const currentValues = { ...getValues()};
-    const changed = JSON.stringify(currentValues.fieldsMapping) !== JSON.stringify(fieldsMapping);
-    setValue("fieldsMapping", {...fieldsMapping}, { shouldDirty: false });
-    setHasChanges(changed);
+    const newFieldMapping = [ ...fieldsMapping ];
+    setValue("fieldsMapping", newFieldMapping, { shouldDirty: false });
   }, [fieldsMapping]);
 
 
@@ -121,6 +120,14 @@ export const ConnectorSettings: React.FC = () => {
       }),
       originalAppName: blueprintConfig.app_name,
     }));
+    if (!isActive) {
+      dispatch(toggleBlueprintAppStatusAction({
+        appStatusData: {
+          app_name: blueprintConfig.app_name,
+          command: "start",
+        },
+      }));
+    }
   };
 
   /* App-related actions */
@@ -188,7 +195,7 @@ export const ConnectorSettings: React.FC = () => {
                   <Box  mr={5} style={{ width: "153px", marginLeft: "16px", alignItems: "center"}}>
                     <Typography variant="body1">{element.fieldIn}</Typography>
                   </Box>
-                  <Box  mr={5} style={{ width: "123px", marginLeft: "16px", alignItems: "center"}}>
+                  <Box  mr={5} style={{ width: "123px", marginLeft: "32px", alignItems: "center"}}>
                     <TextField
                       className={classes.variables}
                       name="fieldOut"
@@ -197,6 +204,7 @@ export const ConnectorSettings: React.FC = () => {
                         const newMapping = [...fieldsMapping];
                         newMapping[index].fieldOut = event.target.value;
                         setFieldsMapping(newMapping);
+                        setHasChanges(true);
                       }}
                     />
                   </Box>
@@ -208,6 +216,7 @@ export const ConnectorSettings: React.FC = () => {
                         const newFieldsMapping = [...fieldsMapping];
                         newFieldsMapping[index].editable = event.target.checked;
                         setFieldsMapping(newFieldsMapping);
+                        setHasChanges(true);
                       }}
                     />
                   </Box >

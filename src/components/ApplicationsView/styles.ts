@@ -198,8 +198,8 @@ export default makeStyles((theme) => ({
     },
   },
   variables: {
-    "& .MuiFilledInput-root": {
-      backgroundColor: "rgba(232, 241, 250, 0)",
+    "& .MuiInputBase-root.MuiInputBase-formControl": {
+      backgroundColor: "rgba(232, 241, 250, 0) !important",
     },
   },
   avatarIcons: {

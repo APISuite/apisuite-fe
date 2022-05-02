@@ -448,7 +448,7 @@ export default function reducer (
           validated: { $set: action.type === GET_BLUEPRINT_CONFIG_SUCCESS },
         },
 
-        isActive: { $set: action.type === GET_BLUEPRINT_CONFIG_SUCCESS ? action.isActive : true },
+        isActive: { $set: action.type === GET_BLUEPRINT_CONFIG_SUCCESS ? action.isActive : false },
       });
     }
 
