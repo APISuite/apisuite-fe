@@ -342,7 +342,6 @@ export function* validateAccessDetailsActionSaga(action: ValidateAccessDetailsAc
     });
 
     if (action.blueprintConfig.auth_type === "oauth") {
-      console.log(response.data.toString());
       window.open(
         response.data.toString(),
         "_self"
