@@ -141,7 +141,6 @@ export const AccessDetails: React.FC = () => {
   };
 
   const validateVars = (url: string) => {
-
     const urlVars = getURLVars(url);
     const newVariables = availableVariables.filter((element: VariablesType) => urlVars.includes(element.key));
     const currentVarNames = newVariables.map((element: VariablesType) => element.key);
@@ -188,7 +187,7 @@ export const AccessDetails: React.FC = () => {
     const currentConfigDetails = {
       ...getValues(),
     };
-
+    currentConfigDetails.variableValues = [ ...availableVariables ];
     const newAppDetails = {
       app_conf: {
         auth_url: selectedAuthType === AUTH_TYPES.TOKEN ? "" : currentConfigDetails.auth_url,
@@ -221,6 +220,7 @@ export const AccessDetails: React.FC = () => {
     dispatch(updateAccessDetailsAction({
       newConfig: createBlueprintConfig({
         ...getValues(),
+        variableValues: [ ...availableVariables ],
       }),
       originalAppName: blueprintConfig.app_name,
     }));
