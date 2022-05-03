@@ -139,6 +139,36 @@ export function* deleteAppActionSaga(action: DeleteAppAction) {
         "content-type": "application/x-www-form-urlencoded",
       },
     });
+    if (["blueprint", "connector"].includes(action.appType)) {
+      const getBlueprintAppConfigActionUrl = `${APP_CONNECTOR_URL}/apps/getid/${action.appId}`;
+      const response: BlueprintAppConfigResponse = yield call(request, {
+        url: getBlueprintAppConfigActionUrl,
+        method: "GET",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+        },
+      });
+      if (response.data.workerStatus === "started") {
+        const toggleBlueprintAppStatusUrl = `${APP_CONNECTOR_URL}/apps/worker/`;
+
+        yield call(request, {
+          url: toggleBlueprintAppStatusUrl,
+          method: "POST",
+          data: {
+            app_name: response.data.name,
+            command: "stop",
+          },
+        });
+      }
+      const deleteAppConnectorUrl = `${APP_CONNECTOR_URL}/apps/delete/${response.data.name}`;
+      yield call(request, {
+        url: deleteAppConnectorUrl,
+        method: "DELETE",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+        },
+      });
+    }
 
     yield put(deleteAppSuccess({ id: action.appId }));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

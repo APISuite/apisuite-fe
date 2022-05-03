@@ -106,6 +106,7 @@ export type DeleteAppAction = {
   type: typeof DELETE_APP,
   appId: number,
   orgID: number,
+  appType: string,
 }
 
 export type DeleteAppActionSuccess = {
@@ -288,7 +289,6 @@ export interface BlueprintAppConfigResponse {
     appMethod: string,
     appUrl: string,
     authType: string,
-    fieldsRaw: string[],
     id: number,
     name: string,
     orgId: number,

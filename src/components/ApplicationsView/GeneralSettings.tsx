@@ -152,7 +152,7 @@ export const GeneralSettings: React.FC = () => {
   };
 
   const _deleteApp = () => {
-    dispatch(deleteApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
+    dispatch(deleteApp({ orgID: profile.currentOrg.id, appId: Number(appId), appType: app.appType.type }));
 
     openDeleteDialog(false);
     history.push("/dashboard/apps");
