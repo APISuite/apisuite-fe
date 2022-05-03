@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import {Box, Grid, TextField, Typography, useTheme, useTranslation, Checkbox} from "@apisuite/fe-base";
+import {useHistory, useParams} from "react-router-dom";
+import {Box, Grid, TextField, Typography, useTheme, useTranslation, Checkbox, Switch} from "@apisuite/fe-base";
 import { FieldMappingType } from "store/applications/types";
 import { AppTypesTab } from "pages/AppView/types";
 import { profileSelector } from "pages/Profile/selectors";
@@ -120,16 +120,16 @@ export const ConnectorSettings: React.FC = () => {
       }),
       originalAppName: blueprintConfig.app_name,
     }));
-    if (!isActive) {
-      dispatch(toggleBlueprintAppStatusAction({
-        appStatusData: {
-          app_name: blueprintConfig.app_name,
-          command: "start",
-        },
-      }));
-    }
   };
 
+  const toggleActiveAppStatus = (isAppActive: boolean) => {
+    dispatch(toggleBlueprintAppStatusAction({
+      appStatusData: {
+        app_name: blueprintConfig.app_name,
+        command: isAppActive ? "start" : "stop",
+      },
+    }));
+  };
   /* App-related actions */
 
   const hasChanges = () => {
@@ -150,7 +150,38 @@ export const ConnectorSettings: React.FC = () => {
         typeId={typeId}
         types={types}
       >
+
+
         <Grid container spacing={3}>
+          <Grid item md={12}>
+            <Box mb={1}>
+              <Typography display="block" gutterBottom variant="h6">
+                {t("dashboardTab.applicationsSubTab.appModal.appStatusTitle")}
+              </Typography>
+            </Box>
+
+            <Box pb={4}>
+              <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                {t("dashboardTab.applicationsSubTab.appModal.appStatusSubtitle")}
+              </Typography>
+            </Box>
+
+            <Box style={{ alignItems: "center", display: "flex" }}>
+              <Switch
+                checked={isActive}
+                onChange={() => toggleActiveAppStatus(!isActive)}
+                color="primary"
+              />
+              <Typography display="block" style={{ color: palette.text.secondary }} variant="body2">
+                {
+                  isActive
+                    ? t("dashboardTab.applicationsSubTab.appModal.activeApp")
+                    : t("dashboardTab.applicationsSubTab.appModal.inactiveApp")
+                }
+              </Typography>
+            </Box>
+          </Grid>
+          <hr className={classes.regularSectionSeparator} />
           <Grid item md={12}>
             <Box mb={1}>
               <Typography display="block" variant="h6">
@@ -225,7 +256,6 @@ export const ConnectorSettings: React.FC = () => {
           </Grid>
         </Grid>
         <hr className={classes.regularSectionSeparator} />
-
         {/* "App action" buttons section */}
         <div className={classes.buttonsContainer}>
           <ActionsFooter
