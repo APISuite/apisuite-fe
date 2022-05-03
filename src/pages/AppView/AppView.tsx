@@ -5,7 +5,7 @@ import { Box, useTranslation } from "@apisuite/fe-base";
 
 import {
   AccessDetails,
-  ClientAccess,
+  ClientAccess, ConnectorSettings,
   CustomProperties,
   ExternalSettings,
   GeneralSettings,
@@ -25,7 +25,7 @@ export const AppView: React.FC = () => {
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const active = isExtensionActive("@apisuite/apisuite-marketplace-extension-ui");
 
-  const { types } = useSelector(typesSelector);
+  const { types, isValid } = useSelector(typesSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -83,6 +83,13 @@ export const AppView: React.FC = () => {
     path: "/dashboard/apps/:appId/type/:typeId/access",
     route: `/dashboard/apps/${appId}/type/${typeId}/access`,
   };
+  const CONNECTOR_SETTINGS = {
+    component: ConnectorSettings,
+    disabled: isNew || !isValid,
+    label: t("applications.tabs.connectorSettings"),
+    path: "/dashboard/apps/:appId/type/:typeId/connector_settings",
+    route: `/dashboard/apps/${appId}/type/${typeId}/connector_settings`,
+  };
 
   if (type && type.type) {
     const appType = type.type;
@@ -98,6 +105,7 @@ export const AppView: React.FC = () => {
     }
     if (appType === AppTypes.BLUEPRINT || appType === AppTypes.CONNECTOR) {
       ROUTES.push(BLUEPRINT);
+      ROUTES.push(CONNECTOR_SETTINGS);
     }
   }
 

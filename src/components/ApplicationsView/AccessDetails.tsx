@@ -11,11 +11,20 @@ import { RouterPrompt } from "components/RouterPrompt";
 import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 import { updateAccessDetailsAction } from "store/applications/actions/updateAccessDetails";
 import { validateAccessDetailsAction } from "store/applications/actions/validateAccessDetails";
+import { VariablesType } from "store/applications/types";
 import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
-import { ActionsFooter, AppContainer, useGetApp } from "./util";
+import {
+  ActionsFooter,
+  AppContainer,
+  createAppRegisterValues,
+  createBlueprintConfig,
+  setCommonValues,
+  useGetApp,
+} from "./util";
 import useStyles from "./styles";
-import { toggleBlueprintAppStatusAction } from "store/applications/actions/toggleBlueprintAppStatus";
+import { fillBlueprintAppConfig } from "store/applications/actions/fillBlueprintAppConfig";
+import Notice from "components/Notice";
 
 export const AccessDetails: React.FC = () => {
   const classes = useStyles();
@@ -27,7 +36,7 @@ export const AccessDetails: React.FC = () => {
   const dispatch = useDispatch();
 
   const {
-    app, blueprintConfig, getBlueprintAppConfigStatus, isActive,
+    app, blueprintConfig, getBlueprintAppConfigStatus,
     requesting, status, types, validateAccessDetailsStatus,
   } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
@@ -51,55 +60,50 @@ export const AccessDetails: React.FC = () => {
     typeId,
   });
 
+  const getTableLabel = () => {
+    return blueprintConfig.api_url ?
+      t("dashboardTab.applicationsSubTab.appModal.nothingToShow")
+      :
+      t("dashboardTab.applicationsSubTab.appModal.noUrlDefined");
+  };
+
   const {
     control,
     formState: { errors, isDirty, isValid },
     getValues,
     setValue,
   } = useForm({
-    defaultValues: {
-      app_id: blueprintConfig.app_id,
-      app_method: blueprintConfig.app_method || "",
-      app_name: blueprintConfig.app_name || "",
-      app_url: blueprintConfig.app_url || "",
-      auth_type: blueprintConfig.app_conf.conn_auth_type,
-      auth_url: blueprintConfig.app_conf.auth_url || "",
-      clt_id: blueprintConfig.app_conf.clt_id || "",
-      clt_secret: blueprintConfig.app_conf.clt_secret || "",
-      conn_auth_type: blueprintConfig.app_conf.conn_auth_type,
-      polling_interval: blueprintConfig.polling_interval || "",
-      redirect_url: blueprintConfig.app_conf.redirect_url || "",
-      scope: blueprintConfig.app_conf.scope || "",
-      token_url: blueprintConfig.app_conf.token_url || "",
-      token: blueprintConfig.app_conf.token || "",
-    },
+    defaultValues:  createAppRegisterValues(blueprintConfig),
     mode: "onChange",
     reValidateMode: "onChange",
   });
 
   useEffect(() => {
     if (!isNew) {
-      setValue("app_id", blueprintConfig.app_id, { shouldDirty: false });
-      setValue("app_method", blueprintConfig.app_method, { shouldDirty: false });
-      setValue("app_name", blueprintConfig.app_name, { shouldDirty: false });
-      setValue("app_url", blueprintConfig.app_url, { shouldDirty: false });
-      setValue("auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
-      setValue("auth_url", blueprintConfig.app_conf.auth_url, { shouldDirty: false });
-      setValue("clt_id", blueprintConfig.app_conf.clt_id, { shouldDirty: false });
-      setValue("clt_secret", blueprintConfig.app_conf.clt_secret, { shouldDirty: false });
-      setValue("conn_auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
-      setValue("polling_interval", blueprintConfig.polling_interval, { shouldDirty: false });
-      setValue("redirect_url", blueprintConfig.app_conf.redirect_url, { shouldDirty: false });
-      setValue("scope", blueprintConfig.app_conf.scope, { shouldDirty: false });
-      setValue("token_url", blueprintConfig.app_conf.token_url, { shouldDirty: false });
-      setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
+      setCommonValues(blueprintConfig, setValue);
+      setValue("fieldsMapping", blueprintConfig.fieldsMapping, { shouldDirty: false });
+      if (
+        blueprintConfig.variableValues &&
+        blueprintConfig.variableValues.length === getURLVars(blueprintConfig.api_url).length
+      ) {
+        setAvailableVariables(blueprintConfig.variableValues);
+      } else {
+        validateVars(blueprintConfig.api_url);
+      }
     }
   }, [app, isNew, setValue]);
 
   useEffect(() => {
+    if (getBlueprintAppConfigStatus.isRequesting) return;
     /* If "getBlueprintAppConfigStatus.isError" amounts to "true",
     it means the blueprint app has yet to be configured. */
-    if (getBlueprintAppConfigStatus.isError) return;
+    if (getBlueprintAppConfigStatus.isError) {
+      const metadata = app.metadata.filter((value) => value.key === "meta_origin_blueprint");
+      if (metadata.length && !getBlueprintAppConfigStatus.retrieved) {
+        dispatch(fillBlueprintAppConfig({ blueprintName: metadata[0].value, appId: app.id }));
+      }
+      return;
+    }
 
     if (blueprintConfig.app_id && !getBlueprintAppConfigStatus.retrieved) {
       dispatch(getBlueprintAppConfig({ appId: blueprintConfig.app_id }));
@@ -111,10 +115,12 @@ export const AccessDetails: React.FC = () => {
     getBlueprintAppConfigStatus.isError,
     getBlueprintAppConfigStatus.retrieved,
   ]);
-  
+
   // Authentication type logic
 
   const [selectedAuth, setSelectedAuth] = React.useState(blueprintConfig.app_conf.conn_auth_type);
+
+  const [availableVariables, setAvailableVariables] = React.useState<VariablesType[]>([]);
 
   const handleAuthSelection = (selectedAuthType: string) => {
     setSelectedAuth(selectedAuthType);
@@ -123,10 +129,39 @@ export const AccessDetails: React.FC = () => {
     setValue("conn_auth_type", selectedAuthType, { shouldDirty: false });
   };
 
+  const getURLVars = (url: string) => {
+    const matcher = (url || "").matchAll(/{([^{}]*?)}/g);
+    const results = [];
+    let value = matcher.next();
+    while (!value.done) {
+      results.push(value.value[1]);
+      value = matcher.next();
+    }
+    return results;
+  };
+
+  const validateVars = (url: string) => {
+    const urlVars = getURLVars(url);
+    const newVariables = availableVariables.filter((element: VariablesType) => urlVars.includes(element.key));
+    const currentVarNames = newVariables.map((element: VariablesType) => element.key);
+    const urlsToAdd = urlVars.filter((element: string) => !currentVarNames.includes(element));
+    for (const urlToAdd of urlsToAdd) {
+      newVariables.push({
+        key : urlToAdd,
+        friendlyName: "",
+        description: "",
+      });
+    }
+    setAvailableVariables(newVariables);
+  };
+
+  React.useEffect(()=> {
+    setValue("variableValues", availableVariables, { shouldDirty: true });
+  }, [availableVariables, setValue]);
   /* App-related actions */
 
   const hasChanges = () => {
-    return (isValid || Object.keys(errors).length === 0) && isDirty;
+    return (isValid || Object.keys(errors).length === 0) && (isDirty || getBlueprintAppConfigStatus.filled);
   };
 
   const accessDetailsMissing = (selectedAuthType: string) => {
@@ -139,22 +174,20 @@ export const AccessDetails: React.FC = () => {
     }
 
     // If "OAuth" auth type fields are missing
-    if (selectedAuthType === AUTH_TYPES.OAUTH && (
+    return selectedAuthType === AUTH_TYPES.OAUTH && (
       !getValues("clt_id") || !getValues("clt_secret") ||
       !getValues("auth_url") || !getValues("token_url") ||
       !getValues("polling_interval")
-    )) {
-      return true;
-    }
+    );
 
-    return false;
+
   };
 
   const validateAccessDetails = (selectedAuthType: string) => {
     const currentConfigDetails = {
       ...getValues(),
     };
-
+    currentConfigDetails.variableValues = [ ...availableVariables ];
     const newAppDetails = {
       app_conf: {
         auth_url: selectedAuthType === AUTH_TYPES.TOKEN ? "" : currentConfigDetails.auth_url,
@@ -166,55 +199,30 @@ export const AccessDetails: React.FC = () => {
         token_url: selectedAuthType === AUTH_TYPES.TOKEN ? "" : currentConfigDetails.token_url,
         token: currentConfigDetails.token,
       },
+      api_url: currentConfigDetails.api_url,
       app_id: currentConfigDetails.app_id,
       app_method: currentConfigDetails.app_method,
       app_name: currentConfigDetails.app_name,
       app_url: currentConfigDetails.app_url,
       auth_type: selectedAuthType === AUTH_TYPES.TOKEN ? AUTH_TYPES.TOKEN : AUTH_TYPES.OAUTH,
       polling_interval: currentConfigDetails.polling_interval,
+      obo: currentConfigDetails.obo,
+      fieldsRaw: currentConfigDetails.fieldsRaw,
+      variableValues: currentConfigDetails.variableValues,
+      fieldsMapping: currentConfigDetails.fieldsMapping,
+      doneUrl: window.location.href,
     };
 
     dispatch(validateAccessDetailsAction({ blueprintConfig: newAppDetails }));
   };
 
   const updateAccessDetails = () => {
-    const currentConfigDetails = {
-      ...getValues(),
-    };
-
-    const newConfigDetails = {
-      app_conf: {
-        auth_url: currentConfigDetails.auth_url,
-        clt_id: currentConfigDetails.clt_id,
-        clt_secret: currentConfigDetails.clt_secret,
-        conn_auth_type: currentConfigDetails.conn_auth_type,
-        redirect_url: currentConfigDetails.redirect_url,
-        scope: currentConfigDetails.scope,
-        token_url: currentConfigDetails.token_url,
-        token: currentConfigDetails.token,
-      },
-      app_id: currentConfigDetails.app_id,
-      app_method: currentConfigDetails.app_method,
-      app_name: currentConfigDetails.app_name,
-      app_url: currentConfigDetails.app_url,
-      auth_type: currentConfigDetails.auth_type,
-      polling_interval: currentConfigDetails.polling_interval,
-    };
-
     dispatch(updateAccessDetailsAction({
-      newConfig: newConfigDetails,
+      newConfig: createBlueprintConfig({
+        ...getValues(),
+        variableValues: [ ...availableVariables ],
+      }),
       originalAppName: blueprintConfig.app_name,
-    }));
-  };
-
-  // "Active app status" logic
-
-  const toggleActiveAppStatus = (isAppActive: boolean) => {
-    dispatch(toggleBlueprintAppStatusAction({
-      appStatusData: {
-        app_name: blueprintConfig.app_name,
-        command: isAppActive ? "start" : "stop",
-      },
     }));
   };
 
@@ -247,26 +255,6 @@ export const AccessDetails: React.FC = () => {
           </Grid>
 
           <Grid item md={12}>
-            <Box>
-              <Controller
-                control={control}
-                name="app_name"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className={classes.inputFields}
-                    error={!!errors.app_name}
-                    fullWidth
-                    helperText={errors.app_name?.message}
-                    label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.appNameFieldLabel")}
-                    margin="dense"
-                    type="text"
-                    variant="outlined"
-                  />
-                )}
-              />
-            </Box>
-
             <Box>
               <Controller
                 control={control}
@@ -307,7 +295,49 @@ export const AccessDetails: React.FC = () => {
                 )}
               />
             </Box>
+            <Box mb={2}>
+              <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="subtitle1">
+                {t("dashboardTab.applicationsSubTab.appModal.oboSubtitle")}
+              </Typography>
+            </Box>
+            <Box style={{ alignItems: "center", display: "flex" }} mb={2}>
+              <Controller
+                name="obo"
+                control={control}
+                render={({ field }) => (
+                  <Switch
+                    checked={field.value}
+                    value={field.value}
+                    onChange={(_event, value) => {
+                      field.onChange(value);
+                    }}
+                  />
+                )}
+              />
 
+              <Typography display="block" style={{ color: palette.text.secondary }} variant="body2">
+                {
+                  getValues("obo")
+                    ? t("dashboardTab.applicationsSubTab.appModal.oboActive")
+                    : t("dashboardTab.applicationsSubTab.appModal.oboInactive")
+                }
+              </Typography>
+            </Box>
+            <Box mb={2}>
+              <Notice
+                noticeText={
+                  <Typography style={{ color: palette.info.dark }} variant="body2">
+                    {t("dashboardTab.applicationsSubTab.appModal.oboAlert")}
+                  </Typography>
+                }
+                type="info"
+              />
+            </Box>
+            <Box mb={2}>
+              <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="subtitle1">
+                {t("dashboardTab.applicationsSubTab.appModal.authSubtitle")}
+              </Typography>
+            </Box>
             <Box style={{ display: "flex" }}>
               <Box
                 className={clsx({
@@ -537,42 +567,117 @@ export const AccessDetails: React.FC = () => {
           <Grid item md={12}>
             <Box mb={1}>
               <Typography display="block" gutterBottom variant="h6">
-                {t("dashboardTab.applicationsSubTab.appModal.appStatusTitle")}
+                {t("dashboardTab.applicationsSubTab.appModal.apiProductSettingsTitle")}
               </Typography>
             </Box>
 
             <Box pb={4}>
               <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
-                {t("dashboardTab.applicationsSubTab.appModal.appStatusSubtitle")}
+                {t("dashboardTab.applicationsSubTab.appModal.apiProductSettingsSubtitle")}
               </Typography>
             </Box>
-          
-            <Box style={{ alignItems: "center", display: "flex" }}>
-              <Switch
-                checked={isActive}
-                onChange={() => toggleActiveAppStatus(!isActive)}
-                color="primary"
+            <Box>
+              <Controller
+                control={control}
+                name="api_url"
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className={classes.inputFields}
+                    error={!!errors.api_url}
+                    fullWidth
+                    helperText={errors.api_url?.message}
+                    label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.apiURLFieldLabel")}
+                    margin="dense"
+                    type="text"
+                    variant="outlined"
+                    onChange={(event) => {
+                      field.onChange(event);
+                      validateVars(event.target.value);
+                    }}
+                  />
+                )}
               />
-              <Typography display="block" style={{ color: palette.text.secondary }} variant="body2">
-                {
-                  isActive
-                    ? t("dashboardTab.applicationsSubTab.appModal.activeApp")
-                    : t("dashboardTab.applicationsSubTab.appModal.inactiveApp")
-                }
-              </Typography>
             </Box>
           </Grid>
         </Grid>
 
+        <Grid container spacing={3}>
+          <Grid item md={12}>
+            <Box mb={1}>
+              <Typography display="block" variant="subtitle1">
+                {t("dashboardTab.applicationsSubTab.appModal.variablesSubtitle")}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item md={12}>
+            <Box className={classes.customTableHeader}>
+              <Box ml={2} mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.variableName")}
+                </Typography>
+              </Box>
+              <Box ml={2} mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.variableFriendlyName")}
+                </Typography>
+              </Box>
+              <Box mr={5}>
+                <Typography style={{ color: palette.text.secondary }} variant="body1">
+                  {t("dashboardTab.applicationsSubTab.appModal.variableDescription")}
+                </Typography>
+              </Box>
+            </Box>
+            {availableVariables.length ? (
+              availableVariables.map((element : VariablesType, index : number) => (
+                <Box className={clsx(classes.tableEntry, {
+                  [classes.evenTableEntry]: index % 2 === 0,
+                  [classes.oddTableEntry]: index % 2 !== 0,
+                })}
+                key={`variables${index}`}>
+                  <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
+                    <Typography variant="body1">{element.key}</Typography>
+                  </Box>
+                  <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
+                    <TextField
+                      className={classes.variables}
+                      name="friendlyName"
+                      value={element.friendlyName}
+                      onChange={(event) => {
+                        const newVariables = [...availableVariables];
+                        newVariables[index].friendlyName = event.target.value;
+                        setAvailableVariables(newVariables);
+                      }}
+                    />
+                  </Box>
+                  <Box  mr={5} style={{ width: "615px", alignItems: "center"}}>
+                    <TextField
+                      name="description"
+                      value={element.description}
+                      className={classes.variables}
+                      onChange={(event) => {
+                        const newVariables = [...availableVariables];
+                        newVariables[index].description = event.target.value;
+                        setAvailableVariables(newVariables);
+                      }}
+                      fullWidth
+                    />
+                  </Box >
+                </Box>))
+            ) : (
+              <div className={classes.nothingToShow}>
+                <Typography variant="body1">{getTableLabel()}</Typography>
+              </div>
+            )}
+          </Grid>
+        </Grid>
         <hr className={classes.regularSectionSeparator} />
-
         {/* "App action" buttons section */}
         <div className={classes.buttonsContainer}>
           <ActionsFooter
             altSaveButtonAction={
               () => {
-                selectedAuth === AUTH_TYPES.TOKEN &&
-                (validateAccessDetailsStatus.validated || getBlueprintAppConfigStatus.retrieved)
+                validateAccessDetailsStatus.validated
                   ? updateAccessDetails()
                   : validateAccessDetails(selectedAuth);
               }

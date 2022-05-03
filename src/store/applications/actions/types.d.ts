@@ -53,6 +53,9 @@ CreateBlueprintAppActionError |
 GetBlueprintAppConfigAction |
 GetBlueprintAppConfigActionSuccess |
 GetBlueprintAppConfigActionError |
+FillBlueprintAppConfigAction |
+FillBlueprintAppConfigActionSuccess |
+FillBlueprintAppConfigActionError |
 ValidateAccessDetailsAction |
 ValidateAccessDetailsActionSuccess |
 ValidateAccessDetailsActionError |
@@ -103,6 +106,7 @@ export type DeleteAppAction = {
   type: typeof DELETE_APP,
   appId: number,
   orgID: number,
+  appType: string,
 }
 
 export type DeleteAppActionSuccess = {
@@ -255,6 +259,21 @@ export type GetBlueprintAppConfigActionError = {
   type: typeof GET_BLUEPRINT_CONFIG_ERROR,
 }
 
+export type FillBlueprintAppConfigAction = {
+  type: typeof FILL_BLUEPRINT_CONFIG,
+  blueprintName: string,
+  appId: number,
+}
+
+export type FillBlueprintAppConfigActionSuccess = {
+  type: typeof FILL_BLUEPRINT_CONFIG_SUCCESS,
+  config: CurrentBlueprintConfig,
+}
+
+export type FillBlueprintAppConfigActionError = {
+  type: typeof FILL_BLUEPRINT_CONFIG_ERROR,
+}
+
 export interface BlueprintAppConfigResponse {
   data: {
     appConfig: {
@@ -270,7 +289,6 @@ export interface BlueprintAppConfigResponse {
     appMethod: string,
     appUrl: string,
     authType: string,
-    fieldsRaw: string[],
     id: number,
     name: string,
     orgId: number,
@@ -280,6 +298,11 @@ export interface BlueprintAppConfigResponse {
     userId: string,
     workerId: string,
     workerStatus: string,
+    obo: boolean,
+    apiUrl: string,
+    variableValues: any[],
+    fieldsRaw: string[],
+    fieldsMapping: any[],
   },
 }
 

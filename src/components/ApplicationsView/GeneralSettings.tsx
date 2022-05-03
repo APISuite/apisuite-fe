@@ -113,6 +113,9 @@ export const GeneralSettings: React.FC = () => {
       setValue("name", app.name, { shouldDirty: false });
       setValue("shortDescription", app.shortDescription, { shouldDirty: false });
     }
+    if (app.logo && decodedBlueprintName) {
+      setAvatar(app.logo);
+    }
   }, [app, isNew, setValue]);
 
   /* App-related actions */
@@ -149,7 +152,7 @@ export const GeneralSettings: React.FC = () => {
   };
 
   const _deleteApp = () => {
-    dispatch(deleteApp({ orgID: profile.currentOrg.id, appId: Number(appId) }));
+    dispatch(deleteApp({ orgID: profile.currentOrg.id, appId: Number(appId), appType: app.appType.type }));
 
     openDeleteDialog(false);
     history.push("/dashboard/apps");

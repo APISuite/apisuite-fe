@@ -17,7 +17,7 @@ export interface ApplicationsStore {
   userApps: AppData[],
   // Blueprint-related data
   blueprintConfig: CurrentBlueprintConfig,
-  getBlueprintAppConfigStatus: Response & { retrieved: boolean },
+  getBlueprintAppConfigStatus: Response & { retrieved: boolean ; filled: boolean },
   getBlueprintDetailsStatus: Response & { name: string },
   validateAccessDetailsStatus: Response & { validated: boolean },
   isActive: boolean,
@@ -64,6 +64,7 @@ export interface BlueprintData {
     labels: string[],
     logo: string,
     overview: string,
+    media: string[],
   },
 }
 
@@ -72,6 +73,39 @@ export interface Metadata {
   value: string,
   title: string,
   description: string,
+}
+
+export interface VariablesType {
+  key: string,
+  friendlyName: string,
+  description: string,
+}
+
+export interface FieldMappingType {
+  fieldIn: string,
+  fieldOut: string,
+  editable: boolean,
+}
+export interface AppRegisterValues {
+  auth_url: string,
+  clt_id: string,
+  clt_secret: string,
+  conn_auth_type: string,
+  redirect_url: string,
+  scope: string,
+  token_url: string,
+  token: string,
+  api_url: string,
+  obo: boolean,
+  polling_interval: string,
+  app_id?: number,
+  app_method: string,
+  app_name: string,
+  app_url: string,
+  auth_type: string,
+  fieldsRaw: string[],
+  variableValues: VariablesType[],
+  fieldsMapping: FieldMappingType[],
 }
 
 export interface CurrentBlueprintConfig {
@@ -85,12 +119,18 @@ export interface CurrentBlueprintConfig {
     token_url: string,
     token: string,
   },
-  app_id: number,
+  api_url: string,
+  obo: boolean,
+  polling_interval: string,
+  app_id?: number,
   app_method: string,
   app_name: string,
   app_url: string,
   auth_type: string,
-  polling_interval: string,
+  fieldsRaw: string[],
+  variableValues: VariablesType[],
+  fieldsMapping: FieldMappingType[],
+  doneUrl: string,
 }
 
 export interface ModalDetails {

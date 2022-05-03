@@ -134,7 +134,46 @@ export default makeStyles((theme) => ({
     lineHeight: "20px",
     marginBottom: "40px",
   },
+  customTableHeader: {
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: theme.shape.borderRadius,
+    display: "flex",
+    padding: theme.spacing(1.75, 0),
+  },
+  nothingToShow: {
+    "& > :first-child": {
+      color: theme.palette.grey[400],
+      fontSize: "16px",
+      fontWeight: 300,
+      paddingTop: theme.spacing(3.125),
+      textAlign: "center",
+    },
 
+    "& > :last-child": {
+      color: theme.palette.grey[300],
+      fontSize: "14px",
+      fontWeight: 300,
+      paddingBottom: theme.spacing(3.75),
+      textAlign: "center",
+    },
+  },
+  tableEntry: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    padding: theme.spacing(1.25, 0),
+    width: "100%",
+  },
+
+  evenTableEntry: {
+    backgroundColor: theme.palette.background.paper,
+  },
+
+  oddTableEntry: {
+    backgroundColor: theme.palette.grey[50],
+  },
   appURLFieldWrapper: {
     display: "flex",
 
@@ -158,7 +197,11 @@ export default makeStyles((theme) => ({
       width: "100%",
     },
   },
-
+  variables: {
+    "& .MuiInputBase-root.MuiInputBase-formControl": {
+      backgroundColor: "rgba(232, 241, 250, 0) !important",
+    },
+  },
   avatarIcons: {
     color: theme.palette.action.active,
     cursor: "pointer",

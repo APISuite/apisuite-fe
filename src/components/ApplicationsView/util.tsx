@@ -10,13 +10,14 @@ import clsx from "clsx";
 import adrift from "assets/adrift.svg";
 import { TypeChip } from "components/AppTypesModal";
 import { getNextType, getPreviousType } from "components/AppTypesModal/util";
-import { AppData, AppType } from "store/applications/types";
+import {AppData, AppRegisterValues, AppType, CurrentBlueprintConfig} from "store/applications/types";
 import { getAppTypes } from "store/applications/actions/getAppTypes";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { AppTypesTab } from "pages/AppView/types";
 import { ActionsFooterProps, AppHeaderProps, LocationHistory, UseGetAppParams } from "./types";
 import useStyles from "./styles";
+import {UseFormSetValue} from "react-hook-form/dist/types/form";
 
 const isDraft = (app: AppData) => {
   return app.subscriptions.length === 0 ? "draftApp" : "subbedApp";
@@ -129,6 +130,80 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
       }
     </>
   );
+};
+
+export const setCommonValues = (
+  blueprintConfig: CurrentBlueprintConfig,
+  setValue: UseFormSetValue<AppRegisterValues>
+) : void => {
+  setValue("app_id", blueprintConfig.app_id, { shouldDirty: false });
+  setValue("app_method", blueprintConfig.app_method, { shouldDirty: false });
+  setValue("app_name", blueprintConfig.app_name, { shouldDirty: false });
+  setValue("app_url", blueprintConfig.app_url, { shouldDirty: false });
+  setValue("auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
+  setValue("auth_url", blueprintConfig.app_conf.auth_url, { shouldDirty: false });
+  setValue("clt_id", blueprintConfig.app_conf.clt_id, { shouldDirty: false });
+  setValue("clt_secret", blueprintConfig.app_conf.clt_secret, { shouldDirty: false });
+  setValue("conn_auth_type", blueprintConfig.app_conf.conn_auth_type, { shouldDirty: false });
+  setValue("polling_interval", blueprintConfig.polling_interval, { shouldDirty: false });
+  setValue("redirect_url", blueprintConfig.app_conf.redirect_url, { shouldDirty: false });
+  setValue("scope", blueprintConfig.app_conf.scope, { shouldDirty: false });
+  setValue("token_url", blueprintConfig.app_conf.token_url, { shouldDirty: false });
+  setValue("token", blueprintConfig.app_conf.token, { shouldDirty: false });
+  setValue("obo", blueprintConfig.obo, { shouldDirty: false });
+  setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
+  setValue("fieldsRaw", blueprintConfig.fieldsRaw, { shouldDirty: false });
+};
+
+export const createAppRegisterValues = (blueprintConfig: CurrentBlueprintConfig) : AppRegisterValues => {
+  return {
+    app_id: blueprintConfig.app_id,
+    app_method: blueprintConfig.app_method || "",
+    app_name: blueprintConfig.app_name || "",
+    app_url: blueprintConfig.app_url || "",
+    auth_type: blueprintConfig.app_conf.conn_auth_type,
+    auth_url: blueprintConfig.app_conf.auth_url || "oauth",
+    clt_id: blueprintConfig.app_conf.clt_id || "",
+    clt_secret: blueprintConfig.app_conf.clt_secret || "",
+    conn_auth_type: blueprintConfig.app_conf.conn_auth_type,
+    polling_interval: blueprintConfig.polling_interval || "",
+    redirect_url: blueprintConfig.app_conf.redirect_url || "",
+    scope: blueprintConfig.app_conf.scope || "",
+    token_url: blueprintConfig.app_conf.token_url || "",
+    token: blueprintConfig.app_conf.token || "",
+    obo: blueprintConfig.obo || false,
+    api_url: blueprintConfig.api_url || "",
+    variableValues: blueprintConfig.variableValues,
+    fieldsRaw: blueprintConfig.fieldsRaw,
+    fieldsMapping: blueprintConfig.fieldsMapping,
+  };
+};
+
+export const createBlueprintConfig = (currentConfigDetails: AppRegisterValues ) : CurrentBlueprintConfig => {
+  return {
+    app_conf: {
+      auth_url: currentConfigDetails.auth_url,
+      clt_id: currentConfigDetails.clt_id,
+      clt_secret: currentConfigDetails.clt_secret,
+      conn_auth_type: currentConfigDetails.conn_auth_type,
+      redirect_url: currentConfigDetails.redirect_url,
+      scope: currentConfigDetails.scope,
+      token_url: currentConfigDetails.token_url,
+      token: currentConfigDetails.token,
+    },
+    api_url: currentConfigDetails.api_url,
+    polling_interval: currentConfigDetails.polling_interval,
+    obo: currentConfigDetails.obo,
+    app_id: currentConfigDetails.app_id,
+    app_method: currentConfigDetails.app_method,
+    app_name: currentConfigDetails.app_name,
+    app_url: currentConfigDetails.app_url,
+    auth_type: currentConfigDetails.auth_type,
+    fieldsRaw: currentConfigDetails.fieldsRaw,
+    variableValues: currentConfigDetails.variableValues,
+    fieldsMapping: currentConfigDetails.fieldsMapping,
+    doneUrl: "",
+  };
 };
 
 export const getAppType = (types: AppType[], typeId: string) => {
@@ -250,7 +325,7 @@ export const ActionsFooter: React.FC<ActionsFooterProps> = ({
       ...app,
       ...getFormValues(),
     };
-    
+
     dispatch(updateApp({ orgID: orgId, appData: updatedAppDetails }));
   };
 
