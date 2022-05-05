@@ -106,6 +106,7 @@ export interface AppRegisterValues {
   fieldsRaw: string[],
   variableValues: VariablesType[],
   fieldsMapping: FieldMappingType[],
+  blueprint: boolean,
 }
 
 export interface CurrentBlueprintConfig {
@@ -131,6 +132,7 @@ export interface CurrentBlueprintConfig {
   variableValues: VariablesType[],
   fieldsMapping: FieldMappingType[],
   doneUrl: string,
+  blueprint: boolean,
 }
 
 export interface ModalDetails {

@@ -303,6 +303,7 @@ export interface BlueprintAppConfigResponse {
     variableValues: any[],
     fieldsRaw: string[],
     fieldsMapping: any[],
+    blueprint: boolean,
   },
 }
 

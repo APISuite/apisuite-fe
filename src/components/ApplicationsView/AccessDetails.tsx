@@ -211,6 +211,7 @@ export const AccessDetails: React.FC = () => {
       variableValues: currentConfigDetails.variableValues,
       fieldsMapping: currentConfigDetails.fieldsMapping,
       doneUrl: window.location.href,
+      blueprint: currentConfigDetails.blueprint,
     };
 
     dispatch(validateAccessDetailsAction({ blueprintConfig: newAppDetails }));
