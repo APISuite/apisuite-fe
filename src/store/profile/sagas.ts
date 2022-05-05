@@ -1,15 +1,34 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
-import { i18n } from "@apisuite/fe-base";
+import {call, put, select, takeLatest} from "redux-saga/effects";
+import {i18n} from "@apisuite/fe-base";
 
-import { API_URL } from "constants/endpoints";
-import { CHANGE_ROLE, changeRoleError, changeRoleSuccess } from "./actions/changeRole";
-import { ChangeRoleAction, ConfirmInviteMemberAction, CreateOrgAction, FetchOrgAction, FetchTeamMembersAction, InviteTeamMemberAction, RemoveTeamMemberAction, UpdateOrgAction, UpdateProfileAction } from "./actions/types";
-import { CONFIRM_INVITE_MEMBER, confirmInviteMemberError, confirmInviteMemberSuccess } from "./actions/confirmInviteMember";
-import { CREATE_ORG, createOrgError, createOrgSuccess } from "./actions/createOrg";
-import { DELETE_ACCOUNT, deleteAccountError, deleteAccountSuccess } from "./actions/deleteAccount";
-import { FETCH_ORG, fetchOrgError, fetchOrgSuccess } from "./actions/fetchOrg";
-import { FETCH_ROLE_OPTIONS, fetchRoleOptionsError, fetchRoleOptionsSuccess } from "./actions/fetchRoleOptions";
-import { FETCH_TEAM_MEMBERS, fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess } from "./actions/fetchTeamMembers";
+import {API_URL} from "constants/endpoints";
+import {CHANGE_ROLE, changeRoleError, changeRoleSuccess} from "./actions/changeRole";
+import {
+  ChangeRoleAction,
+  ConfirmInviteMemberAction,
+  CreateOrgAction,
+  FetchOrgAction,
+  FetchTeamMembersAction,
+  InviteTeamMemberAction,
+  RemoveTeamMemberAction,
+  UpdateOrgAction,
+  UpdateProfileAction,
+} from "./actions/types";
+import {
+  CONFIRM_INVITE_MEMBER,
+  confirmInviteMemberError,
+  confirmInviteMemberSuccess,
+} from "./actions/confirmInviteMember";
+import {CREATE_ORG, createOrgError, createOrgSuccess} from "./actions/createOrg";
+import {DELETE_ACCOUNT, deleteAccountError, deleteAccountSuccess} from "./actions/deleteAccount";
+import {FETCH_ORG, fetchOrgError, fetchOrgSuccess} from "./actions/fetchOrg";
+import {FETCH_ROLE_OPTIONS, fetchRoleOptionsError, fetchRoleOptionsSuccess} from "./actions/fetchRoleOptions";
+import {
+  FETCH_TEAM_MEMBERS,
+  fetchTeamMembers,
+  fetchTeamMembersError,
+  fetchTeamMembersSuccess,
+} from "./actions/fetchTeamMembers";
 import {
   FetchRoleOptionsResponse,
   FetchTeamMembersResponse,
@@ -19,18 +38,18 @@ import {
   Profile,
   UpdateProfileResponse,
 } from "./types";
-import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
-import { handleSessionExpire } from "store/auth/actions/expiredSession";
-import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
-import { LOCAL_STORAGE_KEYS } from "constants/global";
-import { logout } from "store/auth/actions/logout";
-import { openNotification } from "store/notificationStack/actions/notification";
-import { removeTeamMemberError, removeTeamMemberSuccess, REMOVE_TEAM_MEMBER } from "./actions/removeTeamMember";
-import { Store } from "store/types";
-import { UPDATE_ORG, updateOrgError, updateOrgSuccess } from "./actions/updateOrg";
-import { UPDATE_PROFILE, updateProfileError, updateProfileSuccess } from "./actions/updateProfile";
+import {GET_PROFILE, getProfile, getProfileError, getProfileSuccess} from "./actions/getProfile";
+import {handleSessionExpire} from "store/auth/actions/expiredSession";
+import {INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess} from "./actions/inviteTeamMember";
+import {LOCAL_STORAGE_KEYS} from "constants/global";
+import {logout} from "store/auth/actions/logout";
+import {openNotification} from "store/notificationStack/actions/notification";
+import {REMOVE_TEAM_MEMBER, removeTeamMemberError, removeTeamMemberSuccess} from "./actions/removeTeamMember";
+import {Store} from "store/types";
+import {UPDATE_ORG, updateOrgError, updateOrgSuccess} from "./actions/updateOrg";
+import {UPDATE_PROFILE, updateProfileError, updateProfileSuccess} from "./actions/updateProfile";
 import request from "util/request";
-import { getSelectedOrganization } from "util/getSelectedOrganization";
+import {getSelectedOrganization} from "util/getSelectedOrganization";
 
 export function* fetchTeamMembersSaga(action: FetchTeamMembersAction) {
   try {
@@ -157,6 +176,20 @@ export function* changeRoleSaga(action: ChangeRoleAction) {
   }
 }
 
+function getPlan(): GetPlanResponse {
+  try {
+    return call(request, {
+      url: `${API_URL}/plan`,
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  } catch (error) {
+    return {type : "starter" };
+  }
+}
+
 export function* getProfileSaga() {
   try {
     const profile: GetProfileResponse = yield call(request, {
@@ -166,13 +199,8 @@ export function* getProfileSaga() {
         "content-type": "application/json",
       },
     });
-    const plan: GetPlanResponse = yield call(request, {
-      url: `${API_URL}/plan`,
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    const plan: GetPlanResponse =  yield getPlan();
+
     const org = getSelectedOrganization(profile.organizations);
 
     const newProfile: Profile = { ...profile, currentOrg: org, plan: plan.type };
