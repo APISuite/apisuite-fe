@@ -62,6 +62,7 @@ userRoles.forEach((user) => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
 
         cy.setSession();
 
