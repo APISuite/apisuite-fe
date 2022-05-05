@@ -86,6 +86,11 @@ export type Profile = {
     name: string,
     oidcProvider: string | null,
   },
+  plan: string,
+}
+
+export type GetPlanResponse = {
+  type: string,
 }
 
 export type Role = {

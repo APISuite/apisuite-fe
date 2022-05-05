@@ -10,7 +10,15 @@ import { DELETE_ACCOUNT, deleteAccountError, deleteAccountSuccess } from "./acti
 import { FETCH_ORG, fetchOrgError, fetchOrgSuccess } from "./actions/fetchOrg";
 import { FETCH_ROLE_OPTIONS, fetchRoleOptionsError, fetchRoleOptionsSuccess } from "./actions/fetchRoleOptions";
 import { FETCH_TEAM_MEMBERS, fetchTeamMembers, fetchTeamMembersError, fetchTeamMembersSuccess } from "./actions/fetchTeamMembers";
-import { FetchRoleOptionsResponse, FetchTeamMembersResponse, GetProfileResponse, OrgDetailsResponse, Profile, UpdateProfileResponse } from "./types";
+import {
+  FetchRoleOptionsResponse,
+  FetchTeamMembersResponse,
+  GetPlanResponse,
+  GetProfileResponse,
+  OrgDetailsResponse,
+  Profile,
+  UpdateProfileResponse,
+} from "./types";
 import { GET_PROFILE, getProfile, getProfileError, getProfileSuccess } from "./actions/getProfile";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { INVITE_TEAM_MEMBER, inviteTeamMemberError, inviteTeamMemberSuccess } from "./actions/inviteTeamMember";
@@ -158,10 +166,16 @@ export function* getProfileSaga() {
         "content-type": "application/json",
       },
     });
-
+    const plan: GetPlanResponse = yield call(request, {
+      url: `${API_URL}/plan`,
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
     const org = getSelectedOrganization(profile.organizations);
 
-    const newProfile: Profile = { ...profile, currentOrg: org };
+    const newProfile: Profile = { ...profile, currentOrg: org, plan: plan.type };
 
     yield put(getProfileSuccess({ profile: newProfile }));
   } catch (error) {

@@ -62,6 +62,7 @@ const initialState: ProfileStore = {
       name: "",
       oidcProvider: null,
     },
+    plan: "starter",
   },
   roleOptions: [{
     id: -1,
