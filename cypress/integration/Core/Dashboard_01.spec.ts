@@ -36,6 +36,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/apis${apiQueryParameters}`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
@@ -71,6 +72,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/apis${apiQueryParameters}`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
@@ -171,6 +173,7 @@ users.forEach(user => {
       beforeEach(() => {
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/apis${apiQueryParameters}`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
@@ -242,6 +245,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/apis${apiQueryParameters}`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
@@ -276,6 +280,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
         cy.setSession();
@@ -364,6 +369,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/apis${apiQueryParameters}`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
         cy.setSession();
@@ -399,6 +405,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/apis${apiQueryParameters}`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept("GET", `${Cypress.env("api_url")}/plan`, { fixture: "plan/plan.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
         cy.setSession();
