@@ -455,6 +455,7 @@ export function* fillBlueprintAppConfigActionSaga(action: FillBlueprintAppConfig
       variableValues: [],
       fieldsMapping: [],
       doneUrl: "",
+      blueprint: true,
     };
 
     yield put(fillBlueprintAppConfigSuccess({
@@ -502,6 +503,7 @@ export function* getBlueprintAppConfigActionSaga(action: GetBlueprintAppConfigAc
       variableValues: response.data.variableValues || [],
       fieldsMapping: response.data.fieldsMapping || [],
       doneUrl: "",
+      blueprint: response.data.blueprint,
     };
 
     yield put(getBlueprintAppConfigSuccess({

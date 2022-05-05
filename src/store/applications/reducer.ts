@@ -144,6 +144,7 @@ const initialState: ApplicationsStore = {
     variableValues: [],
     fieldsMapping: [],
     doneUrl: "",
+    blueprint: false,
   },
 };
 

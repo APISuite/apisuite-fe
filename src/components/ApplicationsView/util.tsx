@@ -153,6 +153,7 @@ export const setCommonValues = (
   setValue("obo", blueprintConfig.obo, { shouldDirty: false });
   setValue("api_url", blueprintConfig.api_url, { shouldDirty: false });
   setValue("fieldsRaw", blueprintConfig.fieldsRaw, { shouldDirty: false });
+  setValue("blueprint", blueprintConfig.blueprint, {shouldDirty: false});
 };
 
 export const createAppRegisterValues = (blueprintConfig: CurrentBlueprintConfig) : AppRegisterValues => {
@@ -176,6 +177,7 @@ export const createAppRegisterValues = (blueprintConfig: CurrentBlueprintConfig)
     variableValues: blueprintConfig.variableValues,
     fieldsRaw: blueprintConfig.fieldsRaw,
     fieldsMapping: blueprintConfig.fieldsMapping,
+    blueprint: blueprintConfig.blueprint,
   };
 };
 
@@ -203,6 +205,7 @@ export const createBlueprintConfig = (currentConfigDetails: AppRegisterValues ) 
     variableValues: currentConfigDetails.variableValues,
     fieldsMapping: currentConfigDetails.fieldsMapping,
     doneUrl: "",
+    blueprint:  currentConfigDetails.blueprint,
   };
 };
 
