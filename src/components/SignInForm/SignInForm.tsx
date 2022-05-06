@@ -84,7 +84,7 @@ export const SignInForm: React.FC = () => {
     const inputElement = document.getElementById("passwordField");
     const haveErrors = Object.values(formInputs.errors).some(Boolean);
 
-    if (key === "Enter" && document.activeElement === inputElement && haveErrors) {
+    if (key === "Enter" && document.activeElement === inputElement && !haveErrors) {
       handleFormSubmission(event);
     }
   }, [formInputs.errors, handleFormSubmission]);
