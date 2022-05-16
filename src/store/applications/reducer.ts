@@ -22,6 +22,7 @@ import {
   REVOKE_API_ACCESS_SUCCESS,
 } from "store/applications/actions/revokeApiAccess";
 import {FILL_BLUEPRINT_CONFIG, FILL_BLUEPRINT_CONFIG_SUCCESS} from "store/applications/actions/fillBlueprintAppConfig";
+import {APP_CONNECTOR_URL} from "constants/endpoints";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -127,7 +128,7 @@ const initialState: ApplicationsStore = {
       clt_id: "",
       clt_secret: "",
       conn_auth_type: "oauth",
-      redirect_url: "",
+      redirect_url: `${APP_CONNECTOR_URL}/apps/oauth/callback`,
       scope: "",
       token_url: "",
       token: "",
