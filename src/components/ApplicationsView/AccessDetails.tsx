@@ -123,10 +123,12 @@ export const AccessDetails: React.FC = () => {
   const [availableVariables, setAvailableVariables] = React.useState<VariablesType[]>([]);
 
   const handleAuthSelection = (selectedAuthType: string) => {
-    setSelectedAuth(selectedAuthType);
+    if (!checkIfPrefilled("conn_auth_type")) {
+      setSelectedAuth(selectedAuthType);
 
-    setValue("auth_type", selectedAuthType, { shouldDirty: false });
-    setValue("conn_auth_type", selectedAuthType, { shouldDirty: false });
+      setValue("auth_type", selectedAuthType, {shouldDirty: false});
+      setValue("conn_auth_type", selectedAuthType, {shouldDirty: false});
+    }
   };
 
   const getURLVars = (url: string) => {
@@ -360,11 +362,7 @@ export const AccessDetails: React.FC = () => {
                   [classes.authType]: selectedAuth !== AUTH_TYPES.TOKEN,
                 })}
                 mr={8}
-                onClick={() => {
-                  if (!checkIfPrefilled("conn_auth_type")) {
-                    handleAuthSelection(AUTH_TYPES.TOKEN);
-                  }
-                }}
+                onClick={() => handleAuthSelection(AUTH_TYPES.TOKEN) }
               >
                 <Icon>
                   {selectedAuth === AUTH_TYPES.TOKEN ? "radio_button_checked" : "radio_button_unchecked"}
@@ -378,11 +376,7 @@ export const AccessDetails: React.FC = () => {
                   [classes.selectedAuthType]: selectedAuth === AUTH_TYPES.OAUTH,
                   [classes.authType]: selectedAuth !== AUTH_TYPES.OAUTH,
                 })}
-                onClick={() => {
-                  if (!checkIfPrefilled("conn_auth_type")) {
-                    handleAuthSelection(AUTH_TYPES.OAUTH);
-                  }
-                }}
+                onClick={() => handleAuthSelection(AUTH_TYPES.OAUTH) }
               >
                 <Icon>
                   {selectedAuth === AUTH_TYPES.OAUTH ? "radio_button_checked" : "radio_button_unchecked"}
