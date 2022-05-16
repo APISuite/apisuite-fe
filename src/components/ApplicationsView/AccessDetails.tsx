@@ -386,11 +386,10 @@ export const AccessDetails: React.FC = () => {
               </Box>
             </Box>
           </Grid>
-
-          {/* "Token" subsection */}
-          {
-            selectedAuth === AUTH_TYPES.TOKEN && (
-              <Grid item md={12}>
+          <Grid item md={12}>
+            {/* "Token" subsection */}
+            {
+              selectedAuth === AUTH_TYPES.TOKEN && (
                 <Box>
                   <Controller
                     control={control}
@@ -411,182 +410,160 @@ export const AccessDetails: React.FC = () => {
                     )}
                   />
                 </Box>
+              )
+            }
 
-                <Box>
-                  <Controller
-                    control={control}
-                    name="polling_interval"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.polling_interval}
-                        fullWidth
-                        helperText={errors.polling_interval?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.pollingIntervalFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                        disabled={checkIfPrefilled("polling_interval")}
-                      />
-                    )}
-                  />
-                </Box>
-              </Grid>
-            )
-          }
+            {/* "OAuth" subsection */}
+            {
+              selectedAuth === AUTH_TYPES.OAUTH && (
+                <>
+                  <Box>
+                    <Controller
+                      control={control}
+                      name="redirect_url"
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className={classes.inputFields}
+                          error={!!errors.redirect_url}
+                          fullWidth
+                          helperText={errors.redirect_url?.message}
+                          label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.redirectURLFieldLabel")}
+                          margin="dense"
+                          type="text"
+                          variant="outlined"
+                          disabled={true}
+                        />
+                      )}
+                    />
+                  </Box>
 
-          {/* "OAuth" subsection */}
-          {
-            selectedAuth === AUTH_TYPES.OAUTH && (
-              <Grid item md={12}>
-                <Box>
-                  <Controller
-                    control={control}
-                    name="redirect_url"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.redirect_url}
-                        fullWidth
-                        helperText={errors.redirect_url?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.redirectURLFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                        disabled={true}
-                      />
-                    )}
-                  />
-                </Box>
+                  <Box>
+                    <Controller
+                      control={control}
+                      name="clt_id"
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className={classes.inputFields}
+                          error={!!errors.clt_id}
+                          fullWidth
+                          helperText={errors.clt_id?.message}
+                          label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientIDFieldLabel")}
+                          margin="dense"
+                          type="text"
+                          variant="outlined"
+                        />
+                      )}
+                    />
+                  </Box>
 
-                <Box>
-                  <Controller
-                    control={control}
-                    name="clt_id"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.clt_id}
-                        fullWidth
-                        helperText={errors.clt_id?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientIDFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-                </Box>
+                  <Box>
+                    <Controller
+                      control={control}
+                      name="clt_secret"
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className={classes.inputFields}
+                          error={!!errors.clt_secret}
+                          fullWidth
+                          helperText={errors.clt_secret?.message}
+                          label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientSecretFieldLabel")}
+                          margin="dense"
+                          type="text"
+                          variant="outlined"
+                        />
+                      )}
+                    />
+                  </Box>
 
-                <Box>
-                  <Controller
-                    control={control}
-                    name="clt_secret"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.clt_secret}
-                        fullWidth
-                        helperText={errors.clt_secret?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.clientSecretFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-                </Box>
+                  <Box>
+                    <Controller
+                      control={control}
+                      name="auth_url"
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className={classes.inputFields}
+                          error={!!errors.auth_url}
+                          fullWidth
+                          helperText={errors.auth_url?.message}
+                          label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.authURLFieldLabel")}
+                          margin="dense"
+                          type="text"
+                          variant="outlined"
+                          disabled={checkIfPrefilled("auth_url")}
+                        />
+                      )}
+                    />
+                  </Box>
 
-                <Box>
-                  <Controller
-                    control={control}
-                    name="auth_url"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.auth_url}
-                        fullWidth
-                        helperText={errors.auth_url?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.authURLFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                        disabled={checkIfPrefilled("auth_url")}
-                      />
-                    )}
-                  />
-                </Box>
+                  <Box>
+                    <Controller
+                      control={control}
+                      name="token_url"
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className={classes.inputFields}
+                          error={!!errors.token_url}
+                          fullWidth
+                          helperText={errors.token_url?.message}
+                          label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.tokenURLFieldLabel")}
+                          margin="dense"
+                          type="text"
+                          variant="outlined"
+                          disabled={checkIfPrefilled("token_url")}
+                        />
+                      )}
+                    />
+                  </Box>
 
-                <Box>
-                  <Controller
-                    control={control}
-                    name="token_url"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.token_url}
-                        fullWidth
-                        helperText={errors.token_url?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.tokenURLFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                        disabled={checkIfPrefilled("token_url")}
-                      />
-                    )}
+                  <Box>
+                    <Controller
+                      control={control}
+                      name="scope"
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          className={classes.inputFields}
+                          error={!!errors.scope}
+                          fullWidth
+                          helperText={errors.scope?.message}
+                          label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.scopeFieldLabel")}
+                          margin="dense"
+                          type="text"
+                          variant="outlined"
+                          disabled={checkIfPrefilled("scope")}
+                        />
+                      )}
+                    />
+                  </Box>
+                </>
+              )
+            }
+            <Box>
+              <Controller
+                control={control}
+                name="polling_interval"
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className={classes.inputFields}
+                    error={!!errors.polling_interval}
+                    fullWidth
+                    helperText={errors.polling_interval?.message}
+                    label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.pollingIntervalFieldLabel")}
+                    margin="dense"
+                    type="text"
+                    variant="outlined"
+                    disabled={checkIfPrefilled("polling_interval")}
                   />
-                </Box>
-
-                <Box>
-                  <Controller
-                    control={control}
-                    name="scope"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.scope}
-                        fullWidth
-                        helperText={errors.scope?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.scopeFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                        disabled={checkIfPrefilled("scope")}
-                      />
-                    )}
-                  />
-                </Box>
-
-                <Box>
-                  <Controller
-                    control={control}
-                    name="polling_interval"
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        className={classes.inputFields}
-                        error={!!errors.polling_interval}
-                        fullWidth
-                        helperText={errors.polling_interval?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.pollingIntervalFieldLabel")}
-                        margin="dense"
-                        type="text"
-                        variant="outlined"
-                        disabled={checkIfPrefilled("polling_interval")}
-                      />
-                    )}
-                  />
-                </Box>
-              </Grid>
-            )
-          }
+                )}
+              />
+            </Box>
+          </Grid>
 
           <Grid item md={12}>
             <Box mb={1}>
