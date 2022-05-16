@@ -197,7 +197,6 @@ export const GeneralSettings: React.FC = () => {
                 : (
                   <AppHeader
                     app={app}
-                    isNew={isNew}
                     getFormValues={getValues}
                     orgId={profile.currentOrg.id}
                     types={types}

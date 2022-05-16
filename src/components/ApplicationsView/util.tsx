@@ -93,7 +93,6 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
   app,
   appId,
   children,
-  isNew,
   getFormValues,
   notFound,
   orgId,
@@ -115,7 +114,6 @@ export const AppContainer: React.FC<AppHeaderProps & { appId: string; notFound: 
           <Container maxWidth="lg">
             <AppHeader
               app={app}
-              isNew={isNew}
               getFormValues={getFormValues}
               orgId={orgId}
               types={types}
@@ -220,7 +218,6 @@ export const getAppType = (types: AppType[], typeId: string) => {
 
 export const AppHeader: React.FC<AppHeaderProps> = ({
   app,
-  isNew,
   getFormValues,
   orgId,
   types,
@@ -285,7 +282,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           </div>
         </Box>
         <Box display="flex">
-          <TypeChip color="primary" editable={!isNew} onTypeSelected={updateAppType} type={appType.current} />
+          <TypeChip color="primary" editable={false} onTypeSelected={updateAppType} type={appType.current} />
         </Box>
       </Box>
     </div>

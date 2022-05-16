@@ -529,7 +529,6 @@ export const CustomProperties: React.FC = () => {
       <AppContainer
         app={app}
         appId={appId}
-        isNew={isNew}
         getFormValues={getValues}
         notFound={status.get.isError}
         orgId={profile.currentOrg.id}

@@ -245,7 +245,6 @@ export const AccessDetails: React.FC = () => {
         app={app}
         appId={appId}
         getFormValues={getValues}
-        isNew={isNew}
         notFound={status.get.isError}
         orgId={profile.currentOrg.id}
         requesting={requesting}
