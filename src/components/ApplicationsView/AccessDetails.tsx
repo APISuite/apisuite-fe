@@ -182,6 +182,18 @@ export const AccessDetails: React.FC = () => {
 
 
   };
+  const checkIfPrefilled = (field : string) : boolean => {
+    if (app.appType.type === "blueprint") {
+      if (field === "obo") {
+        return blueprintConfig[field] !== undefined;
+      } else if (blueprintConfig.hasOwnProperty(field)) {
+        return blueprintConfig[field as keyof typeof blueprintConfig] !== "";
+      } else if (blueprintConfig.app_conf.hasOwnProperty(field)) {
+        return blueprintConfig.app_conf[field as keyof typeof blueprintConfig.app_conf] !== "";
+      }
+    }
+    return false;
+  };
 
   const validateAccessDetails = (selectedAuthType: string) => {
     const currentConfigDetails = {
@@ -271,6 +283,7 @@ export const AccessDetails: React.FC = () => {
                     margin="dense"
                     type="text"
                     variant="outlined"
+                    disabled={checkIfPrefilled("app_url")}
                   />
                 )}
               />
@@ -292,6 +305,7 @@ export const AccessDetails: React.FC = () => {
                     placeholder={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.appMethodFieldPlaceholder")}
                     type="text"
                     variant="outlined"
+                    disabled={checkIfPrefilled("app_method")}
                   />
                 )}
               />
@@ -312,6 +326,7 @@ export const AccessDetails: React.FC = () => {
                     onChange={(_event, value) => {
                       field.onChange(value);
                     }}
+                    disabled={checkIfPrefilled("obo")}
                   />
                 )}
               />
@@ -346,7 +361,11 @@ export const AccessDetails: React.FC = () => {
                   [classes.authType]: selectedAuth !== AUTH_TYPES.TOKEN,
                 })}
                 mr={8}
-                onClick={() => handleAuthSelection(AUTH_TYPES.TOKEN)}
+                onClick={() => {
+                  if (!checkIfPrefilled("conn_auth_type")) {
+                    handleAuthSelection(AUTH_TYPES.TOKEN);
+                  }
+                }}
               >
                 <Icon>
                   {selectedAuth === AUTH_TYPES.TOKEN ? "radio_button_checked" : "radio_button_unchecked"}
@@ -360,7 +379,11 @@ export const AccessDetails: React.FC = () => {
                   [classes.selectedAuthType]: selectedAuth === AUTH_TYPES.OAUTH,
                   [classes.authType]: selectedAuth !== AUTH_TYPES.OAUTH,
                 })}
-                onClick={() => handleAuthSelection(AUTH_TYPES.OAUTH)}
+                onClick={() => {
+                  if (!checkIfPrefilled("conn_auth_type")) {
+                    handleAuthSelection(AUTH_TYPES.OAUTH);
+                  }
+                }}
               >
                 <Icon>
                   {selectedAuth === AUTH_TYPES.OAUTH ? "radio_button_checked" : "radio_button_unchecked"}
@@ -390,6 +413,7 @@ export const AccessDetails: React.FC = () => {
                         margin="dense"
                         type="text"
                         variant="outlined"
+                        disabled={checkIfPrefilled("token")}
                       />
                     )}
                   />
@@ -410,6 +434,7 @@ export const AccessDetails: React.FC = () => {
                         margin="dense"
                         type="text"
                         variant="outlined"
+                        disabled={checkIfPrefilled("polling_interval")}
                       />
                     )}
                   />
@@ -437,6 +462,7 @@ export const AccessDetails: React.FC = () => {
                         margin="dense"
                         type="text"
                         variant="outlined"
+                        disabled={true}
                       />
                     )}
                   />
@@ -497,6 +523,7 @@ export const AccessDetails: React.FC = () => {
                         margin="dense"
                         type="text"
                         variant="outlined"
+                        disabled={checkIfPrefilled("auth_url")}
                       />
                     )}
                   />
@@ -517,6 +544,7 @@ export const AccessDetails: React.FC = () => {
                         margin="dense"
                         type="text"
                         variant="outlined"
+                        disabled={checkIfPrefilled("token_url")}
                       />
                     )}
                   />
@@ -537,6 +565,7 @@ export const AccessDetails: React.FC = () => {
                         margin="dense"
                         type="text"
                         variant="outlined"
+                        disabled={checkIfPrefilled("scope")}
                       />
                     )}
                   />
@@ -557,6 +586,7 @@ export const AccessDetails: React.FC = () => {
                         margin="dense"
                         type="text"
                         variant="outlined"
+                        disabled={checkIfPrefilled("polling_interval")}
                       />
                     )}
                   />
