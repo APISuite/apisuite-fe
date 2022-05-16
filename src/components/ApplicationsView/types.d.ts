@@ -30,8 +30,6 @@ export type UseGetAppParams = {
 
 export type AppHeaderProps = {
   app: AppData,
-  typeId: string,
-  isNew: boolean,
   getFormValues: UseFormGetValues,
   orgId: number,
   types: AppType[],
