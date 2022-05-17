@@ -231,6 +231,7 @@ export const AccessDetails: React.FC = () => {
     dispatch(validateAccessDetailsAction({ blueprintConfig: newAppDetails }));
   };
 
+  //update details
   const updateAccessDetails = () => {
     dispatch(updateAccessDetailsAction({
       newConfig: createBlueprintConfig({
