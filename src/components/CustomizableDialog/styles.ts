@@ -21,7 +21,7 @@ export default makeStyles((theme) => ({
 
   dialogTitleContainer: {
     alignItems: "center",
-    backgroundColor: theme.palette.grey[50],
+    backgroundColor: theme.palette.primary.light,
     display: "flex",
     padding: theme.spacing(2, 3),
 

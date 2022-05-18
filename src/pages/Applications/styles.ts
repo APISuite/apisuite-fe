@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
   },
 
   clientApplicationCardBottomSection: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.primary.light,
     padding: `${theme.spacing(1.5, 3, 3, 3)}`,
   },
 
