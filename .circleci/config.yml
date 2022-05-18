@@ -48,8 +48,9 @@ jobs:
       - attach_workspace:
           at: ~/
       - setup_remote_docker
-      - run: ./build.sh
-        - no_output_timeout: 30m
+      - run:
+          command: ./build.sh
+          no_output_timeout: 30m
       - slack/notify:
           event: fail
           template: basic_fail_1
