@@ -15,7 +15,7 @@ import clsx from "clsx";
 
 import { testIds } from "testIds";
 
-import dashboardSpaceBackground from "assets/dashboardSpaceBackground.svg";
+
 import apiSVG from "assets/icons/API.svg";
 import billingSVG from "assets/icons/Billing.svg";
 import dataCloudSVG from "assets/icons/DataCloud.svg";
@@ -29,6 +29,7 @@ import teamSVG from "assets/icons/Team.svg";
 import useStyles from "./styles";
 import { APIDetails } from "components/APICatalog/types";
 import { mapAPIData } from "util/mapAPIData";
+import {API_URL} from "constants/endpoints";
 
 export const Dashboard: React.FC = () => {
   const classes = useStyles();
@@ -37,9 +38,11 @@ export const Dashboard: React.FC = () => {
   const { t } = useTranslation();
   const { socialURLs, supportURL, clientName, portalName } = useConfig();
   const { auth, subscriptions, notificationCards, profile } = useSelector(dashboardSelector);
-
+  const trans = useTranslation();
   const DASHBOARD_POST_CONTENT = "DASHBOARD_POST_CONTENT";
-
+  const dashboardSpaceBackground =`${API_URL}/resources/dashboard.background?language=${
+    trans.i18n.language
+  }`;
   const typeOfUser = auth.user!.role.name;
 
   const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([]);

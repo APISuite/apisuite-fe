@@ -24,7 +24,7 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    color: theme.palette.common.white,
+    color: theme.palette.text.primary,
   },
 
   carouselSlideOuterContainer: {
@@ -40,7 +40,6 @@ export default makeStyles((theme) => ({
     height: "670px",
     justifyContent: "center",
     width: "100%",
-
     // Hides the slider's 'previous' and 'next' buttons
     "& > div > span": {
       display: "none",
