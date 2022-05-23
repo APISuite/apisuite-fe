@@ -32,7 +32,7 @@ export const Sandbox: React.FC = () => {
   const { auth, subscriptions } = useSelector(sandboxSelector);
   const trans = useTranslation();
   const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([]);
-  const carouselBackground = `${API_URL}/resources/main.background?language=${
+  const carouselBackground = `${API_URL}/resources/slider.background?language=${
     trans.i18n.language
   }`;
   const carouselSlide1 = `${API_URL}/resources/main.carousel1?language=${

@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     ...theme.typography.button,
     backgroundColor: theme.palette.primary.main,
     borderRadius: theme.shape.borderRadius,
-    color: theme.palette.primary.contrastText,
+    color: `${theme.palette.primary.contrastText} !important`,
     margin: "0px auto",
     padding: "17px 40px",
     textDecoration: "none",
