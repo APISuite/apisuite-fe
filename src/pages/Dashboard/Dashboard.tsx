@@ -188,18 +188,30 @@ export const Dashboard: React.FC = () => {
                 <Typography data-test-id={testIds.greetingCardParagraphTwo} variant="h6">
                   {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardText")}
                 </Typography>
-
+                <Typography style={{ marginTop: "8px" }} variant="h6">
+                  <Trans i18nKey="dashboardTab.landingPageSubTab.adminUser.greetingCard.apiFastTrack">
+                    {[
+                      <Link
+                        key="dashboardTab.landingPageSubTab.adminUser.greetingCard.apiFastTrack"
+                        to="https://cloudoki.com/api-fast-track/"
+                        rel='noopener noreferrer'
+                        target='_blank'
+                      />,
+                    ]}
+                  </Trans>
+                </Typography>
                 {typeOfUser !== "admin" && (
                   <Typography data-test-id={testIds.greetingCardParagraphThree} variant="h6">
                     {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextAdmin")}
                   </Typography>
                 )}
+
               </Grid>
 
               <Box pl={5} display="flex" alignItems="center" width="max-content">
                 <Button
                   data-test-id={testIds.greetingCardButton}
-                  href={typeOfUser !== "admin" ? (supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL) : "/dashboard/admin"}
+                  href={supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
                   variant="contained"
                   disableElevation
                   color="secondary"
