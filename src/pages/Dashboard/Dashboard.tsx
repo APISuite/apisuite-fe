@@ -211,7 +211,7 @@ export const Dashboard: React.FC = () => {
               <Box pl={5} display="flex" alignItems="center" width="max-content">
                 <Button
                   data-test-id={testIds.greetingCardButton}
-                  href={typeOfUser !== "admin" ? (supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL) : "/dashboard/admin"}
+                  href={supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
                   variant="contained"
                   disableElevation
                   color="secondary"
