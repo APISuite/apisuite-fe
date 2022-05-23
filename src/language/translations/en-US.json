@@ -215,7 +215,8 @@
         "greetingCard": {
           "greetingCardTextPartOne": "Hi",
           "greetingCardTextPartTwo": "As Account owner, you have a personalised administrator dashboard. You also have access to account management and a slightly different navigation.",
-          "greetingCardButtonLabel": "Go to Admin area"
+          "greetingCardButtonLabel": "Go to Admin area",
+          "apiFastTrack": "It might be useful for you to check up on <0>API Fast Track!</0>"
         }
       },
       "regularUser": {
