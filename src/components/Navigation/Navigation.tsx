@@ -136,7 +136,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         pr={label.type === "icon" ? 3 : 2}
         py={subTab || expand ? 2 : 6}
         style={adjustTop ? { transform: "translateY(-2px)" } : undefined}
-        color={!expand && subTab ? palette.text.primary : palette.secondary.contrastText}
+        color={palette.text.primary}
       >
         {/* Handling of 'Documentation' and 'Support' tabs, which might point to external links */}
         {
@@ -158,7 +158,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           /^(\/|http)/.test(action) &&
           action !== DefaultDocsAndSupport.documentation &&
           action !== DefaultDocsAndSupport.support && (
-            <Link to={action} style={{ textDecoration: "none", color: (!expand && subTab ? palette.text.primary : palette.secondary.contrastText)}}>
+            <Link to={action} style={{ textDecoration: "none", color: palette.text.primary}}>
               {LabelComponent}
             </Link>
           )
@@ -207,7 +207,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       left={0}
       width="100%"
       zIndex={zIndex.appBar}
-      style={{ background: expand ? "transparent" : palette.secondary.main }}
+      style={{ background: expand ? "transparent" : palette.primary.light }}
     >
       {/* Top nav */}
       <Box
@@ -232,10 +232,10 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
             <Logo
               src={ownerInfo.logo}
               icon={navigation.title.iconFallbackName}
-              expand={expand}
+              expand={false}
             />
 
-            <Box data-test-id={testIds.navigationTitle} mx={2} clone color={palette.secondary.contrastText}>
+            <Box data-test-id={testIds.navigationTitle} mx={2} clone color={palette.text.primary}>
               <Typography variant="h3">
                 {portalName}
               </Typography>
@@ -288,7 +288,10 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           justifyContent="flex-end"
           flexWrap="nowrap"
           px={6}
-          style={{ background: expand ? "transparent" : palette.grey[100] }}
+          style={{
+            background: expand ? "transparent" : palette.background.paper,
+            borderBottom: expand ? "none" : `1px solid ${palette.divider}`,
+          }}
         >
           {/* Back left action */}
           {backAction && (

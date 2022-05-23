@@ -12,10 +12,8 @@ import Notice from "components/Notice";
 
 import { testIds } from "testIds";
 
-import carouselBackground from "assets/space-background.svg";
-import carouselSlide1 from "assets/carousel-slide-1.svg";
-import carouselSlide2 from "assets/carousel-slide-2.svg";
-import carouselSlide3 from "assets/carousel-slide-3.svg";
+
+
 
 import { sandboxSelector } from "./selector";
 import useStyles from "./styles";
@@ -23,6 +21,7 @@ import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import Link from "components/Link";
 import { APIDetails } from "components/APICatalog/types";
 import { mapAPIData } from "util/mapAPIData";
+import { API_URL } from "constants/endpoints";
 
 export const Sandbox: React.FC = () => {
   const classes = useStyles();
@@ -31,9 +30,20 @@ export const Sandbox: React.FC = () => {
   const { t } = useTranslation();
   const { socialURLs, portalName, clientName, supportURL, documentationURL } = useConfig();
   const { auth, subscriptions } = useSelector(sandboxSelector);
-
+  const trans = useTranslation();
   const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([]);
-
+  const carouselBackground = `${API_URL}/resources/slider.background?language=${
+    trans.i18n.language
+  }`;
+  const carouselSlide1 = `${API_URL}/resources/main.carousel1?language=${
+    trans.i18n.language
+  }`;
+  const carouselSlide2 = `${API_URL}/resources/main.carousel2?language=${
+    trans.i18n.language
+  }`;
+  const carouselSlide3 = `${API_URL}/resources/main.carousel3?language=${
+    trans.i18n.language
+  }`;
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */

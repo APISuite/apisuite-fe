@@ -34,7 +34,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       {
         carouselSlideImage &&
         <div className={classes.carouselSlideInnerContainer}>
-          <img alt='Slide image' src={carouselSlideImage} />
+          <img alt='Slide image'  style={{maxHeight: "300px"}} src={carouselSlideImage} />
         </div>
       }
 
