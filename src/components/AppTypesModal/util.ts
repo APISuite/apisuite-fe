@@ -6,7 +6,8 @@ const active = isExtensionActive("@apisuite/apisuite-marketplace-extension-ui");
 
 const TABS = [
   AppTypesTab.GENERAL, AppTypesTab.MEDIA, AppTypesTab.CLIENT,
-  AppTypesTab.EXTERNAL, AppTypesTab.EXPERT, AppTypesTab.CONNECTOR_INPUT, AppTypesTab.CONNECTOR_OUTPUT, AppTypesTab.CONNECTOR_SETTINGS,
+  AppTypesTab.EXTERNAL, AppTypesTab.EXPERT, AppTypesTab.CONNECTOR_INPUT,
+  AppTypesTab.CONNECTOR_OUTPUT, AppTypesTab.CONNECTOR_SETTINGS,
 ];
 
 const getTabs = (appType: string, idx : number) =>  (appType === AppTypes.BLUEPRINT || appType === AppTypes.CONNECTOR) ?

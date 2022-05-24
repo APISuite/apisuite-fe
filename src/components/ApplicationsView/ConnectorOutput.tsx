@@ -233,8 +233,7 @@ export const ConnectorOutput: React.FC = () => {
                 <Box className={clsx(classes.tableEntry, {
                   [classes.evenTableEntry]: index % 2 === 0,
                   [classes.oddTableEntry]: index % 2 !== 0,
-                })}
-                     key={`variables${index}`}>
+                })} key={`variables${index}`}>
                   <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
                     <Typography variant="body1">{element.key}</Typography>
                   </Box>
