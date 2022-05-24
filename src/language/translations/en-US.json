@@ -793,7 +793,8 @@
       "update": "Application \"{{name}}\" was updated with success."
     },
     "tabs": {
-      "accessDetails": "Client access details",
+      "connectorInput": "Connector Input",
+      "connectorOutput": "Connector Output",
       "client": "Client Access Details",
       "expert": "Custom Properties",
       "external": "External Settings",

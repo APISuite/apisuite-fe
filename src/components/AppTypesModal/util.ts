@@ -6,11 +6,11 @@ const active = isExtensionActive("@apisuite/apisuite-marketplace-extension-ui");
 
 const TABS = [
   AppTypesTab.GENERAL, AppTypesTab.MEDIA, AppTypesTab.CLIENT,
-  AppTypesTab.EXTERNAL, AppTypesTab.EXPERT, AppTypesTab.ACCESS_DETAILS, AppTypesTab.CONNECTOR_SETTINGS,
+  AppTypesTab.EXTERNAL, AppTypesTab.EXPERT, AppTypesTab.CONNECTOR_INPUT, AppTypesTab.CONNECTOR_OUTPUT, AppTypesTab.CONNECTOR_SETTINGS,
 ];
 
 const getTabs = (appType: string, idx : number) =>  (appType === AppTypes.BLUEPRINT || appType === AppTypes.CONNECTOR) ?
-  [TABS[0], TABS[1], TABS[5], TABS[6]] : TABS.slice(0, idx);
+  [TABS[0], TABS[1], TABS[5], TABS[6], TABS[7]] : TABS.slice(0, idx);
 
 const getIdx = (appType : string) => {
   let idx = 3;

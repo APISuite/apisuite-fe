@@ -17,7 +17,7 @@ function getApiUrl () {
 
 function getAppConnectorUrl () {
   if (IS_CLOUD) return buildCloudBackendUrl();
-  return process.env.APP_CONNECTOR_API_URL || "https://appconnector.proxy.apisuite.io";
+  return process.env.APP_CONNECTOR_API_URL || "http://localhost:6010";
 }
 
 function getBlueprintsUrl () {

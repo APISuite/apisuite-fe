@@ -11,7 +11,6 @@ import { RouterPrompt } from "components/RouterPrompt";
 import { getBlueprintAppConfig } from "store/applications/actions/getBlueprintAppConfig";
 import { updateAccessDetailsAction } from "store/applications/actions/updateAccessDetails";
 import { validateAccessDetailsAction } from "store/applications/actions/validateAccessDetails";
-import { VariablesType } from "store/applications/types";
 import { applicationsViewSelector } from "./selector";
 import { LocationHistory } from "./types";
 import {
@@ -26,21 +25,12 @@ import useStyles from "./styles";
 import { fillBlueprintAppConfig } from "store/applications/actions/fillBlueprintAppConfig";
 import Notice from "components/Notice";
 
-export const AccessDetails: React.FC = () => {
+export const ConnectorInput: React.FC = () => {
   const classes = useStyles();
   const { palette } = useTheme();
-
-  const { t } = useTranslation();
-
   const history = useHistory() as LocationHistory;
   const dispatch = useDispatch();
-
-  const {
-    app, blueprintConfig, getBlueprintAppConfigStatus,
-    requesting, status, types, validateAccessDetailsStatus,
-  } = useSelector(applicationsViewSelector);
   const { profile } = useSelector(profileSelector);
-
   const { appId, typeId } = useParams<{ appId: string; typeId: string }>();
   const isNew = Number.isNaN(Number(appId));
 
@@ -48,7 +38,11 @@ export const AccessDetails: React.FC = () => {
     OAUTH: "oauth",
     TOKEN: "token",
   };
-
+  const { t } = useTranslation();
+  const {
+    app, blueprintConfig, getBlueprintAppConfigStatus,
+    requesting, status, types, validateAccessDetailsStatus,
+  } = useSelector(applicationsViewSelector);
   useGetApp({
     app,
     appId,
@@ -59,14 +53,6 @@ export const AccessDetails: React.FC = () => {
     status,
     typeId,
   });
-
-  const getTableLabel = () => {
-    return blueprintConfig.api_url ?
-      t("dashboardTab.applicationsSubTab.appModal.nothingToShow")
-      :
-      t("dashboardTab.applicationsSubTab.appModal.noUrlDefined");
-  };
-
   const {
     control,
     formState: { errors, isDirty, isValid },
@@ -82,14 +68,7 @@ export const AccessDetails: React.FC = () => {
     if (!isNew) {
       setCommonValues(blueprintConfig, setValue);
       setValue("fieldsMapping", blueprintConfig.fieldsMapping, { shouldDirty: false });
-      if (
-        blueprintConfig.variableValues &&
-        blueprintConfig.variableValues.length === getURLVars(blueprintConfig.api_url).length
-      ) {
-        setAvailableVariables(blueprintConfig.variableValues);
-      } else {
-        validateVars(blueprintConfig.api_url);
-      }
+      setValue("variableValues", blueprintConfig.variableValues, { shouldDirty: false });
     }
   }, [app, isNew, setValue]);
 
@@ -120,7 +99,7 @@ export const AccessDetails: React.FC = () => {
 
   const [selectedAuth, setSelectedAuth] = React.useState(blueprintConfig.app_conf.conn_auth_type);
 
-  const [availableVariables, setAvailableVariables] = React.useState<VariablesType[]>([]);
+
 
   const handleAuthSelection = (selectedAuthType: string) => {
     if (!checkIfPrefilled("conn_auth_type")) {
@@ -131,35 +110,6 @@ export const AccessDetails: React.FC = () => {
     }
   };
 
-  const getURLVars = (url: string) => {
-    const matcher = (url || "").matchAll(/{([^{}]*?)}/g);
-    const results = [];
-    let value = matcher.next();
-    while (!value.done) {
-      results.push(value.value[1]);
-      value = matcher.next();
-    }
-    return results;
-  };
-
-  const validateVars = (url: string) => {
-    const urlVars = getURLVars(url);
-    const newVariables = availableVariables.filter((element: VariablesType) => urlVars.includes(element.key));
-    const currentVarNames = newVariables.map((element: VariablesType) => element.key);
-    const urlsToAdd = urlVars.filter((element: string) => !currentVarNames.includes(element));
-    for (const urlToAdd of urlsToAdd) {
-      newVariables.push({
-        key : urlToAdd,
-        friendlyName: "",
-        description: "",
-      });
-    }
-    setAvailableVariables(newVariables);
-  };
-
-  React.useEffect(()=> {
-    setValue("variableValues", availableVariables, { shouldDirty: true });
-  }, [availableVariables, setValue]);
   /* App-related actions */
 
   const hasChanges = () => {
@@ -201,7 +151,6 @@ export const AccessDetails: React.FC = () => {
     const currentConfigDetails = {
       ...getValues(),
     };
-    currentConfigDetails.variableValues = [ ...availableVariables ];
     const newAppDetails = {
       app_conf: {
         auth_url: selectedAuthType === AUTH_TYPES.TOKEN ? "" : currentConfigDetails.auth_url,
@@ -236,7 +185,6 @@ export const AccessDetails: React.FC = () => {
     dispatch(updateAccessDetailsAction({
       newConfig: createBlueprintConfig({
         ...getValues(),
-        variableValues: [ ...availableVariables ],
       }),
       originalAppName: blueprintConfig.app_name,
     }));
@@ -565,114 +513,9 @@ export const AccessDetails: React.FC = () => {
               />
             </Box>
           </Grid>
-
-          <Grid item md={12}>
-            <Box mb={1}>
-              <Typography display="block" gutterBottom variant="h6">
-                {t("dashboardTab.applicationsSubTab.appModal.apiProductSettingsTitle")}
-              </Typography>
-            </Box>
-
-            <Box pb={4}>
-              <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
-                {t("dashboardTab.applicationsSubTab.appModal.apiProductSettingsSubtitle")}
-              </Typography>
-            </Box>
-            <Box>
-              <Controller
-                control={control}
-                name="api_url"
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className={classes.inputFields}
-                    error={!!errors.api_url}
-                    fullWidth
-                    helperText={errors.api_url?.message}
-                    label={t("dashboardTab.applicationsSubTab.appModal.blueprintApp.apiURLFieldLabel")}
-                    margin="dense"
-                    type="text"
-                    variant="outlined"
-                    onChange={(event) => {
-                      field.onChange(event);
-                      validateVars(event.target.value);
-                    }}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
         </Grid>
 
-        <Grid container spacing={3}>
-          <Grid item md={12}>
-            <Box mb={1}>
-              <Typography display="block" variant="subtitle1">
-                {t("dashboardTab.applicationsSubTab.appModal.variablesSubtitle")}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item md={12}>
-            <Box className={classes.customTableHeader}>
-              <Box ml={2} mr={5}>
-                <Typography style={{ color: palette.text.secondary }} variant="body1">
-                  {t("dashboardTab.applicationsSubTab.appModal.variableName")}
-                </Typography>
-              </Box>
-              <Box ml={2} mr={5}>
-                <Typography style={{ color: palette.text.secondary }} variant="body1">
-                  {t("dashboardTab.applicationsSubTab.appModal.variableFriendlyName")}
-                </Typography>
-              </Box>
-              <Box mr={5}>
-                <Typography style={{ color: palette.text.secondary }} variant="body1">
-                  {t("dashboardTab.applicationsSubTab.appModal.variableDescription")}
-                </Typography>
-              </Box>
-            </Box>
-            {availableVariables.length ? (
-              availableVariables.map((element : VariablesType, index : number) => (
-                <Box className={clsx(classes.tableEntry, {
-                  [classes.evenTableEntry]: index % 2 === 0,
-                  [classes.oddTableEntry]: index % 2 !== 0,
-                })}
-                key={`variables${index}`}>
-                  <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
-                    <Typography variant="body1">{element.key}</Typography>
-                  </Box>
-                  <Box  mr={5} style={{ width: "110px", marginLeft: "16px", alignItems: "center"}}>
-                    <TextField
-                      className={classes.variables}
-                      name="friendlyName"
-                      value={element.friendlyName}
-                      onChange={(event) => {
-                        const newVariables = [...availableVariables];
-                        newVariables[index].friendlyName = event.target.value;
-                        setAvailableVariables(newVariables);
-                      }}
-                    />
-                  </Box>
-                  <Box  mr={5} style={{ width: "615px", alignItems: "center"}}>
-                    <TextField
-                      name="description"
-                      value={element.description}
-                      className={classes.variables}
-                      onChange={(event) => {
-                        const newVariables = [...availableVariables];
-                        newVariables[index].description = event.target.value;
-                        setAvailableVariables(newVariables);
-                      }}
-                      fullWidth
-                    />
-                  </Box >
-                </Box>))
-            ) : (
-              <div className={classes.nothingToShow}>
-                <Typography variant="body1">{getTableLabel()}</Typography>
-              </div>
-            )}
-          </Grid>
-        </Grid>
+
         <hr className={classes.regularSectionSeparator} />
         {/* "App action" buttons section */}
         <div className={classes.buttonsContainer}>
@@ -694,7 +537,7 @@ export const AccessDetails: React.FC = () => {
             }}
             history={history}
             orgId={profile.currentOrg.id}
-            tabType={AppTypesTab.ACCESS_DETAILS}
+            tabType={AppTypesTab.CONNECTOR_INPUT}
           />
         </div>
       </AppContainer>
