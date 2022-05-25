@@ -309,6 +309,7 @@ export const ConnectorInput: React.FC = () => {
                 className={clsx({
                   [classes.selectedAuthType]: selectedAuth === AUTH_TYPES.TOKEN,
                   [classes.authType]: selectedAuth !== AUTH_TYPES.TOKEN,
+                  [classes.authDisabled] : checkIfPrefilled("conn_auth_type"),
                 })}
                 mr={8}
                 onClick={() => handleAuthSelection(AUTH_TYPES.TOKEN) }
@@ -324,6 +325,7 @@ export const ConnectorInput: React.FC = () => {
                 className={clsx({
                   [classes.selectedAuthType]: selectedAuth === AUTH_TYPES.OAUTH,
                   [classes.authType]: selectedAuth !== AUTH_TYPES.OAUTH,
+                  [classes.authDisabled] : checkIfPrefilled("conn_auth_type"),
                 })}
                 onClick={() => handleAuthSelection(AUTH_TYPES.OAUTH) }
               >
