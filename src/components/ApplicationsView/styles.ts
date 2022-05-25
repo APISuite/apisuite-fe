@@ -787,4 +787,8 @@ export default makeStyles((theme) => ({
       marginRight: theme.spacing(1),
     },
   },
+  authDisabled: {
+    color: theme.palette.text.disabled,
+    cursor: "default",
+  },
 }));
