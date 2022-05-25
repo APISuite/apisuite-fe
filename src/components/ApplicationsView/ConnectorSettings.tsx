@@ -69,7 +69,6 @@ export const ConnectorSettings: React.FC = () => {
 
   useEffect(() => {
     if (!isNew) {
-      console.log("here")
       setCommonValues(blueprintConfig, setValue);
       setValue("variableValues", blueprintConfig.variableValues, { shouldDirty: false });
       setValue("visibility", isActive ? app.visibility : "private", { shouldDirty: false });
