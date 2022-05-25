@@ -150,6 +150,14 @@ export const ConnectorSettings: React.FC = () => {
     }));
     if (!isAppActive) {
       setValue("visibility", "private", { shouldDirty: true});
+      const currentValues = { ...getValues() };
+      if (currentValues.visibility && app.visibility !== currentValues.visibility) {
+        const updatedAppDetails = {
+          ...app,
+          visibility: currentValues.visibility,
+        };
+        dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
+      }
     }
   };
   /* App-related actions */
