@@ -24,6 +24,7 @@ import clsx from "clsx";
 import {toggleBlueprintAppStatusAction} from "store/applications/actions/toggleBlueprintAppStatus";
 import {getSections} from "util/extensions";
 import {updateApp} from "store/applications/actions/updatedApp";
+import Notice from "components/Notice";
 
 
 
@@ -174,6 +175,28 @@ export const ConnectorSettings: React.FC = () => {
 
         <Grid container spacing={3}>
           <Grid item md={12}>
+            {
+              getSections(
+                "MARKETPLACE_APP_SETTINGS",
+                {
+                  formUtil: {
+                    control,
+                    errors,
+                    getValues,
+                    register,
+                    reset,
+                    setValue,
+                  },
+                  data: app,
+                  userRole: "admin",
+                  showLabels: false,
+                  showVisibility: true,
+                  visibilityEnabled: isActive
+                }
+              )
+            }
+          </Grid>
+          <Grid item md={12}>
             <Box mb={1}>
               <Typography display="block" gutterBottom variant="h6">
                 {t("dashboardTab.applicationsSubTab.appModal.appStatusTitle")}
@@ -201,30 +224,14 @@ export const ConnectorSettings: React.FC = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item md={12}>
-            {
-              getSections(
-                "MARKETPLACE_APP_SETTINGS",
-                {
-                  formUtil: {
-                    control,
-                    errors,
-                    getValues,
-                    register,
-                    reset,
-                    setValue,
-                  },
-                  data: app,
-                  userRole: "admin",
-                  showLabels: false,
-                  showVisibility: true,
-                  visibilityEnabled: isActive
-                }
-              )
-            }
+          <Grid item md={6}>
+            <Notice type="info" noticeText={<Typography variant="body2" style={{ color: palette.info.contrastText }}>
+              {t("dashboardTab.applicationsSubTab.appModal.noticeText")}
+            </Typography>} />
           </Grid>
+
           <Grid item md={12}>
-            <Box mb={1}>
+            <Box mb={1} mt={4}>
               <Typography display="block" variant="h6">
                 {t("dashboardTab.applicationsSubTab.appModal.fieldMappingTitle")}
               </Typography>
