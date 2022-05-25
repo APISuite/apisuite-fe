@@ -22,6 +22,8 @@ import useStyles from "./styles";
 import {updateAccessDetailsAction} from "store/applications/actions/updateAccessDetails";
 import clsx from "clsx";
 import {toggleBlueprintAppStatusAction} from "store/applications/actions/toggleBlueprintAppStatus";
+import {getSections} from "util/extensions";
+import {updateApp} from "store/applications/actions/updatedApp";
 
 
 
@@ -53,8 +55,11 @@ export const ConnectorSettings: React.FC = () => {
   });
 
   const {
-    formState: { isDirty },
+    control,
+    formState: { errors, isDirty},
     getValues,
+    register,
+    reset,
     setValue,
   } = useForm({
     defaultValues: createAppRegisterValues(blueprintConfig),
@@ -64,12 +69,17 @@ export const ConnectorSettings: React.FC = () => {
 
   useEffect(() => {
     if (!isNew) {
+      console.log("here")
       setCommonValues(blueprintConfig, setValue);
       setValue("variableValues", blueprintConfig.variableValues, { shouldDirty: false });
+      setValue("visibility", isActive ? app.visibility : "private", { shouldDirty: false });
       if (blueprintConfig.fieldsMapping && blueprintConfig.fieldsMapping.length) {
         setFieldsMapping([ ...blueprintConfig.fieldsMapping ]);
       } else {
         buildFieldsMapping(blueprintConfig.fieldsRaw);
+      }
+      if(getValues().visibility) {
+        setHasChanges(app.visibility !== getValues().visibility)
       }
     }
   }, [app, isNew, setValue, blueprintConfig]);
@@ -114,12 +124,21 @@ export const ConnectorSettings: React.FC = () => {
 
   const updateAccessDetails = () => {
     setHasChanges(false);
+
     dispatch(updateAccessDetailsAction({
       newConfig: createBlueprintConfig({
         ...getValues(),
       }),
       originalAppName: blueprintConfig.app_name,
     }));
+    const currentValues = { ...getValues() }
+    if (currentValues.visibility && app.visibility !== currentValues.visibility) {
+      const updatedAppDetails = {
+        ...app,
+        visibility: currentValues.visibility,
+      };
+      dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
+    }
   };
 
   const toggleActiveAppStatus = (isAppActive: boolean) => {
@@ -129,6 +148,9 @@ export const ConnectorSettings: React.FC = () => {
         command: isAppActive ? "start" : "stop",
       },
     }));
+    if (!isAppActive) {
+      setValue("visibility", "private", { shouldDirty: true})
+    }
   };
   /* App-related actions */
 
@@ -180,7 +202,28 @@ export const ConnectorSettings: React.FC = () => {
               </Typography>
             </Box>
           </Grid>
-          <hr className={classes.regularSectionSeparator} />
+          <Grid item md={12}>
+            {
+              getSections(
+                "MARKETPLACE_APP_SETTINGS",
+                {
+                  formUtil: {
+                    control,
+                    errors,
+                    getValues,
+                    register,
+                    reset,
+                    setValue,
+                  },
+                  data: app,
+                  userRole: "admin",
+                  showLabels: false,
+                  showVisibility: true,
+                  visibilityEnabled: isActive
+                }
+              )
+            }
+          </Grid>
           <Grid item md={12}>
             <Box mb={1}>
               <Typography display="block" variant="h6">
