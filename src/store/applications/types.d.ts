@@ -107,6 +107,7 @@ export interface AppRegisterValues {
   variableValues: VariablesType[],
   fieldsMapping: FieldMappingType[],
   blueprint: boolean,
+  visibility?: string | undefined,
 }
 
 export interface CurrentBlueprintConfig {

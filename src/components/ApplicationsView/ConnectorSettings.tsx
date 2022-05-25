@@ -22,6 +22,9 @@ import useStyles from "./styles";
 import {updateAccessDetailsAction} from "store/applications/actions/updateAccessDetails";
 import clsx from "clsx";
 import {toggleBlueprintAppStatusAction} from "store/applications/actions/toggleBlueprintAppStatus";
+import {getSections} from "util/extensions";
+import {updateApp} from "store/applications/actions/updatedApp";
+import Notice from "components/Notice";
 
 
 
@@ -53,8 +56,11 @@ export const ConnectorSettings: React.FC = () => {
   });
 
   const {
-    formState: { isDirty },
+    control,
+    formState: { errors, isDirty},
     getValues,
+    register,
+    reset,
     setValue,
   } = useForm({
     defaultValues: createAppRegisterValues(blueprintConfig),
@@ -66,10 +72,14 @@ export const ConnectorSettings: React.FC = () => {
     if (!isNew) {
       setCommonValues(blueprintConfig, setValue);
       setValue("variableValues", blueprintConfig.variableValues, { shouldDirty: false });
+      setValue("visibility", isActive ? app.visibility : "private", { shouldDirty: false });
       if (blueprintConfig.fieldsMapping && blueprintConfig.fieldsMapping.length) {
         setFieldsMapping([ ...blueprintConfig.fieldsMapping ]);
       } else {
         buildFieldsMapping(blueprintConfig.fieldsRaw);
+      }
+      if(getValues().visibility) {
+        setHasChanges(app.visibility !== getValues().visibility);
       }
     }
   }, [app, isNew, setValue, blueprintConfig]);
@@ -114,12 +124,21 @@ export const ConnectorSettings: React.FC = () => {
 
   const updateAccessDetails = () => {
     setHasChanges(false);
+
     dispatch(updateAccessDetailsAction({
       newConfig: createBlueprintConfig({
         ...getValues(),
       }),
       originalAppName: blueprintConfig.app_name,
     }));
+    const currentValues = { ...getValues() };
+    if (currentValues.visibility && app.visibility !== currentValues.visibility) {
+      const updatedAppDetails = {
+        ...app,
+        visibility: currentValues.visibility,
+      };
+      dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
+    }
   };
 
   const toggleActiveAppStatus = (isAppActive: boolean) => {
@@ -129,6 +148,17 @@ export const ConnectorSettings: React.FC = () => {
         command: isAppActive ? "start" : "stop",
       },
     }));
+    if (!isAppActive) {
+      setValue("visibility", "private", { shouldDirty: true});
+      const currentValues = { ...getValues() };
+      if (currentValues.visibility && app.visibility !== currentValues.visibility) {
+        const updatedAppDetails = {
+          ...app,
+          visibility: currentValues.visibility,
+        };
+        dispatch(updateApp({ orgID: profile.currentOrg.id, appData: updatedAppDetails }));
+      }
+    }
   };
   /* App-related actions */
 
@@ -152,6 +182,28 @@ export const ConnectorSettings: React.FC = () => {
 
 
         <Grid container spacing={3}>
+          <Grid item md={12}>
+            {
+              getSections(
+                "MARKETPLACE_APP_SETTINGS",
+                {
+                  formUtil: {
+                    control,
+                    errors,
+                    getValues,
+                    register,
+                    reset,
+                    setValue,
+                  },
+                  data: app,
+                  userRole: "admin",
+                  showLabels: false,
+                  showVisibility: true,
+                  visibilityEnabled: isActive,
+                }
+              )
+            }
+          </Grid>
           <Grid item md={12}>
             <Box mb={1}>
               <Typography display="block" gutterBottom variant="h6">
@@ -180,9 +232,14 @@ export const ConnectorSettings: React.FC = () => {
               </Typography>
             </Box>
           </Grid>
-          <hr className={classes.regularSectionSeparator} />
+          <Grid item md={6}>
+            <Notice type="info" noticeText={<Typography variant="body2" style={{ color: palette.info.contrastText }}>
+              {t("dashboardTab.applicationsSubTab.appModal.noticeText")}
+            </Typography>} />
+          </Grid>
+
           <Grid item md={12}>
-            <Box mb={1}>
+            <Box mb={1} mt={4}>
               <Typography display="block" variant="h6">
                 {t("dashboardTab.applicationsSubTab.appModal.fieldMappingTitle")}
               </Typography>
