@@ -341,7 +341,7 @@ export const GeneralSettings: React.FC = () => {
                   userRole: "admin",
                   showLabels: true,
                   showVisibility: !(["connector", "blueprint"].includes(app.appType.type)),
-                  visibilityEnabled: true
+                  visibilityEnabled: true,
                 }
               )
             }

@@ -79,7 +79,7 @@ export const ConnectorSettings: React.FC = () => {
         buildFieldsMapping(blueprintConfig.fieldsRaw);
       }
       if(getValues().visibility) {
-        setHasChanges(app.visibility !== getValues().visibility)
+        setHasChanges(app.visibility !== getValues().visibility);
       }
     }
   }, [app, isNew, setValue, blueprintConfig]);
@@ -131,7 +131,7 @@ export const ConnectorSettings: React.FC = () => {
       }),
       originalAppName: blueprintConfig.app_name,
     }));
-    const currentValues = { ...getValues() }
+    const currentValues = { ...getValues() };
     if (currentValues.visibility && app.visibility !== currentValues.visibility) {
       const updatedAppDetails = {
         ...app,
@@ -149,7 +149,7 @@ export const ConnectorSettings: React.FC = () => {
       },
     }));
     if (!isAppActive) {
-      setValue("visibility", "private", { shouldDirty: true})
+      setValue("visibility", "private", { shouldDirty: true});
     }
   };
   /* App-related actions */
@@ -191,7 +191,7 @@ export const ConnectorSettings: React.FC = () => {
                   userRole: "admin",
                   showLabels: false,
                   showVisibility: true,
-                  visibilityEnabled: isActive
+                  visibilityEnabled: isActive,
                 }
               )
             }
