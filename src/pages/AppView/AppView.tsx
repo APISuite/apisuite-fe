@@ -4,8 +4,10 @@ import { useParams } from "react-router-dom";
 import { Box, useTranslation } from "@apisuite/fe-base";
 
 import {
-  AccessDetails,
-  ClientAccess, ConnectorSettings,
+  ConnectorInput,
+  ClientAccess,
+  ConnectorOutput,
+  ConnectorSettings,
   CustomProperties,
   ExternalSettings,
   GeneralSettings,
@@ -76,12 +78,19 @@ export const AppView: React.FC = () => {
     route: `/dashboard/apps/${appId}/type/${typeId}/expert`,
   };
 
-  const BLUEPRINT = {
-    component: AccessDetails,
+  const CONNECTOR_INPUT = {
+    component: ConnectorInput,
     disabled: isNew,
-    label: t("applications.tabs.accessDetails"),
-    path: "/dashboard/apps/:appId/type/:typeId/access",
-    route: `/dashboard/apps/${appId}/type/${typeId}/access`,
+    label: t("applications.tabs.connectorInput"),
+    path: "/dashboard/apps/:appId/type/:typeId/connector_input",
+    route: `/dashboard/apps/${appId}/type/${typeId}/connector_input`,
+  };
+  const CONNECTOR_OUTPUT = {
+    component: ConnectorOutput,
+    disabled: isNew || !isValid,
+    label: t("applications.tabs.connectorOutput"),
+    path: "/dashboard/apps/:appId/type/:typeId/connector_output",
+    route: `/dashboard/apps/${appId}/type/${typeId}/connector_output`,
   };
   const CONNECTOR_SETTINGS = {
     component: ConnectorSettings,
@@ -104,7 +113,8 @@ export const AppView: React.FC = () => {
       ROUTES.push(EXPERT);
     }
     if (appType === AppTypes.BLUEPRINT || appType === AppTypes.CONNECTOR) {
-      ROUTES.push(BLUEPRINT);
+      ROUTES.push(CONNECTOR_INPUT);
+      ROUTES.push(CONNECTOR_OUTPUT);
       ROUTES.push(CONNECTOR_SETTINGS);
     }
   }

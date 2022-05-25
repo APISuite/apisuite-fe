@@ -19,6 +19,7 @@ import { profileSelector } from "pages/Profile/selectors";
 import clsx from "clsx";
 import { getLatestAPIProdIndex } from "util/getLatestAPIProdIndex";
 import { mapAPIData } from "util/mapAPIData";
+import {API_URL} from "constants/endpoints";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -28,8 +29,11 @@ export const APIProducts: React.FC = () => {
   const { t } = useTranslation();
   const { auth, subscriptions } = useSelector(apiProductsSelector);
   const { profile } = useSelector(profileSelector);
-  const { palette, spacing } = useTheme();
-
+  const {  custom, palette, spacing } = useTheme();
+  const trans = useTranslation();
+  const mainBackground =`${API_URL}/resources/main.background?language=${
+    trans.i18n.language
+  }`;
   const initialAPIState: APIDetails = {
     access: false,
     contract: "",
@@ -95,7 +99,7 @@ export const APIProducts: React.FC = () => {
             {mostRecentAPI.name}
           </Typography>
         </Box>
-  
+
         <Box mb={3} style={{ alignItems: "center", display: "flex" }}>
           {
             mostRecentAPI.contract && (
@@ -103,7 +107,7 @@ export const APIProducts: React.FC = () => {
                 <Typography variant="h5" style={{ color: palette.secondary.main, fontWeight: 300, marginRight: spacing(2) }}>
                   {mostRecentAPI.contract}
                 </Typography>
-  
+
                 <Chip
                   color="secondary"
                   label={mostRecentAPI.version}
@@ -114,7 +118,7 @@ export const APIProducts: React.FC = () => {
               </>
             )
           }
-  
+
           <Chip
             className={clsx({
               [classes.prodAccessibleChip]: mostRecentAPI.access,
@@ -126,7 +130,7 @@ export const APIProducts: React.FC = () => {
             size="small"
           />
         </Box>
-  
+
         <div className={classes.apiProductButtons}>
           <Button
             color="primary"
@@ -137,7 +141,7 @@ export const APIProducts: React.FC = () => {
           >
             {t("apiProductsTab.apiProductButtons.viewDetailsButtonLabel")}
           </Button>
-  
+
           {
             auth.user && (
               <Box clone ml={1}>
@@ -161,7 +165,7 @@ export const APIProducts: React.FC = () => {
     );
   };
 
-  // 'All API products' section  
+  // 'All API products' section
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -364,7 +368,7 @@ export const APIProducts: React.FC = () => {
     if (buttonFilter) {
       newAPIFilters[buttonFilter] = !newAPIFilters[buttonFilter];
     }
-    
+
     if (newAPIFilters.prod) {
       productionAccessibleAPIs = apisToFilter.filter((api) => {
         return api.access === true;
@@ -423,7 +427,7 @@ export const APIProducts: React.FC = () => {
   return (
     <main style={{ backgroundColor: palette.grey[100], height: "100%", paddingBottom: spacing(5) }}>
       {/* 'Latest API product update' section */}
-      <section className={classes.latestAPIProductUpdateSection}>
+      <section style={{background: `url("${custom?.images?.headerBackground || mainBackground}")`}} className={classes.latestAPIProductUpdateSection}>
         <PageContainer disablePaddingY display="flex" position="relative">
           <img
             className={classes.latestAPIProductImage}

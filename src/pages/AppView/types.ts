@@ -12,6 +12,7 @@ export enum AppTypesTab {
   CLIENT = "client",
   EXTERNAL = "external",
   EXPERT = "expert",
-  ACCESS_DETAILS = "access",
+  CONNECTOR_INPUT = "connector_input",
+  CONNECTOR_OUTPUT = "connector_output",
   CONNECTOR_SETTINGS = "connector_settings",
 }
