@@ -211,7 +211,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
     >
       {/* Top nav */}
       <Box
-        borderBottom={expand ? `1px solid ${palette.primary.light}` : undefined}
+        borderBottom={expand ? `1px solid ${palette.primary.main}` : undefined}
         display="flex"
         flexDirection="row"
         flexWrap="nowrap"

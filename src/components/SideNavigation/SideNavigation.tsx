@@ -15,7 +15,7 @@ export const SideNavigation: React.FC<SideNavigationProps> = ({
     <Tabs
       aria-label="side navigation"
       classes={{ indicator: classes.indicator }}
-      indicatorColor="secondary"
+      indicatorColor="primary"
       orientation="vertical"
       value={pathname}
     >

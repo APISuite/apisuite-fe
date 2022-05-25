@@ -17,9 +17,8 @@ export const APIFeatureCard: React.FC<APIFeatureCardProps> = ({
       <Card style={{
         backgroundColor: palette.background.paper,
         borderRadius: shape.borderRadius,
-        boxShadow: "none",
         padding: spacing(3),
-      }}>
+      }} elevation={1}>
         <CardContent>
           <Box mb={2} className={classes.apiFeatureIcon}>
             {

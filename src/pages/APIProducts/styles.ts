@@ -111,7 +111,6 @@ export default makeStyles((theme) => ({
   latestAPIProductUpdateSection: {
     // First color is a fallback one - do not remove!
     background: theme.palette.gradient.light,
-    borderBottom: "4px solid rgba(20, 40, 60, 0.1)",
     height: 350,
     width: "100%",
     padding: theme.spacing(22.5, 7.5, 0, 7.5),

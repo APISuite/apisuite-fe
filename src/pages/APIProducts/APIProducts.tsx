@@ -19,7 +19,6 @@ import { profileSelector } from "pages/Profile/selectors";
 import clsx from "clsx";
 import { getLatestAPIProdIndex } from "util/getLatestAPIProdIndex";
 import { mapAPIData } from "util/mapAPIData";
-import {API_URL} from "constants/endpoints";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -29,11 +28,7 @@ export const APIProducts: React.FC = () => {
   const { t } = useTranslation();
   const { auth, subscriptions } = useSelector(apiProductsSelector);
   const { profile } = useSelector(profileSelector);
-  const {  custom, palette, spacing } = useTheme();
-  const trans = useTranslation();
-  const mainBackground =`${API_URL}/resources/main.background?language=${
-    trans.i18n.language
-  }`;
+  const { palette, spacing } = useTheme();
   const initialAPIState: APIDetails = {
     access: false,
     contract: "",
@@ -425,9 +420,9 @@ export const APIProducts: React.FC = () => {
   };
 
   return (
-    <main style={{ backgroundColor: palette.grey[100], height: "100%", paddingBottom: spacing(5) }}>
+    <main style={{ backgroundColor: palette.background.paper, height: "100%", paddingBottom: spacing(5) }}>
       {/* 'Latest API product update' section */}
-      <section style={{background: `url("${custom?.images?.headerBackground || mainBackground}")`}} className={classes.latestAPIProductUpdateSection}>
+      <section className={classes.latestAPIProductUpdateSection}>
         <PageContainer disablePaddingY display="flex" position="relative">
           <img
             className={classes.latestAPIProductImage}
