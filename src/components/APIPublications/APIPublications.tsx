@@ -200,7 +200,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
             centered
             className={classes.tabsInnerContainer}
             TabIndicatorProps={{
-              style: { background: palette.info.main, height: 3 },
+              style: { background: palette.primary.main, height: 3 },
             }}
             value={selectedTab}
             variant="fullWidth"

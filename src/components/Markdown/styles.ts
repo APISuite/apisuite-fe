@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
   },
   selected: {
     border: "solid",
-    borderColor: theme.palette.info.main,
+    borderColor: theme.palette.primary.main,
     borderLeftWidth: 0,
     borderRightWidth: 3,
     borderTopWidth: 0,
