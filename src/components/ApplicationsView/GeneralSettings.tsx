@@ -169,7 +169,7 @@ export const GeneralSettings: React.FC = () => {
     }
     return t("applications.buttons.backToApps");
   };
-  console.log(appType.current)
+
   const appNotFound = () => {
     return status.get.isError && app.id !== Number(appId);
   };
