@@ -169,7 +169,7 @@ export const GeneralSettings: React.FC = () => {
     }
     return t("applications.buttons.backToApps");
   };
-
+  console.log(appType.current)
   const appNotFound = () => {
     return status.get.isError && app.id !== Number(appId);
   };
@@ -340,7 +340,7 @@ export const GeneralSettings: React.FC = () => {
                   data: app,
                   userRole: "admin",
                   showLabels: true,
-                  showVisibility: !(["connector", "blueprint"].includes(app.appType.type)),
+                  showVisibility: !(appType.current && ["connector", "blueprint"].includes(appType.current.type)),
                   visibilityEnabled: true,
                 }
               )
