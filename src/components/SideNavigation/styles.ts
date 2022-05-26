@@ -2,7 +2,7 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   tabRoot: {
-    borderBottom: `1px solid ${theme.palette.grey[100]}`,
+    borderBottom: `1px solid ${theme.palette.background.paper}`,
     color: theme.palette.text.primary,
     fontWeight: 300,
     minWidth: "unset",
@@ -22,7 +22,7 @@ export default makeStyles((theme) => ({
   },
 
   indicator: {
-    backgroundColor: theme.palette.info.main,
+    backgroundColor: theme.palette.primary.main,
     width: 3,
   },
 }));

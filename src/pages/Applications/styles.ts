@@ -2,7 +2,7 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   clientApplicationCardAvatar: {
-    background: theme.palette.gradient.light,
+    background: theme.palette.gradient.main,
     height: "120px",
     margin: "20px auto",
     textTransform: "uppercase",

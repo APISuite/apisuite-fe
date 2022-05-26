@@ -208,14 +208,12 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
             <Tab
               label={t("apiProductDetails.apiInfoTab")}
               onClick={() => setSelectedTab(APIPublicationTabs.apiInfo)}
-              style={{ borderRight: `1px solid ${palette.grey[300]}`, borderBottom: `1px solid ${palette.grey[300]}` }}
               value={APIPublicationTabs.apiInfo}
             />
 
             <Tab
               label={t("apiProductDetails.apiContractTab")}
               onClick={() => setSelectedTab(APIPublicationTabs.apiContract)}
-              style={{ borderBottom: `1px solid ${palette.grey[300]}` }}
               value={APIPublicationTabs.apiContract}
             />
           </Tabs>

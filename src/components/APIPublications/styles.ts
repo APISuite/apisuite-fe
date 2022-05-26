@@ -43,7 +43,8 @@ export default makeStyles((theme) => ({
   },
 
   selectedTab: {
-    borderBottom: "3px solid `blue`",
+    borderBottom: `3px solid ${theme.palette.primary.main}`,
+    backgroundColor: theme.palette.primary.light,
   },
 
   tabsInnerContainer: {

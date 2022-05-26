@@ -8,9 +8,9 @@ export default makeStyles((theme) => ({
     minHeight: "100%",
     padding: "0 !important",
   },
-  
+
   navContainer: {
-    borderRight: `1px solid ${theme.palette.grey[100]}`,
+    borderRight: `1px solid ${theme.palette.background.paper}`,
     minWidth: 260,
     padding: theme.spacing(4, 0),
   },
