@@ -650,7 +650,6 @@ export const Profile: React.FC = () => {
 
             <Box m={0}>
               <Button
-                color="primary"
                 variant="outlined"
                 size="large"
                 onClick={() => dispatch(logout({}))}
