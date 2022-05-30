@@ -45,7 +45,7 @@ const SocialLinks = () => {
 
           default:
             return (
-              <a key={`${index}-web`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+              <a key={`${index}-web`} href={socialUrl.url} target='_blank' className={classes.iconAnchor} rel='noopener noreferrer'>
                 <SvgIcon size={24} name='earth' />
               </a>
             );
