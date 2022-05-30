@@ -202,7 +202,7 @@ users.forEach(user => {
         cy.testID(testIds.actionsEntry).eq(3).parent().should("have.attr", "href", "/profile/security");
         cy.testID(testIds.actionsEntry).eq(3).should("have.text", enUS.dashboardTab.landingPageSubTab.regularUser.actionsCatalog.fingerprint);
 
-        cy.testID(testIds.actionsEntry).eq(4).parent().should("have.attr", "href", "/dashboard/subscriptions");
+        cy.testID(testIds.actionsEntry).eq(4).parent().should("have.attr", "href", "/api-products");
         cy.testID(testIds.actionsEntry).eq(4).should("have.text", enUS.dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api);
 
         cy.testID(testIds.actionsEntry).eq(5).parent().should("have.attr", "href", settings.supportURL);
@@ -231,7 +231,7 @@ users.forEach(user => {
         cy.testID(testIds.actionsEntry).eq(3).parent().should("have.attr", "href", "/profile/security");
         cy.testID(testIds.actionsEntry).eq(3).should("have.text", enUS.dashboardTab.landingPageSubTab.regularUser.actionsCatalog.fingerprint);
 
-        cy.testID(testIds.actionsEntry).eq(4).parent().should("have.attr", "href", "/dashboard/subscriptions");
+        cy.testID(testIds.actionsEntry).eq(4).parent().should("have.attr", "href", "/api-products");
         cy.testID(testIds.actionsEntry).eq(4).should("have.text", enUS.dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api);
 
         cy.testID(testIds.actionsEntry).eq(5).parent().should("have.attr", "href", "https://intercom.help/api-suite/en/articles/4586659-api-portal-users");
