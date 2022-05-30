@@ -124,7 +124,7 @@ export const Dashboard: React.FC = () => {
                     },
                     {
                       actionImage: apiSVG,
-                        actionLink: "/api-products",
+                      actionLink: "/api-products",
                       actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api"),
                     },
                     {
