@@ -257,7 +257,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
               <Box style={{position:"absolute", right:0, paddingRight: 60}}>
                 {signupAction && (
                   <Button style={{float: "left"}} variant="contained" color="primary" disableElevation
-                    onClick={(e) => {
+                    onClick={(e: MouseEvent ) => {
                       history.push("/auth/signup");
                       e.preventDefault();
                     }}
