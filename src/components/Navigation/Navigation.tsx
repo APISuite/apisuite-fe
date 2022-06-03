@@ -201,7 +201,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       </Box>
     );
   }
-  const signupAction = navigation[role].tabs.find((tab) => tab.action.includes("/auth/signup"));W
+  const signupAction = navigation[role].tabs.find((tab) => tab.action.includes("/auth/signup"));
   const signinAction = navigation[role].tabs.find((tab) => tab.action.includes("/auth/signin"));
   const subTabs = navigation[role].tabs.find((tab) => matchPath(location.pathname, tab.action))?.subTabs;
   const backAction = subTabs?.find(
