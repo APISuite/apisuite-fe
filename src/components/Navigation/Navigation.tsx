@@ -11,7 +11,7 @@ import {
   Typography,
   useConfig,
   useTheme,
-  useTranslation
+  useTranslation,
 } from "@apisuite/fe-base";
 
 import { testIds } from "testIds";
@@ -201,9 +201,9 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       </Box>
     );
   }
-  const signupAction = navigation[role].tabs.find((tab) => tab.action.includes('/auth/signup'))
+  const signupAction = navigation[role].tabs.find((tab) => tab.action.includes("/auth/signup"));
   console.log(signupAction)
-  const signinAction = navigation[role].tabs.find((tab) => tab.action.includes('/auth/signin'))
+  const signinAction = navigation[role].tabs.find((tab) => tab.action.includes("/auth/signin"));
   const subTabs = navigation[role].tabs.find((tab) => matchPath(location.pathname, tab.action))?.subTabs;
   const backAction = subTabs?.find(
     (tab) => matchPath(location.pathname, { path: tab.action, exact: true })
@@ -258,18 +258,18 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
               <Box style={{position:'absolute', right:0, paddingRight: 60}}>
                 {signupAction && (
                   <Button style={{float: "left"}} variant="contained" color="primary" disableElevation
-                          onClick={(e) => {
-                            history.push("/auth/signup")
-                            e.preventDefault()
-                          }}
+                    onClick={(e) => {
+                      history.push("/auth/signup");
+                      e.preventDefault();
+                    }}
                   >{t([signupAction?.label.key || "", signupAction?.label.fallback || ""])}</Button>
                 )}
                 {signinAction && (
                   <Typography style={{float: "left", lineHeight: 2, paddingLeft: 10}}  variant="h6"
-                          onClick={(e) => {
-                            history.push("/auth/signin")
-                            e.preventDefault()
-                          }}
+                    onClick={(e) => {
+                      history.push("/auth/signin");
+                      e.preventDefault();
+                    }}
                   >{t([signinAction?.label.key || "", signinAction?.label.fallback || ""])}</Typography>
                 )}
               </Box>
@@ -305,7 +305,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           flexWrap="nowrap"
           mx={6}
         >
-          {navigation[role].tabs.filter((tab) => !tab.action.includes('/auth/signup') && !tab.action.includes('/auth/signin')).map((tab) => {
+          {navigation[role].tabs.filter((tab) => !tab.action.includes("auth/signup") && !tab.action.includes("/auth/signin")).map((tab) => {
             if (tab.fixed) return null;
 
             return renderTab(tab, { adjustTop: true });
