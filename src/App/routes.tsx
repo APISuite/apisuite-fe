@@ -69,6 +69,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: "/documentation", exact: true, component: Documentation },
   { path: "/forgot", exact: true, component: PasswordRecovery, layout: EssentialLayout },
   { path: "/pages/:page?", exact: true, component: MarkdownPages },
+  { path: "/pages/:parentPage/:page?", exact: true, component: MarkdownPages },
   { path: "/privacy", component: Privacy },
   { path: "/profile", exact: true, auth: true, component: Profile },
   { path: "/profile/organisation", exact: true, auth: true, component: Organisation },
