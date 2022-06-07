@@ -88,12 +88,16 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
     let LabelComponent;
     const key = `nav-tab-${label.key}${label.type}${label.fallback}${label.iconName}`;
     let active = !!matchPath(location.pathname, { path: action, exact });
+    const isPages = action.includes("/pages/");
     const pathLvls = location.pathname.split("/").filter(p => !!p);
     const actionLvls = action.split("/").filter(a => !!a);
     const actionLvl2 = actionLvls.slice(1);
     // check action value only the from second level forward
     if (subTab && !active && actionLvl2.length && pathLvls[0] === actionLvls[0]) {
-      active = actionLvl2.every(lvl => pathLvls.includes(lvl));
+      active = isPages ?
+        pathLvls.splice(1).length === actionLvl2.length && pathLvls.splice(1).every(lvl => actionLvl2.includes(lvl))
+        :
+        actionLvl2.every(lvl => pathLvls.includes(lvl));
     }
 
     if (label.type === "avatar") {
