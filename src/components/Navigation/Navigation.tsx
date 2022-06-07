@@ -1,7 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { matchPath } from "react-router";
-import { Avatar, Box, Grid, Icon, TabConfig, Typography, useConfig, useTheme, useTranslation } from "@apisuite/fe-base";
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  Icon,
+  TabConfig,
+  Typography,
+  useConfig,
+  useTheme,
+  useTranslation,
+} from "@apisuite/fe-base";
 
 import { testIds } from "testIds";
 import { ROLES } from "constants/global";
@@ -12,6 +23,7 @@ import { Logo } from "components/Logo";
 import { navigationSelector } from "./selector";
 import { NavigationProps } from "./types";
 import { DefaultDocsAndSupport } from "./constants";
+import {useHistory} from "react-router-dom";
 
 export const Navigation: React.FC<NavigationProps> = ({ contractible = false, className, ...rest }) => {
   const dispatch = useDispatch();
@@ -54,7 +66,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       setExpand(notScrolled);
     }
   }, [expand]);
-
+  const history = useHistory();
   useEffect(() => {
     // we only listen to scroll if contractible is enabled
     if (!contractible) {
@@ -150,6 +162,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
             </Link>
         }
 
+
         {
           action === DefaultDocsAndSupport.support &&
             <Link to={supportURL || DefaultDocsAndSupport.support} style={{ textDecoration: "none" }}>
@@ -192,12 +205,12 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       </Box>
     );
   }
-
+  const signupAction = navigation[role].tabs.find((tab) => tab.action.includes("/auth/signup"));
+  const signinAction = navigation[role].tabs.find((tab) => tab.action.includes("/auth/signin"));
   const subTabs = navigation[role].tabs.find((tab) => matchPath(location.pathname, tab.action))?.subTabs;
   const backAction = subTabs?.find(
     (tab) => matchPath(location.pathname, { path: tab.action, exact: true })
   )?.backAction;
-
   return (
     <Grid
       data-test-id={testIds.navigation}
@@ -244,7 +257,28 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
                 {portalName}
               </Typography>
             </Box>
+            {expand && (
+              <Box style={{position:"absolute", right:0, paddingRight: 60}}>
+                {signupAction && (
+                  <Button style={{float: "left"}} variant="contained" color="primary" disableElevation
+                    onClick={(e: MouseEvent ) => {
+                      history.push("/auth/signup");
+                      e.preventDefault();
+                    }}
+                  >{t([signupAction?.label.key || "", signupAction?.label.fallback || ""])}</Button>
+                )}
+                {signinAction && (
+                  <Typography style={{float: "left", lineHeight: 2, paddingLeft: 10}}  variant="h6"
+                    onClick={(e) => {
+                      history.push("/auth/signin");
+                      e.preventDefault();
+                    }}
+                  >{t([signinAction?.label.key || "", signinAction?.label.fallback || ""])}</Typography>
+                )}
+              </Box>
+            )}
           </Link>
+
         </Box>
 
 
@@ -274,7 +308,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           flexWrap="nowrap"
           mx={6}
         >
-          {navigation[role].tabs.map((tab) => {
+          {navigation[role].tabs.filter((tab) => !tab.action.includes("auth/signup") && !tab.action.includes("/auth/signin")).map((tab) => {
             if (tab.fixed) return null;
 
             return renderTab(tab, { adjustTop: true });
