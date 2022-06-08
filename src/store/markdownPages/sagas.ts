@@ -11,7 +11,7 @@ import request from "util/request";
 export function* getMarkdownPageSaga(action: GetMarkdownPageAction) {
   try {
     const mdPage: GetMarkdownPageResponse = yield call(request, {
-      url: `${API_URL}/pages/${action.page}/${action.language}`,
+      url: `${API_URL}/pages/${action.page}/en-US`,
       method: "GET",
       headers: {
         "content-type": "application/json",
