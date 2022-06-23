@@ -10,7 +10,6 @@ const registry: RegistryEntry = [
   instanceExtension(Admin, {
     cloudExtensionUrl: "https://cloudextapi.apisuite.io",
   }),
-  instanceExtension(Billing, {}),
   instanceExtension(Marketplace, {}),
 ].filter(Boolean);
 
