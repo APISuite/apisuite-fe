@@ -24,6 +24,8 @@
     "convert-translation": "./node_modules/.bin/convert-translation"
   },
   "dependencies": {
+    "@apisuite/apisuite-marketplace-extension-ui": "file:../apisuite-marketplace-extension-ui/dev-symlink-target",
+    "@apisuite/extension-cloud-extension-ui": "file:../apisuite-cloud-extension-ui/dev-symlink-target",
     "@apisuite/fe-base": "1.0.0-next.10",
     "@hookform/resolvers": "^2.6.1",
     "@material-ui/icons": "4.11.2",
